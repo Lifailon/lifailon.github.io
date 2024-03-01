@@ -233,12 +233,7 @@
   </style>
 </head>
 <body>
-<figure>
-<img
-src="https://github.com/Lifailon/PS-Commands/blob/rsa/Logo/PowerShell-Commands.png"
-alt="Image alt" />
-<figcaption aria-hidden="true">Image alt</figcaption>
-</figure>
+<h1 id="PowerShell-Commands">PowerShell Commands</h1>
 <p><img
 src="https://img.shields.io/github/languages/top/lifailon/PS-Commands"
 alt="GitHub top language" /> <img
@@ -248,8 +243,11 @@ src="https://img.shields.io/github/languages/code-size/lifailon/PS-Commands"
 alt="GitHub code size in bytes" /> <img
 src="https://img.shields.io/github/stars/Lifailon/PS-Commands"
 alt="GitHub Repo stars" /></p>
-<p>?? Habr: <a href="https://habr.com/ru/articles/782592/">PowerShell и
-его возможности</a></p>
+Большая база заметок PowerShell на русском языке.
+<br />
+<p>Habr: <a href="https://habr.com/ru/articles/782592/">PowerShell и его возможности</a></p>
+Оглавление:
+<br />
 <ul>
 <li><a href="#help">Help</a></li>
 <li><a href="#object">Object</a></li>
@@ -350,6 +348,7 @@ alt="GitHub Repo stars" /></p>
 <li><a href="#pester">Pester</a></li>
 <li><a href="#ffmpeg">FFmpeg</a></li>
 <li><a href="#pandoc">Pandoc</a></li>
+<li><a href="#imagemagick">ImageMagick</a></li>
 </ul>
 <h1 id="help">Help</h1>
 <p><code>Get-Verb</code> действия/глаголы, утвержденные для
@@ -8098,9 +8097,42 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb23
 <span id="cb233-5"><a href="#cb233-5" aria-hidden="true" tabindex="-1"></a><span class="va">$path</span> <span class="op">=</span> <span class="op">$(</span><span class="fu">Get-ChildItem</span> <span class="st">&quot;</span><span class="va">$home</span><span class="st">\Downloads\pandoc-*\*.exe&quot;</span><span class="op">).</span><span class="fu">FullName</span></span>
 <span id="cb233-6"><a href="#cb233-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>Path <span class="va">$path</span> <span class="op">-</span>Destination <span class="st">&quot;C:\Windows\System32\pandoc.exe&quot;</span></span>
 <span id="cb233-7"><a href="#cb233-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Remove-Item</span> <span class="st">&quot;</span><span class="va">$home</span><span class="st">\Downloads\pandoc*&quot;</span> <span class="op">-</span>Force <span class="op">-</span>Recurse</span></code></pre></div>
-<p><code>pandoc -s README.md -o PS-Commands.html</code> конвертировать
-из Markdown в HTML<br />
-<code>pandoc -s PS-Commands.html -o README.md</code> конвертировать из
-HTML в Markdown</p>
+<p><code>pandoc -s README.md -o index.html</code> конвертация из
+Markdown в HTML<br />
+<code>pandoc README.md -o index.html --css=styles.css</code> применить
+стили из css<br />
+<code>pandoc -s index.html -o README.md</code> конвертация из HTML в
+Markdown<br />
+<code>pandoc -s README.md -o README.docx</code> конвертация в Word<br />
+<code>pandoc -s README.md -o README.epub</code> конвертация в открытый
+формат электронных версий книг<br />
+<code>pandoc -s README.md -o README.pdf</code> конвертация в PDF
+(требуется rsvg-convert)</p>
+<div class="sourceCode" id="cb234"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb234-1"><a href="#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Import-Module</span> ImportExcel</span>
+<span id="cb234-2"><a href="#cb234-2" aria-hidden="true" tabindex="-1"></a>Import-Excel <span class="op">-</span>Path srv<span class="op">.</span><span class="fu">xlsx</span> <span class="op">|</span> <span class="fu">Export-Csv</span> <span class="op">-</span>Path <span class="va">$csvFilePath</span> <span class="op">-</span>NoTypeInformation <span class="op">-</span>Encoding UTF8 <span class="co"># конвертация Excel в csv</span></span>
+<span id="cb234-3"><a href="#cb234-3" aria-hidden="true" tabindex="-1"></a>pandoc <span class="op">-</span>s <span class="op">-</span>f csv <span class="op">-</span>t markdown input<span class="op">.</span><span class="fu">csv</span> <span class="op">-</span>o output<span class="op">.</span><span class="fu">md</span> <span class="co"># конвертация таблицу csv в markdown</span></span></code></pre></div>
+<h1 id="imagemagick">ImageMagick</h1>
+<p>Source: <a
+href="https://sourceforge.net/projects/imagemagick">ImageMagick</a></p>
+<p><code>magick identify -verbose PowerShell-Commands.png</code> извлечь
+метаданные изображения<br />
+<code>magick PowerShell-Commands.png output.jpg</code> конвертация
+формата изображения<br />
+<code>magick PowerShell-Commands.png -resize 800x600 output.jpg</code>
+изменить размер (увеличить или уменьшить)<br />
+<code>magick PowerShell-Commands.png -crop 400x300+100+50 output.jpg</code>
+обрезать<br />
+<code>magick PowerShell-Commands.png -rotate 90 output.jpg</code>
+повернуть изображение<br />
+<code>magick PowerShell-Commands.png -fill white -pointsize 24 -gravity center -annotate +0+0 "PowerShell" output.jpg</code>
+наложить текст на изображение<br />
+<code>magick PowerShell-Commands.png -brightness-contrast +20x+10 output.jpg</code>
+изменить яркость и контрастность<br />
+<code>magick convert -delay 100 1.png 2.png 3.png output.gif</code>
+создать gif из изображений<br />
+<code>magick convert image1.jpg image2.jpg -append output.jpg</code>
+вертикально объединенить изображения</p>
+<center>Lifailon © 2024</center>
 </body>
 </html>
