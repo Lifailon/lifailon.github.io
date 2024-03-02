@@ -245,6 +245,8 @@ src="https://img.shields.io/github/stars/Lifailon/PS-Commands"
 alt="GitHub Repo stars" /></p>
 Большая база заметок PowerShell на русском языке.
 <br />
+<p>Исходник на <a href="https://github.com/Lifailon/PS-Commands">GitHub</a> (markdown и текстовая версия)</p>
+<p><a href="https://github.com/Lifailon/PS-Commands/blob/rsa/WinForms/WinForms-Test-Stend.ps1">WinForms</a> (тестовый стенд с примерами)</p>
 <p>Habr: <a href="https://habr.com/ru/articles/782592/">PowerShell и его возможности</a></p>
 Оглавление:
 <br />
@@ -325,6 +327,7 @@ alt="GitHub Repo stars" /></p>
 <li><a href="#wireguard">WireGuard</a></li>
 <li><a href="#vpnclient">VpnClient</a></li>
 <li><a href="#proxy">Proxy</a></li>
+<li><a href="#netsh">netsh</a></li>
 <li><a href="#openssh">OpenSSH</a></li>
 <li><a href="#winrm">WinRM</a></li>
 <li><a href="#packagemanagement">PackageManagement</a></li>
@@ -3939,9 +3942,9 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb54
 <p><code>[Audio]::Volume = 0.50</code><br />
 <code>[Audio]::Mute = $true</code></p>
 <h3 id="netsessionenum">NetSessionEnum</h3>
-<p>Function:
-https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN<br />
-Source: https://fuzzysecurity.com/tutorials/24.html</p>
+<p><a
+href="https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN">Function</a><br />
+<a href="https://fuzzysecurity.com/tutorials/24.html">Source</a></p>
 <div class="sourceCode" id="cb55"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> Invoke-NetSessionEnum <span class="op">{</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">param</span> <span class="op">(</span></span>
@@ -4012,10 +4015,10 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb55
 <span id="cb55-67"><a href="#cb55-67" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p><code>Invoke-NetSessionEnum localhost</code></p>
 <h3 id="copyfile">CopyFile</h3>
-<p>Function:
-https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile<br />
-Source:
-https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1/</p>
+<p><a
+href="https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile">Function</a><br />
+<a
+href="https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1/">Source</a></p>
 <div class="sourceCode" id="cb56"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="va">$MethodDefinition</span> <span class="op">=</span> <span class="vs">@&quot;</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="vs">[DllImport(&quot;kernel32.dll&quot;, CharSet = CharSet.Unicode)]</span></span>
@@ -4024,8 +4027,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb56
 <span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="va">$Kernel32</span> <span class="op">=</span> <span class="fu">Add-Type</span> <span class="op">-</span>MemberDefinition <span class="va">$MethodDefinition</span> <span class="op">-</span>Name <span class="st">&quot;Kernel32&quot;</span> <span class="op">-</span>Namespace <span class="st">&quot;Win32&quot;</span> <span class="op">-</span>PassThru</span>
 <span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="va">$Kernel32</span><span class="op">::</span>CopyFile<span class="op">(</span><span class="st">&quot;</span><span class="op">$(</span><span class="va">$Env</span><span class="op">:</span><span class="va">SystemRoot</span><span class="op">)</span><span class="st">\System32\calc.exe&quot;</span><span class="op">,</span> <span class="st">&quot;</span><span class="op">$(</span><span class="va">$Env</span><span class="op">:</span><span class="va">USERPROFILE</span><span class="op">)</span><span class="st">\Desktop\calc.exe&quot;</span><span class="op">,</span> <span class="va">$False</span><span class="op">)</span> </span></code></pre></div>
 <h3 id="showwindowasync">ShowWindowAsync</h3>
-<p>Function:
-https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync</p>
+<p><a
+href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync">Function</a></p>
 <div class="sourceCode" id="cb57"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="va">$Signature</span> <span class="op">=</span> <span class="vs">@&quot;</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="vs">[DllImport(&quot;user32.dll&quot;)]public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);</span></span>
@@ -4036,8 +4039,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb57
 <span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="va">$ShowWindowAsync</span><span class="op">::</span>ShowWindowAsync<span class="op">((</span><span class="fu">Get-Process</span> <span class="op">-</span>Id <span class="va">$Pid</span><span class="op">).</span><span class="fu">MainWindowHandle</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span>
 <span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="va">$ShowWindowAsync</span><span class="op">::</span>ShowWindowAsync<span class="op">((</span><span class="fu">Get-Process</span> <span class="op">-</span>Id <span class="va">$Pid</span><span class="op">).</span><span class="fu">MainWindowHandle</span><span class="op">,</span> <span class="dv">4</span><span class="op">)</span></span></code></pre></div>
 <h3 id="getasynckeystate">GetAsyncKeyState</h3>
-<p>Function:
-https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-getasynckeystate</p>
+<p><a
+href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-getasynckeystate">Function</a></p>
 <p><code>Add-Type -AssemblyName System.Windows.Forms</code><br />
 <code>[int][System.Windows.Forms.Keys]::F1</code> определить номер [Int]
 клавиши по ее названию<br />
@@ -4063,8 +4066,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb58
 <span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a><span class="fu">Start-Sleep</span> <span class="op">-</span>Seconds <span class="dv">0.5</span></span>
 <span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h1 id="console-api">Console API</h1>
-<p>Source:
-https://powershell.one/tricks/input-devices/detect-key-press</p>
+<p><a
+href="https://powershell.one/tricks/input-devices/detect-key-press">Source</a></p>
 <p><code>[Console] | Get-Member -Static</code><br />
 <code>[Console]::BackgroundColor = "Blue"</code><br />
 <code>[Console]::OutputEncoding</code> используемая кодировка в текущей
@@ -4114,8 +4117,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb59
 <span id="cb59-32"><a href="#cb59-32" aria-hidden="true" tabindex="-1"></a><span class="fu">sleep</span> <span class="dv">1</span></span>
 <span id="cb59-33"><a href="#cb59-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">while</span> <span class="op">(</span><span class="va">$true</span><span class="op">)</span></span></code></pre></div>
 <h1 id="drawing">Drawing</h1>
-<p>API:
-https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-7.0&amp;redirectedfrom=MSDN</p>
+<p><a
+href="https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-7.0&amp;redirectedfrom=MSDN">API</a></p>
 <div class="sourceCode" id="cb60"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Add-Type</span> <span class="op">-</span>AssemblyName System<span class="op">.</span><span class="fu">Drawing</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="va">$Width</span> <span class="op">=</span> <span class="dv">800</span></span>
@@ -4171,8 +4174,8 @@ $date = Get-Date -f hh:mm:ss
 }</code></pre>
 <h1 id="sockets">Sockets</h1>
 <h3 id="udp-socket">UDP Socket</h3>
-<p>Source:
-https://cloudbrothers.info/en/test-udp-connection-powershell/</p>
+<p><a
+href="https://cloudbrothers.info/en/test-udp-connection-powershell/">Source</a></p>
 <div class="sourceCode" id="cb64"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> Start-UDPServer <span class="op">{</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="kw">param</span><span class="op">(</span></span>
@@ -5513,7 +5516,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb11
 <span id="cb116-10"><a href="#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="va">$data</span><span class="op">.</span><span class="fu">results</span><span class="op">.</span><span class="fu">series</span><span class="op">.</span><span class="fu">columns</span><span class="ch">` </span>столбцы<span class="op">/</span>ключи</span>
 <span id="cb116-11"><a href="#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="va">$data</span><span class="op">.</span><span class="fu">results</span><span class="op">.</span><span class="fu">series</span><span class="op">.</span><span class="fu">values</span> <span class="ch">` </span>данные построчно</span></code></pre></div>
 <h3 id="endpoints">Endpoints</h3>
-<p>https://docs.influxdata.com/influxdb/v1.7/tools/api/</p>
+<p><a href="https://docs.influxdata.com/influxdb/v1.7/tools/api/">API
+doc</a></p>
 <div class="sourceCode" id="cb117"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stats</span> <span class="op">=</span> <span class="fu">irm</span> http<span class="op">://</span><span class="dv">192.168</span><span class="op">.</span><span class="dv">3.104</span><span class="op">:</span><span class="dv">8086</span><span class="op">/</span>debug<span class="op">/</span>vars<span class="ch">` </span>статистика сервера</span>
 <span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stats</span><span class="op">.</span><span class="st">&quot;database:powershell&quot;</span><span class="op">.</span><span class="fu">values</span><span class="ch">` </span>кол-во таблиц к БД</span>
@@ -5581,8 +5585,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb12
 <span id="cb120-6"><a href="#cb120-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Service</span> <span class="va">$Service_Name</span> <span class="op">|</span> <span class="fu">Start-Service</span></span>
 <span id="cb120-7"><a href="#cb120-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Service</span> <span class="va">$Service_Name</span> <span class="op">|</span> <span class="fu">Set-Service</span> <span class="op">-</span>StartupType Automatic</span></code></pre></div>
 <h1 id="telegraf">Telegraf</h1>
-<p>Plugins:
-https://docs.influxdata.com/telegraf/v1.27/plugins/#input-plugins</p>
+<p><a
+href="https://docs.influxdata.com/telegraf/v1.27/plugins/#input-plugins">Plugins</a></p>
 <p><code>iwr https://dl.influxdata.com/telegraf/releases/telegraf-1.27.1_windows_amd64.zip -UseBasicParsing -OutFile telegraf-1.27.1_windows_amd64.zip</code><br />
 <code>Expand-Archive .\telegraf-1.27.1_windows_amd64.zip -DestinationPath "C:\Telegraf"</code><br />
 <code>rm telegraf-1.27.1_windows_amd64.zip</code><br />
@@ -5616,17 +5620,22 @@ https://docs.influxdata.com/telegraf/v1.27/plugins/#input-plugins</p>
 <p><code>USE telegraf</code><br />
 <code>SELECT usage_idle,usage_system,usage_user FROM cpu</code></p>
 <h1 id="elasticsearch">Elasticsearch</h1>
-<p><code>Install-Module -Name Elastic.Console -AllowPrerelease</code>
-https://github.com/elastic/powershell/blob/master/Elastic.Console/README.md<br />
+<p><code>Install-Module -Name Elastic.Console -AllowPrerelease</code> <a
+href="https://github.com/elastic/powershell/blob/master/Elastic.Console/README.md">github
+source</a><br />
 <code>Get-Command -Module Elastic.Console</code><br />
 <code>Get-ElasticsearchVersion</code><br />
 <code>Set-ElasticsearchVersion 7.3.0</code><br />
 <code>Invoke-Elasticsearch</code> REST API запросы</p>
 <h1 id="cdata">CData</h1>
-<p>https://www.powershellgallery.com/profiles/CData<br />
-https://www.cdata.com/kb/tech/elasticsearch-ado-powershell.rst</p>
-<p><code>Install-Module ElasticsearchCmdlets</code>
-https://www.powershellgallery.com/packages/ElasticsearchCmdlets/23.0.8565.1<br />
+<p><a href="https://www.powershellgallery.com/profiles/CData">PowerShell
+Gallery CData</a><br />
+<a
+href="https://www.cdata.com/kb/tech/elasticsearch-ado-powershell.rst">Automate
+Elasticsearch Integration Tasks from PowerShell</a></p>
+<p><code>Install-Module ElasticsearchCmdlets</code> <a
+href="https://www.powershellgallery.com/packages/ElasticsearchCmdlets/23.0.8565.1">пакет
+драйвера в psgallery</a><br />
 <code>Import-Module ElasticsearchCmdlets</code><br />
 <code>Get-Command -Module ElasticsearchCmdlets</code></p>
 <div class="sourceCode" id="cb122"><pre
@@ -5635,8 +5644,9 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb12
 <span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="va">$orders</span> <span class="op">=</span> Select-Elasticsearch <span class="op">-</span>Connection <span class="va">$elasticsearch</span> <span class="op">-</span>Table <span class="st">&quot;Orders&quot;</span> <span class="op">-</span>Where <span class="st">&quot;ShipCity = </span><span class="ch">`&#39;</span><span class="va">$ShipCity</span><span class="ch">`&#39;</span><span class="st">&quot;</span><span class="ch">` </span>поиск и получение данных</span>
 <span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="va">$orders</span> <span class="op">=</span> Invoke-Elasticsearch <span class="op">-</span>Connection <span class="va">$elasticsearch</span> <span class="op">-</span>Query <span class="st">&#39;SELECT * FROM Orders WHERE ShipCity = @ShipCity&#39;</span> <span class="op">-</span>Params @<span class="op">{</span><span class="st">&#39;@ShipCity&#39;</span><span class="op">=</span><span class="st">&#39;New York&#39;</span><span class="op">}</span><span class="ch">` </span>SQL запросы</span></code></pre></div>
 <h3 id="ado.net-assembly">ADO.NET Assembly</h3>
-<p><code>Install-Package CData.Elasticsearch</code>
-https://www.nuget.org/packages/CData.Elasticsearch<br />
+<p><code>Install-Package CData.Elasticsearch</code> <a
+href="https://www.nuget.org/packages/CData.Elasticsearch">пакет драйвера
+в nuget</a><br />
 <code>[Reflection.Assembly]::LoadFile("C:\Program Files\PackageManagement\NuGet\Packages\CData.Elasticsearch.23.0.8565\lib\net40\System.Data.CData.Elasticsearch.dll")</code></p>
 <div class="sourceCode" id="cb123"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="va">$connect</span> <span class="op">=</span> <span class="fu">New-Object</span> System<span class="op">.</span><span class="fu">Data</span><span class="op">.</span><span class="fu">CData</span><span class="op">.</span><span class="fu">Elasticsearch</span><span class="op">.</span><span class="fu">ElasticsearchConnection</span><span class="op">(</span><span class="st">&quot;Server=127.0.0.1;Port=9200;User=admin;Password=123456;&quot;</span><span class="op">)</span></span>
@@ -5672,7 +5682,10 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb12
 <h1 id="odbc">ODBC</h1>
 <p><code>Get-Command -Module Wdac</code><br />
 <code>Get-OdbcDriver | ft</code> список установленных драйверов</p>
-<p>https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-client-apps-ps1.html</p>
+<p><a
+href="https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-client-apps-ps1.html">Elasticsearch
+ODBC драйвер для доступа к данным Elasticsearch из Microsoft
+PowerShell</a></p>
 <div class="sourceCode" id="cb127"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="va">$connectstring</span> <span class="op">=</span> <span class="st">&quot;DSN=Local Elasticsearch;&quot;</span></span>
 <span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">=</span> <span class="st">&quot;SELECT * FROM library&quot;</span></span>
@@ -5685,8 +5698,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb12
 <span id="cb127-9"><a href="#cb127-9" aria-hidden="true" tabindex="-1"></a><span class="va">$conn</span><span class="op">.</span><span class="fu">close</span><span class="op">()</span></span>
 <span id="cb127-10"><a href="#cb127-10" aria-hidden="true" tabindex="-1"></a><span class="va">$dt</span></span></code></pre></div>
 <h1 id="postgresql">PostgreSQL</h1>
-<p>Скачать и установить драйвер:
-https://www.postgresql.org/ftp/odbc/versions/msi/</p>
+<p><a href="https://www.postgresql.org/ftp/odbc/versions/msi/">Скачать и
+установить драйвер</a></p>
 <div class="sourceCode" id="cb128"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="va">$dbServer</span> <span class="op">=</span> <span class="st">&quot;192.168.3.101&quot;</span></span>
 <span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="va">$port</span> <span class="op">=</span> <span class="st">&quot;5432&quot;</span></span>
@@ -5918,8 +5931,12 @@ Regedit</h3>
 <code>Invoke-SNMPv3Walk</code> обход по дереву OID<br />
 <code>Invoke-SNMPv3Walk -UserName lifailon -Target 192.168.3.100 -AuthSecret password -PrivSecret password -OID 1.3.6.1.2.1.1 -AuthType MD5 -PrivType AES128</code></p>
 <h3 id="lextm.sharpsnmplib">Lextm.SharpSnmpLib</h3>
-<p>https://api.nuget.org/v3-flatcontainer/lextm.sharpsnmplib/12.5.2/lextm.sharpsnmplib.12.5.2.nupkg<br />
-<code>Add-Type -LiteralPath "$home\Desktop\lextm.sharpsnmplib-12.5.2\net471\SharpSnmpLib.dll"</code></p>
+<p><a
+href="https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1">Синтаксис</a><br />
+<a
+href="https://api.nuget.org/v3-flatcontainer/lextm.sharpsnmplib/12.5.2/lextm.sharpsnmplib.12.5.2.nupkg">Download
+lib</a></p>
+<p><code>Add-Type -LiteralPath "$home\Desktop\lextm.sharpsnmplib-12.5.2\net471\SharpSnmpLib.dll"</code></p>
 <div class="sourceCode" id="cb133"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="va">$port</span> <span class="op">=</span> <span class="dv">161</span></span>
 <span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="va">$OID</span> <span class="op">=</span> <span class="st">&quot;1.3.6.1.2.1.1.4.0&quot;</span></span>
@@ -6097,7 +6114,8 @@ LogFileSize=100
 # Уровень логирования. 4 - для отладки (выдает много информации)
 DebugLevel=4</code></pre>
 <h3 id="api-token">API Token</h3>
-<p>https://www.zabbix.com/documentation/current/en/manual/api/reference</p>
+<p><a
+href="https://www.zabbix.com/documentation/current/en/manual/api/reference">Documentation</a></p>
 <p><code>$ip = "192.168.3.102"</code><br />
 <code>$url = "http://$ip/zabbix/api_jsonrpc.php"</code></p>
 <div class="sourceCode" id="cb139"><pre
@@ -6138,7 +6156,9 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb14
 <span id="cb141-9"><a href="#cb141-9" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Invoke-RestMethod</span> <span class="op">-</span>Method POST <span class="op">-</span>Uri <span class="va">$url</span> <span class="op">-</span>Body <span class="op">(</span><span class="va">$data</span> <span class="op">|</span> <span class="fu">ConvertTo-Json</span><span class="op">)</span> <span class="op">-</span>ContentType <span class="st">&quot;application/json&quot;</span><span class="op">).</span><span class="fu">Result</span></span></code></pre></div>
 <h3 id="host.get">host.get</h3>
 <p>Получить список всех хостов (имя и id)</p>
-<p>https://www.zabbix.com/documentation/current/en/manual/api/reference/host</p>
+<p><a
+href="https://www.zabbix.com/documentation/current/en/manual/api/reference/host">Endpoint
+host</a></p>
 <p>host.create - creating new hosts<br />
 host.delete - deleting hosts<br />
 host.get - retrieving hosts<br />
@@ -6535,6 +6555,33 @@ C:.pbk)</p>
 <code>[System.Net.Http.HttpClient]::DefaultProxy.Credentials = $Credential</code><br />
 <code>Invoke-RestMethod http://ifconfig.me/ip</code><br />
 <code>Invoke-RestMethod https://kinozal.tv/rss.xml</code></p>
+<h1 id="netsh">netsh</h1>
+<h3 id="proxy-1">Proxy</h3>
+<p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=192.168.3.108</code><br />
+<code>netsh interface portproxy show all</code><br />
+<code>netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=0.0.0.0</code></p>
+<h3 id="wlan">Wlan</h3>
+<p><code>netsh wlan show profile</code> список сохраненны профилей Wi-Fi
+и паролей<br />
+<code>netsh wlan show interfaces</code> хар-ки текущей сети (MAC,
+speed)<br />
+<code>netsh wlan show profile SSID-Name-Network key=clear</code>
+очистить пароль<br />
+<code>netsh wlan show networks</code> список видемых сетей<br />
+<code>netsh wlan disconnect</code> отключиться от Wi-Fi<br />
+<code>netsh wlan connect name="SSID-Name-Network"</code>
+подключиться<br />
+<code>netsh wlan show drivers</code> драйвер Wi-Fi<br />
+<code>netsh wlan set hostednetwork mode=allow ssid="WiFi-Test" key="password"</code>
+создание точки доступа Wi-Fi (SoftAP)</p>
+<h3 id="firewall-1">Firewall</h3>
+<p><code>netsh advfirewall set allprofiles state off</code> отключить
+fw<br />
+<code>netsh advfirewall reset</code> сбросить настройки<br />
+<code>netsh advfirewall firewall add rule name="Open Remote Desktop" protocol=TCP dir=in localport=3389 action=allow</code>
+открыть порт 3389<br />
+<code>netsh advfirewall firewall add rule name="All ICMP V4" dir=in action=allow protocol=icmpv4</code>
+открыть icmp</p>
 <h1 id="openssh">OpenSSH</h1>
 <p><code>Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Client*'</code><br />
 <code>Add-WindowsCapability -Online -Name OpenSSH.Client*</code><br />
@@ -6812,8 +6859,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb15
 <code>Get-Service | where name -match "ssh-agent" | select Name,Status,StartType</code><br />
 <code>ssh-agent</code><br />
 <code>ssh-add C:\Users\Lifailon\.ssh\id_rsa</code><br />
-<code>cat ~\.ssh\id_rsa.pub | Set-Clipboard</code> copy to
-https://github.com/settings/keys<br />
+<code>cat ~\.ssh\id_rsa.pub | Set-Clipboard</code> copy to <a
+href="https://github.com/settings/keys">settings keys</a><br />
 <code>cd $home\Documents\Git</code><br />
 <code>git clone git@github.com:Lifailon/PowerShell-Commands</code><br />
 <code>cd PowerShell-Commands</code><br />
@@ -6866,8 +6913,8 @@ checkout<br />
 <code>(Get-Module PSDesiredStateConfiguration).ExportedCommands</code><br />
 <code>Get-DscLocalConfigurationManager</code></p>
 <p><code>Get-DscResource</code><br />
-<code>Get-DscResource -Name File -Syntax</code>
-https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1</p>
+<code>Get-DscResource -Name File -Syntax</code> <a
+href="https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1">синтаксис</a></p>
 <p><code>Ensure = Present</code> настройка должна быть включена (каталог
 должен присутствовать, процесс должен быть запущен, если нет – создать,
 запустить)<br />
@@ -7015,8 +7062,9 @@ ansible_shell_type=powershell</code></pre>
 <code>ansible us -m copy -a "src=test.sh dest=/root mode=777" -b</code><br />
 <code>ansible us -a "ls /root" -b</code><br />
 <code>ansible us -a "cat /root/test.sh" -b</code></p>
-<p><code>ansible-doc -l | grep win_</code> список всех модулей Windows
-(https://docs.ansible.com/ansible/latest/collections/ansible/windows/)<br />
+<p><code>ansible-doc -l | grep win_</code> <a
+href="https://docs.ansible.com/ansible/latest/collections/ansible/windows/">список
+всех модулей Windows</a><br />
 <code>ansible ws -m win_ping</code> windows модуль<br />
 <code>ansible ws -m win_ping -u WinRM-Writer</code> указать логин<br />
 <code>ansible ws -m setup</code> собрать подробную информацию о
@@ -7309,9 +7357,11 @@ ansible_shell_type=powershell</code></pre>
       var: wu_output</code></pre>
 <p><code>ansible-playbook /etc/ansible/win-update.yml</code></p>
 <h3 id="win_chocolatey-1">win_chocolatey</h3>
-<p>https://chocolatey.org/install<br />
-https://community.chocolatey.org/api/v2/package/chocolatey<br />
-https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment-guide</p>
+<p><a href="https://chocolatey.org/install">Install</a><br />
+<a
+href="https://community.chocolatey.org/api/v2/package/chocolatey">API</a><br />
+<a
+href="https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment-guide">Deployment</a></p>
 <pre><code>- name: Ensure Chocolatey installed from internal repo
   win_chocolatey:
     name: chocolatey
@@ -7319,6 +7369,8 @@ https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment
     # source: URL-адрес внутреннего репозитория
     source: https://community.chocolatey.org/api/v2/ChocolateyInstall.ps1</code></pre>
 <h1 id="gigachat">GigaChat</h1>
+<p><a href="https://developers.sber.ru/gigachat/login">Developers
+chat</a></p>
 <h3 id="установка-сертификатов">1. Установка сертификатов:</h3>
 <p><code>Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_root_ca.cer"</code>
 скачать сертификат минцифры<br />
@@ -7327,9 +7379,10 @@ https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment
 установить сертификат минцифры<br />
 <code>Import-Certificate -FilePath "$home\Downloads\russian_trusted_sub_ca.cer" -CertStoreLocation "Cert:\CurrentUser\CA"</code></p>
 <h3
-id="авторизация-по-sber-id-и-генерация-новых-авторизационных-данных-для-получения-токена-httpsdevelopers.sber.rustudio-время-жизни-30-минут">2.
+id="авторизация-по-sber-id-и-генерация-новых-авторизационных-данных-для-получения-токена-developers-время-жизни-30-минут">2.
 Авторизация по Sber ID и генерация новых авторизационных данных для
-получения токена: https://developers.sber.ru/studio (время жизни 30
+получения токена: <a
+href="https://developers.sber.ru/studio">Developers</a> (время жизни 30
 минут)</h3>
 <h3
 id="формирование-авторизационных-данных-в-формате-base64-из-client-id-и-client-secret">3.
@@ -7428,8 +7481,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb191-1"><a href
 <span id="cb191-14"><a href="#cb191-14" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$request</span> <span class="kw">|</span> <span class="ex">jq</span> <span class="at">-r</span> .choices[].message.content</span></code></pre></div>
 <h1 id="yandexgpt">YandexGPT</h1>
 <h2 id="получить-oauth-token">Получить OAuth-Token:</h2>
-<p>https://cloud.yandex.ru/ru/docs/iam/operations/iam-token/create время
-жизни IAM-токена не больше 12 часов<br />
+<p><a
+href="https://cloud.yandex.ru/ru/docs/iam/operations/iam-token/create">Create
+AIM Token</a> время жизни IAM-токена не больше 12 часов<br />
 <code>yandexPassportOauthToken="y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"</code>
 для bash<br />
 <code>$yandexPassportOauthToken = "y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"</code>
@@ -7492,9 +7546,12 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb19
 <span id="cb195-17"><a href="#cb195-17" aria-hidden="true" tabindex="-1"></a><span class="vs">&quot;@</span></span>
 <span id="cb195-18"><a href="#cb195-18" aria-hidden="true" tabindex="-1"></a><span class="fu">Invoke-RestMethod</span> <span class="op">-</span>Method POST <span class="op">-</span>Uri <span class="st">&quot;https://llm.api.cloud.yandex.net/foundationModels/v1/completion&quot;</span> <span class="op">-</span>Headers @<span class="op">{</span><span class="st">&quot;Content-Type&quot;</span><span class="op">=</span><span class="st">&quot;application/json&quot;</span><span class="op">;</span> <span class="st">&quot;Authorization&quot;</span><span class="op">=</span><span class="st">&quot;Bearer </span><span class="va">$IAM_TOKEN</span><span class="st">&quot;</span><span class="op">;</span> <span class="st">&quot;x-folder-id&quot;</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$FOLDER_ID</span><span class="st">&quot;</span><span class="op">}</span> <span class="op">-</span>Body <span class="va">$body</span></span></code></pre></div>
 <h1 id="superagi">SuperAGI</h1>
-<p>https://github.com/TransformerOptimus/SuperAGI<br />
-https://models.superagi.com/playground/generate<br />
-https://documenter.getpostman.com/view/30119783/2s9YR3cFJG</p>
+<p><a
+href="https://github.com/TransformerOptimus/SuperAGI">Source</a><br />
+<a href="https://models.superagi.com/playground/generate">Playground
+generate</a><br />
+<a href="https://documenter.getpostman.com/view/30119783/2s9YR3cFJG">API
+Doc (exaples)</a></p>
 <div class="sourceCode" id="cb196"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="va">SUPERAGI_API_KEY</span><span class="op">=</span><span class="st">&quot;31f72164129XXXXX&quot;</span></span>
 <span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="va">prompt</span><span class="op">=</span><span class="st">&quot;посчитай сумму 22+33, дай только ответ без лишнего текста&quot;</span></span>
@@ -7530,7 +7587,9 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb19
 <span id="cb197-15"><a href="#cb197-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="op">|</span> <span class="fu">ConvertTo-Json</span><span class="op">)</span></span>
 <span id="cb197-16"><a href="#cb197-16" aria-hidden="true" tabindex="-1"></a><span class="op">$(</span><span class="va">$request</span> <span class="op">-replace</span> <span class="st">&quot;^data: &quot;</span> <span class="op">|</span> <span class="fu">ConvertFrom-Json</span><span class="op">).</span><span class="fu">choices</span><span class="op">.</span><span class="fu">text</span></span></code></pre></div>
 <h1 id="replicate">Replicate</h1>
-<p>https://replicate.com/stability-ai/stable-diffusion/examples?input=http</p>
+<p><a
+href="https://replicate.com/stability-ai/stable-diffusion/examples?input=http">API
+curl examples</a></p>
 <div class="sourceCode" id="cb198"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="va">REPLICATE_API_TOKEN</span><span class="op">=</span><span class="st">&quot;r8_STyeUNXiGonkLfxE1FSKaqll26lXXXXXXXXXX&quot;</span></span>
 <span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="va">prompt</span><span class="op">=</span><span class="st">&quot;Жираф в полоску зебры&quot;</span></span>
@@ -7602,7 +7661,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20
 <span id="cb201-7"><a href="#cb201-7" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span> <span class="op">=</span> <span class="fu">Invoke-RestMethod</span> <span class="st">&quot;https://www.googleapis.com/customsearch/v1?q=</span><span class="va">$Query</span><span class="st">&amp;key=</span><span class="va">$Key</span><span class="st">&amp;cx=</span><span class="va">$cx</span><span class="st">&amp;lr=lang_</span><span class="va">$Lang</span><span class="st">&amp;num=</span><span class="va">$Num</span><span class="st">&amp;</span><span class="va">$start</span><span class="st">=</span><span class="va">$Start</span><span class="st">&quot;</span></span>
 <span id="cb201-8"><a href="#cb201-8" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span><span class="op">.</span><span class="fu">items</span> <span class="op">|</span> <span class="fu">Select-Object</span> title<span class="op">,</span>snippet<span class="op">,</span>displayLink<span class="op">,</span>link <span class="op">|</span> <span class="fu">Format-List</span></span></code></pre></div>
 <h1 id="rapidapi">RapidAPI</h1>
-<p>https://rapidapi.com/ru/neoscrap-net/api/google-search72</p>
+<p><a
+href="https://rapidapi.com/ru/neoscrap-net/api/google-search72">Google-Search72</a></p>
 <div class="sourceCode" id="cb202"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="va">$Key</span> <span class="op">=</span> <span class="st">&quot;&lt;TOKEN_API&gt;&quot;</span></span>
 <span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a><span class="va">$headers</span><span class="op">=</span>@<span class="op">{}</span></span>
@@ -7612,7 +7672,7 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20
 <span id="cb202-6"><a href="#cb202-6" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span> <span class="op">=</span> <span class="fu">Invoke-RestMethod</span> <span class="st">&quot;https://google-search72.p.rapidapi.com/search?q=</span><span class="va">$query</span><span class="st">%20gitgub&amp;gl=us&amp;lr=lang_ru&amp;num=20&amp;start=0&quot;</span> <span class="op">-</span>Method GET <span class="op">-</span>Headers <span class="va">$headers</span></span>
 <span id="cb202-7"><a href="#cb202-7" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span><span class="op">.</span><span class="fu">items</span> <span class="op">|</span> <span class="fu">Select-Object</span> title<span class="op">,</span>snippet<span class="op">,</span>displayLink<span class="op">,</span>link <span class="op">|</span> <span class="fu">Format-List</span></span></code></pre></div>
 <h3 id="imdb">IMDb</h3>
-<p>https://rapidapi.com/apidojo/api/imdb8</p>
+<p><a href="https://rapidapi.com/apidojo/api/imdb8">IMDb8</a></p>
 <div class="sourceCode" id="cb203"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="va">$key</span> <span class="op">=</span> <span class="st">&quot;&lt;TOKEN_API&gt;&quot;</span> <span class="co"># 500 запросов в месяц</span></span>
 <span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="va">$query</span><span class="op">=</span><span class="st">&quot;Break&quot;</span></span>
@@ -7625,7 +7685,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20
 <span id="cb203-9"><a href="#cb203-9" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span><span class="op">.</span><span class="fu">results</span><span class="op">.</span><span class="fu">principals</span> <span class="co"># актеры</span></span>
 <span id="cb203-10"><a href="#cb203-10" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span><span class="op">.</span><span class="fu">results</span><span class="op">.</span><span class="fu">image</span></span></code></pre></div>
 <h3 id="moviesdatabase">MoviesDatabase</h3>
-<p>https://rapidapi.com/SAdrian/api/moviesdatabase</p>
+<p><a
+href="https://rapidapi.com/SAdrian/api/moviesdatabase">MoviesDatabase</a></p>
 <div class="sourceCode" id="cb204"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="va">$key</span> <span class="op">=</span> <span class="st">&quot;&lt;TOKEN_API&gt;&quot;</span></span>
 <span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="va">$imdb_id</span> <span class="op">=</span> <span class="st">&quot;tt0455275&quot;</span></span>
@@ -7635,7 +7696,9 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20
 <span id="cb204-6"><a href="#cb204-6" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span> <span class="op">=</span> <span class="fu">Invoke-RestMethod</span> <span class="st">&quot;https://moviesdatabase.p.rapidapi.com/titles/</span><span class="va">$imdb_id</span><span class="st">&quot;</span> <span class="op">-</span>Method GET <span class="op">-</span>Headers <span class="va">$headers</span></span>
 <span id="cb204-7"><a href="#cb204-7" aria-hidden="true" tabindex="-1"></a><span class="va">$response</span><span class="op">.</span><span class="fu">results</span></span></code></pre></div>
 <h1 id="tmdb">TMDB</h1>
-<p>https://developer.themoviedb.org/reference/intro/getting-started</p>
+<p><a
+href="https://developer.themoviedb.org/reference/intro/getting-started">Developer
+TMDB</a></p>
 <div class="sourceCode" id="cb205"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="va">$TOKEN</span> <span class="op">=</span> <span class="st">&quot;548e444e7812575caa0a7eXXXXXXXXXX&quot;</span></span>
 <span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="va">$Endpoint</span> <span class="op">=</span> <span class="st">&quot;search/tv&quot;</span> <span class="co"># поиск сериала (tv) и фильма (movie) по названию</span></span>
@@ -7651,7 +7714,9 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20
 <span id="cb205-12"><a href="#cb205-12" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Invoke-RestMethod</span> <span class="op">-</span>Uri <span class="st">&quot;https://api.themoviedb.org/3/tv/</span><span class="va">$id</span><span class="st">/season/2?api_key=</span><span class="va">$Token</span><span class="st">&quot;</span> <span class="op">-</span>Method Get<span class="op">).</span><span class="fu">episodes</span> <span class="co"># вывести 2 сезон</span></span>
 <span id="cb205-13"><a href="#cb205-13" aria-hidden="true" tabindex="-1"></a><span class="fu">Invoke-RestMethod</span> <span class="op">-</span>Uri <span class="st">&quot;https://api.themoviedb.org/3/tv/</span><span class="va">$id</span><span class="st">/season/2/episode/8?api_key=</span><span class="va">$Token</span><span class="st">&quot;</span> <span class="op">-</span>Method Get <span class="co"># вывести 8 эпизод</span></span></code></pre></div>
 <h1 id="ivi">ivi</h1>
-<p>https://ask.ivi.ru/knowledge-bases/10/articles/51697-dokumentatsiya-dlya-api-ivi</p>
+<p><a
+href="https://ask.ivi.ru/knowledge-bases/10/articles/51697-dokumentatsiya-dlya-api-ivi">ivi
+api doc</a></p>
 <p><code>Invoke-RestMethod https://api.ivi.ru/mobileapi/categories</code>
 список категорий и жанров (genres/meta_genres)<br />
 <code>Invoke-RestMethod https://api.ivi.ru/mobileapi/collections</code>
@@ -7674,9 +7739,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb206-1"><a href
 <span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="va">get</span><span class="op">=</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-s</span> https://www.kinopoisk.ru/film/<span class="va">$id</span>/episodes/<span class="va">)</span></span>
 <span id="cb206-3"><a href="#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&quot;%s\n&quot;</span> <span class="st">&quot;</span><span class="va">${get</span><span class="op">[@]</span><span class="va">}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-A</span> 1 <span class="st">&quot;Сезон 2&quot;</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&quot;эпизодов&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-r</span> <span class="st">&quot;s/^.+\: //&quot;</span> <span class="co"># количество эпиздовод во втором сезоне (8)</span></span></code></pre></div>
 <h3 id="kinopoisk.dev">kinopoisk.dev</h3>
-<p>https://t.me/kinopoiskdev_bot - получить токен<br />
-https://kinopoisk.dev/documentation - документация по API в формате
-OpenAPI</p>
+<p><a href="https://t.me/kinopoiskdev_bot">Получить токен</a><br />
+<a href="https://kinopoisk.dev/documentation">Документация по API в
+формате OpenAPI</a></p>
 <p><code>GET /v1.4/movie/{id}</code> поиск по id</p>
 <div class="sourceCode" id="cb207"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="va">$id</span> <span class="op">=</span> <span class="dv">5106881</span></span>
@@ -7752,9 +7817,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb215-1"><a href
 <span id="cb215-5"><a href="#cb215-5" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
 <span id="cb215-6"><a href="#cb215-6" aria-hidden="true" tabindex="-1"></a><span class="ex">percent-decode</span> <span class="st">&quot;%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA&quot;</span></span></code></pre></div>
 <h1 id="videocdn">VideoCDN</h1>
-<p>https://github.com/notssh/videocdn-api<br />
-https://github.com/API-Movies/videocdn<br />
-https://api-movies.github.io/videocdn/index.json</p>
+<p><a href="https://github.com/notssh/videocdn-api">API</a><br />
+<a href="https://github.com/API-Movies/videocdn">Source</a><br />
+<a href="https://api-movies.github.io/videocdn/index.json">API
+JSON</a></p>
 <div class="sourceCode" id="cb216"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="va">$kp_id</span> <span class="op">=</span> <span class="dv">5106881</span></span>
 <span id="cb216-2"><a href="#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="va">$token</span> <span class="op">=</span> <span class="st">&quot;YfTWH2p3Mai7ziqDoGjS3yXXXXXXXXXX&quot;</span></span>
@@ -7769,8 +7835,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb217-1"><a href
 <h1 id="telegram">Telegram</h1>
 <p><span class="citation" data-cites="BotFather">@BotFather</span>
 (https://t.me/BotFather) /newbot</p>
-<p>https://api.telegram.org/bot<token>/<endpoint></p>
-<p>https://core.telegram.org/bots/api#getupdates</p>
+<p>Format:
+<code>https://api.telegram.org/bot&lt;token&gt;/&lt;endpoint&gt;</code></p>
+<p><a
+href="https://core.telegram.org/bots/api#getupdates">getupdates</a></p>
 <div class="sourceCode" id="cb218"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb218-1"><a href="#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> Get-FromTelegram <span class="op">{</span></span>
 <span id="cb218-2"><a href="#cb218-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">param</span> <span class="op">(</span></span>
@@ -7821,7 +7889,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb21
 <code>Get-FromTelegram -Last</code><br />
 <code>Get-FromTelegram -Date</code><br />
 <code>Get-FromTelegram -ChatID</code></p>
-<p>https://core.telegram.org/bots/api#sendmessage</p>
+<p><a
+href="https://core.telegram.org/bots/api#sendmessage">sendmessage</a></p>
 <div class="sourceCode" id="cb219"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb219-1"><a href="#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> Send-ToTelegram <span class="op">{</span></span>
 <span id="cb219-2"><a href="#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="kw">param</span> <span class="op">(</span></span>
@@ -7875,7 +7944,8 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb22
 <span id="cb221-9"><a href="#cb221-9" aria-hidden="true" tabindex="-1"></a><span class="va">$request</span><span class="op">.</span><span class="fu">data</span> <span class="co"># прочитать callback_data нажатой кнопки</span></span>
 <span id="cb221-10"><a href="#cb221-10" aria-hidden="true" tabindex="-1"></a><span class="va">$request</span><span class="op">.</span><span class="fu">message</span><span class="op">.</span><span class="fu">date</span></span></code></pre></div>
 <h1 id="discord">Discord</h1>
-<p>https://discord.com/developers/applications</p>
+<p><a
+href="https://discord.com/developers/applications">Developers</a></p>
 <p>Создаем Applications (General Information). В Bot привязываем к
 Application и копируем токен авторизации. В OAuth2 - URL Generator
 выбираем bot и права Administrator и копируем созданный URL для
@@ -8005,11 +8075,12 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb23
 <p>Использует шрифты, которые необходимо установить и настроить в
 параметрах профиля PowerShell: <a
 href="https://github.com/ryanoasis/nerd-fonts">Nerd Fonts</a><br />
-Список шрифтов: https://www.nerdfonts.com/font-downloads<br />
+<a href="https://www.nerdfonts.com/font-downloads">Список
+шрифтов</a><br />
 Скачать и установить шрифт похожий на Cascadia Code - <a
 href="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/CascadiaCode.zip">CaskaydiaCove</a></p>
 <h1 id="pester">Pester</h1>
-<p>Source: <a href="https://github.com/pester/Pester">Pester</a></p>
+<p><a href="https://github.com/pester/Pester">Source</a></p>
 <p><code>Install-Module -Name Pester -Repository PSGallery -Force -AllowClobber</code><br />
 <code>Import-Module Pester</code><br />
 <code>$(Get-Module Pester -ListAvailable).Version</code></p>
@@ -8133,6 +8204,6 @@ href="https://sourceforge.net/projects/imagemagick">ImageMagick</a></p>
 создать gif из изображений<br />
 <code>magick convert image1.jpg image2.jpg -append output.jpg</code>
 вертикально объединенить изображения</p>
-<center>Lifailon © 2024</center>
+<center>Lifailon © 2022-2024</center>
 </body>
 </html>
