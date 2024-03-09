@@ -233,9 +233,25 @@
   </style>
 </head>
 <body>
-    <script async src="https://cse.google.com/cse.js?cx=00375fd6fbe034dab">
+
+  <p>
+
+    Search in GitHub Repository:
+    <br>
+    
+    <script>
+      (function() {
+        var cx = '00375fd6fbe034dab';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
     </script>
-    <div class="gcse-search"></div>  
+    <gcse:searchbox-only></gcse:searchbox-only>
+
 <h1 id="PowerShell-Commands">PowerShell Commands</h1>
 <p><img
 src="https://img.shields.io/github/languages/top/lifailon/PS-Commands"
