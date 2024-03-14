@@ -1,0 +1,45 @@
+name: Lifailon
+description: 📚 Large base of PowerShell notes in Russian language
+avatar: https://avatars.githubusercontent.com/u/116945542?s=400&u=a0265b8aff463b2b6814705dffc04894954d0a59&v=4
+footer-links:
+  dribbble:
+  email:
+  facebook:
+  flickr:
+  github: Lifailon/PS-Commands
+  instagram:
+  linkedin:
+  pinterest:
+  rss:
+  twitter:
+  stackoverflow:
+  youtube:
+  googleplus:
+disqus:
+google_analytics:
+url: https://lifailon.github.io
+
+# Если вы размещаете свой сайт в репозитории проекта на страницах GitHub.
+# (http://yourusername.github.io/repository-name)
+# и НЕ в пользовательском репозитории (http://yourusername.github.io)
+# тогда добавьте сюда baseurl, например: "/repository-name"
+baseurl: ""
+
+permalink: /:title/
+version: v1.2.0
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+sass:
+  style: :expanded
+gems:
+  - jekyll-sitemap
+  - jekyll-feed
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
