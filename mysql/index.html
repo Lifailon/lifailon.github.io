@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="generator" content="Hugo 0.123.8">
+
+    
+
+    
+
+    
+        
+            <meta
+                name="description"
+                content="Large base of PowerShell notes in Russian language" />
+        
+
+        
+            <meta
+                name="keywords"
+                content="PowerShell" />
+        
+
+        
+            <meta name="author" content="Lifailon" />
+        
+
+    
+
+
+    <title>
+        
+            MySQL |
+            Lifailon.GitHub.io
+        
+    </title>
+
+    
+
+
+    
+    
+
+    
+    
+
+
+    
+    
+
+
+    
+    
+
+
+    
+    
+
+    
+
+
+    
+    
+
+    
+
+    
+
+        
+        
+
+
+        
+        
+
+
+        <link
+            rel="stylesheet"
+            href="/css/index_d751713.min.912d03bce61461ecbc3ca083479e1ed814bba94df76d0bdc6aa88fdca33621b9bb410dc2c81af31e8101fec62decfa5f6e48901ad673bc5056d2f1d1f2368a34.css"
+            integrity="sha512-kS0DvOYUYey8PKCDR54e2BS7qU33bQvcaqiP3KM2Ibm7QQ3CyBrzHoEB/sYt7PpfbkiQGtZzvFBW0vHR8jaKNA==" />
+    
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+</head>
+
+
+
+    <body>
+        <header class="header">
+    <div class="header_left">
+        
+    </div>
+
+    <div class="header_middle">
+        
+            MySQL -
+            Lifailon.GitHub.io
+        
+    </div>
+</header>
+
+
+
+        <main>
+            <aside class="sidebar">
+    
+
+
+
+    
+    
+
+    
+    
+
+
+    <ul class="section-tree">
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/powershell/" title="./powershell/">
+                        PowerShell
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/dotnet/" title="./dotnet/">
+                        .NET
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/activedirectory/" title="./activedirectory/">
+                        Active Directory
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/ansible/" title="./ansible/">
+                        Ansible
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/apps/" title="./apps/">
+                        Apps
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/com/" title="./com/">
+                        Component Object Model
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/git/" title="./git/">
+                        Git
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/html/" title="./html/">
+                        HTML
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/influxdb/" title="./influxdb/">
+                        InfluxDB
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/exchange/" title="./exchange/">
+                        MS Exchange
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/mssql/" title="./mssql/">
+                        MS SQL
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/mysql/" title="./mysql/">
+                        MySQL
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/network/" title="./network/">
+                        Network
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/api/" title="./api/">
+                        REST API
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/virtualization/" title="./virtualization/">
+                        Virtualization
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/wmi/" title="./wmi/">
+                        WMI
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/zabbix/" title="./zabbix/">
+                        Zabbix
+                    </a>
+                </li>
+            
+        
+    </ul>
+
+
+</aside>
+<aside class="exapandable"></aside>
+
+
+            
+    <article class="main">
+        <button
+    class="sidebar-toggle-btn"
+    type="menu"
+    aria-expanded="false"
+    aria-haspopup="true">
+    <i class="bi bi-list"></i>
+</button>
+
+
+
+        <div class="title">
+            <h1 class="title-header">
+                MySQL
+            </h1>
+
+            <div class="author-date-readtime">
+                
+
+                    
+                        <div class="author" title="Author">
+                            <i class="bi bi-person"></i>
+                            <a
+                                href="/author/lifailon/"
+                                class="cat-btn">
+                                Lifailon
+                            </a>
+                        </div>
+                    
+
+                
+
+                
+                    <div class="date" title="Date">
+                        <i class="bi bi-calendar3"></i>
+                        <time
+                            datetime="Mar 14 2024"
+                            >Mar 14 2024
+                        </time>
+                    </div>
+                
+
+                
+                    <div
+                        class="readtime"
+                        title="Time to Read">
+                        <i class="bi bi-clock"></i>
+                        6 mins to read
+                    </div>
+                
+            </div>
+        </div>
+
+        <div class="article-meta">
+            
+
+            
+
+            
+                <div class="breadcumb">
+                    <i class="bi bi-folder"></i>
+                    
+    
+
+
+
+
+<a href="https://lifailon.github.io/" class="bread-btn">
+    
+        <i class="bi bi-house-fill"></i>
+    
+
+    
+        Home
+    
+</a>
+
+
+
+
+    /
+
+
+
+<a href="https://lifailon.github.io/mysql/" class="bread-btn">
+    
+
+    
+        MySQL
+    
+</a>
+
+                </div>
+            
+
+            
+        </div>
+
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#config">Config</a></li>
+    <li><a href="#commands">Commands</a>
+      <ul>
+        <li><a href="#data-type">DATA TYPE</a></li>
+        <li><a href="#database">DATABASE</a></li>
+        <li><a href="#user">USER</a></li>
+        <li><a href="#table">TABLE</a></li>
+        <li><a href="#column">COLUMN</a></li>
+        <li><a href="#insert">INSERT</a></li>
+        <li><a href="#select">SELECT</a></li>
+        <li><a href="#where">WHERE</a></li>
+        <li><a href="#delete">DELETE</a></li>
+        <li><a href="#update">UPDATE</a></li>
+        <li><a href="#check">CHECK</a></li>
+        <li><a href="#dump">DUMP</a></li>
+        <li><a href="#innodb_force_recovery">innodb_force_recovery</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql-connector-net">MySQL Connector NET</a>
+      <ul>
+        <li><a href="#add-aduser">Add-ADUser</a></li>
+        <li><a href="#get-aduser">Get-ADUser</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        
+
+
+        <div class="content">
+            
+                <h2 id="config">Config</h2>
+<p><code>apt -y install mysql-server mysql-client</code> <br>
+<code>mysql -V</code> <br>
+<code>systemctl status mysql</code> <br>
+<code>mysqladmin -u root password</code> задать пароль root</p>
+<p><code>nano /etc/mysql/mysql.conf.d/mysqld.cnf</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="[mysqld]%0d%0auser%20%20%20%20%20%20%20%20%20%20%20%20=%20mysql%0d%0a#%20pid-file%20%20%20%20%20%20=%20/var/run/mysqld/mysqld.pid%0d%0a#%20socket%20%20%20%20%20%20%20%20=%20/var/run/mysqld/mysqld.sock%0d%0a#%20port%20%20%20%20%20%20%20%20%20%20=%203306%0d%0a#%20datadir%20%20%20%20%20%20%20=%20/var/lib/mysql%0d%0a#%20tmpdir%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20=%20/tmp%0d%0abind-address%20%20%20%20%20%20%20%20%20%20%20%20=%200.0.0.0%0d%0amysqlx-bind-address%20%20%20%20%20=%200.0.0.0%0d%0alog_error%20=%20/var/log/mysql/error.log">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>[mysqld]
+user            = mysql
+# pid-file      = /var/run/mysqld/mysqld.pid
+# socket        = /var/run/mysqld/mysqld.sock
+# port          = 3306
+# datadir       = /var/lib/mysql
+# tmpdir                = /tmp
+bind-address            = 0.0.0.0
+mysqlx-bind-address     = 0.0.0.0
+log_error = /var/log/mysql/error.log</code></pre>
+    
+</div>
+<p><code>systemctl restart mysql</code> <br>
+<code>ss -tulnp | grep 3306</code> <br>
+<code>ufw allow 3306/tcp</code> <br>
+<code>nc -zv 192.168.1.253 3306</code> <br>
+<code>tnc 192.168.1.253 -p 3306</code></p>
+<p><code>mysql -u root -p</code> <br>
+<code>SELECT user(), now(), version();</code> <br>
+<code>quit;</code></p>
+<p><code>mysql -u root -p -e 'SHOW TABLES FROM db_aduser;'</code> отобразить список таблиц без подключения к консоли MySQL</p>
+<h2 id="commands">Commands</h2>
+<p><code>CREATE</code> создать БД, пользователя, таблицу <br>
+<code>ALTER</code>  управление столбцами таблице <br>
+<code>DROP</code> удалить БД, пользователя, таблицу <br>
+<code>USE</code> выбрать БД <br>
+<code>SHOW</code> вывесли список БД, прав доступа пользователя (GRANTS), названия столбцов и их свойства <br>
+<code>GRANT</code> дать доступ пользователю к БД <br>
+<code>REVOKE</code>  удалить доступ пользователя к БД <br>
+<code>UPDATE</code> изменить права доступа, значения с таблице <br>
+<code>FLUSH</code> обновить права доступа <br>
+<code>SELECT</code> отобразить выбранную БД, вывести список пользователей, выборка данных в таблице <br>
+<code>INSERT</code> внести данные <br>
+<code>DELETE</code> удалить данные в (FROM) таблице</p>
+<h3 id="data-type">DATA TYPE</h3>
+<p><code>VARCHAR(N)</code> строка переменной длины, в формате ASCII, где один символ занимает 1 байт, числом N указывается максимальная возможная длина строки <br>
+<code>NVARCHAR(N)</code> строка переменной длины, в формате Unicode, где один символ занимает 2 байта <br>
+<code>CHAR(N)/nchar(N)</code> строка фиксированной длины, которая всегда дополняется справа пробелами до длины N и в базе данных она занимает ровно N символов <br>
+<code>INT</code> целое число, от -2147483648 до 2147483647, занимает 4 байта <br>
+<code>FLOAT</code> число, в котором может присутствовать десятичная точка (запятая) <br>
+<code>BIT</code> флаг, Да - 1 или Нет - 0 <br>
+<code>DATE</code> формат даты, например 25.05.2023 <br>
+<code>TIME</code> 23:30:55.1234567 <br>
+<code>DATETIME</code> 25.05.2023 23:30:55.1234567</p>
+<h3 id="database">DATABASE</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="SHOW%20databases;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%b2%d1%8b%d0%b2%d0%b5%d1%81%d1%82%d0%b8%20%d1%81%d0%bf%d0%b8%d1%81%d0%be%d0%ba%20%d0%91%d0%94%0d%0aCREATE%20DATABASE%20db_aduser;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%81%d0%be%d0%b7%d0%b4%d0%b0%d1%82%d1%8c%20%d0%91%d0%94%0d%0aCREATE%20DATABASE%20db_rep%20DEFAULT%20CHARACTER%20SET%20utf8%20DEFAULT%20COLLATE%20utf8_general_ci;%20%20#%20%d1%81%d0%be%d0%b7%d0%b4%d0%b0%d1%82%d1%8c%20%d0%91%d0%94%20%d1%81%20%d0%ba%d0%be%d0%b4%d0%b8%d1%80%d0%be%d0%b2%d0%ba%d0%be%d0%b9%20UTF-8%0d%0aDROP%20DATABASE%20db_rep;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b8%d1%82%d1%8c%20%d0%91%d0%94%0d%0aUSE%20db_aduser;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%b2%d1%8b%d0%b1%d1%80%d0%b0%d1%82%d1%8c/%d0%bf%d0%b5%d1%80%d0%b5%d0%ba%d0%bb%d1%8e%d1%87%d0%b8%d1%82%d1%8c%d1%81%d1%8f%20%d0%bd%d0%b0%20%d0%b2%d1%8b%d0%b1%d1%80%d0%b0%d0%bd%d0%bd%d1%83%d1%8e%20%d0%91%d0%94%0d%0aSELECT%20database%28%29;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%be%d1%82%d0%be%d0%b1%d1%80%d0%b0%d0%b7%d0%b8%d1%82%d1%8c%20%d0%b2%d1%8b%d0%b1%d1%80%d0%b0%d0%bd%d0%bd%d1%83%d1%8e%20%d0%91%d0%94">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>SHOW databases;                                                                     # вывести список БД
+CREATE DATABASE db_aduser;                                                          # создать БД
+CREATE DATABASE db_rep DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;  # создать БД с кодировкой UTF-8
+DROP DATABASE db_rep;                                                               # удалить БД
+USE db_aduser;                                                                      # выбрать/переключиться на выбранную БД
+SELECT database();                                                                  # отобразить выбранную БД</code></pre>
+    
+</div>
+<h3 id="user">USER</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="SELECT%20USER,HOST%20FROM%20mysql.user;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%b2%d1%8b%d0%b2%d0%b5%d1%81%d1%82%d0%b8%20%d1%81%d0%bf%d0%b8%d1%81%d0%be%d0%ba%20%d0%a3%d0%97%0d%0aCREATE%20USER%20posh@localhost%20IDENTIFIED%20BY%20%271qaz!QAZ%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%81%d0%be%d0%b7%d0%b4%d0%b0%d1%82%d1%8c%20%d0%a3%d0%97,%20%d0%ba%d0%be%d1%82%d0%be%d1%80%d0%b0%d1%8f%20%d0%b1%d1%83%d0%b4%d0%b5%d1%82%20%d0%bf%d0%be%d0%b4%d0%ba%d0%bb%d1%8e%d1%87%d0%b0%d1%82%d1%8c%d1%81%d1%8f%20%d1%81%20%d0%bb%d0%be%d0%ba%d0%b0%d0%bb%d1%8c%d0%bd%d0%be%d0%b3%d0%be%20%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80%d0%b0%0d%0aCREATE%20USER%20posh@localhost%20IDENTIFIED%20BY%20%271qaz!QAZ%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%81%d0%be%d0%b7%d0%b4%d0%b0%d1%82%d1%8c%20%d0%a3%d0%97,%20%d0%ba%d0%be%d1%82%d0%be%d1%80%d0%b0%d1%8f%20%d0%b1%d1%83%d0%b4%d0%b5%d1%82%20%d0%bf%d0%be%d0%b4%d0%ba%d0%bb%d1%8e%d1%87%d0%b0%d1%82%d1%8c%d1%81%d1%8f%20%d1%81%20%d1%83%d0%ba%d0%b0%d0%b7%d0%b0%d0%bd%d0%bd%d0%be%d0%b3%d0%be%20%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80%d0%b0%0d%0aCREATE%20USER%20posh@%27192.168.3.99%27%20IDENTIFIED%20BY%20%271qaz!QAZ%27;%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%a3%d0%97%20%d0%b4%d0%bb%d1%8f%20%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%d0%b0%20%d1%81%20%d0%ba%d0%be%d0%bd%d0%ba%d1%80%d0%b5%d1%82%d0%bd%d0%be%d0%b3%d0%be%20%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80%d0%b0%0d%0aCREATE%20USER%20%27admin%27@%27%25%27%20IDENTIFIED%20BY%20%27Admin12#%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%a3%d0%97%20%d0%b4%d0%bb%d1%8f%20%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%d0%b0%20%d1%81%20%d0%bb%d1%8e%d0%b1%d0%be%d0%b3%d0%be%20%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80%d0%b0%20%28%25%20-%20wildcard%29%0d%0aDROP%20USER%20posh@localhost;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b8%d1%82%d1%8c%20%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d0%be%d0%b2%d0%b0%d1%82%d0%b5%d0%bb%d1%8f%0d%0aSHOW%20GRANTS%20FOR%20posh@%27%25%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%be%d1%82%d0%be%d0%b1%d1%80%d0%b0%d0%b7%d0%b8%d1%82%d1%8c%20%d0%bf%d1%80%d0%b0%d0%b2%d0%b0%20%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%d0%b0%20%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d0%be%d0%b2%d0%b0%d1%82%d0%b5%d0%bb%d1%8f%0d%0aGRANT%20ALL%20PRIVILEGES%20ON%20db_aduser.*%20TO%20posh@%27192.168.3.99%27;%20%20%20%20%20%20%20%20%20%20%20#%20%d0%bf%d0%be%d0%bb%d0%bd%d1%8b%d0%b9%20%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%20%d0%b4%d0%bb%d1%8f%20posh%20%d0%ba%20%d0%91%d0%94%20db_aduser%0d%0aGRANT%20ALL%20PRIVILEGES%20ON%20*.*%20TO%20posh@%27%25%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%20%d0%ba%20%d0%b2%d1%81%d0%b5%d0%bc%20%d0%91%d0%94%20c%20%d0%bb%d1%8e%d0%b1%d0%be%d0%b3%d0%be%20%d0%ba%d0%bb%d0%b8%d0%b5%d0%bd%d1%82%d1%81%d0%ba%d0%be%d0%b3%d0%be%20%d1%85%d0%be%d1%81%d1%82%d0%b0%0d%0aGRANT%20SELECT,DELETE%20ON%20mysql.*%20TO%20posh@%27%25%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%bf%d1%80%d0%b0%d0%b2%d0%b0%20SELECT%20%d0%b8%20DELETE%20%d0%bd%d0%b0%20%d0%b2%d1%81%d1%82%d1%80%d0%be%d0%b5%d0%bd%d0%bd%d1%83%d1%8e%20%d0%91%d0%94%20mysql%0d%0aREVOKE%20DELETE%20ON%20mysql.*%20FROM%20posh@%27%25%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b8%d1%82%d1%8c%20%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%20DELETE%0d%0aUPDATE%20mysql.user%20SET%20super_priv=%27Y%27%20WHERE%20USER=%27posh%27%20AND%20host=%27%25%27;%20%20#%20%d0%b8%d0%b7%d0%bc%d0%b5%d0%bd%d0%b8%d1%82%d1%8c%20%d0%bf%d1%80%d0%b8%d0%b2%d0%b5%d0%bb%d0%b5%d0%b3%d0%b8%d0%b8%20%d0%b4%d0%bb%d1%8f%20%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d0%be%d0%b2%d0%b0%d1%82%d0%b5%d0%bb%d1%8f%0d%0aSELECT%20USER,HOST,super_priv%20FROM%20mysql.user;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%81%d0%bf%d0%b8%d1%81%d0%be%d0%ba%20%d0%a3%d0%97%20%d0%b8%20%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%d0%b0%20%d1%81%20%d0%bf%d1%80%d0%b0%d0%b2%d0%b0%d0%bc%d0%b8%20SUPER%20privilege%0d%0aFLUSH%20PRIVILEGES;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%be%d0%b1%d0%bd%d0%be%d0%b2%d0%b8%d1%82%d1%8c%20%d0%bf%d1%80%d0%b0%d0%b2%d0%b0%20%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%d0%b0">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>SELECT USER,HOST FROM mysql.user;                                     # вывести список УЗ
+CREATE USER posh@localhost IDENTIFIED BY &#39;1qaz!QAZ&#39;;                  # создать УЗ, которая будет подключаться с локального сервера
+CREATE USER posh@localhost IDENTIFIED BY &#39;1qaz!QAZ&#39;;                  # создать УЗ, которая будет подключаться с указанного сервера
+CREATE USER posh@&#39;192.168.3.99&#39; IDENTIFIED BY &#39;1qaz!QAZ&#39;;             # УЗ для доступа с конкретного сервера
+CREATE USER &#39;admin&#39;@&#39;%&#39; IDENTIFIED BY &#39;Admin12#&#39;;                     # УЗ для доступа с любого сервера (% - wildcard)
+DROP USER posh@localhost;                                             # удалить пользователя
+SHOW GRANTS FOR posh@&#39;%&#39;;                                             # отобразить права доступа пользователя
+GRANT ALL PRIVILEGES ON db_aduser.* TO posh@&#39;192.168.3.99&#39;;           # полный доступ для posh к БД db_aduser
+GRANT ALL PRIVILEGES ON *.* TO posh@&#39;%&#39;;                              # доступ к всем БД c любого клиентского хоста
+GRANT SELECT,DELETE ON mysql.* TO posh@&#39;%&#39;;                           # права SELECT и DELETE на встроенную БД mysql
+REVOKE DELETE ON mysql.* FROM posh@&#39;%&#39;;                               # удалить доступ DELETE
+UPDATE mysql.user SET super_priv=&#39;Y&#39; WHERE USER=&#39;posh&#39; AND host=&#39;%&#39;;  # изменить привелегии для пользователя
+SELECT USER,HOST,super_priv FROM mysql.user;                          # список УЗ и таблица с правами SUPER privilege
+FLUSH PRIVILEGES;                                                     # обновить права доступа</code></pre>
+    
+</div>
+<h3 id="table">TABLE</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="SHOW%20TABLES;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%be%d1%82%d0%be%d0%b1%d1%80%d0%b0%d0%b7%d0%b8%d1%82%d1%8c%20%d1%81%d0%bf%d0%b8%d1%81%d0%be%d0%ba%20%d0%b2%d1%81%d0%b5%d1%85%20%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%0d%0aSHOW%20TABLES%20LIKE%20%27%25user%27;%20%20#%20%d0%bf%d0%be%d0%b8%d1%81%d0%ba%20%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%d1%8b%20%d0%bf%d0%be%20wildcard-%d0%b8%d0%bc%d0%b5%d0%bd%d0%b8%0d%0aCREATE%20TABLE%20table_aduser%20%28id%20INT%20NOT%20NULL%20AUTO_INCREMENT,%20Name%20VARCHAR%28100%29,%20email%20VARCHAR%28100%29,%20PRIMARY%20KEY%20%28ID%29%29;%20%20#%20%d1%81%d0%be%d0%b7%d0%b4%d0%b0%d1%82%d1%8c%20%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%d1%83%0d%0aDROP%20TABLE%20table_aduser;%20%20%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b8%d1%82%d1%8c%20%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%d1%83">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>SHOW TABLES;               # отобразить список всех таблиц
+SHOW TABLES LIKE &#39;%user&#39;;  # поиск таблицы по wildcard-имени
+CREATE TABLE table_aduser (id INT NOT NULL AUTO_INCREMENT, Name VARCHAR(100), email VARCHAR(100), PRIMARY KEY (ID));  # создать таблицу
+DROP TABLE table_aduser;   # удалить таблицу</code></pre>
+    
+</div>
+<h3 id="column">COLUMN</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="SHOW%20COLUMNS%20FROM%20table_aduser;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%be%d1%82%d0%be%d0%b1%d1%80%d0%b0%d0%b7%d0%b8%d1%82%d1%8c%20%d0%bd%d0%b0%d0%b7%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5%20%d1%81%d1%82%d0%be%d0%b1%d1%86%d0%be%d0%b2%20%d0%b8%20%d0%b8%d1%85%20%d1%81%d0%b2%d0%be%d0%b9%d1%81%d1%82%d0%b2%d0%b0%0d%0aALTER%20TABLE%20table_aduser%20DROP%20COLUMN%20id;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b8%d1%82%d1%8c%20%d1%81%d1%82%d0%be%d0%bb%d0%b1%d0%b5%d1%86%20id%0d%0aALTER%20TABLE%20table_aduser%20ADD%20COLUMN%20info%20VARCHAR%2810%29;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%b4%d0%be%d0%b1%d0%b0%d0%b2%d0%b8%d1%82%d1%8c%20%d1%81%d1%82%d0%be%d0%bb%d0%b1%d0%b5%d1%86%20info%0d%0aALTER%20TABLE%20table_aduser%20CHANGE%20info%20new_info%20VARCHAR%28100%29;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%b8%d0%b7%d0%bc%d0%b5%d0%bd%d0%b8%d1%82%d1%8c%20%d0%b8%d0%bc%d1%8f%20%d1%81%d1%82%d0%be%d0%bb%d0%b1%d1%86%d0%b0%20info%20%d0%bd%d0%b0%20new_info%20%d0%b8%20%d0%b5%d0%b3%d0%be%20%d1%82%d0%b8%d0%bf%20%d0%b4%d0%b0%d0%bd%d0%bd%d1%8b%d1%85%0d%0aALTER%20TABLE%20table_aduser%20ADD%20COLUMN%20%28id%20INT%20NOT%20NULL%20AUTO_INCREMENT,%20PRIMARY%20KEY%20%28ID%29%29;%20#%20%d0%b4%d0%be%d0%b1%d0%b0%d0%b2%d0%b8%d1%82%d1%8c%20%d1%81%d1%82%d0%be%d0%bb%d0%b1%d0%b5%d1%86%20id">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>SHOW COLUMNS FROM table_aduser;                                                         # отобразить название стобцов и их свойства
+ALTER TABLE table_aduser DROP COLUMN id;                                                # удалить столбец id
+ALTER TABLE table_aduser ADD COLUMN info VARCHAR(10);                                   # добавить столбец info
+ALTER TABLE table_aduser CHANGE info new_info VARCHAR(100);                             # изменить имя столбца info на new_info и его тип данных
+ALTER TABLE table_aduser ADD COLUMN (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (ID)); # добавить столбец id</code></pre>
+    
+</div>
+<h3 id="insert">INSERT</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="INSERT%20table_aduser%20%28Name,email%29%20VALUES%20%28%27Alex%27,%27no-email%27%29;%0d%0aINSERT%20table_aduser%20%28Name,email%29%20VALUES%20%28%27Alex%27,%27no-email%27%29;%0d%0aINSERT%20table_aduser%20%28Name%29%20VALUES%20%28%27Support%27%29;%0d%0aINSERT%20table_aduser%20%28Name%29%20VALUES%20%28%27Jack%27%29;">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>INSERT table_aduser (Name,email) VALUES (&#39;Alex&#39;,&#39;no-email&#39;);
+INSERT table_aduser (Name,email) VALUES (&#39;Alex&#39;,&#39;no-email&#39;);
+INSERT table_aduser (Name) VALUES (&#39;Support&#39;);
+INSERT table_aduser (Name) VALUES (&#39;Jack&#39;);</code></pre>
+    
+</div>
+<h3 id="select">SELECT</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="SELECT%20*%20FROM%20table_aduser;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%81%d0%be%d0%b4%d0%b5%d1%80%d0%b6%d0%b8%d0%bc%d0%be%d0%b5%20%d0%b2%d1%81%d0%b5%d1%85%20%d1%81%d1%82%d0%be%d0%b1%d1%86%d0%be%d0%b2%20%d0%b2%20%d0%b2%d1%8b%d0%b1%d1%80%d0%b0%d0%bd%d0%bd%d0%be%d0%b9%20%28FROM%29%20%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%d0%b5%0d%0aSELECT%20Name,email%20FROM%20table_aduser;%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%81%d0%be%d0%b4%d0%b5%d1%80%d0%b6%d0%b8%d0%bc%d0%be%d0%b5%20%d1%83%d0%ba%d0%b0%d0%b7%d0%b0%d0%bd%d0%bd%d1%8b%d1%85%20%d1%81%d1%82%d0%be%d0%b1%d1%86%d0%be%d0%b2%0d%0aSELECT%20DISTINCT%20Name,Email%20FROM%20table_aduser;%20%20%20#%20%d0%be%d1%82%d0%be%d0%b1%d1%80%d0%b0%d0%b7%d0%b8%d1%82%d1%8c%20%d1%83%d0%bd%d0%b8%d0%ba%d0%b0%d0%bb%d1%8c%d0%bd%d1%8b%d0%b5%20%d0%b7%d0%b0%d0%bf%d0%b8%d1%81%d0%b8%20%28%d0%b1%d0%b5%d0%b7%20%d0%bf%d0%be%d0%b2%d1%82%d0%be%d1%80%d0%b5%d0%bd%d0%b8%d0%b9%29%0d%0aSELECT%20*%20FROM%20table_aduser%20ORDER%20BY%20Name;%20%20%20%20%20%20%20#%20%d0%be%d1%82%d1%81%d0%be%d1%80%d1%82%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d1%82%d1%8c%20%d0%bf%d0%be%20Name%0d%0aSELECT%20*%20FROM%20table_aduser%20ORDER%20BY%20Name%20DESC;%20%20#%20%d0%be%d0%b1%d1%80%d0%b0%d1%82%d0%bd%d0%b0%d1%8f%20%d1%81%d0%be%d1%80%d1%82%d0%b8%d1%80%d0%be%d0%b2%d0%ba%d0%b0%0d%0aSELECT%20COUNT%28*%29%20FROM%20table_aduser;%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%ba%d0%be%d0%bb%d0%b8%d1%87%d0%b5%d1%81%d1%82%d0%b2%d0%be%20%d1%81%d1%82%d1%80%d0%be%d0%ba%20%d0%b2%20%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%d0%b5%0d%0aSELECT%20COUNT%28new_info%29%20FROM%20table_aduser;%20%20%20%20%20%20%20#%20%d0%ba%d0%be%d0%bb%d0%b8%d1%87%d0%b5%d1%81%d1%82%d0%b2%d0%be%20%d1%81%d1%82%d1%80%d0%be%d0%ba%20%d0%b2%20%d1%81%d1%82%d0%be%d0%bb%d0%b1%d1%86%d0%b5">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>SELECT * FROM table_aduser;                     # содержимое всех стобцов в выбранной (FROM) таблице
+SELECT Name,email FROM table_aduser;            # содержимое указанных стобцов
+SELECT DISTINCT Name,Email FROM table_aduser;   # отобразить уникальные записи (без повторений)
+SELECT * FROM table_aduser ORDER BY Name;       # отсортировать по Name
+SELECT * FROM table_aduser ORDER BY Name DESC;  # обратная сортировка
+SELECT COUNT(*) FROM table_aduser;              # количество строк в таблице
+SELECT COUNT(new_info) FROM table_aduser;       # количество строк в столбце</code></pre>
+    
+</div>
+<h3 id="where">WHERE</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="NOT;%20AND;%20OR%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%bf%d0%be%20%d0%bf%d1%80%d0%b8%d0%be%d1%80%d0%b8%d1%82%d0%b5%d1%82%d0%b0%d0%bc%20%d1%83%d1%81%d0%bb%d0%be%d0%b2%d0%b8%d0%b9%0d%0aSELECT%20*%20FROM%20table_aduser%20WHERE%20Name%20=%20%27Alex%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%bf%d0%be%d0%b8%d1%81%d0%ba%20%d0%bf%d0%be%20%d1%81%d0%be%d0%b4%d0%b5%d1%80%d0%b6%d0%b8%d0%bc%d0%be%d0%bc%d1%83%0d%0aSELECT%20*%20FROM%20table_aduser%20WHERE%20NOT%20Name%20!=%20%27Alex%27;%20%20%20%20%20%20%20%20%20%20#%20%d1%83%d1%81%d0%bb%d0%be%d0%b2%d0%b8%d0%b5%20NOT%20%d0%b3%d0%b4%d0%b5%20Name%20%d0%bd%d0%b5%20%d1%80%d0%b0%d0%b2%d0%b5%d0%bd%20%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d1%8e%0d%0aSELECT%20*%20FROM%20table_aduser%20WHERE%20email%20!=%20%27%27;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%b2%d1%8b%d0%b2%d0%b5%d1%81%d1%82%d0%b8%20%d1%81%d1%82%d1%80%d0%be%d0%ba%d0%b8,%20%d0%b3%d0%b4%d0%b5%20%d1%81%d0%be%d0%b4%d0%b5%d1%80%d0%b6%d0%b8%d0%bc%d0%be%d0%b5%20email%20%d0%bd%d0%b5%20%d1%80%d0%b0%d0%bd%d0%be%20null%0d%0aSELECT%20*%20FROM%20table_aduser%20WHERE%20email%20!=%20%27%27%20OR%20id%20%3e%201000;%20%20%20%20#%20%d0%b8%d0%bb%d0%b8%20id%20%d0%b2%d1%8b%d1%88%d0%b5%201000%0d%0aSELECT%20*%20FROM%20table_aduser%20WHERE%20Name%20RLIKE%20%22support%22;%20%20%20%20%20%20%20%20#%20%d1%80%d0%b5%d0%b3%d0%b8%d1%81%d1%82%d1%80%d0%be%d0%bd%d0%b5%d0%b7%d0%b0%d0%b2%d0%b8%d1%81%d0%b5%d0%bc%d1%8b%d0%b9%20%28RLIKE%29%20%d0%bf%d0%be%d0%b8%d1%81%d0%ba%0d%0aSELECT%20*%20FROM%20table_aduser%20WHERE%20Name%20RLIKE%20%22%5esupport%22;%20%20%20%20%20%20%20#%20%d0%bd%d0%b0%d1%87%d0%b8%d0%bd%d0%b0%d1%8e%d1%82%d1%81%d1%8f%20%d1%82%d0%be%d0%bb%d1%8c%d0%ba%d0%be%20%d1%81%20%d1%8d%d1%82%d0%be%d0%b3%d0%be%20%d1%81%d0%bb%d0%be%d0%b2%d0%be%d1%81%d0%be%d1%87%d0%b5%d1%82%d0%b0%d0%bd%d0%b8%d1%8f">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>NOT; AND; OR                                                  # по приоритетам условий
+SELECT * FROM table_aduser WHERE Name = &#39;Alex&#39;;               # поиск по содержимому
+SELECT * FROM table_aduser WHERE NOT Name != &#39;Alex&#39;;          # условие NOT где Name не равен значению
+SELECT * FROM table_aduser WHERE email != &#39;&#39;;                 # вывести строки, где содержимое email не рано null
+SELECT * FROM table_aduser WHERE email != &#39;&#39; OR id &gt; 1000;    # или id выше 1000
+SELECT * FROM table_aduser WHERE Name RLIKE &#34;support&#34;;        # регистронезависемый (RLIKE) поиск
+SELECT * FROM table_aduser WHERE Name RLIKE &#34;^support&#34;;       # начинаются только с этого словосочетания</code></pre>
+    
+</div>
+<h3 id="delete">DELETE</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="SELECT%20*%20FROM%20table_aduser%20WHERE%20Name%20RLIKE%20%22alex%22;%20%20%20#%20%d0%bd%d0%b0%d0%b9%d1%82%d0%b8%20%d0%b8%20%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d0%b8%d1%82%d1%8c%20%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d1%8f%20%d0%bf%d0%b5%d1%80%d0%b5%d0%b4%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b5%d0%bd%d0%b8%d0%b5%d0%bc%0d%0aDELETE%20FROM%20table_aduser%20WHERE%20Name%20RLIKE%20%22alex%22;%20%20%20%20%20#%20Query%20OK,%202%20rows%20affected%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b5%d0%bd%d0%be%20%d0%b4%d0%b2%d0%b5%20%d1%81%d1%82%d1%80%d0%be%d0%ba%d0%b8%0d%0aDELETE%20FROM%20table_aduser;%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b8%d1%82%d1%8c%20%d0%92%d0%a1%d0%95%20%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d1%8f">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>SELECT * FROM table_aduser WHERE Name RLIKE &#34;alex&#34;;   # найти и проверить значения перед удалением
+DELETE FROM table_aduser WHERE Name RLIKE &#34;alex&#34;;     # Query OK, 2 rows affected # удалено две строки
+DELETE FROM table_aduser;                             # удалить ВСЕ значения</code></pre>
+    
+</div>
+<h3 id="update">UPDATE</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="SELECT%20*%20FROM%20table_aduser%20WHERE%20Name%20=%20%27Jack%27;%20%20%20%20%20%20%20%20%20%20%20%20%20#%20%d0%bd%d0%b0%d0%b9%d1%82%d0%b8%20%d0%b8%20%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d0%b8%d1%82%d1%8c%20%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d0%b5%20%d0%bf%d0%b5%d1%80%d0%b5%d0%b4%20%d0%b8%d0%b7%d0%bc%d0%b5%d0%bd%d0%b5%d0%bd%d0%b8%d0%b5%d0%bc%0d%0aUPDATE%20table_aduser%20SET%20Name%20=%20%27Alex%27%20WHERE%20Name%20=%20%27Jack%27;%20%20#%20%d0%b8%d0%b7%d0%bc%d0%b5%d0%bd%d0%b8%d1%82%d1%8c%20%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d0%b5%20%27Jack%27%20%d0%bd%d0%b0%20%27Alex%27%0d%0aUPDATE%20db_aduser.table_aduser%20SET%20Name=%27BCA%27%20WHERE%20id=1;%20%20%20%20#%20%d0%b8%d0%b7%d0%bc%d0%b5%d0%bd%d0%b8%d1%82%d1%8c%20%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d0%b5%20%d0%b2%20%d1%81%d1%82%d1%80%d0%be%d0%ba%d0%b5%20%d1%81%20ID%201">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>SELECT * FROM table_aduser WHERE Name = &#39;Jack&#39;;             # найти и проверить значение перед изменением
+UPDATE table_aduser SET Name = &#39;Alex&#39; WHERE Name = &#39;Jack&#39;;  # изменить значение &#39;Jack&#39; на &#39;Alex&#39;
+UPDATE db_aduser.table_aduser SET Name=&#39;BCA&#39; WHERE id=1;    # изменить значение в строке с ID 1</code></pre>
+    
+</div>
+<h3 id="check">CHECK</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="CHECK%20TABLE%20db_aduser.table_aduser;%20%20%20%20%20#%20%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d0%b8%d1%82%d1%8c%0d%0aANALYZE%20TABLE%20db_aduser.table_aduser;%20%20%20#%20%d0%b0%d0%bd%d0%b0%d0%bb%d0%b8%d0%b7%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d1%82%d1%8c%0d%0aOPTIMIZE%20TABLE%20db_aduser.table_aduser;%20%20#%20%d0%be%d0%bf%d1%82%d0%b8%d0%bc%d0%b8%d0%b7%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d1%82%d1%8c%0d%0aREPAIR%20TABLE%20db_aduser.table_aduser;%20%20%20%20#%20%d0%b2%d0%be%d1%81%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%b8%d1%82%d1%8c%0d%0aTRUNCATE%20TABLE%20db_aduser.table_aduser;%20%20#%20%d0%be%d1%87%d0%b8%d1%81%d1%82%d0%b8%d1%82%d1%8c">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>CHECK TABLE db_aduser.table_aduser;     # проверить
+ANALYZE TABLE db_aduser.table_aduser;   # анализировать
+OPTIMIZE TABLE db_aduser.table_aduser;  # оптимизировать
+REPAIR TABLE db_aduser.table_aduser;    # восстановить
+TRUNCATE TABLE db_aduser.table_aduser;  # очистить</code></pre>
+    
+</div>
+<h3 id="dump">DUMP</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="mysqldump%20-u%20root%20-p%20--databases%20db_aduser%20%3e%20/bak/db_aduser.sql%0d%0amysql%20-u%20root%20-p%20db_aduser%20%3c%20/bak/db_aduser.sql%0d%0a%0d%0acrontab%20-e%0d%0a00%2022%20*%20*%20*%20/usr/bin/mysqldump%20-uroot%20-p1qaz!QAZ%20db_zabbix%20%7c%20/bin/bzip2%20%3e%20%60date%20&#43;/dump/zabbix/zabbix-%5c%25d-%5c%25m-%5c%25Y-%5c%25H:%5c%25M.bz2%60%0d%0a00%2023%20*%20*%20*%20/usr/bin/mysqldump%20-uroot%20-p1qaz!QAZ%20db_zabbix%20%3e%20%60date%20&#43;/dump/smb/zabbix-%5c%25d-%5c%25m-%5c%25Y-%5c%25H:%5c%25M.sql%60%0d%0a0%200%20*%20*%20*%20find%20/dump/zabbix%20-mtime%20&#43;7%20-exec%20rm%20%7b%7d%20%5c;%0d%0a%0d%0amysqldump%20-u%20root%20--single-transaction%20db_zabbix%20%3e%20/dump/zabbix/db_zabbix.sql%0d%0amysql%20-u%20user_zabbix%20-p%20-e%20%27CREATE%20DATABASE%20db_zabbix;%27%0d%0amysql%20-u%20user_zabbix%20-p%20db_zabbix%20%3c%20/root/db_zabbix.sql">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>mysqldump -u root -p --databases db_aduser &gt; /bak/db_aduser.sql
+mysql -u root -p db_aduser &lt; /bak/db_aduser.sql
+
+crontab -e
+00 22 * * * /usr/bin/mysqldump -uroot -p1qaz!QAZ db_zabbix | /bin/bzip2 &gt; `date &#43;/dump/zabbix/zabbix-\%d-\%m-\%Y-\%H:\%M.bz2`
+00 23 * * * /usr/bin/mysqldump -uroot -p1qaz!QAZ db_zabbix &gt; `date &#43;/dump/smb/zabbix-\%d-\%m-\%Y-\%H:\%M.sql`
+0 0 * * * find /dump/zabbix -mtime &#43;7 -exec rm {} \;
+
+mysqldump -u root --single-transaction db_zabbix &gt; /dump/zabbix/db_zabbix.sql
+mysql -u user_zabbix -p -e &#39;CREATE DATABASE db_zabbix;&#39;
+mysql -u user_zabbix -p db_zabbix &lt; /root/db_zabbix.sql</code></pre>
+    
+</div>
+<h3 id="innodb_force_recovery">innodb_force_recovery</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="sed%20-i%20%27/innodb_force_recovery/d%27%20/etc/mysql/my.cnf%20#%20%d1%83%d0%b4%d0%b0%d0%bb%d0%b8%d1%82%d1%8c%0d%0amode=6;%20sed%20-i%20%22/%5e%5c[mysqld%5c]/%7bN;s/$/%5cninnodb_force_recovery=$mode/%7d%22%20/etc/mysql/my.cnf%20#%20%d0%b4%d0%be%d0%b1%d0%b0%d0%b2%d0%b8%d1%82%d1%8c%20mode%206%0d%0asystemctl%20restart%20mysql%0d%0a%0d%0a[mysqld]%0d%0ainnodb_force_recovery=1%20#%20%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80%20%d0%bf%d1%8b%d1%82%d0%b0%d0%b5%d1%82%d1%81%d1%8f%20%d0%bd%d0%b0%d1%87%d0%b0%d1%82%d1%8c%20%d1%80%d0%b0%d0%b1%d0%be%d1%82%d1%83%20%d0%bd%d0%b5%d0%b7%d0%b0%d0%b2%d0%b8%d1%81%d0%b8%d0%bc%d0%be%20%d0%be%d1%82%20%d1%82%d0%be%d0%b3%d0%be,%20%d0%b5%d1%81%d1%82%d1%8c%20%d0%bb%d0%b8%20%d0%bf%d0%be%d0%b2%d1%80%d0%b5%d0%b6%d0%b4%d0%b5%d0%bd%d0%bd%d1%8b%d0%b5%20%d0%b4%d0%b0%d0%bd%d0%bd%d1%8b%d0%b5%20InnoDB%20%d0%b8%d0%bb%d0%b8%20%d0%bd%d0%b5%d1%82%0d%0ainnodb_force_recovery=2%20#%20%d1%83%d0%b4%d0%b0%d0%b5%d1%82%d1%81%d1%8f%20%d0%b2%d0%be%d1%81%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%b8%d1%82%d1%8c%20%d1%80%d0%b0%d0%b1%d0%be%d1%82%d1%83%20%d0%b7%d0%b0%20%d1%81%d1%87%d0%b5%d1%82%20%d0%be%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b8%20%d0%bf%d0%be%d1%82%d0%be%d0%ba%d0%b0%20%d0%ba%d0%be%d0%bc%d0%b0%d0%bd%d0%b4,%20%d0%ba%d0%be%d1%82%d0%be%d1%80%d1%8b%d0%b5%20%d0%b1%d1%8b%d0%bb%d0%b8%20%d1%87%d0%b0%d1%81%d1%82%d0%b8%d1%87%d0%bd%d0%be%20%d0%b2%d1%8b%d0%bf%d0%be%d0%bb%d0%bd%d0%b5%d0%bd%d1%8b%20%d0%b8%d0%bb%d0%b8%20%d0%bd%d0%b5%20%d0%b2%d1%8b%d0%bf%d0%be%d0%bb%d0%bd%d0%b5%d0%bd%d1%8b%20%28%d0%bd%d0%b5%20%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba%d0%b0%d0%b5%d1%82%20%d1%84%d0%be%d0%bd%d0%be%d0%b2%d1%8b%d0%b5%20%d0%be%d0%bf%d0%b5%d1%80%d0%b0%d1%86%d0%b8%d0%b8%29%0d%0ainnodb_force_recovery=3%20#%20%d0%be%d1%82%d0%bc%d0%b5%d0%bd%d1%8f%d0%b5%d1%82%20%d0%be%d1%82%d0%ba%d0%b0%d1%82%20%d0%bf%d0%be%d1%81%d0%bb%d0%b5%20%d0%b2%d0%be%d1%81%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%bb%d0%b5%d0%bd%d0%b8%d1%8f%20%d0%bf%d0%be%d0%b2%d1%80%d0%b5%d0%b6%d0%b4%d0%b5%d0%bd%d0%bd%d1%8b%d1%85%20%d1%84%d0%b0%d0%b9%d0%bb%d0%be%d0%b2%20%28%d0%bd%d0%b5%20%d0%bf%d1%8b%d1%82%d0%b0%d0%b5%d1%82%d1%81%d1%8f%20%d0%be%d1%82%d0%ba%d0%b0%d1%82%d0%b8%d1%82%d1%8c%20%d1%82%d1%80%d0%b0%d0%bd%d0%b7%d0%b0%d0%ba%d1%86%d0%b8%d0%b8%29%0d%0ainnodb_force_recovery=6%20#%20%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba%20%d0%a1%d0%a3%d0%91%d0%94%20%d0%b2%20%d1%80%d0%b5%d0%b6%d0%b8%d0%bc%d0%b5%20read%20only">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>sed -i &#39;/innodb_force_recovery/d&#39; /etc/mysql/my.cnf # удалить
+mode=6; sed -i &#34;/^\[mysqld\]/{N;s/$/\ninnodb_force_recovery=$mode/}&#34; /etc/mysql/my.cnf # добавить mode 6
+systemctl restart mysql
+
+[mysqld]
+innodb_force_recovery=1 # сервер пытается начать работу независимо от того, есть ли поврежденные данные InnoDB или нет
+innodb_force_recovery=2 # удается восстановить работу за счет остановки потока команд, которые были частично выполнены или не выполнены (не запускает фоновые операции)
+innodb_force_recovery=3 # отменяет откат после восстановления поврежденных файлов (не пытается откатить транзакции)
+innodb_force_recovery=6 # запуск СУБД в режиме read only</code></pre>
+    
+</div>
+<h2 id="mysql-connector-net">MySQL Connector NET</h2>
+<h3 id="add-aduser">Add-ADUser</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="$ip%20=%20%22192.168.1.253%22%0d%0a$user%20=%20%22posh%22%0d%0a$pass%20=%20%221qaz!QAZ%22%0d%0a$db%20=%20%22db_aduser%22%0d%0aAdd-Type%20%e2%80%93Path%20%22$home%5cDocuments%5cMySQL-Connector-NET%5c8.0.31-4.8%5cMySql.Data.dll%22%0d%0a$Connection%20=%20[MySql.Data.MySqlClient.MySqlConnection]@%7b%0d%0aConnectionString=%22server=$ip;uid=$user;pwd=$pass;database=$db%22%0d%0a%7d%0d%0a$Connection.Open%28%29%0d%0a$Command%20=%20New-Object%20MySql.Data.MySqlClient.MySqlCommand%0d%0a$Command.Connection%20=%20$Connection%0d%0a$UserList%20=%20Get-ADUser%20-filter%20*%20-properties%20name,EmailAddress%0d%0aforeach%20%28$user%20in%20$UserList%29%20%7b%0d%0a$uname=$user.Name%0d%0a$uemail=$user.EmailAddress%0d%0a$Command.CommandText%20=%20%22INSERT%20INTO%20table_aduser%20%28Name,Email%29%20VALUES%20%28%27$uname%27,%27$uemail%27%29%22%0d%0a$Command.ExecuteNonQuery%28%29%0d%0a%7d%0d%0a$Connection.Close%28%29">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span>$ip = <span style="color:#e6db74">&#34;192.168.1.253&#34;</span>
+</span></span><span style="display:flex;"><span>$user = <span style="color:#e6db74">&#34;posh&#34;</span>
+</span></span><span style="display:flex;"><span>$pass = <span style="color:#e6db74">&#34;1qaz!QAZ&#34;</span>
+</span></span><span style="display:flex;"><span>$db = <span style="color:#e6db74">&#34;db_aduser&#34;</span>
+</span></span><span style="display:flex;"><span>Add-Type <span style="color:#960050;background-color:#1e0010">–</span>Path <span style="color:#e6db74">&#34;</span>$home<span style="color:#e6db74">\Documents\MySQL-Connector-NET\8.0.31-4.8\MySql.Data.dll&#34;</span>
+</span></span><span style="display:flex;"><span>$Connection = [<span style="color:#66d9ef">MySql.Data.MySqlClient.MySqlConnection</span>]@{
+</span></span><span style="display:flex;"><span>ConnectionString=<span style="color:#e6db74">&#34;server=</span>$ip<span style="color:#e6db74">;uid=</span>$user<span style="color:#e6db74">;pwd=</span>$pass<span style="color:#e6db74">;database=</span>$db<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$Connection.Open()
+</span></span><span style="display:flex;"><span>$Command = New-Object MySql.Data.MySqlClient.MySqlCommand
+</span></span><span style="display:flex;"><span>$Command.Connection = $Connection
+</span></span><span style="display:flex;"><span>$UserList = Get-ADUser -filter * -properties name,EmailAddress
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($user <span style="color:#66d9ef">in</span> $UserList) {
+</span></span><span style="display:flex;"><span>$uname=$user.Name
+</span></span><span style="display:flex;"><span>$uemail=$user.EmailAddress
+</span></span><span style="display:flex;"><span>$Command.CommandText = <span style="color:#e6db74">&#34;INSERT INTO table_aduser (Name,Email) VALUES (&#39;</span>$uname<span style="color:#e6db74">&#39;,&#39;</span>$uemail<span style="color:#e6db74">&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>$Command.ExecuteNonQuery()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$Connection.Close()</span></span></code></pre></div>
+    
+</div>
+<h3 id="get-aduser">Get-ADUser</h3>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="$ip%20=%20%22192.168.1.253%22%0d%0a$user%20=%20%22posh%22%0d%0a$pass%20=%20%221qaz!QAZ%22%0d%0a$db%20=%20%22db_aduser%22%0d%0aAdd-Type%20%e2%80%93Path%20%22$home%5cDocuments%5cMySQL-Connector-NET%5c8.0.31-4.8%5cMySql.Data.dll%22%0d%0a$Connection%20=%20[MySql.Data.MySqlClient.MySqlConnection]@%7b%0d%0aConnectionString%20=%20%22server=$ip;uid=$user;pwd=$pass;database=$db%22%0d%0a%7d%0d%0a$Connection.Open%28%29%0d%0a$Command%20=%20New-Object%20MySql.Data.MySqlClient.MySqlCommand%0d%0a$Command.Connection%20=%20$Connection%0d%0a$MYSQLDataAdapter%20=%20New-Object%20MySql.Data.MySqlClient.MySqlDataAdapter%0d%0a$MYSQLDataSet%20=%20New-Object%20System.Data.DataSet%0d%0a$Command.CommandText%20=%20%22SELECT%20*%20FROM%20table_aduser%22%0d%0a$MYSQLDataAdapter.SelectCommand%20=%20$Command%0d%0a$NumberOfDataSets%20=%20$MYSQLDataAdapter.Fill%28$MYSQLDataSet,%20%22data%22%29%0d%0a$Collections%20=%20New-Object%20System.Collections.Generic.List[System.Object]%0d%0aforeach%28$DataSet%20in%20$MYSQLDataSet.tables[0]%29%20%7b%0d%0a$Collections.Add%28[PSCustomObject]@%7b%0d%0aName%20=%20$DataSet.name;%0d%0aMail%20=%20$DataSet.email%0d%0a%7d%29%0d%0a%7d%0d%0a$Connection.Close%28%29%0d%0a$Collections">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span>$ip = <span style="color:#e6db74">&#34;192.168.1.253&#34;</span>
+</span></span><span style="display:flex;"><span>$user = <span style="color:#e6db74">&#34;posh&#34;</span>
+</span></span><span style="display:flex;"><span>$pass = <span style="color:#e6db74">&#34;1qaz!QAZ&#34;</span>
+</span></span><span style="display:flex;"><span>$db = <span style="color:#e6db74">&#34;db_aduser&#34;</span>
+</span></span><span style="display:flex;"><span>Add-Type <span style="color:#960050;background-color:#1e0010">–</span>Path <span style="color:#e6db74">&#34;</span>$home<span style="color:#e6db74">\Documents\MySQL-Connector-NET\8.0.31-4.8\MySql.Data.dll&#34;</span>
+</span></span><span style="display:flex;"><span>$Connection = [<span style="color:#66d9ef">MySql.Data.MySqlClient.MySqlConnection</span>]@{
+</span></span><span style="display:flex;"><span>ConnectionString = <span style="color:#e6db74">&#34;server=</span>$ip<span style="color:#e6db74">;uid=</span>$user<span style="color:#e6db74">;pwd=</span>$pass<span style="color:#e6db74">;database=</span>$db<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$Connection.Open()
+</span></span><span style="display:flex;"><span>$Command = New-Object MySql.Data.MySqlClient.MySqlCommand
+</span></span><span style="display:flex;"><span>$Command.Connection = $Connection
+</span></span><span style="display:flex;"><span>$MYSQLDataAdapter = New-Object MySql.Data.MySqlClient.MySqlDataAdapter
+</span></span><span style="display:flex;"><span>$MYSQLDataSet = New-Object System.Data.DataSet
+</span></span><span style="display:flex;"><span>$Command.CommandText = <span style="color:#e6db74">&#34;SELECT * FROM table_aduser&#34;</span>
+</span></span><span style="display:flex;"><span>$MYSQLDataAdapter.SelectCommand = $Command
+</span></span><span style="display:flex;"><span>$NumberOfDataSets = $MYSQLDataAdapter.Fill($MYSQLDataSet, <span style="color:#e6db74">&#34;data&#34;</span>)
+</span></span><span style="display:flex;"><span>$Collections = New-Object System.Collections.Generic.List[<span style="color:#66d9ef">System.Object</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span>($DataSet <span style="color:#66d9ef">in</span> $MYSQLDataSet.tables[<span style="color:#ae81ff">0</span>]) {
+</span></span><span style="display:flex;"><span>$Collections.Add([<span style="color:#66d9ef">PSCustomObject</span>]@{
+</span></span><span style="display:flex;"><span>Name = $DataSet.name;
+</span></span><span style="display:flex;"><span>Mail = $DataSet.email
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$Connection.Close()
+</span></span><span style="display:flex;"><span>$Collections</span></span></code></pre></div>
+    
+</div>
+
+            
+        </div>
+    </article>
+
+        </main>
+
+        <footer class="footer">
+    <div class="footer-left">
+        <ul class="social">
+            
+                <li>GitHub</li>
+            
+
+            
+                <li>Lifailon</li>
+            
+
+            
+                
+            
+                
+            
+                
+                    <li>
+                        
+                            <a href="https://github.com/Lifailon" target="_blank">
+                                <i class="bi-github"></i>
+                            </a>
+                        
+
+                    </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+    </div>
+
+    <div class="footer-right">
+        <ul class="control status clearfix">
+            
+
+            
+            
+
+            
+
+            
+                <li>
+                    <a href="https://gohugo.io" class="btn" target="_blank"
+                        >Hugo: 0.123.8</a
+                    >
+                </li>
+            
+
+            
+                <li>
+                    <a
+                        href="https://github.com/JingWangTW/dark-theme-editor"
+                        class="btn"
+                        target="_blank"
+                        >Theme: dark-theme-editor</a
+                    >
+                </li>
+            
+
+            
+                <li>
+                    
+                        Last modified: &nbsp;
+                        <time>
+                            Mar 14 2024
+                        </time>
+                    
+                </li>
+            
+
+            
+        </ul>
+    </div>
+</footer>
+
+    </body>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+    
+    
+
+
+    <script
+        type="text/javascript"
+        src="/js/index_d751713.min.5eeb120f16ea146352725c420364f87befead45f678142b8f0ffbef024646931fbc06bff07a7bd6cb57fa2f8cd8a21ba6a4ee5a278ec32303a378bc1cd17f246.js"
+        integrity="sha512-XusSDxbqFGNSclxCA2T4e&#43;/q1F9ngUK48P&#43;&#43;8CRkaTH7wGv/B6e9bLV/ovjNiiG6ak7lonjsMjA6N4vBzRfyRg=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+
+
+
+
+</html>

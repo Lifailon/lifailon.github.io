@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="generator" content="Hugo 0.123.8">
+
+    
+
+    
+
+    
+        
+            <meta
+                name="description"
+                content="Large base of PowerShell notes in Russian language" />
+        
+
+        
+            <meta
+                name="keywords"
+                content="PowerShell" />
+        
+
+        
+            <meta name="author" content="Lifailon" />
+        
+
+    
+
+
+    <title>
+        
+            Ansible |
+            Lifailon.GitHub.io
+        
+    </title>
+
+    
+
+
+    
+    
+
+    
+    
+
+
+    
+    
+
+
+    
+    
+
+
+    
+    
+
+    
+
+
+    
+    
+
+    
+
+    
+
+        
+        
+
+
+        
+        
+
+
+        <link
+            rel="stylesheet"
+            href="/css/index_d751713.min.912d03bce61461ecbc3ca083479e1ed814bba94df76d0bdc6aa88fdca33621b9bb410dc2c81af31e8101fec62decfa5f6e48901ad673bc5056d2f1d1f2368a34.css"
+            integrity="sha512-kS0DvOYUYey8PKCDR54e2BS7qU33bQvcaqiP3KM2Ibm7QQ3CyBrzHoEB/sYt7PpfbkiQGtZzvFBW0vHR8jaKNA==" />
+    
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+</head>
+
+
+
+    <body>
+        <header class="header">
+    <div class="header_left">
+        
+    </div>
+
+    <div class="header_middle">
+        
+            Ansible -
+            Lifailon.GitHub.io
+        
+    </div>
+</header>
+
+
+
+        <main>
+            <aside class="sidebar">
+    
+
+
+
+    
+    
+
+    
+    
+
+
+    <ul class="section-tree">
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/powershell/" title="./powershell/">
+                        PowerShell
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/dotnet/" title="./dotnet/">
+                        .NET
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/activedirectory/" title="./activedirectory/">
+                        Active Directory
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/ansible/" title="./ansible/">
+                        Ansible
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/apps/" title="./apps/">
+                        Apps
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/com/" title="./com/">
+                        Component Object Model
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/git/" title="./git/">
+                        Git
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/html/" title="./html/">
+                        HTML
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/influxdb/" title="./influxdb/">
+                        InfluxDB
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/exchange/" title="./exchange/">
+                        MS Exchange
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/mssql/" title="./mssql/">
+                        MS SQL
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/mysql/" title="./mysql/">
+                        MySQL
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/network/" title="./network/">
+                        Network
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/api/" title="./api/">
+                        REST API
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/virtualization/" title="./virtualization/">
+                        Virtualization
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/wmi/" title="./wmi/">
+                        WMI
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/zabbix/" title="./zabbix/">
+                        Zabbix
+                    </a>
+                </li>
+            
+        
+    </ul>
+
+
+</aside>
+<aside class="exapandable"></aside>
+
+
+            
+    <article class="main">
+        <button
+    class="sidebar-toggle-btn"
+    type="menu"
+    aria-expanded="false"
+    aria-haspopup="true">
+    <i class="bi bi-list"></i>
+</button>
+
+
+
+        <div class="title">
+            <h1 class="title-header">
+                Ansible
+            </h1>
+
+            <div class="author-date-readtime">
+                
+
+                    
+                        <div class="author" title="Author">
+                            <i class="bi bi-person"></i>
+                            <a
+                                href="/author/lifailon/"
+                                class="cat-btn">
+                                Lifailon
+                            </a>
+                        </div>
+                    
+
+                
+
+                
+                    <div class="date" title="Date">
+                        <i class="bi bi-calendar3"></i>
+                        <time
+                            datetime="Mar 14 2024"
+                            >Mar 14 2024
+                        </time>
+                    </div>
+                
+
+                
+                    <div
+                        class="readtime"
+                        title="Time to Read">
+                        <i class="bi bi-clock"></i>
+                        5 mins to read
+                    </div>
+                
+            </div>
+        </div>
+
+        <div class="article-meta">
+            
+
+            
+
+            
+                <div class="breadcumb">
+                    <i class="bi bi-folder"></i>
+                    
+    
+
+
+
+
+<a href="https://lifailon.github.io/" class="bread-btn">
+    
+        <i class="bi bi-house-fill"></i>
+    
+
+    
+        Home
+    
+</a>
+
+
+
+
+    /
+
+
+
+<a href="https://lifailon.github.io/ansible/" class="bread-btn">
+    
+
+    
+        Ansible
+    
+</a>
+
+                </div>
+            
+
+            
+        </div>
+
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hosts">Hosts</a></li>
+    <li><a href="#win_modules">Win_Modules</a>
+      <ul>
+        <li><a href="#win_shell-varsdebug">win_shell (vars/debug)</a></li>
+        <li><a href="#win_powershell">win_powershell</a></li>
+        <li><a href="#win_chocolatey">win_chocolatey</a></li>
+        <li><a href="#win_regedit">win_regedit</a></li>
+        <li><a href="#win_service">win_service</a></li>
+        <li><a href="#win_service_info">win_service_info</a></li>
+        <li><a href="#fetchslurp">fetch/slurp</a></li>
+        <li><a href="#win_copy">win_copy</a></li>
+        <li><a href="#win_command">win_command</a></li>
+        <li><a href="#win_package">win_package</a></li>
+        <li><a href="#win_firewall_rule">win_firewall_rule</a></li>
+        <li><a href="#win_group">win_group</a></li>
+        <li><a href="#win_group_membership">win_group_membership</a></li>
+        <li><a href="#win_user">win_user</a></li>
+        <li><a href="#win_feature">win_feature</a></li>
+        <li><a href="#win_reboot">win_reboot</a></li>
+        <li><a href="#win_find">win_find</a></li>
+        <li><a href="#win_uri">win_uri</a></li>
+        <li><a href="#win_updates">win_updates</a></li>
+        <li><a href="#win_chocolatey-1">win_chocolatey</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        
+
+
+        <div class="content">
+            
+                <p><code>apt -y update &amp;&amp; apt -y upgrade</code> <br>
+<code>apt -y install ansible</code> v2.10.8 <br>
+<code>apt -y install ansible-core</code> v2.12.0 <br>
+<code>apt -y install sshpass</code></p>
+<p><code>ansible-galaxy collection install ansible.windows</code> установить коллекцию модулей <br>
+<code>ansible-galaxy collection install community.windows</code> <br>
+<code>ansible-galaxy collection list | grep windows</code> <br>
+<code>ansible-config dump | grep DEFAULT_MODULE_PATH</code> путь хранения модулей</p>
+<p><code>apt-get -y install python-dev libkrb5-dev krb5-user</code> пакеты для Kerberos аутентификации <br>
+<code>apt install python3-pip</code> <br>
+<code>pip3 install requests-kerberos</code> <br>
+<code>nano /etc/krb5.conf</code> настроить [realms] и [domain_realm] <br>
+<code>kinit -C support4@domail.local</code> <br>
+<code>klist</code></p>
+<p><code>ansible --version</code> <br>
+<code>config file = None</code> <br>
+<code>nano /etc/ansible/ansible.cfg</code> файл конфигурации</p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="[defaults]%0d%0ainventory%20=%20/etc/ansible/hosts%0d%0a#%20uncomment%20this%20to%20disable%20SSH%20key%20host%20checking%0d%0a#%20%d0%9e%d1%82%d0%ba%d0%bb%d1%8e%d1%87%d0%b8%d1%82%d1%8c%20%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d0%ba%d1%83%20%d0%ba%d0%bb%d1%8e%d1%87%d0%b0%20ssh%20%28%d0%b4%d0%bb%d1%8f%20%d0%bf%d0%be%d0%b4%d0%ba%d0%bb%d1%8e%d1%87%d0%b5%d0%bd%d0%b8%d1%8f%20%d0%b8%d1%81%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d1%83%d1%8f%20%d0%bf%d0%b0%d1%80%d0%be%d0%bb%d1%8c%29%0d%0ahost_key_checking%20=%20False">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>[defaults]
+inventory = /etc/ansible/hosts
+# uncomment this to disable SSH key host checking
+# Отключить проверку ключа ssh (для подключения используя пароль)
+host_key_checking = False</code></pre>
+    
+</div>
+<h2 id="hosts">Hosts</h2>
+<p><code>nano /etc/ansible/hosts</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>[us]
+pi-hole-01 ansible_host=192.168.3.101
+zabbix-01 ansible_host=192.168.3.102
+grafana-01 ansible_host=192.168.3.103
+netbox-01 ansible_host=192.168.3.104
+
+[all:vars]
+ansible_ssh_port=2121
+ansible_user=lifailon
+ansible_password=123098
+path_user=/home/lifailon
+ansible_python_interpreter=/usr/bin/python3
+
+[ws]
+huawei-book-01 ansible_host=192.168.3.99
+plex-01 ansible_host=192.168.3.100
+
+[ws:vars]
+ansible_port=5985
+#ansible_port=5986
+ansible_user=Lifailon
+#ansible_user=support4@DOMAIN.LOCAL
+ansible_password=123098
+ansible_connection=winrm
+ansible_winrm_scheme=http
+ansible_winrm_transport=basic
+#ansible_winrm_transport=kerberos
+ansible_winrm_server_cert_validation=ignore
+validate_certs=false
+
+[win_ssh]
+huawei-book-01 ansible_host=192.168.3.99
+plex-01 ansible_host=192.168.3.100
+
+[win_ssh:vars]
+ansible_python_interpreter=C:\Users\Lifailon\AppData\Local\Programs\Python\Python311\` добавить переменную среды интерпритатора Python в Windows
+ansible_connection=ssh
+#ansible_shell_type=cmd
+ansible_shell_type=powershell</code></pre>
+    
+</div>
+<p><code>ansible-inventory --list</code> проверить конфигурацию (читает в формате JSON) или YAML (-y) с просмотром все применяемых переменных</p>
+<h2 id="win_modules">Win_Modules</h2>
+<p><code>ansible us -m ping</code> <br>
+<code>ansible win_ssh -m ping</code> <br>
+<code>ansible us -m shell -a &quot;uptime &amp;&amp; df -h | grep lv&quot;</code> <br>
+<code>ansible us -m setup | grep -iP &quot;mem|proc&quot;</code> информация о железе <br>
+<code>ansible us -m apt -a &quot;name=mc&quot; -b</code> повысить привилегии sudo (-b) <br>
+<code>ansible us -m service -a &quot;name=ssh state=restarted enabled=yes&quot; -b</code> перезапустить службу <br>
+<code>echo &quot;echo test&quot; &gt; test.sh</code> <br>
+<code>ansible us -m copy -a &quot;src=test.sh dest=/root mode=777&quot; -b</code> <br>
+<code>ansible us -a &quot;ls /root&quot; -b</code> <br>
+<code>ansible us -a &quot;cat /root/test.sh&quot; -b</code></p>
+<p><code>ansible-doc -l | grep win_</code> <a href="https://docs.ansible.com/ansible/latest/collections/ansible/windows/">список всех модулей Windows</a> <br>
+<code>ansible ws -m win_ping</code> windows модуль <br>
+<code>ansible ws -m win_ping -u WinRM-Writer</code> указать логин <br>
+<code>ansible ws -m setup</code> собрать подробную информацию о системе <br>
+<code>ansible ws -m win_whoami</code> информация о правах доступах, группах доступа <br>
+<code>ansible ws -m win_shell -a '$PSVersionTable'</code> <br>
+<code>ansible ws -m win_shell -a 'Get-Service | where name -match &quot;ssh|winrm&quot;'</code> <br>
+<code>ansible ws -m win_service -a &quot;name=sshd state=stopped&quot;</code> <br>
+<code>ansible ws -m win_service -a &quot;name=sshd state=started&quot;</code></p>
+<h3 id="win_shell-varsdebug">win_shell (vars/debug)</h3>
+<p><code>nano /etc/ansible/PowerShell-Vars.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+ ` Указать коллекцию модулей
+  collections:
+  - ansible.windows
+ ` Задать переменные
+  vars:
+    SearchName: PermitRoot
+  tasks:
+  - name: Get port ssh
+    win_shell: |
+      Get-Content &#34;C:\Programdata\ssh\sshd_config&#34; | Select-String &#34;{{SearchName}}&#34;
+   ` Передать вывод в переменную
+    register: command_output
+  - name: Output port ssh
+   ` Вывести переменную на экран
+    debug:
+      var: command_output.stdout_lines</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/PowerShell-Vars.yml</code> <br>
+<code>ansible-playbook /etc/ansible/PowerShell-Vars.yml --extra-vars &quot;SearchName='LogLevel|Syslog'&quot;</code> передать переменную</p>
+<h3 id="win_powershell">win_powershell</h3>
+<p><code>nano /etc/ansible/powershell-param.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Run PowerShell script with parameters
+    ansible.windows.win_powershell:
+      parameters:
+        Path: C:\Temp
+        Force: true
+      script: |
+        [CmdletBinding()]
+        param (
+          [String]$Path,
+          [Switch]$Force
+        )
+        New-Item -Path $Path -ItemType Directory -Force:$Force</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/powershell-param.yml</code></p>
+<h3 id="win_chocolatey">win_chocolatey</h3>
+<p><code>nano /etc/ansible/setup-adobe-acrobat.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Install Acrobat Reader
+    win_chocolatey:
+      name: adobereader
+      state: present</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/setup-adobe-acrobat.yml</code></p>
+<p><code>nano /etc/ansible/setup-openssh.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: install the Win32-OpenSSH service
+    win_chocolatey:
+      name: openssh
+      package_params: /SSHServerFeature
+      state: present</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/setup-openssh.yml</code></p>
+<h3 id="win_regedit">win_regedit</h3>
+<p><code>nano /etc/ansible/win-set-shell-ssh-ps7.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Set the default shell to PowerShell 7 for Windows OpenSSH
+    win_regedit:
+      path: HKLM:\SOFTWARE\OpenSSH
+      name: DefaultShell
+     ` data: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+      data: &#39;C:\Program Files\PowerShell\7\pwsh.exe&#39;
+      type: string
+      state: present</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/win-set-shell-ssh-ps7.yml</code></p>
+<h3 id="win_service">win_service</h3>
+<p><code>nano /etc/ansible/win-service.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Start service
+    win_service:
+      name: sshd
+      state: started
+#     state: stopped
+#     state: restarted
+#     start_mode: auto</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/win-service.yml</code></p>
+<h3 id="win_service_info">win_service_info</h3>
+<p><code>nano /etc/ansible/get-service.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Get info for a single service
+    win_service_info:
+      name: sshd
+    register: service_info
+  - name: Print returned information
+    ansible.builtin.debug:
+      var: service_info.services</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/get-service.yml</code></p>
+<h3 id="fetchslurp">fetch/slurp</h3>
+<p><code>nano /etc/ansible/copy-from-win-to-local.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Retrieve remote file on a Windows host
+#   Скопировать файл из Windows-системы
+    ansible.builtin.fetch:
+#   Прочитать файл (передать в память в формате Base64)
+#   ansible.builtin.slurp:
+      src: C:\Telegraf\telegraf.conf
+      dest: /root/telegraf.conf
+      flat: yes
+    register: telegraf_conf
+  - name: Print returned information
+    ansible.builtin.debug:
+      msg: &#34;{{ telegraf_conf[&#39;content&#39;] | b64decode }}&#34;</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/copy-from-win-to-local.yml</code></p>
+<h3 id="win_copy">win_copy</h3>
+<p><code>echo &quot;Get-Service | where name -eq vss | Start-Service&quot; &gt; /home/lifailon/Start-Service-VSS.ps1</code> <br>
+<code>nano /etc/ansible/copy-file-to-win.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Copy file to win hosts
+    win_copy:
+      src: /home/lifailon/Start-Service-VSS.ps1
+      dest: C:\Users\Lifailon\Desktop\Start-Service-VSS.ps1</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/copy-file-to-win.yml</code></p>
+<p><code>curl -OL https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/PowerShell-7.3.6-win-x64.msi</code> <br>
+<code>nano /etc/ansible/copy-file-to-win.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Copy file to win hosts
+    win_copy:
+      src: /home/lifailon/PowerShell-7.3.6-win-x64.msi
+      dest: C:\Install\PowerShell-7.3.6.msi</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/copy-file-to-win.yml</code></p>
+<h3 id="win_command">win_command</h3>
+<p><code>nano /etc/ansible/run-script-ps1.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Run PowerShell Script
+    win_command: powershell -ExecutionPolicy ByPass -File C:\Users\Lifailon\Desktop\Start-Service-VSS.ps1</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/run-script-ps1.yml</code></p>
+<h3 id="win_package">win_package</h3>
+<p><code>nano /etc/ansible/setup-msi-package.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Install MSI Package
+    win_package:
+#     path: C:\Install\7z-23.01.msi
+      path: C:\Install\PowerShell-7.3.6.msi
+      arguments:
+        - /quiet
+        - /passive
+        - /norestart</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/setup-msi-package.yml</code></p>
+<h3 id="win_firewall_rule">win_firewall_rule</h3>
+<p><code>nano /etc/ansible/win-fw-open.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Open RDP port
+    win_firewall_rule:
+      name: Open RDP port
+      localport: 3389
+      action: allow
+      direction: in
+      protocol: tcp
+      state: present
+      enabled: yes</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/win-fw-open.yml</code></p>
+<h3 id="win_group">win_group</h3>
+<p><code>nano /etc/ansible/win-creat-group.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Create a new group
+    win_group:
+      name: deploy
+      description: Deploy Group
+      state: present</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/win-creat-group.yml</code></p>
+<h3 id="win_group_membership">win_group_membership</h3>
+<p><code>nano /etc/ansible/add-user-to-group.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Add a local and domain user to a local group
+    win_group_membership:
+      name: deploy
+      members:
+        - WinRM-Writer
+      state: present</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/add-user-to-group.yml</code></p>
+<h3 id="win_user">win_user</h3>
+<p><code>nano /etc/ansible/creat-win-user.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Creat user
+    win_user:
+      name: test
+      password: 123098
+      state: present
+      groups:
+        - deploy</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/creat-win-user.yml</code></p>
+<p><code>nano /etc/ansible/delete-win-user.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Delete user
+    ansible.windows.win_user:
+      name: test
+      state: absent</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/delete-win-user.yml</code></p>
+<h3 id="win_feature">win_feature</h3>
+<p><code>nano /etc/ansible/install-feature.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Install Windows Feature
+      win_feature:
+        name: SNMP-Service
+        state: present</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/install-feature.yml</code></p>
+<h3 id="win_reboot">win_reboot</h3>
+<p><code>nano /etc/ansible/win-reboot.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Reboot a slow machine that might have lots of updates to apply
+    win_reboot:
+      reboot_timeout: 3600</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/win-reboot.yml</code></p>
+<h3 id="win_find">win_find</h3>
+<p><code>nano /etc/ansible/win-ls.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Find files in multiple paths
+    ansible.windows.win_find:
+      paths:
+      - D:\Install\OpenSource
+      patterns: [&#39;*.rar&#39;,&#39;*.zip&#39;,&#39;*.msi&#39;]
+     ` Файл созданный менее 7 дней назад
+      age: -7d
+     ` Размер файла больше 10MB
+      size: 10485760
+     ` Рекурсивный поиск (в дочерних директориях)
+      recurse: true
+    register: command_output
+  - name: Output
+    debug:
+      var: command_output</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/win-ls.yml</code></p>
+<h3 id="win_uri">win_uri</h3>
+<p><code>nano /etc/ansible/rest-get.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: REST GET request to endpoint github
+    ansible.windows.win_uri:
+      url: https://api.github.com/repos/Lifailon/pSyslog/releases/latest
+    register: http_output
+  - name: Output
+    debug:
+      var: http_output</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/rest-get.yml</code></p>
+<h3 id="win_updates">win_updates</h3>
+<p><code>nano /etc/ansible/win-update.yml</code></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- hosts: ws
+  tasks:
+  - name: Install only particular updates based on the KB numbers
+    ansible.windows.win_updates:
+      category_names:
+      - SecurityUpdates
+      - CriticalUpdates
+      - UpdateRollups
+      - Drivers
+     ` Фильтрация
+     ` accept_list:
+     ` - KB2267602
+     ` Поиск обновлений
+     ` state: searched
+     ` Загрузить обновления
+     ` state: downloaded
+     ` Установить обновления
+      state: installed
+      log_path: C:\Ansible-Windows-Upadte-Log.txt
+      reboot: false
+    register: wu_output
+  - name: Output
+    debug:
+      var: wu_output</code></pre>
+    
+</div>
+<p><code>ansible-playbook /etc/ansible/win-update.yml</code></p>
+<h3 id="win_chocolatey-1">win_chocolatey</h3>
+<p><a href="https://chocolatey.org/install">Install</a> <br>
+<a href="https://community.chocolatey.org/api/v2/package/chocolatey">API</a> <br>
+<a href="https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment-guide">Deployment</a></p>
+
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-copy"></i>
+            </button>
+        </div>
+    
+
+    
+        <pre><code>- name: Ensure Chocolatey installed from internal repo
+  win_chocolatey:
+    name: chocolatey
+    state: present
+	# source: URL-адрес внутреннего репозитория
+    source: https://community.chocolatey.org/api/v2/ChocolateyInstall.ps1</code></pre>
+    
+</div>
+
+            
+        </div>
+    </article>
+
+        </main>
+
+        <footer class="footer">
+    <div class="footer-left">
+        <ul class="social">
+            
+                <li>GitHub</li>
+            
+
+            
+                <li>Lifailon</li>
+            
+
+            
+                
+            
+                
+            
+                
+                    <li>
+                        
+                            <a href="https://github.com/Lifailon" target="_blank">
+                                <i class="bi-github"></i>
+                            </a>
+                        
+
+                    </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+    </div>
+
+    <div class="footer-right">
+        <ul class="control status clearfix">
+            
+
+            
+            
+
+            
+
+            
+                <li>
+                    <a href="https://gohugo.io" class="btn" target="_blank"
+                        >Hugo: 0.123.8</a
+                    >
+                </li>
+            
+
+            
+                <li>
+                    <a
+                        href="https://github.com/JingWangTW/dark-theme-editor"
+                        class="btn"
+                        target="_blank"
+                        >Theme: dark-theme-editor</a
+                    >
+                </li>
+            
+
+            
+                <li>
+                    
+                        Last modified: &nbsp;
+                        <time>
+                            Mar 14 2024
+                        </time>
+                    
+                </li>
+            
+
+            
+        </ul>
+    </div>
+</footer>
+
+    </body>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+    
+    
+
+
+    <script
+        type="text/javascript"
+        src="/js/index_d751713.min.5eeb120f16ea146352725c420364f87befead45f678142b8f0ffbef024646931fbc06bff07a7bd6cb57fa2f8cd8a21ba6a4ee5a278ec32303a378bc1cd17f246.js"
+        integrity="sha512-XusSDxbqFGNSclxCA2T4e&#43;/q1F9ngUK48P&#43;&#43;8CRkaTH7wGv/B6e9bLV/ovjNiiG6ak7lonjsMjA6N4vBzRfyRg=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+
+
+
+
+</html>

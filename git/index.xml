@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gits on PS-Commands</title>
+    <link>http://localhost:1313/git/</link>
+    <description>Recent content in Gits on PS-Commands</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Mar 2024 03:00:00 +0300</lastBuildDate>
+    <atom:link href="http://localhost:1313/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git</title>
+      <link>http://localhost:1313/git/git/</link>
+      <pubDate>Thu, 14 Mar 2024 03:00:00 +0300</pubDate>
+      <guid>http://localhost:1313/git/git/</guid>
+      <description>test</description>
+    </item>
+  </channel>
+</rss>
