@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://lifailon.github.io/powershell/</loc>
-    <lastmod>2024-03-14T04:00:00+03:00</lastmod>
+    <loc>https://lifailon.github.io/github/</loc>
+    <lastmod>2024-03-14T05:00:00+03:00</lastmod>
   </url><url>
     <loc>https://lifailon.github.io/</loc>
+    <lastmod>2024-03-14T05:00:00+03:00</lastmod>
+  </url><url>
+    <loc>https://lifailon.github.io/powershell/</loc>
     <lastmod>2024-03-14T04:00:00+03:00</lastmod>
   </url><url>
     <loc>https://lifailon.github.io/dotnet/</loc>
@@ -15,6 +18,9 @@
     <lastmod>2024-03-14T03:00:00+03:00</lastmod>
   </url><url>
     <loc>https://lifailon.github.io/ansible/</loc>
+    <lastmod>2024-03-14T03:00:00+03:00</lastmod>
+  </url><url>
+    <loc>https://lifailon.github.io/api/</loc>
     <lastmod>2024-03-14T03:00:00+03:00</lastmod>
   </url><url>
     <loc>https://lifailon.github.io/apps/</loc>
@@ -42,9 +48,6 @@
     <lastmod>2024-03-14T03:00:00+03:00</lastmod>
   </url><url>
     <loc>https://lifailon.github.io/network/</loc>
-    <lastmod>2024-03-14T03:00:00+03:00</lastmod>
-  </url><url>
-    <loc>https://lifailon.github.io/api/</loc>
     <lastmod>2024-03-14T03:00:00+03:00</lastmod>
   </url><url>
     <loc>https://lifailon.github.io/virtualization/</loc>

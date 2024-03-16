@@ -6,8 +6,15 @@
     <description>Recent content on PS-Commands</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 Mar 2024 04:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Thu, 14 Mar 2024 05:00:00 +0300</lastBuildDate>
     <atom:link href="https://lifailon.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitHub</title>
+      <link>https://lifailon.github.io/github/</link>
+      <pubDate>Thu, 14 Mar 2024 05:00:00 +0300</pubDate>
+      <guid>https://lifailon.github.io/github/</guid>
+      <description>Набор скриптов и модулей.&#xA;Тестовый стенд WinForms с примерами реализации большенства функционала. Работа с DataGridView, Button, Checkbox и т.п.&#xA;Автоматизация установки всех зависимостей для работы с Selenium и модули с примерами работ (SpeedTest и Translation) и бесплатными версиями ChatGPT через консоль для интеграции в код.&#xA;Другие модули и GUI приложения в репозитории на GitHub.</description>
+    </item>
     <item>
       <title>PowerShell</title>
       <link>https://lifailon.github.io/powershell/</link>
@@ -35,6 +42,13 @@
       <pubDate>Thu, 14 Mar 2024 03:00:00 +0300</pubDate>
       <guid>https://lifailon.github.io/ansible/</guid>
       <description>apt -y update &amp;amp;&amp;amp; apt -y upgrade apt -y install ansible v2.10.8 apt -y install ansible-core v2.12.0 apt -y install sshpass&#xA;ansible-galaxy collection install ansible.windows установить коллекцию модулей ansible-galaxy collection install community.windows ansible-galaxy collection list | grep windows ansible-config dump | grep DEFAULT_MODULE_PATH путь хранения модулей&#xA;apt-get -y install python-dev libkrb5-dev krb5-user пакеты для Kerberos аутентификации apt install python3-pip pip3 install requests-kerberos nano /etc/krb5.conf настроить [realms] и [domain_realm] kinit -C support4@domail.</description>
+    </item>
+    <item>
+      <title>API</title>
+      <link>https://lifailon.github.io/api/</link>
+      <pubDate>Thu, 14 Mar 2024 03:00:00 +0300</pubDate>
+      <guid>https://lifailon.github.io/api/</guid>
+      <description>REST API $url = &amp;quot;https://habr.com/ru/rss/users/Lifailon/publications/articles/?fl=ru&amp;quot; RSS лента публикаций на Habr Invoke-RestMethod $url $iwr = Invoke-WebRequest -Uri $url $iwr | Get-Member $iwr.Content $iwr.StatusCode -eq 200 $iwr.Headers $iwr.ParsedHtml | Select lastModified $iwr.Links | fl title,innerText,href $iwr.Images.src&#xA;Methods GET - Read POST - Create PATCH - Partial update/modify PUT - Update/replace DELETE - Remove&#xA;Download Image function Download-Image { param ( [Parameter(Mandatory = $True)]$url ) $folder = $url -replace &amp;#34;http.+://&amp;#34; -replace &amp;#34;/&amp;#34;,&amp;#34;-&amp;#34; -replace &amp;#34;-$&amp;#34; $path = &amp;#34;$home\Pictures\$folder&amp;#34; if (Test-Path $path) { Remove-Item $path -Recurse -Force New-Item -ItemType Directory $path &amp;gt; $null } else { New-Item -ItemType Directory $path &amp;gt; $null } $irm = Invoke-WebRequest -Uri $url foreach ($img in $irm.</description>
     </item>
     <item>
       <title>Apps</title>
@@ -69,7 +83,7 @@
       <link>https://lifailon.github.io/influxdb/</link>
       <pubDate>Thu, 14 Mar 2024 03:00:00 +0300</pubDate>
       <guid>https://lifailon.github.io/influxdb/</guid>
-      <description>Download InfluxDB 1.x Open Source InfluxDB-Studio&#xA;Install Windows Invoke-RestMethod &amp;#34;https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip&amp;#34; -OutFile &amp;#34;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&amp;#34; Expand-Archive &amp;#34;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&amp;#34; -DestinationPath &amp;#34;$home\Documents\&amp;#34; Remove-Item &amp;#34;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&amp;#34; &amp;amp; &amp;#34;$home\Downloads\influxdb-1.8.10-1\influxd.exe&amp;#34;&#xD;Install Ubuntu wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb sudo dpkg -i influxdb_1.8.10_amd64.deb systemctl start influxdb systemctl status influxdb ps aux | grep influxdb | grep -Ev &amp;#34;grep&amp;#34; netstat -natpl | grep 80[8-9][3-9]&#xD;API nano /etc/influxdb/influxdb.conf [http] enabled = true bind-address = &amp;#34;:8086&amp;#34; auth-enabled = false systemctl restart influxdb&#xD;Chronograf wget https://dl.influxdata.com/chronograf/releases/chronograf-1.10.2_windows_amd64.zip -UseBasicParsing -OutFile chronograf-1.10.2_windows_amd64.zip&#xD;Expand-Archive .</description>
+      <description>Install Windows Download InfluxDB 1.x Open Source&#xA;InfluxDB-Studio&#xA;Invoke-RestMethod &amp;#34;https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip&amp;#34; -OutFile &amp;#34;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&amp;#34; Expand-Archive &amp;#34;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&amp;#34; -DestinationPath &amp;#34;$home\Documents\&amp;#34; Remove-Item &amp;#34;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&amp;#34; &amp;amp; &amp;#34;$home\Downloads\influxdb-1.8.10-1\influxd.exe&amp;#34;&#xD;Install Ubuntu wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb sudo dpkg -i influxdb_1.8.10_amd64.deb systemctl start influxdb systemctl status influxdb ps aux | grep influxdb | grep -Ev &amp;#34;grep&amp;#34; netstat -natpl | grep 80[8-9][3-9]&#xD;API nano /etc/influxdb/influxdb.conf [http] enabled = true bind-address = &amp;#34;:8086&amp;#34; auth-enabled = false systemctl restart influxdb&#xD;Chronograf wget https://dl.influxdata.com/chronograf/releases/chronograf-1.10.2_windows_amd64.zip -UseBasicParsing -OutFile chronograf-1.10.2_windows_amd64.zip&#xD;Expand-Archive .</description>
     </item>
     <item>
       <title>MS Exchange</title>
@@ -98,13 +112,6 @@
       <pubDate>Thu, 14 Mar 2024 03:00:00 +0300</pubDate>
       <guid>https://lifailon.github.io/network/</guid>
       <description>Network ping Test-Connection -Count 1 $srv1, $srv2 отправить icmp-пакет двум хостам Test-Connection $srv -ErrorAction SilentlyContinue не выводить ошибок, если хост не отвечает Test-Connection -Source $srv1 -ComputerName $srv2 пинг с удаленного компьютера&#xA;function Test-PingNetwork { param ( [Parameter(Mandatory,ValueFromPipeline)][string[]]$Network, [ValidateRange(100,10000)][int]$Timeout = 100 ) $ping = New-Object System.Net.NetworkInformation.Ping $Network = $Network -replace &amp;#34;0$&amp;#34; $net = @() foreach ($r in @(1..254)) { $net += &amp;#34;$network$r&amp;#34; } foreach ($n in $net) { $ping.Send($n, $timeout) | select @{Name=&amp;#34;Address&amp;#34;; Expression={$n -replace &amp;#34;.</description>
-    </item>
-    <item>
-      <title>REST API</title>
-      <link>https://lifailon.github.io/api/</link>
-      <pubDate>Thu, 14 Mar 2024 03:00:00 +0300</pubDate>
-      <guid>https://lifailon.github.io/api/</guid>
-      <description>REST API $url = &amp;quot;https://habr.com/ru/rss/users/Lifailon/publications/articles/?fl=ru&amp;quot; RSS лента публикаций на Habr Invoke-RestMethod $url $iwr = Invoke-WebRequest -Uri $url $iwr | Get-Member $iwr.Content $iwr.StatusCode -eq 200 $iwr.Headers $iwr.ParsedHtml | Select lastModified $iwr.Links | fl title,innerText,href $iwr.Images.src&#xA;Methods GET - Read POST - Create PATCH - Partial update/modify PUT - Update/replace DELETE - Remove&#xA;Download Image function Download-Image { param ( [Parameter(Mandatory = $True)]$url ) $folder = $url -replace &amp;#34;http.+://&amp;#34; -replace &amp;#34;/&amp;#34;,&amp;#34;-&amp;#34; -replace &amp;#34;-$&amp;#34; $path = &amp;#34;$home\Pictures\$folder&amp;#34; if (Test-Path $path) { Remove-Item $path -Recurse -Force New-Item -ItemType Directory $path &amp;gt; $null } else { New-Item -ItemType Directory $path &amp;gt; $null } $irm = Invoke-WebRequest -Uri $url foreach ($img in $irm.</description>
     </item>
     <item>
       <title>Virtualization</title>

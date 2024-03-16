@@ -131,6 +131,14 @@
         
             
                 <li class="file">
+                    <a href="https://lifailon.github.io/github/" title="./github/">
+                        GitHub
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
                     <a href="https://lifailon.github.io/powershell/" title="./powershell/">
                         PowerShell
                     </a>
@@ -157,6 +165,14 @@
                 <li class="file">
                     <a href="https://lifailon.github.io/ansible/" title="./ansible/">
                         Ansible
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://lifailon.github.io/api/" title="./api/">
+                        API
                     </a>
                 </li>
             
@@ -229,14 +245,6 @@
                 <li class="file">
                     <a href="https://lifailon.github.io/network/" title="./network/">
                         Network
-                    </a>
-                </li>
-            
-        
-            
-                <li class="file">
-                    <a href="https://lifailon.github.io/api/" title="./api/">
-                        REST API
                     </a>
                 </li>
             
@@ -374,30 +382,26 @@
         
             <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#install-windows">Install Windows</a></li>
-        <li><a href="#install-ubuntu">Install Ubuntu</a></li>
-        <li><a href="#api">API</a></li>
-        <li><a href="#chronograf">Chronograf</a></li>
-        <li><a href="#grafana">Grafana</a></li>
-        <li><a href="#cli-client">CLI Client</a></li>
-        <li><a href="#users">USERS</a></li>
-        <li><a href="#database">DATABASE</a></li>
-        <li><a href="#measurement">MEASUREMENT</a></li>
-        <li><a href="#selectwhere">SELECT/WHERE</a></li>
-        <li><a href="#regex">REGEX</a></li>
-        <li><a href="#group-by-tag_key">GROUP BY tag_key</a></li>
-        <li><a href="#functionsfield_key">Functions(field_key)</a></li>
-        <li><a href="#policy">POLICY</a></li>
-        <li><a href="#api-post">API POST</a></li>
-        <li><a href="#api-get">API GET</a></li>
-        <li><a href="#endpoints">Endpoints</a></li>
-        <li><a href="#pingto-influxdb">PingTo-InfluxDB</a></li>
-        <li><a href="#performanceto-influxdb">PerformanceTo-InfluxDB</a></li>
-        <li><a href="#service">Service</a></li>
-      </ul>
-    </li>
+    <li><a href="#install-windows">Install Windows</a></li>
+    <li><a href="#install-ubuntu">Install Ubuntu</a></li>
+    <li><a href="#api">API</a></li>
+    <li><a href="#chronograf">Chronograf</a></li>
+    <li><a href="#grafana">Grafana</a></li>
+    <li><a href="#cli-client">CLI Client</a></li>
+    <li><a href="#users">USERS</a></li>
+    <li><a href="#database">DATABASE</a></li>
+    <li><a href="#measurement">MEASUREMENT</a></li>
+    <li><a href="#selectwhere">SELECT/WHERE</a></li>
+    <li><a href="#regex">REGEX</a></li>
+    <li><a href="#group-by-tag_key">GROUP BY tag_key</a></li>
+    <li><a href="#functionsfield_key">Functions(field_key)</a></li>
+    <li><a href="#policy">POLICY</a></li>
+    <li><a href="#api-post">API POST</a></li>
+    <li><a href="#api-get">API GET</a></li>
+    <li><a href="#endpoints">Endpoints</a></li>
+    <li><a href="#pingto-influxdb">PingTo-InfluxDB</a></li>
+    <li><a href="#performanceto-influxdb">PerformanceTo-InfluxDB</a></li>
+    <li><a href="#service">Service</a></li>
     <li><a href="#telegraf">Telegraf</a></li>
   </ul>
 </nav>
@@ -406,9 +410,9 @@
 
         <div class="content">
             
-                <p><a href="https://www.influxdata.com/downloads">Download InfluxDB 1.x Open Source</a>
-<a href="https://github.com/CymaticLabs/InfluxDBStudio">InfluxDB-Studio</a></p>
-<h3 id="install-windows">Install Windows</h3>
+                <h2 id="install-windows">Install Windows</h2>
+<p><a href="https://www.influxdata.com/downloads">Download InfluxDB 1.x Open Source</a></p>
+<p><a href="https://github.com/CymaticLabs/InfluxDBStudio">InfluxDB-Studio</a></p>
 
 
 
@@ -432,7 +436,7 @@
 </span></span><span style="display:flex;"><span>&amp; <span style="color:#e6db74">&#34;</span>$home<span style="color:#e6db74">\Downloads\influxdb-1.8.10-1\influxd.exe&#34;</span></span></span></code></pre></div>
     
 </div>
-<h3 id="install-ubuntu">Install Ubuntu</h3>
+<h2 id="install-ubuntu">Install Ubuntu</h2>
 
 
 
@@ -459,7 +463,7 @@
 </span></span><span style="display:flex;"><span>netstat -natpl | grep 80<span style="color:#f92672">[</span>8-9<span style="color:#f92672">][</span>3-9<span style="color:#f92672">]</span></span></span></code></pre></div>
     
 </div>
-<h3 id="api">API</h3>
+<h2 id="api">API</h2>
 
 
 
@@ -487,7 +491,7 @@
 </span></span><span style="display:flex;"><span>systemctl restart influxdb</span></span></code></pre></div>
     
 </div>
-<h3 id="chronograf">Chronograf</h3>
+<h2 id="chronograf">Chronograf</h2>
 
 
 
@@ -514,7 +518,7 @@ systemctl status influxdb
 http://192.168.3.102:8888</code></pre>
     
 </div>
-<h3 id="grafana">Grafana</h3>
+<h2 id="grafana">Grafana</h2>
 <p><a href="https://grafana.com/grafana/download">Download</a></p>
 <p><code>invoke-RestMethod https://dl.grafana.com/enterprise/release/grafana-enterprise-10.3.1.windows-amd64.msi -OutFile &quot;$home\Download\grafana.msi&quot;</code></p>
 
@@ -541,7 +545,7 @@ http://192.168.3.102:8888</code></pre>
 </span></span><span style="display:flex;"><span>systemctl status grafana-server</span></span></code></pre></div>
     
 </div>
-<h3 id="cli-client">CLI Client</h3>
+<h2 id="cli-client">CLI Client</h2>
 <p><code>apt install influxdb-client</code> <br>
 <code>influx</code> <br>
 <code>influx --host 192.168.3.102 --username admin --password password</code></p>
@@ -570,7 +574,7 @@ http://192.168.3.102:8888</code></pre>
 </span></span><span style="display:flex;"><span>SELECT * FROM <span style="color:#e6db74">&#34;HardwareMonitor&#34;</span> WHERE time &gt; now() - <span style="color:#ae81ff">5m</span></span></span></code></pre></div>
     
 </div>
-<h3 id="users">USERS</h3>
+<h2 id="users">USERS</h2>
 <p><code>SHOW USERS</code> отобразить пользователей и их права доступа <br>
 <code>CREATE USER admin WITH PASSWORD 'password' WITH ALL PRIVILEGES</code> создать пользователя <br>
 <code>GRANT ALL PRIVILEGES TO &quot;admin&quot;</code> предоставить права доступа <br>
@@ -579,21 +583,21 @@ http://192.168.3.102:8888</code></pre>
 <code>SHOW GRANTS FOR &quot;admin&quot;</code> БД и привелегии доступа для указанного пользователя <br>
 <code>SET PASSWORD FOR &quot;admin&quot; = 'new_password'</code> изменить пароль <br>
 <code>DROP USER &quot;admin&quot;</code> удалить пользователя</p>
-<h3 id="database">DATABASE</h3>
+<h2 id="database">DATABASE</h2>
 <p><code>CREATE DATABASE powershell</code> создать БД <br>
 <code>SHOW DATABASES</code> отобразить список БД <br>
 <code>DROP DATABASE powershell</code> удалить БД <br>
 <code>USE powershell</code> <br>
 <code>SHOW measurements</code> отобразить все таблицы <br>
 <code>INSERT performance,host=console,counter=CPU value=0.88</code> записать данные в таблицу performance</p>
-<h3 id="measurement">MEASUREMENT</h3>
+<h2 id="measurement">MEASUREMENT</h2>
 <p><code>SHOW TAG KEYS FROM &quot;HardwareMonitor&quot;</code> отобразить все тэги в таблице <br>
 <code>SHOW TAG VALUES FROM &quot;HardwareMonitor&quot; WITH KEY = &quot;HardwareName&quot;</code> отобразить все значения указанного тэга <br>
 <code>SHOW FIELD KEYS FROM &quot;HardwareMonitor&quot;</code> отобразить все Field Tags и их тип данных <br>
 <code>SHOW SERIES FROM &quot;HardwareMonitor&quot;</code> отобразить список всех уникальных серий в указанной таблице. Серия - это набор точек данных, которые имеют одинаковые значения для всех тегов, за исключением времени. <br>
 <code>DROP SERIES FROM &quot;HardwareMonitor&quot;</code> очистить все данные в таблице <br>
 <code>DROP MEASUREMENT &quot;HardwareMonitor&quot;</code> удалить таблицу</p>
-<h3 id="selectwhere">SELECT/WHERE</h3>
+<h2 id="selectwhere">SELECT/WHERE</h2>
 <p><code>SELECT * FROM performance</code> отобразить все данные в таблице <br>
 <code>SELECT value FROM performance</code> отфильтровать по столбцу value (только Field Keys) <br>
 <code>SELECT * FROM performance limit 10</code> отобразить 10 единиц данных <br>
@@ -603,7 +607,7 @@ http://192.168.3.102:8888</code></pre>
 <code>SELECT upload/1000 FROM speedtest WHERE upload/1000 &lt;= 250</code> выборка по столбцу upload и разделить вывод на 1000, вывести upload меньше 250 <br>
 <code>DELETE FROM performance WHERE time &gt; now() -1h</code> удалить данные за последние 1/4 часа <br>
 <code>DELETE FROM performance WHERE time &lt; now() -24h</code> удалить данные старше 24 часов</p>
-<h3 id="regex">REGEX</h3>
+<h2 id="regex">REGEX</h2>
 <p><code>SELECT * FROM &quot;win_pdisk&quot; WHERE instance =~/.*C:/ and time &gt; now() - 5m</code> и <br>
 <code>SELECT * FROM &quot;win_pdisk&quot; WHERE instance =~/.*E:/ or instance =~ /.*F:/</code> или <br>
 <code>SELECT * FROM &quot;win_pdisk&quot; WHERE instance !~ /.*Total/</code> не равно (исключить) <br>
@@ -611,10 +615,10 @@ http://192.168.3.102:8888</code></pre>
 <code>SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m and HardwareName =~ /Intel.+i7/</code> эквивалент 12th_Gen_Intel_Core_i7-1260P <br>
 <code>SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m and HardwareName =~ /^Intel/</code> начинается на Intel <br>
 <code>SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m and HardwareName =~ /00$/</code> заканчивается на 00</p>
-<h3 id="group-by-tag_key">GROUP BY tag_key</h3>
+<h2 id="group-by-tag_key">GROUP BY tag_key</h2>
 <p><code>SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m and SensorName = 'Temperature' GROUP BY HardwareName</code> создать уникальные группы по тэгу HardwareName <br>
 <code>SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m and SensorName = 'Temperature' GROUP BY Host,HardwareName</code> больше групп по двум тэгаам</p>
-<h3 id="functionsfield_key">Functions(field_key)</h3>
+<h2 id="functionsfield_key">Functions(field_key)</h2>
 <p><a href="https://docs.influxdata.com/influxdb/v1.8/query_language/functions">Functions</a></p>
 <p><code>SELECT instance,LAST(Avg._Disk_Read_Queue_Length) FROM &quot;win_pdisk&quot; GROUP BY instance</code> отфильтровать вывод по последнему/текущему значению <br>
 <code>SELECT instance,FIRST(Avg._Disk_Read_Queue_Length) FROM &quot;win_pdisk&quot; GROUP BY instance</code> отфильтровать вывод по первому значению за весь или указанный отрезок времени <br>
@@ -626,7 +630,7 @@ http://192.168.3.102:8888</code></pre>
 <p><code>SELECT *,MAX(Value) FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() -1h GROUP BY SensorName,Host</code> создать группы для выявления максимального значения значения стобца Value каждого тэга SensorName и хоста за последний час <br>
 <code>SELECT *,MAX(Value) FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() -1h and SensorName = 'CPU_Package' GROUP BY Host</code> масимальное значение CPU_Package за последний час для каждого хоста <br>
 <code>SELECT MEAN(Value) FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() -1h and SensorName = 'CPU_Package' GROUP BY Host</code> среднее значение CPU_Package за последний час</p>
-<h3 id="policy">POLICY</h3>
+<h2 id="policy">POLICY</h2>
 <p><code>CREATE DATABASE powershell WITH DURATION 48h REPLICATION 1 NAME &quot;del2d&quot;</code> создать БД с политикой хранения 2 дня <br>
 <code>CREATE RETENTION POLICY del2h ON powershell DURATION 2h REPLICATION 1</code> создать новую политику хранения для БД <br>
 <code>CREATE RETENTION POLICY del6h ON powershell DURATION 6h REPLICATION 1 SHARD DURATION 2h</code> указать период хранения 6 часов + 2 часа до очистки (по умолчанию 1ч или больше) <br>
@@ -664,7 +668,7 @@ http://192.168.3.102:8888</code></pre>
 </span></span><span style="display:flex;"><span>$mass | ConvertFrom-Csv</span></span></code></pre></div>
     
 </div>
-<h3 id="api-post">API POST</h3>
+<h2 id="api-post">API POST</h2>
 <p>Вместо таблиц в InfluxDB имеются измерения. Вместо столбцов в ней есть теги и поля.</p>
 
 
@@ -702,7 +706,7 @@ $timestamp = ([string]$unixtime -replace &#34;\..&#43;&#34;) &#43; &#34;00000000
 Invoke-RestMethod -Method POST -Uri $url -Body &#34;$table,host=$(hostname) download=200000,upload=300000,ping=3 $timestamp&#34;</code></pre>
     
 </div>
-<h3 id="api-get">API GET</h3>
+<h2 id="api-get">API GET</h2>
 <p><code>curl http://192.168.3.104:8086/query --data-urlencode &quot;q=SHOW DATABASES&quot;</code> pwsh7 (ConvertFrom-Json) and bash</p>
 <p><code>$dbs = irm &quot;http://192.168.3.104:8086/query?q=SHOW DATABASES&quot;</code> <br>
 <code>$dbs = irm &quot;http://192.168.3.104:8086/query?epoch=ms&amp;u=admin&amp;p=password&amp;q=SHOW DATABASES&quot;</code> <br>
@@ -737,7 +741,7 @@ Invoke-RestMethod -Method POST -Uri $url -Body &#34;$table,host=$(hostname) down
 </span></span><span style="display:flex;"><span>$data.results.series.values ` данные построчно</span></span></code></pre></div>
     
 </div>
-<h3 id="endpoints">Endpoints</h3>
+<h2 id="endpoints">Endpoints</h2>
 <p><a href="https://docs.influxdata.com/influxdb/v1.7/tools/api/">API doc</a></p>
 
 
@@ -771,7 +775,7 @@ Invoke-RestMethod -Method POST -Uri $url -Body &#34;$table,host=$(hostname) down
 <p><code>http://192.168.3.99:8086/api/v2/setup</code> <br>
 <code>http://192.168.3.99:8086/api/v2/config</code> <br>
 <code>http://192.168.3.99:8086/api/v2/write</code></p>
-<h3 id="pingto-influxdb">PingTo-InfluxDB</h3>
+<h2 id="pingto-influxdb">PingTo-InfluxDB</h2>
 
 
 
@@ -802,7 +806,7 @@ Invoke-RestMethod -Method POST -Uri $url -Body &#34;$table,host=$(hostname) down
     
 </div>
 <p><code>SELECT * FROM ping WHERE status = false</code></p>
-<h3 id="performanceto-influxdb">PerformanceTo-InfluxDB</h3>
+<h2 id="performanceto-influxdb">PerformanceTo-InfluxDB</h2>
 
 
 
@@ -849,7 +853,7 @@ Invoke-RestMethod -Method POST -Uri $url -Body &#34;$table,host=$(hostname) down
 </span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
     
 </div>
-<h3 id="service">Service</h3>
+<h2 id="service">Service</h2>
 
 
 
