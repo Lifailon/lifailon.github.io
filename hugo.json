@@ -1,0 +1,60 @@
+{
+  "baseURL": "https://lifailon.github.io",
+  "languageCode": "en-us",
+  "title": "PS-Commands",
+  "theme": "dark-theme-editor",
+  "params": {
+    "header": {
+      "title": "Lifailon.GitHub.io",
+      "subtitle": "Большая база заметок PowerShell на русском языке.",
+      "logo": {
+        "imgUrl": "",
+        "logoLink": ""
+      }
+    },
+    "site": {
+      "faviconUrl": ""
+    },
+    "footer": {
+      "copyrightStr": "GitHub",
+      "counter": false,
+      "language": false,
+      "hugoVersion": true,
+      "theme": true,
+      "modifiedTime": true,
+      "dateFormat": "Jan 02 2006",
+      "gitHash": false,
+      "socialLink": {
+        "github": "https://github.com/Lifailon",
+        "email": "",
+        "telegram": "",
+        "youtube": "",
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "linkedin": "",
+        "medium": "",
+        "vimeo": ""
+      }
+    },
+    "globalFrontmatter": {
+      "author": "Lifailon"
+    },
+    "homePage": {
+      "siteLongDescriptionTitle": "PowerShell Commands",
+      "siteLongDescription": "Структура языка, синтаксис командлетов и модулей, работа с системными и внешними утилитами, платформой .NET, различными сервисами через REST API, а так же системами AD, Exchange, Hyper-V, VMWare, базами данных и т.д.",
+      "showRecentPostsBlock": false,
+      "numOfRecentPosts": 5,
+      "recentPostShowUrl": false
+    },
+    "page": {
+      "includeToc": true,
+      "showAuthor": true,
+      "showDate": true,
+      "dateFormat": "Jan 02 2006",
+      "showTimeToRead": true,
+      "showBreadcrumb": true,
+      "codeBlockCopible": true
+    }
+  }
+}
