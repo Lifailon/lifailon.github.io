@@ -21,6 +21,8 @@ nav:
   - Zabbix: Zabbix\index.md
 theme:
   name: material
+  features:
+    - content.code.copy
   palette:
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
