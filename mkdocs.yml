@@ -1,8 +1,7 @@
 site_name: PowerShell Commands
 site_url: https://lifailon.github.io
-site_description: TEST
 nav:
-  - GitHub: GitHub\index.md
+  - Home: index.md
   - PowerShell: PowerShell\index.md
   - ActiveDirectory: ActiveDirectory\index.md
   - Ansible: Ansible\index.md
