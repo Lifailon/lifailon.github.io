@@ -2,7 +2,7 @@ site_name: PowerShell Commands
 site_url: https://lifailon.github.io
 nav:
   - Home: index.md
-  - PowerShell: PowerShell\index.md
+  - Syntax: Syntax\index.md
   - ActiveDirectory: ActiveDirectory\index.md
   - Ansible: Ansible\index.md
   - API: API\index.md
