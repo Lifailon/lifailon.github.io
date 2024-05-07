@@ -1,0 +1,1069 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TEST">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/HTML/">
+      
+      
+        <link rel="prev" href="../Git/">
+      
+      
+        <link rel="next" href="../InfluxDB/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>HTML - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#html" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HTML
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PowerShell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ActiveDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Apps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotNET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    HTML
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    HTML
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#convertfrom-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConvertFrom-Html
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convertto-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConvertTo-Html
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pswritehtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSWriteHTML
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htmlreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      HtmlReport
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htmlagilitypack" class="md-nav__link">
+    <span class="md-ellipsis">
+      HtmlAgilityPack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selenium" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selenium">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selenium-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium modules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InfluxDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MSSQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MSSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MySQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MySQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WMI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WMI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#convertfrom-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConvertFrom-Html
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convertto-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      ConvertTo-Html
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pswritehtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSWriteHTML
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htmlreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      HtmlReport
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htmlagilitypack" class="md-nav__link">
+    <span class="md-ellipsis">
+      HtmlAgilityPack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selenium" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selenium">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selenium-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium modules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">&para;</a></h1>
+<h2 id="convertfrom-html">ConvertFrom-Html<a class="headerlink" href="#convertfrom-html" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">function ConvertFrom-Html {
+    param (
+        [Parameter(ValueFromPipeline)]$url
+    )
+    $irm = Invoke-RestMethod $url
+    $HTMLFile = New-Object -ComObject HTMLFile
+    $Bytes = [System.Text.Encoding]::Unicode.GetBytes($irm)
+    $HTMLFile.write($Bytes)
+    ($HTMLFile.all | where {$_.tagname -eq &quot;body&quot;}).innerText
+}
+
+$apache_status = &quot;http://192.168.3.102/server-status&quot;
+$apache_status | ConvertFrom-Html
+</code></pre>
+<h2 id="convertto-html">ConvertTo-Html<a class="headerlink" href="#convertto-html" title="Permanent link">&para;</a></h2>
+<p><code>Get-Process | select Name, CPU | ConvertTo-Html -As Table &gt; "$home\desktop\proc-table.html"</code> вывод в формате List (Format-List) или Table (Format-Table)</p>
+<pre><code class="language-PowerShell">$servers = &quot;ya.ru&quot;,&quot;ya.com&quot;,&quot;google.com&quot;
+$path = &quot;$home\Desktop\Ping.html&quot; 
+$header = @&quot;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;Отчет о статусе серверов&lt;/title&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+&lt;!--
+body {
+background-color: #E0E0E0;
+font-family: sans-serif
+}
+table, th, td {
+background-color: white;
+border-collapse:collapse;
+border: 1px solid black;
+padding: 5px
+}
+--&gt;
+&lt;/style&gt;
+&quot;@
+$body = @&quot;
+&lt;h1&gt;Ping status&lt;/h1&gt;
+&lt;p&gt;$(get-date -Format &quot;dd.MM.yyyy hh:mm&quot;).&lt;/p&gt;
+&quot;@
+$results = foreach ($server in $servers) { 
+    if (Test-Connection $server -Count 1 -ea 0 -Quiet) { 
+        $status = &quot;Up&quot; 
+    }
+    else { 
+        $status = &quot;Down&quot;
+    }
+    [PSCustomObject]@{
+        Name = $server
+        Status = $status
+    }
+}
+$results | ConvertTo-Html -head $header -body $body | foreach {
+    $_ -replace &quot;&lt;td&gt;Down&lt;/td&gt;&quot;,&quot;&lt;td style='background-color:#FF8080'&gt;Down&lt;/td&gt;&quot; -replace &quot;&lt;td&gt;Up&lt;/td&gt;&quot;,&quot;&lt;td style='background-color:#5BCCF3'&gt;Up&lt;/td&gt;&quot;
+} | Out-File $path
+Invoke-Item $path
+</code></pre>
+<h2 id="pswritehtml">PSWriteHTML<a class="headerlink" href="#pswritehtml" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">Import-Module PSWriteHTML
+(Get-Module PSWriteHTML).ExportedCommands
+Get-Service | Out-GridHtml -FilePath ~\Desktop\Get-Service-Out-GridHtml.html
+</code></pre>
+<h2 id="htmlreport">HtmlReport<a class="headerlink" href="#htmlreport" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">Import-Module HtmlReport
+$topVM = ps | Sort PrivateMemorySize -Descending | Select -First 10 | %{,@(($_.ProcessName + &quot; &quot; + $_.Id), $_.PrivateMemorySize)}
+$topCPU = ps | Sort CPU -Descending | Select -First 10 | %{,@(($_.ProcessName + &quot; &quot; + $_.Id), $_.CPU)}
+New-Report -Title &quot;Piggy Processes&quot; -Input {
+New-Chart Bar &quot;Top VM Users&quot; -input $topVm
+New-Chart Column &quot;Top CPU Overall&quot; -input $topCPU
+ps | Select ProcessName, Id, CPU, WorkingSet, *MemorySize | New-Table &quot;All Processes&quot;
+} &gt; ~\Desktop\Get-Process-HtmlReport.html
+</code></pre>
+<h2 id="htmlagilitypack">HtmlAgilityPack<a class="headerlink" href="#htmlagilitypack" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.nuget.org/packages/HtmlAgilityPack">Source</a></p>
+<pre><code class="language-PowerShell"># Загрузка библиотеки C#, которая позволяет парсить HTML-документы, выбирать элементы DOM и извлекать из них данные
+Add-Type -Path &quot;C:\Users\Lifailon\Downloads\HtmlAgilityPack\Net40\HtmlAgilityPack.dll&quot;
+$title = &quot;новобранец&quot;
+$url = &quot;http://fasts-torrent.net&quot;
+$ep = &quot;engine/ajax/search_torrent.php?title=$title&quot;
+$html = Invoke-RestMethod &quot;$url/$ep&quot;
+# Создание нового объекта HtmlDocument из HtmlAgilityPack, который будет использоваться для загрузки и обработки HTML-кода
+$HtmlDocument = New-Object HtmlAgilityPack.HtmlDocument
+# Загрузка HTML в созданный объект HtmlDocument
+$HtmlDocument.LoadHtml($html)
+$torrents = @()
+# Использование XPath для выбора всех элементов &lt;tr&gt; (строк таблицы) в документе
+$HtmlDocument.DocumentNode.SelectNodes(&quot;//tr&quot;) | ForEach-Object {
+    # Для каждой строки таблицы выбираем классы, соответствующие названию раздачи, размеру и ссылке для скачивания.
+    $titleNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-title']&quot;)
+    $sizeNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-sp']&quot;)
+    $downloadLinkNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-d-btn']/a&quot;)
+    # Проверяем, что все классы найдены
+    if ($titleNode -ne $null -and $sizeNode -ne $null -and $downloadLinkNode -ne $null) {
+        # Извлечение текста из классов
+        $title = $titleNode.InnerText.Trim()
+        $size = $sizeNode.InnerText.Trim()
+        $downloadLink = $downloadLinkNode.Attributes[&quot;href&quot;].Value
+        $torrent = New-Object PSObject -Property @{
+            Title = $title
+            Size = $size
+            DownloadLink = &quot;$($url)$($downloadLink)&quot;
+        }
+        $torrents += $torrent
+    }
+}
+</code></pre>
+<p><code>$torrents</code></p>
+<pre><code class="language-PowerShell">Title                                                                    Size     DownloadLink
+-----                                                                    ----     ------------
+Новобранец (6 сезон: 1-3 серии из 13) (2024) WEBRip | RuDub              1,55 ГБ  http://fasts-torrent.net/download/449613/torrent/-6-1-3-13-2024-webrip-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 1080p | RuDub       54,15 ГБ http://fasts-torrent.net/download/433749/torrent/-5-1-22-22-2023-webrip-1080p-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 720p | RuDub        30,14 ГБ http://fasts-torrent.net/download/433750/torrent/-5-1-22-22-2023-webrip-720p-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip | RuDub             11,55 ГБ http://fasts-torrent.net/download/433751/torrent/-5-1-22-22-2023-webrip-rudub/
+Новобранец (4 сезон: 1-22 серии из 22) (2021) WEB-DL 720p | RG.Paravozik 21.33 Gb http://fasts-torrent.net/download/418618/torrent/-4-1-22-22-2021-web-dl-720p-rgparavozik/
+Полицейский с половиной: Новобранец (2017) WEB-DLRip 720p| Чистый звук   3.41 Gb  http://fasts-torrent.net/download/254846/torrent/-2017-web-dlrip-720p-/
+Полицейский с половиной: Новобранец (2017) WEB-DLRip | Чистый звук       1.37 Gb  http://fasts-torrent.net/download/254845/torrent/-2017-web-dlrip-/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip | BaibaKo           11.28 Gb http://fasts-torrent.net/download/364669/torrent/-2-1-20-20-2019-webrip-baibako/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip 1080p | Octopus     45.97 Gb http://fasts-torrent.net/download/364161/torrent/-2-1-20-20-2019-webrip-1080p-octopus/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEB-DLRip | LostFilm       11.95 Gb http://fasts-torrent.net/download/364668/torrent/-2-1-20-20-2019-web-dlrip-lostfilm/
+</code></pre>
+<h2 id="selenium">Selenium<a class="headerlink" href="#selenium" title="Permanent link">&para;</a></h2>
+<p><code>Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/Deploy-Selenium/rsa/Deploy-Selenium-Drivers.ps1")</code> установка всех драйверов и Chromium соответствующий версии для драйвера</p>
+<pre><code>$path = &quot;$home\Documents\Selenium\&quot;
+$log = &quot;$path\ChromeDriver.log&quot;
+$ChromeDriver = &quot;$path\ChromeDriver.exe&quot;
+$WebDriver = &quot;$path\WebDriver.dll&quot;
+$SupportDriver = &quot;$path\WebDriver.Support.dll&quot;
+$Chromium = (Get-ChildItem $path -Recurse | Where-Object Name -like chrome.exe).FullName
+Add-Type -Path $WebDriver
+Add-Type -Path $SupportDriver
+try {
+    $ChromeOptions = New-Object OpenQA.Selenium.Chrome.ChromeOptions # создаем объект с настройками запуска браузера
+    $ChromeOptions.BinaryLocation = $Chromium # передаем путь до исполняемого файла, который отвечает за запуск браузера
+    $ChromeOptions.AddArgument(&quot;start-maximized&quot;) # добавляем аргумент, который позволяет запустить браузер на весь экран
+    #$ChromeOptions.AddArgument(&quot;start-minimized&quot;) # запускаем браузер в окне
+    #$ChromeOptions.AddArgument(&quot;window-size=400,800&quot;) # запускаем браузер с заданными размерам окна в пикселях
+    $ChromeOptions.AcceptInsecureCertificates = $True # игнорировать предупреждение на сайтах с не валидным сертификатом
+    #$ChromeOptions.AddArgument(&quot;headless&quot;) # скрывать окно браузера при запуске
+    $ChromeDriverService = [OpenQA.Selenium.Chrome.ChromeDriverService]::CreateDefaultService($ChromeDriver) # создаем объект настроек службы драйвера
+    $ChromeDriverService.HideCommandPromptWindow = $True # отключаем весь вывод логирования драйвера в консоль (этот вывод нельзя перенаправить)
+    $ChromeDriverService.LogPath = $log # указать путь до файла с журналом
+    $ChromeDriverService.EnableAppendLog = $True # не перезаписывать журнал при каждом новом запуске
+    #$ChromeDriverService.EnableVerboseLogging = $True # кроме INFO и ошибок, записывать DEBUG сообщения
+    $Selenium = New-Object OpenQA.Selenium.Chrome.ChromeDriver($ChromeDriverService, $ChromeOptions) # инициализируем запуск с указанными настройками
+
+    $Selenium.Navigate().GoToUrl(&quot;https://google.com&quot;) # переходим по указанной ссылке в браузере
+    #$Selenium.Manage().Window.Minimize() # свернуть окно браузера после запуска и перехода по нужному url (что бы считать страницу корректно)
+    # Ищем поле для ввода текста:
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::Id('APjFqb'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::XPath('//*[@id=&quot;APjFqb&quot;]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::Name('q'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::XPath('//*[@name=&quot;q&quot;]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::ClassName('gLFyf'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;yZiJbe&quot;]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::TagName('textarea')) | Where-Object ComputedAccessibleRole -eq combobox
+    $Search.SendKeys(&quot;calculator online&quot;) # передаем текст выбранному элементу
+    $Search.SendKeys([OpenQA.Selenium.Keys]::Enter) # нажимаем Enter для вызова функции поиска
+
+    Start-Sleep 1
+    $div = $Selenium.FindElements([OpenQA.Selenium.By]::TagName(&quot;div&quot;))
+    $2 = $div | Where-Object {($_.ComputedAccessibleRole -eq &quot;button&quot;) -and ($_.ComputedAccessibleLabel -eq &quot;2&quot;)}
+    $2.Click()
+    $2.Click()
+    $plus = $div | Where-Object {($_.ComputedAccessibleRole -eq &quot;button&quot;) -and ($_.Text -eq &quot;+&quot;)}
+    $plus.Click()
+    $3 = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;KN1kY&quot;]'))
+    $3.Click()
+    $3.Click()
+    $sum = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;Pt8tGc&quot;]'))
+    $sum.Click()
+    $result = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;VssY5c&quot;]')).Text
+    Write-Host &quot;Result: $result&quot; -ForegroundColor Green
+}
+finally {
+    $Selenium.Close()
+    $Selenium.Quit()
+}
+</code></pre>
+<h3 id="selenium-modules">Selenium modules<a class="headerlink" href="#selenium-modules" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-GPT/Get-GPT.psm1 | Out-File -FilePath &quot;$(New-Item -Path &quot;$($($Env:PSModulePath -split &quot;;&quot;)[0])\Get-GPT&quot; -ItemType Directory -Force)\Get-GPT.psm1&quot; -Force
+</code></pre>
+<p><code>Get-GPT "Исполняй роль калькулятора. Посчитай сумму чисел: 22+33"</code></p>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-Translation/Get-Translation.psm1 | Out-File -FilePath &quot;$(New-Item -Path &quot;$($($Env:PSModulePath -split &quot;;&quot;)[0])\Get-Translation&quot; -ItemType Directory -Force)\Get-Translation.psm1&quot; -Force
+</code></pre>
+<p><code>Get-Translation -Provider DeepL -Text "I translating the text"</code> <br />
+<code>Get-Translation -Provider DeepL -Text "Я перевожу текст"</code> <br />
+<code>Get-Translation -Provider Google -Text "I translating the text"</code> <br />
+<code>Get-Translation -Provider Google -Text "Я перевожу текст" -Language en</code></p>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-SpeedTest/Get-SpeedTest.psm1 | Out-File -FilePath &quot;$(New-Item -Path &quot;$($($Env:PSModulePath -split &quot;;&quot;)[0])\Get-SpeedTest&quot; -ItemType Directory -Force)\Get-SpeedTest.psm1&quot; -Force
+</code></pre>
+<p><code>Get-SpeedTest -Provider Libre</code> <br />
+<code>Get-SpeedTest -Provider Open</code> <br />
+<code>Get-SpeedTest -Provider Ookla</code></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

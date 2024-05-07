@@ -1,0 +1,3912 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TEST">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/PowerShell/">
+      
+      
+        <link rel="prev" href="../GitHub/">
+      
+      
+        <link rel="next" href="../ActiveDirectory/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>PowerShell - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#help" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PowerShell
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    PowerShell
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#help" class="md-nav__link">
+    <span class="md-ellipsis">
+      Help
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    <span class="md-ellipsis">
+      ENV
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history" class="md-nav__link">
+    <span class="md-ellipsis">
+      History
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clipboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clipboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write" class="md-nav__link">
+    <span class="md-ellipsis">
+      Write
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Array
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hashtable" class="md-nav__link">
+    <span class="md-ellipsis">
+      HashTable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collectionslist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collections/List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pscustomobject" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSCustomObject
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-member" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add-Member
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Select-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      Select-String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-tableformat-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format-Table/Format-List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measure-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measure-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compare-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where-Object (?)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sort-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lastfirst" class="md-nav__link">
+    <span class="md-ellipsis">
+      Last/First
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Group-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property" class="md-nav__link">
+    <span class="md-ellipsis">
+      Property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      DateTime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measure-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measure-Command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#npp" class="md-nav__link">
+    <span class="md-ellipsis">
+      npp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regex" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regex
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Regex">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matches
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-method-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Форматирование (.NET method format)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Условный оператор
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Операторы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline Operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invocation-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Invocation Operator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Специальные символы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Якори
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Группы захвата
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datatype" class="md-nav__link">
+    <span class="md-ellipsis">
+      DataType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DataType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#math" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#round" class="md-nav__link">
+    <span class="md-ellipsis">
+      Round
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tostring" class="md-nav__link">
+    <span class="md-ellipsis">
+      ToString
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#char" class="md-nav__link">
+    <span class="md-ellipsis">
+      Char
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#psd1" class="md-nav__link">
+    <span class="md-ellipsis">
+      psd1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#psm1" class="md-nav__link">
+    <span class="md-ellipsis">
+      psm1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      function switch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit-convertor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bit Convertor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#foreach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Foreach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#foreach-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      ForEach-Object (%)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#while" class="md-nav__link">
+    <span class="md-ellipsis">
+      While
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#try-catch-finally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try-Catch-Finally
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#readwrite-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read/Write Bytes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear-env-temp-14-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clear-env-Temp-14-days
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filehash" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filehash
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microsoftpowershellarchive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microsoft.PowerShell.Archive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credential" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credential
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Credential">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-gridview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out-Gridview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out-File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-content-gccattype" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get-Content (gc/cat/type)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aes-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      AES Key
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#winevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      WinEvent
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WinEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filter-xpathhashtable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter XPath/Hashtable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reboot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logon
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eventlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      EventLog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defender" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defender
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windowsupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      WindowsUpdate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dism" class="md-nav__link">
+    <span class="md-ellipsis">
+      DISM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduled
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shutdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      shutdown
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localaccounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      LocalAccounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smb" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SMB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-acl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get-Acl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ntfssecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      NTFSSecurity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iscsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      iSCSI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ps2exe" class="md-nav__link">
+    <span class="md-ellipsis">
+      PS2EXE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nssm" class="md-nav__link">
+    <span class="md-ellipsis">
+      NSSM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jobs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#threadjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      ThreadJob
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poshrsjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      PoshRSJob
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regedit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regedit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oh-my-posh" class="md-nav__link">
+    <span class="md-ellipsis">
+      oh-my-posh
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="oh-my-posh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#themes-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      themes-performance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminal-icons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terminal-Icons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pester" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pester
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ActiveDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Apps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotNET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTML/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InfluxDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MSSQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MSSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MySQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MySQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WMI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WMI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#help" class="md-nav__link">
+    <span class="md-ellipsis">
+      Help
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    <span class="md-ellipsis">
+      ENV
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history" class="md-nav__link">
+    <span class="md-ellipsis">
+      History
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clipboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clipboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write" class="md-nav__link">
+    <span class="md-ellipsis">
+      Write
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Array
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hashtable" class="md-nav__link">
+    <span class="md-ellipsis">
+      HashTable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collectionslist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collections/List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pscustomobject" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSCustomObject
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-member" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add-Member
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Select-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      Select-String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-tableformat-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format-Table/Format-List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measure-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measure-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compare-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where-Object (?)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sort-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lastfirst" class="md-nav__link">
+    <span class="md-ellipsis">
+      Last/First
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Group-Object
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property" class="md-nav__link">
+    <span class="md-ellipsis">
+      Property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      DateTime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measure-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measure-Command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#npp" class="md-nav__link">
+    <span class="md-ellipsis">
+      npp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regex" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regex
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Regex">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matches
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-method-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Форматирование (.NET method format)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Условный оператор
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Операторы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pipeline Operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invocation-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Invocation Operator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Специальные символы
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Якори
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Группы захвата
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datatype" class="md-nav__link">
+    <span class="md-ellipsis">
+      DataType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DataType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#math" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#round" class="md-nav__link">
+    <span class="md-ellipsis">
+      Round
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tostring" class="md-nav__link">
+    <span class="md-ellipsis">
+      ToString
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#char" class="md-nav__link">
+    <span class="md-ellipsis">
+      Char
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#psd1" class="md-nav__link">
+    <span class="md-ellipsis">
+      psd1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#psm1" class="md-nav__link">
+    <span class="md-ellipsis">
+      psm1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      function switch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit-convertor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bit Convertor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#foreach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Foreach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#foreach-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      ForEach-Object (%)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#while" class="md-nav__link">
+    <span class="md-ellipsis">
+      While
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#try-catch-finally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try-Catch-Finally
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#readwrite-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read/Write Bytes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear-env-temp-14-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clear-env-Temp-14-days
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filehash" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filehash
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microsoftpowershellarchive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microsoft.PowerShell.Archive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credential" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credential
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Credential">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-gridview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out-Gridview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out-File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-content-gccattype" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get-Content (gc/cat/type)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aes-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      AES Key
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#winevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      WinEvent
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WinEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filter-xpathhashtable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter XPath/Hashtable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reboot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logon
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eventlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      EventLog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defender" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defender
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windowsupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      WindowsUpdate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dism" class="md-nav__link">
+    <span class="md-ellipsis">
+      DISM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduled
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shutdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      shutdown
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localaccounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      LocalAccounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smb" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SMB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-acl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get-Acl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ntfssecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      NTFSSecurity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iscsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      iSCSI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ps2exe" class="md-nav__link">
+    <span class="md-ellipsis">
+      PS2EXE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nssm" class="md-nav__link">
+    <span class="md-ellipsis">
+      NSSM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jobs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#threadjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      ThreadJob
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poshrsjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      PoshRSJob
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regedit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regedit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oh-my-posh" class="md-nav__link">
+    <span class="md-ellipsis">
+      oh-my-posh
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="oh-my-posh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#themes-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      themes-performance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminal-icons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terminal-Icons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pester" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pester
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>PowerShell</h1>
+
+<h2 id="help">Help<a class="headerlink" href="#help" title="Permanent link">&para;</a></h2>
+<p><code>Get-Verb</code> действия/глаголы, утвержденные для использования в командлетах <br />
+<code>Get-Command *Language*</code> поиск команды по имени <br />
+<code>(Get-Command Get-Language).Module</code> узнать к какому модулю принадлежит команда <br />
+<code>Get-Command Get-Content | fl Module,DLL</code> узнать принадлежность команды к модулю и dll <br />
+<code>Get-Command -Module LanguagePackManagement</code> отобразить список команд указанного модуля <br />
+<code>(Get-Module LanguagePackManagement).ExportedCommands.Values</code> отобразить список команд указанного модуля <br />
+<code>Get-Language | Get-Member</code> отобразить список методов команды (действия), объекты вывода и Event (события объектов: Click) <br />
+<code>(Get-Help Get-Service).Aliases</code> узнать псевдонимом команды <br />
+<code>Get-Alias gsv</code> узнать имя команды по псевдониму <br />
+<code>Get-Help Get-Service</code> синтаксис <br />
+<code>Get-Help Get-Service -Parameter *</code> описание всех параметров <br />
+<code>Get-Help Get-Service -Online</code> <br />
+<code>Get-Help Get-Service -ShowWindow</code> описание параметров в GUI с фильтрацией <br />
+<code>Show-Command</code> вывести список команд в GUI <br />
+<code>Show-Command Get-Service</code> список параметров команды в GUI <br />
+<code>Invoke-Expression</code> iex принимает текст для выполнения в консоли как команды <br />
+<code>$PSVersionTable</code> версия PowerShell <br />
+<code>Set-ExecutionPolicy Unrestricted</code> <br />
+<code>Get-ExecutionPolicy</code> <br />
+<code>$Metadata = New-Object System.Management.Automation.CommandMetaData (Get-Command Get-Service)</code> получить информацию о командлете <br />
+<code>[System.Management.Automation.ProxyCommand]::Create($Metadata)</code> исходный код функции</p>
+<h2 id="object">Object<a class="headerlink" href="#object" title="Permanent link">&para;</a></h2>
+<h3 id="variable">Variable<a class="headerlink" href="#variable" title="Permanent link">&para;</a></h3>
+<p><code>$var = Read-Host "Enter"</code> ручной ввод <br />
+<code>$pass = Read-Host "Enter Password" -AsSecureString</code> скрывать набор <br />
+<code>$global:path = "\\path"</code> задать глобальную переменную, например в функции <br />
+<code>$using:srv</code> использовать переменную текущей сесси в Invoke-сессии <br />
+<code>Get-Variable</code> отобразить все переменные <br />
+<code>ls variable:/</code> отобразить все переменные <br />
+<code>Get-Variable *srv*</code> найти переменную по имени <br />
+<code>Get-Variable -Scope Global</code> отобразить все глобальные переменные <br />
+<code>Get-Variable Error</code> последняя команда с ошибкой <br />
+<code>Remove-Variable -Name *</code> очистить все переменные <br />
+<code>$LASTEXITCODE</code> содержит код вывода последней запущенной программы, например ping. Если код возврата положительный (True), то $LastExitCode = 0</p>
+<h3 id="env">ENV<a class="headerlink" href="#env" title="Permanent link">&para;</a></h3>
+<p><code>Get-ChildItem Env:</code> отобразить все переменные окружения <br />
+<code>$env:PSModulePath</code> директории импорта модулей <br />
+<code>$env:userprofile</code> <br />
+<code>$env:computername</code> <br />
+<code>$env:username</code> <br />
+<code>$env:userdnsdomain</code> <br />
+<code>$env:logonserver</code> <br />
+<code>([DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()).Name</code> <br />
+<code>[Environment]::GetFolderPath('ApplicationData')</code></p>
+<h3 id="history">History<a class="headerlink" href="#history" title="Permanent link">&para;</a></h3>
+<p><code>Get-History</code> история команд текущей сессии <br />
+<code>(Get-History)[-1].Duration.TotalSeconds</code> время выполнения последней команды <br />
+<code>(Get-PSReadLineOption).HistorySavePath</code> путь к сохраненному файлу с 4096 последних команд (из модуля PSReadLine) <br />
+<code>Get-Content (Get-PSReadlineOption).HistorySavePath | Select-String Get</code> поиск по содержимому файла (GREP) <br />
+<code>Set-PSReadlineOption -MaximumHistoryCount 10000</code> изменить количество сохраняемых команд в файл <br />
+<code>Get-PSReadLineOption | select MaximumHistoryCount</code> <br />
+<code>Set-PSReadlineOption -HistorySaveStyle SaveNothing</code> отключить ведение журнала <br />
+<code>F2</code> переключиться с InlineView на ListView</p>
+<h3 id="clipboard">Clipboard<a class="headerlink" href="#clipboard" title="Permanent link">&para;</a></h3>
+<p><code>Set-Clipboard $srv</code> скопировать в буфер обмена <br />
+<code>Get-Clipboard</code> вставить</p>
+<h3 id="write">Write<a class="headerlink" href="#write" title="Permanent link">&para;</a></h3>
+<p><code>Write-Host -ForegroundColor Black -BackgroundColor Green "Test" -NoNewline</code> <br />
+<code>Write-Error Test</code> <br />
+<code>Foreach ($n in 1..100) {Write-Progress -Activity "Test Progress" -PercentComplete $n}</code></p>
+<h3 id="array">Array<a class="headerlink" href="#array" title="Permanent link">&para;</a></h3>
+<p><code>$srv = @("server-01", "server-02")</code>  создать массив <br />
+<code>$srv += @("server-03")</code> добавить в массив новый элемент <br />
+<code>$srv.Count</code> отобразить кол-во элементов в массиве <br />
+<code>Out-String</code> построчный вывод</p>
+<h3 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h3>
+<p><code>$srv[0]</code> вывести первое значение элемента массива <br />
+<code>$srv[0] = Name</code> замена элемента в массиве <br />
+<code>$srv[0].Length</code> узнать кол-во символов первого значения в массиве <br />
+<code>$srv[10..100]</code> срез</p>
+<pre><code class="language-PowerShell">$array = &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;
+$num = 0
+foreach ($a in $array) {
+$num += 1
+$index = [array]::IndexOf($array, $a) # узнать номер индекса по зачению
+$array[$index] = $num # пересобрать исходный массив
+}
+</code></pre>
+<h3 id="hashtable">HashTable<a class="headerlink" href="#hashtable" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$hashtable = @{&quot;User&quot; = &quot;$env:username&quot;; &quot;Server&quot; = &quot;$env:computername&quot;} # создать
+$hashtable += @{&quot;User2&quot; = &quot;$env:username&quot;; &quot;Server2&quot; = &quot;$env:computername&quot;} # добавить ключи
+$hashtable.Keys # список всех ключей
+$hashtable[&quot;User&quot;] # получить значение (Values) по ключу
+$hashtable[&quot;User&quot;] = &quot;Test&quot; # изменить
+$hashtable.Remove(&quot;User&quot;) # удалить ключ
+</code></pre>
+<p><code>$Tag = @{$true = 'dev'; $false = 'prod'}[([System.Net.Dns]::GetHostEntry("localhost").HostName) -match '.*.TestDomain$']</code></p>
+<h3 id="collectionslist">Collections/List<a class="headerlink" href="#collectionslist" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$Collections = New-Object System.Collections.Generic.List[System.Object]
+$Collections.Add([PSCustomObject]@{User = $env:username; Server = $env:computername})
+</code></pre>
+<h3 id="pscustomobject">PSCustomObject<a class="headerlink" href="#pscustomobject" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$CustomObject = [PSCustomObject][ordered]@{User = $env:username; Server = $env:computername}
+$CustomObject | Add-Member –MemberType NoteProperty –Name Arr –Value @(1,2,3) # добавить Property (свойство/стобец)
+$CustomObject.Arr = @(1,3,5) # изменить содержимое
+$CustomObject.PsObject.Properties.Remove('User') # удалить Property
+</code></pre>
+<h3 id="add-member">Add-Member<a class="headerlink" href="#add-member" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$ScriptBlock = {Get-Service}
+$CustomObject | Add-Member -Name &quot;TestMethod&quot; -MemberType ScriptMethod -Value $ScriptBlock # Добавить Method
+$CustomObject | Get-Member
+$CustomObject.TestMethod()
+</code></pre>
+<h3 id="class">Class<a class="headerlink" href="#class" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">Class CustomClass {
+[string]$User
+[string]$Server
+Start([bool]$Param1) {
+If ($Param1) {Write-Host &quot;Start Function&quot;}}
+}
+
+$Class = New-Object -TypeName CustomClass
+$Class.User = $env:username
+$Class.Server = $env:computername
+$Class.Start(1)
+</code></pre>
+<h3 id="pipeline">Pipeline<a class="headerlink" href="#pipeline" title="Permanent link">&para;</a></h3>
+<p><code>$obj | Add-Member -MemberType NoteProperty -Name "Type" -Value "user" -Force</code> добавление объкта вывода NoteProperty <br />
+<code>$obj | Add-Member -MemberType NoteProperty -Name "User" -Value "admin" -Force</code> изменеие содержимого для сущности объекта User <br />
+<code>ping $srv | Out-Null</code> перенаправить результат вывода в Out-Null</p>
+<h3 id="select-object">Select-Object<a class="headerlink" href="#select-object" title="Permanent link">&para;</a></h3>
+<p><code>Get-Process | Select-Object -Property *</code> отобразить все доступные объекты вывода <br />
+<code>Get-Process | select -Unique "Name"</code> удалить повторяющиеся значения в массиве <br />
+<code>Get-Process | select -ExpandProperty ProcessName</code> преобразовать из объекта-коллекции в массив (вывести содержимое без наименовая столбца) <br />
+<code>(Get-Process | ? Name -match iperf).Modules</code> список используемых модулей процессом</p>
+<h3 id="expression">Expression<a class="headerlink" href="#expression" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">ps | Sort-Object -Descending CPU | select -first 10 ProcessName, # сортировка по CPU, вывести первых 10 значений (-first)
+@{Name=&quot;ProcessorTime&quot;; Expression={$_.TotalProcessorTime -replace &quot;\.\d+$&quot;}}, # затрачено процессорного времени в минутах
+@{Name=&quot;Memory&quot;; Expression={[string]([int]($_.WS / 1024kb))+&quot;MB&quot;}}, # делим байты на КБ
+@{Label=&quot;RunTime&quot;; Expression={((Get-Date) - $_.StartTime) -replace &quot;\.\d+$&quot;}} # вычесть из текущего времени - время запуска, и удалить milisec
+</code></pre>
+<h3 id="select-string">Select-String<a class="headerlink" href="#select-string" title="Permanent link">&para;</a></h3>
+<p><code>$(ipconfig | Select-String IPv4) -replace ".+: " | Where-Object {$_ -match "^172."}</code> узнать только IP <br />
+<code>$Current_IP = Get-Content $RDCMan_RDG_PATH | Select-String $RDCMan_Display_Name -Context 0,1</code> получить две строки <br />
+<code>$Current_IP = $Current_IP.Context.DisplayPostContext[0] -replace ".+&lt;name&gt;|&lt;\/name&gt;"</code> забрать только вторую строку и удалить тэги</p>
+<h3 id="format-tableformat-list">Format-Table/Format-List<a class="headerlink" href="#format-tableformat-list" title="Permanent link">&para;</a></h3>
+<p><code>Get-Process | ft ProcessName, StartTime -Autosize</code> автоматическая группировка размера столбцов</p>
+<h3 id="measure-object">Measure-Object<a class="headerlink" href="#measure-object" title="Permanent link">&para;</a></h3>
+<p><code>Get-Process | Measure | select Count</code> кол-во объектов <br />
+<code>Get-Process | Measure -Line -Word -Character</code> кол-во строк, слов и Char объектов <br />
+<code>Get-Process | Measure-Object PM -sum | Select-Object Count,@{Name="MEM_MB"; Expression={[int]($_.Sum/1mb)}}</code> кол-во процессов и общий объем занятой памяти в МБайт</p>
+<h3 id="compare-object">Compare-Object<a class="headerlink" href="#compare-object" title="Permanent link">&para;</a></h3>
+<p><code>Compare-Object -ReferenceObject (Get-Content -Path .\file1.txt) -DifferenceObject (Get-Content -Path .\file2.txt)</code> сравнение двух файлов <br />
+<code>$group1 = Get-ADGroupMember -Identity "Domain Admins"</code> <br />
+<code>$group2 = Get-ADGroupMember -Identity "Enterprise Admins"</code> <br />
+<code>Compare-Object -ReferenceObject $group1 -DifferenceObject $group2 -IncludeEqual</code><br />
+<code>==</code> нет изменений <br />
+<code>&lt;=</code> есть изменения в $group1 <br />
+<code>=&gt;</code> есть изменения в $group2</p>
+<h3 id="where-object">Where-Object (?)<a class="headerlink" href="#where-object" title="Permanent link">&para;</a></h3>
+<p><code>Get-Process | Where-Object {$_.ProcessName -match "zabbix"}</code> фильтрация/поиск процессов по имени свойства объекта <br />
+<code>Get-Process | where CPU -gt 10 | Sort-Object -Descending CPU</code> вывести объекты, где значения CPU больше 10 <br />
+<code>Get-Process | where WS -gt 200MB</code> отобразить процессы где WS выше 200МБ <br />
+<code>Get-Service | where Name -match "zabbix"</code> поиск службы <br />
+<code>Get-Service -ComputerName $srv | Where {$_.Name -match "WinRM"} | Restart-Service</code> перезапустить службу на удаленном компьютере <br />
+<code>(Get-Service).DisplayName</code> вывести значения свойства массива <br />
+<code>netstat -an | where {$_ -match 443}</code> <br />
+<code>netstat -an | ?{$_ -match 443}</code> <br />
+<code>(netstat -an) -match 443</code></p>
+<h3 id="sort-object">Sort-Object<a class="headerlink" href="#sort-object" title="Permanent link">&para;</a></h3>
+<p><code>Get-Process | Sort-Object -Descending CPU | ft</code> обратная (-Descending) сортировка по CPU <br />
+<code>$path[-1..-10]</code> обратная сборка массива без сортировки</p>
+<h3 id="lastfirst">Last/First<a class="headerlink" href="#lastfirst" title="Permanent link">&para;</a></h3>
+<p><code>Get-Process | Sort-Object -Descending CPU | select -First 10</code> вывести первых 10 объектов <br />
+<code>Get-Process | Sort-Object -Descending CPU | select -Last 10</code> вывести последних 10 объектов</p>
+<h3 id="group-object">Group-Object<a class="headerlink" href="#group-object" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$Groups = Get-CimInstance -Class Win32_PnPSignedDriver |
+Select-Object DriverProviderName, FriendlyName, Description, DriverVersion, DriverDate |
+Group-Object DriverProviderName, FriendlyName, Description, DriverVersion, DriverDate
+$(foreach ($Group in $Groups) {
+    $Group.Group[0]
+}) | Format-Table
+</code></pre>
+<h3 id="error">Error<a class="headerlink" href="#error" title="Permanent link">&para;</a></h3>
+<p><code>$Error</code> выводит все ошибки текущего сеанса <br />
+<code>$Error[0].InvocationInfo</code> развернутый отчет об ошибке <br />
+<code>$Error.clear()</code> <br />
+<code>$LASTEXITCODE</code> результат выполнения последней команды (0 - успех) <br />
+<code>exit 1</code> код завершения, который возвращается $LASTEXITCODE</p>
+<h3 id="property">Property<a class="headerlink" href="#property" title="Permanent link">&para;</a></h3>
+<p><code>$srv.Count</code> кол-во элементов в массиве <br />
+<code>$srv.Length</code> содержит количество символом строки переменной [string] или количество значений (строк) объекта <br />
+<code>$srv.Chars(2)</code> отобразить 3-й символ в строке <br />
+<code>$srv[2]</code> отобразить 3-ю строку в массиве</p>
+<h3 id="method">Method<a class="headerlink" href="#method" title="Permanent link">&para;</a></h3>
+<p><code>$srv.Insert(0,"https://")</code> добавить значение перед первым символом <br />
+<code>$srv.Substring(4)</code> удалить (из всего массива) первые 4 символа <br />
+<code>$srv.Remove(3)</code> удалить из всего массива все после 3 символа <br />
+<code>$string = "123"</code> создать строку <br />
+<code>$int = [convert]::ToInt32($string)</code> преобразовать строку в тип данных число <br />
+<code>[string]::Concat($text,$num)</code> объеденить переменные в одну строку <br />
+<code>[string]::Join(":",$text,$num)</code> объеденить используя разделитель <br />
+<code>[string]::Compare($text,$num,$true)</code> выдает 0 при совпадении или 1/-1 при несовпадении, $true (без учета регистра) или $false (с учетом регистра) <br />
+<code>[string]::Equals($text,$num)</code> производит сравнение двух строк и выдает $true при их совпадении или $false при несовпадении <br />
+<code>[string]::IsNullOrEmpty($text)</code> проверяет наличие строки, если строка пуста $true, если нет $false <br />
+<code>[string]::IsNullOrWhiteSpace($text2)</code> проверяет на наличие только символов пробел, табуляция или символ новой строки</p>
+<h3 id="datetime">DateTime<a class="headerlink" href="#datetime" title="Permanent link">&para;</a></h3>
+<p><code>Get-TimeZone</code> часовой пояс <br />
+<code>[DateTime]::UtcNow</code> время в формате UTC 0 <br />
+<code>(Get-Date).AddHours(-3)</code> <br />
+<code>$Date = (Get-Date -Format "dd/MM/yyyy hh:mm:ss")</code> <br />
+<code>$Date = Get-Date -f "dd/MM/yyyy"</code> получаем тип данных [string] <br />
+<code>[DateTime]$gDate = Get-Date "$Date"</code> преобразовать в тип [DateTime] <br />
+<code>[int32]$days=($fDate-$gDate).Days</code> получить разницу в днях <br />
+<code>"5/7/07" -as [DateTime]</code> преобразовать входные данные в тип данных [DateTime] <br />
+<code>New-TimeSpan -Start $VBRRP.CreationTimeUTC -End $VBRRP.CompletionTimeUTC</code> получить разницу во времени</p>
+<h3 id="measure-command">Measure-Command<a class="headerlink" href="#measure-command" title="Permanent link">&para;</a></h3>
+<p><code>(Measure-Command {ping ya.ru}).TotalSeconds</code> узнать только время выполнения <br />
+<code>(Get-History)[-1] | select @{Name="RunTime"; Expression={$_.EndExecutionTime - $_.StartExecutionTime}},ExecutionStatus,CommandLine</code> посчитать время работы последней [-1] (select -Last 1) выполненной команды и узнать ее статус</p>
+<h3 id="timer">Timer<a class="headerlink" href="#timer" title="Permanent link">&para;</a></h3>
+<p><code>$start_time = Get-Date</code> зафиксировать время до выполнения команды <br />
+<code>$end_time = Get-Date</code> зафиксировать время по завершению <br />
+<code>$time = $end_time - $start_time</code> высчитать время работы скрипта <br />
+<code>$min = $time.minutes</code> <br />
+<code>$sec = $time.seconds</code> <br />
+<code>Write-Host "$min минут $sec секунд"</code> <br />
+<code>$timer = [System.Diagnostics.Stopwatch]::StartNew()</code> запустить таймер <br />
+<code>$timer.IsRunning</code> статус работы таймера <br />
+<code>$timer.Elapsed.TotalSeconds</code> отобразить время с момента запуска (в секундах) <br />
+<code>$timer.Stop()</code> остановить таймер</p>
+<h2 id="npp">npp<a class="headerlink" href="#npp" title="Permanent link">&para;</a></h2>
+<p><code>pwsh -NoExit -ExecutionPolicy Unrestricted -WindowStyle Maximized -File "$(FULL_CURRENT_PATH)"</code></p>
+<p><code>%AppData%\Notepad++</code> themes/shortcuts.xml </p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;NotepadPlus&gt;
+    &lt;InternalCommands /&gt;
+    &lt;Macros&gt;
+        &lt;Macro name=&quot;`+\+&amp;gt;&quot; Ctrl=&quot;yes&quot; Alt=&quot;no&quot; Shift=&quot;no&quot; Key=&quot;190&quot;&gt;
+            &lt;Action type=&quot;0&quot; message=&quot;2453&quot; wParam=&quot;0&quot; lParam=&quot;0&quot; sParam=&quot;&quot; /&gt;
+            &lt;Action type=&quot;1&quot; message=&quot;2170&quot; wParam=&quot;0&quot; lParam=&quot;0&quot; sParam=&quot;`&quot; /&gt;
+            &lt;Action type=&quot;0&quot; message=&quot;2451&quot; wParam=&quot;0&quot; lParam=&quot;0&quot; sParam=&quot;&quot; /&gt;
+            &lt;Action type=&quot;0&quot; message=&quot;2451&quot; wParam=&quot;0&quot; lParam=&quot;0&quot; sParam=&quot;&quot; /&gt;
+            &lt;Action type=&quot;1&quot; message=&quot;2170&quot; wParam=&quot;0&quot; lParam=&quot;0&quot; sParam=&quot; &quot; /&gt;
+            &lt;Action type=&quot;1&quot; message=&quot;2170&quot; wParam=&quot;0&quot; lParam=&quot;0&quot; sParam=&quot;\&quot; /&gt;
+            &lt;Action type=&quot;0&quot; message=&quot;2300&quot; wParam=&quot;0&quot; lParam=&quot;0&quot; sParam=&quot;&quot; /&gt;
+        &lt;/Macro&gt;
+    &lt;/Macros&gt;
+    &lt;UserDefinedCommands&gt;
+        &lt;Command name=&quot;PowerShell7&quot; Ctrl=&quot;no&quot; Alt=&quot;yes&quot; Shift=&quot;no&quot; Key=&quot;116&quot;&gt;pwsh -NoExit -ExecutionPolicy Unrestricted -WindowStyle Maximized -File &amp;quot;$(FULL_CURRENT_PATH)&amp;quot;&lt;/Command&gt;
+    &lt;/UserDefinedCommands&gt;
+    &lt;PluginCommands /&gt;
+    &lt;ScintillaKeys /&gt;
+&lt;/NotepadPlus&gt;
+</code></pre>
+<p><code>Parsing text to Markdown:</code> <br />
+<code>Macros: FnLeft+'+FnRight+FnRight+\s\\+Down</code> <br />
+<code>Replace: "# ","'"</code></p>
+<pre><code>.       # Обозначает любой символ
+\       # Экранирующий символ. Символы которые экранируются: ^, [, ., $, {, *, (, ), \, +, |, ?, &lt;, &gt;
+^       # Начало строки
+$       # Конец строки
+\n      # Новая строка
+\d      # Любая цифра
+\D      # Не цифра
+\w      # Любая буква латиницы, цифра, или знак подчёркивания
+\W      # Не латиница, не цифра, не подчёркивание
+\s      # Пробел, табуляция, перенос строки
+\S      # Не пробел
+\b      # Граница слова. Применяется когда нужно выделить, что искомые символы являются словом, а не частью другого слова
+\B      # Не граница слова
+\&lt;      # Начало слова
+\&gt;      # Конец слова
+\A      # Начало текста
+\Z      # Конец текста
+*       # Повторитель. Означает что предшествующий символ может работать 0 и более раз
++       # Количество предшествующего не менее 1-го.
+?       # Ограничитель. Не более одного раза
+|       # Или. Соединяет несколько вариантов
+()      # В круглые скобки заключаются все комбинации с &quot;или&quot; и поиск начала и конца строк
+[ ]     # В квадратных скобках задаются символы к поиску, например [a-яА-Я], или [0-9]
+[^ ]    # Исключает из поиска символы указанные в квадратных скобках
+{ }     # В фигурных скобках указывается точное количество вхождений
+\d{2}   # Найти две цифры
+\d{2,4} # Найти две или четыре
+{4,}    # Найти четыре и более
+
+^\s{1,}#.+` поиск вначале строки комментария и пробел после него 1 или больше и любое кол-во символов
+</code></pre>
+<h2 id="regex">Regex<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h2>
+<p><code>-replace "1","2"</code> замена элементов в индексах массива (везде где присутствует 1, заменить на 2), для удаления используется только первое значение <br />
+<code>-split " "</code> преобразовать строку в массив, разделителем указан пробел, которой удаляется ($url.Split("/")[-1]) <br />
+<code>-join " "</code> преобразовать массив (коллекцию) в единую строку (string), добавить разделителем пробел </p>
+<p><code>-like *txt*</code> поиск по маскам wildcard, выводит значение на экран <br />
+<code>-match txt</code> поиска по шаблонам, проверка на соответствие содержимого текста <br />
+<code>-match "zabbix|rpc"</code> условия, для поиска по нескольким словам <br />
+<code>-NotMatch</code> проверка на отсутствие вхождения </p>
+<h3 id="matches">Matches<a class="headerlink" href="#matches" title="Permanent link">&para;</a></h3>
+<p><code>$ip = "192.168.10.1"</code> <br />
+<code>$ip -match "(\.\d{1,3})\.\d{1,2}"</code> True <br />
+<code>$Matches</code> отобразить все подходящие переменные последнего поиска, которые входят и не входят в группы ()</p>
+<p><code>$String = "09/14/2017 12:00:27 - mtbill_post_201709141058.txt 7577_Delivered: OK"</code> <br />
+<code>$String -Match ".*(?=\.txt)" | Out-Null</code> <br />
+<code>$Matches[0][-4..-1] -Join ""</code></p>
+<p><code>$string.Substring($string.IndexOf(".txt")-4, 4)</code> 2-й вариант (IndexOf)`</p>
+<h3 id="net-method-format">Форматирование (.NET method format)<a class="headerlink" href="#net-method-format" title="Permanent link">&para;</a></h3>
+<p><code>[string]::Format("{1} {0}","Index0","Index1")</code> <br />
+<code>"{1} {0}" -f "Index0","Index1"</code> <br />
+<code>"{0:###-##-##}" -f 1234567</code> записать число в другом формате (#) <br />
+<code>"{0:0000}" -f 123</code> вывести число в формате не меньше 4 знаков (0123) <br />
+<code>"{0:P0}" -f (220/1000)</code> посчитать в процентах (P) <br />
+<code>"{0:P}" -f (512MB/1GB)</code> сколько % составляет 512Мб от 1Гб <br />
+<code>"{0:0.0%}" -f 0.123</code> умножить на 100%</p>
+<pre><code class="language-PowerShell">$gp = Get-Process | sort cpu -Descending | select -First 10
+foreach ($p in $gp) {
+&quot;{0} - {1:N2}&quot; -f $p.processname, $p.cpu # округлить
+}
+</code></pre>
+<h3 id="_1">Условный оператор<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p><code>$rh = Read-Host</code> <br />
+<code>if ($rh -eq 1) {ipconfig} elseif ($rh -eq 2) {getmac} else {hostname}</code> <br />
+Если условие if () является истенным ($True), выполнить действие в {} <br />
+Если условие if () является ложным ($False), выполнить действие не обязательного оператора else <br />
+Условие Elseif идёт после условия if для проверки дополнительных условий перед выполнение оператора else. Оператор, который первый вернет $True, отменит выполнение следующих дополнительных условий <br />
+Если передать переменную в условие без оператора, то будет проверяться наличие значения у переменной на $True/$False <br />
+<code>if ((tnc $srv -Port 80).TcpTestSucceeded) {"Opened port"} else {"Closed port"}</code></p>
+<h3 id="_2">Операторы<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><code>-eq</code> равно (equal) <br />
+<code>-ceq</code> учитывать регистр <br />
+<code>-ne</code> не равно (not equal) <br />
+<code>-gt</code> больше (greater) <br />
+<code>-ge</code> больше или равно <br />
+<code>-lt</code> меньше (less) <br />
+<code>-le</code> меньше или равно <br />
+<code>-in</code> проверить на наличие (5 -in @(1,2,3,4,5)) <br />
+<code>-NOT</code> логическое НЕТ !(Test-Path $path) <br />
+<code>-and</code> логическое И <br />
+<code>-or</code> логическое ИЛИ <br />
+<code>if ((($1 -eq 1) -and ($2 -eq 2)) -or ($1 -ne 3)) {"$true"} else {"$false"}</code> два условия: (если $1 = 1 и $2 = 2) или $1 не равно 3</p>
+<h3 id="pipeline-operators">Pipeline Operators<a class="headerlink" href="#pipeline-operators" title="Permanent link">&para;</a></h3>
+<p><code>Write-Output "First" &amp;&amp; Write-Output "Second"</code> две успешные команды выполняются <br />
+<code>Write-Error "Bad" &amp;&amp; Write-Output "Second"</code> первая команда завершается ошибкой, из-за чего вторая команда не выполняется <br />
+<code>Write-Error "Bad" || Write-Output "Second"</code> первая команда завершается ошибкой, поэтому выполняется вторая команда <br />
+<code>Write-Output "First" || Write-Output "Second"</code> первая команда выполнена успешно, поэтому вторая команда не выполняется</p>
+<h3 id="invocation-operator">Invocation Operator<a class="headerlink" href="#invocation-operator" title="Permanent link">&para;</a></h3>
+<p><code>$addr = "8.8.8.8"</code> <br />
+<code>$ping = "ping"</code> <br />
+<code>&amp; $ping $addr</code> запускает текст как команду</p>
+<p><code>&amp; $ping $addr &amp;</code> запустить команду в фоне <br />
+<code>(Get-Job)[-1] | Receive-Job -Keep</code></p>
+<h3 id="_3">Специальные символы<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><code>\d</code> число от 0 до 9 (20-07-2022 эквивалент: "\d\d-\d\d-\d\d\d\d") <br />
+<code>\D</code> обозначает любой символ, кроме цифры. Удаления всех символов, кроме цифр: [int]$("123 test" -replace "\D") <br />
+<code>\w</code> буква от "a" до "z" и от "A" до "Z" или число от 0 до 9 <br />
+<code>\s</code> пробел, эквивалент: " " <br />
+<code>\n</code> новая строка <br />
+<code>\b</code> маска, определяет начало и конец целого словосочетания для поиска <br />
+<code>.</code> обозначает любой символ, кроме новой строки <br />
+<code>\</code> экранирует любой специальны символ (метасимвол). Используется, если нужно указать конкретный символ, вместо специального ({ } [ ] / \ + * . $ ^ | ?) <br />
+<code>+</code> повторяется 1 и более раз (\s+) <br />
+<code>{1,25}</code> квантификатор, указывает количество повторений символа слева на право (от 1 до 25 раз) <br />
+<code>[]</code> поиск совпадения любой буквы, например, [A-z0-9] от A до z и цифры от 0 до 9 ("192.168.1.1" -match "192.1[6-7][0-9]")</p>
+<h3 id="_4">Якори<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><code>^</code> или <code>\A</code> определяет начало строки. $url -replace '^','https:'<code>добавить в начало;</code>$<code>или</code>\Z<code>обозначают конец строки. $ip -replace "\d{1,3}$","0"</code>(?=text)<code>поиск слова слева. Пишем слева на право от искомого (ищет только целые словосочетания) "Server:\s(.{1,30})\s(?=$username)"</code>(?&lt;=text)<code>поиск слова справа. $in_time -replace ".+(?&lt;=Last)"</code> удалить все до слова Last <br />
+<code>(?!text)</code> не совпадает со словом слева <br />
+<code>(?&lt;!text)</code> не совпадает со словом справа</p>
+<p><code>$test = "string"</code> <br />
+<code>$test -replace ".{1}$"</code> удалить любое кол-во символов в конце строки <br />
+<code>$test -replace "^.{1}"</code> удалить любое кол-во символов в начале строки </p>
+<h3 id="_5">Группы захвата<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p><code>$date = '12.31.2021'</code> <br />
+<code>$date -replace '^(\d{2}).(\d{2})','$2.$1'</code> поменять местами <br />
+<code>$1</code> содержимое первой группы в скобках <br />
+<code>$2</code> содержимое второй группы</p>
+<h2 id="datatype">DataType<a class="headerlink" href="#datatype" title="Permanent link">&para;</a></h2>
+<p><code>$srv.GetType()</code> узнать тип данных <br />
+<code>$srv -is [string]</code> проверка на соответствие типа данных <br />
+<code>$srv -isnot [System.Object]</code> проверка на несоответствие <br />
+<code>[Object]</code> массив (BaseType:System.Array) <br />
+<code>[DateTime]</code> формат времени (BaseType:System.ValueType) <br />
+<code>[Bool]/[Boolean]</code> логическое значение ($True/$False) или 1/0 (1 бит) наличие/отсуствие напряжения <br />
+<code>[Byte]</code> 8-битное (1 байт) целое число без знака (0..255) <br />
+<code>[Int16]</code> 16-битное знаковое целое число от -32767 до 32767 (тип данных WORD 0..65535) <br />
+<code>[Int]</code> 32-битное (4 байта) знаковое целое число от –2147483648 до 2147483647 (DWORD) <br />
+<code>[Int64]</code> 64-битное от -9223372036854775808 до 9223372036854775808 (LWORD) <br />
+<code>[Decimal]</code> 128-битное десятичное значение от –79228162514264337593543950335 до 79228162514264337593543950335 <br />
+<code>[Single]</code> число с плавающей запятой (32-разрядное) <br />
+<code>[Double]</code> число с плавающей запятой с двойной точностью (64-разрядное) <br />
+<code>[String]</code> неизменяемая строка символов Юникода фиксированной длины (BaseType:System.Object)</p>
+<h3 id="math">Math<a class="headerlink" href="#math" title="Permanent link">&para;</a></h3>
+<p><code>[math] | Get-Member -Static</code> <br />
+<code>[math]::Pow(2,4)</code> 2 в 4 степени <br />
+<code>[math]::Truncate(1.8)</code> грубое округление, удаляет дробную часть <br />
+<code>[math]::Ceiling(1.8)</code> округляет число в большую сторону до ближайшего целого значения <br />
+<code>[math]::Floor(-1.8)</code> округляет число в меньшую сторону <br />
+<code>[math]::Min(33,22)</code> возвращает наименьшее значение двух значений <br />
+<code>[math]::Max(33,22)</code> возвращает наибольшее значение двух значений</p>
+<h3 id="round">Round<a class="headerlink" href="#round" title="Permanent link">&para;</a></h3>
+<p><code>[double]::Round(87.5, 0)</code> 88 (нечетное), в .NET по умолчанию используется округление в средней точке ToEven, где *.5 значения округляются до ближайшего четного целого числа. <br />
+<code>[double]::Round(88.5, 0)</code> 88 (четное) <br />
+<code>[double]::Round(88.5, 0, 1)</code> 89 (округлять в большую сторону) <br />
+<code>[double]::Round(1234.56789, 2)</code> округлить до 2 символов после запятой</p>
+<h3 id="tostring">ToString<a class="headerlink" href="#tostring" title="Permanent link">&para;</a></h3>
+<p><code>(4164539/1MB).ToString("0.00")</code> разделить на дважды на 1024/1024 и округлить до 3,97</p>
+<h3 id="char">Char<a class="headerlink" href="#char" title="Permanent link">&para;</a></h3>
+<p><code>[Char]</code> cимвол Юникода (16-разрядный) <br />
+<code>$char = $srv.ToCharArray()</code> разбить строку [string] на массив [System.Array] из букв </p>
+<h2 id="module">Module<a class="headerlink" href="#module" title="Permanent link">&para;</a></h2>
+<h3 id="psd1">psd1<a class="headerlink" href="#psd1" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">@{
+    RootModule        = &quot;Get-Function.psm1&quot;
+    ModuleVersion     = &quot;0.1&quot;
+    Author            = &quot;Lifailon&quot;
+    CompanyName       = &quot;Open Source Community&quot;
+    Copyright         = &quot;Apache-2.0&quot;
+    Description       = &quot;Function example&quot;
+    PowerShellVersion = &quot;7.2&quot;
+    PrivateData       = @{
+        PSData = @{
+            Tags         = @(&quot;Function&quot;,&quot;Example&quot;)
+            ProjectUri   = &quot;https://github.com/Lifailon/PS-Commands&quot;
+            LicenseUri   = &quot;https://github.com/Lifailon/Console-Translate/blob/rsa/LICENSE&quot;
+            ReleaseNotes = &quot;Second release&quot;
+        }
+    }
+}
+</code></pre>
+<h3 id="psm1">psm1<a class="headerlink" href="#psm1" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">function Get-Function {
+    &lt;#
+    .SYNOPSIS
+    Описание
+    .DESCRIPTION
+    Описание
+    .LINK
+    https://github.com/Lifailon/PS-Commands
+    #&gt;
+    param (
+        [Parameter(Mandatory,ValueFromPipeline)][string]$Text,
+        [ValidateSet(&quot;Test1&quot;,&quot;Test2&quot;)][string]$Provider = &quot;Test1&quot;,
+        [ValidateRange(1,3)][int]$Number = 2,
+        [Switch]$Switch
+    )
+    Write-Host Param Text: $Text
+    Write-Host Param Provider: $Provider
+    Write-Host Param Number: $Number
+    Write-Host Param Switch: $Switch
+}
+</code></pre>
+<p><code>Get-Function Test</code></p>
+<h3 id="switch">Switch<a class="headerlink" href="#switch" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$MMM = Get-Date -UFormat &quot;%m&quot;
+switch($MMM) {
+    &quot;01&quot; {$Month = 'Jan'}
+    &quot;02&quot; {$Month = 'Feb'}
+    &quot;03&quot; {$Month = 'Mar'}
+    &quot;04&quot; {$Month = 'Apr'}
+    &quot;05&quot; {$Month = 'May'}
+    &quot;06&quot; {$Month = 'Jun'}
+    &quot;07&quot; {$Month = 'Jul'}
+    &quot;08&quot; {$Month = 'Aug'}
+    &quot;09&quot; {$Month = 'Sep'}
+    &quot;10&quot; {$Month = 'Oct'}
+    &quot;11&quot; {$Month = 'Nov'}
+    &quot;12&quot; {$Month = 'Dec'}
+}
+</code></pre>
+<h3 id="function-switch">function switch<a class="headerlink" href="#function-switch" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">Function fun-switch (
+    [switch]$param
+) {
+    If ($param) {&quot;yes&quot;} else {&quot;no&quot;}
+}
+
+fun-switch -param
+</code></pre>
+<h2 id="bit">Bit<a class="headerlink" href="#bit" title="Permanent link">&para;</a></h2>
+<pre><code>Двоичное    Десятичное
+1           1
+10          2
+11          3
+100         4
+101         5
+110         6
+111         7
+1000        8
+1001        9
+1010        10
+1011        11
+1100        12
+1101        13
+1110        14
+1111        15
+1 0000      16
+
+Двоичное    Десятичное  Номер разряда
+1           1           0
+10          2           1
+100         4           2
+1000        8           3
+1 0000      16          4
+10 0000     32          5
+100 0000    64          6
+1000 0000   128         7
+1 0000 0000 256         8
+
+Из двоичного =&gt; десятичное (1-й вариант по таблице)
+1001 0011 = 1000 0000 + 1 0000 + 10 + 1 = 128 + 16 + 2 + 1 = 147
+
+2-й вариант
+7654 3210 (разряды двоичного выражения) = (1*2^7)+(0*2^6)+(0*2^5)+(1*2^4)+(0*2^3)+(0*2^2)+(1*2^1)+(1*2^0) = 147
+[math]::Pow(2,7) + [math]::Pow(2,4) + [math]::Pow(2,1) + [math]::Pow(2,0) = 147` исключить 0 и сложить степень
+
+Из десятичного =&gt; двоичное (1-й вариант по таблице)
+347 вычесть ближайшие 256 = 91 (+ 1 0000 0000 забрать двоичный остаток)
+91  - 64  = 27 ближайшее 16 (+ 100 0000)
+27  - 16  = 11 ближайшее 8 (+ 1 0000)
+11  - 8   = 3  ближайшее 2 (+ 1000)
+3   - 2   = 1 (+ 10)
+1   - 1   = 0 (+ 1)
+1 0101 1011
+
+2-й вариант
+Последовательное деления числа на 2, предворительно забирая остаток для получения четного числа в меньшую сторону
+347 - 346 = остаток 1, (347-1)/2 = 173
+173 - 172 = остаток 1, (172-1)/2 = 86
+86  - 86  = остаток 0, 86/2 = 43
+43  - 42  = остаток 1, (43-1)/2 = 21
+21  - 20  = остаток 1, (21-1)/2 = 10
+10  - 10  = остаток 0, 10/2 = 5
+5   - 4   = остаток 1, (5-1)/2 = 2
+2   - 2   = остаток 0, 2/2 = 1
+1   - 2   = остаток 1, (1-1)/2 = 0
+Результат деления записывается снизу вверх
+</code></pre>
+<h3 id="bit-convertor">Bit Convertor<a class="headerlink" href="#bit-convertor" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">function ConvertTo-Bit {
+    param (
+        [Int]$int
+    )
+    [array]$bits = @()
+    $test = $true
+    while ($test -eq $true) {
+        if (($int/2).GetType() -match [double]) {
+            $int = ($int-1)/2
+            [array]$bits += 1
+        }
+        elseif (($int/2).GetType() -match [int]) {
+            $int = $int/2
+            [array]$bits += 0
+        }
+        if ($int -eq 0) {
+            $test = $false
+        }
+    }
+    $bits =  $bits[-1..-999]
+    ([string]($bits)) -replace &quot;\s&quot;
+}
+</code></pre>
+<p><code>ConvertTo-Bit 347</code></p>
+<pre><code class="language-PowerShell">function ConvertFrom-Bit {
+    param (
+        $bit
+    )
+    [int]$int = 0
+    $bits = $bit.ToString().ToCharArray()
+    $index = ($bits.Count)-1
+    foreach ($b in $bits) {
+        if ($b -notlike 0) {
+            $int += [math]::Pow(2,$index)
+        }
+    $index -= 1
+    }
+    $int
+}
+</code></pre>
+<p><code>ConvertFrom-Bit 10010011</code></p>
+<p><code>Get-Process pwsh | fl ProcessorAffinity</code> привязка процесса к ядрам, представляет из себя битовую маску (bitmask), где каждому биту соответствует ядро процессора. Если для ядра отмечено сходство (affinity), то бит выставляется в 1, если нет — то в 0. Например, если выбраны все 16 ядер, то это 1111 1111 1111 1111 или 65535. <br />
+<code>(Get-Process pwsh).ProcessorAffinity = 15</code> 0000000000001111 присвоить 4 первых ядра <br />
+<code>(Get-Process pwsh).ProcessorAffinity = 61440</code> 1111000000000000 присвоить 4 последних ядра <br />
+<code>(Get-Process pwsh).ProcessorAffinity = (ConvertFrom-Bit 1111000000000000)</code></p>
+<h2 id="cycle">Cycle<a class="headerlink" href="#cycle" title="Permanent link">&para;</a></h2>
+<h3 id="foreach">Foreach<a class="headerlink" href="#foreach" title="Permanent link">&para;</a></h3>
+<p><code>$list = 100..110</code> создать массив из цифр от 100 до 110 <br />
+<code>foreach ($srv in $list) {ping 192.168.3.$srv -n 1 -w 50}</code> $srv хранит текущий элемент из $list и повторяет команду до последнего элемента в массиве <br />
+<code>$foreach.Current</code> текущий элемент в цикле <br />
+<code>$foreach.Reset()</code> обнуляет итерацию, перебор начнется заново, что приводит к бесконечному циклу <br />
+<code>$foreach.MoveNext()</code> переход к следующему элементу в цикле</p>
+<h3 id="foreach-object">ForEach-Object (%)<a class="headerlink" href="#foreach-object" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">100..110 | %{ping -n 1 -w 50 192.168.3.$_ &gt; $null
+if ($LastExitCode -eq 0) {Write-Host &quot;192.168.3.$_&quot; -ForegroundColor green
+} else {
+Write-Host &quot;192.168.3.$_&quot;-ForegroundColor Red}}
+%  # передать цикл через конвеер (ForEach-Object)
+$_ # переменная цикла и конвеера ($PSItem)
+gwmi Win32_QuickFixEngineering | where {$_.InstalledOn.ToString() -match &quot;2022&quot;} | %{($_.HotFixID.Substring(2))} # gwmi создает массив, вывод команды передается where для поиска подходящих под критерии объектов. По конвееру передается в цикл для удаления первых (2) символов методом Substring из всех объектов HotFixID.
+</code></pre>
+<h3 id="while">While<a class="headerlink" href="#while" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$srv = &quot;yandex.ru&quot;
+$out2 = &quot;Есть пинг&quot;
+$out3 = &quot;Нет пинга&quot;
+$out = $false # предварительно сбросить переменную, While проверяет условие до запуска цикла
+While ($out -eq $false){ # пока условие является $true, цикл будет повторяться
+$out = ping -n 1 -w 50 $srv
+if ($out -match &quot;ttl&quot;) {$out = $true; $out2} else {$out = $false; $out3; sleep 1}
+}
+
+while ($True){ # запустить бесконечный цикл
+$result = ping yandex.ru -n 1 -w 50
+if ($result -match &quot;TTL&quot;){ # условие, при котором будет выполнен break
+Write-Host &quot;Сайт доступен&quot;
+break # остановит цикл
+} else {Write-Host &quot;Сайт недоступен&quot;; sleep 1}
+}
+</code></pre>
+<h3 id="try-catch-finally">Try-Catch-Finally<a class="headerlink" href="#try-catch-finally" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">Try {$out = pping 192.168.3.1}
+Catch {Write-Warning &quot;$($error[0])&quot;} # выводит в случае ошибки (вместо ошибки)
+finally {$out = &quot;End&quot;} # выполняется в конце в любом случае
+</code></pre>
+<h2 id="files">Files<a class="headerlink" href="#files" title="Permanent link">&para;</a></h2>
+<p><code>$file = [System.IO.File]::Create("$home\desktop\test.txt")</code> создать файл <br />
+<code>$file.Close()</code> закрыть файл <br />
+<code>[System.IO.File]::ReadAllLines("$home\desktop\test.txt")</code> прочитать файл <br />
+<code>$file = New-Object System.IO.StreamReader("$home\desktop\test.txt")</code> файл будет занят процессом PowerShell <br />
+<code>$file | gm</code> <br />
+<code>$file.ReadLine()</code> построчный вывод <br />
+<code>$file.ReadToEnd()</code> прочитать файл целиком</p>
+<h3 id="readwrite-bytes">Read/Write Bytes<a class="headerlink" href="#readwrite-bytes" title="Permanent link">&para;</a></h3>
+<p><code>$file = [io.file]::ReadAllBytes("$home\desktop\powershell.jpg")</code> метод открывает двоичный файл, считывает его в массив байт и закрывает файл <br />
+<code>[io.file]::WriteAllBytes("$home\desktop\tloztotk-2.jpg",$file)</code> сохранить байты в файл (можно использовать для выгрузки двоичных файлов из БД)</p>
+<p><code>Get-Content $home/desktop\test.txt -Wait</code> аналог tail <br />
+<code>Test-Path $path</code> проверить доступность пути <br />
+<code>Get-ChildItem $path -Filter *.txt -Recurse</code> отобразить содержимое каталога (Alias: ls/gci/dir) и дочерних каталогов (-Recurse) и отфильтровать вывод <br />
+<code>Get-Location</code> отобразить текущие месторасположение (Alias: pwd/gl) <br />
+<code>Set-Location $path</code> перемещение по каталогам (Alias: cd/sl) <br />
+<code>Invoke-Item $path</code> открыть файл (Alias: ii/start) <br />
+<code>Get-ItemProperty $env:userprofile\Documents\dns-list.txt | select FullName,Directory,Name,BaseName,Extension</code> свойтсва файла <br />
+<code>Get-ItemProperty -Path $path\* | select FullName,CreationTime,LastWriteTime</code> свойства файлов содержимого директории, дата их создания и последнего изменения <br />
+<code>New-Item -Path "C:\test\" -ItemType "Directory"</code> создать директорию (Alias: mkdir/md) <br />
+<code>New-Item -Path "C:\test\file.txt" -ItemType "File" -Value "Добавить текст в файл"</code> создать файл <br />
+<code>"test" &gt; "C:\test\file.txt"</code> заменить содержимое <br />
+<code>"test" &gt;&gt; "C:\test\file.txt"</code> добавить строку в файл <br />
+<code>New-Item -Path "C:\test\test\file.txt" -Force</code> ключ используется для создания отсутствующих в пути директорий или перезаписи файла если он уже существует <br />
+<code>Move-Item</code> перемещение объектов (Alias: mv/move) <br />
+<code>Remove-Item "$path\" -Recurse</code> удаление всех файлов внутри каталога, без запроса подверждения (Alias: rm/del) <br />
+<code>Remove-Item $path -Recurse -Include "*.txt","*.temp" -Exclude "log.txt"</code> удалить все файлы с расширением txt и temp ([Array]), кроме log.txt <br />
+<code>Rename-Item "C:\test\*.*" "*.jpg"</code> переименовать файлы по маске (Alias: ren) <br />
+<code>Copy-Item</code> копирование файлов и каталогов (Alias: cp/copy) <br />
+<code>Copy-Item -Path "\\server-01\test" -Destination "C:\" -Recurse</code> копировать директорию с ее содержимым (-Recurse) <br />
+<code>Copy-Item -Path "C:\*.txt" -Destination "C:\test\"</code> знак '\' в конце Destination используется для переноса папки внутрь указанной, отсутствие, что это новое имя директории <br />
+<code>Copy-Item -Path "C:\*" -Destination "C:\test\" -Include '*.txt','*.jpg'</code> копировать объекты с указанным расширением (Include) <br />
+<code>Copy-Item -Path "C:\*" -Destination "C:\test\" -Exclude '*.jpeg'</code> копировать объекты, за исключением файлов с расширением (Exclude) <br />
+<code>$log = Copy-Item "C:\*.txt" "C:\test\" -PassThru</code> вывести результат копирования (логирование) в переменную, можно забирать строки с помощью индексов $log[0].FullName</p>
+<h3 id="clear-env-temp-14-days">Clear-env-Temp-14-days<a class="headerlink" href="#clear-env-temp-14-days" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$ls = Get-Item $env:TEMP\*.tmp # считать все файлы с указанным расширением
+$date = (Get-Date).AddDays(-14)
+foreach ($l in $ls) {
+    if ($l.LastWriteTime -le $date) {
+        $l.FullName
+        Remove-Item $l.FullName -Recurse
+    }
+}
+</code></pre>
+<h3 id="filehash">Filehash<a class="headerlink" href="#filehash" title="Permanent link">&para;</a></h3>
+<p><code>Get-Filehash -Algorithm SHA256 "$env:USERPROFILE\Documents\RSA.conf.txt"</code></p>
+<h3 id="microsoftpowershellarchive">Microsoft.PowerShell.Archive<a class="headerlink" href="#microsoftpowershellarchive" title="Permanent link">&para;</a></h3>
+<p><code>Compress-Archive -Path $sourcepath -DestinationPath $dstpath -CompressionLevel Optimal</code> архивировать <br />
+<code>Expand-Archive .\powerlinefonts.zip</code> разархивировать</p>
+<h2 id="credential">Credential<a class="headerlink" href="#credential" title="Permanent link">&para;</a></h2>
+<p><code>$Cred = Get-Credential</code> сохраняет креды в переменные <code>$Cred.Username</code> и <code>$Cred.Password</code> <br />
+<code>$Cred.GetNetworkCredential().password</code> извлечь пароль <br />
+<code>cmdkey /generic:"TERMSRV/$srv" /user:"$username" /pass:"$password"</code> добавить указанные креды аудентификации на на терминальный сервер для подключения без пароля <br />
+<code>mstsc /admin /v:$srv</code> авторизоваться <br />
+<code>cmdkey /delete:"TERMSRV/$srv"</code> удалить добавленные креды аудентификации из системы <br />
+<code>rundll32.exe keymgr.dll,KRShowKeyMgr</code> хранилище Stored User Names and Password <br />
+<code>Get-Service VaultSvc</code> служба для работы Credential Manager <br />
+<code>Install-Module CredentialManager</code> установить модуль управления Credential Manager к хранилищу PasswordVault из PowerShell <br />
+<code>[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls11,Tls12'</code> для устаноки модуля <br />
+<code>Get-StoredCredential</code> получить учетные данные из хранилища Windows Vault <br />
+<code>Get-StrongPassword</code> генератор пароля <br />
+<code>New-StoredCredential -UserName test -Password "123456"</code> добавить учетную запись <br />
+<code>Remove-StoredCredential</code> удалить учетную запись <br />
+<code>$Cred = Get-StoredCredential | where {$_.username -match "admin"}</code> <br />
+<code>$pass = $cred.password</code> <br />
+<code>$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass)</code> <br />
+<code>[System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)</code></p>
+<h3 id="out-gridview">Out-Gridview<a class="headerlink" href="#out-gridview" title="Permanent link">&para;</a></h3>
+<p><code>Get-Service -cn $srv | Out-GridView -Title "Service $srv" -OutputMode Single –PassThru | Restart-Service</code> перезапустить выбранную службу</p>
+<h3 id="out-file">Out-File<a class="headerlink" href="#out-file" title="Permanent link">&para;</a></h3>
+<p><code>Read-Host –AsSecureString | ConvertFrom-SecureString | Out-File "$env:userprofile\desktop\password.txt"</code> писать в файл. Преобразовать пароль в формат SecureString с использованием шифрования Windows Data Protection API (DPAPI)</p>
+<h3 id="get-content-gccattype">Get-Content (gc/cat/type)<a class="headerlink" href="#get-content-gccattype" title="Permanent link">&para;</a></h3>
+<p><code>$password = gc "$env:userprofile\desktop\password.txt" | ConvertTo-SecureString</code> читать хэш пароля из файла с помощью ключей, хранящихся в профиле текущего пользователя, который невозможно прочитать на другом копьютере</p>
+<h3 id="aes-key">AES Key<a class="headerlink" href="#aes-key" title="Permanent link">&para;</a></h3>
+<p><code>$AESKey = New-Object Byte[] 32</code> <br />
+<code>[Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($AESKey)</code> <br />
+<code>$AESKey | Out-File "C:\password.key"</code> <br />
+<code>$Cred.Password | ConvertFrom-SecureString -Key (Get-Content "C:\password.key") | Set-Content "C:\password.txt"</code> сохранить пароль в файл используя внешний ключ <br />
+<code>$pass = Get-Content "C:\password.txt" | ConvertTo-SecureString -Key (Get-Content "\\Server\Share\password.key")</code> расшифровать пароль на втором компьютере</p>
+<h2 id="winevent">WinEvent<a class="headerlink" href="#winevent" title="Permanent link">&para;</a></h2>
+<p><code>Get-WinEvent -ListLog *</code> отобразить все доступные журналы логов <br />
+<code>Get-WinEvent -ListLog * | where RecordCount -ne 0 | where RecordCount -ne $null | sort -Descending RecordCount</code> отобразить не пустые журналы с сортировкой по кол-ву записей <br />
+<code>Get-WinEvent -ListProvider * | ft</code> отобразить всех провайдеров приложений <br />
+<code>Get-WinEvent -ListProvider GroupPolicy</code> найти в какой журнал LogLinks {Application} пишутся логи приложения <br />
+<code>Get-WinEvent -ListProvider *smb*</code> <br />
+<code>Get-WinEvent -ListLog * | where logname -match SMB | sort -Descending RecordCount</code> найти все журналы по имени <br />
+<code>Get-WinEvent -LogName "Microsoft-Windows-SmbClient/Connectivity"</code> <br />
+<code>Get-WinEvent -ListProvider *firewall*</code></p>
+<h3 id="filter-xpathhashtable">Filter XPath/Hashtable<a class="headerlink" href="#filter-xpathhashtable" title="Permanent link">&para;</a></h3>
+<p><code>Get-WinEvent -FilterHashtable @{LogName="Security";ID=4624}</code> найти логи по ID в журнале Security <br />
+<code>Get-WinEvent -FilterHashtable @{LogName="System";Level=2}</code> найти все записи ошибки (1 - критический, 3 - предупреждение, 4 - сведения) <br />
+<code>Get-WinEvent -FilterHashtable @{LogName="System";Level=2;ProviderName="Service Control Manager"}</code> отфильтровать по имени провайдера</p>
+<p><code>([xml](Get-WinEvent -FilterHashtable @{LogName="Security";ID=4688} -MaxEvents 1).ToXml()).Event.EventData.Data</code> отобразить все свойства, хранимые в EventData (Message) <br />
+<code>Get-WinEvent -FilterHashtable @{logname="security";ID=4688} -MaxEvents 1 | select timecreated,{$_.Properties[5].value}</code> отфильтровать время события и имя запущенного процесса</p>
+<pre><code>$query = '
+&lt;QueryList&gt;
+    &lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&gt;
+        &lt;Select Path=&quot;Security&quot;&gt;
+            *[System[EventID=4688]] and 
+            *[EventData[Data[@Name=&quot;NewProcessName&quot;]=&quot;C:\Windows\System32\autochk.exe&quot; or Data[@Name=&quot;NewProcessName&quot;]=&quot;C:\Windows\System32\services.exe&quot;]]
+        &lt;/Select&gt;
+    &lt;/Query&gt;
+&lt;/QueryList&gt;
+'
+
+Get-WinEvent -LogName Security -FilterXPath $query
+</code></pre>
+<h3 id="reboot">Reboot<a class="headerlink" href="#reboot" title="Permanent link">&para;</a></h3>
+<pre><code>$query = '
+&lt;QueryList&gt;
+    &lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&gt;
+        &lt;Select Path=&quot;System&quot;&gt;
+            *[
+            System[
+            EventID=41 or
+            EventID=1074 or
+            EventID=1076 or
+            EventID=6005 or
+            EventID=6006 or
+            EventID=6008 or
+            EventID=6009 or
+            EventID=6013
+            ]
+            ]
+        &lt;/Select&gt;
+    &lt;/Query&gt;
+&lt;/QueryList&gt;
+'
+Get-WinEvent -LogName System -FilterXPath $query
+
+41  ` Система была перезагружена без корректного завершения работы.
+1074` Система была корректного выключена пользователем или процессом.
+1076` Следует за Event ID 6008 и означает, что первый пользователь (с правом выключения системы) подключившийся к серверу после неожиданной перезагрузки или выключения, указал причину этого события.
+6005` Запуск &quot;Журнала событий Windows&quot; (Event Log). Указывает на включение системы.
+6006` Остановка «Журнала событий Windows». Указывает на выключение системы.
+6008` Предыдущее выключение системы было неожиданным.
+6009` Версия операционной системы, зафиксированная при загрузке системы.
+6013` Время работы системы (system uptime) в секундах.
+</code></pre>
+<h3 id="logon">Logon<a class="headerlink" href="#logon" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$srv = &quot;localhost&quot;
+$FilterXPath = '&lt;QueryList&gt;&lt;Query Id=&quot;0&quot;&gt;&lt;Select&gt;*[System[EventID=21]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;'
+$RDPAuths = Get-WinEvent -ComputerName $srv -LogName &quot;Microsoft-Windows-TerminalServices-LocalSessionManager/Operational&quot; -FilterXPath $FilterXPath
+[xml[]]$xml = $RDPAuths | Foreach {$_.ToXml()}
+$EventData = Foreach ($event in $xml.Event) {
+New-Object PSObject -Property @{
+&quot;Connection Time&quot; = (Get-Date ($event.System.TimeCreated.SystemTime) -Format 'yyyy-MM-dd hh:mm K')
+&quot;User Name&quot; = $event.UserData.EventXML.User
+&quot;User ID&quot; = $event.UserData.EventXML.SessionID
+&quot;User Address&quot; = $event.UserData.EventXML.Address
+&quot;Event ID&quot; = $event.System.EventID
+}}
+$EventData | ft
+</code></pre>
+<h3 id="eventlog">EventLog<a class="headerlink" href="#eventlog" title="Permanent link">&para;</a></h3>
+<p><code>Get-EventLog -List</code> отобразить все корневые журналы логов и их размер <br />
+<code>Clear-EventLog Application</code> очистить логи указанного журнала <br />
+<code>Get-EventLog -LogName Security -InstanceId 4624</code> найти логи по ID в журнале Security</p>
+<h2 id="defender">Defender<a class="headerlink" href="#defender" title="Permanent link">&para;</a></h2>
+<p><code>Import-Module Defender</code> <br />
+<code>Get-Command -Module Defender</code> <br />
+<code>Get-MpComputerStatus</code> <br />
+<code>(Get-MpComputerStatus).AntivirusEnabled</code> статус работы антивируса</p>
+<p><code>$session = NewCimSession -ComputerName hostname</code> подключиться к удаленному компьютеру, используется WinRM <br />
+<code>Get-MpComputerStatus -CimSession $session | fl fullscan*</code> узнать дату последнего сканирования на удаленном компьютере</p>
+<p><code>Get-MpPreference</code> настройки <br />
+<code>(Get-MpPreference).ScanPurgeItemsAfterDelay</code> время хранения записей журнала защитника в днях <br />
+<code>Set-MpPreference -ScanPurgeItemsAfterDelay 30</code> изменить время хранения <br />
+<code>ls "C:\ProgramData\Microsoft\Windows Defender\Scans\History"</code> <br />
+<code>Get-MpPreference | select disable*</code> отобразить статус всех видов проверок/сканирований <br />
+<code>Set-MpPreference -DisableRealtimeMonitoring $true</code> отключить защиту Defender в реальном времени (использовать только ручное сканирование) <br />
+<code>Set-MpPreference -DisableRemovableDriveScanning $false</code> включить сканирование USB накопителей <br />
+<code>Get-MpPreference | select excl*</code> отобразить список всех исключений <br />
+<code>(Get-MpPreference).ExclusionPath</code> <br />
+<code>Add-MpPreference -ExclusionPath C:\install</code> добавить директорию в исключение <br />
+<code>Remove-MpPreference -ExclusionPath C:\install</code> удалить из исключения <br />
+<code>New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1 -PropertyType DWORD -Force</code> полностью отключить Windows Defender</p>
+<p><code>Set-MpPreference -SignatureDefinitionUpdateFileSharesSources \\FileShare1\Updates</code> для обновления из сетевой папки нужно предварительно скачать файлы с сигнатурами баз с сайта https://www.microsoft.com/security/portal/definitions/adl.aspx и поместить в сетевой каталог<br />
+<code>Update-MpSignature -UpdateSource FileShares</code> изменить источник обновлений (MicrosoftUpdateServer – сервера обновлений MS в интернете, InternalDefinitionUpdateServer — внутренний WSUS сервер) <br />
+<code>Update-MpSignature</code> обновить сигнатуры</p>
+<p><code>Start-MpScan -ScanType QuickScan</code> быстрая проверка или FullScan <br />
+<code>Start-MpScan -ScanType FullScan -AsJob</code> <br />
+<code>Set-MpPreference -RemediationScheduleDay 1-7</code> выбрать дни, начиная с воскресенья или 0 каждый день, 8 - сбросить <br />
+<code>Set-MpPreference -ScanScheduleQuickScanTime 14:00:00</code> <br />
+<code>Start-MpScan -ScanType CustomScan -ScanPath "C:\Program Files"</code> сканировать выбранную директорию</p>
+<p><code>Get-MpThreat</code> история угроз и тип угрозы (ThreatName: HackTool/Trojan) <br />
+<code>Get-MpThreatCatalog</code> список известных видов угроз <br />
+<code>Get-MpThreatDetection</code> история защиты (активных и прошлые) и ID угрозы <br />
+<code>Get-MpThreat -ThreatID 2147760253</code></p>
+<p><code>ls "C:\ProgramData\Microsoft\Windows Defender\Quarantine\"</code> директория хранения файлов в карантине <br />
+<code>cd "C:\Program Files\Windows Defender\"</code> <br />
+<code>.\MpCmdRun.exe -restore -name $ThreatName</code> восстановить файл из карантина <br />
+<code>.\MpCmdRun.exe -restore -filepath $path_file</code></p>
+<h2 id="windowsupdate">WindowsUpdate<a class="headerlink" href="#windowsupdate" title="Permanent link">&para;</a></h2>
+<p><code>Get-Hotfix | Sort-Object -Descending  InstalledOn</code> список установленных обновлений (информация из cimv2) <br />
+<code>Get-Hotfix -Description "Security update"</code> <br />
+<code>Get-CimInstance Win32_QuickFixEngineering</code> <br />
+<code>Get-Command -Module WindowsUpdate</code> <br />
+<code>Get-WindowsUpdateLog</code> <br />
+<code>Get-Service uhssvc</code> служба Microsoft Health Update Tools, которая отвечает за предоставление обновлений</p>
+<p><code>Install-Module -Name PSWindowsUpdate -Scope CurrentUser</code> <br />
+<code>Import-Module PSWindowsUpdate</code> <br />
+<code>Get-Command -Module PSWindowsUpdate</code> <br />
+<code>Get-WindowsUpdate</code> список обновлений для скачать и установить с сервера WSUS или Microsoft Update <br />
+<code>Get-WindowsUpdate -Download</code> загрузить все обновления <br />
+<code>Get-WindowsUpdate –Install</code> установить все обновления <br />
+<code>Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot</code> установить все обновления без перезагрузки <br />
+<code>Get-WindowsUpdate -KBArticleID KB2267602, KB4533002 -Install</code> <br />
+<code>Get-WindowsUpdate -KBArticleID KB2538243 -Hide</code> скрыть обновления, что бы они никогда не устанавливались <br />
+<code>Get-WindowsUpdate –IsHidden</code> отобразить скрытые обновления (Hide-WindowsUpdate) <br />
+<code>Remove-WindowsUpdate -KBArticleID KB4011634 -NoRestart</code> удалить обновление <br />
+<code>Uninstall-WindowsUpdate</code> удалить обновление <br />
+<code>Add-WUServiceManager</code> регистрация сервера обновления (Windows Update Service Manager) <br />
+<code>Enable-WURemoting</code> включить правила Windows Defender, разрешающие удаленное использование командлета PSWindowsUpdate <br />
+<code>Get-WUApiVersion</code> версия Windows Update Agent <br />
+<code>Get-WUHistory</code> список всех установленных обновлений (история обновлений) <br />
+<code>Get-WUHistory | Where-Object {$_.Title -match "KB4517389"}</code> поиск обновления <br />
+<code>Get-WULastResults</code> даты последнего поиска и установки обновлений <br />
+<code>Get-WURebootStatus</code> проверить, нужна ли перезагрузка для применения конкретного обновления <br />
+<code>Get-WUServiceManager</code> выводит источники обновлений <br />
+<code>Get-WUInstallerStatus</code> статус службы Windows Installer <br />
+<code>Remove-WUServiceManager</code> отключить Windows Update Service Manager</p>
+<h2 id="dism">DISM<a class="headerlink" href="#dism" title="Permanent link">&para;</a></h2>
+<p><code>Get-Command -Module Dism -Name *Driver*</code> <br />
+<code>Export-WindowsDriver -Online -Destination C:\Users\Lifailon\Documents\Drivers\</code> извлечение драйверов из текущей системы (C:\Windows\System32\DriverStore\FileRepository), выгружает список файлов, которые необходимы для установки драйвера (dll,sys,exe) в соответствии со списком файлов, указанных в секции [CopyFiles] inf-файла драйвера. <br />
+<code>Export-WindowsDriver -Path C:\win_image -Destination C:\drivers</code> извлечь драйвера из офлайн образа Windows, смонтированного в каталог c:\win_image <br />
+<code>$BackupDrivers = Export-WindowsDriver -Online -Destination C:\Drivers</code> <br />
+<code>$BackupDrivers | ft Driver,ClassName,ProviderName,Date,Version,ClassDescription</code> список драйверов в объектном представлении <br />
+<code>$BackupDrivers | where classname -match printer</code> <br />
+<code>pnputil.exe /add-driver C:\drivers\*.inf /subdirs /install</code> установить все (параметр subdirs) драйвера из указанной папки (включая вложенные)</p>
+<p><code>sfc /scannow</code> проверить целостность системных файлов с помощью утилиты SFC (System File Checker), в случае поиска ошибок, попробует восстановить их оригинальные копии из хранилища системных компонентов Windows (каталог C:\Windows\WinSxS). Вывод работы логируется в C:\Windows\Logs\CBS с тегом SR <br />
+<code>Get-ComputerInfo | select *</code> подробная информация о системе (WindowsVersion,WindowsEditionId,<em>Bios</em>) <br />
+<code>Get-WindowsImage -ImagePath E:\sources\install.wim</code> список доступных версий в образе <br />
+<code>Repair-WindowsImage -Online –ScanHealth</code> <br />
+<code>Repair-WindowsImage -Online -RestoreHealth</code> восстановление хранилища системных компонентов <br />
+<code>Repair-WindowsImage -Online -RestoreHealth -Source E:\sources\install.wim:3 –LimitAccess</code> восстановление в оффлайн режиме из образа по номеру индекса</p>
+<h2 id="scheduled">Scheduled<a class="headerlink" href="#scheduled" title="Permanent link">&para;</a></h2>
+<p><code>$Trigger = New-ScheduledTaskTrigger -At 01:00am -Daily</code> 1:00 ночи <br />
+<code>$Trigger = New-ScheduledTaskTrigger –AtLogon</code> запуск при входе пользователя в систему <br />
+<code>$Trigger = New-ScheduledTaskTrigger -AtStartup</code> при запуске системы <br />
+<code>$User = "NT AUTHORITY\SYSTEM"</code> <br />
+<code>$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "$home\Documents\DNS-Change-Tray-1.3.ps1"</code> <br />
+<code>$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-NoProfile -NoLogo -NonInteractive -ExecutionPolicy Unrestricted -WindowStyle Hidden -File $home\Documents\DNS-Change-Tray-1.3.ps1"</code> <br />
+<code>Register-ScheduledTask -TaskName "DNS-Change-Tray-Startup" -Trigger $Trigger -User $User -Action $Action -RunLevel Highest –Force</code></p>
+<p><code>Get-ScheduledTask | ? state -ne Disabled</code> список всех активных заданий <br />
+<code>Start-ScheduledTask DNS-Change-Tray-Startup</code> запустить задание немедленно <br />
+<code>Get-ScheduledTask DNS-Change-Tray-Startup | Disable-ScheduledTask</code> отключить задание <br />
+<code>Get-ScheduledTask DNS-Change-Tray-Startup | Enable-ScheduledTask</code> включить задание <br />
+<code>Unregister-ScheduledTask DNS-Change-Tray-Startup</code> удалить задание <br />
+<code>Export-ScheduledTask DNS-Change-Tray-Startup | Out-File $home\Desktop\Task-Export-Startup.xml</code> экспортировать задание в xml <br />
+<code>Register-ScheduledTask -Xml (Get-Content $home\Desktop\Task-Export-Startup.xml | Out-String) -TaskName "DNS-Change-Tray-Startup"</code></p>
+<h2 id="shutdown">shutdown<a class="headerlink" href="#shutdown" title="Permanent link">&para;</a></h2>
+<p><code>shutdown /r /o</code> перезагрузка в безопасный режим <br />
+<code>shutdown /s /t 600 /c "Power off after 10 minutes"</code> выключение <br />
+<code>shutdown /s /f</code> принудительное закрытие приложений <br />
+<code>shutdown /a</code> отмена <br />
+<code>shutdown /r /t 0 /m \\192.168.3.100</code> <br />
+<code>Restart-Computer -ComputerName 192.168.3.100 -Protocol WSMan</code> через WinRM <br />
+<code>Restart-Computer –ComputerName 192.168.3.100 –Force</code> через WMI <br />
+<code>Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Start\HideShutDown" -Name "value" -Value 1</code> скрыть кнопку выключения <br />
+<code>Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Start\HideRestart" -Name "value" -Value 1</code> скрыть кнопку перезагрузки</p>
+<pre><code class="language-PowerShell">function Start-Shutdown {
+    &lt;#
+    .SYNOPSIS
+    Module for shutdown and restart the computer at a specified time
+    .DESCRIPTION
+    Example:
+    # Start-Shutdown -Time &quot;18:00&quot;
+    # Start-Shutdown -Restart -Time &quot;18:00&quot;
+    # Start-Shutdown -Cancel
+    .LINK
+    https://github.com/Lifailon/PS-Commands
+    #&gt;
+    param(
+        [string]$Time,
+        [switch]$Restart,
+        [switch]$Cancel
+    )
+    if ($Time) {
+        $currentDateTime = Get-Date
+        $shutdownTime = Get-Date $Time
+        if ($shutdownTime -lt $currentDateTime) {
+            $shutdownTime = $shutdownTime.AddDays(1)
+        }
+        $timeUntilShutdown = $shutdownTime - $currentDateTime
+        $secondsUntilShutdown = [math]::Round($timeUntilShutdown.TotalSeconds)
+    }
+    if ($Cancel) {
+        Start-Process -FilePath &quot;shutdown.exe&quot; -ArgumentList &quot;/a&quot;
+    } elseif ($Restart) {
+        Write-Host &quot;The computer will restart after $($timeUntilShutdown.Hours) hours and $($timeUntilShutdown.Minutes) minutes.&quot;
+        Start-Process -FilePath &quot;shutdown.exe&quot; -ArgumentList &quot;/r&quot;, &quot;/f&quot;, &quot;/t&quot;, &quot;$secondsUntilShutdown&quot;
+    } else {
+        Write-Host &quot;The computer will shutdown after $($timeUntilShutdown.Hours) hours and $($timeUntilShutdown.Minutes) minutes.&quot;
+        Start-Process -FilePath &quot;shutdown.exe&quot; -ArgumentList &quot;/s&quot;, &quot;/f&quot;, &quot;/t&quot;, &quot;$secondsUntilShutdown&quot;
+    }
+}
+</code></pre>
+<h2 id="localaccounts">LocalAccounts<a class="headerlink" href="#localaccounts" title="Permanent link">&para;</a></h2>
+<p><code>Get-Command -Module Microsoft.PowerShell.LocalAccounts</code> <br />
+<code>Get-LocalUser</code> список пользователей <br />
+<code>Get-LocalGroup</code> список групп <br />
+<code>New-LocalUser "1C" -Password $Password -FullName "1C Domain"</code> создать пользователя <br />
+<code>Set-LocalUser -Password $Password 1C</code> изменить пароль <br />
+<code>Add-LocalGroupMember -Group "Administrators" -Member "1C"</code> добавить в группу Администраторов <br />
+<code>Get-LocalGroupMember "Administrators"</code> члены группы</p>
+<pre><code class="language-PowerShell">@(&quot;vproxy-01&quot;,&quot;vproxy-02&quot;,&quot;vproxy-03&quot;) | %{
+icm $_ {Add-LocalGroupMember -Group &quot;Administrators&quot; -Member &quot;support4&quot;}
+icm $_ {Get-LocalGroupMember &quot;Administrators&quot;}
+}
+</code></pre>
+<h2 id="smb">SMB<a class="headerlink" href="#smb" title="Permanent link">&para;</a></h2>
+<p><code>Get-SmbServerConfiguration</code> <br />
+<code>Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force</code> отключить протокол SMB v1 <br />
+<code>Get-WindowsFeature | Where-Object {$_.name -eq "FS-SMB1"} | ft Name,Installstate</code> модуль ServerManager, проверить установлен ли компонент SMB1 <br />
+<code>Install-WindowsFeature FS-SMB1</code> установить SMB1 <br />
+<code>Uninstall-WindowsFeature –Name FS-SMB1 –Remove</code> удалить SMB1 клиента (понадобится перезагрузка) <br />
+<code>Get-WindowsOptionalFeature -Online</code> модуль DISM, для работы с компонентами Windows <br />
+<code>Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -Remove</code> удалить SMB1 <br />
+<code>Set-SmbServerConfiguration –AuditSmb1Access $true</code> включить аудит SMB1 <br />
+<code>Get-SmbConnection</code> список активных сессий и используемая версия SMB (Dialect) <br />
+<code>Get-SmbOpenFile | select ClientUserName,ClientComputerName,Path,SessionID</code> список открытых файлов <br />
+<code>Get-SmbShare</code> список сетевых папок <br />
+<code>New-SmbShare -Name xl-share -Path E:\test</code> создать новую общую сетевую папку (расшарить) <br />
+<code>-EncryptData $True</code> включить шифрование SMB <br />
+<code>-Description</code> имя в сетевом окружении <br />
+<code>-ReadAccess "domain\username"</code> доступ на чтение <br />
+<code>-ChangeAccess</code> доступ на запись <br />
+<code>-FullAccess</code> полный доступ <br />
+<code>-NoAccess ALL</code> нет прав <br />
+<code>-FolderEnumerationMode [AccessBased | Unrestricted]</code> позволяет скрыть в сетевой папке объекты, на которых у пользователя нет доступа с помощью Access-Based Enumeration (ABE) <br />
+<code>Get-SmbShare xl-share | Set-SmbShare -FolderEnumerationMode AccessBased</code> ключить ABE для всех расшаренных папок <br />
+<code>Remove-SmbShare xl-share -force</code> удалить сетевой доступ (шару) <br />
+<code>Get-SmbShareAccess xl-share</code> вывести список доступов безопасности к шаре <br />
+<code>Revoke-SmbShareAccess xl-share -AccountName Everyone –Force</code> удалить группу из списка доступов <br />
+<code>Grant-SmbShareAccess -Name xl-share -AccountName "domain\XL-Share" -AccessRight Change –force</code> изменить/добавить разрешения на запись (Full,Read) <br />
+<code>Grant-SmbShareAccess -Name xl-share -AccountName "все" -AccessRight Change –force</code> <br />
+<code>Block-SmbShareAccess -Name xl-share -AccountName "domain\noAccess" -Force</code> принудительный запрет <br />
+<code>New-SmbMapping -LocalPath X: -RemotePath \\$srv\xl-share -UserName support4 -Password password –Persistent $true</code> подключить сетевой диск <br />
+<code>-Persistent</code> восстановление соединения после отключения компьютера или сети <br />
+<code>-SaveCredential</code> позволяет сохранить учетные данные пользователя для подключения в диспетчер учетных данных Windows Credential Manager <br />
+<code>Stop-Process -Name "explorer" | Start-Process -FilePath "C:\Windows\explorer.exe"</code> перезапустить процесс для отображения в проводнике <br />
+<code>Get-SmbMapping</code> список подключенных сетевых дисков <br />
+<code>Remove-SmbMapping X: -force</code> отмонтировать сетевой диск <br />
+<code>$CIMSession = New-CIMSession –Computername $srv</code> создать сеанс CIM (аудентификация на SMB) <br />
+<code>Get-SmbOpenFile -CIMSession $CIMSession | select ClientUserName,ClientComputerName,Path | Out-GridView -PassThru | Close-SmbOpenFile -CIMSession $CIMSession -Confirm:$false –Force</code> закрыть файлы (открыть к ним сетевой доступ)</p>
+<h3 id="get-acl">Get-Acl<a class="headerlink" href="#get-acl" title="Permanent link">&para;</a></h3>
+<p><code>(Get-Acl \\$srv\xl-share).access</code> доступ ACL на уровне NTFS <br />
+<code>Get-Acl C:\Drivers | Set-Acl C:\Distr</code> скопировать NTFS разрешения с одной папки и применить их на другую</p>
+<h3 id="ntfssecurity">NTFSSecurity<a class="headerlink" href="#ntfssecurity" title="Permanent link">&para;</a></h3>
+<p><code>Install-Module -Name NTFSSecurity -force</code> <br />
+<code>Get-Item "\\$srv\xl-share" | Get-NTFSAccess</code> <br />
+<code>Add-NTFSAccess -Path "\\$srv\xl-share" -Account "domain\xl-share" -AccessRights Fullcontrol -PassThru</code> добавить <br />
+<code>Remove-NTFSAccess -Path "\\$srv\xl-share" -Account "domain\xl-share" -AccessRights FullControl -PassThru</code> удалить <br />
+<code>Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Clear-NTFSAccess</code> удалить все разрешения, без удаления унаследованных разрешений <br />
+<code>Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Enable-NTFSAccessInheritance</code> включить NTFS наследование для всех объектов в каталоге</p>
+<h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
+<p><code>Get-Command -Module Storage</code> <br />
+<code>Get-Disk</code> список логических дисков <br />
+<code>Get-Partition</code> отобразить разделы на всех дисках <br />
+<code>Get-Volume</code> список логичких разделов <br />
+<code>Get-PhysicalDisk</code> список физических дисков <br />
+<code>Initialize-Disk 1 –PartitionStyle MBR</code> инициализировать диск <br />
+<code>New-Partition -DriveLetter D –DiskNumber 1 -Size 500gb</code> создать раздел (выделить все место -UseMaximumSize) <br />
+<code>Format-Volume -DriveLetter D -FileSystem NTFS -NewFileSystemLabel Disk-D</code> форматировать раздел <br />
+<code>Set-Partition -DriveLetter D -IsActive $True</code> сделать активным <br />
+<code>Remove-Partition -DriveLetter D –DiskNumber 1</code> удалить раздел <br />
+<code>Clear-Disk -Number 1 -RemoveData</code> очистить диск <br />
+<code>Repair-Volume –driveletter C –Scan</code> Check disk <br />
+<code>Repair-Volume –driveletter C –SpotFix</code> <br />
+<code>Repair-Volume –driverletter C -Scan –Cimsession $CIMSession</code></p>
+<h3 id="iscsi">iSCSI<a class="headerlink" href="#iscsi" title="Permanent link">&para;</a></h3>
+<p><code>New-IscsiVirtualDisk -Path D:\iSCSIVirtualDisks\iSCSI2.vhdx -Size 20GB</code> создать динамический vhdx-диск (для фиксированного размера -UseFixed) <br />
+<code>New-IscsiServerTarget -TargetName iscsi-target-2 -InitiatorIds "IQN:iqn.1991-05.com.microsoft:srv3.contoso.com"</code> создать Target <br />
+<code>Get-IscsiServerTarget | fl TargetName, LunMappings</code> <br />
+<code>Connect-IscsiTarget -NodeAddress "iqn.1995-05.com.microsoft:srv2-iscsi-target-2-target" -IsPersistent $true</code> подключиться инициатором к таргету <br />
+<code>Get-IscsiTarget | fl</code> <br />
+<code>Disconnect-IscsiTarget -NodeAddress "iqn.1995-05.com.microsoft:srv2-iscsi-target-2-target" -Confirm:$false</code> отключиться</p>
+<h2 id="ps2exe">PS2EXE<a class="headerlink" href="#ps2exe" title="Permanent link">&para;</a></h2>
+<p><code>Install-Module ps2exe -Repository PSGallery</code> <br />
+<code>Get-Module -ListAvailable</code> список всех модулей <br />
+<code>-noConsole</code> использовать GUI, без окна консоли powershell <br />
+<code>-noOutput</code> выполнение в фоне <br />
+<code>-noError</code> без вывода ошибок <br />
+<code>-requireAdmin</code> при запуске запросить права администратора <br />
+<code>-credentialGUI</code> вывод диалогового окна для ввода учетных данных <br />
+<code>Invoke-ps2exe -inputFile "$home\Desktop\WinEvent-Viewer-1.1.ps1" -outputFile "$home\Desktop\WEV-1.1.exe" -iconFile "$home\Desktop\log_48px.ico" -title "WinEvent-Viewer" -noConsole -noOutput -noError</code></p>
+<h2 id="nssm">NSSM<a class="headerlink" href="#nssm" title="Permanent link">&para;</a></h2>
+<p><code>$powershell_Path = (Get-Command powershell).Source</code> <br />
+<code>$NSSM_Path = (Get-Command "C:\WinPerf-Agent\NSSM-2.24.exe").Source</code> <br />
+<code>$Script_Path = "C:\WinPerf-Agent\WinPerf-Agent-1.1.ps1"</code> <br />
+<code>$Service_Name = "WinPerf-Agent"</code> <br />
+<code>&amp; $NSSM_Path install $Service_Name $powershell_Path -ExecutionPolicy Bypass -NoProfile -f $Script_Path</code> создать Service <br />
+<code>&amp; $NSSM_Path start $Service_Name</code> запустить <br />
+<code>&amp; $NSSM_Path status $Service_Name</code> статус <br />
+<code>$Service_Name | Restart-Service</code> перезапустить <br />
+<code>$Service_Name | Get-Service</code> статус <br />
+<code>$Service_Name | Stop-Service</code> остановить <br />
+<code>&amp; $NSSM_Path set $Service_Name description "Check performance CPU and report email"</code> изменить описание <br />
+<code>&amp; $NSSM_Path remove $Service_Name</code> удалить</p>
+<h2 id="jobs">Jobs<a class="headerlink" href="#jobs" title="Permanent link">&para;</a></h2>
+<p><code>Get-Job</code> получение списка задач <br />
+<code>Start-Job</code> запуск процесса <br />
+<code>Stop-Job</code> остановка процесса <br />
+<code>Suspend-Job</code> приостановка работы процесса <br />
+<code>Resume-Job</code> восстановление работы процесса <br />
+<code>Wait-Job</code> ожидание вывода команды <br />
+<code>Receive-Job</code> получение результатов выполненного процесса <br />
+<code>Remove-Job</code> удалить задачу</p>
+<pre><code class="language-PowerShell">function Start-PingJob ($Network) {
+$RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+foreach ($4 in 1..254) {
+$ip = $RNetwork+$4
+# создаем задания, забираем 3-ю строку вывода и добавляем к выводу ip-адрес:
+(Start-Job {&quot;$using:ip : &quot;+(ping -n 1 -w 50 $using:ip)[2]}) | Out-Null
+}
+while ($True){
+$status_job = (Get-Job).State[-1] # забираем статус последнего задания
+if ($status_job -like &quot;Completed&quot;){ # проверяем на выполнение (задания выполняются по очереди сверху вниз)
+$ping_out = Get-Job | Receive-Job # если выполнен, забираем вывод всех заданий
+Get-Job | Remove-Job -Force # удаляем задания
+$ping_out
+break # завершаем цикл
+}}
+}
+</code></pre>
+<p><code>Start-PingJob -Network 192.168.3.0</code> <br />
+<code>(Measure-Command {Start-PingJob -Network 192.168.3.0}).TotalSeconds</code> 60 Seconds</p>
+<h3 id="threadjob">ThreadJob<a class="headerlink" href="#threadjob" title="Permanent link">&para;</a></h3>
+<p><code>Install-Module -Name ThreadJob</code> <br />
+<code>Get-Module ThreadJob -list</code> <br />
+<code>Start-ThreadJob {ping ya.ru} | Out-Null</code> создать фоновую задачу <br />
+<code>Get-Job | Receive-Job -Keep</code> отобразить и не удалять вывод <br />
+<code>(Get-Job).HasMoreData</code> если False, то вывод команы удален <br />
+<code>(Get-Job)[-1].Output</code> отобразить вывод последней задачи</p>
+<pre><code class="language-PowerShell">function Start-PingThread ($Network) {
+$RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+foreach ($4 in 1..254) {
+$ip = $RNetwork+$4
+# создаем задания, забираем 3-ю строку вывода и добавляем к выводу ip-адрес:
+(Start-ThreadJob {&quot;$using:ip : &quot;+(ping -n 1 -w 50 $using:ip)[2]}) | Out-Null
+}
+while ($True){
+$status_job = (Get-Job).State[-1] # забираем статус последнего задания
+if ($status_job -like &quot;Completed&quot;){ # проверяем на выполнение (задания выполняются по очереди сверху вниз)
+$ping_out = Get-Job | Receive-Job # если выполнен, забираем вывод всех заданий
+Get-Job | Remove-Job -Force # удаляем задания
+$ping_out
+break # завершаем цикл
+}}
+}
+</code></pre>
+<p><code>Start-PingThread -Network 192.168.3.0</code> <br />
+<code>(Measure-Command {Start-PingThread -Network 192.168.3.0}).TotalSeconds</code> 24 Seconds</p>
+<h3 id="poshrsjob">PoshRSJob<a class="headerlink" href="#poshrsjob" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">function Start-PingRSJob ($Network) {
+$RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+foreach ($4 in 1..254) {
+$ip = $RNetwork+$4
+(Start-RSJob {&quot;$using:ip : &quot;+(ping -n 1 -w 50 $using:ip)[2]}) | Out-Null
+}
+$ping_out = Get-RSJob | Receive-RSJob
+$ping_out
+Get-RSJob | Remove-RSJob
+}
+</code></pre>
+<p><code>Start-PingRSJob -Network 192.168.3.0</code> <br />
+<code>(Measure-Command {Start-PingRSJob -Network 192.168.3.0}).TotalSeconds</code> 10 Seconds</p>
+<h2 id="regedit">Regedit<a class="headerlink" href="#regedit" title="Permanent link">&para;</a></h2>
+<p><code>Get-PSDrive</code> список всех доступных дисков/разделов, их размер и веток реестра <br />
+<code>cd HKLM:\</code> HKEY_LOCAL_MACHINE <br />
+<code>cd HKCU:\</code> HKEY_CURRENT_USER <br />
+<code>Get-Item</code> получить информацию о ветке реестра <br />
+<code>New-Item</code> создать новый раздел реестра <br />
+<code>Remove-Item</code> удалить ветку реестра <br />
+<code>Get-ItemProperty</code> получить значение ключей/параметров реестра (это свойства ветки реестра, аналогично свойствам файла) <br />
+<code>Set-ItemProperty</code> изменить название или значение параметра реестра <br />
+<code>New-ItemProperty</code> создать параметр реестра <br />
+<code>Remove-ItemProperty</code> удалить параметр</p>
+<p><code>Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select DisplayName</code> список установленных программ <br />
+<code>Get-Item HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\00000002</code> посмотреть содержимое Items <br />
+<code>(Get-ItemProperty HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\00000002)."New Signature"</code> отобразить значение (Value) свойства (Property) Items <br />
+<code>$reg_path = "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\00000002"</code> <br />
+<code>$sig_name = "auto"</code> <br />
+<code>Set-ItemProperty -Path $reg_path -Name "New Signature" -Value $sig_name</code> изменить или добавить в корне ветки (Path) свойство (Name) со значением (Value) <br />
+<code>Set-ItemProperty -Path $reg_path -Name "Reply-Forward Signature" -Value $sig_name</code></p>
+<pre><code>Windows Registry Editor Version 5.00
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe]
+&quot;Debugger&quot;=&quot;\&quot;C:\\Windows\\System32\\Taskmgr.exe\&quot;&quot;
+</code></pre>
+<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
+<p><code>lodctr /R</code> пересоздать счетчиков производительности из системного хранилища архивов (так же исправляет счетчики для CIM, например, для cpu Win32_PerfFormattedData_PerfOS_Processor и iops Win32_PerfFormattedData_PerfDisk_PhysicalDisk) <br />
+<code>(Get-Counter -ListSet *).CounterSetName</code> вывести список всех доступных счетчиков производительности в системе <br />
+<code>(Get-Counter -ListSet *memory*).Counter</code> поиск по wildcard-имени во всех счетчиках (включая дочернии) <br />
+<code>Get-Counter "\Memory\Available MBytes"</code> объем свободной оперативной памяти <br />
+<code>Get-Counter -cn $srv "\LogicalDisk(*)\% Free Space"</code> % свободного места на всех разделах дисков <br />
+<code>(Get-Counter "\Process(*)\ID Process").CounterSamples</code> <br />
+<code>Get-Counter "\Processor(_Total)\% Processor Time" –ComputerName $srv -MaxSamples 5 -SampleInterval 2</code> 5 проверок каждые 2 секунды <br />
+<code>Get-Counter "\Процессор(_Total)\% загруженности процессора" -Continuous</code> непрерывно <br />
+<code>(Get-Counter "\Процессор(*)\% загруженности процессора").CounterSamples</code></p>
+<p><code>(Get-Counter -ListSet *интерфейс*).Counter</code> найти все счетчики <br />
+<code>Get-Counter "\Сетевой интерфейс(*)\Всего байт/с"</code> отобразить все адаптеры (выбрать действующий по трафику)</p>
+<pre><code class="language-PowerShell">$WARNING = 25
+$CRITICAL = 50
+$TransferRate = ((Get-Counter &quot;\\huawei-mb-x-pro\сетевой интерфейс(intel[r] wi-fi 6e ax211 160mhz)\всего байт/с&quot;
+).countersamples | select -ExpandProperty CookedValue)*8
+$NetworkUtilisation = [math]::round($TransferRate/1000000000*100,2)
+if ($NetworkUtilisation -gt $CRITICAL){
+Write-Output &quot;CRITICAL: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s&quot;   
+#exit 2     
+}
+if ($NetworkUtilisation -gt $WARNING){
+Write-Output &quot;WARNING: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s&quot;
+#exit 1
+}
+Write-Output &quot;OK: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s&quot;   
+#exit 0
+</code></pre>
+<h2 id="dsc">DSC<a class="headerlink" href="#dsc" title="Permanent link">&para;</a></h2>
+<p><code>Import-Module PSDesiredStateConfiguration</code> <br />
+<code>Get-Command -Module PSDesiredStateConfiguration</code> <br />
+<code>(Get-Module PSDesiredStateConfiguration).ExportedCommands</code> <br />
+<code>Get-DscLocalConfigurationManager</code></p>
+<p><code>Get-DscResource</code> <br />
+<code>Get-DscResource -Name File -Syntax</code> <a href="https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1">синтаксис</a></p>
+<p><code>Ensure = Present</code> настройка должна быть включена (каталог должен присутствовать, процесс должен быть запущен, если нет – создать, запустить) <br />
+<code>Ensure = Absent</code> настройка должна быть выключена (каталога быть не должно, процесс не должен быть запущен, если нет – удалить, остановить)</p>
+<pre><code class="language-PowerShell">Configuration TestConfiguraion
+{
+    Ctrl+Space
+}
+
+Configuration DSConfigurationProxy 
+{
+    Node vproxy-01 
+    {
+        File CreateDir
+        {
+            Ensure = &quot;Present&quot;
+            Type = &quot;Directory&quot;
+            DestinationPath = &quot;C:\Temp&quot;
+        }
+        Service StopW32time
+        {
+            Name = &quot;w32time&quot;
+            State = &quot;Stopped&quot;` Running
+        }
+        WindowsProcess RunCalc
+        {
+            Ensure = &quot;Present&quot;
+            Path = &quot;C:\WINDOWS\system32\calc.exe&quot;
+            Arguments = &quot;&quot;
+        }
+        Registry RegSettings
+        {
+            Ensure = &quot;Present&quot;
+            Key = &quot;HKEY_LOCAL_MACHINE\SOFTWARE\MySoft&quot;
+            ValueName = &quot;TestName&quot;
+            ValueData = &quot;TestValue&quot;
+            ValueType = &quot;String&quot;
+        }
+#       WindowsFeature IIS
+#       {
+#            Ensure = &quot;Present&quot;
+#            Name = &quot;Web-Server&quot;
+#       }
+    }
+}
+</code></pre>
+<p><code>$Path = (DSConfigurationProxy).DirectoryName</code> <br />
+<code>Test-DscConfiguration -Path $Path | select *</code> ResourcesInDesiredState - уже настроено, ResourcesNotInDesiredState - не настроено (не соответствует) <br />
+<code>Start-DscConfiguration -Path $Path</code> <br />
+<code>Get-Job</code> <br />
+<code>$srv = "vproxy-01"</code> <br />
+<code>Get-Service -ComputerName $srv | ? name -match w32time # Start-Service</code> <br />
+<code>icm $srv {Get-Process | ? ProcessName -match calc} | ft # Stop-Process -Force</code> <br />
+<code>icm $srv {ls C:\ | ? name -match Temp} | ft</code> rm`</p>
+<pre><code class="language-PowerShell">Configuration InstallPowerShellCore {
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Node localhost {
+        Script InstallPowerShellCore {
+            GetScript = {
+                return @{
+                    GetScript = $GetScript
+                }
+            }
+            SetScript = {
+                [string]$url = $(Invoke-RestMethod https://api.github.com/repos/PowerShell/PowerShell/releases/latest).assets.browser_download_url -match &quot;win-x64.zip&quot;
+                $downloadPath = &quot;$home\Downloads\PowerShell.zip&quot;
+                $installPath = &quot;$env:ProgramFiles\PowerShell\7&quot;
+                Invoke-WebRequest -Uri $url -OutFile $downloadPath
+                Expand-Archive -Path $downloadPath -DestinationPath $installPath -Force
+            }
+            TestScript = {
+                return Test-Path &quot;$env:ProgramFiles\PowerShell\7\pwsh.exe&quot;
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>$Path = (InstallPowerShellCore).DirectoryName</code> <br />
+<code>Test-DscConfiguration -Path $Path</code> <br />
+<code>Start-DscConfiguration -Path $path -Wait -Verbose</code> <br />
+<code>Get-Job</code></p>
+<h2 id="oh-my-posh">oh-my-posh<a class="headerlink" href="#oh-my-posh" title="Permanent link">&para;</a></h2>
+<p><a href="https://ohmyposh.dev/docs/installation/windows">Install</a></p>
+<p><code>winget install JanDeDobbeleer.OhMyPosh -s winget</code> <br />
+<code>choco install oh-my-posh -y</code> <br />
+<code>scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json</code> <br />
+<code>Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))</code></p>
+<p><a href="https://ohmyposh.dev/docs/themes">Themes</a></p>
+<p><code>Get-PoshThemes</code> <br />
+<code>oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/di4am0nd.omp.json" | Invoke-Expression</code> <br />
+<code>oh-my-posh init pwsh --config "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cert.omp.json" | Invoke-Expression</code></p>
+<p><code>New-Item -Path $PROFILE -Type File -Force</code> <br />
+<code>notepad $PROFILE</code> <br />
+<code>oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/di4am0nd.omp.json" | Invoke-Expression</code></p>
+<h3 id="themes-performance">themes-performance<a class="headerlink" href="#themes-performance" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">Install-Module themes-performance -Repository NuGet
+Import-Module themes-performance
+Set-PoshTheme -Theme System-Sensors # -Save
+Set-PoshTheme -Theme System-Performance # -Save
+Set-PoshTheme -Theme Pwsh-Process-Performance # -Save
+</code></pre>
+<h3 id="terminal-icons">Terminal-Icons<a class="headerlink" href="#terminal-icons" title="Permanent link">&para;</a></h3>
+<p><code>Install-Module -Name Terminal-Icons -Repository PSGallery</code> <br />
+<code>scoop bucket add extras</code> <br />
+<code>scoop install terminal-icons</code></p>
+<p><code>notepad $PROFILE</code> <br />
+<code>Import-Module -Name Terminal-Icons</code></p>
+<p>Использует шрифты, которые необходимо установить и настроить в параметрах профиля PowerShell: <a href="https://github.com/ryanoasis/nerd-fonts">Nerd Fonts</a> <br />
+<a href="https://www.nerdfonts.com/font-downloads">Список шрифтов</a> <br />
+Скачать и установить шрифт похожий на Cascadia Code - <a href="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/CascadiaCode.zip">CaskaydiaCove</a></p>
+<h2 id="pester">Pester<a class="headerlink" href="#pester" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/pester/Pester">Source</a></p>
+<p><code>Install-Module -Name Pester -Repository PSGallery -Force -AllowClobber</code> <br />
+<code>Import-Module Pester</code> <br />
+<code>$(Get-Module Pester -ListAvailable).Version</code></p>
+<p><code>.Tests.ps1</code></p>
+<pre><code class="language-PowerShell">function Add-Numbers {
+    param (
+        [int]$a,
+        [int]$b
+    )
+    $a + $b
+}
+Describe &quot;Add-Numbers&quot; {
+    Context &quot;При сложении двух чисел&quot; {
+        It &quot;Должна вернуться правильная сумма&quot; {
+            $result = Add-Numbers -a 3 -b 4
+            $result | Should -Be 7
+        }
+    }
+    Context &quot;При сложении двух чисел&quot; {
+        It &quot;Должна вернуться ошибка (5+0 -ne 4)&quot; {
+            $result = Add-Numbers -a 5 -b 0
+            $result | Should -Be 4
+        }
+    }
+}
+
+function Get-RunningProcess {
+    return Get-Process | Select-Object -ExpandProperty Name
+}
+Describe &quot;Get-RunningProcess&quot; {
+    Context &quot;При наличии запущенных процессов&quot; {
+        It &quot;Должен возвращать список имен процессов&quot; {
+            $result = Get-RunningProcess
+            $result | Should -Contain &quot;svchost&quot;
+            $result | Should -Contain &quot;explorer&quot;
+        }
+    }
+    Context &quot;Когда нет запущенных процессов&quot; {
+        It &quot;Должен возвращать пустой список&quot; {
+            # Замокать функцию Get-Process, чтобы она всегда возвращала пустой список процессов
+            Mock Get-Process { return @() }
+            $result = Get-RunningProcess
+            $result | Should -BeEmpty
+        }
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

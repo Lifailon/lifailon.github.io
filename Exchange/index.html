@@ -1,0 +1,1466 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TEST">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/Exchange/">
+      
+      
+        <link rel="prev" href="../dotNET/">
+      
+      
+        <link rel="next" href="../Git/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>MS Exchange - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pssession" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MS Exchange
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PowerShell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ActiveDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Apps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotNET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Exchange
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Exchange
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pssession" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSSession
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messagetrackinglog" class="md-nav__link">
+    <span class="md-ellipsis">
+      MessageTrackingLog
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mailbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mailbox
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moverequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      MoveRequest
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Archive
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quota
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mailboxrepairrequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      MailboxRepairRequest
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eseutil" class="md-nav__link">
+    <span class="md-ellipsis">
+      eseutil
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dial-tone-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dial Tone Recovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recovery-database-rdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recovery database (RDB)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transport
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pst" class="md-nav__link">
+    <span class="md-ellipsis">
+      PST
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributiongroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      DistributionGroup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auditlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      AuditLog
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Queue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defrag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dag-database-availability-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      DAG (Database Availability Group)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTML/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InfluxDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MSSQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MSSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MySQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MySQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WMI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WMI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pssession" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSSession
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messagetrackinglog" class="md-nav__link">
+    <span class="md-ellipsis">
+      MessageTrackingLog
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mailbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mailbox
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moverequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      MoveRequest
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Archive
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quota
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mailboxrepairrequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      MailboxRepairRequest
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eseutil" class="md-nav__link">
+    <span class="md-ellipsis">
+      eseutil
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dial-tone-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dial Tone Recovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recovery-database-rdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recovery database (RDB)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transport
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pst" class="md-nav__link">
+    <span class="md-ellipsis">
+      PST
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributiongroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      DistributionGroup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auditlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      AuditLog
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Queue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defrag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dag-database-availability-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      DAG (Database Availability Group)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Exchange</h1>
+
+<h2 id="pssession">PSSession<a class="headerlink" href="#pssession" title="Permanent link">&para;</a></h2>
+<p><code>$srv_cas = "exchange-cas"</code> <br />
+<code>$session_exchange = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://$srv_cas/PowerShell/</code> -Credential $Cred -Authentication Kerberos <br />
+<code>Get-PSSession</code> <br />
+<code>Import-PSSession $session_exchange -DisableNameChecking</code> импортировать в текущую сессию</p>
+<p><code>Get-ExchangeServer | select name,serverrole,admindisplayversion,Edition,OriginatingServer,WhenCreated,WhenChanged,DataPath | ft</code> список всех серверов</p>
+<h2 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h2>
+<p><code>Get-ImapSettings</code> настройки IMAP <br />
+<code>Get-ExchangeCertificate</code> список сертификатов <br />
+<code>Get-ExchangeCertificate -Thumbprint "5CEC8544D4743BC279E5FEA1679F79F5BD0C2B3A" | Enable-ExchangeCertificate -Services  IMAP, POP, IIS, SMTP</code> <br />
+<code>iisreset</code> <br />
+<code>Get-ClientAccessService | fl identity, *uri*</code> настройки службы автообнаружения в Exchange 2016 <br />
+<code>Get-ClientAccessService -Identity $srv | Set-ClientAccessService -AutoDiscoverServiceInternalUri https://mail.domain.ru/Autodiscover/Autodiscover.xml</code> изменить на внешний адрес <br />
+<code>Get-OutlookAnywhere</code> OA позволяет клиентам Outlook подключаться к своим почтовым ящикам за пределами локальной сети (без использования VPN) <br />
+<code>Get-WebServicesVirtualDirectory</code> <br />
+<code>Get-OwaVirtualDirectory</code> <br />
+<code>Get-ActiveSyncVirtualDirectory</code> <br />
+<code>Get-OabVirtualDirectory</code> виртуальная директория автономной адресной книги <br />
+<code>Get-OabVirtualDirectory -Server $srv | Set-OabVirtualDirectory -InternalUrl "https://mail.domain.ru/OAB" -ExternalUrl "https://mail.domain.ru/OAB"</code></p>
+<h2 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h2>
+<p>MS (Mailbox) - сервер с БД почтовых ящиков и общих папок, отвечает только за их размещение и не выполняет маршрутизацию никаких сообщений. <br />
+CAS (Client Access Server) - обработка клиентских подключений к почтовым ящикам, которые создаются клиентами Outlook Web Access (HTTP для Outlook Web App), Outlook Anywhere, ActiveSync (для мобильных устройств), интернет протоколы POP3 и IMAP4, MAPI для клиентов Microsoft Outlook. <br />
+Hub Transort - ответвечает за маршрутизацию сообщений интернета и инфраструктурой Exchange, а также между серверами Exchange. Сообщения всегда маршрутизируются с помощью роли транспортного сервера-концентратора, даже если почтовые ящики источника и назначения находятся в одной базе данных почтовых ящиков. <br />
+Relay - роль пограничного транспортного сервера (шлюз SMTP в периметре сети).</p>
+<p>SCP (Service Connection Point) - запись прописывается в AD, при создание сервера CAS. Outlook запрашивает SCP, выбирает те, которые находятся в одном сайте с ним и по параметру WhenCreated – по дате создания, выбирая самый старый. <br />
+Autodiscover. Outlook выбирает в качестве сервера Client Access тот, который прописан в атрибуте RPCClientAccessServer базы данных пользователя. Сведения о базе данных и сервере mailbox, на котором она лежит, берутся из AD.</p>
+<h2 id="messagetrackinglog">MessageTrackingLog<a class="headerlink" href="#messagetrackinglog" title="Permanent link">&para;</a></h2>
+<p><code>Get-MessageTrackingLog -ResultSize Unlimited | select Timestamp,Sender,Recipients,RecipientCount,MessageSubject,Source,EventID,ClientHostname,ServerHostname,ConnectorId, @{Name="MessageSize"; Expression={[string]([int]($_.TotalBytes / 1024))+" KB"}},@{Name="MessageLatency"; Expression={$_.MessageLatency -replace "\.\d+$"}}</code> <br />
+<code>Get-MessageTrackingLog -Start (Get-Date).AddHours(-24) -ResultSize Unlimited | where {[string]$_.recipients -like "*@yandex.ru"}</code> вывести сообщения за последние 24 часа, где получателем был указанный домен <br />
+-Start "04/01/2023 09:00:00" -End "04/01/2023 18:00:00" - поиск по указанному промежутку времени <br />
+-MessageSubject "Тест" - поиск по теме письма <br />
+-Recipients "support4@domain.ru" - поиск по получателю <br />
+-Sender - поиск по отправителю <br />
+-EventID – поиск по коду события сервера (RECEIVE, SEND, FAIL, DSN, DELIVER, BADMAIL, RESOLVE, EXPAND, REDIRECT, TRANSFER, SUBMIT, POISONMESSAGE, DEFER) <br />
+-Server – поиск на определенном транспортном сервере <br />
+-messageID – трекинг письма по его ID</p>
+<h2 id="mailbox">Mailbox<a class="headerlink" href="#mailbox" title="Permanent link">&para;</a></h2>
+<p><code>Get-Mailbox -Database "it2"</code> список почтовых серверов в базе данных <br />
+<code>Get-Mailbox -resultsize unlimited | ? Emailaddresses -like "support4" | format-list name,emailaddresses,database,servername</code> какую БД, сервер и smtp-адреса использует почтовый ящик <br />
+<code>Get-Mailbox -Database $db_name -Archive</code> отобразить архивные почтовые ящики</p>
+<p><code>Get-MailboxFolderStatistics -Identity "support4" -FolderScope All | select Name,ItemsInFolder,FolderSize</code> отобразить кол-во писем и размер в каждой папке <br />
+<code>Get-MailboxStatistics "support4" | select DisplayName,LastLoggedOnUserAccount,LastLogonTime,LastLogoffTime,ItemCount,TotalItemSize,DeletedItemCount,TotalDeletedItemSize,Database,ServerName</code> общее кол-во писем, их размер, время последнего входа и выхода, имя сервера и БД <br />
+<code>Get-Mailbox -Server s2 | Get-MailboxStatistics | where {$_.Lastlogontime -lt (get-date).AddDays(-30)} | Sort Lastlogontime -desc | ft displayname,Lastlogontime,totalitemsize</code> ящики, которые не использовались 30 и более дней</p>
+<p><code>Enable-Mailbox -Identity support9 -Database test_base</code> создать почтовый ящик для существующего пользователя в AD <br />
+<code>New-Mailbox -Name $login -UserPrincipalName "$login@$domain" -Database $select_db -OrganizationalUnit $path -Password (ConvertTo-SecureString -String "$password" -AsPlainText -Force)</code> создать новый почтовый ящик без привязки к пользователю AD <br />
+<code>Get-MailboxDatabase -Database $db_name | Remove-MailboxDatabase</code> удалить БД</p>
+<p><code>Set-MailBox "support4" -PrimarySmtpAddress support24@domain.ru -EmailAddressPolicyEnabled $false</code> добавить и изменить основной SMTP-адрес электронной почты для пользователя <br />
+<code>Set-Mailbox -Identity "support4" -DeliverToMailboxAndForward $true -ForwardingSMTPAddress "username@outlook.com"</code> включить переадресацию почты (электронная почта попадает в почтовый ящик пользователя support4 и одновременно пересылается по адресу username@outlook.com)</p>
+<h2 id="moverequest">MoveRequest<a class="headerlink" href="#moverequest" title="Permanent link">&para;</a></h2>
+<p><code>Get-Mailbox -Database $db_in | New-MoveRequest -TargetDatabase $db_out</code> переместить все почтовые ящики из одной БД в другую <br />
+<code>New-MoveRequest -Identity $db_in -TargetDatabase $db_out</code> переместить один почтовый ящик <br />
+<code>Get-MoveRequest | Suspend-MoveRequest</code> остановить запросы перемещения <br />
+<code>Get-MoveRequest | Remove-MoveRequest</code> удалить запросы на перемещение <br />
+<code>Get-MoveRequest | Get-MoveRequestStatistics</code> статус перемещения</p>
+<p>Status: <br />
+Cleanup - нужно подождать <br />
+Queued - в очереди <br />
+InProgress - в процессе <br />
+Percent Complete - процент выполнения <br />
+CompletionInProgress - завершение процесса <br />
+Completed - завершено</p>
+<p><code>Remove-MoveRequest -Identity $db_name</code> завершить процесс перемещения (убрать статус перемещения с почтового ящика и очистить список перемещений) <br />
+<code>Get-MailboxDatabase | Select Name, MailboxRetention</code> после перемещения ящиков, размер базы не изменится, полное удаление из базы произойдет, как пройдет количество дней, выставленное в параметре MailboxRetention <br />
+<code>Set-MailboxDatabase -MailboxRetention '0.00:00:00' -Identity $db_name</code> изменить значение</p>
+<h2 id="archive">Archive<a class="headerlink" href="#archive" title="Permanent link">&para;</a></h2>
+<p><code>Enable-Mailbox -Identity $name -Archive</code> включить архив для пользователя <br />
+<code>Get-Mailbox $name | New-MoveReques –ArchiveOnly –ArchiveTargetDatabase DBArch</code> переместить архивный почтовый ящик в другую БД <br />
+<code>Get-Mailbox $name | fl Name,Database,ArchiveDatabase</code> место расположения БД пользователя и БД его архива <br />
+<code>Disable-Mailbox -Identity $name -Archive</code> отключить архив <br />
+<code>Connect-Mailbox -Identity "8734c04e-981e-4ccf-a547-1c1ac7ebf3e2" -Archive -User $name -Database it2</code> подключение архива пользователя к указанному почтовому ящику <br />
+<code>Get-Mailbox $name | Set-Mailbox -ArchiveQuota 20GB -ArchiveWarningQuota 19GB</code> настроить квоты хранения архива</p>
+<h2 id="quota">Quota<a class="headerlink" href="#quota" title="Permanent link">&para;</a></h2>
+<p><code>Get-Mailbox -Identity $mailbox | fl IssueWarningQuota, ProhibitSendQuota, ProhibitSendReceiveQuota, UseDatabaseQuotaDefaults</code> отобразить квоты почтового ящика <br />
+IssueWarningQuota — квота, при достижении которой Exchange отправит уведомление <br />
+ProhibitSendQuota — при достижении будет запрещена отправка <br />
+ProhibitSendReceiveQuota — при достижении будет запрещена отправка и получение <br />
+UseDatabaseQuotaDefaults — используется ли квота БД или false - индвидиуальные <br />
+<code>Set-Mailbox -Identity $mailbox -UseDatabaseQuotaDefaults $false -IssueWarningQuota "3 GB" -ProhibitSendQuota "4 GB" -ProhibitSendReceiveQuota "5 GB"</code> задать квоту для пользователя</p>
+<p><code>Get-MailboxDatabase $db_name | fl Name, *Quota</code> отобразить квоты наложенные на БД <br />
+<code>Set-MailboxDatabase $db -ProhibitSendReceiveQuota "5 GB" -ProhibitSendQuota "4 GB" -IssueWarningQuota "3 GB"</code> настроить квоты на БД</p>
+<h2 id="database">Database<a class="headerlink" href="#database" title="Permanent link">&para;</a></h2>
+<p><code>Get-MailboxDatabase -Status | select ServerName,Name,DatabaseSize</code> список и размер всех БД на всех MX-серверах <br />
+<code>New-MailboxDatabase -Name it_2022 -EdbFilePath E:\Bases\it_2022\it_2022.edb -LogFolderPath G:\Logs\it_2022 -OfflineAddressBook "Default Offline Address List" -server exch-mx-01</code> создать БД <br />
+<code>Restart-Service MSExchangeIS</code> <br />
+<code>Get-Service | Where {$_ -match "exchange"} | Restart-Service</code> <br />
+<code>Get-MailboxDatabase -Server exch-01</code> список баз данных на MX-сервере <br />
+<code>New-MoveRequest -Identity "support4" -TargetDatabase it_2022</code> переместить почтовый ящик в новую БД <br />
+<code>Move-Databasepath $db_name –EdbFilepath "F:\DB\$db_name\$db_name.edb" –LogFolderpath "E:\DB\$db_name\logs\"</code> переместить БД и транзакционные логи на другой диск <br />
+<code>Set-MailboxDatabase -CircularLoggingEnabled $true -Identity $db_name</code> включить циклическое ведение журнала (Circular Logging), где последовательно пишутся 4 файла логов по 5 МБ, после чего первый лог-файл перезаписывается <br />
+<code>Set-MailboxDatabase -CircularLoggingEnabled $false -Identity $db_name</code> отключить циклическое ведение журнала <br />
+<code>Get-MailboxDatabase -Server "exch-mx-01" -Status | select EdbFilePath,LogFolderPath,LogFilePrefix</code> путь к БД, логам, имя текущего актуального лог-файла</p>
+<h2 id="mailboxrepairrequest">MailboxRepairRequest<a class="headerlink" href="#mailboxrepairrequest" title="Permanent link">&para;</a></h2>
+<p><code>New-MailboxRepairRequest -Database it2 -CorruptionType ProvisionedFolder, SearchFolder, AggregateCounts, Folderview</code> запустить последовательный тест (в конкретный момент времени не доступен один почтовый ящик) и исправление ошибок на прикладном уровне <br />
+<code>Get-MailboxRepairRequest -Database it2</code> прогресс выполнения <br />
+Позволяет исправить: <br />
+ProvisionedFolder – нарушения логической структуры папок <br />
+SearchFolder – ошибки в папках поиска <br />
+AggregateCounts – проверка и исправление информации о количестве элементов в папках и их размере <br />
+FolderView – неверное содержимое, отображаемое представлениями папок</p>
+<h2 id="eseutil">eseutil<a class="headerlink" href="#eseutil" title="Permanent link">&para;</a></h2>
+<p>При отправке/получении любого письма Exchange сначала вносит информацию в транзакционный лог, и только потом сохраняет элемент непосредственно в базу данных. Размер одного лог файла - 1 Мб. Есть три способа урезания логов: DAG, Backup на базе Volume Shadow Copy, Circular Logging.</p>
+<p>Ручное удаление журналов транзакций: <br />
+<code>cd E:\MS_Exchange_2010\MailBox\Reg_v1_MailBoxes\</code> перейти в каталог с логами <br />
+<code>ls E*.chk</code> узнать имя файла, в котором находится информация из контрольной точки фиксации журналов <br />
+<code>eseutil /mk .\E18.chk</code> узнать последний файл журнала, действия из которого были занесены в БД Exchange <br />
+<code>Checkpoint: (0x561299,8,16)</code> 561299 имя файла, который был последним зафиксирован (его информация уже в базе данных) <br />
+Находим в проводнике файл E0500561299.txt, можно удалять все файлы журналов, которые старше найденного файла</p>
+<p>Восстановление БД (если две копии БД с ошибкой): <br />
+<code>Get-MailboxDatabaseCopyStatus -Identity db_name\* | Format-List Name,Status,ContentIndexState</code> <br />
+Status            : FailedAndSuspended <br />
+ContentIndexState : Failed <br />
+Status            : Dismounted <br />
+ContentIndexState : Failed</p>
+<p><code>Get-MailboxDatabase -Server exch-mx-01 -Status | fl Name,EdbFilePath,LogFolderPath</code> проверить расположение базы и транзакционных логов <br />
+LogFolderPath - директория логов <br />
+E18 - имя транкзакционного лога (из него читаются остальные логи) <br />
+<code>dismount-Database db_name</code> отмантировать БД <br />
+<code>eseutil /mh D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> проверить базу <br />
+State: Dirty Shutdown - несогласованное состояние, означает, что часть транзакций не перенесена в базу, например, после того, как была осуществлена аварийная перезагрузка сервера. <br />
+<code>eseutil /ml E:\MS_Exchange_2010\MailBox\db_name\E18</code> проверка целостности транзакционных логи, если есть логи транзакций и они не испорчены, то можно восстановить из них, из файла E18 считываются все логи, должен быть статус - ОК</p>
+<p>Soft Recovery (мягкое восстановление) - необходимо перевести базу в состояние корректного отключения (Clear shutdown) путем записи недостающих файлов журналов транзакций в БД. <br />
+<code>eseutil /R E18 /l E:\MS_Exchange_2010\MailBox\db_name\ /d D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> <br />
+<code>eseutil /R E18 /a /i /l E:\MS_Exchange_2010\MailBox\db_name\ /d D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> если с логами что-то не так, можно попробовать восстановить базу игнорируя ошибку в логах <br />
+<code>eseutil /mk D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> cостоянии файла контрольных точек <br />
+<code>eseutil /g D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> проверка целостности БД <br />
+<code>eseutil /k D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> проверка контрольных сумм базы (CRC)</p>
+<p>Hard Recovery - если логи содержат ошибки и база не восстанавливается, то восстанавливаем базу без логов. <br />
+<code>eseutil /p D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> <br />
+/p - удалит поврежденные страницы, эта информация будет удалена из БД и восстановит целостность <br />
+<code>esetuil /d D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb</code> выполнить дефрагментацию (если был потерян большой объем данных, то может сильно снизиться производительность) <br />
+После выполнения команд необходимо вручную удалить все файлы с расширением log в папке MDBDATA, перед попыткой смонтировать базу данных. <br />
+<code>isinteg -s "db_name.edb" -test alltests</code> проверьте целостность базы данных <br />
+<code>isinteg -s "server_name" -fix -test -alltests</code> если проверка будет провалена. Выполнять команду до тех пор, пока у всех ошибок не станет статус 0 или статус не перестанет меняться, иногда необходимо 3 прохода для достижения результата. <br />
+<code>eseutil /mh D:\MS_Exchange_2010\Mailbox\db_name\db_name.edb | Select-String -Pattern "State:","Log Required:"</code> проверить статус <br />
+State: Clear shutdown - успешный статус <br />
+<code>Log Required</code> требуются ли файлы журналов, необходимые базе, чтобы перейти в согласованное состояние. Если база размонтирована корректно, то это значение будет равняться 0. <br />
+<code>mount-Database -force db_name</code> примонтировать БД <br />
+<code>Get-MailboxDatabase –Status db_name | fl Mounted</code> статус БД <br />
+<code>New-MailboxRepairRequest -Database db_name -CorruptionType SearchFolder,AggregateCounts,ProvisionedFolder,FolderView</code> восстановление логической целостности данных <br />
+После этого восстановить Index. <br />
+Если индексы не восстанавливаются, но БД монтируется, то перенести почтовые ящики в новую БД.</p>
+<p>Восстановление БД из Backup:</p>
+<p>1-й вариант:<br />
+1. Отмантировать текущую БД и удалить или переименовать директорию с файлами текущей БД.<br />
+3. Восстановить в ту же директорию из Backup базу с логами.<br />
+4. Запустить мягкое восстановление БД (Soft Recovery).<br />
+5. Примониторвать.</p>
+<p>2-й вариант:<br />
+1. Отмантировать и удалить текущую БД.<br />
+2. Восстановить БД с логами из Backup в любое место.<br />
+3. Запустить мягкое восстановление БД (Soft Recovery).<br />
+4. Создать новую БД.<br />
+5. Создать Recovery Database и смонтировать в нее восстановленную из бэкапа БД, скопировать из неё почтовые ящики в новую БД и переключить на них пользователей.<br />
+6. Если использовать Dial Tone Recovery, то так же перенести из временной БД промежуточные данные почтовых ящиков.</p>
+<p>3-й вариант:<br />
+1. Восстановить целостность Soft Repair или Hard Recovery.<br />
+2. Создать новую БД. Указывать в свойствах: «база может быть перезаписана при восстановлении».<br />
+3. Если база была только что оздана и еще не была подмонтирована, то эта папка будет пуста, туда перемещаем базу из Backup, которая была обработана ESEUTIL вместе со всеми файлами. Указать имя .edb такое же, которое было при создании новой базы.<br />
+4. Монтируем базу.<br />
+5. Перенацеливаем ящики со старой (Mailbox_DB_02), неисправной базы, на новую базу (Mailbox_DB_02_02):<br />
+<code>Get-Mailbox -Database Mailbox_DB_02 | where {$_.ObjectClass -NotMatch '(SystemAttendantMailbox|ExOleDbSystemMailbox)'} | Set-Mailbox -Database Mailbox_DB_02_02</code><br />
+6. Восстановление логической целостности данных:<br />
+<code>New-MailboxRepairRequest -Database "Mailbox_DB_02_02" -CorruptionType ProvisionedFolder, SearchFolder, AggregateCounts, Folderview</code></p>
+<h2 id="dial-tone-recovery">Dial Tone Recovery<a class="headerlink" href="#dial-tone-recovery" title="Permanent link">&para;</a></h2>
+<p><code>Get-Mailbox -Database "MailboxDB" | Set-Mailbox -Database "TempDB"</code> перенацелить ящики с одной БД (нерабочей) на другую (пустую) <br />
+<code>Get-Mailbox -Database TempDB</code> отобразить почтовые ящики в БД TempDB <br />
+<code>Restart-Service MSExchangeIS</code> перезапустить службу Mailbox Information Store (банка данных), иначе пользователи будут по-прежнему пытаться подключиться к старой БД <br />
+<code>iisreset</code> <br />
+<code>Get-Mailbox -Database "TempDB" | Set-Mailbox -Database "MailboxDB"</code> после восстановления старой БД, нужно переключить пользователей с временной БД обратно <br />
+После этого сделать слияние с временной БД с помощью Recovery.</p>
+<h2 id="recovery-database-rdb">Recovery database (RDB)<a class="headerlink" href="#recovery-database-rdb" title="Permanent link">&para;</a></h2>
+<p><code>New-MailboxDatabase –Recovery –Name RecoveryDB –Server $exch_mx –EdbFilePath "D:\TempDB\TempDB.edb" -LogFolderPath "D:\TempDB"</code> для переноса новых писем из временной БД в основную необходим только сам файл TempDB.edb со статусом Clean Shutdown, из нее необходимо создать служебную БД (ключ -Recovery) <br />
+<code>Mount-Database "D:\TempDB\TempDB.edb"</code> примонтировать БД <br />
+<code>Get-MailboxStatistics -Database RecoveryDB</code> <br />
+<code>New-MailboxRestoreRequest –SourceDatabase RecoveryDB –SourceStoreMailbox support –TargetMailbox support</code> скопировать данные почтового ящика с DisplayName: support из RecoveryDB в почтовый ящик с псевдонимом support существующей базы. По умолчанию ищет в почтовой базе совпадающие LegacyExchangeDN либо проверяет совпадение адреса X500, если нужно восстановить данные в другой ящик, нужно указывать ключ -AllowLegacyDNMisMatch <br />
+<code>New-MailboxRestoreRequest –SourceDatabase RecoveryDB –SourceStoreMailbox support –TargetMailbox support –TargetRootFolder "Restore"</code> скопировать письма в отдельную папку в ящике назначения (создается автоматически), возможно восстановить содержимое конкретной папки -IncludeFolders "#Inbox#" <br />
+<code>Get-MailboxRestoreRequest | Get-MailboxRestoreRequestStatistics</code> статус запроса восстановления <br />
+<code>Get-MailboxRestoreRequestStatistics -Identity support</code> <br />
+<code>Get-MailboxRestoreRequest -Status Completed | Remove-MailboxRestoreRequest</code> удалить все успешные запросы</p>
+<h2 id="transport">Transport<a class="headerlink" href="#transport" title="Permanent link">&para;</a></h2>
+<p><code>Get-TransportServer $srv_cas | select MaxConcurrentMailboxDeliveries,MaxConcurrentMailboxSubmissions,MaxConnectionRatePerMinute,MaxOutboundConnections,MaxPerDomainOutboundConnections,PickupDirectoryMaxMessagesPerMinute</code> настройки пропускной способности транспортного сервера <br />
+MaxConcurrentMailboxDeliveries — максимальное количество одновременных потоков, которое может открыть сервер для отправки писем. <br />
+MaxConcurrentMailboxSubmissions — максимальное количество одновременных потоков, которое может открыть сервер для получения писем. <br />
+MaxConnectionRatePerMinute — максимальное возможная скорость открытия входящих соединений в минуту. <br />
+MaxOutboundConnections — максимальное возможное количество соединений, которое может открыть Exchange для отправки. <br />
+MaxPerDomainOutboundConnections — максимальное возможное количество исходящих соединений, которое может открыть Exchange для одного удаленного домена. <br />
+PickupDirectoryMaxMessagesPerMinute — скорость внутренней обработки сообщений в минуту (распределение писем по папкам). <br />
+<code>Set-TransportServer exchange-cas -MaxConcurrentMailboxDeliveries 21 -MaxConcurrentMailboxSubmissions 21 -MaxConnectionRatePerMinute 1201 -MaxOutboundConnections 1001 -MaxPerDomainOutboundConnections 21 -PickupDirectoryMaxMessagesPerMinute 101</code> изменить значения</p>
+<p><code>Get-TransportConfig | select MaxSendSize, MaxReceiveSize</code> ограничение размера сообщения на уровне траспорта (наименьший приоритет, после коннектора и почтового ящика). <br />
+<code>New-TransportRule -Name AttachmentLimit -AttachmentSizeOver 15MB -RejectMessageReasonText "Sorry, messages with attachments over 15 MB are not accepted"</code> создать транспортное правило для проверки размера вложения</p>
+<h2 id="connector">Connector<a class="headerlink" href="#connector" title="Permanent link">&para;</a></h2>
+<p><code>Get-ReceiveConnector | select Name,MaxMessageSize,RemoteIPRanges,WhenChanged</code> ограничения размера сообщения на уровне коннектора (приоритет ниже, чем у почтового ящика) <br />
+<code>Set-ReceiveConnector ((Get-ReceiveConnector).Identity)[-1] -MaxMessageSize 30Mb</code> изменить размер у последнего коннектора в списке (приоритет выше, чем у траспорта) <br />
+<code>Get-Mailbox "support4" | select MaxSendSize, MaxReceiveSize</code> наивысший приоритет <br />
+<code>Set-Mailbox "support4" -MaxSendSize 30MB -MaxReceiveSize 30MB</code> изменить размер</p>
+<p><code>Set-SendConnector -Identity "ConnectorName" -Port 26</code> изменить порт коннектора отправки <br />
+<code>Get-SendConnector "proxmox" | select port</code></p>
+<p><code>Get-ReceiveConnector | select Name,MaxRecipientsPerMessage</code> по умолчанию Exchange принимает ограниченное количество адресатов в одном письме (200) <br />
+<code>Set-ReceiveConnector ((Get-ReceiveConnector).Identity)[-1] -MaxRecipientsPerMessage 50</code> изменить значение <br />
+<code>Set-ReceiveConnector ((Get-ReceiveConnector).Identity)[-1] -MessageRateLimit 1000</code> задать лимит обработки сообщений в минуту для коннектора</p>
+<p><code>Get-OfflineAddressbook | Update-OfflineAddressbook</code> обновить OAB <br />
+<code>Get-ClientAccessServer | Update-FileDistributionService</code></p>
+<h2 id="pst">PST<a class="headerlink" href="#pst" title="Permanent link">&para;</a></h2>
+<p><code>New-MailboxExportRequest -Mailbox $name -filepath "\\$srv\pst\$name.PST" # -ContentFilter {(Received -lt "01/01/2021")} -Priority Highest/Lower # -IsArchive</code> выполнить экспорт из архива пользователя <br />
+<code>New-MailboxExportRequest -Mailbox $name -IncludeFolders "#Inbox#" -FilePath "\\$srv\pst\$name.PST"</code> только папку входящие <br />
+<code>New-MailboxImportRequest -Mailbox $name "\\$srv\pst\$name.PST"</code> импорт из PST <br />
+<code>Get-MailboxExportRequest</code> статус запросов <br />
+<code>Get-MailboxExportRequest -Status Completed | Remove-MailboxExportRequest</code> удалить успешно завершенные запросы <br />
+<code>Remove-MailboxExportRequest -RequestQueue MBXDB01 -RequestGuid 25e0eaf2-6cc2-4353-b83e-5cb7b72d441f</code> отменить экспорт</p>
+<h2 id="distributiongroup">DistributionGroup<a class="headerlink" href="#distributiongroup" title="Permanent link">&para;</a></h2>
+<p><code>Get-DistributionGroup</code> список групп рассылки <br />
+<code>Get-DistributionGroupMember "!_Офис"</code> список пользователей в группе <br />
+<code>Add-DistributionGroupMember -Identity "!_Офис" -Member "$name@$domain"</code> добавить в группу рассылки <br />
+<code>Remove-DistributionGroupMember -Identity "!_Офис" -Member "$name@$domain"</code> <br />
+<code>New-DistributionGroup -Name "!_Тест" -Members "$name@$domain"</code> создать группу <br />
+<code>Set-DistributionGroup -Identity "support4" -HiddenFromAddressListsEnabled $true (или Set-Mailbox)</code> скрыть из списка адресов Exchange</p>
+<h2 id="search">Search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h2>
+<p><code>Search-Mailbox -Identity "support4" -SearchQuery 'Тема:"Mikrotik DOWN"'</code> поиск писем по теме <br />
+<code>Search-Mailbox -Identity "support4" -SearchQuery 'Subject:"Mikrotik DOWN"'</code><br />
+<code>Search-Mailbox -Identity "support4" -SearchQuery 'attachment -like:"*.rar"'</code><br />
+<code>Search-Mailbox -Identity "support4" -SearchQuery "отправлено: &lt; 01/01/2020" -DeleteContent -Force</code> удаление писем по дате</p>
+<p>Формат даты в зависимости от региональных настроек сервера: <br />
+<code>20/07/2018</code> <br />
+<code>07/20/2018</code> <br />
+<code>20-Jul-2018</code> <br />
+<code>20/July/2018</code></p>
+<h2 id="auditlog">AuditLog<a class="headerlink" href="#auditlog" title="Permanent link">&para;</a></h2>
+<p><code>Get-AdminAuditLogConfig</code> настройки аудита <br />
+<code>Set-Mailbox -Identity "support4" -AuditOwner HardDelete</code> добавить логирование HardDelete писем <br />
+<code>Set-mailbox -identity "support4" -AuditlogAgelimit 120</code> указать время хранения <br />
+<code>Get-mailbox -identity "support4" | Format-list Audit*</code> данные аудита <br />
+<code>Search-MailboxAuditLog -Identity "support4" -LogonTypes Delegate -ShowDetails -Start "2022-02-22 18:00" -End "2022-03-22 18:00"</code> просмотр логов <br />
+<code>Search-AdminAuditLog -StartDate "02/20/2022" | ft CmdLetName,Caller,RunDate,ObjectModified -Autosize</code> поиск событий истории выполненых команд в журнале аудита Exchange</p>
+<h2 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
+<p><code>Test-ServiceHealth</code> проверить доступность ролей сервера: почтовых ящиков, клиентского доступа, единой системы обмена сообщениями, траспортного сервера <br />
+<code>$mx_srv_list | %{Test-MapiConnectivity -Server $_}</code> проверка подключения MX-серверов к БД <br />
+<code>Test-MAPIConnectivity -Database $db</code> проверка возможности логина в базу <br />
+<code>Test-MAPIConnectivity –Identity $user@$domain</code> проверка возможности логина в почтовый ящик <br />
+<code>Test-ComputerSecureChannel</code> проверка работы службы AD <br />
+<code>Test-MailFlow</code> результат тестового потока почты</p>
+<h2 id="queue">Queue<a class="headerlink" href="#queue" title="Permanent link">&para;</a></h2>
+<p><code>Get-TransportServer | %{Get-Queue -Server $_.Name}</code> отобразить очереди на всех транспортных серверах <br />
+<code>Get-Queue -Identity EXCHANGE-CAS\155530 | Format-List</code> подробная информация об очереди <br />
+<code>Get-Queue -Identity EXCHANGE-CAS\155530 | Get-Message -ResultSize Unlimited | Select FromAddress,Recipients</code> отобразить список отправителей (FromAddress) и список получателей в очереди (Recipients) <br />
+<code>Get-Message -Queue EXCHANGE-CAS\155530</code> отобразить индентификатор сообщений в конкретной очереди (сервер\очередь\идентификатор письма) <br />
+<code>Resume-Message EXCHANGE-CAS\155530\444010</code> повторить отправку письма из очереди <br />
+<code>Retry-Queue -Filter {Status -eq "Retry"}</code> принудительно повторить отправку всех сообщений c статусом "Повторить" <br />
+<code>Get-Queue -Identity EXCHANGE-CAS\155530 | Get-Message -ResultSize unlimited | Remove-Message -WithNDR $False</code> очистить очередь <br />
+<code>Get-transportserver EXCHANGE-CAS | Select MessageExpirationTimeout</code> отобразить время жизни сообщений в очереди (по умолчанию, 2 дня)</p>
+<p>Error Exchange 452 4.3.1 Insufficient system resources - окончание свободного места на диске, на котором находятся очереди службы Exchange Hub Transport, за мониторинг отвечает компонент доступных ресурсов Back Pressure, который в том числе отслеживает свободное место на диске <br />
+Порог Medium (90%) — перестать принимать по SMTP почту от внешних отправителей (почта от MAPI клиентов при этом обрабатывается) <br />
+Порог High (99%) — обработка потока почты полностью прекращается <br />
+Решение: очистить, например логи IIS (C:\inetpub\logs\LogFiles\W3SVC1), увеличить размер диска, отключить мониторинг Back Pressure (плохой вариант) или перенести транспортные очередь на другой диск достаточного объёма.</p>
+<p><code>Get-Service | ? name -like "MSExchangeTransport" | Stop-Service</code> остановить служу очереди <br />
+<code>Rename-Item "C:\Program Files\Microsoft\Exchange Server\V15\TransportRoles\data\Queue" "C:\Program Files\Microsoft\Exchange Server\V15\TransportRoles\data\Queue_old"</code> очистить базу очереди <br />
+<code>C:\Program Files\Microsoft\Exchange Server\V15\Bin\EdgeTransport.exe.config</code> конфигурационный файл, который содержит путь к бд с очередью (блок <appSettings> ключи <add key="QueueDatabasePath" value="$new_path" /> и QueueDatabaseLoggingPath) <br />
+Для переноса БД, необходимо переместить существующие файлы базы данных Mail.que и Trn.chk (контрольные точки для отслеживания записи в логах) из исходного местоположения в новое. Переместите существующие файлы журнала транзакций Trn.log, Trntmp.log, Trn nnnn.log , Trnres00001.jrs, Trnres00002.jrs и Temp.edb из старого расположения в новое. tmp.edb — временный файл для проверки схемы самой базы, перености не нужно. <br />
+После запуска службы транспорта удалить старую базу данных очереди и файлы журнала транзакций из старого расположения.</p>
+<h2 id="defrag">Defrag<a class="headerlink" href="#defrag" title="Permanent link">&para;</a></h2>
+<p><code>Get-MailboxDatabase -Status | ft Name, DatabaseSize, AvailableNewMailboxSpace</code> <br />
+DatabaseSize - текущий размер базы <br />
+AvailableNewMailboxSpace - объём пустых страниц, пространство, которое можно освободить при дефрагментации <br />
+(DatabaseSize — AvailableNewMailboxSpace) x 1,1 - необходимо дополнительно иметь свободного места не менее 110% от текущего размера базы (без учета пустых страниц) <br />
+<code>cd $path</code> <br />
+<code>Dismount-Database "$path\$db_name"</code> отмонтировать БД <br />
+<code>eseutil /d "$path\$db_name.edb"</code> <br />
+<code>Mount-Database "$path\$db"</code> примонтировать БД</p>
+<h2 id="dag-database-availability-group">DAG (Database Availability Group)<a class="headerlink" href="#dag-database-availability-group" title="Permanent link">&para;</a></h2>
+<p><code>Install-WindowsFeature -Name Failover-Clustering -ComputerName EXCH-MX-01</code> основывается на технологии Windows Server Failover Cluster <br />
+<code>New-DatabaseAvailabilityGroup -Name dag-01 -WitnessServer fs-05 -WitnessDirectory C:\witness_exchange1</code> создать группу с указанием файлового свидетеля для кворума <br />
+Quorum - это процесс голосования, в котором для принятия решения нужно иметь большинство голосов, что бы сделать текущую копию базы данных активной. <br />
+WitnessDirectory — используется для хранения данных файлового ресурса-свидетеля. <br />
+<code>Set-DatabaseAvailabilityGroup dag-01 –DatabaseAvailabilityGroupIPAdress $ip</code> изменить ip-адрес группы <br />
+<code>Get-DatabaseAvailabilityGroup</code> список всех групп <br />
+<code>Get-DatabaseAvailabilityGroup -Identity dag-01</code> <br />
+<code>Add-DatabaseAvailabilityGroupServer -Identity dag-01 -MailboxServer EXCH-MX-01</code> добавить первый сервер (все БД на серверах в DAG должны храниться по одинаковому пути) <br />
+<code>Add-MailboxDatabaseCopy -Identity db_name -MailboxServer EXCH-MX-04</code> добавить копию БД <br />
+<code>Get-MailboxDatabaseCopyStatus -Identity db_name\* | select Name,Status,LastInspectedLogTime</code> статус и время последнего копирования журнала транзакий</p>
+<p>Status: <br />
+Mounted - рабочая база <br />
+Suspended - приостановлено копирование <br />
+Healthy - рабочая пассивная копия <br />
+ServiceDown - недоступна (выключен сервер) <br />
+Dismounted - отмонтирована <br />
+FailedAndSuspended - ошибка и приостановка копирования <br />
+Resynchronizing - процесс синхронизация, где будет постепенно уменьшаться длина очереди <br />
+CopyQueue Length - длина репликационной очереди копирования (0 - значит все изменения из активной базы реплицированы в пассивную копию)</p>
+<p><code>Resume-MailboxDatabaseCopy -Identity db_name\EXCH-MX-04</code> возобновить (Resume) или запустить копирование бд на EXCH-MX-04 (из статуса Suspended в Healthy) <br />
+<code>Suspend-MailboxDatabaseCopy -Identity db_name\EXCH-MX-04</code> остановить копирование (в статус Suspended) <br />
+<code>Update-MailboxDatabaseCopy -Identity db_name\EXCH-MX-04 -DeleteExistingFiles</code> обновить копию БД (сделать Full Backup) <br />
+<code>Set-MailboxDatabaseCopy -Identity db_name\EXCH-MX-04 -ActivationPreference 1</code> изменить приоритет для активации копий БД (какую использовать, 1 – самое высокое значение) <br />
+<code>Move-ActiveMailboxDatabase db_name -ActivateOnServer EXCH-MX-04 -MountDialOverride:None -Confirm:$false</code> включить копию БД в DAG (переключиться на активную копию) <br />
+<code>Remove-MailboxDatabaseCopy -Identity db_name\EXCH-MX-04 -Confirm:$False</code> удалить копии пассивной базы в DAG-группе (у БД должно быть отключено ведение циклического журнала) <br />
+<code>Remove-DatabaseAvailabilityGroupServer -Identity dag-01 -MailboxServer EXCH-MX-04 -ConfigurationOnly</code> удалить MX сервер из группы DAG <br />
+<code>Import-Module FailoverClusters</code> <br />
+<code>Get-ClusterNode EXCH-MX-04 | Remove-ClusterNode -Force</code> удалить отказавший узел из Windows Failover Cluster</p>
+<p><code>Get-DatabaseAvailabilityGroup | Get-DatabaseAvailabilityGroupHealth</code> мониторинг</p>
+<h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
+<p><code>Get-MailboxDatabaseCopyStatus * | select name,status,ContentIndexState,ContentIndexErrorMessage,ActiveDatabaseCopy,LatestCopyBackupTime,CopyQueueLength</code> узнать состояние работы индксов БД и текст ошибки, на каком сервере активная копия БД, дата последней копии и текущая очередь <br />
+<code>Get-MailboxDatabaseCopyStatus -Identity $db_name\* | Format-List Name,ContentIndexState</code> отобразить список всех копий конкретной БД на всех серверах, и статус их индексов, если у второго сервера статус Healthy, можно восстановить из него <br />
+<code>Get-MailboxDatabaseCopyStatus -Identity $db_name\EXCH-MX-04 | Update-MailboxDatabaseCopy -SourceServer EXCH-MX-01 -CatalogOnly</code> восстановить БД из копии <br />
+<code>cd %PROGRAMFILES%\Microsoft\Exchange Server\V14\Scripts</code> или v15 для Exchange 2016 <br />
+<code>.\ResetSearchIndex.ps1 $db_name</code> скрипт восстановления индекса</p>
+<p><code>Get-MailboxDatabaseCopyStatus * | where {$_.ContentIndexState -eq "Failed" -or $_.ContentIndexState -eq "FailedAndSuspended"}</code> отобразить у какой БД произошел сбой работы (FailedAndSuspended) или индекса (ContentIndexState)</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

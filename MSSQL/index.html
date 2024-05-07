@@ -1,0 +1,1248 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TEST">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/MSSQL/">
+      
+      
+        <link rel="prev" href="../InfluxDB/">
+      
+      
+        <link rel="next" href="../MySQL/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>MS SQL - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#express" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MS SQL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PowerShell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ActiveDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Apps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotNET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTML/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InfluxDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    MSSQL
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    MSSQL
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#express" class="md-nav__link">
+    <span class="md-ellipsis">
+      Express
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemdatasqlclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      System.Data.SqlClient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqlclient-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      SqlClient INSERT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssms-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSMS INSERT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#t-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      T-SQL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Тип резервной копии
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Модели восстановления
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Системные БД
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Регламентные операции
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MySQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MySQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WMI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WMI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#express" class="md-nav__link">
+    <span class="md-ellipsis">
+      Express
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemdatasqlclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      System.Data.SqlClient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqlclient-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      SqlClient INSERT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssms-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSMS INSERT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#t-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      T-SQL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Тип резервной копии
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Модели восстановления
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Системные БД
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Регламентные операции
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>MSSQL</h1>
+
+<h2 id="express">Express<a class="headerlink" href="#express" title="Permanent link">&para;</a></h2>
+<p><code>wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add -</code> импортировать GPG-ключ для репозитория <br />
+<code>https://packages.microsoft.com/config/ubuntu/</code> выбрать репозиторий и скопировать URL <br />
+<code>add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2019.list)"</code> <br />
+<code>apt-get update</code> обновить список пакетов <br />
+<code>apt-get install mssql-server</code> <br />
+<code>/opt/mssql/bin/mssql-conf setup</code> скрипт начальной конфигурации (выбрать редакцию, 3 - express и русский язык 9 из 11) <br />
+<code>systemctl status mssql-server</code> <br />
+<code>curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -</code> установить клиент <br />
+<code>curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | tee /etc/apt/sources.list.d/msprod.list</code> <br />
+<code>apt-get update</code> <br />
+<code>apt-get install mssql-tools</code> <br />
+<code>echo 'export PATH="$PATH:/opt/mssql-tools/bin"' &gt;&gt; ~/.bashrc</code> добавить в домашний каталог файла bashrc, что бы не писать путь к исполняемому файлу <br />
+<code>export PATH="$PATH:/opt/mssql-tools/bin"</code> <br />
+<code>iptables -I INPUT 1 -p tcp --dport 1433 -j ACCEPT</code></p>
+<pre><code>sqlcmd -S localhost -U SA
+CREATE DATABASE itinvent
+go
+SELECT name FROM master.dbo.sysdatabases
+go
+</code></pre>
+<h2 id="systemdatasqlclient">System.Data.SqlClient<a class="headerlink" href="#systemdatasqlclient" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$user = &quot;itinvent&quot;
+$pass = &quot;itinvent&quot;
+$db   = &quot;itinvent&quot;
+$srv  = &quot;192.168.3.103&quot;
+$SqlConnection = New-Object System.Data.SqlClient.SqlConnection
+$SqlConnection.ConnectionString = &quot;server=$srv;database=$db;user id=$user;password=$pass;Integrated Security=false&quot;
+
+$SqlCommand = New-Object System.Data.SqlClient.SqlCommand` класс формата команды
+$SqlCommand.CommandText = &quot;SELECT * FROM ITINVENT.dbo.USERS&quot;` отобразить содержимое таблицы
+#$SqlCommand.CommandText = &quot;SELECT LICENCE_DATE,DESCR,MODEL_NO,TYPE_NO FROM ITINVENT.dbo.ITEMS where LICENCE_DATE IS NOT NULL&quot;
+$SqlCommand.Connection = $SqlConnection` передать формат подключения
+$SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter` создать адаптер подключения для выполнения SELECT запросов к БД
+$SqlAdapter.SelectCommand = $SqlCommand` передать команду
+
+$DataSet = New-Object System.Data.DataSet` создать объект приема данных формата XML
+$SqlAdapter.Fill($DataSet)` заполнить данными полученные от адаптера (возвращает кол-во объектов)
+$SqlConnection.Close()
+$Data = $DataSet.Tables
+$Data[0] | ft
+</code></pre>
+<h2 id="sqlclient-insert">SqlClient INSERT<a class="headerlink" href="#sqlclient-insert" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$user = &quot;itinvent&quot;
+$pass = &quot;itinvent&quot;
+$db   = &quot;db_test&quot;
+$srv  = &quot;192.168.3.103&quot;
+$sql = &quot;INSERT INTO table_test (column_user) VALUES ('lifailon')&quot;` добавить данные в таблицу table_test в колонку column_user
+$SqlConnection = New-Object System.Data.SqlClient.SqlConnection
+$SqlConnection.ConnectionString = &quot;server=$srv;database=$db;user id=$user;password=$pass;Integrated Security=false&quot;
+$SqlCommand = New-Object System.Data.SqlClient.SqlCommand
+$SqlCommand.CommandText = $sql
+$SqlCommand.Connection = $SqlConnection
+$SqlConnection.Open()
+$rowsAffected = $SqlCommand.ExecuteNonQuery();` для запросов INSERT/UPDATE/DELETE не используется SqlDataAdapter
+$SqlConnection.Close()
+</code></pre>
+<h2 id="ssms-insert">SSMS INSERT<a class="headerlink" href="#ssms-insert" title="Permanent link">&para;</a></h2>
+<pre><code>USE [db_test]
+GO
+INSERT INTO [dbo].[table_test]
+           ([column_user])
+     VALUES
+           ('lifailon')
+GO
+SELECT TOP (1000) [column_user]
+FROM [db_test].[dbo].[table_test]
+</code></pre>
+<h2 id="t-sql">T-SQL<a class="headerlink" href="#t-sql" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>DDL (Data Definition Language / Язык определения данных). К этому типу относятся команды, которые создают базу данных, таблицы, индексы, хранимые процедуры. <br />
+<code>CREATE</code> создает объекты базы данных (саму базу даных, таблицы, индексы и т.д.) <br />
+<code>ALTER</code> изменяет объекты базы данных <br />
+<code>DROP</code> удаляет объекты базы данных <br />
+<code>TRUNCATE</code> удаляет все данные из таблиц</p>
+</li>
+<li>
+<p>DML (Data Manipulation Language / Язык манипуляции данными). К этому типу относят команды по выбору, обновлению, добавлению и удалению данных. <br />
+<code>SELECT</code> извлекает данные из БД <br />
+<code>UPDATE</code> обновляет данные <br />
+<code>INSERT</code> добавляет новые данные <br />
+<code>DELETE</code> удаляет данные</p>
+</li>
+<li>
+<p>DCL (Data Control Language / Язык управления доступа к данным). К этому типу относят команды, которые управляют правами по доступу к данным. <br />
+<code>GRANT</code> предоставляет права для доступа к данным <br />
+<code>REVOKE</code> отзывает права на доступ к данным</p>
+</li>
+</ul>
+<pre><code>-- Переменные
+DECLARE @text NVARCHAR(20), @int INT;
+SET @text='Test';
+SET @int = 21;
+select @text,@int
+
+-- Имена сервера и экземпляра 
+Select @@SERVERNAME as [Server\Instance]; 
+
+-- версия SQL Server 
+Select @@VERSION as SQLServerVersion; 
+
+-- Текущая БД (БД, в контексте которой выполняется запрос)
+Select DB_NAME() AS CurrentDB_Name;
+
+-- Время работы с момента запуска сервера
+SELECT  @@Servername AS ServerName ,
+        create_date AS  ServerStarted ,
+        DATEDIFF(s, create_date, GETDATE()) / 86400.0 AS DaysRunning ,
+        DATEDIFF(s, create_date, GETDATE()) AS SecondsRunnig
+FROM    sys.databases
+WHERE   name = 'tempdb';
+
+-- Количество активных соединений
+SELECT  @@Servername AS Server ,
+        DB_NAME(database_id) AS DatabaseName ,
+        COUNT(database_id) AS Connections ,
+        Login_name AS  LoginName ,
+        MIN(Login_Time) AS Login_Time ,
+        MIN(COALESCE(last_request_end_time, last_request_start_time))
+                                                         AS  Last_Batch
+FROM    sys.dm_exec_sessions
+WHERE   database_id &gt; 0
+        AND DB_NAME(database_id) NOT IN ( 'master', 'msdb' )
+GROUP BY database_id ,
+         login_name
+ORDER BY DatabaseName;
+
+-- Статус Backup
+SELECT  @@Servername AS ServerName ,
+        d.Name AS DBName ,
+        MAX(b.backup_finish_date) AS LastBackupCompleted
+FROM    sys.databases d
+        LEFT OUTER JOIN msdb..backupset b
+                    ON b.database_name = d.name
+                       AND b.[type] = 'D'
+GROUP BY d.Name
+ORDER BY d.Name;
+
+-- Путь к Backup
+SELECT  @@Servername AS ServerName ,
+        d.Name AS DBName ,
+        b.Backup_finish_date ,
+        bmf.Physical_Device_name
+FROM    sys.databases d
+        INNER JOIN msdb..backupset b ON b.database_name = d.name
+                                        AND b.[type] = 'D'
+        INNER JOIN msdb.dbo.backupmediafamily bmf ON b.media_set_id = bmf.media_set_id
+ORDER BY d.NAME ,
+        b.Backup_finish_date DESC; 
+
+-- Вывести список всех БД, модели восстановления и путь к mdf/ldf
+EXEC sp_helpdb; 
+SELECT  @@SERVERNAME AS Server ,
+        d.name AS DBName ,
+        create_date ,
+        recovery_model_Desc AS RecoveryModel ,
+        m.physical_name AS FileName
+FROM    sys.databases d
+        JOIN sys.master_files m ON d.database_id = m.database_id
+ORDER BY d.name;
+
+-- Размер БД
+with fs
+as
+(
+    select database_id, type, size * 8.0 / 1024 size
+    from sys.master_files
+)
+select 
+    name,
+    (select sum(size) from fs where type = 0 and fs.database_id = db.database_id) DataFileSizeMB,
+    (select sum(size) from fs where type = 1 and fs.database_id = db.database_id) LogFileSizeMB
+from sys.databases 
+
+-- Поиск таблицы по маске имени (вывод: названия схемы где распологается объект, тип объекта, дата создания и последней модификации):
+select [object_id], [schema_id],
+       schema_name([schema_id]) as [schema_name], 
+       [name], 
+       [type], 
+       [type_desc], 
+       [create_date], 
+       [modify_date]
+from sys.all_objects
+-- where [name]='INVENT';
+where [name] like '%INVENT%';
+
+-- Кол-во строк в таблицах
+SELECT  @@ServerName AS Server ,
+        DB_NAME() AS DBName ,
+        OBJECT_SCHEMA_NAME(p.object_id) AS SchemaName ,
+        OBJECT_NAME(p.object_id) AS TableName ,
+        i.Type_Desc ,
+        i.Name AS IndexUsedForCounts ,
+        SUM(p.Rows) AS Rows
+FROM    sys.partitions p
+        JOIN sys.indexes i ON i.object_id = p.object_id
+                              AND i.index_id = p.index_id
+WHERE   i.type_desc IN ( 'CLUSTERED', 'HEAP' )
+                             -- This is key (1 index per table) 
+        AND OBJECT_SCHEMA_NAME(p.object_id) &lt;&gt; 'sys'
+GROUP BY p.object_id ,
+        i.type_desc ,
+        i.Name
+ORDER BY SchemaName ,
+        TableName; 
+
+-- Найти строковое (nvarchar) значение 2023 по всем таблицам базы данных
+-- Отображается в какой таблице и столбце хранится значение, а также количество найденных пары таблица-колонка
+set nocount on
+declare @name varchar(128), @substr nvarchar(4000), @column varchar(128)
+set @substr = '%2023%'
+declare @sql nvarchar(max);
+create table`rslt 
+(table_name varchar(128), field_name varchar(128), [value] nvarchar(max))
+declare s cursor for select table_name as table_name from information_schema.tables where table_type = 'BASE TABLE' order by table_name
+open s
+fetch next from s into @name
+while @@fetch_status = 0
+begin
+declare c cursor for 
+select quotename(column_name) as column_name from information_schema.columns 
+where data_type in ('text', 'ntext', 'varchar', 'char', 'nvarchar', 'char', 'sysname', 'int', 'tinyint') and table_name  = @name
+set @name = quotename(@name)
+open c
+fetch next from c into @column
+while @@fetch_status = 0
+begin
+--print 'Processing table - ' + @name + ', column - ' + @column
+set @sql='insert into`rslt select ''' + @name + ''' as Table_name, ''' + @column + ''', cast(' + @column + 
+' as nvarchar(max)) from' + @name + ' where cast(' + @column + ' as nvarchar(max)) like ''' + @substr + '''';
+print @sql;
+exec(@sql);
+fetch next from c into @column;
+end
+close c
+deallocate c
+fetch next from s into @name
+end
+select table_name as [Table Name], field_name as [Field Name], count(*) as [Found Mathes] from`rslt
+group by table_name, field_name
+order by table_name, field_name
+drop table`rslt
+close s
+deallocate s
+
+-- Поиск в таблице [CI_HISTORY] и столбцу [HIST_ID]:
+SELECT * FROM ITINVENT.dbo.CI_HISTORY where [HIST_ID] like '%2023%';
+
+-- Узнать фрагментацию индексов
+DECLARE @db_id SMALLINT;
+SET @db_id = DB_ID(N'itinvent');
+IF @db_id IS NULL
+BEGIN;
+    PRINT N'Неправильное имя базы';
+END;
+ELSE
+BEGIN;
+    SELECT
+        object_id AS [ID объекта],
+        index_id AS [ID индекса],
+        index_type_desc AS [Тип индекса],
+        avg_fragmentation_in_percent AS [Фрагментация в %]
+
+    FROM sys.dm_db_index_physical_stats(@db_id, NULL, NULL, NULL , 'LIMITED')
+
+    ORDER BY [avg_fragmentation_in_percent] DESC;
+END;
+GO
+
+-- TempDB
+-- Initial size - начальный/минимальный размер БД (1024 MB)
+-- Autogrowh - прирост (512MB)
+-- По умолчанию tempdb настроена на авто-расширение (Autogrow) и при каждой перезагрузке SQL Server пересоздаёт файлы этой БД с минимальным размером инициализации.
+-- Увеличив размер инициализации файлов tempdb, можно свести к минимуму затраты системных ресурсов на операции авто-расширения.
+
+-- Изменить путь к БД:
+USE master;
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = tempdev, FILENAME = 'F:\tempdb.mdf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = temp2, FILENAME = 'F:\tempdb_mssql_2.ndf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = temp3, FILENAME = 'F:\tempdb_mssql_3.ndf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = temp4, FILENAME = 'F:\tempdb_mssql_4.ndf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = temp5, FILENAME = 'F:\tempdb_mssql_5.ndf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = temp6, FILENAME = 'F:\tempdb_mssql_6.ndf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = temp7, FILENAME = 'F:\tempdb_mssql_7.ndf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = temp8, FILENAME = 'F:\tempdb_mssql_8.ndf');
+GO
+ALTER DATABASE tempdb
+MODIFY FILE (NAME = templog, FILENAME = 'F:\templog.ldf');
+GO
+
+-- Указать размер файла:
+MODIFY FILE (NAME = temp2, FILENAME = 'F:\tempdb_mssql_2.ndf' , SIZE = 1048576KB , FILEGROWTH = 524288KB);
+</code></pre>
+<h2 id="_1">Тип резервной копии<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Full (Полная копия). Когда стартует полное резервирование, записывается Log Sequence Number (LSN - последовательный номер журнала), а так же LSN записывается и при завершении полного резервирования. Этот LSN является механизмом, используемым SQL Server, чтобы знать, в каком порядке выполнялись операторы INSERT, UPDATE или DELETE. При этом наличие записанных LSN начала и окончания, как части полного бэкапа, обеспечивает согласованное с точки зрения транзакций резервное копирование, поскольку при полном резервном копировании учитываются изменения, произошедшие во время резервного копирования. Это обеспечивает обработку таких транзакций в процессе восстановления бэкапа.</li>
+<li>Differential (дифференциальная/разностная копия). Хранит данных, изменившиеся с момента последней Полной резервной копии. При восстановлении нужно сначала восстановить Полную резервную копию в режиме NORECOVERY, потом можно применить любую из последующих Разностных копий, без предыдущей Полной резервной копии Разностная копия бесполезна. Каждая последующая Разностная копия будет хранить все данные, входящие в предыдущую Разностную резервную копию, сделанную после предыдущей Полной копии.</li>
+<li>Incremental (инкрементальная/копия журналов транзакций). Резервное копирования журнала транзакций копирует все транзакции, которые произошли с момента последнего резервного копирования, а затем урезает журнал транзакций для освобождения дискового пространства. Транзакции происходят в определенном порядке (LSN), бэкап журнала поддерживает этот порядок транзакций. Бэкапы журналов транзакций должны восстанавливаться по порядку. Для восстановления базы данных потребуется вся цепочка резервных копий: полная и все последующие инкрементальные журнала транзакций.</li>
+</ul>
+<h2 id="_2">Модели восстановления<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Simple (Простая). Хранится только необходимый для жизни остаток журнала транзакций. Журнал транзакций (лог) автоматически очищается. Создание резервных копий журнала транзакций невозможна, поэтому остается самое ограниченное число опций по восстановлению. Недоступен функционал: Always On, Point-In-Time восстановление, Резервные копии журнала транзакций.</li>
+<li>Full (Полная). Хранится журнал транзакций всех изменений в БД с момента последнего резервного копирования журнала транзакций. Журнал транзакций не будет очищаться до тех пор, пока не будет сделана резервная копия журнала транзакций.</li>
+<li>Bulk logged (С неполным протоколированием). Идентична Full, за исключение: SELECT INTO, BULK INSERT и BCP, INSERT INTO SELECT, операции с индексами (CREATE INDEX, ALTER INDEX REBUILD, DROP INDEX)</li>
+</ul>
+<h2 id="_3">Системные БД<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>master. Хранятся все данные системного уровня (конфигурация системы, сведенья об учетных записях входа, информация обо всех других базах данных) для экземпляра SQL Server.</li>
+<li>tempdb. Рабочее пространство для временных объектов, таких как глобальные или локальные временные таблицы, временные хранимые процедуры, табличные переменные и курсоры. Пересоздаётся при каждом запуске SQL Server.</li>
+<li>model. Используется в качестве шаблона для всех баз данных, создаваемых в экземпляре SQL Server, все содержимое базы данных model, включая параметры базы данных, копируется в создаваемую базу данных. Так как база данных tempdb создается каждый раз при запуске SQL Server, база данных model всегда должна существовать в системе SQL Server. </li>
+<li>msdb. Используется агентом SQL Server для создания расписания предупреждений (оператор) и выполнение заданий, а также другими компонентами. SQL Server хранит полный журнал резервного копирования и восстановления в базе данных msdb. Для отправки почты оператору используется: USE [msdb].</li>
+<li>resource. Доступная только для чтения база данных, которая содержит все системные объекты, например sys.objects, физически хранятся в базе данных resource, но логически присутствуют в схеме sys каждой базы данных.</li>
+</ul>
+<h2 id="_4">Регламентные операции<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Проверка целостности базы данных</li>
+</ul>
+<p><code>DBCC CHECKDB</code></p>
+<ul>
+<li>
+<p>Индексы. Индексы используются для быстрого поиска данных без необходимости поиска/просмотра всех строк в таблице базы данных при каждом обращении к таблице базы данных. Индекс ускоряет процесс запроса, предоставляя быстрый доступ к строкам данных в таблице, аналогично тому, как указатель в книге помогает вам быстро найти необходимую информацию. Индексы предоставляют путь для быстрого поиска данных на основе значений в этих столбцах. Для каждого индекса обязательно хранится его статистика. MS SQL Server самостоятельно создает и изменяет индексы при работе с базой. С течением времени данные в индексе становятся фрагментированными, т.е. разбросанными по базе данных, что серьезно снижает производительность запросов. Если фрагментация составляет от 5 до 30% (стандартно в задании 15%), то рекомендуется ее устранить с помощью реорганизации, при фрагментации выше 30% (по умолчанию в задаче &gt; 30% фрагментации и число страниц &gt; 1000) необходимо полное перестроение индексов. После перестроения планово используется только реорганизация.</p>
+</li>
+<li>
+<p>Реорганизация (Reorganize) или дефрагментация индекса — это серия небольших локальных перемещений страниц так, чтобы индекс не был фрагментирован. После реорганизации статистика не обновляется. Во время выполнения почти все данные доступны, пользователи смогут работать.</p>
+</li>
+</ul>
+<p><code>sp_msforeachtable N'DBCC INDEXDEFRAG (&lt;имя базы данных&gt;, ''?'')'</code></p>
+<ul>
+<li>Перестроение (Rebuild) индексов (или задача в мастере планов обслуживания: Восстановить индекс) запускает процесс полного построения индексов. В версии MS SQL Server Standard происходит отключение всех клиентов от базы на время выполнения операции. После перестроения обязательно обновляется статистика.</li>
+</ul>
+<p><code>sp_msforeachtable N'DBCC DBREINDEX (''?'')'</code></p>
+<ul>
+<li>Обновление статистики. Статистика — небольшая таблица (обычно до 200 строк), в которой хранится обобщенная информация о том, какие значения и как часто встречаются в таблице. На основании статистики сервер принимает решение, как лучше построить запрос. Когда происходят запросы к БД (например, SELECT) вы получаете данные, но не описываете то, как эти данные должны быть извлечены. В получении и обработке данных помогает статистика. Во время выполнения процедуры обновления статистики данные не блокируются.</li>
+</ul>
+<p><code>exec sp_msforeachtable N'UPDATE STATISTICS ? WITH FULLSCAN'</code></p>
+<ul>
+<li>Очистка процедурного кэша, выполняется после обновления статистики. Оптимизатор MS SQL Server кэширует планы запросов для их повторного выполнения. Это делается для того, чтобы экономить время, затрачиваемое на компиляцию запроса в том случае, если такой же запрос уже выполнялся и его план известен. После обновия статистики, не будет очищен процедурный кэш, то SQL Server может выбрать старый (неоптимальный) план запроса из кэша вместо того, чтобы построить новый (более оптимальный) план.</li>
+</ul>
+<p><code>DBCC FREEPROCCACHE</code></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -9,23 +9,31 @@
         <meta name="description" content="TEST">
       
       
+        <meta name="author" content="Lifailon">
       
       
+        <link rel="canonical" href="https://lifailon.github.io/WMI/">
       
       
-      <link rel="icon" href="/assets/images/favicon.png">
+        <link rel="prev" href="../Virtualization/">
+      
+      
+        <link rel="next" href="../Zabbix/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
     
     
       
-        <title>PowerShell Commands</title>
+        <title>WMI - PowerShell Commands</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,7 +52,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -69,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#wmicim-windows-management-instrumentationcommon-information-model" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -81,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -101,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              WMI
             
           </span>
         </div>
@@ -202,7 +215,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -220,7 +233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/GitHub/" class="md-nav__link">
+      <a href="../GitHub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -240,7 +253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/PowerShell/" class="md-nav__link">
+      <a href="../PowerShell/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -260,7 +273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ActiveDirectory/" class="md-nav__link">
+      <a href="../ActiveDirectory/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -280,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Ansible/" class="md-nav__link">
+      <a href="../Ansible/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -300,7 +313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/API/" class="md-nav__link">
+      <a href="../API/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -320,7 +333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Apps/" class="md-nav__link">
+      <a href="../Apps/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -340,7 +353,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/COM/" class="md-nav__link">
+      <a href="../COM/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -360,7 +373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/dotNET/" class="md-nav__link">
+      <a href="../dotNET/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -380,7 +393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Exchange/" class="md-nav__link">
+      <a href="../Exchange/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -400,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Git/" class="md-nav__link">
+      <a href="../Git/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -420,7 +433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/HTML/" class="md-nav__link">
+      <a href="../HTML/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -440,7 +453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/InfluxDB/" class="md-nav__link">
+      <a href="../InfluxDB/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -460,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/MSSQL/" class="md-nav__link">
+      <a href="../MSSQL/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -480,7 +493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/MySQL/" class="md-nav__link">
+      <a href="../MySQL/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -500,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Network/" class="md-nav__link">
+      <a href="../Network/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -520,7 +533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Virtualization/" class="md-nav__link">
+      <a href="../Virtualization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -537,10 +550,19 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/WMI/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -549,6 +571,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -560,7 +583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/Zabbix/" class="md-nav__link">
+      <a href="../Zabbix/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -590,6 +613,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -601,8 +626,75 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+<h1 id="wmicim-windows-management-instrumentationcommon-information-model">WMI/CIM (Windows Management Instrumentation/Common Information Model)<a class="headerlink" href="#wmicim-windows-management-instrumentationcommon-information-model" title="Permanent link">&para;</a></h1>
+<p><code>Get-WmiObjec -ComputerName localhost -Namespace root -class "__NAMESPACE" | select name,__namespace</code> отобразить дочернии Namespace (логические иерархические группы) <br />
+<code>Get-WmiObject -List</code> отобразить все классы пространства имен "root\cimv2" (по умолчанию), свойства (описывают конфигурацию и текущее состояние управляемого ресурса) и их методы (какие действия позволяет выполнить над этим ресурсом) <br />
+<code>Get-WmiObject -List | Where-Object {$_.name -match "video"}</code> поиск класса по имени, его свойств и методов <br />
+<code>Get-WmiObject -ComputerName localhost -Class Win32_VideoController</code> отобразить содержимое свойств класса</p>
+<p><code>gwmi -List | where name -match "service" | ft -auto</code> если в таблице присутствуют Methods, то можно взаимодействовать {StartService, StopService} <br />
+<code>gwmi -Class win32_service | select *</code> отобразить список всех служб и всех их свойств <br />
+<code>Get-CimInstance Win32_service</code> обращается на прямую к "root\cimv2" <br />
+<code>gwmi win32_service -Filter "name='Zabbix Agent'"</code> отфильтровать вывод по имени <br />
+<code>(gwmi win32_service -Filter "name='Zabbix Agent'").State</code> отобразить конкретное свойство <br />
+<code>gwmi win32_service -Filter "State = 'Running'"</code> отфильтровать запущенные службы <br />
+<code>gwmi win32_service -Filter "StartMode = 'Auto'"</code> отфильтровать службы по методу запуска <br />
+<code>gwmi -Query 'select * from win32_service where startmode="Auto"'</code> WQL-запрос (WMI Query Language) <br />
+<code>gwmi win32_service | Get-Member -MemberType Method</code> отобразить все методы взаимодействия с описание применения (Delete, StartService) <br />
+<code>(gwmi win32_service -Filter 'name="Zabbix Agent"').Delete()</code> удалить службу <br />
+<code>(gwmi win32_service -Filter 'name="MSSQL$MSSQLE"').StartService()</code> запустить службу</p>
+<p><code>Get-CimInstance -ComputerName $srv Win32_OperatingSystem | select LastBootUpTime</code> время последнего включения <br />
+<code>gwmi -ComputerName $srv -Class Win32_OperatingSystem | select LocalDateTime,LastBootUpTime</code> текущее время и время последнего включения <br />
+<code>gwmi Win32_OperatingSystem | Get-Member -MemberType Method</code> методы reboot и shutdown <br />
+<code>(gwmi Win32_OperatingSystem -EnableAllPrivileges).Reboot()</code> используется с ключем повышения привелегий <br />
+<code>(gwmi Win32_OperatingSystem -EnableAllPrivileges).Win32Shutdown(0)</code> завершение сеанса пользователя</p>
+<pre><code class="language-PowerShell">$system = Get-WmiObject -Class Win32_OperatingSystem
+$InstallDate = [Management.ManagementDateTimeconverter]::ToDateTime($system.installdate)` Получаем дату установки ОС
+$AfterInstallDays = ((Get-Date) — $Installdate).Days` Вычисляем время, прошедшее с момента установки
+$ShortInstallDate = &quot;{0:yyyy-MM-dd HH:MM}&quot; -f ($InstallDate)
+&quot;Система установлена: $ShortInstallDate (Прошло $AfterInstalldays дней)&quot;
+</code></pre>
+<p><code>(Get-WmiObject win32_battery).estimatedChargeRemaining</code> заряд батареи в процентах <br />
+<code>gwmi Win32_UserAccount</code> доменные пользователи <br />
+<code>(gwmi Win32_SystemUsers).PartComponent</code> <br />
+<code>Get-CimInstance -ClassName Win32_LogonSession</code> <br />
+<code>Get-CimInstance -ClassName Win32_BIOS</code></p>
+<p><code>gwmi -list -Namespace root\CIMV2\Terminalservices</code> <br />
+<code>(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).AllowTSConnections</code> <br />
+<code>(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(1)</code> включить RDP</p>
+<pre><code>$srv = &quot;localhost&quot;
+gwmi Win32_logicalDisk -ComputerName $srv | where {$_.Size -ne $null} | select @{
+Label=&quot;Value&quot;; Expression={$_.DeviceID}}, @{Label=&quot;AllSize&quot;; Expression={
+[string]([int]($_.Size/1Gb))+&quot; GB&quot;}},@{Label=&quot;FreeSize&quot;; Expression={
+[string]([int]($_.FreeSpace/1Gb))+&quot; GB&quot;}}, @{Label=&quot;Free%&quot;; Expression={
+[string]([int]($_.FreeSpace/$_.Size*100))+&quot; %&quot;}}
+</code></pre>
+<h1 id="nla">NLA<a class="headerlink" href="#nla" title="Permanent link">&para;</a></h1>
+<p><code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").UserAuthenticationRequired</code> <br />
+<code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(1)</code> включить NLA <br />
+<code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer</code> отобразить значение (2) <br />
+<code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication</code> отобразить значение (1) <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer -Value 0</code> изменить значение <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -Value 0</code> <br />
+<code>REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters /v AllowEncryptionOracle /t REG_DWORD /d 2</code> отключить на клиентском компьютере проверку версии CredSSP, если на целевом комьютере-сервере не установлены обновления KB4512509 от мая 2018 года</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -644,10 +736,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/", "features": [], "search": "/assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="/assets/javascripts/bundle.dd8806f2.min.js"></script>
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
     
   </body>

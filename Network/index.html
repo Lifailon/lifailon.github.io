@@ -1,0 +1,2334 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TEST">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/Network/">
+      
+      
+        <link rel="prev" href="../MySQL/">
+      
+      
+        <link rel="next" href="../Virtualization/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>Network - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#network" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Network
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PowerShell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ActiveDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Apps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotNET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTML/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InfluxDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MSSQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MSSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MySQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MySQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ping" class="md-nav__link">
+    <span class="md-ellipsis">
+      ping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dhcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      dhcp
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#port" class="md-nav__link">
+    <span class="md-ellipsis">
+      port
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nslookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      nslookup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      ipconfig
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adapter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dnsclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNSClient
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dnscache" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNSCache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcpsetting" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCPSetting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netstat" class="md-nav__link">
+    <span class="md-ellipsis">
+      netstat
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hostname" class="md-nav__link">
+    <span class="md-ellipsis">
+      hostname
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arp" class="md-nav__link">
+    <span class="md-ellipsis">
+      arp
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewall" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Firewall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firewall-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall-Manager
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RDP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ipban" class="md-nav__link">
+    <span class="md-ellipsis">
+      IPBan
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smtp" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMTP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      SNMP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SNMP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-snmp-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup SNMP Service
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-snmp-service-via-regedit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting SNMP Service via Regedit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snmpwalk" class="md-nav__link">
+    <span class="md-ellipsis">
+      snmpwalk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snmp-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      SNMP Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lextmsharpsnmplib" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lextm.SharpSnmpLib
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Walk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pki" class="md-nav__link">
+    <span class="md-ellipsis">
+      pki
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenSSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openvpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenVPN
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenVPN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serverovpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      server.ovpn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clientovpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      client.ovpn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route" class="md-nav__link">
+    <span class="md-ellipsis">
+      Route
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nat" class="md-nav__link">
+    <span class="md-ellipsis">
+      NAT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wireguard" class="md-nav__link">
+    <span class="md-ellipsis">
+      WireGuard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vpnclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      VpnClient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#netsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      netsh
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="netsh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proxy_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wlan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenSSH
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenSSH">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#winrm" class="md-nav__link">
+    <span class="md-ellipsis">
+      WinRM
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WinRM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-remote-management-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows Remote Management Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kerberos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kerberos
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WMI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WMI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ping" class="md-nav__link">
+    <span class="md-ellipsis">
+      ping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dhcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      dhcp
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#port" class="md-nav__link">
+    <span class="md-ellipsis">
+      port
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nslookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      nslookup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      ipconfig
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adapter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dnsclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNSClient
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dnscache" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNSCache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcpsetting" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCPSetting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netstat" class="md-nav__link">
+    <span class="md-ellipsis">
+      netstat
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hostname" class="md-nav__link">
+    <span class="md-ellipsis">
+      hostname
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arp" class="md-nav__link">
+    <span class="md-ellipsis">
+      arp
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewall" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Firewall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firewall-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall-Manager
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RDP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ipban" class="md-nav__link">
+    <span class="md-ellipsis">
+      IPBan
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smtp" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMTP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      SNMP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SNMP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-snmp-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup SNMP Service
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-snmp-service-via-regedit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting SNMP Service via Regedit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snmpwalk" class="md-nav__link">
+    <span class="md-ellipsis">
+      snmpwalk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snmp-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      SNMP Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lextmsharpsnmplib" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lextm.SharpSnmpLib
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Walk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pki" class="md-nav__link">
+    <span class="md-ellipsis">
+      pki
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openssl" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenSSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openvpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenVPN
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenVPN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serverovpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      server.ovpn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clientovpn" class="md-nav__link">
+    <span class="md-ellipsis">
+      client.ovpn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route" class="md-nav__link">
+    <span class="md-ellipsis">
+      Route
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nat" class="md-nav__link">
+    <span class="md-ellipsis">
+      NAT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wireguard" class="md-nav__link">
+    <span class="md-ellipsis">
+      WireGuard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vpnclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      VpnClient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#netsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      netsh
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="netsh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proxy_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wlan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wlan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenSSH
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenSSH">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#winrm" class="md-nav__link">
+    <span class="md-ellipsis">
+      WinRM
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WinRM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-remote-management-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows Remote Management Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kerberos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kerberos
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h2 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h2>
+<h3 id="ping">ping<a class="headerlink" href="#ping" title="Permanent link">&para;</a></h3>
+<p><code>Test-Connection -Count 1 $srv1, $srv2</code> отправить icmp-пакет двум хостам <br />
+<code>Test-Connection $srv -ErrorAction SilentlyContinue</code> не выводить ошибок, если хост не отвечает <br />
+<code>Test-Connection -Source $srv1 -ComputerName $srv2</code> пинг с удаленного компьютера</p>
+<pre><code class="language-PowerShell">function Test-PingNetwork {
+param (
+    [Parameter(Mandatory,ValueFromPipeline)][string[]]$Network,
+    [ValidateRange(100,10000)][int]$Timeout = 100
+)
+$ping = New-Object System.Net.NetworkInformation.Ping
+$Network  = $Network -replace &quot;0$&quot;
+$net = @()
+foreach ($r in @(1..254)) {
+    $net += &quot;$network$r&quot;
+}
+foreach ($n in $net) {
+    $ping.Send($n, $timeout) | select @{Name=&quot;Address&quot;; Expression={$n -replace &quot;.+\.&quot;}}, Status
+}
+}
+</code></pre>
+<p><code>Test-PingNetwork -Network 192.168.3.0</code> <br />
+<code>Test-PingNetwork -Network 192.168.3.0 -Timeout 1000</code></p>
+<p><code>Get-CimInstance -Class Win32_PingStatus -Filter "Address='127.0.0.1'"</code> <br />
+<code>Get-CimInstance -Class Win32_PingStatus -Filter "Address='127.0.0.1'" | Format-Table -Property Address,ResponseTime,StatusCode -Autosize</code> 0 - успех <br />
+<code>'127.0.0.1','8.8.8.8' | ForEach-Object -Process {Get-CimInstance -Class Win32_PingStatus -Filter ("Address='$_'") | Select-Object -Property Address,ResponseTime,StatusCode}</code> <br />
+<code>$ips = 1..254 | ForEach-Object -Process {'192.168.1.' + $_}</code> сформировать массив из ip-адресов подсети</p>
+<h3 id="dhcp">dhcp<a class="headerlink" href="#dhcp" title="Permanent link">&para;</a></h3>
+<p><code>Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true"</code> отобразить адаптеры с включенным DHCP <br />
+<code>$wql = 'SELECT * from Win32_NetworkAdapterConfiguration WHERE IPEnabled=True and DHCPEnabled=False'</code> <br />
+<code>Invoke-CimMethod -MethodName ReleaseDHCPLease -Query $wql</code> включение DHCP на всех адаптерах <br />
+<code>Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName ReleaseDHCPLeaseAll</code> отменить аренду адресов DHCP на всех адаптерах <br />
+<code>Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName RenewDHCPLeaseAll</code> обновить аренду адресов DHCP на всех адаптерах</p>
+<h3 id="port">port<a class="headerlink" href="#port" title="Permanent link">&para;</a></h3>
+<p><code>tnc $srv -p 5985</code> <br />
+<code>tnc $srv -CommonTCPPort WINRM</code> HTTP,RDP,SMB <br />
+<code>tnc ya.ru –TraceRoute -Hops 2</code> TTL=2 <br />
+<code>tnc ya.ru -DiagnoseRouting</code> маршрутизация до хоста, куда (DestinationPrefix: 0.0.0.0/0) через (NextHop: 192.168.1.254)</p>
+<h3 id="nslookup">nslookup<a class="headerlink" href="#nslookup" title="Permanent link">&para;</a></h3>
+<p><code>nslookup ya.ru 1.1.1.1</code> с указанием DNS сервера <br />
+<code>nslookup -type=any ya.ru</code> указать тип записи <br />
+<code>Resolve-DnsName ya.ru -Type MX</code> ALL,ANY,A,NS,SRV,CNAME,PTR,TXT(spf) <br />
+<code>[System.Net.Dns]::GetHostEntry("ya.ru")</code></p>
+<h3 id="ipconfig">ipconfig<a class="headerlink" href="#ipconfig" title="Permanent link">&para;</a></h3>
+<p><code>Get-NetIPConfiguration</code> <br />
+<code>Get-NetIPConfiguration -InterfaceIndex 14 -Detailed</code></p>
+<h3 id="adapter">Adapter<a class="headerlink" href="#adapter" title="Permanent link">&para;</a></h3>
+<p><code>Get-NetAdapter</code> <br />
+<code>Set-NetIPInterface -InterfaceIndex 14 -Dhcp Disabled</code> отключить DHCP <br />
+<code>Get-NetAdapter -InterfaceIndex 14 | New-NetIPAddress –IPAddress 192.168.3.99 -DefaultGateway 192.168.3.1 -PrefixLength 24</code> задать/добавить статический IP-адрес <br />
+<code>Set-NetIPAddress -InterfaceIndex 14 -IPAddress 192.168.3.98</code> изменить IP-адреас на адаптере <br />
+<code>Remove-NetIPAddress -InterfaceIndex 14 -IPAddress 192.168.3.99</code> удалить IP-адрес на адаптере <br />
+<code>Set-NetIPInterface -InterfaceIndex 14 -Dhcp Enabled</code> включить DHCP</p>
+<h3 id="dnsclient">DNSClient<a class="headerlink" href="#dnsclient" title="Permanent link">&para;</a></h3>
+<p><code>Get-DNSClientServerAddress</code> <br />
+<code>Set-DNSClientServerAddress -InterfaceIndex 14 -ServerAddresses 8.8.8.8</code></p>
+<h3 id="dnscache">DNSCache<a class="headerlink" href="#dnscache" title="Permanent link">&para;</a></h3>
+<p><code>Get-DnsClientCache</code> отобразить кэшированные записи клиента DNS <br />
+<code>Clear-DnsClientCache</code> очистить кэш</p>
+<h3 id="binding">Binding<a class="headerlink" href="#binding" title="Permanent link">&para;</a></h3>
+<p><code>Get-NetAdapterBinding -Name Ethernet -IncludeHidden -AllBindings</code> <br />
+<code>Get-NetAdapterBinding -Name "Беспроводная сеть" -DisplayName "IP версии 6 (TCP/IPv6)" | Set-NetAdapterBinding -Enabled $false</code> отключить IPv6 на адаптере</p>
+<h3 id="tcpsetting">TCPSetting<a class="headerlink" href="#tcpsetting" title="Permanent link">&para;</a></h3>
+<p><code>Get-NetTCPSetting</code> <br />
+<code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CongestionProvider DCTCP</code> <br />
+<code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CwndRestart True</code> <br />
+<code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -ForceWS Disabled</code></p>
+<h3 id="netstat">netstat<a class="headerlink" href="#netstat" title="Permanent link">&para;</a></h3>
+<p><code>netstat -anop tcp</code> -n/-f/-b <br />
+<code>Get-NetTCPConnection -State Established,Listen | ? LocalPort -Match 3389</code> <br />
+<code>Get-NetTCPConnection -State Established,Listen | ? RemotePort -Match 22</code> <br />
+<code>Get-NetUDPEndpoint | ? LocalPort -Match 514</code> netstat -ap udp`</p>
+<h3 id="statistics">Statistics<a class="headerlink" href="#statistics" title="Permanent link">&para;</a></h3>
+<p><code>netstat -se</code> <br />
+<code>Get-NetAdapterStatistics</code></p>
+<h3 id="hostname">hostname<a class="headerlink" href="#hostname" title="Permanent link">&para;</a></h3>
+<p><code>$env:computername</code> <br />
+<code>hostname.exe</code> <br />
+<code>(Get-CIMInstance CIM_ComputerSystem).Name</code> <br />
+<code>(New-Object -ComObject WScript.Network).ComputerName</code> <br />
+<code>[System.Environment]::MachineName</code> <br />
+<code>[System.Net.Dns]::GetHostName()</code></p>
+<h3 id="arp">arp<a class="headerlink" href="#arp" title="Permanent link">&para;</a></h3>
+<p><code>ipconfig /all | Select-String "физ"</code> grep <br />
+<code>Get-NetNeighbor -AddressFamily IPv4</code></p>
+<pre><code class="language-PowerShell">function Get-ARP {
+Param (
+$proxy,
+$search
+)
+if (!$proxy) {
+$arp = arp -a
+}
+if ($proxy) {
+$arp = icm $proxy {arp -a}
+}
+$mac = $arp[3..260]
+$mac = $mac -replace &quot;^\s\s&quot;
+$mac = $mac -replace &quot;\s{1,50}&quot;,&quot; &quot;
+$mac_coll = New-Object System.Collections.Generic.List[System.Object]
+foreach ($m in $mac) {
+$smac = $m -split &quot; &quot;
+$mac_coll.Add([PSCustomObject]@{
+IP = $smac[0];
+MAC = $smac[1];
+Type = $smac[2]
+})
+}
+if ($search) {
+if ($search -NotMatch &quot;\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}&quot;) {
+#$ns = nslookup $search
+#$ns = $ns[-2]
+#$global:ns = $ns -replace &quot;Address:\s{1,10}&quot;
+$rdns = Resolve-DnsName $search -ErrorAction Ignore
+$ns = $rdns.IPAddress
+if ($ns -eq $null) {
+return
+}
+} else {
+$ns = $search
+}
+$mac_coll = $mac_coll | ? ip -Match $ns
+}
+$mac_coll
+}
+</code></pre>
+<p><code>Get-ARP -search 192.168.3.100</code> <br />
+<code>Get-ARP -search 192.168.3.100 -proxy dc-01</code></p>
+<h2 id="firewall">Firewall<a class="headerlink" href="#firewall" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$days = 5
+$obj = @()
+$fw = Get-WinEvent &quot;Microsoft-Windows-Windows Firewall With Advanced Security/Firewall&quot;
+foreach ($temp_fw in $fw) {
+if ($temp_fw.id -eq 2097) { # 2004
+    $type = &quot;Added Rule&quot;
+}
+elseif ($temp_fw.id -eq 2006) {
+    $type = &quot;Deleted Rule&quot;
+}
+$port = $temp_fw.Properties[7] | select -ExpandProperty value
+$name = $temp_fw.Properties[1] | select -ExpandProperty value
+$obj += [PSCustomObject]@{
+    Time = $temp_fw.TimeCreated;
+    Type = $type;
+    Port = $port;
+    Name = $name}
+}
+$obj | Where-Object time -gt (Get-Date).AddDays(-$days)
+</code></pre>
+<p><code>New-NetFirewallRule -Profile Any -DisplayName "Open Port 135 RPC" -Direction Inbound -Protocol TCP -LocalPort 135</code> открыть in-порт <br />
+<code>Get-NetFirewallRule | where DisplayName -match kms | select *</code> найти правило по имени <br />
+<code>Get-NetFirewallPortFilter | where LocalPort -like 80</code> найти действующие правило по номеру порта</p>
+<pre><code class="language-PowerShell">Get-NetFirewallRule -Enabled True -Direction Inbound | select -Property DisplayName,
+@{Name='Protocol';Expression={($_ | Get-NetFirewallPortFilter).Protocol}},
+@{Name='LocalPort';Expression={($_ | Get-NetFirewallPortFilter).LocalPort}},
+@{Name='RemotePort';Expression={($_ | Get-NetFirewallPortFilter).RemotePort}},
+@{Name='RemoteAddress';Expression={($_ | Get-NetFirewallAddressFilter).RemoteAddress}},
+Enabled,Profile
+</code></pre>
+<h3 id="firewall-manager">Firewall-Manager<a class="headerlink" href="#firewall-manager" title="Permanent link">&para;</a></h3>
+<p><code>Install-Module Firewall-Manager</code> <br />
+<code>Export-FirewallRules -Name * -CSVFile $home\documents\fw.csv</code> -Inbound -Outbound -Enabled -Disabled -Allow -Block (фильтр правил для экспорта) <br />
+<code>Import-FirewallRules -CSVFile $home\documents\fw.csv</code></p>
+<h2 id="rdp">RDP<a class="headerlink" href="#rdp" title="Permanent link">&para;</a></h2>
+<p><code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber"</code> отобразить номер текущего RDP порта <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber" -Value "3390"</code> изменить RDP-порт <br />
+<code>$(Get-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\" -Name "fDenyTSConnections").fDenyTSConnections</code> если 0, то включен <br />
+<code>Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\" -Name "fDenyTSConnections" -Value 0</code> включить RDP <br />
+<code>reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f</code> <br />
+<code>(gcim -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(0)</code> включить RDP (для Windows Server) <br />
+<code>Get-Service TermService | Restart-Service -Force</code> перезапустить rdp-службу <br />
+<code>New-NetFirewallRule -Profile Any -DisplayName "RDP 3390" -Direction Inbound -Protocol TCP -LocalPort 3390</code> открыть RDP-порт</p>
+<h3 id="ipban">IPBan<a class="headerlink" href="#ipban" title="Permanent link">&para;</a></h3>
+<p><code>auditpol /get /category:*</code> отобразить все политики аудита <br />
+<code>auditpol /get /category:Вход/выход</code> отобразить локальные политики аудита для Входа и Выхода из системы <br />
+<code>auditpol /set /subcategory:"Вход в систему" /success:enable /failure:enable</code> включить локальные политики - Аудит входа в систему <br />
+<code>auditpol /set /subcategory:"Выход из системы" /success:enable /failure:enable</code></p>
+<p><code>$url = $($(Invoke-RestMethod https://api.github.com/repos/DigitalRuby/IPBan/releases/latest).assets | Where-Object name -match ".+win.+x64.+").browser_download_url</code> получить ссылку для загрузки последней версии <br />
+<code>$version = $(Invoke-RestMethod https://api.github.com/repos/DigitalRuby/IPBan/releases/latest).tag_name</code> получить номер последней версии <br />
+<code>$path = "$home\Documents\ipban-$version"</code> путь для установки <br />
+<code>Invoke-RestMethod $url -OutFile "$home\Downloads\IPBan-$version.zip"</code> скачать дистрибутив <br />
+<code>Expand-Archive "$home\Downloads\ipban-$version.zip" -DestinationPath $path</code> разархивировать в путь для установки <br />
+<code>Remove-Item "$home\Downloads\ipban-$version.zip"</code> удалить дистрибутив <br />
+<code>sc create IPBan type=own start=delayed-auto binPath="$path\DigitalRuby.IPBan.exe" DisplayName=IPBan</code> создать службу <br />
+<code>Get-Service IPBan</code> статус службы <br />
+<code>$conf = $(Get-Content "$path\ipban.config")</code> читаем конфигурацию <br />
+<code>$conf = $conf -replace '&lt;add key="Whitelist" value=""/&gt;','&lt;add key="Whitelist" value="192.168.3.0/24"/&gt;'</code> добавить в белый лист домашнюю сеть для исключения <br />
+<code>$conf = $conf -replace '&lt;add key="ProcessInternalIPAddresses" value="false"/&gt;','&lt;add key="ProcessInternalIPAddresses" value="true"/&gt;'</code> включить обработку локальных (внутренних) ip-адресов <br />
+<code>$conf = $conf -replace '&lt;add key="FailedLoginAttemptsBeforeBanUserNameWhitelist" value="20"/&gt;','&lt;add key="FailedLoginAttemptsBeforeBanUserNameWhitelist" value="5"/&gt;'</code> указать количество попыток подключения до блокировки <br />
+<code>$conf = $conf -replace '&lt;add key="ExpireTime" value="01:00:00:00"/&gt;','&lt;add key="ExpireTime" value="00:01:00:00"/&gt;'</code> задать время блокировки 1 час <br />
+<code>$conf &gt; "$path\ipban.config"</code> обновить конфигурацию <br />
+<code>Get-Service IPBan | Start-Service</code> запустить службу</p>
+<pre><code>Get-NetFirewallRule | Where-Object DisplayName -Match &quot;IPBan&quot; | ForEach-Object {
+    $Name = $_.DisplayName
+    Get-NetFirewallAddressFilter -AssociatedNetFirewallRule $_ | Select-Object @{Name=&quot;Name&quot;; Expression={$Name}},LocalIP,RemoteIP
+} # отобразить область применения правил Брандмауэра для IPBan
+</code></pre>
+<p><code>Get-Content -Wait "$path\logfile.txt"</code> читать лог <br />
+<code>Get-Service IPBan | Stop-Service</code> остановить службу <br />
+<code>sc delete IPBan</code> удалить службу</p>
+<h2 id="smtp">SMTP<a class="headerlink" href="#smtp" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">function Send-SMTP {
+param (
+[Parameter(Mandatory = $True)]$mess
+)
+$srv_smtp = &quot;smtp.yandex.ru&quot; 
+$port = &quot;587&quot;
+$from = &quot;login1@yandex.ru&quot; 
+$to = &quot;login2@yandex.ru&quot; 
+$user = &quot;login1&quot;
+$pass = &quot;password&quot;
+$subject = &quot;Service status on Host: $hostname&quot;
+$Message = New-Object System.Net.Mail.MailMessage
+$Message.From = $from
+$Message.To.Add($to) 
+$Message.Subject = $subject 
+$Message.IsBodyHTML = $true 
+$Message.Body = &quot;&lt;h1&gt; $mess &lt;/h1&gt;&quot;
+$smtp = New-Object Net.Mail.SmtpClient($srv_smtp, $port)
+$smtp.EnableSSL = $true 
+$smtp.Credentials = New-Object System.Net.NetworkCredential($user, $pass);
+$smtp.Send($Message) 
+}
+</code></pre>
+<p><code>Send-SMTP $(Get-Service)</code></p>
+<h2 id="snmp">SNMP<a class="headerlink" href="#snmp" title="Permanent link">&para;</a></h2>
+<h3 id="setup-snmp-service">Setup SNMP Service<a class="headerlink" href="#setup-snmp-service" title="Permanent link">&para;</a></h3>
+<p><code>Install-WindowsFeature SNMP-Service,SNMP-WMI-Provider -IncludeManagementTools</code> установить роль SNMP и WMI провайдер через Server Manager <br />
+<code>Get-WindowsFeature SNMP*</code> <br />
+<code>Add-WindowsCapability -Online -Name SNMP.Client~~~~0.0.1.0</code> установить компонент Feature On Demand для Windows 10/11<code></code>Get-Service SNMP<em><code></code>Get-NetFirewallrule -DisplayName </em>snmp<em> | ft<code></code>Get-NetFirewallrule -DisplayName </em>snmp* | Enable-NetFirewallRule`</p>
+<h3 id="setting-snmp-service-via-regedit">Setting SNMP Service via Regedit<a class="headerlink" href="#setting-snmp-service-via-regedit" title="Permanent link">&para;</a></h3>
+<p>Agent: <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SNMP\Parameters\RFC1156Agent" -Name "sysContact" -Value "lifailon-user"</code> создать (New) или изменить (Set) <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SNMP\Parameters\RFC1156Agent" -Name "sysLocation" -Value "plex-server"</code></p>
+<p>Security: <br />
+<code>New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\services\SNMP\Parameters\TrapConfiguration\public"</code> создать новый community string <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\ValidCommunities" -Name "public" -Value 16</code> назначить права на public <br />
+<code>1 — NONE</code> <br />
+<code>2 — NOTIFY</code> позволяет получать SNMP ловушки <br />
+<code>4 — READ ONLY</code> позволяет получать данные с устройства <br />
+<code>8 — READ WRITE</code> позволяет получать данные и изменять конфигурацию устройства <br />
+<code>16 — READ CREATE</code> позволяет читать данные, изменять и создавать объекты <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\PermittedManagers" -Name "1" -Value "192.168.3.99"</code> от кого разрешено принимать запросы <br />
+<code>Get-Service SNMP | Restart-Service</code></p>
+<h3 id="snmpwalk">snmpwalk<a class="headerlink" href="#snmpwalk" title="Permanent link">&para;</a></h3>
+<p><code>snmpwalk -v 2c -c public 192.168.3.100</code> <br />
+<code>snmpwalk -v 2c -c public -O e 192.168.3.100</code></p>
+<h3 id="snmp-modules">SNMP Modules<a class="headerlink" href="#snmp-modules" title="Permanent link">&para;</a></h3>
+<p><code>Install-Module -Name SNMP</code> <br />
+<code>Get-SnmpData -IP 192.168.3.100 -OID 1.3.6.1.2.1.1.4.0 -UDPport 161 -Community public</code> <br />
+<code>(Get-SnmpData -IP 192.168.3.100 -OID 1.3.6.1.2.1.1.4.0).Data</code> <br />
+<code>Invoke-SnmpWalk -IP 192.168.3.100 -OID 1.3.6.1.2.1.1</code> пройтись по дереву OID <br />
+<code>Invoke-SnmpWalk -IP 192.168.3.100 -OID 1.3.6.1.2.1.25.6.3.1.2</code> список установленного ПО <br />
+<code>Invoke-SnmpWalk -IP 192.168.3.100 -OID 1.3.6.1.2.1.25.2.3.1</code> список разделов и памяти (C: D: Virtual Memory и Physical Memory) <br />
+<code>Set-SnmpData</code> изменение данных на удаленном устройстве</p>
+<p><code>Install-Module -Name SNMPv3</code> <br />
+<code>Invoke-SNMPv3Get</code> получение данных по одному OID <br />
+<code>Invoke-SNMPv3Set</code> изменение данных <br />
+<code>Invoke-SNMPv3Walk</code> обход по дереву OID <br />
+<code>Invoke-SNMPv3Walk -UserName lifailon -Target 192.168.3.100 -AuthSecret password -PrivSecret password -OID 1.3.6.1.2.1.1 -AuthType MD5 -PrivType AES128</code></p>
+<h3 id="lextmsharpsnmplib">Lextm.SharpSnmpLib<a class="headerlink" href="#lextmsharpsnmplib" title="Permanent link">&para;</a></h3>
+<p><a href="https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1">Синтаксис</a> <br />
+<a href="https://api.nuget.org/v3-flatcontainer/lextm.sharpsnmplib/12.5.2/lextm.sharpsnmplib.12.5.2.nupkg">Download lib</a></p>
+<p><code>Add-Type -LiteralPath "$home\Desktop\lextm.sharpsnmplib-12.5.2\net471\SharpSnmpLib.dll"</code></p>
+<pre><code class="language-PowerShell">$port = 161
+$OID = &quot;1.3.6.1.2.1.1.4.0&quot;
+$variableList = New-Object Collections.Generic.List[Lextm.SharpSnmpLib.Variable]
+$variableList.Add([Lextm.SharpSnmpLib.Variable]::new([Lextm.SharpSnmpLib.ObjectIdentifier]::new($OID)))
+$timeout = 3000
+[Net.IPAddress]$ip = &quot;192.168.3.100&quot;
+$endpoint = New-Object Net.IpEndPoint $ip, $port
+$Community = &quot;public&quot;
+[Lextm.SharpSnmpLib.VersionCode]$Version = &quot;V2&quot;
+
+$message = [Lextm.SharpSnmpLib.Messaging.Messenger]::Get(
+$Version,
+$endpoint,
+$Community,
+$variableList,
+$TimeOut
+)
+$message.Data.ToString()
+</code></pre>
+<h3 id="walk">Walk<a class="headerlink" href="#walk" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">[Lextm.SharpSnmpLib.ObjectIdentifier]$OID = &quot;1.3.6.1.2.1.1&quot; # дерево или конечный OID
+$WalkMode = [Lextm.SharpSnmpLib.Messaging.WalkMode]::WithinSubtree # режим обхода по дереву
+$results = New-Object Collections.Generic.List[Lextm.SharpSnmpLib.Variable]
+$message = [Lextm.SharpSnmpLib.Messaging.Messenger]::Walk(
+  $Version,
+  $endpoint,
+  $Community,
+  $OID,
+  $results,
+  $TimeOut,
+  $WalkMode
+)
+$results
+
+$results2 = @()
+foreach ($d in $results) {
+$results2 +=[PSCustomObject]@{'ID'=$d.id.ToString();'Data'=$d.Data.ToString()} # перекодировать вывод построчно в строку
+}
+$results2
+</code></pre>
+<h2 id="pki">pki<a class="headerlink" href="#pki" title="Permanent link">&para;</a></h2>
+<p><code>New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName "$env:computername" -FriendlyName "Test Certificate" -NotAfter (Get-Date).AddYears(5)</code> создать самоподписанный сертификат (в LocalMachine\My - Сертификаты компьютера\Личное) с сроком действия 5 лет</p>
+<p><code>Get-ChildItem -Path Cert:\CurrentUser\Root\</code> список всех установленных сертификатов в хранилище Доверенные корневые ЦС Текущего пользователя <br />
+<code>Get-ChildItem -Path Cert:\CurrentUser\My\</code> список самозаверяющих сертификатов в Личное хранилище Текущего пользователя <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\</code> список самозаверяющих сертификатов в Личное хранилище Локального компьютера <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\ | select NotBefore,NotAfter,Thumbprint,Subject</code> срок действия сертификата <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\ | where Thumbprint -eq D9356FB774EE0E6206B7D5B59B99102CA5B17BDA</code> поиск сертификат по отпечатку</p>
+<p><code>Get-ChildItem -Path $env:APPDATA\Microsoft\SystemCertificates\My\Certificates\</code> сертификаты в файловой системе, каждый файл соответствует сертификату, установленному в личном хранилище текущего пользователя <br />
+<code>Get-ChildItem -Path $env:APPDATA\Microsoft\SystemCertificates\My\Keys\</code> ссылки на объекты закрытых ключей, созданных поставщиком хранилища ключей (KSP) <br />
+<code>Get-ChildItem -Path HKCU:\Software\Microsoft\SystemCertificates\CA\Certificates | ft -AutoSize</code> список сертификатов в реестре вошедшего в систему пользователя</p>
+<p><code>$cert = (Get-ChildItem -Path Cert:\CurrentUser\My\)[1]</code> выбрать сертификат <br />
+<code>$cert | Remove-Item</code> удалить сертификат</p>
+<p><code>Export-Certificate -FilePath $home\Desktop\certificate.cer -Cert $cert</code> экспортировать сертификат <br />
+<code>$cert.HasPrivateKey</code> проверить наличие закрытого ключа <br />
+<code>$pass = "password" | ConvertTo-SecureString -AsPlainText -Force</code> создать пароль для шифрования закрытого ключа <br />
+<code>Export-PfxCertificate -FilePath $home\Desktop\certificate.pfx -Password $pass -Cert $certificate</code> экспортировать сертификат с закрытым ключем</p>
+<p><code>Import-Certificate -FilePath $home\Desktop\certificate.cer -CertStoreLocation Cert:\CurrentUser\My</code> импортировать сертификат <br />
+<code>Import-PfxCertificate -Exportable -Password $pass -CertStoreLocation Cert:\CurrentUser\My -FilePath $home\Desktop\certificate.pfx</code></p>
+<h2 id="openssl">OpenSSL<a class="headerlink" href="#openssl" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">Invoke-WebRequest -Uri https://slproweb.com/download/Win64OpenSSL_Light-3_1_1.msi -OutFile $home\Downloads\OpenSSL-Light-3.1.1.msi
+Start-Process $home\Downloads\OpenSSL-Light-3.1.1.msi -ArgumentList '/quiet' -Wait` установить msi пакет в тихом режиме (запуск от имени Администратора)
+rm $home\Downloads\OpenSSL-Light-3.1.1.msi
+cd &quot;C:\Program Files\OpenSSL-Win64\bin&quot;
+</code></pre>
+<ul>
+<li>
+<p>Изменить пароль для PFX <br />
+<code>openssl pkcs12 -in "C:\Cert\domain.ru.pfx" -out "C:\Cert\domain.ru.pem" -nodes</code> экспортируем имеющийся сертификат и закрытый ключ в .pem-файл без пароля с указанием текущего пароля <br />
+<code>openssl pkcs12 -export -in "C:\Cert\domain.ru.pem" -out "C:\Cert\domain.ru_password.pfx" -nodes</code> конвертируем .pem обратно в .pfx c указанием нового пароля</p>
+</li>
+<li>
+<p>Конвертация из закрытого и открытого ключа PEM в PFX <br />
+<code>openssl pkcs12 -export -in "C:\tmp\vpn\vpn.itproblog.ru-crt.pem" -inkey "C:\tmp\vpn\vpn.itproblog.ru-key.pem" -out "C:\tmp\vpn\vpn.iiproblog.ru.pfx"</code> <br />
+in – путь до файла с открытым ключом <br />
+inkey – путь до файла с закрытым ключом <br />
+out – путь до файла, в который будет конвертирован сертификат (pfx)</p>
+</li>
+<li>
+<p>Конвертация PFX в CRT <br />
+<code>openssl pkcs12 -in "C:\OpenSSL-Win64\bin\_.domain.ru.pfx" -clcerts -out "C:\OpenSSL-Win64\bin\_.domain.ru.crt"</code> указывается текущий и 2 раза новый пароль PEM pass phrase (файл содержит EGIN CERTIFICATE и BEGIN ENCRYPTED PRIVATE KEY) <br />
+<code>openssl pkcs12 -in "C:\OpenSSL-Win64\bin\_.domain.ru.pfx" -clcerts -nokeys -out "C:\OpenSSL-Win64\bin\_.domain.ru.crt"</code> без ключа, получить открытую часть (файл содержит только EGIN CERTIFICATE)</p>
+</li>
+<li>
+<p>Конвертация PFX в KEY <br />
+<code>openssl pkcs12 -in "C:\OpenSSL-Win64\bin\_.domain.ru.pfx" -nocerts -out "C:\OpenSSL-Win64\bin\_.domain.ru.key"</code> файл содержит только BEGIN ENCRYPTED PRIVATE KEY</p>
+</li>
+<li>
+<p>Снять пароль к закрытого ключа .key <br />
+<code>openssl rsa -in "C:\OpenSSL-Win64\bin\_.domain.ru.key" -out "C:\OpenSSL-Win64\bin\_.domain.ru-decrypted.key"</code></p>
+</li>
+<li>
+<p>CRT и KEY в PFX: <br />
+<code>openssl pkcs12 -inkey certificate.key -in certificate.crt -export -out certificate.pfx</code></p>
+</li>
+</ul>
+<h2 id="openvpn">OpenVPN<a class="headerlink" href="#openvpn" title="Permanent link">&para;</a></h2>
+<p><code>Invoke-WebRequest -Uri https://swupdate.openvpn.org/community/releases/OpenVPN-2.6.5-I001-amd64.msi -OutFile $home\Downloads\OpenVPN-2.6.5.msi</code> <br />
+<code>Start-Process $home\Downloads\OpenVPN-2.6.5.msi -ArgumentList '/quiet /SELECT_OPENSSL_UTILITIES=1' -Wait</code> <br />
+<code>msiexec /i $home\Downloads\OpenVPN-2.6.5.msi ADDLOCAL=EasyRSA /passive /quiet # установить отдельный компонент EasyRSA Certificate Management Scripts</code> <br />
+<code># msiexec /i $home\Downloads\OpenVPN-2.6.5.msi ADDLOCAL=OpenVPN.Service,Drivers,Drivers.Wintun,OpenVPN,OpenVPN.GUI,OpenVPN.GUI.OnLogon,EasyRSA /passive</code> выборочная установка <br />
+<code># Invoke-WebRequest -Uri https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.5/EasyRSA-3.1.5-win64.zip -OutFile $home\Downloads\EasyRSA-3.1.5.zip</code> скачать отдельный пакет EasyRSA <br />
+<code>rm $home\Downloads\OpenVPN-2.6.5.msi</code></p>
+<p><code>cd "C:\Program Files\OpenVPN\easy-rsa"</code> <br />
+<code>Copy-Item vars.example vars</code> файл конфигурации для EasyRSA</p>
+<pre><code>set_var EASYRSA_TEMP_DIR &quot;$EASYRSA_PKI&quot;
+set_var EASYRSA_REQ_COUNTRY &quot;RU&quot;
+set_var EASYRSA_REQ_PROVINCE &quot;MSK&quot;
+set_var EASYRSA_REQ_CITY &quot;MSK&quot;
+set_var EASYRSA_REQ_ORG &quot;FAILON.NET&quot;
+set_var EASYRSA_REQ_EMAIL &quot;lifailon@domain.ru&quot;
+set_var EASYRSA_REQ_OU &quot;IT&quot;
+#set_var EASYRSA_KEY_SIZE 2048
+#set_var EASYRSA_CA_EXPIRE 3650
+#set_var EASYRSA_CERT_EXPIRE 825
+</code></pre>
+<p><code>.\EasyRSA-Start.bat</code> среда EasyRSA Shell <br />
+<code>easyrsa init-pki</code> инициализация PKI, создает директорию: C:\Program Files\OpenVPN\easy-rsa\pki и читает переменные файла \easy-rsa\vars <br />
+<code>easyrsa build-ca</code> генерация корневого CA с указанием пароля и произвольное имя сервера (\pki\ca.crt и \pki\private\ca.key) <br />
+<code>easyrsa gen-req server nopass</code> генерация запроса сертификата и ключ для сервера OpenVPN - yes (\pki\reqs\server.req и \pki\private\server.key) <br />
+<code>easyrsa sign-req server server</code> подписать запрос на выпуск сертификата сервера с помощью CA - yes (\pki\issued\server.crt) <br />
+<code>easyrsa gen-dh</code> создать ключ Диффи-Хеллмана (\pki\dh.pem) <br />
+<code>easyrsa gen-req client1</code> nopass<code>генерация запроса сертификата и ключ для клиента OpenVPN (\pki\reqs\client1.req и \pki\private\client1.key)</code> <br />
+<code>easyrsa sign-req client client1</code> подписать запрос на выпуск сертификата клиента с помощью CA - yes (\pki\issued\client1.crt) <br />
+<code>easyrsa revoke client1</code> отозвать сертификат пользователя <br />
+<code>openssl rsa -in "C:\Program Files\OpenVPN\easy-rsa\pki\private\client1.key" -out "C:\Program Files\OpenVPN\easy-rsa\pki\private\client1_nopass.key"</code> снять защиту паролем для ключа (BEGIN ENCRYPTED PRIVATE KEY -&gt; BEGIN PRIVATE KEY) <br />
+<code>exit</code> <br />
+<code>cd "C:\Program Files\OpenVPN\bin"</code> <br />
+<code>.\openvpn --genkey secret ta.key</code> генерация ключа tls-auth (\bin\ta.key) <br />
+<code>Move-Item "C:\Program Files\OpenVPN\bin\ta.key" "C:\Program Files\OpenVPN\easy-rsa\pki\"</code></p>
+<h3 id="serverovpn">server.ovpn<a class="headerlink" href="#serverovpn" title="Permanent link">&para;</a></h3>
+<p><code># Copy-Item "C:\Program Files\OpenVPN\sample-config\server.ovpn" "C:\Program Files\OpenVPN\config-auto\server.ovpn"</code> <br />
+<code>New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\server.ovpn"</code></p>
+<pre><code>port 1194
+proto udp
+# Что именно инкапсулировать в туннеле (ethernet фреймы - tap или ip пакеты - tun)
+dev tun
+ca &quot;C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\ca.crt&quot;
+cert &quot;C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\issued\\server.crt&quot;
+key &quot;C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\private\\server.key&quot;
+dh &quot;C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\dh.pem&quot;
+server 192.168.4.0 255.255.255.0
+# Хранит список сопоставления ip для клиентов, что бы назначить тот же адрес при перезапуске сервера
+# ifconfig-pool-persist &quot;C:\\Program Files\\OpenVPN\\dhcp-client-list.txt&quot;
+# Разрешить клиентам подключаться под одним ключом
+# duplicate-cn
+# max-clients 30
+# Разрешить обмен трафиком между клиентами
+client-to-client
+# compress
+tls-auth &quot;C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\ta.key&quot; 0
+cipher AES-256-GCM
+keepalive 20 60
+# Не перечитавать файлы ключей при перезапуске туннеля
+persist-key
+# Оставляет без изменения устройства tun/tap при перезапуске OpenVPN
+persist-tun
+status &quot;C:\\Program Files\\OpenVPN\\log\\status.log&quot;
+log &quot;C:\\Program Files\\OpenVPN\\log\\openvpn.log&quot;
+verb 3
+mute 20
+windows-driver wintun
+# Открыть доступ к подсети за сервером
+push &quot;route 192.168.3.0 255.255.255.0&quot;
+push &quot;route 192.168.4.0 255.255.255.0&quot;
+# Завернуть все запросы клиента (в том числе Интернет трафик) на OpenVPN сервер
+# push &quot;redirect-gateway def1&quot;
+# push &quot;dhcp-option DNS 192.168.3.101&quot;
+# push &quot;dhcp-option DOMAIN failon.net&quot;
+</code></pre>
+<p><code>New-NetFirewallRule -DisplayName "AllowOpenVPN-In" -Direction Inbound -Protocol UDP –LocalPort 1194 -Action Allow</code> на сервере <br />
+<code>New-NetFirewallRule -DisplayName "AllowOpenVPN-Out" -Direction Outbound -Protocol UDP –LocalPort 1194 -Action Allow</code> на клиенте <br />
+<code>Get-Service *openvpn* | Restart-Service</code></p>
+<h3 id="clientovpn">client.ovpn<a class="headerlink" href="#clientovpn" title="Permanent link">&para;</a></h3>
+<p><code># Copy-Item "C:\Program Files\OpenVPN\sample-config\client.ovpn" "C:\Program Files\OpenVPN\config-auto\client.ovpn"</code> <br />
+<code>New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\client.ovpn"</code></p>
+<pre><code>client
+dev tun
+proto udp
+remote 26.115.154.67 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ca ca.crt
+cert client1.crt
+key client1.key
+remote-cert-tls server
+tls-auth ta.key 1
+cipher AES-256-GCM
+connect-retry-max 25
+# Использовать драйвер wintun и полный путь до сертификатов при использовании openvpn gui
+windows-driver wintun
+verb 3
+</code></pre>
+<h3 id="client">Client<a class="headerlink" href="#client" title="Permanent link">&para;</a></h3>
+<p><code>iwr -Uri https://openvpn.net/downloads/openvpn-connect-v3-windows.msi -OutFile "$home\downloads\OpenVPN-Connect-3.msi"</code> <br />
+Передать конфигурацию и ключи: <br />
+<code>client.ovpn</code> <br />
+<code>ca.crt</code> <br />
+<code>dh.pem</code> <br />
+<code>ta.key</code> <br />
+<code>client1.crt</code> <br />
+<code>client1.key</code></p>
+<h2 id="route">Route<a class="headerlink" href="#route" title="Permanent link">&para;</a></h2>
+<p><code>Get-Service RemoteAccess | Stop-Service</code> <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" -Name "IPEnableRouter" -Value 1</code> включает IP маршрутизацию <br />
+<code>(Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters").IPEnableRouter</code> <br />
+<code>Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | ft</code> отобразить сетевые интерфейсы <br />
+<code>Set-NetIPInterface -ifIndex 13 -Forwarding Enabled</code> включить переадресацию на интерфейсе</p>
+<p><code>sysctl net.ipv4.ip_forward=1</code> <br />
+<code>echo "sysctl net.ipv4.ip_forward = 1" &gt;&gt; /etc/sysctl.conf</code></p>
+<p><code>Get-NetRoute</code> <br />
+<code>New-NetRoute -DestinationPrefix "192.168.3.0/24" -NextHop "192.168.4.1" -InterfaceIndex 8</code> <br />
+<code>route -p add 192.168.3.0 mask 255.255.255.0 192.168.4.1 metric 1</code> <br />
+<code>route -p change 192.168.3.0 mask 255.255.255.0 192.168.4.1 metric 2</code> <br />
+<code>route -p add 192.168.3.0 mask 255.255.255.0 192.168.4.1 metric 1 if 7</code> указать номер сетевого интерфейса на который необходимо посылать пакет (Wintun Userspace Tunnel) <br />
+<code>route print -4</code> <br />
+<code>route delete 192.168.3.0</code></p>
+<p><code>tracert 192.168.3.101</code> с 192.168.4.6</p>
+<pre><code>1    17 ms     *       22 ms  192.168.4.1
+2    12 ms    13 ms    14 ms  192.168.3.101
+</code></pre>
+<p><code>route add -net 192.168.4.0 netmask 255.255.255.0 gw 192.168.3.100</code> <br />
+<code>route -e</code></p>
+<p><code>traceroute 192.168.4.6</code> с 192.168.3.101</p>
+<pre><code>1  192.168.3.100 (192.168.3.100)  0.148 ms  0.110 ms  0.106 ms
+2  192.168.4.6 (192.168.4.6)  14.573 ms * *
+</code></pre>
+<p><code>ping 192.168.3.101 -t</code> с 192.168.4.6 <br />
+<code>tcpdump -n -i ens33 icmp</code> на 192.168.3.101</p>
+<pre><code>14:36:34.533771 IP 192.168.4.6 &gt; 192.168.3.101: ICMP echo request, id 1, seq 2962, length 40 # отправил запрос
+14:36:34.533806 IP 192.168.3.101 &gt; 192.168.4.6: ICMP echo reply, id 1, seq 2962, length 40 # отправил ответ
+</code></pre>
+<h2 id="nat">NAT<a class="headerlink" href="#nat" title="Permanent link">&para;</a></h2>
+<p><code>Get-Command -Module NetNat</code> <br />
+<code>New-NetNat -Name LocalNat -InternalIPInterfaceAddressPrefix "192.168.3.0/24"</code> <br />
+<code>Add-NetNatStaticMapping -NatName LocalNat -Protocol TCP -ExternalIPAddress 0.0.0.0 -ExternalPort 80 -InternalIPAddress 192.168.3.102 -InternalPort 80</code> <br />
+<code>Remove-NetNatStaticMapping -StaticMappingID 0</code> <br />
+<code>Remove-NetNat -Name LocalNat</code></p>
+<h2 id="wireguard">WireGuard<a class="headerlink" href="#wireguard" title="Permanent link">&para;</a></h2>
+<p><code>Invoke-WebRequest "https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi" -OutFile "$home\Downloads\WireGuard-Client-0.5.3.msi"</code> <br />
+<code>msiexec.exe /i "$home\Downloads\WireGuard-Client-0.5.3.msi" DO_NOT_LAUNCH=1 /qn</code> <br />
+<code>Invoke-WebRequest "http://www.wiresock.net/downloads/wiresock-vpn-gateway-x64-1.1.4.1.msi" -OutFile "$home\Downloads\WireSock-VPN-Gateway-1.1.4.1.msi"</code> <br />
+<code>msiexec.exe /i "http://www.wiresock.net/downloads/wiresock-vpn-gateway-x64-1.1.4.1.msi" /qn</code> <br />
+<code>$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")</code> <br />
+<code>wg-quick-config -add -start</code> <br />
+<code>26.115.154.67:8181</code> <br />
+<code>192.168.21.4/24</code> <br />
+<code>Successfully saved client configuration: C:\ProgramData\NT KERNEL\WireSock VPN Gateway\wsclient_1.conf</code> <br />
+<code>Successfully saved server configuration: C:\ProgramData\NT KERNEL\WireSock VPN Gateway\wiresock.conf</code> <br />
+<code>get-service *wire*</code> <br />
+<code>wg show</code> <br />
+<code>wg-quick-config -add -restart</code> add client</p>
+<p>wiresock.conf</p>
+<pre><code>[Interface]
+PrivateKey = gCHC0g2JPwr6sXPiaOL4/KTkMyjN9TculrJUA/GORV8=
+Address = 192.168.21.5/24
+ListenPort = 8181
+
+[Peer]
+PublicKey = NoSxjew2RCHiUzI6mlahjd4I+0EcLsoYom/H01z91yU=
+AllowedIPs = 192.168.21.6/32
+</code></pre>
+<p>wsclient_1.conf (добавить маршруты для клиента в AllowedIPs)</p>
+<pre><code>[Interface]
+PrivateKey = yIpRQRmaGrrk9Y+49E8JhEpFmKzSeecvUAdeNgf1hUM=
+Address = 192.168.21.6/24
+DNS = 8.8.8.8, 1.1.1.1
+MTU = 1420
+
+[Peer]
+PublicKey = Fp7674VSYeGj8CYt6RCKR7Qz1y/IKUXCw8ImOFhX3hk=
+AllowedIPs = 192.168.21.0/24, 192.168.3.0/24
+Endpoint = 26.115.154.67:8181
+PersistentKeepalive = 25
+</code></pre>
+<h2 id="vpnclient">VpnClient<a class="headerlink" href="#vpnclient" title="Permanent link">&para;</a></h2>
+<p><code>Get-Command -Module VpnClient</code> <br />
+<code>Add-VpnConnection -Name "vpn-failon" -ServerAddress "26.115.154.67" -TunnelType L2TP -L2tpPsk "123098" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential -AllUserConnection –PassThru -Force</code> <br />
+<code>-TunnelType PPTP/L2TP/SSTP/IKEv2/Automatic</code> <br />
+<code>-L2tpPsk</code> использовать общий ключ для аутентификации (без параметра, для L2TP аутентификации используется сертификат) <br />
+<code>-AuthenticationMethod Pap/Chap/MSChapv2/Eap/MachineCertificate</code> <br />
+<code>-EncryptionLevel NoEncryption/Optional/Required/Maximum/Custom</code> <br />
+<code>-SplitTunneling</code> заворачивать весь трафик через VPN-туннель (включение Use default gateway on remote network в настройках параметра VPN адаптера) <br />
+<code>-UseWinlogonCredential</code> использовать учетные данные текущего пользователя для аутентификации на VPN сервере <br />
+<code>-RememberCredential</code> разрешить сохранять учетные данные для VPN подключения (учетная запись и пароль сохраняются в диспетчер учетных данных Windows после первого успешного подключения) <br />
+<code>-DnsSuffix domain.local</code> <br />
+<code>-AllUserConnection</code> разрешить использовать VPN подключение для всех пользователей компьютера (сохраняется в конфигурационный файл: C:\ProgramData\Microsoft\Network\Connections\Pbk\rasphone.pbk)</p>
+<p><code>Install-Module -Name VPNCredentialsHelper</code> модуль для сохранения логина и пароля в Windows Credential Manager для VPN подключения <br />
+<code>Set-VpnConnectionUsernamePassword -connectionname vpn-failon -username user1 -password password</code></p>
+<p><code>rasdial "vpn-failon"</code> подключиться <br />
+<code>Get-VpnConnection -AllUserConnection | select *</code> список VPN подключения, доступных для всех пользователей, найстройки и текущий статус подключения (ConnectionStatus) <br />
+<code>Add-VpnConnectionRoute -ConnectionName vpn-failon -DestinationPrefix 192.168.3.0/24 –PassThru</code> динамически добавить в таблицу маршрутизации маршрут, который будет активен при подключении к VPN <br />
+<code>Remove-VpnConnection -Name vpn-failon -AllUserConnection -Force</code> удалить</p>
+<p><code>Set-VpnConnection -Name "vpn-failon" -SplitTunneling $True</code> включить раздельное тунеллирование <br />
+<code>Add-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix 172.22.22.0/24</code> настроить маршрутизацию к указанной подсети через VPN-соединение <br />
+<code>(Get-VpnConnection -ConnectionName "vpn-failon").routes</code> отобразить таблицу маршрутизации для указанного соединения <br />
+<code>Remove-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix "172.22.23.0/24"</code></p>
+<h2 id="proxy">Proxy<a class="headerlink" href="#proxy" title="Permanent link">&para;</a></h2>
+<p><code>$user = "lifailon"</code> <br />
+<code>$pass = "Proxy"</code> <br />
+<code>$SecureString = ConvertTo-SecureString $pass -AsPlainText -Force</code> <br />
+<code>$Credential = New-Object System.Management.Automation.PSCredential($user, $SecureString)</code> <br />
+<code>[System.Net.Http.HttpClient]::DefaultProxy = New-Object System.Net.WebProxy("http://192.168.3.100:9090")</code> <br />
+<code>[System.Net.Http.HttpClient]::DefaultProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials</code> <br />
+<code>[System.Net.Http.HttpClient]::DefaultProxy.Credentials = $Credential</code> <br />
+<code>Invoke-RestMethod http://ifconfig.me/ip</code> <br />
+<code>Invoke-RestMethod https://kinozal.tv/rss.xml</code></p>
+<h2 id="netsh">netsh<a class="headerlink" href="#netsh" title="Permanent link">&para;</a></h2>
+<h3 id="proxy_1">Proxy<a class="headerlink" href="#proxy_1" title="Permanent link">&para;</a></h3>
+<p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=192.168.3.108</code> <br />
+<code>netsh interface portproxy show all</code> <br />
+<code>netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=0.0.0.0</code></p>
+<h3 id="wlan">Wlan<a class="headerlink" href="#wlan" title="Permanent link">&para;</a></h3>
+<p><code>netsh wlan show profile</code> список сохраненны профилей Wi-Fi и паролей <br />
+<code>netsh wlan show interfaces</code> хар-ки текущей сети (MAC, speed) <br />
+<code>netsh wlan show profile SSID-Name-Network key=clear</code> очистить пароль <br />
+<code>netsh wlan show networks</code> список видемых сетей <br />
+<code>netsh wlan disconnect</code> отключиться от Wi-Fi <br />
+<code>netsh wlan connect name="SSID-Name-Network"</code> подключиться <br />
+<code>netsh wlan show drivers</code> драйвер Wi-Fi <br />
+<code>netsh wlan set hostednetwork mode=allow ssid="WiFi-Test" key="password"</code> создание точки доступа Wi-Fi (SoftAP)</p>
+<h3 id="firewall_1">Firewall<a class="headerlink" href="#firewall_1" title="Permanent link">&para;</a></h3>
+<p><code>netsh advfirewall set allprofiles state off</code> отключить fw <br />
+<code>netsh advfirewall reset</code> сбросить настройки <br />
+<code>netsh advfirewall firewall add rule name="Open Remote Desktop" protocol=TCP dir=in localport=3389 action=allow</code> открыть порт 3389 <br />
+<code>netsh advfirewall firewall add rule name="All ICMP V4" dir=in action=allow protocol=icmpv4</code> открыть icmp</p>
+<h1 id="openssh">OpenSSH<a class="headerlink" href="#openssh" title="Permanent link">&para;</a></h1>
+<p><code>Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Client*'</code> <br />
+<code>Add-WindowsCapability -Online -Name OpenSSH.Client*</code> <br />
+<code>dism /Online /Add-Capability /CapabilityName:OpenSSH.Client~~~~0.0.1.0</code> <br />
+<code>iwr https://github.com/PowerShell/Win32-OpenSSH/releases/download/v9.2.2.0p1-Beta/OpenSSH-Win64-v9.2.2.0.msi -OutFile $home\Downloads\OpenSSH-Win64-v9.2.2.0.msi</code> скачать <br />
+<code>msiexec /i $home\Downloads\OpenSSH-Win64-v9.2.2.0.msi</code> установить msi пакет <br />
+<code>Set-Service sshd -StartupType Automatic</code> <br />
+<code>Get-NetTCPConnection | where LocalPort -eq 22</code> <br />
+<code>New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22</code> <br />
+<code>Get-NetFirewallRule -Name *ssh*</code> <br />
+<code>Start-Process notepad++ C:\Programdata\ssh\sshd_config</code> конфигурационный файл <br />
+<code>GSSAPIAuthentication yes</code> включить Kerberos аутентификацию (через AD) <br />
+<code>SyslogFacility LOCAL0</code> включить локальное ведение журнала в файл (C:\ProgramData\ssh\logs\sshd.log) <br />
+<code>LogLevel INFO</code> <br />
+<code>Restart-Service sshd</code> <br />
+<code>ssh -K $srv</code> выполнить Kerberos аутентификацию <br />
+<code>ssh Lifailon@192.168.3.99 -p 22</code> <br />
+<code>pwsh -command Get-Service</code> <br />
+<code>ssh -L 3101:192.168.3.101:22 -R 3101:192.168.3.101:22 lifailon@192.168.3.101 -p 22</code> SSH Tunnel lifailon@localhost:3101 -&gt; 192.168.3.101:3101</p>
+<h2 id="winrm">WinRM<a class="headerlink" href="#winrm" title="Permanent link">&para;</a></h2>
+<p><code>Enter-PSSession -ComputerName $srv</code> подключиться к PowerShell сессии через PSRemoting. Подключение возможно только по FQDN-имени <br />
+<code>Invoke-Command $srv -ScriptBlock {Get-ComputerInfo}</code> выполнение команды через PSRemoting <br />
+<code>$session = New-PSSession $srv</code> открыть сессию <br />
+<code>Get-PSSession</code> отобразить активные сессии <br />
+<code>icm -Session $session {$srv = $using:srv}</code> передать переменную текущей сессии ($using) в удаленную <br />
+<code>Disconnect-PSSession $session</code> закрыть сессию <br />
+<code>Remove-PSSession $session</code> удалить сессию <br />
+<code>Import-Module -Name ActiveDirectory -PSSession $srv</code> импортировать модуль с удаленного компьютера в локальную сессию</p>
+<h3 id="windows-remote-management-configuration">Windows Remote Management Configuration<a class="headerlink" href="#windows-remote-management-configuration" title="Permanent link">&para;</a></h3>
+<p><code>winrm quickconfig -quiet</code> изменит запуск службы WinRM на автоматический, задаст стандартные настройки WinRM и добавить исключения для портов в fw <br />
+<code>Enable-PSRemoting –Force</code> включить PowerShell Remoting, работает только для доменного и частного сетевых профилей Windows <br />
+<code>Enable-PSRemoting -SkipNetworkProfileCheck -Force</code> для настройки компьютера в общей (public) сети (работает с версии powershell 6)</p>
+<p><code>$NetProfiles = Get-NetConnectionProfile</code> отобразить профили сетевых подключений <br />
+<code>Set-NetConnectionProfile -InterfaceIndex $NetProfiles[1].InterfaceIndex -NetworkCategory Private</code> изменить тип сети для профиля (DomainAuthenticated/Public) <br />
+<code>(Get-CimInstance -ClassName Win32_ComputerSystem).PartOfDomain</code> проверить, что компьютер добавлен в домен AD <br />
+<code>Get-Service WinRM | Set-Service -StartupType AutomaticDelayedStart</code> отложенный запуск <br />
+<code>Get-Service -Name winrm -RequiredServices</code> статус зависимых служб <br />
+<code>New-NetFirewallRule -Profile Any -DisplayName "WinRM HTTP" -Direction Inbound -Protocol TCP -LocalPort 5985,5986</code> <br />
+<code>Test-NetConnection $srv -port 5895</code> проверить порт <br />
+<code>Test-WSMan $srv -ErrorAction Ignore</code> проверить работу WinRM на удаленном компьютере (игнорировать вывод ошибок для скрипта) или локально (localhost)</p>
+<p><code>$Cert = New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName "$env:computername" -FriendlyName "WinRM HTTPS Certificate" -NotAfter (Get-Date).AddYears(5)</code> создать самоподписанный сертификат <br />
+<code>$Thumbprint = $Cert.Thumbprint</code> забрать отпечаток <br />
+<code>New-Item -Path WSMan:\Localhost\Listener -Transport HTTPS -Address * -CertificateThumbprint $Thumbprint -Name WinRM_HTTPS_Listener -Force</code> создать прослушиватель <br />
+<code>New-NetFirewallRule -DisplayName 'WinRM HTTPS' -Profile Domain,Private -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5986</code> открыть порт в fw</p>
+<pre><code>$selector_set = @{
+    Address = &quot;*&quot;
+    Transport = &quot;HTTPS&quot;
+}
+$value_set = @{
+    CertificateThumbprint = &quot;66ABFDA044D8C85135048186E2FDC0DBE6125163&quot;
+}
+New-WSManInstance -ResourceURI &quot;winrm/config/Listener&quot; -SelectorSet $selector_set -ValueSet $value_set
+</code></pre>
+<p><code>winrm get winrm/config</code> отобразить всю конфигурацию (Client/Service) <br />
+<code>winrm get winrm/config/service/auth</code> конфигурация авторизации на сервере <br />
+<code>winrm enumerate winrm/config/listener</code> текущая конфигурация прослушивателей WinRM (отображает отпечаток сертификата для HTTPS 5986) <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\ | where Thumbprint -eq D9356FB774EE0E6206B7D5B59B99102CA5B17BDA | select *</code> информация о сертификате</p>
+<p><code>ls WSMan:\localhost\Client</code> конфигурацию клиента <br />
+<code>ls WSMan:\localhost\Service</code> конфигурация сервера <br />
+<code>ls WSMan:\localhost\Service\auth</code> список всех конфигураций аутентификации WinRM сервера <br />
+<code>Set-Item -path WSMan:\localhost\Service\auth\basic -value $true</code> разрешить локальную аутентификацию к текущему серверу <br />
+<code>ls HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WSMAN</code> настройки в реестре (например, для включения аудентификации в \Service\auth_basic = 1) <br />
+<code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.* -Force</code> добавить доверенные хосты в конфигурацию на клиенте, чтобы работала Negotiate аутентификация через NTLM <br />
+<code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.3.100 -Concatenate -Force</code> добавить второй компьютер <br />
+<code>ls WSMan:\localhost\Client\TrustedHosts</code> <br />
+<code>Set-Item WSMan:\localhost\Client\AllowUnencrypted $true</code> включить передача незашифрованных данных конфигурации клиента <br />
+<code>Set-Item WSMan:\localhost\Service\AllowUnencrypted $true</code> включить передача незашифрованных данных конфигурации сервера (необходимо быть в private сети)</p>
+<p><code>Get-PSSessionConfiguration</code> проверить, включен ли PSremoting и вывести список пользователей и групп, которым разрешено подключаться через WinRM <br />
+<code>Set-PSSessionConfiguration -Name Microsoft.PowerShell -ShowSecurityDescriptorUI</code> назначить права доступа через дескриптор безопасности текущей сессии (до перезагруки) <br />
+<code>(Get-PSSessionConfiguration -Name "Microsoft.PowerShell").SecurityDescriptorSDDL</code> получить настройки дескриптора в формате SDDL <br />
+<code>Set-PSSessionConfiguration -Name Microsoft.PowerShell -SecurityDescriptorSDDL $SDDL</code> применить настройки дескриптора на другом компьютере без использования GUI </p>
+<p><code>New-LocalUser "WinRM-Writer" -Password (ConvertTo-SecureString -AsPlainText "123098")</code> создать пользователя <br />
+<code>Add-LocalGroupMember -Group "Remote Management Users" -Member "WinRM-Writer"</code> добавить пользователя WinRM-Writer в локальную группу доступа "Пользователи удаленного управления" <br />
+<code>cmdkey /add:192.168.3.99 /user:WinRM-Writer /pass:123098</code> сохранить пароль в CredentialManager<br />
+<code>cmdkey /list</code> <br />
+<code>Import-Module CredentialManager</code> <br />
+<code>Add-Type -AssemblyName System.Web</code> <br />
+<code>New-StoredCredential -Target 192.168.3.99 -UserName WinRM-Writer -Password 123098 -Comment WinRM</code> сохранить пароль в CredentialManager (из PS5) <br />
+<code>Get-StoredCredential -AsCredentialObject</code> <br />
+<code>$cred = Get-StoredCredential -Target 192.168.3.99</code> <br />
+<code>Enter-PSSession -ComputerName 192.168.3.99 -Credential $cred -Authentication Negotiate</code> <br />
+<code>Enter-PSSession -ComputerName 192.168.3.99 -Credential $cred -Authentication Basic -Port 5985</code> работает при отключении allowunencrypted на стороне сервера и клиента <br />
+<code>winrs -r:http://192.168.3.100:5985/wsman -u:WinRM-Writer -p:123098 ipconfig</code> передать команду через winrs (-?) <br />
+<code>winrs -r:https://192.168.3.100:5985/wsman -u:WinRM-Writer -p:123098 -ssl ipconfig</code> через https <br />
+<code>pwsh -Command "Install-Module -Name PSWSMan"</code> установить модуль для использования в Linux системе</p>
+<h3 id="kerberos">Kerberos<a class="headerlink" href="#kerberos" title="Permanent link">&para;</a></h3>
+<p><code>.\CheckMaxTokenSize.ps1 -Principals login -OSEmulation $true -Details $true</code> узнать размер токена пользователя в домене <br />
+<code>Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Parameters | select maxtokensize</code> максимальный размер токена на сервере <br />
+<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\HTTP\Parameters</code> изменить размера, если заголовок пакета аутентификации превышает 16 Кб (из за большого кол-ва групп) <br />
+<code>MaxFieldLength увеличить до 0000ffff (65535)</code> <br />
+<code>MaxRequestBytes увеличить до 0000ffff (65535)</code></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1229 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TEST">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/Zabbix/">
+      
+      
+        <link rel="prev" href="../WMI/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>Zabbix - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zabbix-agent-deploy" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Zabbix
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PowerShell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PowerShell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ActiveDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Apps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dotNET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTML/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InfluxDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MSSQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MSSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MySQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MySQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WMI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WMI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix-agent-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zabbix Agent Deploy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix_sender" class="md-nav__link">
+    <span class="md-ellipsis">
+      zabbix_sender
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix_get" class="md-nav__link">
+    <span class="md-ellipsis">
+      zabbix_get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#userparameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      UserParameter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include" class="md-nav__link">
+    <span class="md-ellipsis">
+      Include
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix_agent2conf" class="md-nav__link">
+    <span class="md-ellipsis">
+      zabbix_agent2.conf
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Token
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#userget" class="md-nav__link">
+    <span class="md-ellipsis">
+      user.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemget" class="md-nav__link">
+    <span class="md-ellipsis">
+      problem.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hostget" class="md-nav__link">
+    <span class="md-ellipsis">
+      host.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#itemget" class="md-nav__link">
+    <span class="md-ellipsis">
+      item.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historyget" class="md-nav__link">
+    <span class="md-ellipsis">
+      history.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert-secconds-to-timespan-and-datetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert Secconds To TimeSpan and DateTime
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert-from-unix-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert From Unix Time
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix-agent-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zabbix Agent Deploy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix_sender" class="md-nav__link">
+    <span class="md-ellipsis">
+      zabbix_sender
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix_get" class="md-nav__link">
+    <span class="md-ellipsis">
+      zabbix_get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#userparameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      UserParameter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include" class="md-nav__link">
+    <span class="md-ellipsis">
+      Include
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zabbix_agent2conf" class="md-nav__link">
+    <span class="md-ellipsis">
+      zabbix_agent2.conf
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Token
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#userget" class="md-nav__link">
+    <span class="md-ellipsis">
+      user.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemget" class="md-nav__link">
+    <span class="md-ellipsis">
+      problem.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hostget" class="md-nav__link">
+    <span class="md-ellipsis">
+      host.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#itemget" class="md-nav__link">
+    <span class="md-ellipsis">
+      item.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historyget" class="md-nav__link">
+    <span class="md-ellipsis">
+      history.get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert-secconds-to-timespan-and-datetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert Secconds To TimeSpan and DateTime
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert-from-unix-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert From Unix Time
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Zabbix</h1>
+
+<h2 id="zabbix-agent-deploy">Zabbix Agent Deploy<a class="headerlink" href="#zabbix-agent-deploy" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$url = &quot;https://cdn.zabbix.com/zabbix/binaries/stable/6.4/6.4.5/zabbix_agent2-6.4.5-windows-amd64-static.zip&quot;
+$path = &quot;$home\Downloads\zabbix-agent2-6.4.5.zip&quot;
+$WebClient = New-Object System.Net.WebClient
+$WebClient.DownloadFile($url, $path)` скачать файл
+Expand-Archive $path -DestinationPath &quot;C:\zabbix-agent2-6.4.5\&quot;` разархивировать
+Remove-Item $path` удалить архив
+New-NetFirewallRule -DisplayName &quot;Zabbix-Agent&quot; -Profile Any -Direction Inbound -Action Allow -Protocol TCP -LocalPort 10050,10051` открыть порты в FW
+
+$Zabbix_Server = &quot;192.168.3.102&quot;
+$conf = &quot;C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.conf&quot;
+$cat = cat $conf
+$rep = $cat -replace &quot;Server=.+&quot;,&quot;Server=$Zabbix_Server&quot;
+$rep | Select-String Server=
+$rep &gt; $conf
+
+$exe = &quot;C:\zabbix-agent2-6.4.5\bin\zabbix_agent2.exe&quot;
+.$exe --config $conf --install` установить службу
+Get-Service *Zabbix*Agent* | Start-Service` запустить службу
+#.$exe --config $conf --uninstall` удалить службу
+</code></pre>
+<h2 id="zabbix_sender">zabbix_sender<a class="headerlink" href="#zabbix_sender" title="Permanent link">&para;</a></h2>
+<p>Создать host - задать произвольное имя (powershell-host) и добавить в группу <br />
+Создать Items: <br />
+Name: Service Count <br />
+Type: Zabbix trapper <br />
+Key: service.count <br />
+Type of Information: Numeric</p>
+<pre><code class="language-PowerShell">$path = &quot;C:\zabbix-agent2-6.4.5\bin&quot;
+$scount = (Get-Service).Count
+.$path\zabbix_sender.exe -z 192.168.3.102 -s &quot;powershell-host&quot; -k service.count -o $scount
+</code></pre>
+<h2 id="zabbix_get">zabbix_get<a class="headerlink" href="#zabbix_get" title="Permanent link">&para;</a></h2>
+<p><code>apt install zabbix-get</code> <br />
+<code>nano /etc/zabbix/zabbix_agentd.conf</code> <br />
+<code>Server=127.0.0.1,192.168.3.102,192.168.3.99</code> добавить сервера для получения данных zabbix_get с агента (как их запрашивает сервер)</p>
+<p><code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k agent.version</code> проверить версию агента <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k agent.ping</code> 1 - ok <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.discovery</code> список сетевых интерфейсов <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.in["ens33"]</code> <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.out["ens33"]</code></p>
+<h2 id="userparameter">UserParameter<a class="headerlink" href="#userparameter" title="Permanent link">&para;</a></h2>
+<p><code>UserParameter=process.count,powershell -Command "(Get-Process).Count"</code> <br />
+<code>UserParameter=process.vm[*],powershell -Command "(Get-Process $1).ws"</code></p>
+<p>Test: <br />
+<code>C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.count</code> <br />
+<code>C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.vm[zabbix_agent2]</code><br />
+<code>C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.vm[powershell]</code></p>
+<p>Создать новые Items: <br />
+key: <code>process.count</code> <br />
+key: <code>process.vm[zabbix_agent2]</code></p>
+<h2 id="include">Include<a class="headerlink" href="#include" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Добавить параметр Include для включения конфигурационных файлов подключаемых плагинов<br />
+<code>'Include=.\zabbix_agent2.d\plugins.d\*.conf' &gt;&gt; C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.conf</code></p>
+</li>
+<li>
+<p>Создать конфигурационный файл с пользовательскими параметрами в каталоге, путь к которому указан в zabbix_agentd.conf <br />
+<code>'UserParameter=Get-Query-Param[*],powershell.exe -noprofile -executionpolicy bypass -File C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\scripts\User-Sessions\Get-Query-Param.ps1 $1' &gt; C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\plugins.d\User-Sessions.conf</code></p>
+</li>
+<li>
+<p>Поместить скрипт Get-Query-Param.ps1 в каталог, путь к которому указан в User-Sessions.conf. Скрипт содержим пользовательские параметры, которые он принимает от Zabbix сервера для передачи их в функции скрипта.</p>
+</li>
+</ul>
+<pre><code class="language-PowerShell">Param([string]$select)
+if ($select -eq &quot;ACTIVEUSER&quot;) {
+(Get-Query | where status -match &quot;Active&quot;).User
+}
+if ($select -eq &quot;INACTIVEUSER&quot;) {
+(Get-Query | where status -match &quot;Disconnect&quot;).User
+}
+if ($select -eq &quot;ACTIVECOUNT&quot;) {
+(Get-Query | where status -match &quot;Active&quot;).Status.Count
+}
+if ($select -eq &quot;INACTIVECOUNT&quot;) {
+(Get-Query | where status -match &quot;Disconnect&quot;).Status.Count
+}
+</code></pre>
+<ul>
+<li>Проверить работу скрипта:</li>
+</ul>
+<p><code>$path = "C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\scripts\User-Sessions"</code> <br />
+<code>.$path\Get-Query-Param.ps1 ACTIVEUSER</code> <br />
+<code>.$path\Get-Query-Param.ps1 INACTIVEUSER</code> <br />
+<code>.$path\Get-Query-Param.ps1 ACTIVECOUNT</code> <br />
+<code>.$path\Get-Query-Param.ps1 INACTIVECOUNT</code></p>
+<ul>
+<li>Создать Items с ключами:</li>
+</ul>
+<p><code>Get-Query-Param[ACTIVEUSER]</code> Type: Text <br />
+<code>Get-Query-Param[INACTIVEUSER]</code> Type: Text <br />
+<code>Get-Query-Param[ACTIVECOUNT]</code> Type: Int <br />
+<code>Get-Query-Param[INACTIVECOUNT]</code> Type: Int</p>
+<ul>
+<li>Макросы:</li>
+</ul>
+<p><code>{$ACTIVEMAX} = 16</code> <br />
+<code>{$ACTIVEMIN} = 0</code></p>
+<ul>
+<li>Триггеры:</li>
+</ul>
+<p><code>last(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT])&gt;{$ACTIVEMAX}</code> <br />
+<code>min(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT],24h)={$ACTIVEMIN}</code></p>
+<h2 id="zabbix_agent2conf">zabbix_agent2.conf<a class="headerlink" href="#zabbix_agent2conf" title="Permanent link">&para;</a></h2>
+<pre><code># Агент может работать в пассивном (сервер забирает сам информацию) и активном режиме (агент сам отправляет):
+Server=192.168.3.102
+ServerActive=192.168.3.102
+# Требуется указать hostname для ServerActive:
+Hostname=huawei-book-01
+# Если не указано, используется для генерации имени хоста (игнорируется, если имя хоста определено):
+# HostnameItem=system.hostname
+# Как часто обновляется список активных проверок, в секундах (Range: 60-3600):
+RefreshActiveChecks=120
+# IP-адрес источника для исходящих соединений:
+# SourceIP=
+# Агент будет слушать на этом порту соединения с сервером (Range: 1024-32767):
+# ListenPort=10050
+# Список IP-адресов, которые агент должен прослушивать через запятую
+# ListenIP=0.0.0.0
+# Агент будет прослушивать этот порт для запросов статуса HTTP (Range: 1024-32767):
+# StatusPort=
+ControlSocket=\\.\pipe\agent.sock
+# Куда вести журнал (file/syslog/console):
+LogType=file
+LogFile=C:\zabbix-agent2-6.4.5\zabbix_agent2.log
+# Размер лога от 0-1024 MB (0 - отключить автоматическую ротацию логов)
+LogFileSize=100
+# Уровень логирования. 4 - для отладки (выдает много информации)
+DebugLevel=4
+</code></pre>
+<h2 id="api-token">API Token<a class="headerlink" href="#api-token" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.zabbix.com/documentation/current/en/manual/api/reference">Documentation</a></p>
+<p><code>$ip = "192.168.3.102"</code> <br />
+<code>$url = "http://$ip/zabbix/api_jsonrpc.php"</code></p>
+<pre><code class="language-PowerShell">$data = @{
+    &quot;jsonrpc&quot;=&quot;2.0&quot;;
+    &quot;method&quot;=&quot;user.login&quot;;
+    &quot;params&quot;=@{
+        &quot;username&quot;=&quot;Admin&quot;;` в версии до 6.4 параметр &quot;user&quot;
+        &quot;password&quot;=&quot;zabbix&quot;;
+    };
+    &quot;id&quot;=1;
+}
+$token = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType &quot;application/json&quot;).Result
+</code></pre>
+<p><code>$token = "2eefd25fdf1590ebcdb7978b5bcea1fff755c65b255da8cbd723181b639bb789"</code> сгенерировать токен в UI (http://192.168.3.102/zabbix/zabbix.php?action=token.list)</p>
+<h2 id="userget">user.get<a class="headerlink" href="#userget" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$data = @{
+    &quot;jsonrpc&quot;=&quot;2.0&quot;;
+    &quot;method&quot;=&quot;user.get&quot;;
+    &quot;params&quot;=@{
+    };
+    &quot;auth&quot;=$token;
+    &quot;id&quot;=1;
+}
+$users = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType &quot;application/json&quot;).Result
+</code></pre>
+<h2 id="problemget">problem.get<a class="headerlink" href="#problemget" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$data = @{
+    &quot;jsonrpc&quot;=&quot;2.0&quot;;
+    &quot;method&quot;=&quot;problem.get&quot;;
+    &quot;params&quot;=@{
+    };
+    &quot;auth&quot;=$token;
+    &quot;id&quot;=1;
+}
+(Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType &quot;application/json&quot;).Result
+</code></pre>
+<h2 id="hostget">host.get<a class="headerlink" href="#hostget" title="Permanent link">&para;</a></h2>
+<p>Получить список всех хостов (имя и id)</p>
+<p><a href="https://www.zabbix.com/documentation/current/en/manual/api/reference/host">Endpoint host</a></p>
+<p>host.create - creating new hosts <br />
+host.delete - deleting hosts <br />
+host.get - retrieving hosts <br />
+host.massadd - adding related objects to hosts <br />
+host.massremove - removing related objects from hosts <br />
+host.massupdate - replacing or removing related objects from hosts <br />
+host.update - updating hosts</p>
+<pre><code class="language-PowerShell">$data = @{
+    &quot;jsonrpc&quot;=&quot;2.0&quot;;
+    &quot;method&quot;=&quot;host.get&quot;;
+    &quot;params&quot;=@{
+        &quot;output&quot;=@(` отфильтровать вывод
+            &quot;hostid&quot;;
+            &quot;host&quot;;
+        );
+    };
+    &quot;id&quot;=2;
+    &quot;auth&quot;=$token;
+}
+$hosts = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType &quot;application/json&quot;).Result
+$host_id = $hosts[3].hostid` забрать id хоста по индексу
+</code></pre>
+<h2 id="itemget">item.get<a class="headerlink" href="#itemget" title="Permanent link">&para;</a></h2>
+<p>Получить id элементов данных по наименованию ключа для конкретного хоста</p>
+<pre><code class="language-PowerShell">$data = @{
+    &quot;jsonrpc&quot;=&quot;2.0&quot;;
+    &quot;method&quot;=&quot;item.get&quot;;
+    &quot;params&quot;=@{
+        &quot;hostids&quot;=@($host_id);` отфильтровать по хосту
+    };
+    &quot;auth&quot;=$token;
+    &quot;id&quot;=1;
+}
+$items = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType &quot;application/json&quot;).Result
+$items_id = ($items | where key_ -match system.uptime).itemid` забрать id элемента данных
+</code></pre>
+<h2 id="historyget">history.get<a class="headerlink" href="#historyget" title="Permanent link">&para;</a></h2>
+<p>Получить всю историю элемента данных по его id</p>
+<pre><code class="language-PowerShell">$data = @{
+    &quot;jsonrpc&quot;=&quot;2.0&quot;;
+    &quot;method&quot;=&quot;history.get&quot;;
+    &quot;params&quot;=@{
+        &quot;hostids&quot;=@($host_id); ` фильтрация по хосту
+        &quot;itemids&quot;=@($items_id);` фильтрация по элементу данных
+    };
+    &quot;auth&quot;=$token;
+    &quot;id&quot;=1;
+}
+$items_data_uptime = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType &quot;application/json&quot;).Result` получить все данные по ключу у конкретного хоста
+</code></pre>
+<h2 id="convert-secconds-to-timespan-and-datetime">Convert Secconds To TimeSpan and DateTime<a class="headerlink" href="#convert-secconds-to-timespan-and-datetime" title="Permanent link">&para;</a></h2>
+<p><code>$sec = $items_data_uptime.value</code></p>
+<pre><code class="language-PowerShell">function ConvertSecondsTo-TimeSpan {
+    param (
+        $insec
+    )
+    $TimeSpan = [TimeSpan]::fromseconds($insec)
+    &quot;{0:dd' day 'hh\:mm\:ss}&quot; -f $TimeSpan
+}
+</code></pre>
+<p><code>$UpTime = ConvertSecondsTo-TimeSpan $sec[-1]</code></p>
+<h2 id="convert-from-unix-time">Convert From Unix Time<a class="headerlink" href="#convert-from-unix-time" title="Permanent link">&para;</a></h2>
+<p><code>$time = $items_data_uptime.clock</code></p>
+<pre><code class="language-PowerShell">function ConvertFrom-UnixTime {
+    param (
+        $intime
+    )
+    $EpochTime = [DateTime]&quot;1/1/1970&quot;
+    $TimeZone = Get-TimeZone
+    $UTCTime = $EpochTime.AddSeconds($intime)
+    $UTCTime.AddMinutes($TimeZone.BaseUtcOffset.TotalMinutes)
+}
+</code></pre>
+<p><code>$GetDataTime = ConvertFrom-UnixTime $time[-1]</code></p>
+<p><code>($hosts | where hostid -eq $host_id).host</code> получить имя хоста <br />
+<code>$UpTime</code> последнее полученное значение времени работы хоста <br />
+<code>$GetDataTime</code> время последнего полученного значения</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>
