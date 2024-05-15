@@ -18,28 +18,6 @@ footer-links:
 disqus:
 google_analytics:
 url: https://lifailon.github.io
-
-# Если вы размещаете свой сайт в репозитории проекта на страницах GitHub.
-# (http://yourusername.github.io/repository-name)
-# и НЕ в пользовательском репозитории (http://yourusername.github.io)
-# тогда добавьте сюда baseurl, например: "/repository-name"
+# Если вы размещаете свой сайт в репозитории проекта на страницах GitHub (http://yourusername.github.io/repository-name)
+# и НЕ в пользовательском репозитории (http://yourusername.github.io), тогда добавьте сюда baseurl, например: "/repository-name"
 baseurl: ""
-
-permalink: /:title/
-version: v1.2.0
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: 'highlight'
-sass:
-  style: :expanded
-gems:
-  - jekyll-sitemap
-  - jekyll-feed
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - LICENSE
-  - README.md
-  - CNAME
