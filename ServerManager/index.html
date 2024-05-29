@@ -1,0 +1,1317 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/ServerManager/">
+      
+      
+        <link rel="prev" href="../API/">
+      
+      
+        <link rel="next" href="../ActiveDirectory/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>Server Manager - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Server Manager
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PS-Commands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FileSystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Threads/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pswa" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSWA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsb-windows-server-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      WSB (Windows Server Backup)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rds" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dnsserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNSServer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dhcpserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      DHCPServer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      DFS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storagereplica" class="md-nav__link">
+    <span class="md-ellipsis">
+      StorageReplica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsus" class="md-nav__link">
+    <span class="md-ellipsis">
+      WSUS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WSUS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windowsupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      WindowsUpdate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pswindowsupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSWindowsUpdate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updateservices" class="md-nav__link">
+    <span class="md-ellipsis">
+      UpdateServices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poshwsus" class="md-nav__link">
+    <span class="md-ellipsis">
+      PoshWSUS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microsoft Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pswa" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSWA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsb-windows-server-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      WSB (Windows Server Backup)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rds" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dnsserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNSServer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dhcpserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      DHCPServer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      DFS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storagereplica" class="md-nav__link">
+    <span class="md-ellipsis">
+      StorageReplica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsus" class="md-nav__link">
+    <span class="md-ellipsis">
+      WSUS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WSUS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windowsupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      WindowsUpdate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pswindowsupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSWindowsUpdate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updateservices" class="md-nav__link">
+    <span class="md-ellipsis">
+      UpdateServices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poshwsus" class="md-nav__link">
+    <span class="md-ellipsis">
+      PoshWSUS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h2 id="module">Module<a class="headerlink" href="#module" title="Permanent link">&para;</a></h2>
+<p><code>Get-Command *WindowsFeature*</code> source module ServerManager <br />
+<code>Get-WindowsFeature -ComputerName "localhost"</code> <br />
+<code>Get-WindowsFeature | where Installed -eq $True</code> список установленных ролей и компонентов <br />
+<code>Get-WindowsFeature | where FeatureType -eq "Role"</code> отсортировать по списку ролей <br />
+<code>Install-WindowsFeature -Name DNS</code> установить роль <br />
+<code>Get-Command *DNS*</code> <br />
+<code>Get-DnsServerSetting -ALL</code> <br />
+<code>Uninstall-WindowsFeature -Name DNS</code> удалить роль</p>
+<h2 id="pswa">PSWA<a class="headerlink" href="#pswa" title="Permanent link">&para;</a></h2>
+<p><code>Install-WindowsFeature -Name WindowsPowerShellWebAccess -IncludeManagementTools</code> <br />
+<code>Install-PswaWebApplication -UseTestCertificate</code> Создать веб-приложение /pswa <br />
+<code>Add-PswaAuthorizationRule -UserGroupName "$domain\Domain Admins" -ComputerName * -ConfigurationName * -RuleName "For Admins"</code> добавить права авторизации</p>
+<h2 id="wsb-windows-server-backup">WSB (Windows Server Backup)<a class="headerlink" href="#wsb-windows-server-backup" title="Permanent link">&para;</a></h2>
+<p>При создании backup DC через WSB, создается копия состояния системы (System State), куда попадает база AD (NTDS.DIT), объекты групповых политик, содержимое каталога SYSVOL, реестр, метаданные IIS, база AD CS, и другие системные файлы и ресурсы. Резервная копия создается через службу теневого копирования VSS. <br />
+<code>Get-WindowsFeature Windows-Server-Backup</code> проверить установлена ли роль <br />
+<code>Add-Windowsfeature Windows-Server-Backup –Includeallsubfeature</code> установить роль</p>
+<pre><code class="language-PowerShell">$path=&quot;\\$srv\bak-dc\dc-03\&quot;
+[string]$TargetUNC=$path+(get-date -f 'yyyy-MM-dd')
+if ((Test-Path -Path $path) -eq $true) {New-Item -Path $TargetUNC -ItemType directory} # если путь доступен, создать новую директорию по дате
+$WBadmin_cmd = &quot;wbadmin.exe START BACKUP -backupTarget:$TargetUNC -systemState -noverify -vssCopy -quiet&quot;
+# $WBadmin_cmd = &quot;wbadmin start backup -backuptarget:$path -include:C:\Windows\NTDS\ntds.dit -quiet&quot; # Backup DB NTDS
+Invoke-Expression $WBadmin_cmd
+</code></pre>
+<h2 id="rds">RDS<a class="headerlink" href="#rds" title="Permanent link">&para;</a></h2>
+<p><code>Get-Command -Module RemoteDesktop</code> <br />
+<code>Get-RDServer -ConnectionBroker $broker</code> список всех серверов в фермеы, указывается полное доменное имя при обращение к серверу с ролью RDCB <br />
+<code>Get-RDRemoteDesktop -ConnectionBroker $broker</code> список коллекций <br />
+<code>(Get-RDLicenseConfiguration -ConnectionBroker $broker | select *).LicenseServer</code> список серверов с ролью RDL <br />
+<code>Get-RDUserSession -ConnectionBroker $broker</code> список всех активных пользователей <br />
+<code>Disconnect-RDUser -HostServer $srv -UnifiedSessionID $id -Force</code> отключить сессию пользователя <br />
+<code>Get-RDAvailableApp -ConnectionBroker $broker -CollectionName C03</code> список установленного ПО на серверах в коллекции <br />
+<code>(Get-RDSessionCollectionConfiguration -ConnectionBroker $broker -CollectionName C03 | select *).CustomRdpProperty</code> use redirection server name:i:1 <br />
+<code>Get-RDConnectionBrokerHighAvailability</code></p>
+<h1 id="dnsserver">DNSServer<a class="headerlink" href="#dnsserver" title="Permanent link">&para;</a></h1>
+<p><code>Get-Command -Module DnsServer</code> <br />
+<code>Show-DnsServerCache</code> отобразить весь кэш DNS-сервера <br />
+<code>Show-DnsServerCache | where HostName -match ru</code> <br />
+<code>Clear-DnsServerCache</code> <br />
+<code>Get-DnsServerCache</code> <br />
+<code>Get-DnsServerDiagnostics</code></p>
+<pre><code class="language-PowerShell">$zone = icm $srv {Get-DnsServerZone} | select ZoneName,ZoneType,DynamicUpdate,ReplicationScope,SecureSecondaries,
+DirectoryPartitionName | Out-GridView -Title &quot;DNS Server: $srv&quot; –PassThru
+$zone_name = $zone.ZoneName
+if ($zone_name -ne $null) {
+    icm $srv {
+        Get-DnsServerResourceRecord -ZoneName $using:zone_name | sort RecordType | select RecordType,HostName, @{
+        Label=&quot;IPAddress&quot;; Expression={$_.RecordData.IPv4Address.IPAddressToString}},TimeToLive,Timestamp
+    } | select RecordType,HostName,IPAddress,TimeToLive,Timestamp | Out-GridView -Title &quot;DNS Server: $srv&quot;
+}
+</code></pre>
+<p><code>Sync-DnsServerZone –passthru</code> синхронизировать зоны с другими DC в домене <br />
+<code>Remove-DnsServerZone -Name domain.local</code> удалить зону <br />
+<code>Get-DnsServerResourceRecord -ZoneName domain.local -RRType A</code> вывести все А-записи в указанной зоне <br />
+<code>Add-DnsServerResourceRecordA -Name new-host-name -IPv4Address 192.168.1.100 -ZoneName domain.local -TimeToLive 01:00:00 -CreatePtr</code> создать А-запись и PTR для нее <br />
+<code>Remove-DnsServerResourceRecord -ZoneName domain.local -RRType A -Name new-host-name –Force</code> удалить А-запись</p>
+<pre><code class="language-PowerShell">$DNSServer = &quot;DC-01&quot;
+$DNSFZone = &quot;domain.com&quot;
+$DataFile = &quot;C:\Scripts\DNS-Create-A-Records-from-File.csv&quot;
+# cat $DataFile
+# &quot;HostName;IP&quot;
+# &quot;server-01;192.168.1.10&quot;
+$DNSRR = [WmiClass]&quot;\\$DNSServer\root\MicrosoftDNS:MicrosoftDNS_ResourceRecord&quot;
+$ConvFile = $DataFile + &quot;_unicode&quot;
+Get-Content $DataFile | Set-Content $ConvFile -Encoding Unicode
+Import-CSV $ConvFile -Delimiter &quot;;&quot; | ForEach-Object {
+    $FQDN = $_.HostName + &quot;.&quot; + $DNSFZone
+    $IP = $_.HostIP
+    $TextA = &quot;$FQDN IN A $IP&quot;
+    [Void]$DNSRR.CreateInstanceFromTextRepresentation($DNSServer,$DNSFZone,$TextA)
+}
+</code></pre>
+<h1 id="dhcpserver">DHCPServer<a class="headerlink" href="#dhcpserver" title="Permanent link">&para;</a></h1>
+<p><code>Get-Command -Module DhcpServer</code></p>
+<pre><code class="language-PowerShell">$mac = icm $srv -ScriptBlock {Get-DhcpServerv4Scope | Get-DhcpServerv4Lease} | select AddressState,
+HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridView -Title &quot;HDCP Server: $srv&quot; –PassThru
+(New-Object -ComObject Wscript.Shell).Popup($mac.ClientId,0,$mac.HostName,64)
+</code></pre>
+<p><code>Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.10 -ClientId 00-50-56-C0-00-08 -Description "new reservation"</code></p>
+<h1 id="dfs">DFS<a class="headerlink" href="#dfs" title="Permanent link">&para;</a></h1>
+<p><code>dfsutil /root:\\domain.sys\public /export:C:\export-dfs.txt</code> экспорт конфигурации namespace root <br />
+<code>dfsutil /AddFtRoot /Server:\\$srv /Share:public</code> на новой машине предварительно создать корень на основе домена <br />
+<code>dfsutil /root:\\domain.sys\public /import:C:\export-dfs.txt /&lt;verify /set</code> Import (перед импортом данных в существующий корень DFS, утилита создает резервную копию конфигурации корня в текущем каталоге, из которого запускается утилита dfsutil) <br />
+<code>/verify</code> выводит изменения, которые будут внесены в процессе импорта, без применения <br />
+<code>/set</code> меняет целевое пространство имен путем полной перезаписи и замены на конфигурацию пространства имен из импортируемого файла <br />
+<code>/merge</code> импортирует конфигурацию пространства имен в дополнение к существующей конфигурации для слияния, параметры из файла конфигурации будут иметь больший приоритет, чем существующие параметры пространства имен</p>
+<p><code>Export-DfsrClone</code> экспортирует клонированную базу данных репликации DFS и параметры конфигурации тома <br />
+<code>Get-DfsrCloneState</code> получает состояние операции клонирования базы данных <br />
+<code>Import-DfsrClone</code> импортирует клонированную базу данных репликации DFS и параметры конфигурации тома</p>
+<p><code>net use x: \\$srv1\public\*</code> примонтировать диск <br />
+<code>Get-DfsrFileHash x:\* | Out-File C:\$srv1.txt</code> забрать hash всех файлов диска в файл (файлы с одинаковыми хешами всегда являются точными копиями друг друга) <br />
+<code>net use x: /d</code> отмонтировать <br />
+<code>net use x: \\$srv2\public\*</code> <br />
+<code>Get-DfsrFileHash x:\* | Out-File C:\$srv2.txt</code> <br />
+<code>net use x: /d</code> <br />
+<code>Compare-Object -ReferenceObject (Get-Content C:\$srv1.txt) -DifferenceObject (Get-Content C:\$srv2.txt) -IncludeEqual</code> сравнить содержимое файлов</p>
+<p><code>Get-DfsrBacklog -DestinationComputerName "fs-06" -SourceComputerName "fs-05" -GroupName "folder-rep" -FolderName "folder" -Verbose</code> получает список ожидающих обновлений файлов между двумя партнерами репликации DFS <br />
+<code>Get-DfsrConnection</code> отображает группы репликации, участников и статус <br />
+<code>Get-DfsReplicatedFolder</code> отображает имя и полный путь к папкам реликации в системе DFS <br />
+<code>Get-DfsrState -ComputerName fs-06 -Verbose</code> состояние репликации DFS для члена группы <br />
+<code>Get-DfsReplicationGroup</code> отображает группы репликации и их статус <br />
+<code>Add-DfsrConnection</code> создает соединение между членами группы репликации <br />
+<code>Add-DfsrMember</code> добавляет компьютеры в группу репликации <br />
+<code>ConvertFrom-DfsrGuid</code> преобразует идентификаторы GUID в понятные имена в заданной группы репликации <br />
+<code>Get-DfsrConnectionSchedule</code> получает расписание соединений между членами группы репликации <br />
+<code>Get-DfsrGroupSchedule</code> извлекает расписание группы репликации <br />
+<code>Get-DfsrIdRecord</code> получает записи ID для реплицированных файлов или папок из базы данных репликации DFS <br />
+<code>Get-DfsrMember</code> получает компьютеры в группе репликации <br />
+<code>Get-DfsrMembership</code> получает параметры членства для членов групп репликации <br />
+<code>Get-DfsrPreservedFiles</code> получает список файлов и папок, ранее сохраненных репликацией DFS <br />
+<code>Get-DfsrServiceConfiguration</code> получает параметры службы репликации DFS для членов группы <br />
+<code>Grant-DfsrDelegation</code> предоставляет разрешения участникам безопасности для группы репликации <br />
+<code>Revoke-DfsrDelegation</code> отменяет разрешения участников безопасности для группы репликации <br />
+<code>New-DfsReplicationGroup</code> создает группу репликации <br />
+<code>New-DfsReplicatedFolder</code> создает реплицированную папку в группе репликации <br />
+<code>Remove-DfsrConnection</code> удаляет соединение между членами группы репликации <br />
+<code>Remove-DfsReplicatedFolder</code> удаляет реплицированную папку из группы репликации <br />
+<code>Remove-DfsReplicationGroup</code> удаляет группу репликации <br />
+<code>Remove-DfsrMember</code> удаляет компьютеры из группы репликации <br />
+<code>Restore-DfsrPreservedFiles</code> восстанавливает файлы и папки, ранее сохраненные репликацией DFS <br />
+<code>Set-DfsrConnection</code> изменяет параметры соединения между членами группы репликации <br />
+<code>Set-DfsrConnectionSchedule</code> изменяет параметры расписания соединений между членами группы репликации <br />
+<code>Set-DfsReplicatedFolder</code> изменяет настройки реплицированной папки <br />
+<code>Set-DfsReplicationGroup</code> изменяет группу репликации <br />
+<code>Set-DfsrGroupSchedule</code> изменяет расписание группы репликации <br />
+<code>Set-DfsrMember</code> изменяет информацию о компьютере-участнике в группе репликации <br />
+<code>Set-DfsrMembership</code> настраивает параметры членства для членов группы репликации <br />
+<code>Set-DfsrServiceConfiguration</code> изменяет параметры службы репликации DFS <br />
+<code>Sync-DfsReplicationGroup</code> синхронизирует репликацию между компьютерами независимо от расписания <br />
+<code>Suspend-DfsReplicationGroup</code> приостанавливает репликацию между компьютерами независимо от расписания <br />
+<code>Update-DfsrConfigurationFromAD</code> инициирует обновление службы репликации DFS <br />
+<code>Write-DfsrHealthReport</code> создает отчет о работоспособности репликации DFS <br />
+<code>Write-DfsrPropagationReport</code> создает отчеты для тестовых файлов распространения в группе репликации <br />
+<code>Start-DfsrPropagationTest</code> создает тестовый файл распространения в реплицированной папке</p>
+<h1 id="storagereplica">StorageReplica<a class="headerlink" href="#storagereplica" title="Permanent link">&para;</a></h1>
+<p><code>Install-WindowsFeature Storage-Replica –IncludeManagementTools -Restart</code> <br />
+<code>Get-Command -Module StorageReplica</code> <br />
+<code>Test-SRTopology</code> проверить соответствует ли сервер и канал связи технологии Storage Replica <br />
+<code>New-SRPartnership -SourceComputerName srv-01 -SourceRGName srv-01-rep-group-01 -SourceVolumeName D: -SourceLogVolumeName L: -DestinationComputerName srv-02 -DestinationRGName srv-02-rep-group-01 -DestinationVolumeName D: -DestinationLogVolumeName L: -LogSizeInBytes 1GB</code> <br />
+<code>Get-Counter -Counter "\Storage Replica Statistics(*)"</code> <br />
+<code>Get-WinEvent -ProviderName Microsoft-Windows-StorageReplica -max 10</code> <br />
+<code>Set-SRPartnership -ReplicationMode Asynchronous</code> переключить режим репликации на асинхронный <br />
+<code>Set-SRPartnership -NewSourceComputerName srv-02 -SourceRGName srv-02-rep-group-01 -DestinationComputerName srv-01 -DestinationRGName srv-01-rep-group-01</code> изменить вручную направление репликации данных, переведя вторичную копию в онлайн режим (при выходе из строя основного сервера) <br />
+<code>Get-SRGroup</code> информация о состояние группы реплизации <br />
+<code>Get-SRPartnerShip</code> информация о направлении репликации <br />
+<code>(Get-SRGroup).Replicas | Select-Object numofbytesremaining</code> проверить длину очереди копирования <br />
+<code>Get-SRPartnership | Remove-SRPartnership</code> удалить реплизацию на основном сервере <br />
+<code>Get-SRGroup | Remove-SRGroup</code> удалить реплизацию на обоих серверах</p>
+<h1 id="wsus">WSUS<a class="headerlink" href="#wsus" title="Permanent link">&para;</a></h1>
+<p><code>Get-Hotfix | Sort-Object -Descending  InstalledOn</code> список установленных обновлений (информация из cimv2) <br />
+<code>Get-Hotfix -Description "Security update"</code> <br />
+<code>Get-CimInstance Win32_QuickFixEngineering</code> <br />
+<code>Get-Service uhssvc</code> служба Microsoft Health Update Tools, которая отвечает за предоставление обновлений</p>
+<h2 id="windowsupdate">WindowsUpdate<a class="headerlink" href="#windowsupdate" title="Permanent link">&para;</a></h2>
+<p><code>Get-Command -Module WindowsUpdate</code> <br />
+<code>Get-WindowsUpdateLog</code> формирует отчет в $home\AppData\Local\Temp\WindowsUpdateLog в формате csv</p>
+<h2 id="pswindowsupdate">PSWindowsUpdate<a class="headerlink" href="#pswindowsupdate" title="Permanent link">&para;</a></h2>
+<p><code>Install-Module -Name PSWindowsUpdate -Scope CurrentUser</code> <br />
+<code>Import-Module PSWindowsUpdate</code> <br />
+<code>Get-Command -Module PSWindowsUpdate</code> <br />
+<code>Get-WindowsUpdate</code> список обновлений для скачать и установить с сервера WSUS или Microsoft Update <br />
+<code>Get-WindowsUpdate -Download</code> загрузить все обновления <br />
+<code>Get-WindowsUpdate –Install</code> установить все обновления <br />
+<code>Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot</code> установить все обновления без перезагрузки <br />
+<code>Get-WindowsUpdate -KBArticleID KB2267602, KB4533002 -Install</code> <br />
+<code>Get-WindowsUpdate -KBArticleID KB2538243 -Hide</code> скрыть обновления, что бы они никогда не устанавливались <br />
+<code>Get-WindowsUpdate –IsHidden</code> отобразить скрытые обновления (Hide-WindowsUpdate) <br />
+<code>Remove-WindowsUpdate -KBArticleID KB4011634 -NoRestart</code> удалить обновление <br />
+<code>Uninstall-WindowsUpdate</code> удалить обновление <br />
+<code>Add-WUServiceManager</code> регистрация сервера обновления (Windows Update Service Manager) <br />
+<code>Enable-WURemoting</code> включить правила Windows Defender, разрешающие удаленное использование командлета PSWindowsUpdate <br />
+<code>Get-WUApiVersion</code> версия Windows Update Agent <br />
+<code>Get-WUHistory</code> список всех установленных обновлений (история обновлений) <br />
+<code>Get-WUHistory | Where-Object {$_.Title -match "KB4517389"}</code> поиск обновления <br />
+<code>Get-WULastResults</code> даты последнего поиска и установки обновлений <br />
+<code>Get-WURebootStatus</code> проверить, нужна ли перезагрузка для применения конкретного обновления <br />
+<code>Get-WUServiceManager</code> выводит источники обновлений <br />
+<code>Get-WUInstallerStatus</code> статус службы Windows Installer <br />
+<code>Remove-WUServiceManager</code> отключить Windows Update Service Manager</p>
+<h2 id="updateservices">UpdateServices<a class="headerlink" href="#updateservices" title="Permanent link">&para;</a></h2>
+<p><code>Install-WindowsFeature -Name UpdateServices-RSAT</code> установить роль UpdateServices <br />
+<code>$UpdateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope</code> <br />
+<code>[enum]::GetValues([Microsoft.UpdateServices.Administration.ApprovedStates])</code> список утвержденных состояний <br />
+<code>[enum]::GetValues([Microsoft.UpdateServices.Administration.UpdateInstallationStates])</code> статус установки (неизвестный, непригодный, не установлен, скачено, установлен, неуспешный, установлен и ожидает перезагрузки, все) <br />
+<code>$UpdateScope.ApprovedStates = [Microsoft.UpdateServices.Administration.ApprovedStates]"NotApproved"</code> выставляем статус не утвержденных обновлений на сервере WSUS <br />
+<code>$UpdateScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]"NotInstalled"</code> выставляем статус не установленных обновлений <br />
+<code>$UpdateScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]"NotInstalled,Downloaded"</code> обновления загружены, но не установлены</p>
+<h2 id="poshwsus">PoshWSUS<a class="headerlink" href="#poshwsus" title="Permanent link">&para;</a></h2>
+<p><code>Install-Module -Name PoshWSUS</code> <br />
+<code>Get-Command -Module PoshWSUS</code> нужны права администратора <br />
+<code>Add-PSWSUSClientToGroup</code> добавление клиента в группу <br />
+<code>Approve-PSWSUSUpdate</code> утверждение обновления <br />
+<code>Connect-PSWSUSDatabaseServer</code> подключение к серверу базы данных WSUS <br />
+<code>Connect-PSWSUSServer</code> подключение к серверу WSUS <br />
+<code>Deny-PSWSUSUpdate</code> отклонение обновления <br />
+<code>Disconnect-PSWSUSServer</code> отключение от сервера WSUS <br />
+<code>Export-PSWSUSMetaData</code> экспорт метаданных WSUS <br />
+<code>Get-PoshWSUSSyncUpdateCategories</code> получение категорий обновлений для синхронизации <br />
+<code>Get-PoshWSUSSyncUpdateClassifications</code> получение классификаций обновлений для синхронизации <br />
+<code>Get-PSWSUSCategory</code> получение категории WSUS <br />
+<code>Get-PSWSUSChildServer</code> получение дочернего сервера WSUS <br />
+<code>Get-PSWSUSClassification</code> получение классификации WSUS <br />
+<code>Get-PSWSUSClient</code> получение информации о клиенте <br />
+<code>Get-PSWSUSClientGroupMembership</code> получение групповой принадлежности клиента <br />
+<code>Get-PSWSUSClientPerUpdate</code> получение информации о клиентах по обновлениям <br />
+<code>Get-PSWSUSClientsInGroup</code> получение клиентов в группе <br />
+<code>Get-PSWSUSCommand</code> получение информации о командах WSUS <br />
+<code>Get-PSWSUSConfig</code> получение конфигурации WSUS <br />
+<code>Get-PSWSUSConfigEnabledUpdateLanguages</code> получение включенных языков обновлений <br />
+<code>Get-PSWSUSConfigProxyServer</code> получение конфигурации прокси-сервера <br />
+<code>Get-PSWSUSConfigSupportedUpdateLanguages</code> получение поддерживаемых языков обновлений <br />
+<code>Get-PSWSUSConfigSyncSchedule</code> получение расписания синхронизации <br />
+<code>Get-PSWSUSConfigSyncUpdateCategories</code> получение категорий обновлений для синхронизации <br />
+<code>Get-PSWSUSConfigSyncUpdateClassifications</code> получение классификаций обновлений для синхронизации <br />
+<code>Get-PSWSUSConfigUpdateFiles</code> получение конфигурации файлов обновлений <br />
+<code>Get-PSWSUSConfigUpdateSource</code> получение источника обновлений <br />
+<code>Get-PSWSUSConfiguration</code> получение полной конфигурации WSUS <br />
+<code>Get-PSWSUSContentDownloadProgress</code> получение прогресса загрузки контента <br />
+<code>Get-PSWSUSCurrentUserRole</code> получение роли текущего пользователя <br />
+<code>Get-PSWSUSDatabaseConfig</code> получение конфигурации базы данных <br />
+<code>Get-PSWSUSDownstreamServer</code> получение конфигурации нижестоящего сервера <br />
+<code>Get-PSWSUSEmailConfig</code> получение конфигурации электронной почты <br />
+<code>Get-PSWSUSEnabledUpdateLanguages</code> получение включенных языков обновлений <br />
+<code>Get-PSWSUSEvent</code> получение событий WSUS <br />
+<code>Get-PSWSUSGroup</code> получение информации о группе <br />
+<code>Get-PSWSUSInstallableItem</code> получение информации об установленных элементах <br />
+<code>Get-PSWSUSInstallApprovalRule</code> получение правил утверждения установки <br />
+<code>Get-PSWSUSProxyServer</code> получение информации о прокси-сервере <br />
+<code>Get-PSWSUSServer</code> получение информации о сервере WSUS <br />
+<code>Get-PSWSUSStatus</code> получение статуса WSUS <br />
+<code>Get-PSWSUSSubscription</code> получение подписки WSUS <br />
+<code>Get-PSWSUSSupportedUpdateLanguages</code> получение поддерживаемых языков обновлений <br />
+<code>Get-PSWSUSSyncEvent</code> получение событий синхронизации <br />
+<code>Get-PSWSUSSyncHistory</code> получение истории синхронизаций <br />
+<code>Get-PSWSUSSyncProgress</code> получение прогресса синхронизации <br />
+<code>Get-PSWSUSSyncSchedule</code> получение расписания синхронизации <br />
+<code>Get-PSWSUSUpdate</code> получение информации об обновлении <br />
+<code>Get-PSWSUSUpdateApproval</code> получение информации об утверждении обновлений <br />
+<code>Get-PSWSUSUpdateCategory</code> получение категории обновлений <br />
+<code>Get-PSWSUSUpdateClassification</code> получение классификации обновлений <br />
+<code>Get-PSWSUSUpdateFile</code> получение файлов обновлений <br />
+<code>Get-PSWSUSUpdateFiles</code> получение списка файлов обновлений <br />
+<code>Get-PSWSUSUpdatePerClient</code> получение информации об обновлениях по клиентам <br />
+<code>Get-PSWSUSUpdateSource</code> получение источника обновлений <br />
+<code>Get-PSWSUSUpdateSummary</code> получение сводки по обновлениям <br />
+<code>Get-PSWSUSUpdateSummaryPerClient</code> получение сводки по обновлениям для каждого клиента <br />
+<code>Get-PSWSUSUpdateSummaryPerGroup</code> получение сводки по обновлениям для каждой группы <br />
+<code>Import-PSWSUSMetaData</code> импорт метаданных WSUS <br />
+<code>New-PSWSUSComputerScope</code> создание области охвата компьютеров <br />
+<code>New-PSWSUSGroup</code> создание новой группы <br />
+<code>New-PSWSUSInstallApprovalRule</code> создание правила утверждения установки <br />
+<code>New-PSWSUSUpdateScope</code> создание области охвата обновлений <br />
+<code>Remove-PSWSUSClient</code> удаление клиента <br />
+<code>Remove-PSWSUSClientFromGroup</code> удаление клиента из группы <br />
+<code>Remove-PSWSUSGroup</code> удаление группы <br />
+<code>Remove-PSWSUSInstallApprovalRule</code> удаление правила утверждения установки <br />
+<code>Remove-PSWSUSUpdate</code> удаление обновления <br />
+<code>Reset-PSWSUSContent</code> сброс контента WSUS <br />
+<code>Resume-PSWSUSDownload</code> возобновление загрузки <br />
+<code>Resume-PSWSUSUpdateDownload</code> возобновление загрузки обновлений <br />
+<code>Set-PoshWsusClassification</code> установка классификации WSUS <br />
+<code>Set-PoshWSUSProduct</code> установка продукта WSUS <br />
+<code>Set-PSWSUSConfigEnabledUpdateLanguages</code> установка включенных языков обновлений <br />
+<code>Set-PSWSUSConfigProduct</code> установка продукта конфигурации WSUS <br />
+<code>Set-PSWsusConfigProxyServer</code> установка прокси-сервера конфигурации WSUS <br />
+<code>Set-PSWSUSConfigSyncSchedule</code> установка расписания синхронизации <br />
+<code>Set-PSWSUSConfigTargetingMode</code> установка режима таргетирования <br />
+<code>Set-PSWSUSConfigUpdateClassification</code> установка классификации обновлений <br />
+<code>Set-PSWSUSConfigUpdateFiles</code> установка файлов обновлений <br />
+<code>Set-PSWSUSConfigUpdateSource</code> установка источника обновлений <br />
+<code>Set-PSWSUSEmailConfig</code> установка конфигурации электронной почты <br />
+<code>Set-PSWSUSEnabledUpdateLanguages</code> установка включенных языков обновлений <br />
+<code>Set-PSWSUSInstallApprovalRule</code> установка правила утверждения установки <br />
+<code>Set-PSWSUSProxyServer</code> установка прокси-сервера <br />
+<code>Set-PSWSUSSyncSchedule</code> установка расписания синхронизации <br />
+<code>Set-PSWSUSTargetingMode</code> установка режима таргетирования <br />
+<code>Set-PSWSUSUpdateFiles</code> установка файлов обновлений <br />
+<code>Set-PSWSUSUpdateSource</code> установка источника обновлений <br />
+<code>Start-PSWSUSCleanup</code> запуск очистки WSUS <br />
+<code>Start-PSWSUSInstallApprovalRule</code> запуск правила утверждения установки <br />
+<code>Start-PSWSUSSync</code> запуск синхронизации <br />
+<code>Stop-PSWSUSDownload</code> остановка загрузки <br />
+<code>Stop-PSWSUSSync</code> остановка синхронизации <br />
+<code>Stop-PSWSUSUpdateDownload</code> остановка загрузки обновлений <br />
+<code>Test-PSWSUSDatabaseServerConnection</code> тестирование подключения к серверу базы данных</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

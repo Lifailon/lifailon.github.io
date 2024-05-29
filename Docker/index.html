@@ -1,0 +1,1618 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/Docker/">
+      
+      
+        <link rel="prev" href="../Ansible/">
+      
+      
+        <link rel="next" href="../Zabbix/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>Docker - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wsl" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PS-Commands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FileSystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Threads/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microsoft Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      WSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspect
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exec
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prune
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remove
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker-api
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-tcp-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker-tcp-api
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ctop" class="md-nav__link">
+    <span class="md-ellipsis">
+      ctop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lazydocker" class="md-nav__link">
+    <span class="md-ellipsis">
+      LazyDocker
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dockerfile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#push" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker-Compose
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uptime-kuma" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uptime-Kuma
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uptime-kuma-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uptime-Kuma-Api
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Swarm
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dozzle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dozzle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dozzle-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dozzle-Auth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portainer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dockerdotnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker.DotNet
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      WSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      Volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspect
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exec
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prune
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remove
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker-api
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-tcp-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker-tcp-api
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ctop" class="md-nav__link">
+    <span class="md-ellipsis">
+      ctop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lazydocker" class="md-nav__link">
+    <span class="md-ellipsis">
+      LazyDocker
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dockerfile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#push" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker-Compose
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uptime-kuma" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uptime-Kuma
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uptime-kuma-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uptime-Kuma-Api
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Swarm
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dozzle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dozzle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dozzle-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dozzle-Auth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portainer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dockerdotnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker.DotNet
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h2 id="wsl">WSL<a class="headerlink" href="#wsl" title="Permanent link">&para;</a></h2>
+<p><code>wsl --list</code> список установленных дистрибутивов Linux <br />
+<code>wsl --list --online</code> список доступных дистрибутивов <br />
+<code>wsl --install -d Ubuntu</code> установить Ubuntu в Windows Subsystem for Linux <br />
+<code>wsl --status</code> <br />
+<code>wsl --exec "htop"</code> выполнить команду в подсистеме Linux по умолчанию <br />
+<code>wsl -e bash -c "docker -v"</code> <br />
+<code>wsl -e bash -c "systemctl status docker"</code></p>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<p><code>apt update &amp;&amp; apt upgrade -y</code> <br />
+<code>apt install docker.io</code> <br />
+<code>systemctl status docker</code> <br />
+<code>systemctl start docker</code> <br />
+<code>systemctl enable docker</code> <br />
+<code>iptables -t nat -N DOCKER</code> <br />
+<code>docker -v</code> <br />
+<code>docker -h</code> <br />
+<code>curl https://registry-1.docker.io/v2/</code> проверить доступ к Docker Hub <br />
+<code>curl -s -X POST -H "Content-Type: application/json" -d '{"username": "lifailon", "password": "password"}' https://hub.docker.com/v2/users/login | jq -r .token &gt; dockerToken.txt</code> получить временный токен доступа для авторизации <br />
+<code>sudo docker login</code> вход в реестр репозитория hub.docker.com <br />
+<code>cat dockerToken.txt | sudo docker login --username lifailon --password-stdin</code> передать токен авторизации (https://hub.docker.com/settings/security) из файла через stdin <br />
+<code>cat /root/.docker/config.json | jq -r .auths[].auth</code> место хранения токена авторизации в системе <br />
+<code>cat /root/.docker/config.json | python3 -m json.tool</code></p>
+<h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
+<p>Commands: <code>search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/kill/rm/rmi</code></p>
+<p><code>docker search speedtest</code> поиск образа в реестре <br />
+<code>docker pull adolfintel/speedtest</code> скачать образ LibreSpeed из реестра Docker Hub (https://hub.docker.com/r/adolfintel/speedtest) <br />
+<code>docker images (docker image ls)</code> отобразить все локальные (уже загруженные) образы docker (image ls) <br />
+<code>docker images --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}"</code> отфильтровать вывод (json-формат) <br />
+<code>docker create -it --name speedtest -p 8080:80 adolfintel/speedtest</code> создать контейнер из образа adolfintel/speedtest с именем speedtest и проброс 80 порта контейнера на 8080 порт хоста <br />
+<code>docker start speedtest</code> запустить созданный контейнер <br />
+<code>ss -ltp | grep 8080</code> проверить, что порт открыт <br />
+<code>docker ps</code> отобразить все запущенные докер контейнеры <br />
+<code>docker ps -a</code> список всех существующих контейнеров (для их запуска/удаления по NAMES/ID и код выхода Exited 0 - успешная остановка) <br />
+<code>docker ps -s</code> размер контейнеров (--size) <br />
+<code>docker restart speedtest</code> перезапустить контейнер <br />
+<code>docker pause speedtest</code> приостановить контейнер <br />
+<code>docker unpause uptime-kuma</code> возобновить работу контейнера <br />
+<code>docker rename speedtest speedtest-2</code> переименоввать контейнер (docker rename old_name new_name) <br />
+<code>docker stop speedtest-2</code> остановить работающий контейнер с отправкой главному процессу контейнера сигнал SIGTERM, и через время SIGKILL <br />
+<code>docker kill uptime-kuma</code> остановить работающий контейнер с отправкой главному процессу контейнера сигнал SIGKILL <br />
+<code>docker kill $(docker ps -q)</code> остановить все контейнеры <br />
+<code>docker rm speedtest-2</code> удалить контейнер <br />
+<code>docker rmi adolfintel/speedtest</code> удалить образ <br />
+<code>docker run -d --restart=unless-stopped --name openspeedtest -p 3000:3000 -p 3001:3001 openspeedtest/latest</code> загрузить образ OpenSpeedTest (https://hub.docker.com/r/openspeedtest/latest), создать контейнер и запустить в одну команду в фоновом режиме (-d/--detach, терминал возвращает контроль сразу после запуска контейнера, если не используется, можно видеть логи, но придется остановить контейнер для выхода) <br />
+<code>docker rm openspeedtest &amp;&amp; docker rmi openspeedtest/latest</code> удаляем контейнер и образ в одну команду <br />
+<code>docker run --name pg1 -p 5433:5432 -e POSTGRES_PASSWORD=PassWord -d postgres</code> создать контейнер postgres (https://hub.docker.com/_/postgres) с параметрами (-e) <br />
+<code>docker run -d --restart=always --name uptime-kuma -p 8080:3001 louislam/uptime-kuma:1</code> создать и запустить контейнер Uptime-Kuma (https://hub.docker.com/r/elestio/uptime-kuma) в режиме always, при котором контейнер должен перезапускаться автоматически, если он остановится или если перезапустится Docker (например, после перезагрузки хоста)</p>
+<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<p><code>docker update --restart unless-stopped uptime-kuma</code> изменить режим перезапуска контейнера после его остановки на unless-stopped (режим аналогичен always, но контейнер не будет перезапущен, если он был остановлен вручную с помощью docker stop) <br />
+<code>docker update --restart on-failure uptime-kuma</code> контейнер будет перезапущен только в случае его завершения с ошибкой, когда код завершения отличается от 0, через двоеточие можно указать количество попыток перезапуска (например, on-failure:3) <br />
+<code>docker update --cpu-shares 512 --memory 500M uptime-kuma</code> задать ограничения по CPU, контейнер будет иметь доступ к указанной доле процессорного времени в диапазоне от 2 до 262,144 (2^18) или --cpus (количество процессоров), --memory/--memory-swap и --blkio-weight для IOps (относительный вес от 10 до 1000)</p>
+<h2 id="stats">Stats<a class="headerlink" href="#stats" title="Permanent link">&para;</a></h2>
+<p><code>docker stats</code> посмотреть статистику потребляемых ресурсов запущенными контейнерами (top) <br />
+<code>docker stats --no-stream --format json</code> вывести результат один раз в формате json</p>
+<h2 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">&para;</a></h2>
+<p><code>docker logs uptime-kuma --tail 100</code> показать логи конкретного запущенного контейнера в терминале (последние 100 строк) <br />
+<code>docker system events</code> предоставляют события от демона dockerd в реальном времени <br />
+<code>journalctl -xeu docker.service</code> <br />
+<code>docker system df</code> отобразить сводную информацию занятого пространства образами и контейнерами <br />
+<code>du -h --max-depth=1 /var/lib/docker</code> <br />
+<code>du -h --max-depth=2 /var/lib/docker/containers</code></p>
+<h2 id="volume">Volume<a class="headerlink" href="#volume" title="Permanent link">&para;</a></h2>
+<p><code>docker volume ls</code> показывает список томов и место хранения (механизмы хранения постояннымх данных контейнера на хостовой машине, которые сохраняются между перезапусками или пересозданиями контейнеров) <br />
+<code>docker volume inspect uptime-kuma</code> подробная информация конфигурации тома (отображает локальный путь к данным в системе, Mountpoint: /var/lib/docker/volumes/uptime-kuma/_data) <br />
+<code>docker volume create test</code> создать том <br />
+<code>docker volume rm test</code> удалить том <br />
+<code>docker run -d --restart=always --name uptime-kuma -p 8080:3001 -v uptime-kuma:/app/data louislam/uptime-kuma:1</code> создать и запустить контейнер на указанном томе (том создается автоматически, в дальнейшем его можно указывать при создании контейнера, если необходимо загружать из него сохраненные данные)</p>
+<h2 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h2>
+<p><code>docker network ls</code> список сетей <br />
+<code>docker network inspect bridge</code> подробная информация о сети bridge <br />
+<code>docker inspect uptime-kuma | jq .[].NetworkSettings.Networks</code> узнать наименование сетевого адаптера указанного контейнера <br />
+<code>docker run -d --name uptime-kuma --network host nginx louislam/uptime-kuma:1</code> запуск контейнера с использованием host сети, которая позволяет контейнеру использовать сеть хостовой машины <br />
+<code>docker network create network_test</code> создать новую сеть <br />
+<code>docker network connect network_test uptime-kuma</code> подключить работающий контейнер к указанной сети <br />
+<code>docker network disconnect network_test uptime-kuma</code> отключить от сети</p>
+<h2 id="inspect">Inspect<a class="headerlink" href="#inspect" title="Permanent link">&para;</a></h2>
+<p><code>docker inspect uptime-kuma</code> подробная информация о контейнере (например, конфигурация NetworkSettings) <br />
+<code>docker inspect uptime-kuma --format='{{.LogPath}}'</code> показать, где хранятся логи для конкретного контейнера в локальной системе <br />
+<code>docker inspect uptime-kuma | grep LogPath</code> <br />
+<code>docker inspect $(docker ps -q) --format='{{.NetworkSettings.Ports}}'</code> отобразить TCP порты всех запущенных контейнеров <br />
+<code>docker inspect $(docker ps -q) --format='{{.NetworkSettings.Ports}}' | grep -Po "[0-9]+(?=}])"</code> отобразить порты хоста (внешние) <br />
+<code>docker port uptime-kuma</code> отобразить проброшенные порты контейнера <br />
+<code>for ps in $(docker ps -q); do docker port $ps | sed -n 2p | awk -F ":" '{print $NF}'; done</code> отобразить внешние порты всех запущенных контейнеров <br />
+<code>id=$(docker inspect uptime-kuma | jq -r .[].Id)</code> узнать ID контейнера по его имени в конфигурации <br />
+<code>cat /var/lib/docker/containers/$id/config.v2.json | jq .</code> прочитать конфигурационный файл контейнера</p>
+<h2 id="exec">Exec<a class="headerlink" href="#exec" title="Permanent link">&para;</a></h2>
+<p><code>docker exec -it uptime-kuma /bin/bash</code> подключиться к работающему контейнеру (при выходе из оболочки, контейнер будет работать), используя интерпритатор bash <br />
+<code>docker top uptime-kuma</code> отобразить работающие процессы контейнера <br />
+<code>docker exec -it --user root uptime-kuma bash apt-get install -y procps</code> авторизоваться под пользователем root и установить procps <br />
+<code>docker exec -it uptime-kuma ps -aux</code> отобразить работающие процессы внутри контейнера <br />
+<code>docker exec uptime-kuma kill -9 25055</code> убить процесс внутри контейнера <br />
+<code>docker exec -it uptime-kuma ping 8.8.8.8</code> <br />
+<code>docker exec -it uptime-kuma pwd</code> <br />
+<code>docker cp ./Console-Performance.sh uptime-kuma:/app</code> скопировать из локальной системы в контейнер <br />
+<code>docker exec -it uptime-kuma ls</code> <br />
+<code>docker cp uptime-kuma:/app/db/ backup/db</code> сокпировать из контейнера в локальную систему <br />
+<code>ls backup/db</code></p>
+<h2 id="prune">Prune<a class="headerlink" href="#prune" title="Permanent link">&para;</a></h2>
+<p><code>docker network prune &amp;&amp; docker image prune &amp;&amp; docker volume prune &amp;&amp; docker container prune</code> удалить все неиспользуемые сети, висящие образа, остановленные контейнеры, все неиспользуемые тома <br />
+<code>system prune –volumes</code> заменяет все четыре команды для очистки и дополнительно очищает кеш сборки</p>
+<h2 id="remove">Remove<a class="headerlink" href="#remove" title="Permanent link">&para;</a></h2>
+<p><code>systemctl stop docker.service</code> <br />
+<code>systemctl stop docker.socket</code> <br />
+<code>pkill -f docker</code> <br />
+<code>pkill -f containerd</code> <br />
+<code>apt purge docker.io -y || dpkg --purge docker.io</code> <br />
+<code>dpkg -l | grep docker</code> <br />
+<code>rm -rf /var/lib/docker</code> <br />
+<code>rm -rf /run/docker</code> <br />
+<code>rm -rf /run/docker.sock</code></p>
+<h2 id="docker-api">Docker-api<a class="headerlink" href="#docker-api" title="Permanent link">&para;</a></h2>
+<p><code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/version | jq .</code> использовать локальный сокет (/run/docker.sock) для взаимодействия с Docker daemon через его API <br />
+<code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/info | jq .</code> количество образов, запущенных и остановленных контейнеров и остальные метрики ОС <br />
+<code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/events</code> логи Docker daemon <br />
+<code>curl --silent -XGET --unix-socket /run/docker.sock -H "Content-Type: application/json" http://localhost/containers/json | jq .</code> список работающих контейнеров и их параметры конфигурации <br />
+<code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/containers/uptime-kuma/json | jq .</code> подробные сведения (конфигурация) контейнера <br />
+<code>curl --silent -XPOST --unix-socket /run/docker.sock -d "{"Image":"nginx:latest"}" http://localhost/containers/create?name=nginx</code> создать контейнер с указанным образом в теле запроса (должен уже присутствовать образ) <br />
+<code>curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/start</code> запустить контейнер по Id <br />
+<code>curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/stop</code> остановить контейнер <br />
+<code>curl --silent -XDELETE --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1</code> удалить контейнер</p>
+<h2 id="docker-tcp-api">Docker-tcp-api<a class="headerlink" href="#docker-tcp-api" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">echo '{
+    &quot;hosts&quot;: [&quot;tcp://0.0.0.0:2375&quot;, &quot;unix:///var/run/docker.sock&quot;]
+}' &gt; &quot;/etc/docker/daemon.json&quot;
+service=$(cat /lib/systemd/system/docker.service | sed &quot;s/ -H fd:\/\///&quot;)
+printf &quot;%s\n&quot; &quot;$service&quot; &gt; /lib/systemd/system/docker.service
+systemctl daemon-reload
+systemctl restart docker
+</code></pre>
+<p>curl --silent -XGET http://192.168.3.102:2375/version | jq .</p>
+<h2 id="ctop">ctop<a class="headerlink" href="#ctop" title="Permanent link">&para;</a></h2>
+<p><code>scoop install ctop</code> установка в Windows</p>
+<pre><code class="language-bash">wget https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 -O /usr/local/bin/ctop
+chmod +x /usr/local/bin/ctop
+</code></pre>
+<p><code>ctop</code> отображает сводную таблицу (top) CPU, MEM, NET RX/TX, IO R/W <br />
+<code>o</code> - графики <br />
+<code>l</code> - логи контейнера в реальном времени <br />
+<code>s</code> - stop/start <br />
+<code>R</code> - remove после stop <br />
+<code>p</code> - pause/unpause <br />
+<code>r</code> - restart <br />
+<code>e</code> - exec shell</p>
+<h2 id="lazydocker">LazyDocker<a class="headerlink" href="#lazydocker" title="Permanent link">&para;</a></h2>
+<p><code>scoop install lazydocker || choco install lazydocker</code> установка в Windows</p>
+<pre><code class="language-bash">wget https://github.com/jesseduffield/lazydocker/releases/download/v0.23.1/lazydocker_0.23.1_Linux_x86.tar.gz -O ~/lazydocker.tar.gz
+tar -xzf ~/lazydocker.tar.gz lazydocker
+rm ~/lazydocker.tar.gz
+mv lazydocker /usr/local/bin/lazydocker
+chmod +x /usr/local/bin/lazydocker
+</code></pre>
+<p>lazydocker</p>
+<h2 id="dockerfile">Dockerfile<a class="headerlink" href="#dockerfile" title="Permanent link">&para;</a></h2>
+<p><code>git clone https://github.com/Lifailon/TorAPI</code> <br />
+<code>cd TorAPI</code> <br />
+<code>nano Dockerfile</code></p>
+<pre><code class="language-Dockerfile"># Указать базовый образ, который содержит последнюю версию Node.js и npm для создания контейнера
+FROM node:latest
+# Установить рабочую директорию для контейнера (все последующие команды будут выполняться относительно этой директории)
+WORKDIR /torapi
+# Копирует файл package.json из текущей директории на хосте в рабочую директорию контейнера
+COPY package.json ./
+# Запускает команду (используя оболочку по умолчанию) для установки зависимостей, указанных в package.json
+RUN npm install
+# Копирует все файлы из текущей директории на хосте в рабочую директорию контейнера
+COPY . .
+# Определяем переменные окружения по умолчанию
+ENV PORT=8443
+# Открывает порт 8443 для доступа к приложению из контейнера
+EXPOSE $PORT
+# Устанавливает команду по умолчанию для запуска при старте контейнера, которая запускает приложение с помощью npm start
+CMD [&quot;npm&quot;, &quot;start&quot;]
+</code></pre>
+<p><code>docker build -t torapi .</code> собрать образ из dockerfile <br />
+<code>docker run -d --name TorAPI -p 8443:8443 torapi</code></p>
+<h2 id="push">Push<a class="headerlink" href="#push" title="Permanent link">&para;</a></h2>
+<p><code>docker login</code> <br />
+<code>git clone https://github.com/Lifailon/TorAPI</code> <br />
+<code>cd TorAPI</code> <br />
+<code>docker build -t lifailon/torapi .</code> собрать образ для публикации на Docker Hub <br />
+<code>docker push lifailon/torapi</code> загрузить образ на Docker Hub</p>
+<p><code>docker pull lifailon/torapi:latest</code> загрузить образ из Docker Hub <br />
+<code>docker run -d --name TorAPI -p 8443:8443 lifailon/torapi:latest</code> загрузить образ и создать контейнер</p>
+<h2 id="docker-compose">Docker-Compose<a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">curl -L &quot;https://github.com/docker/compose/releases/download/1.27.0/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+</code></pre>
+<p><code>nano docker-compose.yml</code></p>
+<pre><code class="language-yml">version: &quot;3.8&quot;
+services:
+  torapi:
+    image: lifailon/torapi:latest
+    container_name: TorAPI
+    volumes:
+      - torapi:/rotapi
+    ports:
+      - &quot;8443:8443&quot;
+    restart: unless-stopped
+volumes:
+  torapi:
+</code></pre>
+<p><code>docker-compose up -d</code> при повторном запуске пересоздаст контейнер с изменениями</p>
+<h2 id="uptime-kuma">Uptime-Kuma<a class="headerlink" href="#uptime-kuma" title="Permanent link">&para;</a></h2>
+<p><code>nano docker-compose.yml</code></p>
+<pre><code class="language-yml">version: &quot;3.8&quot;
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - uptime-kuma:/app/data
+    ports:
+      - &quot;8080:3001&quot;
+    restart: unless-stopped
+volumes:
+  uptime-kuma:
+</code></pre>
+<p><code>docker-compose up -d</code></p>
+<h2 id="uptime-kuma-api">Uptime-Kuma-Api<a class="headerlink" href="#uptime-kuma-api" title="Permanent link">&para;</a></h2>
+<p><code>nano docker-compose.yml</code></p>
+<pre><code class="language-yml">version: &quot;3.9&quot;
+services:
+  kuma:
+    container_name: uptime-kuma-frontend
+    image: louislam/uptime-kuma:latest
+    ports:
+      - &quot;8080:3001&quot;
+    restart: unless-stopped
+    volumes:
+      - uptime-kuma:/app/data
+  api:
+    container_name: uptime-kuma-backend-api
+    image: medaziz11/uptimekuma_restapi
+    volumes:
+      - api:/db
+    restart: unless-stopped
+    environment:
+      - KUMA_SERVER=http://kuma:3001
+      - KUMA_USERNAME=admin
+      - KUMA_PASSWORD=KumaAdmin
+      - ADMIN_PASSWORD=KumaApiAdmin
+    depends_on:
+      - kuma
+    ports:
+      - &quot;8081:8000&quot;
+volumes:
+  uptime-kuma:
+  api:
+</code></pre>
+<p><code>docker-compose up -d</code></p>
+<p>OpenAPI doc: http://192.168.3.102:8081/docs <br />
+<code>TOKEN=$(curl -s -X POST http://192.168.3.102:8081/login/access-token --data "username=admin" --data "password=KumaApiAdmin" | jq -r .access_token)</code> <br />
+<code>curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://127.0.0.1:8081/monitors | jq .</code> <br />
+<code>curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://127.0.0.1:8081/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'</code></p>
+<h2 id="swarm">Swarm<a class="headerlink" href="#swarm" title="Permanent link">&para;</a></h2>
+<p><code>docker swarm init</code> инициализировать manager node и получить токен для подключения worker node (сервер) <br />
+<code>docker swarm join-token manager</code> узнать токен подключения <br />
+<code>docker swarm join --token SWMTKN-1-1a078rm7vuenefp6me84t4swqtvdoveu6dh2pw34xjcf2gyw33-81f8r32jt3kkpk4dqnt0oort9 192.168.3.101:2377</code> подключение на worker node (клиент) <br />
+<code>docker node ls</code> отобразить список node на manager node <br />
+<code>docker node inspect u4u897mxb1oo39pbj5oezd3um</code> подробная информация (конфигурация) о node по id <br />
+<code>docker swarm leave --force</code> выйти из кластера на worker node (на manager node изменится статус с Ready на Down) <br />
+<code>docker node rm u4u897mxb1oo39pbj5oezd3um</code> удалить node (со статусом Down) на manager node <br />
+<code>docker pull lifailon/torapi:latest</code> <br />
+<code>nano docker-compose-stack.yml</code></p>
+<pre><code class="language-yml">version: &quot;3.8&quot;
+services:
+  torapi:
+    image: lifailon/torapi:latest
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        order: start-first
+      # Режим виртуального IP для балансировки нагрузки
+      endpoint_mode: vip
+    volumes:
+      - torapi:/rotapi
+    ports:
+      # Порт внутри контейнера
+      - target: 8443
+        published: 8443
+        protocol: tcp
+        # Режим балансировки нагрузки по умолчанию
+        mode: ingress
+volumes:
+  torapi:
+</code></pre>
+<p><code>docker stack deploy -c docker-compose-stack.yml TorAPI</code> собрать стэк сервисов, определенных в docker-compose (на worker node появится контейнер TorAPI_torapi.1.ug5ngdlqkl76dt) <br />
+<code>docker stack ls</code> отобразить список стэков <br />
+<code>docker service ls</code> список сервисов всех стэков <br />
+<code>docker stack ps TorAPI</code> список задач в стеке <br />
+<code>docker stack services TorAPI</code> список сервисов внутри стэка указанного стэка по имени <br />
+<code>docker service ps TorAPI_torapi</code> подробная информация о сервисе по его имени (TorAPI имя стэка и _torapi имя сервиса) <br />
+<code>docker service inspect --pretty TorAPI_torapi</code> конфигурация сервиса <br />
+<code>docker service inspect TorAPI_torapi</code> конфигурация сервиса в формате JSON <br />
+<code>docker service logs TorAPI_torapi</code> журнала конкретного сервиса по всем серверам кластера <br />
+<code>docker service scale TorAPI_torapi=3</code> масштабирует сервис до указанного числа реплик <br />
+<code>docker stack rm TorAPI</code> удалить стэк (не требует остановки контейнеров)</p>
+<h2 id="dozzle">Dozzle<a class="headerlink" href="#dozzle" title="Permanent link">&para;</a></h2>
+<p><code>docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest</code> <br />
+<code>docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest --remote-host tcp://192.168.3.102:2375|mon-01</code> доступ к удаленному хосту через Docker-tcp-api <br />
+http://192.168.3.102:9999</p>
+<h2 id="dozzle-auth">Dozzle-Auth<a class="headerlink" href="#dozzle-auth" title="Permanent link">&para;</a></h2>
+<p><code>echo -n DozzleAdmin | shasum -a 256</code> получить пароль в формате sha-256 <br />
+<code>mkdir dozzle &amp;&amp; nano ./dozzle/users.yml</code> создать авторизационный файл</p>
+<pre><code class="language-yml">users:
+  admin:
+    name: &quot;admin&quot;
+    password: &quot;a800c3ee4dac5102ed13ba673589077cf0a87a7ddaff59882bb3c08f275a516e&quot;
+</code></pre>
+<p><code>nano docker-compose.yml</code></p>
+<pre><code class="language-yml">version: &quot;3.8&quot;
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dozzle:/data
+    ports:
+      - 9999:8080
+    environment:
+      DOZZLE_AUTH_PROVIDER: simple
+      DOZZLE_HOSTNAME: dozzle
+      DOZZLE_REMOTE_HOST: tcp://192.168.3.102:2375|mon-01
+</code></pre>
+<p><code>docker-compose up -d</code></p>
+<h2 id="portainer">Portainer<a class="headerlink" href="#portainer" title="Permanent link">&para;</a></h2>
+<p><code>curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml</code> скачать yaml файл <br />
+<code>version_update=$(cat portainer-agent-stack.yml | sed "s/2.11.1/latest/g")</code> <br />
+<code>printf "%s\n" "$version_update" &gt; portainer-agent-stack.yml</code> обновить версию в yaml файле на последнюю доступную в Docker Hub (2.19.5) <br />
+<code>docker stack deploy -c portainer-agent-stack.yml portainer</code> развернуть в кластере swarm (на каждом node будет установлен агент, который будет собирать данные, а на manager будет установлен сервер с web панелью) <br />
+https://192.168.3.101:9443</p>
+<p><code>docker run -d --name portainer_agent -p 9001:9001 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent:2.19.5</code> установить агент на удаленный хост <br />
+https://192.168.3.101:9443/#!/endpoints добавить удаленный хост по URL 192.168.3.102:9001</p>
+<p><code>docker volume create portainer_data</code> создать volume для установки локального контейнера (не в кластер swarm) <br />
+<code>docker create -it --name=portainer -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</code> создать локальный контейнер <br />
+<code>docker start portainer</code> <br />
+http://192.168.3.101:9000</p>
+<h1 id="dockerdotnet">Docker.DotNet<a class="headerlink" href="#dockerdotnet" title="Permanent link">&para;</a></h1>
+<pre><code class="language-PowerShell"># Импорт библиотеки Docker.DotNet (https://nuget.info/packages/Docker.DotNet/3.125.15)
+Add-Type -Path &quot;$home\Documents\Docker.DotNet-3.125.15\lib\netstandard2.1\Docker.DotNet.dll&quot;
+# Указываем адрес удаленного сервера Docker, на котором слушает сокет Docker API
+$config = [Docker.DotNet.DockerClientConfiguration]::new(&quot;http://192.168.3.102:2375&quot;)
+# Подключаемся клиентом
+$client = $config.CreateClient()
+# Получить список методов класса клиента
+$client | Get-Member
+# Выводим список контейнеров
+$containers = $client.Containers.ListContainersAsync([Docker.DotNet.Models.ContainersListParameters]::new()).GetAwaiter().GetResult()
+# Забираем id по имени
+$kuma_id = $($containers | Where-Object names -match &quot;uptime-kuma-front&quot;).id
+# Получить список дочерних методов
+$client.Containers | Get-Member
+# Остановить контейнер по его id
+$StopParameters = [Docker.DotNet.Models.ContainerStopParameters]::new()
+$client.Containers.StopContainerAsync($kuma_id, $StopParameters)
+# Запустить контейнер
+$StartParameters = [Docker.DotNet.Models.ContainerStartParameters]::new()
+$client.Containers.StartContainerAsync($kuma_id, $StartParameters)
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

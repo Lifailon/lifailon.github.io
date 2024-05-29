@@ -1,24 +1,27 @@
 site_name: PowerShell Commands
 site_url: https://lifailon.github.io
 nav:
-  - Home: index.md
+  - PS-Commands: index.md
   - Syntax: Syntax\index.md
-  - ActiveDirectory: ActiveDirectory\index.md
-  - Ansible: Ansible\index.md
-  - API: API\index.md
-  - Apps: Apps\index.md
+  - File System: FileSystem\index.md
+  - Windows: Windows\index.md
+  - Threads: Threads\index.md
+  - Modules: Modules\index.md
+  - .NET: dotNET\index.md
   - COM: COM\index.md
-  - dotNET: dotNET\index.md
-  - Exchange: Exchange\index.md
-  - Git: Git\index.md
-  - HTML: HTML\index.md
-  - InfluxDB: InfluxDB\index.md
-  - MSSQL: MSSQL\index.md
-  - MySQL: MySQL\index.md
-  - Network: Network\index.md
+  - REST API: API\index.md
+  - Server Manager: ServerManager\index.md
+  - Active Directory: ActiveDirectory\index.md
+  - Microsoft Exchange: Exchange\index.md
   - Virtualization: Virtualization\index.md
-  - WMI: WMI\index.md
+  - Database: Database\index.md
+  - Data: Data\index.md
+  - Git: Git\index.md
+  - Ansible: Ansible\index.md
+  - Docker: Docker\index.md
   - Zabbix: Zabbix\index.md
+  - DevOps: DevOps\index.md
+  - Epic Games Radar: epic-games-radar\index.html
 theme:
   name: material
   features:

@@ -10,13 +10,13 @@
         <meta name="author" content="Lifailon">
       
       
-        <link rel="canonical" href="https://lifailon.github.io/WMI/">
+        <link rel="canonical" href="https://lifailon.github.io/Threads/">
       
       
-        <link rel="prev" href="../Virtualization/">
+        <link rel="prev" href="../Windows/">
       
       
-        <link rel="next" href="../Zabbix/">
+        <link rel="next" href="../Modules/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>WMI - PowerShell Commands</title>
+        <title>Threads - PowerShell Commands</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#wmicim-windows-management-instrumentationcommon-information-model" class="md-skip">
+        <a href="#jobs" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              WMI
+              Threads
             
           </span>
         </div>
@@ -235,7 +235,7 @@
         
   
   <span class="md-ellipsis">
-    Home
+    PS-Commands
   </span>
   
 
@@ -271,11 +271,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../ActiveDirectory/" class="md-nav__link">
+      <a href="../FileSystem/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    ActiveDirectory
+    File System
   </span>
   
 
@@ -291,11 +291,132 @@
   
   
     <li class="md-nav__item">
-      <a href="../Ansible/" class="md-nav__link">
+      <a href="../Windows/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Ansible
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threadjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      ThreadJob
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poshrsjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      PoshRSJob
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#foreach-object-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      ForEach-Object-Parallel
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
   </span>
   
 
@@ -311,31 +432,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../API/" class="md-nav__link">
+      <a href="../dotNET/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    API
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Apps/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Apps
+    .NET
   </span>
   
 
@@ -371,11 +472,51 @@
   
   
     <li class="md-nav__item">
-      <a href="../dotNET/" class="md-nav__link">
+      <a href="../API/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    dotNET
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
   </span>
   
 
@@ -395,7 +536,67 @@
         
   
   <span class="md-ellipsis">
-    Exchange
+    Microsoft Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
   </span>
   
 
@@ -431,11 +632,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../HTML/" class="md-nav__link">
+      <a href="../Ansible/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    HTML
+    Ansible
   </span>
   
 
@@ -451,125 +652,15 @@
   
   
     <li class="md-nav__item">
-      <a href="../InfluxDB/" class="md-nav__link">
+      <a href="../Docker/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    InfluxDB
+    Docker
   </span>
   
 
       </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MSSQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MSSQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MySQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MySQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Network/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Network
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Virtualization/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Virtualization
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    WMI
-  </span>
-  
-
-      </a>
-      
     </li>
   
 
@@ -586,6 +677,46 @@
   
   <span class="md-ellipsis">
     Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
   </span>
   
 
@@ -611,8 +742,59 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threadjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      ThreadJob
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poshrsjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      PoshRSJob
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#foreach-object-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      ForEach-Object-Parallel
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -627,56 +809,151 @@
                   
 
 
-<h1 id="wmicim-windows-management-instrumentationcommon-information-model">WMI/CIM (Windows Management Instrumentation/Common Information Model)<a class="headerlink" href="#wmicim-windows-management-instrumentationcommon-information-model" title="Permanent link">&para;</a></h1>
-<p><code>Get-WmiObjec -ComputerName localhost -Namespace root -class "__NAMESPACE" | select name,__namespace</code> отобразить дочернии Namespace (логические иерархические группы) <br />
-<code>Get-WmiObject -List</code> отобразить все классы пространства имен "root\cimv2" (по умолчанию), свойства (описывают конфигурацию и текущее состояние управляемого ресурса) и их методы (какие действия позволяет выполнить над этим ресурсом) <br />
-<code>Get-WmiObject -List | Where-Object {$_.name -match "video"}</code> поиск класса по имени, его свойств и методов <br />
-<code>Get-WmiObject -ComputerName localhost -Class Win32_VideoController</code> отобразить содержимое свойств класса</p>
-<p><code>gwmi -List | where name -match "service" | ft -auto</code> если в таблице присутствуют Methods, то можно взаимодействовать {StartService, StopService} <br />
-<code>gwmi -Class win32_service | select *</code> отобразить список всех служб и всех их свойств <br />
-<code>Get-CimInstance Win32_service</code> обращается на прямую к "root\cimv2" <br />
-<code>gwmi win32_service -Filter "name='Zabbix Agent'"</code> отфильтровать вывод по имени <br />
-<code>(gwmi win32_service -Filter "name='Zabbix Agent'").State</code> отобразить конкретное свойство <br />
-<code>gwmi win32_service -Filter "State = 'Running'"</code> отфильтровать запущенные службы <br />
-<code>gwmi win32_service -Filter "StartMode = 'Auto'"</code> отфильтровать службы по методу запуска <br />
-<code>gwmi -Query 'select * from win32_service where startmode="Auto"'</code> WQL-запрос (WMI Query Language) <br />
-<code>gwmi win32_service | Get-Member -MemberType Method</code> отобразить все методы взаимодействия с описание применения (Delete, StartService) <br />
-<code>(gwmi win32_service -Filter 'name="Zabbix Agent"').Delete()</code> удалить службу <br />
-<code>(gwmi win32_service -Filter 'name="MSSQL$MSSQLE"').StartService()</code> запустить службу</p>
-<p><code>Get-CimInstance -ComputerName $srv Win32_OperatingSystem | select LastBootUpTime</code> время последнего включения <br />
-<code>gwmi -ComputerName $srv -Class Win32_OperatingSystem | select LocalDateTime,LastBootUpTime</code> текущее время и время последнего включения <br />
-<code>gwmi Win32_OperatingSystem | Get-Member -MemberType Method</code> методы reboot и shutdown <br />
-<code>(gwmi Win32_OperatingSystem -EnableAllPrivileges).Reboot()</code> используется с ключем повышения привелегий <br />
-<code>(gwmi Win32_OperatingSystem -EnableAllPrivileges).Win32Shutdown(0)</code> завершение сеанса пользователя</p>
-<pre><code class="language-PowerShell">$system = Get-WmiObject -Class Win32_OperatingSystem
-$InstallDate = [Management.ManagementDateTimeconverter]::ToDateTime($system.installdate)` Получаем дату установки ОС
-$AfterInstallDays = ((Get-Date) — $Installdate).Days` Вычисляем время, прошедшее с момента установки
-$ShortInstallDate = &quot;{0:yyyy-MM-dd HH:MM}&quot; -f ($InstallDate)
-&quot;Система установлена: $ShortInstallDate (Прошло $AfterInstalldays дней)&quot;
+  <h1>Threads</h1>
+
+<h2 id="jobs">Jobs<a class="headerlink" href="#jobs" title="Permanent link">&para;</a></h2>
+<p><code>Get-Job</code> получение списка задач <br />
+<code>Start-Job</code> запуск процесса <br />
+<code>Stop-Job</code> остановка процесса <br />
+<code>Suspend-Job</code> приостановка работы процесса <br />
+<code>Resume-Job</code> восстановление работы процесса <br />
+<code>Wait-Job</code> ожидание вывода команды <br />
+<code>Receive-Job</code> получение результатов выполненного процесса <br />
+<code>Remove-Job</code> удалить задачу</p>
+<pre><code class="language-PowerShell">function Start-PingJob ($Network) {
+    $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+    foreach ($4 in 1..254) {
+        $ip = $RNetwork+$4
+        # Создаем задания, забираем 3-ю строку вывода и добавляем к выводу ip-адрес
+        (Start-Job {&quot;$using:ip : &quot;+(ping -n 1 -w 50 $using:ip)[2]}) | Out-Null
+    }
+    while ($True) {
+        $status_job = $(Get-Job).State[-1] # забираем статус последнего задания (задания выполняются по очереди сверху вниз)
+        if ($status_job -like &quot;Completed&quot;) { # проверяем задание на выполнение
+            $ping_out = Get-Job | Receive-Job # если выполнено, забираем вывод всех заданий
+            Get-Job | Remove-Job -Force # удаляем задания
+            break # завершаем цикл
+        }
+    }
+    $ping_out
+}
 </code></pre>
-<p><code>(Get-WmiObject win32_battery).estimatedChargeRemaining</code> заряд батареи в процентах <br />
-<code>gwmi Win32_UserAccount</code> доменные пользователи <br />
-<code>(gwmi Win32_SystemUsers).PartComponent</code> <br />
-<code>Get-CimInstance -ClassName Win32_LogonSession</code> <br />
-<code>Get-CimInstance -ClassName Win32_BIOS</code></p>
-<p><code>gwmi -list -Namespace root\CIMV2\Terminalservices</code> <br />
-<code>(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).AllowTSConnections</code> <br />
-<code>(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(1)</code> включить RDP</p>
-<pre><code>$srv = &quot;localhost&quot;
-gwmi Win32_logicalDisk -ComputerName $srv | where {$_.Size -ne $null} | select @{
-Label=&quot;Value&quot;; Expression={$_.DeviceID}}, @{Label=&quot;AllSize&quot;; Expression={
-[string]([int]($_.Size/1Gb))+&quot; GB&quot;}},@{Label=&quot;FreeSize&quot;; Expression={
-[string]([int]($_.FreeSpace/1Gb))+&quot; GB&quot;}}, @{Label=&quot;Free%&quot;; Expression={
-[string]([int]($_.FreeSpace/$_.Size*100))+&quot; %&quot;}}
+<p><code>Start-PingJob -Network 192.168.3.0</code> <br />
+<code>$(Measure-Command {Start-PingJob -Network 192.168.3.0}).TotalSeconds</code> 60 Seconds</p>
+<h2 id="threadjob">ThreadJob<a class="headerlink" href="#threadjob" title="Permanent link">&para;</a></h2>
+<p><code>Install-Module -Name ThreadJob</code> <br />
+<code>Get-Module ThreadJob -list</code> <br />
+<code>Start-ThreadJob {ping ya.ru} | Out-Null</code> создать фоновую задачу <br />
+<code>Get-Job | Receive-Job -Keep</code> отобразить и не удалять вывод <br />
+<code>(Get-Job).HasMoreData</code> если False, то вывод команы удален <br />
+<code>(Get-Job)[-1].Output</code> отобразить вывод последней задачи</p>
+<pre><code class="language-PowerShell">function Start-PingThreadJob ($Network) {
+    $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+    foreach ($4 in 1..254) {
+        $ip = $RNetwork+$4
+        $(Start-ThreadJob {
+            &quot;$using:ip : &quot; + $(ping -n 1 -w 50 $using:ip)[2]
+        }) | Out-Null
+    }
+    while ($True) {
+        $status_job = $(Get-Job).State[-1]
+        if ($status_job -like &quot;Completed&quot;) {
+            $ping_out = Get-Job | Receive-Job
+            Get-Job | Remove-Job -Force
+            break
+        }
+    }
+    $ping_out
+}
 </code></pre>
-<h1 id="nla">NLA<a class="headerlink" href="#nla" title="Permanent link">&para;</a></h1>
-<p><code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").UserAuthenticationRequired</code> <br />
-<code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(1)</code> включить NLA <br />
-<code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer</code> отобразить значение (2) <br />
-<code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication</code> отобразить значение (1) <br />
-<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer -Value 0</code> изменить значение <br />
-<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -Value 0</code> <br />
-<code>REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters /v AllowEncryptionOracle /t REG_DWORD /d 2</code> отключить на клиентском компьютере проверку версии CredSSP, если на целевом комьютере-сервере не установлены обновления KB4512509 от мая 2018 года</p>
+<p><code>Start-PingThreadJob -Network 192.168.3.0</code> <br />
+<code>$(Measure-Command {Start-PingThread -Network 192.168.3.0}).TotalSeconds</code> 24 Seconds</p>
+<h2 id="poshrsjob">PoshRSJob<a class="headerlink" href="#poshrsjob" title="Permanent link">&para;</a></h2>
+<p>Install-Module -Name PoshRSJob</p>
+<pre><code class="language-PowerShell">function Start-PingRSJob ($Network) {
+    $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+    foreach ($4 in 1..254) {
+        $ip = $RNetwork+$4
+        $(Start-RSJob {
+            &quot;$using:ip : &quot; + $(ping -n 1 -w 50 $using:ip)[2]
+        }) | Out-Null
+    }
+    while ($True) {
+        $status_job = $(Get-RSJob).State -notcontains &quot;Running&quot; # проверяем, что массив не содержит активных заданий
+        if ($status_job) {
+            $ping_out = Get-RSJob | Receive-RSJob
+            Get-RSJob | Remove-RSJob
+            break
+        }
+    }
+    $ping_out
+}
+</code></pre>
+<p><code>Start-PingRSJob -Network 192.168.3.0</code> <br />
+<code>$(Measure-Command {Start-PingRSJob -Network 192.168.3.0}).TotalSeconds</code> 10 Seconds</p>
+<h2 id="parallel">Parallel<a class="headerlink" href="#parallel" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell"># Import function from GitHub to current session
+$module = &quot;https://raw.githubusercontent.com/RamblingCookieMonster/Invoke-Parallel/master/Invoke-Parallel/Invoke-Parallel.ps1&quot;
+Invoke-Expression $(Invoke-RestMethod $module)
+</code></pre>
+<p>Get-Help Invoke-Parallel -Full</p>
+<pre><code class="language-PowerShell">function Start-PingInvokeParallel ($Network) {
+    $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+    1..254 | ForEach-Object {$srvList += @($RNetwork+$_)}
+    Invoke-Parallel -InputObject $srvList -ScriptBlock {
+        &quot;$_ : &quot; + $(ping -n 1 -w 50 $_)[2]
+    }
+}
+</code></pre>
+<p><code>Start-PingInvokeParallel -Network 192.168.3.0</code> <br />
+<code>$(Get-History)[-1].Duration.TotalSeconds</code> 7 seconds</p>
+<pre><code class="language-PowerShell">$array_main  = 1..10 | ForEach-Object {&quot;192.168.3.$_&quot;}
+Invoke-Parallel -InputObject $(0..$($array_main.Count-1)) -ScriptBlock {
+    Foreach ($n in 1..100) {
+        Start-Sleep -Milliseconds 100
+        Write-Progress -Activity $($array_main[$_]) -PercentComplete $n -id $_
+    }
+} -ImportVariables
+</code></pre>
+<h2 id="foreach-object-parallel">ForEach-Object-Parallel<a class="headerlink" href="#foreach-object-parallel" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">function Start-PingParallel ($Network) {
+    $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+    1..254 | ForEach-Object -Parallel {
+        &quot;$using:RNetwork.$_ : &quot; + $(ping -n 1 -w 50 &quot;$using:RNetwork$_&quot;)[2]
+    } -ThrottleLimit 254
+}
+</code></pre>
+<p><code>Start-PingParallel -Network 192.168.3.0</code> <br />
+<code>$(Get-History)[-1].Duration.TotalSeconds</code> 2 seconds</p>
+<pre><code class="language-PowerShell">function Start-TestConnectParallel (
+        $Network,
+        [switch]$Csv
+    ) {
+    $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
+    if ($csv) {
+        &quot;Address,Status,Latency&quot;
+    }
+    1..254 | ForEach-Object -Parallel {
+        $test = Test-Connection &quot;$using:RNetwork$_&quot; -Count 1 -TimeoutSeconds 1
+        if ($using:csv) {
+            &quot;$($using:RNetwork)$_,$($test.Status),$($test.Latency)&quot;
+        } else {
+            $test
+        }
+    } -ThrottleLimit 254
+}
+</code></pre>
+<p><code>Start-TestConnectParallel -Network 192.168.3.0 -Csv | ConvertFrom-Csv</code> <br />
+<code>$(Get-History)[-1].Duration.TotalSeconds</code> 3 seconds</p>
+<pre><code class="language-PowerShell">$array_main  = 1..10 | ForEach-Object {&quot;192.168.3.$_&quot;}
+$(0..$($array_main.Count-1)) | ForEach-Object -Parallel {
+    Foreach ($n in 1..100) {
+        Start-Sleep -Milliseconds 100
+        $array_temp = $using:array_main
+        Write-Progress -Activity $($array_temp[$_]) -PercentComplete $n -id $_
+    }
+} -ThrottleLimit $($array_main.Count)
+</code></pre>
 
 
 

@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://lifailon.github.io/ActiveDirectory/">
       
       
-        <link rel="prev" href="../Syntax/">
+        <link rel="prev" href="../ServerManager/">
       
       
-        <link rel="next" href="../Ansible/">
+        <link rel="next" href="../Exchange/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#active-directory" class="md-skip">
+        <a href="#rsat-remote-server-administration-tools" class="md-skip">
           Skip to content
         </a>
       
@@ -235,7 +235,7 @@
         
   
   <span class="md-ellipsis">
-    Home
+    PS-Commands
   </span>
   
 
@@ -268,307 +268,14 @@
       
   
   
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    ActiveDirectory
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    ActiveDirectory
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#active-directory" class="md-nav__link">
-    <span class="md-ellipsis">
-      Active Directory
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Active Directory">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rsat-remote-server-administration-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      RSAT (Remote Server Administration Tools)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#import-module-activedirectory" class="md-nav__link">
-    <span class="md-ellipsis">
-      Import-Module ActiveDirectory
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adsi-active-directory-service-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADSI (Active Directory Service Interface)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ldap-lightweight-directory-access-protocol" class="md-nav__link">
-    <span class="md-ellipsis">
-      LDAP (Lightweight Directory Access Protocol)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#laps-local-admin-password-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      LAPS (Local Admin Password Management)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recycle-bin" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recycle Bin
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#thumbnailphoto" class="md-nav__link">
-    <span class="md-ellipsis">
-      thumbnailPhoto
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#addomaincontroller" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADDomainController
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adcomputer" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADComputer
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#aduser" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADUser
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adgroupmember" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADGroupMember
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adreplication" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADReplication
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#repadmin" class="md-nav__link">
-    <span class="md-ellipsis">
-      repadmin
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dcdiag" class="md-nav__link">
-    <span class="md-ellipsis">
-      dcdiag
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ntdsutil" class="md-nav__link">
-    <span class="md-ellipsis">
-      ntdsutil
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gpo" class="md-nav__link">
-    <span class="md-ellipsis">
-      GPO
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#servermanager" class="md-nav__link">
-    <span class="md-ellipsis">
-      ServerManager
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="ServerManager">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pswa" class="md-nav__link">
-    <span class="md-ellipsis">
-      PSWA
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#wsb-windows-server-backup" class="md-nav__link">
-    <span class="md-ellipsis">
-      WSB (Windows Server Backup)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rds" class="md-nav__link">
-    <span class="md-ellipsis">
-      RDS
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dnsserver" class="md-nav__link">
-    <span class="md-ellipsis">
-      DNSServer
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dhcpserver" class="md-nav__link">
-    <span class="md-ellipsis">
-      DHCPServer
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dfs" class="md-nav__link">
-    <span class="md-ellipsis">
-      DFS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#storagereplica" class="md-nav__link">
-    <span class="md-ellipsis">
-      StorageReplica
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
   
   
     <li class="md-nav__item">
-      <a href="../Ansible/" class="md-nav__link">
+      <a href="../FileSystem/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Ansible
+    File System
   </span>
   
 
@@ -584,11 +291,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../API/" class="md-nav__link">
+      <a href="../Windows/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    API
+    Windows
   </span>
   
 
@@ -604,11 +311,51 @@
   
   
     <li class="md-nav__item">
-      <a href="../Apps/" class="md-nav__link">
+      <a href="../Threads/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Apps
+    Threads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
   </span>
   
 
@@ -644,11 +391,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../dotNET/" class="md-nav__link">
+      <a href="../API/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    dotNET
+    REST API
   </span>
   
 
@@ -664,11 +411,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Exchange/" class="md-nav__link">
+      <a href="../ServerManager/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Exchange
+    Server Manager
   </span>
   
 
@@ -681,194 +428,38 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../Git/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Git
+    Active Directory
   </span>
   
 
       </a>
-    </li>
-  
-
-    
       
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HTML/" class="md-nav__link">
         
-  
-  <span class="md-ellipsis">
-    HTML
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../InfluxDB/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    InfluxDB
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MSSQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MSSQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MySQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MySQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Network/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Network
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Virtualization/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Virtualization
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../WMI/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    WMI
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Zabbix/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Zabbix
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-  </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
 
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
@@ -882,16 +473,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#active-directory" class="md-nav__link">
-    <span class="md-ellipsis">
-      Active Directory
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Active Directory">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#rsat-remote-server-administration-tools" class="md-nav__link">
     <span class="md-ellipsis">
       RSAT (Remote Server Administration Tools)
@@ -899,8 +480,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#import-module-activedirectory" class="md-nav__link">
     <span class="md-ellipsis">
       Import-Module ActiveDirectory
@@ -908,8 +489,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#adsi-active-directory-service-interface" class="md-nav__link">
     <span class="md-ellipsis">
       ADSI (Active Directory Service Interface)
@@ -917,8 +498,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#ldap-lightweight-directory-access-protocol" class="md-nav__link">
     <span class="md-ellipsis">
       LDAP (Lightweight Directory Access Protocol)
@@ -926,8 +507,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#laps-local-admin-password-management" class="md-nav__link">
     <span class="md-ellipsis">
       LAPS (Local Admin Password Management)
@@ -935,8 +516,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#recycle-bin" class="md-nav__link">
     <span class="md-ellipsis">
       Recycle Bin
@@ -944,8 +525,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#thumbnailphoto" class="md-nav__link">
     <span class="md-ellipsis">
       thumbnailPhoto
@@ -953,8 +534,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#addomaincontroller" class="md-nav__link">
     <span class="md-ellipsis">
       ADDomainController
@@ -962,8 +543,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#adcomputer" class="md-nav__link">
     <span class="md-ellipsis">
       ADComputer
@@ -971,8 +552,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#aduser" class="md-nav__link">
     <span class="md-ellipsis">
       ADUser
@@ -980,8 +561,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#adgroupmember" class="md-nav__link">
     <span class="md-ellipsis">
       ADGroupMember
@@ -989,18 +570,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#adreplication" class="md-nav__link">
     <span class="md-ellipsis">
       ADReplication
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1040,79 +616,377 @@
   
 </li>
       
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microsoft Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
         <li class="md-nav__item">
-  <a href="#servermanager" class="md-nav__link">
+  <a href="#rsat-remote-server-administration-tools" class="md-nav__link">
     <span class="md-ellipsis">
-      ServerManager
+      RSAT (Remote Server Administration Tools)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="ServerManager">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pswa" class="md-nav__link">
-    <span class="md-ellipsis">
-      PSWA
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#wsb-windows-server-backup" class="md-nav__link">
-    <span class="md-ellipsis">
-      WSB (Windows Server Backup)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rds" class="md-nav__link">
-    <span class="md-ellipsis">
-      RDS
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dnsserver" class="md-nav__link">
+  <a href="#import-module-activedirectory" class="md-nav__link">
     <span class="md-ellipsis">
-      DNSServer
+      Import-Module ActiveDirectory
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dhcpserver" class="md-nav__link">
+  <a href="#adsi-active-directory-service-interface" class="md-nav__link">
     <span class="md-ellipsis">
-      DHCPServer
+      ADSI (Active Directory Service Interface)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dfs" class="md-nav__link">
+  <a href="#ldap-lightweight-directory-access-protocol" class="md-nav__link">
     <span class="md-ellipsis">
-      DFS
+      LDAP (Lightweight Directory Access Protocol)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#storagereplica" class="md-nav__link">
+  <a href="#laps-local-admin-password-management" class="md-nav__link">
     <span class="md-ellipsis">
-      StorageReplica
+      LAPS (Local Admin Password Management)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recycle-bin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recycle Bin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thumbnailphoto" class="md-nav__link">
+    <span class="md-ellipsis">
+      thumbnailPhoto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addomaincontroller" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADDomainController
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adcomputer" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADComputer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aduser" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADUser
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adgroupmember" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADGroupMember
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adreplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADReplication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repadmin" class="md-nav__link">
+    <span class="md-ellipsis">
+      repadmin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dcdiag" class="md-nav__link">
+    <span class="md-ellipsis">
+      dcdiag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ntdsutil" class="md-nav__link">
+    <span class="md-ellipsis">
+      ntdsutil
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpo" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPO
     </span>
   </a>
   
@@ -1133,8 +1007,9 @@
                   
 
 
-<h2 id="active-directory">Active Directory<a class="headerlink" href="#active-directory" title="Permanent link">&para;</a></h2>
-<h3 id="rsat-remote-server-administration-tools">RSAT (Remote Server Administration Tools)<a class="headerlink" href="#rsat-remote-server-administration-tools" title="Permanent link">&para;</a></h3>
+  <h1>Active Directory</h1>
+
+<h2 id="rsat-remote-server-administration-tools">RSAT (Remote Server Administration Tools)<a class="headerlink" href="#rsat-remote-server-administration-tools" title="Permanent link">&para;</a></h2>
 <p><code>DISM.exe /Online /add-capability /CapabilityName:Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0 /CapabilityName:Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0</code> <br />
 <code>Add-WindowsCapability –online –Name Rsat.Dns.Tools~~~~0.0.1.0</code> <br />
 <code>Add-WindowsCapability -Online -Name Rsat.DHCP.Tools~~~~0.0.1.0</code> <br />
@@ -1143,9 +1018,13 @@
 <code>Add-WindowsCapability -Online -Name Rsat.CertificateServices.Tools~~~~0.0.1.0</code> <br />
 <code>Add-WindowsCapability -Online -Name Rsat.RemoteDesktop.Services.Tools~~~~0.0.1.0</code> <br />
 <code>Get-WindowsCapability -Name RSAT* -Online | Select-Object -Property DisplayName, State</code> отобразить список установленных компанентов</p>
-<h3 id="import-module-activedirectory">Import-Module ActiveDirectory<a class="headerlink" href="#import-module-activedirectory" title="Permanent link">&para;</a></h3>
-<p><code>$Session = New-PSSession -ComputerName $srv</code> -Credential $cred<code></code>Export-PSsession -Session $Session -Module ActiveDirectory -OutputModule ActiveDirectory<code>экспортировать модуль из удаленной сесси (например, с DC)</code>Remove-PSSession -Session $Session<code></code>Import-Module ActiveDirectory<code></code>Get-Command -Module ActiveDirectory`</p>
-<h3 id="adsi-active-directory-service-interface">ADSI (Active Directory Service Interface)<a class="headerlink" href="#adsi-active-directory-service-interface" title="Permanent link">&para;</a></h3>
+<h2 id="import-module-activedirectory">Import-Module ActiveDirectory<a class="headerlink" href="#import-module-activedirectory" title="Permanent link">&para;</a></h2>
+<p><code>$Session = New-PSSession -ComputerName $srv</code> -Credential $cred <br />
+<code>Export-PSsession -Session $Session -Module ActiveDirectory -OutputModule ActiveDirectory</code> экспортировать модуль из удаленной сесси (например, с DC) <br />
+<code>Remove-PSSession -Session $Session</code> <br />
+<code>Import-Module ActiveDirectory</code> <br />
+<code>Get-Command -Module ActiveDirectory</code></p>
+<h2 id="adsi-active-directory-service-interface">ADSI (Active Directory Service Interface)<a class="headerlink" href="#adsi-active-directory-service-interface" title="Permanent link">&para;</a></h2>
 <p><code>$d0 = $env:userdnsdomain</code> <br />
 <code>$d0 = $d0 -split "\."</code> <br />
 <code>$d1 = $d0[0]</code> <br />
@@ -1156,7 +1035,7 @@
 <code>$Local_User | Get-Member</code> <br />
 <code>$Local_User.Description</code> <br />
 <code>$Local_User.LastLogin</code> время последней авторизации локального пользователя</p>
-<h3 id="ldap-lightweight-directory-access-protocol">LDAP (Lightweight Directory Access Protocol)<a class="headerlink" href="#ldap-lightweight-directory-access-protocol" title="Permanent link">&para;</a></h3>
+<h2 id="ldap-lightweight-directory-access-protocol">LDAP (Lightweight Directory Access Protocol)<a class="headerlink" href="#ldap-lightweight-directory-access-protocol" title="Permanent link">&para;</a></h2>
 <p><code>$ldapsearcher = New-Object System.DirectoryServices.DirectorySearcher</code> <br />
 <code>$ldapsearcher.SearchRoot = "LDAP://OU=Domain Controllers,DC=$d1,DC=$d2"</code> <br />
 <code>$ldapsearcher.Filter = "(objectclass=computer)"</code> <br />
@@ -1175,13 +1054,13 @@ CN (Common Name) - общее имя</p>
 <p><code>(Get-ADObject (Get-ADRootDSE).DefaultNamingContext -Properties wellKnownObjects).wellKnownObjects</code> отобразить отобразить контейнеры по умолчанию <br />
 <code>redircmp OU=Client Computers,DC=root,DC=domain,DC=local</code> изменить контейнер компьютеров по умолчанию <br />
 <code>redirusr</code> изменить контейнер пользователей по умолчанию</p>
-<h3 id="laps-local-admin-password-management">LAPS (Local Admin Password Management)<a class="headerlink" href="#laps-local-admin-password-management" title="Permanent link">&para;</a></h3>
+<h2 id="laps-local-admin-password-management">LAPS (Local Admin Password Management)<a class="headerlink" href="#laps-local-admin-password-management" title="Permanent link">&para;</a></h2>
 <p><code>Import-module AdmPwd.ps</code> импортировать модуль <br />
 <code>Get-AdmPwdPassword -ComputerName NAME</code> посмотреть пароль <br />
 <code>Reset-AdmPwdPassword -ComputerName NAME</code> изменить пароль <br />
 <code>Get-ADComputer -Filter * -SearchBase "DC=$d1,DC=$d2" | Get-AdmPwdPassword -ComputerName {$_.Name} | select ComputerName,Password,ExpirationTimestamp | Out-GridView</code> <br />
 <code>Get-ADComputer -Identity $srv | Get-AdmPwdPassword -ComputerName {$_.Name} | select ComputerName,Password,ExpirationTimestamp</code></p>
-<h3 id="recycle-bin">Recycle Bin<a class="headerlink" href="#recycle-bin" title="Permanent link">&para;</a></h3>
+<h2 id="recycle-bin">Recycle Bin<a class="headerlink" href="#recycle-bin" title="Permanent link">&para;</a></h2>
 <p>Удаленные объекты хранятся в корзине AD в течении времени захоронения (определяется в атрибуте домена msDS-deletedObjectLifetime), заданном для леса. По умолчанию это 180 дней. Если данный срок прошел, объект все еще остается в контейнере Deleted Objects, но большинство его атрибутов и связей очищаются (Recycled Object). После истечения периода tombstoneLifetime (по умолчанию также 180 дней, но можно увеличить) объект полностью удаляется из AD автоматическим процессом очистки. <br />
 <code>Get-ADForest domain.local</code> отобразить уровень работы леса <br />
 <code>Set-ADForestMode -Identity domain.local -ForestMode Windows2008R2Forest -force</code> увеличить уровень работы леса <br />
@@ -1193,10 +1072,10 @@ CN (Common Name) - общее имя</p>
 <code>Restore-ADObject -Identity "3dc33c7c-b912-4a19-b1b7-415c1395a34e"</code> восстановить по значению атрибута ObjectGUID <br />
 <code>Get-ADObject -Filter 'SAMAccountName -eq "tnas-01"' –IncludeDeletedObjects | Restore-ADObject</code> восстановить по SAMAccountName <br />
 <code>Get-ADObject -Filter {Deleted -eq $True -and ObjectClass -eq 'group' -and Name -like '*Allow*'} –IncludeDeletedObjects | Restore-ADObject –Verbose</code> восстановить группу или компьютер</p>
-<h3 id="thumbnailphoto">thumbnailPhoto<a class="headerlink" href="#thumbnailphoto" title="Permanent link">&para;</a></h3>
+<h2 id="thumbnailphoto">thumbnailPhoto<a class="headerlink" href="#thumbnailphoto" title="Permanent link">&para;</a></h2>
 <p><code>$photo = [byte[]](Get-Content C:\Install\adm.jpg -Encoding byte)</code> преобразовать файл картинки в массив байтов (jpeg/bmp файл, размером фото до 100 Кб и разрешением 96?96) <br />
 <code>Set-ADUser support4 -Replace @{thumbnailPhoto=$photo}</code> задать значение атрибута thumbnailPhoto</p>
-<h3 id="addomaincontroller">ADDomainController<a class="headerlink" href="#addomaincontroller" title="Permanent link">&para;</a></h3>
+<h2 id="addomaincontroller">ADDomainController<a class="headerlink" href="#addomaincontroller" title="Permanent link">&para;</a></h2>
 <p><code>Get-ADDomainController</code> выводит информацию о текущем контроллере домена (LogonServer), который используется данным компьютером для аутентификации (DC выбирается при загрузке в соответствии с топологией сайтов AD) <br />
 <code>Get-ADDomainController -Discover -Service PrimaryDC</code> найти контроллер с ролью PDC в домене <br />
 <code>Get-ADDomainController -Filter * | ft HostName,IPv4Address,Name,Site,OperatingSystem,IsGlobalCatalog</code> список все DC, принадлежность к сайту, версии ОС и GC</p>
@@ -1204,7 +1083,7 @@ CN (Common Name) - общее имя</p>
 <p>USN (Update Sequence Numbers) - счетчик номера последовательного обновления, который существует у каждого объекта AD. При репликации контроллеры обмениваются значениями USN, объект с более низким USN будет при репликации перезаписан объектом с более высоким USN. Находится в свойствах - Object (включить View - Advanced Features). Каждый контроллер домена содержит отдельный счетчик USN, который начинает отсчет в момент запуска процесса Dcpromo и продолжает увеличивать значения в течение всего времени существования контроллера домена. Значение счетчика USN увеличивается каждый раз, когда на контроллере домена происходит транзакция, это операции создания, обновления или удаления объекта.</p>
 <p><code>Get-ADDomainController -Filter * | % {</code> отобразить USN объекта на всех DC в домене<code></code>Get-ADUser -Server $_.HostName -Identity support4 -Properties uSNChanged | select SamAccountName,uSNChanged<code></code>}`</p>
 <p><code>dcpromo /forceremoval</code> принудительно выполнит понижение в роли контроллера домена до уровня рядового сервера. После понижения роли выполняется удаление всех ссылок в домене на этот контроллер. Далее производит включение сервера в состав домена, и выполнение обратного процесса, т.е. повышение сервера до уровня контроллера домена.</p>
-<h3 id="adcomputer">ADComputer<a class="headerlink" href="#adcomputer" title="Permanent link">&para;</a></h3>
+<h2 id="adcomputer">ADComputer<a class="headerlink" href="#adcomputer" title="Permanent link">&para;</a></h2>
 <p><code>nltest /DSGETDC:$env:userdnsdomain</code> узнать на каком DC аудентифицирован хост (Logon Server) <br />
 <code>nltest /SC_RESET:$env:userdnsdomain\srv-dc2.$env:userdnsdomain</code> переключить компьютер на другой контроллер домена AD вручную (The command completed successfully) <br />
 <code>Get-ADComputer –Identity $env:computername -Properties PasswordLastSet</code> время последней смены пароля на сервере <br />
@@ -1225,7 +1104,7 @@ CN (Common Name) - общее имя</p>
 <code>if ($_.Enabled -eq "True") {$_.Enabled -replace "True","Active"} else {$_.Enabled -replace "False","Blocked"}</code> <br />
 <code>}}, Name, IPv4Address, OperatingSystem, @{Label="UserOwner"; Expression={$_.ManagedBy -replace "(CN=|,.+)"}</code> <br />
 <code>},Created | Out-GridView</code></p>
-<h3 id="aduser">ADUser<a class="headerlink" href="#aduser" title="Permanent link">&para;</a></h3>
+<h2 id="aduser">ADUser<a class="headerlink" href="#aduser" title="Permanent link">&para;</a></h2>
 <p><code>Get-ADUser -Identity support4 -Properties *</code> список всех атрибутов <br />
 <code>Get-ADUser -Identity support4 -Properties DistinguishedName, EmailAddress, Description</code> путь DN, email и описание <br />
 <code>Get-ADUser -Filter {(Enabled -eq "True") -and (mail -ne "null")} -Properties mail | ft Name,mail</code> список активных пользователей и есть почтовый ящик <br />
@@ -1253,13 +1132,13 @@ CN (Common Name) - общее имя</p>
 <code>Get-ADUser -Filter {(LastLogonTimestamp -le $day)} -Property LastLogonTimestamp | select Name,SamAccountName,@{n='LastLogonTimestamp';e={[DateTime]::FromFileTime($_.LastLogonTimestamp)}} | sort -Descending LastLogonTimestamp</code> пользователи, которые не логинились больше 360 дней. Репликация атрибута LastLogonTimestamp составляет от 9 до 14 дней. <br />
 <code>| Disable-ADAccount $_.SamAccountName</code> заблокировать <br />
 <code>-WhatIf</code> отобразить вывод без применения изменений</p>
-<h3 id="adgroupmember">ADGroupMember<a class="headerlink" href="#adgroupmember" title="Permanent link">&para;</a></h3>
+<h2 id="adgroupmember">ADGroupMember<a class="headerlink" href="#adgroupmember" title="Permanent link">&para;</a></h2>
 <p><code>(Get-ADUser -Identity support4 -Properties MemberOf).memberof</code> список групп в которых состоит пользователь <br />
 <code>Get-ADGroupMember -Identity "Domain Admins" | Select Name,SamAccountName</code> список пользователей в группе <br />
 <code>Add-ADGroupMember -Identity "Domain Admins" -Members support5</code> добавить в группу <br />
 <code>Remove-ADGroupMember -Identity "Domain Admins" -Members support5 -force</code> удалить из группы <br />
 <code>Get-ADGroup -filter * | where {!($_ | Get-ADGroupMember)} | Select Name</code> отобразить список пустых групп (-Not)</p>
-<h3 id="adreplication">ADReplication<a class="headerlink" href="#adreplication" title="Permanent link">&para;</a></h3>
+<h2 id="adreplication">ADReplication<a class="headerlink" href="#adreplication" title="Permanent link">&para;</a></h2>
 <p><code>Get-Command -Module ActiveDirectory -Name *Replication*</code> список всех командлетов модуля <br />
 <code>Get-ADReplicationFailure -Target dc-01</code> список ошибок репликации с партнерами <br />
 <code>Get-ADReplicationFailure -Target $env:userdnsdomain -Scope Domain</code> <br />
@@ -1292,10 +1171,10 @@ CN (Common Name) - общее имя</p>
 Когда репликация автоматически отключена, ОС записывает в DSA - not writable одно из четырех значений: <br />
 <code>Path: HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NTDS\Parameters</code> <br />
 <code>Dsa Not Writable</code> <br />
-<code>#define DSA_WRITABLE_GEN 1</code> версия леса несовместима с ОС <br />
-<code>#define DSA_WRITABLE_NO_SPACE 2</code> на диске, где размещена база данных Active Directory или файлы журналов (логи), недостаточно свободного места <br />
-<code>#define DSA_WRITABLE_USNROLLBCK 4</code> откат USN произошел из-за неправильного отката базы данных Active Directory во времени (восстановление из снапшота) <br />
-<code>#define DSA_WRITABLE_CORRUPT_UTDV 8</code> вектор актуальности поврежден на локальном контроллере домена</p>
+<code>##define DSA_WRITABLE_GEN 1</code> версия леса несовместима с ОС <br />
+<code>##define DSA_WRITABLE_NO_SPACE 2</code> на диске, где размещена база данных Active Directory или файлы журналов (логи), недостаточно свободного места <br />
+<code>##define DSA_WRITABLE_USNROLLBCK 4</code> откат USN произошел из-за неправильного отката базы данных Active Directory во времени (восстановление из снапшота) <br />
+<code>##define DSA_WRITABLE_CORRUPT_UTDV 8</code> вектор актуальности поврежден на локальном контроллере домена</p>
 <h2 id="dcdiag">dcdiag<a class="headerlink" href="#dcdiag" title="Permanent link">&para;</a></h2>
 <p><code>dcdiag /s:&lt;DomainController&gt; [/n:&lt;NamingContext&gt;] [[/u:&lt;domain\user&gt;] [/p:&lt;password&gt;]] [{/a|/e}{/q|/v}] [/f:&lt;LogFile&gt;] [/ferr:&lt;ErrorLog&gt;] [/test:&lt;test&gt;] [/fix]</code> <br />
 <code>dcdiag /Test:replications /s:dc-01</code> отображает ошибки репликации <br />
@@ -1394,153 +1273,6 @@ CN (Common Name) - общее имя</p>
 <code>Backup-GPO -Name LAPS -Path "$home\Desktop"</code> <br />
 <code>Backup-GPO -All -Path "$home\Desktop"</code> <br />
 <code>Restore-GPO -Name LAPS -Path C:\Backup\GPOs\</code></p>
-<h2 id="servermanager">ServerManager<a class="headerlink" href="#servermanager" title="Permanent link">&para;</a></h2>
-<p><code>Get-Command *WindowsFeature*</code> source module ServerManager <br />
-<code>Get-WindowsFeature -ComputerName "localhost"</code> <br />
-<code>Get-WindowsFeature | where Installed -eq $True</code> список установленных ролей и компонентов <br />
-<code>Get-WindowsFeature | where FeatureType -eq "Role"</code> отсортировать по списку ролей <br />
-<code>Install-WindowsFeature -Name DNS</code> установить роль <br />
-<code>Get-Command *DNS*</code> <br />
-<code>Get-DnsServerSetting -ALL</code> <br />
-<code>Uninstall-WindowsFeature -Name DNS</code> удалить роль</p>
-<h3 id="pswa">PSWA<a class="headerlink" href="#pswa" title="Permanent link">&para;</a></h3>
-<p><code>Install-WindowsFeature -Name WindowsPowerShellWebAccess -IncludeManagementTools</code> <br />
-<code>Install-PswaWebApplication -UseTestCertificate</code> Создать веб-приложение /pswa <br />
-<code>Add-PswaAuthorizationRule -UserGroupName "$domain\Domain Admins" -ComputerName * -ConfigurationName * -RuleName "For Admins"</code> добавить права авторизации</p>
-<h3 id="wsb-windows-server-backup">WSB (Windows Server Backup)<a class="headerlink" href="#wsb-windows-server-backup" title="Permanent link">&para;</a></h3>
-<p>При создании backup DC через WSB, создается копия состояния системы (System State), куда попадает база AD (NTDS.DIT), объекты групповых политик, содержимое каталога SYSVOL, реестр, метаданные IIS, база AD CS, и другие системные файлы и ресурсы. Резервная копия создается через службу теневого копирования VSS. <br />
-<code>Get-WindowsFeature Windows-Server-Backup</code> проверить установлена ли роль <br />
-<code>Add-Windowsfeature Windows-Server-Backup –Includeallsubfeature</code> установить роль</p>
-<pre><code class="language-PowerShell">$path=&quot;\\$srv\bak-dc\dc-03\&quot;
-[string]$TargetUNC=$path+(get-date -f 'yyyy-MM-dd')
-if ((Test-Path -Path $path) -eq $true) {New-Item -Path $TargetUNC -ItemType directory} # если путь доступен, создать новую директорию по дате
-$WBadmin_cmd = &quot;wbadmin.exe START BACKUP -backupTarget:$TargetUNC -systemState -noverify -vssCopy -quiet&quot;
-# $WBadmin_cmd = &quot;wbadmin start backup -backuptarget:$path -include:C:\Windows\NTDS\ntds.dit -quiet&quot; # Backup DB NTDS
-Invoke-Expression $WBadmin_cmd
-</code></pre>
-<h3 id="rds">RDS<a class="headerlink" href="#rds" title="Permanent link">&para;</a></h3>
-<p><code>Get-Command -Module RemoteDesktop</code> <br />
-<code>Get-RDServer -ConnectionBroker $broker</code> список всех серверов в фермеы, указывается полное доменное имя при обращение к серверу с ролью RDCB <br />
-<code>Get-RDRemoteDesktop -ConnectionBroker $broker</code> список коллекций <br />
-<code>(Get-RDLicenseConfiguration -ConnectionBroker $broker | select *).LicenseServer</code> список серверов с ролью RDL <br />
-<code>Get-RDUserSession -ConnectionBroker $broker</code> список всех активных пользователей <br />
-<code>Disconnect-RDUser -HostServer $srv -UnifiedSessionID $id -Force</code> отключить сессию пользователя <br />
-<code>Get-RDAvailableApp -ConnectionBroker $broker -CollectionName C03</code> список установленного ПО на серверах в коллекции <br />
-<code>(Get-RDSessionCollectionConfiguration -ConnectionBroker $broker -CollectionName C03 | select *).CustomRdpProperty</code> use redirection server name:i:1 <br />
-<code>Get-RDConnectionBrokerHighAvailability</code></p>
-<h2 id="dnsserver">DNSServer<a class="headerlink" href="#dnsserver" title="Permanent link">&para;</a></h2>
-<p><code>Get-Command -Module DnsServer</code> <br />
-<code>Show-DnsServerCache</code> отобразить весь кэш DNS-сервера <br />
-<code>Show-DnsServerCache | where HostName -match ru</code> <br />
-<code>Clear-DnsServerCache</code> <br />
-<code>Get-DnsServerCache</code> <br />
-<code>Get-DnsServerDiagnostics</code></p>
-<pre><code class="language-PowerShell">$zone = icm $srv {Get-DnsServerZone} | select ZoneName,ZoneType,DynamicUpdate,ReplicationScope,SecureSecondaries,
-DirectoryPartitionName | Out-GridView -Title &quot;DNS Server: $srv&quot; –PassThru
-$zone_name = $zone.ZoneName
-if ($zone_name -ne $null) {
-icm $srv {Get-DnsServerResourceRecord -ZoneName $using:zone_name | sort RecordType | select RecordType,HostName, @{
-Label=&quot;IPAddress&quot;; Expression={$_.RecordData.IPv4Address.IPAddressToString}},TimeToLive,Timestamp
-} | select RecordType,HostName,IPAddress,TimeToLive,Timestamp | Out-GridView -Title &quot;DNS Server: $srv&quot;
-}
-</code></pre>
-<p><code>Sync-DnsServerZone –passthru</code> синхронизировать зоны с другими DC в домене <br />
-<code>Remove-DnsServerZone -Name domain.local</code> удалить зону <br />
-<code>Get-DnsServerResourceRecord -ZoneName domain.local -RRType A</code> вывести все А-записи в указанной зоне <br />
-<code>Add-DnsServerResourceRecordA -Name new-host-name -IPv4Address 192.168.1.100 -ZoneName domain.local -TimeToLive 01:00:00 -CreatePtr</code> создать А-запись и PTR для нее <br />
-<code>Remove-DnsServerResourceRecord -ZoneName domain.local -RRType A -Name new-host-name –Force</code> удалить А-запись</p>
-<pre><code class="language-PowerShell">$DNSServer = &quot;DC-01&quot;
-$DNSFZone = &quot;domain.com&quot;
-$DataFile = &quot;C:\Scripts\DNS-Create-A-Records-from-File.csv&quot;
-# cat $DataFile
-# &quot;HostName;IP&quot;
-# &quot;server-01;192.168.1.10&quot;
-$DNSRR = [WmiClass]&quot;\\$DNSServer\root\MicrosoftDNS:MicrosoftDNS_ResourceRecord&quot;
-$ConvFile = $DataFile + &quot;_unicode&quot;
-Get-Content $DataFile | Set-Content $ConvFile -Encoding Unicode
-Import-CSV $ConvFile -Delimiter &quot;;&quot; | ForEach-Object {
-$FQDN = $_.HostName + &quot;.&quot; + $DNSFZone
-$IP = $_.HostIP
-$TextA = &quot;$FQDN IN A $IP&quot;
-[Void]$DNSRR.CreateInstanceFromTextRepresentation($DNSServer,$DNSFZone,$TextA)
-}
-</code></pre>
-<h2 id="dhcpserver">DHCPServer<a class="headerlink" href="#dhcpserver" title="Permanent link">&para;</a></h2>
-<p><code>Get-Command -Module DhcpServer</code></p>
-<pre><code class="language-PowerShell">$mac = icm $srv -ScriptBlock {Get-DhcpServerv4Scope | Get-DhcpServerv4Lease} | select AddressState,
-HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridView -Title &quot;HDCP Server: $srv&quot; –PassThru
-(New-Object -ComObject Wscript.Shell).Popup($mac.ClientId,0,$mac.HostName,64)
-</code></pre>
-<p><code>Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.10 -ClientId 00-50-56-C0-00-08 -Description "new reservation"</code></p>
-<h2 id="dfs">DFS<a class="headerlink" href="#dfs" title="Permanent link">&para;</a></h2>
-<p><code>dfsutil /root:\\domain.sys\public /export:C:\export-dfs.txt</code> экспорт конфигурации namespace root <br />
-<code>dfsutil /AddFtRoot /Server:\\$srv /Share:public</code> на новой машине предварительно создать корень на основе домена <br />
-<code>dfsutil /root:\\domain.sys\public /import:C:\export-dfs.txt /&lt;verify /set</code> Import (перед импортом данных в существующий корень DFS, утилита создает резервную копию конфигурации корня в текущем каталоге, из которого запускается утилита dfsutil) <br />
-<code>/verify</code> выводит изменения, которые будут внесены в процессе импорта, без применения <br />
-<code>/set</code> меняет целевое пространство имен путем полной перезаписи и замены на конфигурацию пространства имен из импортируемого файла <br />
-<code>/merge</code> импортирует конфигурацию пространства имен в дополнение к существующей конфигурации для слияния, параметры из файла конфигурации будут иметь больший приоритет, чем существующие параметры пространства имен</p>
-<p><code>Export-DfsrClone</code> экспортирует клонированную базу данных репликации DFS и параметры конфигурации тома <br />
-<code>Get-DfsrCloneState</code> получает состояние операции клонирования базы данных <br />
-<code>Import-DfsrClone</code> импортирует клонированную базу данных репликации DFS и параметры конфигурации тома</p>
-<p><code>net use x: \\$srv1\public\*</code> примонтировать диск <br />
-<code>Get-DfsrFileHash x:\* | Out-File C:\$srv1.txt</code> забрать hash всех файлов диска в файл (файлы с одинаковыми хешами всегда являются точными копиями друг друга) <br />
-<code>net use x: /d</code> отмонтировать <br />
-<code>net use x: \\$srv2\public\*</code> <br />
-<code>Get-DfsrFileHash x:\* | Out-File C:\$srv2.txt</code> <br />
-<code>net use x: /d</code> <br />
-<code>Compare-Object -ReferenceObject (Get-Content C:\$srv1.txt) -DifferenceObject (Get-Content C:\$srv2.txt) -IncludeEqual</code> сравнить содержимое файлов</p>
-<p><code>Get-DfsrBacklog -DestinationComputerName "fs-06" -SourceComputerName "fs-05" -GroupName "folder-rep" -FolderName "folder" -Verbose</code> получает список ожидающих обновлений файлов между двумя партнерами репликации DFS <br />
-<code>Get-DfsrConnection</code> отображает группы репликации, участников и статус <br />
-<code>Get-DfsReplicatedFolder</code> отображает имя и полный путь к папкам реликации в системе DFS <br />
-<code>Get-DfsrState -ComputerName fs-06 -Verbose</code> состояние репликации DFS для члена группы <br />
-<code>Get-DfsReplicationGroup</code> отображает группы репликации и их статус <br />
-<code>Add-DfsrConnection</code> создает соединение между членами группы репликации <br />
-<code>Add-DfsrMember</code> добавляет компьютеры в группу репликации <br />
-<code>ConvertFrom-DfsrGuid</code> преобразует идентификаторы GUID в понятные имена в заданной группы репликации <br />
-<code>Get-DfsrConnectionSchedule</code> получает расписание соединений между членами группы репликации <br />
-<code>Get-DfsrGroupSchedule</code> извлекает расписание группы репликации <br />
-<code>Get-DfsrIdRecord</code> получает записи ID для реплицированных файлов или папок из базы данных репликации DFS <br />
-<code>Get-DfsrMember</code> получает компьютеры в группе репликации <br />
-<code>Get-DfsrMembership</code> получает параметры членства для членов групп репликации <br />
-<code>Get-DfsrPreservedFiles</code> получает список файлов и папок, ранее сохраненных репликацией DFS <br />
-<code>Get-DfsrServiceConfiguration</code> получает параметры службы репликации DFS для членов группы <br />
-<code>Grant-DfsrDelegation</code> предоставляет разрешения участникам безопасности для группы репликации <br />
-<code>Revoke-DfsrDelegation</code> отменяет разрешения участников безопасности для группы репликации <br />
-<code>New-DfsReplicationGroup</code> создает группу репликации <br />
-<code>New-DfsReplicatedFolder</code> создает реплицированную папку в группе репликации <br />
-<code>Remove-DfsrConnection</code> удаляет соединение между членами группы репликации <br />
-<code>Remove-DfsReplicatedFolder</code> удаляет реплицированную папку из группы репликации <br />
-<code>Remove-DfsReplicationGroup</code> удаляет группу репликации <br />
-<code>Remove-DfsrMember</code> удаляет компьютеры из группы репликации <br />
-<code>Restore-DfsrPreservedFiles</code> восстанавливает файлы и папки, ранее сохраненные репликацией DFS <br />
-<code>Set-DfsrConnection</code> изменяет параметры соединения между членами группы репликации <br />
-<code>Set-DfsrConnectionSchedule</code> изменяет параметры расписания соединений между членами группы репликации <br />
-<code>Set-DfsReplicatedFolder</code> изменяет настройки реплицированной папки <br />
-<code>Set-DfsReplicationGroup</code> изменяет группу репликации <br />
-<code>Set-DfsrGroupSchedule</code> изменяет расписание группы репликации <br />
-<code>Set-DfsrMember</code> изменяет информацию о компьютере-участнике в группе репликации <br />
-<code>Set-DfsrMembership</code> настраивает параметры членства для членов группы репликации <br />
-<code>Set-DfsrServiceConfiguration</code> изменяет параметры службы репликации DFS <br />
-<code>Sync-DfsReplicationGroup</code> синхронизирует репликацию между компьютерами независимо от расписания <br />
-<code>Suspend-DfsReplicationGroup</code> приостанавливает репликацию между компьютерами независимо от расписания <br />
-<code>Update-DfsrConfigurationFromAD</code> инициирует обновление службы репликации DFS <br />
-<code>Write-DfsrHealthReport</code> создает отчет о работоспособности репликации DFS <br />
-<code>Write-DfsrPropagationReport</code> создает отчеты для тестовых файлов распространения в группе репликации <br />
-<code>Start-DfsrPropagationTest</code> создает тестовый файл распространения в реплицированной папке</p>
-<h1 id="storagereplica">StorageReplica<a class="headerlink" href="#storagereplica" title="Permanent link">&para;</a></h1>
-<p><code>Install-WindowsFeature Storage-Replica –IncludeManagementTools -Restart</code> <br />
-<code>Get-Command -Module StorageReplica</code> <br />
-<code>Test-SRTopology</code> проверить соответствует ли сервер и канал связи технологии Storage Replica <br />
-<code>New-SRPartnership -SourceComputerName srv-01 -SourceRGName srv-01-rep-group-01 -SourceVolumeName D: -SourceLogVolumeName L: -DestinationComputerName srv-02 -DestinationRGName srv-02-rep-group-01 -DestinationVolumeName D: -DestinationLogVolumeName L: -LogSizeInBytes 1GB</code> <br />
-<code>Get-Counter -Counter "\Storage Replica Statistics(*)"</code> <br />
-<code>Get-WinEvent -ProviderName Microsoft-Windows-StorageReplica -max 10</code> <br />
-<code>Set-SRPartnership -ReplicationMode Asynchronous</code> переключить режим репликации на асинхронный <br />
-<code>Set-SRPartnership -NewSourceComputerName srv-02 -SourceRGName srv-02-rep-group-01 -DestinationComputerName srv-01 -DestinationRGName srv-01-rep-group-01</code> изменить вручную направление репликации данных, переведя вторичную копию в онлайн режим (при выходе из строя основного сервера) <br />
-<code>Get-SRGroup</code> информация о состояние группы реплизации <br />
-<code>Get-SRPartnerShip</code> информация о направлении репликации <br />
-<code>(Get-SRGroup).Replicas | Select-Object numofbytesremaining</code> проверить длину очереди копирования <br />
-<code>Get-SRPartnership | Remove-SRPartnership</code> удалить реплизацию на основном сервере <br />
-<code>Get-SRGroup | Remove-SRGroup</code> удалить реплизацию на обоих серверах</p>
 
 
 

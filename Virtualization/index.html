@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://lifailon.github.io/Virtualization/">
       
       
-        <link rel="prev" href="../Network/">
+        <link rel="prev" href="../Exchange/">
       
       
-        <link rel="next" href="../WMI/">
+        <link rel="next" href="../Database/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#vmware" class="md-skip">
+        <a href="#vmwarepowercli" class="md-skip">
           Skip to content
         </a>
       
@@ -235,7 +235,7 @@
         
   
   <span class="md-ellipsis">
-    Home
+    PS-Commands
   </span>
   
 
@@ -271,11 +271,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../ActiveDirectory/" class="md-nav__link">
+      <a href="../FileSystem/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    ActiveDirectory
+    File System
   </span>
   
 
@@ -291,11 +291,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Ansible/" class="md-nav__link">
+      <a href="../Windows/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Ansible
+    Windows
   </span>
   
 
@@ -311,11 +311,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../API/" class="md-nav__link">
+      <a href="../Threads/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    API
+    Threads
   </span>
   
 
@@ -331,11 +331,31 @@
   
   
     <li class="md-nav__item">
-      <a href="../Apps/" class="md-nav__link">
+      <a href="../Modules/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Apps
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
   </span>
   
 
@@ -371,11 +391,51 @@
   
   
     <li class="md-nav__item">
-      <a href="../dotNET/" class="md-nav__link">
+      <a href="../API/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    dotNET
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
   </span>
   
 
@@ -395,127 +455,7 @@
         
   
   <span class="md-ellipsis">
-    Exchange
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Git/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Git
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HTML/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    HTML
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../InfluxDB/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    InfluxDB
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MSSQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MSSQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MySQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MySQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Network/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Network
+    Microsoft Exchange
   </span>
   
 
@@ -573,9 +513,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#vmware" class="md-nav__link">
+  <a href="#vmwarepowercli" class="md-nav__link">
     <span class="md-ellipsis">
-      VMWare
+      VMWare/PowerCLI
     </span>
   </a>
   
@@ -587,6 +527,54 @@
       Hyper-V
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Hyper-V">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vmconnect-via-rdcman" class="md-nav__link">
+    <span class="md-ellipsis">
+      VMConnect via RDCMan
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Azure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Azure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manage-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manage-VM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manage-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manage-Disk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -605,11 +593,91 @@
   
   
     <li class="md-nav__item">
-      <a href="../WMI/" class="md-nav__link">
+      <a href="../Database/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    WMI
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
   </span>
   
 
@@ -630,6 +698,46 @@
   
   <span class="md-ellipsis">
     Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
   </span>
   
 
@@ -663,9 +771,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#vmware" class="md-nav__link">
+  <a href="#vmwarepowercli" class="md-nav__link">
     <span class="md-ellipsis">
-      VMWare
+      VMWare/PowerCLI
     </span>
   </a>
   
@@ -677,6 +785,54 @@
       Hyper-V
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Hyper-V">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vmconnect-via-rdcman" class="md-nav__link">
+    <span class="md-ellipsis">
+      VMConnect via RDCMan
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Azure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Azure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manage-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manage-VM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manage-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manage-Disk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -697,7 +853,7 @@
 
   <h1>Virtualization</h1>
 
-<h2 id="vmware">VMWare<a class="headerlink" href="#vmware" title="Permanent link">&para;</a></h2>
+<h2 id="vmwarepowercli">VMWare/PowerCLI<a class="headerlink" href="#vmwarepowercli" title="Permanent link">&para;</a></h2>
 <p><code>Install-Module -Name VMware.PowerCLI # -AllowClobber</code> установить модуль (PackageProvider: nuget) <br />
 <code>Get-Module -ListAvailable VMware* | Select Name,Version</code> <br />
 <code>Import-Module VMware.VimAutomation.Core</code> импортировать в сессию <br />
@@ -713,53 +869,55 @@
 <code>$Cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $user ,$pass</code> <br />
 <code>Connect-VIServer $esxi -User $Cred.Username -Password $Cred.GetNetworkCredential().password</code> подключиться, используя PSCredential ($Cred) <br />
 <code>Connect-VIServer $esxi -User $user -Password $pass</code> подключиться, используя логин и пароль</p>
-<p><code>Get-Command –Module *vmware*</code> <br />
-<code>Get-Command –Module *vmware* -name *get*iscsi*</code> <br />
-<code>Get-IScsiHbaTarget</code> <br />
-<code>Get-Datacenter</code> <br />
-<code>Get-Cluster</code> <br />
-<code>Get-VMHost</code> <br />
-<code>Get-VMHost | select Name,Model,ProcessorType,MaxEVCMode,NumCpu,CpuTotalMhz,CpuUsageMhz,MemoryTotalGB,MemoryUsageGB</code> <br />
-<code>Get-VMHostDisk | select VMHost,ScsiLun,TotalSectors</code></p>
-<p><code>Get-Datastore</code> <br />
-<code>Get-Datastore TNAS-vmfs-4tb-01</code> <br />
-<code>Get-Datastore TNAS-vmfs-4tb-01 | get-vm</code> <br />
-<code>Get-Datastore -RelatedObject vm-01</code> <br />
-<code>(Get-Datastore TNAS-vmfs-4tb-01).ExtensionData.Info.GetType()</code> <br />
-<code>(Get-Datastore TNAS-vmfs-4tb-01).ExtensionData.Info.Vmfs.Extent</code></p>
-<p><code>Get-Command –Module *vmware* -name *disk*</code> <br />
-<code>Get-VM vm-01 | Get-Datastore</code> <br />
-<code>Get-VM vm-01 | Get-HardDisk</code> <br />
-<code>Get-VM | Get-HardDisk | select Parent,Name,CapacityGB,StorageFormat,FileName | ft</code> <br />
-<code>Copy-HardDisk</code> <br />
-<code>Get-VM | Get-Snapshot</code> <br />
-<code>Get-VM | where {$_.Powerstate -eq "PoweredOn"}</code> <br />
-<code>Get-VMHost esxi-05 | Get-VM | where {$_.Powerstate -eq "PoweredOff"} | Move-VM –Destination (Get-VMHost esxi-06)</code></p>
-<p><code>Get-VM | select Name,VMHost,PowerState,NumCpu,MemoryGB,</code> <br />
-<code>@{Name="UsedSpaceGB"; Expression={[int32]($_.UsedSpaceGB)}},@{Name="ProvisionedSpaceGB"; Expression={[int32]($_.ProvisionedSpaceGB)}},</code> <br />
-<code>CreateDate,CpuHotAddEnabled,MemoryHotAddEnabled,CpuHotRemoveEnabled,Notes</code></p>
-<p><code>Get-VMGuest vm-01 | Update-Tools</code> <br />
-<code>Get-VMGuest vm-01 | select OSFullName,IPAddress,HostName,State,Disks,Nics,ToolsVersion</code> <br />
-<code>Get-VMGuest * | select -ExpandProperty IPAddress</code> <br />
-<code>Restart-VMGuest -vm vm-01 -Confirm:$False</code> <br />
-<code>Start-VM -vm vm-01 -Confirm:$False</code> <br />
-<code>Shutdown-VMGuest -vm vm-01 -Confirm:$false</code></p>
-<p><code>New-VM –Name vm-01 -VMHost esxi-06 –ResourcePool Production –DiskGB 60 –DiskStorageFormat Thin –Datastore TNAS-vmfs-4tb-01</code> <br />
-<code>Get-VM vm-01 | Copy-VMGuestFile -Source "\\$srv\Install\Soft\Btest.exe" -Destination "C:\Install\" -LocalToGuest -GuestUser USER -GuestPassword PASS -force</code></p>
-<p><code>Get-VM -name vm-01 | Export-VApp -Destination C:\Install -Format OVF</code> Export template (.ovf, .vmdk, .mf) <br />
-<code>Get-VM -name vm-01 | Export-VApp -Destination C:\Install -Format OVA</code></p>
-<p><code>Get-VMHostNetworkAdapter | select VMHost,Name,Mac,IP,@{Label="Port Group"; Expression={$_.ExtensionData.Portgroup}} | ft</code> <br />
-<code>Get-VM | Get-NetworkAdapter | select Parent,Name,Id,Type,MacAddress,ConnectionState,WakeOnLanEnabled | ft</code></p>
+<p><code>Get-Command –Module *vmware*</code> отобразить список команд модуля VMware <br />
+<code>Get-Command –Module *vmware* -name *get*iscsi*</code> найти команды модуля VMware, связанные с iSCSI <br />
+<code>Get-IScsiHbaTarget</code> получить цели iSCSI HBA (Host Bus Adapter) <br />
+<code>Get-Datacenter</code> получить список датацентров в инфраструктуре VMware <br />
+<code>Get-Cluster</code> список кластеров <br />
+<code>Get-VMHost</code> список хостов виртуальных машин (ESXi хостов) <br />
+<code>Get-VMHost | Select-Object Name,Model,ProcessorType,MaxEVCMode,NumCpu,CpuTotalMhz,CpuUsageMhz,MemoryTotalGB,MemoryUsageGB</code> получить информацию о хостах виртуальных машин, включая имя, модель, тип процессора и использование ресурсов <br />
+<code>Get-VMHostDisk | Select-Object VMHost,ScsiLun,TotalSectors</code> получить информацию о дисках хостов виртуальных машин, включая хост, SCSI LUN и общее количество секторов</p>
+<p><code>Get-Datastore</code> список всех хранилищ данных <br />
+<code>Get-Datastore TNAS-vmfs-4tb-01</code> получить информацию о хранилище данных с именем TNAS-vmfs-4tb-01 <br />
+<code>Get-Datastore TNAS-vmfs-4tb-01 | get-vm</code> получить список виртуальных машин, которые используют хранилище данных <br />
+<code>Get-Datastore -RelatedObject vm-01</code> получить информацию о хранилищах данных, связанных с виртуальной машиной <br />
+<code>$(Get-Datastore TNAS-vmfs-4tb-01).ExtensionData.Info.GetType()</code> получить тип информации о хранилище данных <br />
+<code>$(Get-Datastore TNAS-vmfs-4tb-01).ExtensionData.Info.Vmfs.Extent</code> получить информацию о том, на каких дисках находится хранилище данных</p>
+<p><code>Get-Command –Module *vmware* -name *disk*</code> найти команды модуля VMware, связанные с дисками <br />
+<code>Get-VM vm-01 | Get-Datastore</code> получить информацию о хранилищах данных, используемых виртуальной машиной <br />
+<code>Get-VM vm-01 | Get-HardDisk</code> получить информацию о подключенных дисках к виртуальной машины <br />
+<code>Get-VM | Get-HardDisk | select Parent,Name,CapacityGB,StorageFormat,FileName | ft</code> получить информацию о дисках всех виртуальных машин, включая родительскую ВМ, имя, емкость, формат и имя файла <br />
+<code>Copy-HardDisk</code> скопировать жесткий диск виртуальной машины <br />
+<code>Get-VM | Get-Snapshot</code> список всех снимков виртуальных машин <br />
+<code>Get-VM | where {$_.Powerstate -eq "PoweredOn"}</code> список всех включенных виртуальных машин <br />
+<code>Get-VMHost esxi-05 | Get-VM | where {$_.Powerstate -eq "PoweredOff"} | Move-VM –Destination (Get-VMHost esxi-06)</code> переместить все выключенные виртуальные машины с хоста esxi-05 на хост esxi-06</p>
+<pre><code class="language-PowerShell">Get-VM | select Name,VMHost,PowerState,NumCpu,MemoryGB,
+@{Name=&quot;UsedSpaceGB&quot;; Expression={[int32]($_.UsedSpaceGB)}},
+@{Name=&quot;ProvisionedSpaceGB&quot;; Expression={[int32]($_.ProvisionedSpaceGB)}},
+CreateDate,CpuHotAddEnabled,MemoryHotAddEnabled,CpuHotRemoveEnabled,Notes
+</code></pre>
+<p><code>Get-VMGuest vm-01 | Update-Tools</code> обновить VMware Tools на виртуальной машине vm-01 <br />
+<code>Get-VMGuest vm-01 | select OSFullName,IPAddress,HostName,State,Disks,Nics,ToolsVersion</code> получить информацию о гостевой операционной системе виртуальной машины vm-01 (имя ОС, IP-адрес, имя хоста, состояние, диски, сетевые адаптеры и версию VMware Tools) <br />
+<code>Get-VMGuest * | select -ExpandProperty IPAddress</code> получить IP-адреса всех гостевых ОС виртуальных машин <br />
+<code>Restart-VMGuest -vm vm-01 -Confirm:$False</code> перезагрузить гостевую ОС виртуальной машины без запроса подтверждения <br />
+<code>Start-VM -vm vm-01 -Confirm:$False</code> включить виртуальную машину без запроса подтверждения <br />
+<code>Shutdown-VMGuest -vm vm-01 -Confirm:$false</code> выключить</p>
+<p><code>New-VM –Name vm-01 -VMHost esxi-06 –ResourcePool Production –DiskGB 60 –DiskStorageFormat Thin –Datastore TNAS-vmfs-4tb-01</code> создать новую виртуальную машину vm-01 на хосте esxi-06 в пуле ресурсов Production с диском 60 ГБ в формате Thin и размещением на хранилище данных TNAS-vmfs-4tb-01</p>
+<p><code>Get-VM vm-01 | Copy-VMGuestFile -Source "\\$srv\Install\Soft\Btest.exe" -Destination "C:\Install\" -LocalToGuest -GuestUser USER -GuestPassword PASS -force</code> Скопировать файл с хоста на гостевую ОС виртуальной машины vm-01 с принудительным выполнением</p>
+<p><code>Get-VM -name vm-01 | Export-VApp -Destination C:\Install -Format OVF</code> экспортировать виртуальную машину vm-01 в шаблон OVF (.ovf, .vmdk, .mf) <br />
+<code>Get-VM -name vm-01 | Export-VApp -Destination C:\Install -Format OVA</code> экспортировать виртуальную машину vm-01 в шаблон OVA</p>
+<p><code>Get-VMHostNetworkAdapter | select VMHost,Name,Mac,IP,@{Label="Port Group"; Expression={$_.ExtensionData.Portgroup}} | ft</code> получить информацию о сетевых адаптерах хостов виртуальных машин, включая хост, имя, MAC-адрес, IP-адрес и портовую группу <br />
+<code>Get-VM | Get-NetworkAdapter | select Parent,Name,Id,Type,MacAddress,ConnectionState,WakeOnLanEnabled | ft</code> получить информацию о сетевых адаптерах виртуальных машин, включая родительскую ВМ, имя, идентификатор, тип, MAC-адрес, состояние подключения и поддержку Wake-on-LAN</p>
 <p><code>Get-Command –Module *vmware* -name *event*</code> <br />
-<code>Get-VIEvent -MaxSamples 1000 | where {($_.FullFormattedMessage -match "power")} | select username,CreatedTime,FullFormattedMessage</code> <br />
-<code>Get-logtype | select Key,SourceEntityId,Filename,Creator,Info</code> <br />
-<code>(Get-Log vpxd:vpxd.log).Entries | select -Last 50</code></p>
+<code>Get-VIEvent -MaxSamples 1000 | where {($_.FullFormattedMessage -match "power")} | select username,CreatedTime,FullFormattedMessage</code> получить последние 1000 событий, связанных с питанием, включая имя пользователя, время создания и полное сообщение <br />
+<code>Get-logtype | select Key,SourceEntityId,Filename,Creator,Info</code> получить информацию о типах логов <br />
+<code>$(Get-Log vpxd:vpxd.log).Entries | select -Last 50</code> получить последние 50 записей из лога vpxd</p>
 <p><code>Get-Command –Module *vmware* -name *syslog*</code> <br />
-<code>Set-VMHostSysLogServer -VMHost esxi-05 -SysLogServer "tcp://192.168.3.100" -SysLogServerPort 3515</code> <br />
+<code>Set-VMHostSysLogServer -VMHost esxi-05 -SysLogServer "tcp://192.168.3.100" -SysLogServerPort 3515</code> установить сервер syslog сервер для хранения системных логов для хоста esxi-05 <br />
 <code>Get-VMHostSysLogServer -VMHost esxi-05</code></p>
 <h2 id="hyper-v">Hyper-V<a class="headerlink" href="#hyper-v" title="Permanent link">&para;</a></h2>
 <p><code>Install-WindowsFeature -Name Hyper-V -IncludeManagementTools -Restart</code> установить роль на Windows Server <br />
-<code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V –All</code> установить роль на  Windows Desktop <br />
+<code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V –All</code> установить роль на Windows Desktop <br />
 <code>Get-Command -Module hyper-v</code> <br />
 <code>Get-VMHost</code></p>
 <pre><code class="language-PowerShell">New-VMSwitch -name NAT -SwitchType Internal # создать виртуальный коммутатор и адаптер для него
@@ -773,40 +931,42 @@ Add-NetNatStaticMapping -NatName LocalNat -Protocol TCP -ExternalIPAddress 0.0.0
 <code>Get-NetNat</code> список сетей <br />
 <code>Remove-NetNatStaticMapping -StaticMappingID 0</code> удалить проброс <br />
 <code>Remove-NetNat -Name LocalNat</code> удалить сеть</p>
-<p><code>New-VMSwitch -Name Local -AllowManagementOS $True -NetAdapterName "Ethernet 4" -SwitchType External</code> создать вшений (External) виртуальный коммутатор <br />
-<code>$VMName = "hv-dc-01"</code></p>
-<pre><code class="language-PowerShell">$VM = @{
-Name = $VMName
-MemoryStartupBytes = 4Gb
-Generation = 2
-NewVHDPath = &quot;D:\VM\$VMName\$VMName.vhdx&quot;
-NewVHDSizeBytes = 50Gb
-BootDevice = &quot;VHD&quot;
-Path = &quot;D:\VM\$VMName&quot;
-SwitchName = &quot;NAT&quot;
+<p><code>New-VMSwitch -Name Local -AllowManagementOS $True -NetAdapterName "Ethernet 4" -SwitchType External</code> создать вшений (External) виртуальный коммутатор </p>
+<pre><code class="language-PowerShell">$VMName = &quot;hv-dc-01&quot;
+$VM = @{
+    Name = $VMName
+    MemoryStartupBytes = 4Gb
+    Generation = 2
+    NewVHDPath = &quot;D:\VM\$VMName\$VMName.vhdx&quot;
+    NewVHDSizeBytes = 50Gb
+    BootDevice = &quot;VHD&quot;
+    Path = &quot;D:\VM\$VMName&quot;
+    SwitchName = &quot;NAT&quot;
 }
-New-VM @VM
 </code></pre>
-<p><code>Set-VMDvdDrive -VMName $VMName -Path "C:\Users\Lifailon\Documents\WS-2016.iso"</code> <br />
+<p><code>New-VM @VM</code> создать виртуальную машину с параметрами</p>
+<p><code>Set-VMDvdDrive -VMName $VMName -Path "C:\Users\Lifailon\Documents\WS-2016.iso"</code> примонтировать образ <br />
 <code>New-VHD -Path "D:\VM\$VMName\disk_d.vhdx" -SizeBytes 10GB</code> создать VHDX диск <br />
 <code>Add-VMHardDiskDrive -VMName $VMName -Path "D:\VM\$VMName\disk_d.vhdx"</code> примонтировать диск <br />
 <code>Get-VM –VMname $VMName | Set-VM –AutomaticStartAction Start</code> автозапуск <br />
-<code>Get-VM -Name $VMName | Set-VMMemory -StartupBytes 8Gb</code> <br />
-<code>Set-VMProcessor $VMName -Count 2</code> <br />
-<code>Get-VM -Name $VMName | Checkpoint-VM -SnapshotName "Snapshot-1"</code> <br />
-<code>Restore-VMCheckpoint -Name Snapshot-1" -VMName $VMName -Confirm:$false</code> <br />
-<code>Get-VM | Select -ExpandProperty NetworkAdapters | Select VMName,IPAddresses,Status</code> получить IP адрес всех ВМ <br />
-<code>vmconnect.exe localhost $VMHost</code></p>
-<p><code>Get-NetTCPConnection -State Established,Listen | Where-Object LocalPort -Match 2179</code> найти порт слушателя <br />
+<code>Get-VM -Name $VMName | Set-VMMemory -StartupBytes 8Gb</code> назначить стартовый размер оперативной памяти при запуске <br />
+<code>Set-VMProcessor $VMName -Count 2</code> количество виртуальных процессоров (vCPU: ядер/потоков) <br />
+<code>Set-VMProcessor $VMName -Count 2 -Maximum 4 -Reserve 50 -RelativeWeight 200</code> указать максимальное количество выделяемых процессоров, резервируется 50% ресурсов процессора хоста и установить относительный вес 200 для приоритизации распределения ресурсов процессора относительно других виртуальных машин <br />
+<code>Get-VM -Name $VMName | Checkpoint-VM -SnapshotName "Snapshot-1"</code> создать снапшот <br />
+<code>Restore-VMCheckpoint -Name "Snapshot-1" -VMName $VMName -Confirm:$false</code> восстановление из снапшота <br />
+<code>Get-VM | Select -ExpandProperty NetworkAdapters | Select VMName,IPAddresses,Status</code> получить IP адрес всех ВМ</p>
+<h3 id="vmconnect-via-rdcman">VMConnect via RDCMan<a class="headerlink" href="#vmconnect-via-rdcman" title="Permanent link">&para;</a></h3>
+<p><code>vmconnect.exe localhost $VMHost</code> подключиться к виртуальной машине через VMConnect (используется в диспетчере Hyper-V) <br />
+<code>Get-NetTCPConnection -State Established,Listen | Where-Object LocalPort -Match 2179</code> найти порт слушателя<br />
 <code>Get-Process -Id (Get-NetTCPConnection -State Established,Listen | Where-Object LocalPort -Match 2179).OwningProcess</code> найти процесс по ID (vmms/VMConnect) <br />
-<code>New-NetFirewallRule -Name "Hyper-V" -DisplayName "Hyper-V" -Group "Hyper-V" -Direction Inbound -Protocol TCP -LocalPort 2179 -Action Allow -Profile Public</code> <br />
-<code>Get-LocalGroupMember -Group "Администраторы Hyper-V"</code> или "Hyper-V Administrators" <br />
-<code>Add-LocalGroupMember -Group "Администраторы Hyper-V" -Member "lifailon"</code> <br />
-<code>Get-VM * | select name,ID</code> добавить id в RDCMan для подключения <br />
+<code>New-NetFirewallRule -Name "Hyper-V" -DisplayName "Hyper-V" -Group "Hyper-V" -Direction Inbound -Protocol TCP -LocalPort 2179 -Action Allow -Profile Public</code> открыть порт в локальном Firewall <br />
+<code>Get-LocalGroupMember -Group "Администраторы Hyper-V"</code> <br />
+<code>Get-LocalGroupMember -Group "Hyper-V Administrators"</code> <br />
+<code>Add-LocalGroupMember -Group "Администраторы Hyper-V" -Member "lifailon"</code> добавить пользователя в группу администраторов (для возможности подключения) <br />
+<code>Get-VM * | Select-Object Name,Id</code> добавить id в RDCMan для подключения <br />
 <code>Grant-VMConnectAccess -ComputerName plex-01 -VMName hv-devops-01 -UserName lifailon</code> дать доступ на подключение не администратору <br />
-<code>Grant-VMConnectAccess -ComputerName huawei-book -VMName hv-devops-01 -UserName lifailon</code> <br />
 <code>Get-VMConnectAccess</code> <br />
-<code>Revoke-VMConnectAccess -VMName hv-devops-01 -UserName lifailon</code></p>
+<code>Revoke-VMConnectAccess -VMName hv-devops-01 -UserName lifailon</code> забрать доступ</p>
 <p>Error: <code>Unknown disconnection reason 3848</code> - добавить ключи реестра на стороне клиента</p>
 <pre><code class="language-PowerShell">New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowFreshCredentialsDomain -Name Hyper-V -PropertyType String -Value &quot;Microsoft Virtual Console Service/*&quot; -Force
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowDefaultCredentials -Name Hyper-V -PropertyType String -Value &quot;Microsoft Virtual Console Service/*&quot; -Force
@@ -818,6 +978,75 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\Policy
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowSavedCredentials -Name Hyper-V -PropertyType String -Value &quot;Microsoft Virtual Console Service/*&quot; -Force
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowSavedCredentialsDomain -Name Hyper-V -PropertyType String -Value &quot;Microsoft Virtual Console Service/*&quot; -Force
 </code></pre>
+<h2 id="azure">Azure<a class="headerlink" href="#azure" title="Permanent link">&para;</a></h2>
+<p><code>Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force</code> установить все модули для работы с Azure <br />
+<code>Get-Module *Az.*</code> список всех модулей</p>
+<p><code>Get-Command -Module Az.Accounts</code> отобразить список команд модуля Az.Accounts <br />
+<code>Connect-AzAccount</code> подключиться у учетной записи Azure <br />
+<code>Get-AzContext</code> получить текущий статус подключения к Azure <br />
+<code>Get-AzSubscription</code> получить список подписок Azure, доступных для текущего пользователя <br />
+<code>Set-AzContext</code> установить контекст Azure для конкретной подписки и/или учетной записи <br />
+<code>Disconnect-AzAccount</code> отключиться от учетной записи Azure</p>
+<p><code>Get-Command -Module Az.Compute</code> <br />
+<code>Get-AzVM</code> получить список виртуальных машин в текущей подписке или группе ресурсов <br />
+<code>Get-AzVMSize</code> получить список доступных размеров виртуальных машин в определенном регионе <br />
+<code>Get-AzVMImage</code> получить список доступных образов виртуальных машин <br />
+<code>New-AzVM</code> создать новую виртуальную машину <br />
+<code>Remove-AzVM</code> удалить виртуальную машину <br />
+<code>Start-AzVM</code> запустить виртуальную машину <br />
+<code>Stop-AzVM</code> остановить виртуальную машину <br />
+<code>Restart-AzVM</code> перезагрузить виртуальную машину</p>
+<p><code>Get-Command -Module Az.Network</code> <br />
+<code>Get-AzVirtualNetwork</code> получить список виртуальных сетей в текущей подписке или группе ресурсов <br />
+<code>New-AzVirtualNetwork</code> создать новую виртуальную сеть <br />
+<code>Remove-AzVirtualNetwork</code> удалить виртуальную сеть <br />
+<code>Get-AzNetworkInterface</code> получить список сетевых интерфейсов <br />
+<code>New-AzNetworkInterface</code> создать новый сетевой интерфейс <br />
+<code>Remove-AzNetworkInterface</code> удалить сетевой интерфейс</p>
+<p><code>Get-Command -Module Az.Storage</code> <br />
+<code>Get-AzStorageAccount</code> получить список учетных записей хранилища <br />
+<code>New-AzStorageAccount</code> создать новую учетную запись хранилища <br />
+<code>Remove-AzStorageAccount</code> удалить учетную запись хранилища <br />
+<code>Get-AzStorageContainer</code> список контейнеров в учетной записи хранилища <br />
+<code>New-AzStorageContainer</code> создать новый контейнер в учетной записи хранилища <br />
+<code>Remove-AzStorageContainer</code> удалить контейнер</p>
+<p><code>Get-Command -Module Az.ResourceManager</code> <br />
+<code>Get-AzResourceGroup</code> получить список групп ресурсов в текущей подписке <br />
+<code>New-AzResourceGroup</code> создать новую группу ресурсов <br />
+<code>Remove-AzResourceGroup</code> удалить группу ресурсов <br />
+<code>Get-AzResource</code> получить список ресурсов <br />
+<code>New-AzResource</code> создать новый ресурс <br />
+<code>Remove-AzResource</code> удалить ресурс</p>
+<p><code>Get-Command -Module Az.KeyVault</code> <br />
+<code>Get-AzKeyVault</code> список хранилищ ключей <br />
+<code>New-AzKeyVault</code> создать новое хранилище ключей в Azure <br />
+<code>Remove-AzKeyVault</code> удалить хранилище ключей в Azure</p>
+<p><code>Get-Command -Module Az.Identity</code> <br />
+<code>Get-AzADUser</code> получить информацию о пользователях Azure Active Directory <br />
+<code>New-AzADUser</code> создать нового пользователя <br />
+<code>Remove-AzADUser</code> удалить пользователя <br />
+<code>Get-AzADGroup</code> получить информацию о группах <br />
+<code>New-AzADGroup</code> создать новую группу <br />
+<code>Remove-AzADGroup</code> удалить группу</p>
+<h3 id="manage-vm">Manage-VM<a class="headerlink" href="#manage-vm" title="Permanent link">&para;</a></h3>
+<p>Source: https://learn.microsoft.com/ru-ru/azure/virtual-machines/windows/tutorial-manage-vm</p>
+<p><code>New-AzResourceGroup -Name "Resource-Group-01" -Location "EastUS"</code> создать группу ресурсов (логический контейнер, в котором происходит развертывание ресурсов Azure) <br />
+<code>Get-AzVMImageOffer -Location "EastUS" -PublisherName "MicrosoftWindowsServer"</code> список доступных образов Windows Server для установки <br />
+<code>$cred = Get-Credential</code> <br />
+<code>New-AzVm -ResourceGroupName "Resource-Group-01" -Name "vm-01" -Location 'EastUS' -Image "MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest" -Size "Standard_D2s_v3" -OpenPorts 80,3389 --Credential $cred</code> создать виртуальную машину <br />
+<code>Get-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01" -Status | Select @{n="Status"; e={$_.Statuses[1].Code}}</code> статус виртуальной машины <br />
+<code>Start-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01"</code> запустить виртуальную машину <br />
+<code>Stop-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01" -Force</code> остановить виртуальную машину <br />
+<code>Invoke-AzVMRunCommand -ResourceGroupName "Resource-Group-01" -VMName "vm-01" -CommandId "RunPowerShellScript" -ScriptString "Install-WindowsFeature -Name Web-Server -IncludeManagementTools"</code> установить роль веб-сервера IIS</p>
+<h3 id="manage-disk">Manage-Disk<a class="headerlink" href="#manage-disk" title="Permanent link">&para;</a></h3>
+<p>Source: https://learn.microsoft.com/ru-ru/azure/virtual-machines/windows/tutorial-manage-data-disk</p>
+<p><code>$diskConfig = New-AzDiskConfig -Location "EastUS" -CreateOption Empty -DiskSizeGB 512 -SkuName "Standard_LRS"</code> создать диск на 512 Гб <br />
+<code>$dataDisk = New-AzDisk -ResourceGroupName "Resource-Group-01" -DiskName "disk-512" -Disk $diskConfig</code> создание объекта диска для подготовки диска данных к работе <br />
+<code>Get-AzDisk -ResourceGroupName "Resource-Group-01" -DiskName "disk-512"</code> список дисков <br />
+<code>$vm = Get-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01"</code> <br />
+<code>Add-AzVMDataDisk -VM $vm -Name "Resource-Group-01" -CreateOption Attach -ManagedDiskId $dataDisk.Id -Lun 1</code> подключить диск к виртуальной машине <br />
+<code>Update-AzVM -ResourceGroupName "Resource-Group-01" -VM $vm</code> обновить конфигурацию виртуальной машины <br />
+<code>Get-Disk | Where PartitionStyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "disk-512" -Confirm:$false</code> инициализировать диск в ОС (необходимо подключиться к виртуальной машине) с таблицей MBR, создать раздел и назначить все пространство и форматировать в файловую систему NTFS</p>
 
 
 

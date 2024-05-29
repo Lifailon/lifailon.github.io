@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://lifailon.github.io/Exchange/">
       
       
-        <link rel="prev" href="../dotNET/">
+        <link rel="prev" href="../ActiveDirectory/">
       
       
-        <link rel="next" href="../Git/">
+        <link rel="next" href="../Virtualization/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>MS Exchange - PowerShell Commands</title>
+        <title>Microsoft Exchange - PowerShell Commands</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pssession" class="md-skip">
+        <a href="#connect" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MS Exchange
+              Microsoft Exchange
             
           </span>
         </div>
@@ -235,7 +235,7 @@
         
   
   <span class="md-ellipsis">
-    Home
+    PS-Commands
   </span>
   
 
@@ -271,11 +271,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../ActiveDirectory/" class="md-nav__link">
+      <a href="../FileSystem/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    ActiveDirectory
+    File System
   </span>
   
 
@@ -291,11 +291,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Ansible/" class="md-nav__link">
+      <a href="../Windows/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Ansible
+    Windows
   </span>
   
 
@@ -311,11 +311,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../API/" class="md-nav__link">
+      <a href="../Threads/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    API
+    Threads
   </span>
   
 
@@ -331,11 +331,31 @@
   
   
     <li class="md-nav__item">
-      <a href="../Apps/" class="md-nav__link">
+      <a href="../Modules/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Apps
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
   </span>
   
 
@@ -371,11 +391,51 @@
   
   
     <li class="md-nav__item">
-      <a href="../dotNET/" class="md-nav__link">
+      <a href="../API/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    dotNET
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
   </span>
   
 
@@ -402,7 +462,7 @@
           
   
   <span class="md-ellipsis">
-    Exchange
+    Microsoft Exchange
   </span>
   
 
@@ -413,7 +473,7 @@
         
   
   <span class="md-ellipsis">
-    Exchange
+    Microsoft Exchange
   </span>
   
 
@@ -433,9 +493,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pssession" class="md-nav__link">
+  <a href="#connect" class="md-nav__link">
     <span class="md-ellipsis">
-      PSSession
+      Connect
     </span>
   </a>
   
@@ -663,126 +723,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../Git/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Git
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HTML/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    HTML
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../InfluxDB/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    InfluxDB
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MSSQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MSSQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MySQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MySQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Network/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Network
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../Virtualization/" class="md-nav__link">
         
   
@@ -803,11 +743,91 @@
   
   
     <li class="md-nav__item">
-      <a href="../WMI/" class="md-nav__link">
+      <a href="../Database/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    WMI
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
   </span>
   
 
@@ -828,6 +848,46 @@
   
   <span class="md-ellipsis">
     Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
   </span>
   
 
@@ -861,9 +921,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pssession" class="md-nav__link">
+  <a href="#connect" class="md-nav__link">
     <span class="md-ellipsis">
-      PSSession
+      Connect
     </span>
   </a>
   
@@ -1091,16 +1151,16 @@
                   
 
 
-  <h1>Exchange</h1>
+  <h1>Microsoft Exchange</h1>
 
-<h2 id="pssession">PSSession<a class="headerlink" href="#pssession" title="Permanent link">&para;</a></h2>
+<h2 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">&para;</a></h2>
 <p><code>$srv_cas = "exchange-cas"</code> <br />
 <code>$session_exchange = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://$srv_cas/PowerShell/</code> -Credential $Cred -Authentication Kerberos <br />
 <code>Get-PSSession</code> <br />
 <code>Import-PSSession $session_exchange -DisableNameChecking</code> импортировать в текущую сессию</p>
-<p><code>Get-ExchangeServer | select name,serverrole,admindisplayversion,Edition,OriginatingServer,WhenCreated,WhenChanged,DataPath | ft</code> список всех серверов</p>
 <h2 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h2>
-<p><code>Get-ImapSettings</code> настройки IMAP <br />
+<p><code>Get-ExchangeServer | select name,serverrole,admindisplayversion,Edition,OriginatingServer,WhenCreated,WhenChanged,DataPath | ft</code> список всех серверов<br />
+<code>Get-ImapSettings</code> настройки IMAP <br />
 <code>Get-ExchangeCertificate</code> список сертификатов <br />
 <code>Get-ExchangeCertificate -Thumbprint "5CEC8544D4743BC279E5FEA1679F79F5BD0C2B3A" | Enable-ExchangeCertificate -Services  IMAP, POP, IIS, SMTP</code> <br />
 <code>iisreset</code> <br />
@@ -1268,7 +1328,7 @@ State: Clear shutdown - успешный статус <br />
 <code>Mount-Database "D:\TempDB\TempDB.edb"</code> примонтировать БД <br />
 <code>Get-MailboxStatistics -Database RecoveryDB</code> <br />
 <code>New-MailboxRestoreRequest –SourceDatabase RecoveryDB –SourceStoreMailbox support –TargetMailbox support</code> скопировать данные почтового ящика с DisplayName: support из RecoveryDB в почтовый ящик с псевдонимом support существующей базы. По умолчанию ищет в почтовой базе совпадающие LegacyExchangeDN либо проверяет совпадение адреса X500, если нужно восстановить данные в другой ящик, нужно указывать ключ -AllowLegacyDNMisMatch <br />
-<code>New-MailboxRestoreRequest –SourceDatabase RecoveryDB –SourceStoreMailbox support –TargetMailbox support –TargetRootFolder "Restore"</code> скопировать письма в отдельную папку в ящике назначения (создается автоматически), возможно восстановить содержимое конкретной папки -IncludeFolders "#Inbox#" <br />
+<code>New-MailboxRestoreRequest –SourceDatabase RecoveryDB –SourceStoreMailbox support –TargetMailbox support –TargetRootFolder "Restore"</code> скопировать письма в отдельную папку в ящике назначения (создается автоматически), возможно восстановить содержимое конкретной папки -IncludeFolders "##Inbox##" <br />
 <code>Get-MailboxRestoreRequest | Get-MailboxRestoreRequestStatistics</code> статус запроса восстановления <br />
 <code>Get-MailboxRestoreRequestStatistics -Identity support</code> <br />
 <code>Get-MailboxRestoreRequest -Status Completed | Remove-MailboxRestoreRequest</code> удалить все успешные запросы</p>
@@ -1296,8 +1356,8 @@ PickupDirectoryMaxMessagesPerMinute — скорость внутренней о
 <p><code>Get-OfflineAddressbook | Update-OfflineAddressbook</code> обновить OAB <br />
 <code>Get-ClientAccessServer | Update-FileDistributionService</code></p>
 <h2 id="pst">PST<a class="headerlink" href="#pst" title="Permanent link">&para;</a></h2>
-<p><code>New-MailboxExportRequest -Mailbox $name -filepath "\\$srv\pst\$name.PST" # -ContentFilter {(Received -lt "01/01/2021")} -Priority Highest/Lower # -IsArchive</code> выполнить экспорт из архива пользователя <br />
-<code>New-MailboxExportRequest -Mailbox $name -IncludeFolders "#Inbox#" -FilePath "\\$srv\pst\$name.PST"</code> только папку входящие <br />
+<p><code>New-MailboxExportRequest -Mailbox $name -filepath "\\$srv\pst\$name.PST" ## -ContentFilter {(Received -lt "01/01/2021")} -Priority Highest/Lower ## -IsArchive</code> выполнить экспорт из архива пользователя <br />
+<code>New-MailboxExportRequest -Mailbox $name -IncludeFolders "##Inbox##" -FilePath "\\$srv\pst\$name.PST"</code> только папку входящие <br />
 <code>New-MailboxImportRequest -Mailbox $name "\\$srv\pst\$name.PST"</code> импорт из PST <br />
 <code>Get-MailboxExportRequest</code> статус запросов <br />
 <code>Get-MailboxExportRequest -Status Completed | Remove-MailboxExportRequest</code> удалить успешно завершенные запросы <br />

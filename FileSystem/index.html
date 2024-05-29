@@ -1,0 +1,1666 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/FileSystem/">
+      
+      
+        <link rel="prev" href="../Syntax/">
+      
+      
+        <link rel="next" href="../Windows/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>File System - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#items" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              File System
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PS-Commands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    File System
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    File System
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#items" class="md-nav__link">
+    <span class="md-ellipsis">
+      Items
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clear-env-temp-14-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clear-env-Temp-14-days
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemiofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      System.IO.File
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#readwrite-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read/Write Bytes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Archive
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Archive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoftpowershellarchive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microsoft.PowerShell.Archive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemiocompressionfilesystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      System.IO.Compression.FileSystem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#winrar" class="md-nav__link">
+    <span class="md-ellipsis">
+      WinRAR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pseverything" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSEverything
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#console-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Console-Menu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smb" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMB
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acl" class="md-nav__link">
+    <span class="md-ellipsis">
+      ACL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ntfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      NTFS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iscsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      iSCSI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#base64" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Base64">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utf8" class="md-nav__link">
+    <span class="md-ellipsis">
+      UTF8
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unicode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unicode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#veeam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Veeam
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Veeam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-vbrcommand" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get-VBRCommand
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#veeam-restat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Veeam-REStat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nas" class="md-nav__link">
+    <span class="md-ellipsis">
+      NAS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NAS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#truenas" class="md-nav__link">
+    <span class="md-ellipsis">
+      TrueNAS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synology
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Threads/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microsoft Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#items" class="md-nav__link">
+    <span class="md-ellipsis">
+      Items
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clear-env-temp-14-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clear-env-Temp-14-days
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemiofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      System.IO.File
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#readwrite-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read/Write Bytes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Archive
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Archive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoftpowershellarchive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microsoft.PowerShell.Archive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemiocompressionfilesystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      System.IO.Compression.FileSystem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#winrar" class="md-nav__link">
+    <span class="md-ellipsis">
+      WinRAR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pseverything" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSEverything
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#console-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Console-Menu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smb" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMB
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acl" class="md-nav__link">
+    <span class="md-ellipsis">
+      ACL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ntfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      NTFS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iscsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      iSCSI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#base64" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Base64">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utf8" class="md-nav__link">
+    <span class="md-ellipsis">
+      UTF8
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unicode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unicode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#veeam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Veeam
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Veeam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-vbrcommand" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get-VBRCommand
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#veeam-restat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Veeam-REStat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nas" class="md-nav__link">
+    <span class="md-ellipsis">
+      NAS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NAS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#truenas" class="md-nav__link">
+    <span class="md-ellipsis">
+      TrueNAS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synology
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h2 id="items">Items<a class="headerlink" href="#items" title="Permanent link">&para;</a></h2>
+<p><code>Get-Content $home/desktop\test.txt -Wait</code> аналог tail <br />
+<code>Test-Path $path</code> проверить доступность пути <br />
+<code>Get-FileHash -Algorithm SHA256 "$path"</code> узнать хэш файла по алгоритму sha256 <br />
+<code>Get-ChildItem $path -Filter *.txt -Recurse</code> отобразить содержимое каталога (Alias: ls/gci/dir) и дочерних каталогов (-Recurse) и отфильтровать вывод <br />
+<code>Get-Location</code> отобразить текущие месторасположение (Alias: pwd/gl) <br />
+<code>Set-Location $path</code> перемещение по каталогам (Alias: cd/sl) <br />
+<code>Invoke-Item $path</code> открыть файл (Alias: ii/start) <br />
+<code>Get-ItemProperty $env:userprofile\Documents\dns-list.txt | select FullName,Directory,Name,BaseName,Extension</code> свойтсва файла <br />
+<code>Get-ItemProperty -Path $path\* | select FullName,CreationTime,LastWriteTime</code> свойства файлов содержимого директории, дата их создания и последнего изменения <br />
+<code>New-Item -Path "C:\test\" -ItemType "Directory"</code> создать директорию (Alias: mkdir/md) <br />
+<code>New-Item -Path "C:\test\file.txt" -ItemType "File" -Value "Добавить текст в файл"</code> создать файл <br />
+<code>"test" &gt; "C:\test\file.txt"</code> заменить содержимое <br />
+<code>"test" &gt;&gt; "C:\test\file.txt"</code> добавить строку в файл <br />
+<code>New-Item -Path "C:\test\test\file.txt" -Force</code> ключ используется для создания отсутствующих в пути директорий или перезаписи файла если он уже существует <br />
+<code>Move-Item</code> перемещение объектов (Alias: mv/move) <br />
+<code>Remove-Item "$path\" -Recurse</code> удаление всех файлов внутри каталога, без запроса подверждения (Alias: rm/del) <br />
+<code>Remove-Item $path -Recurse -Include "*.txt","*.temp" -Exclude "log.txt"</code> удалить все файлы с расширением txt и temp ([Array]), кроме log.txt <br />
+<code>Rename-Item "C:\test\*.*" "*.jpg"</code> переименовать файлы по маске (Alias: ren) <br />
+<code>Copy-Item</code> копирование файлов и каталогов (Alias: cp/copy) <br />
+<code>Copy-Item -Path "\\server-01\test" -Destination "C:\" -Recurse</code> копировать директорию с ее содержимым (-Recurse) <br />
+<code>Copy-Item -Path "C:\*.txt" -Destination "C:\test\"</code> знак '\' в конце Destination используется для переноса папки внутрь указанной, отсутствие, что это новое имя директории <br />
+<code>Copy-Item -Path "C:\*" -Destination "C:\test\" -Include '*.txt','*.jpg'</code> копировать объекты с указанным расширением (Include) <br />
+<code>Copy-Item -Path "C:\*" -Destination "C:\test\" -Exclude '*.jpeg'</code> копировать объекты, за исключением файлов с расширением (Exclude) <br />
+<code>$log = Copy-Item "C:\*.txt" "C:\test\" -PassThru</code> вывести результат копирования (логирование) в переменную, можно забирать строки с помощью индексов $log[0].FullName <br />
+<code>Unblock-File "script.ps1"</code> разблокирует файлы скриптов PowerShell скачанных из Интернета, чтобы их можно было запустить, даже если политика выполнения PowerShell в режиме RemoteSigned</p>
+<h2 id="clear-env-temp-14-days">Clear-env-Temp-14-days<a class="headerlink" href="#clear-env-temp-14-days" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$ls = Get-Item $env:TEMP\*.tmp # считать все файлы с указанным расширением
+$date = (Get-Date).AddDays(-14)
+foreach ($l in $ls) {
+    if ($l.LastWriteTime -le $date) {
+        $l.FullName
+        Remove-Item $l.FullName -Recurse
+    }
+}
+</code></pre>
+<h2 id="systemiofile">System.IO.File<a class="headerlink" href="#systemiofile" title="Permanent link">&para;</a></h2>
+<p><code>$file = [System.IO.File]::Create("$home\desktop\test.txt")</code> создать файл <br />
+<code>$file.Close()</code> закрыть файл <br />
+<code>[System.IO.File]::ReadAllLines("$home\desktop\test.txt")</code> прочитать файл <br />
+<code>$file = New-Object System.IO.StreamReader("$home\desktop\test.txt")</code> файл будет занят процессом PowerShell <br />
+<code>$file | Get-Member</code> <br />
+<code>$file.ReadLine()</code> построчный вывод <br />
+<code>$file.ReadToEnd()</code> прочитать файл целиком</p>
+<h2 id="readwrite-bytes">Read/Write Bytes<a class="headerlink" href="#readwrite-bytes" title="Permanent link">&para;</a></h2>
+<p><code>$file = [io.file]::ReadAllBytes("$home\desktop\powershell.jpg")</code> метод открывает двоичный файл, считывает его в массив байт и закрывает файл <br />
+<code>[io.file]::WriteAllBytes("$home\desktop\tloztotk-2.jpg",$file)</code> сохранить байты в файл (можно использовать для выгрузки двоичных файлов из БД)</p>
+<h1 id="archive">Archive<a class="headerlink" href="#archive" title="Permanent link">&para;</a></h1>
+<h2 id="microsoftpowershellarchive">Microsoft.PowerShell.Archive<a class="headerlink" href="#microsoftpowershellarchive" title="Permanent link">&para;</a></h2>
+<p><code>Compress-Archive -Path $srcPath -DestinationPath "$($srcPath).zip" -CompressionLevel Optimal</code> архивировать (по исходному пути и названию с добавлением расширения) <br />
+<code>Expand-Archive -Path $zip</code> разархивировать <br />
+<code>Expand-Archive -Path $zip -DestinationPath $dstPath</code> указать путь извлечения <br />
+<code>Expand-Archive -Path $zip -OutputPath $dstPath</code></p>
+<h2 id="systemiocompressionfilesystem">System.IO.Compression.FileSystem<a class="headerlink" href="#systemiocompressionfilesystem" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">function Expand-ArchiveFile {
+    param (
+        # Путь к архиву
+        $Path,
+        # Путь, куда извлечь файл
+        $DestinationPath,
+        # Имя файла, который нужно извлечь
+        $FileName
+    )
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    try {
+        # Открыть архив для чтения
+        $zipArchive = [System.IO.Compression.ZipFile]::OpenRead($Path)
+        # Найти файл в архиве
+        $fileEntry = $zipArchive.Entries | Where-Object { $_.FullName -eq $fileName }
+        if ($fileEntry) {
+            # Создание потока для чтения содержимого файла
+            $stream = $fileEntry.Open()
+            # Создание файла и запись в него данных из потока
+            $DestinationPathFileName = &quot;$DestinationPath\$FileName&quot;
+            $fileStream = [System.IO.File]::Create($DestinationPathFileName)
+            $stream.CopyTo($fileStream)
+            # Закрытие потоков
+            $stream.Close()
+            $fileStream.Close()
+        } else {
+            Write-Output &quot;Файл $fileName не найден в архиве&quot;
+        }
+    } catch {
+        Write-Error &quot;Ошибка при извлечении файла из архива&quot;
+    } finally {
+        # Закрыть архив
+        $zipArchive.Dispose()
+    }
+}
+</code></pre>
+<h2 id="winrar">WinRAR<a class="headerlink" href="#winrar" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">function Expand-ArchivePassword {
+    param (
+        $Path,
+        $Password
+    )
+    $winrar =  &quot;C:\Program Files\WinRAR\WinRAR.exe&quot;
+    &amp; $winrar x -p&quot;$Password&quot; $Path
+}
+</code></pre>
+<p><code>cd "$home\Downloads"</code> <br />
+<code>Expand-ArchivePassword archive.rar qwe123</code></p>
+<h1 id="handle">Handle<a class="headerlink" href="#handle" title="Permanent link">&para;</a></h1>
+<p><code>$url = "https://download.sysinternals.com/files/Handle.zip"</code> <br />
+<code>Invoke-RestMethod $url -OutFile "$env:TEMP\handle.zip"</code> <br />
+<code>Expand-ArchiveFile -Path "$env:TEMP\handle.zip" -DestinationPath "$home\Documents" -FileName "handle.exe"</code> извлекаем выбранный файл из архива <br />
+<code>Remove-Item "$env:TEMP\handle.zip"</code> <br />
+<code>$handle = "$home\Documents\handle.exe"</code> <br />
+<code>$test = New-Object System.IO.StreamReader("$home\desktop\test.txt")</code> занять файл текущим процессом pwsh ($pid) <br />
+<code>$SearchProcess = &amp; $handle "C:\Users\Lifailon\Desktop\test.txt" -nobanner -u -v | ConvertFrom-Csv</code> вывести список дескрипторов по пути к файлу (имя процесса, его PID и пользователь который запустил) <br />
+<code>Stop-Process $SearchProcess.PID</code> завершить процесс, который удерживал файл</p>
+<h1 id="pseverything">PSEverything<a class="headerlink" href="#pseverything" title="Permanent link">&para;</a></h1>
+<p><code>Install-Module PSEverything -Repository NuGet</code> <br />
+<code>Find-Everything pingui</code> найти все файлы в системе (на всех локальных дисках) с именем <em>pingui</em> через dll csharp версии Everything (по умолчанию) <br />
+<code>Find-Everything pingui-0.1.py | Format-List</code> <br />
+<code>Find-Everything pingui -es</code> использовать cli версию Everything для поиска (при первом использовании версии, необходимо дождаться автоматической установки файлов зависимостей) <br />
+<code>Find-Everything pingui-0.1 -ComputerName localhost</code> поиск на удаленном компьютере через REST API, если запущен HTTP-сервер Everything</p>
+<h1 id="console-menu">Console-Menu<a class="headerlink" href="#console-menu" title="Permanent link">&para;</a></h1>
+<pre><code class="language-PowerShell"># Импортируем модуль PS-Menu в текущую сессию из репозитория GitHub
+$module = &quot;https://raw.githubusercontent.com/chrisseroka/ps-menu/master/ps-menu.psm1&quot;
+Invoke-Expression $(Invoke-RestMethod $module)
+</code></pre>
+<p>Пример навигации по директориям в системе используя меню:</p>
+<pre><code class="language-PowerShell">function ls-menu {
+    param (
+        $startDir = &quot;C:\&quot;
+    )
+    clear
+    # Проверяем, что мы не находимся в root директории (исключить возврат назад)
+    if ([System.IO.Path]::GetPathRoot($startDir) -eq $startDir) {
+        $select = menu @(
+            @($(Get-ChildItem $startDir).name)
+        )
+    }
+    else {
+        $select = menu @(
+            @(&quot;..&quot;)+@($(Get-ChildItem $startDir).name)
+        )
+    }
+    # Если выбрали возврат назад, то забираем только путь у стартовой директории
+    if ($select -eq &quot;..&quot;) {
+        $backPath = [System.IO.Path]::GetDirectoryName($startDir)
+        ls-menu $backPath
+    }
+    else {
+        # Проверяем, что выбрали директорию
+        if ($(Test-Path &quot;$startDir\$select&quot; -PathType Container)) {
+            # Если выбрали директорию, к стартовому пути добавляем выбранное имя директории
+            ls-menu &quot;$startDir\$select&quot;
+        }
+        else {
+            ls-menu $startDir
+        }
+    }
+}
+</code></pre>
+<p><code>ls-menu</code> <br />
+<code>ls-menu $home</code> <br />
+<code>ls-menu "D:\"</code></p>
+<h1 id="smb">SMB<a class="headerlink" href="#smb" title="Permanent link">&para;</a></h1>
+<p><code>Get-SmbServerConfiguration</code> <br />
+<code>Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force</code> отключить протокол SMB v1 <br />
+<code>Get-WindowsFeature | Where-Object {$_.name -eq "FS-SMB1"} | ft Name,Installstate</code> модуль ServerManager, проверить установлен ли компонент SMB1 <br />
+<code>Install-WindowsFeature FS-SMB1</code> установить SMB1 <br />
+<code>Uninstall-WindowsFeature –Name FS-SMB1 –Remove</code> удалить SMB1 клиента (понадобится перезагрузка) <br />
+<code>Get-WindowsOptionalFeature -Online</code> модуль DISM, для работы с компонентами Windows <br />
+<code>Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -Remove</code> удалить SMB1 <br />
+<code>Set-SmbServerConfiguration –AuditSmb1Access $true</code> включить аудит SMB1 <br />
+<code>Get-SmbConnection</code> список активных сессий и используемая версия SMB (Dialect) <br />
+<code>Get-SmbOpenFile | select ClientUserName,ClientComputerName,Path,SessionID</code> список открытых файлов <br />
+<code>Get-SmbShare</code> список сетевых папок <br />
+<code>New-SmbShare -Name xl-share -Path E:\test</code> создать новую общую сетевую папку (расшарить) <br />
+<code>-EncryptData $True</code> включить шифрование SMB <br />
+<code>-Description</code> имя в сетевом окружении <br />
+<code>-ReadAccess "domain\username"</code> доступ на чтение <br />
+<code>-ChangeAccess</code> доступ на запись <br />
+<code>-FullAccess</code> полный доступ <br />
+<code>-NoAccess ALL</code> нет прав <br />
+<code>-FolderEnumerationMode [AccessBased | Unrestricted]</code> позволяет скрыть в сетевой папке объекты, на которых у пользователя нет доступа с помощью Access-Based Enumeration (ABE) <br />
+<code>Get-SmbShare xl-share | Set-SmbShare -FolderEnumerationMode AccessBased</code> ключить ABE для всех расшаренных папок <br />
+<code>Remove-SmbShare xl-share -force</code> удалить сетевой доступ (шару) <br />
+<code>Get-SmbShareAccess xl-share</code> вывести список доступов безопасности к шаре <br />
+<code>Revoke-SmbShareAccess xl-share -AccountName Everyone –Force</code> удалить группу из списка доступов <br />
+<code>Grant-SmbShareAccess -Name xl-share -AccountName "domain\XL-Share" -AccessRight Change –force</code> изменить/добавить разрешения на запись (Full,Read) <br />
+<code>Grant-SmbShareAccess -Name xl-share -AccountName "все" -AccessRight Change –force</code> <br />
+<code>Block-SmbShareAccess -Name xl-share -AccountName "domain\noAccess" -Force</code> принудительный запрет <br />
+<code>New-SmbMapping -LocalPath X: -RemotePath \\$srv\xl-share -UserName support4 -Password password –Persistent $true</code> подключить сетевой диск <br />
+<code>-Persistent</code> восстановление соединения после отключения компьютера или сети <br />
+<code>-SaveCredential</code> позволяет сохранить учетные данные пользователя для подключения в диспетчер учетных данных Windows Credential Manager <br />
+<code>Stop-Process -Name "explorer" | Start-Process -FilePath "C:\Windows\explorer.exe"</code> перезапустить процесс для отображения в проводнике <br />
+<code>Get-SmbMapping</code> список подключенных сетевых дисков <br />
+<code>Remove-SmbMapping X: -force</code> отмонтировать сетевой диск <br />
+<code>$CIMSession = New-CIMSession –Computername $srv</code> создать сеанс CIM (аудентификация на SMB) <br />
+<code>Get-SmbOpenFile -CIMSession $CIMSession | select ClientUserName,ClientComputerName,Path | Out-GridView -PassThru | Close-SmbOpenFile -CIMSession $CIMSession -Confirm:$false –Force</code> закрыть файлы (открыть к ним сетевой доступ)</p>
+<h1 id="acl">ACL<a class="headerlink" href="#acl" title="Permanent link">&para;</a></h1>
+<p><code>(Get-Acl \\$srv\xl-share).access</code> доступ ACL на уровне NTFS <br />
+<code>Get-Acl C:\Drivers | Set-Acl C:\Distr</code> скопировать NTFS разрешения с одной папки и применить их на другую</p>
+<h1 id="ntfs">NTFS<a class="headerlink" href="#ntfs" title="Permanent link">&para;</a></h1>
+<p><code>Install-Module -Name NTFSSecurity -force</code> <br />
+<code>Get-Item "\\$srv\xl-share" | Get-NTFSAccess</code> <br />
+<code>Add-NTFSAccess -Path "\\$srv\xl-share" -Account "domain\xl-share" -AccessRights Fullcontrol -PassThru</code> добавить <br />
+<code>Remove-NTFSAccess -Path "\\$srv\xl-share" -Account "domain\xl-share" -AccessRights FullControl -PassThru</code> удалить <br />
+<code>Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Clear-NTFSAccess</code> удалить все разрешения, без удаления унаследованных разрешений <br />
+<code>Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Enable-NTFSAccessInheritance</code> включить NTFS наследование для всех объектов в каталоге</p>
+<h1 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h1>
+<p><code>Get-Command -Module Storage</code> <br />
+<code>Get-Disk</code> список логических дисков <br />
+<code>Get-Partition</code> отобразить разделы на всех дисках <br />
+<code>Get-Volume</code> список логичких разделов <br />
+<code>Get-PhysicalDisk</code> список физических дисков <br />
+<code>Initialize-Disk 1 –PartitionStyle MBR</code> инициализировать диск <br />
+<code>New-Partition -DriveLetter D –DiskNumber 1 -Size 500gb</code> создать раздел (выделить все место -UseMaximumSize) <br />
+<code>Format-Volume -DriveLetter D -FileSystem NTFS -NewFileSystemLabel Disk-D</code> форматировать раздел <br />
+<code>Set-Partition -DriveLetter D -IsActive $True</code> сделать активным <br />
+<code>Remove-Partition -DriveLetter D –DiskNumber 1</code> удалить раздел <br />
+<code>Clear-Disk -Number 1 -RemoveData</code> очистить диск <br />
+<code>Repair-Volume –driveletter C –Scan</code> Check disk <br />
+<code>Repair-Volume –driveletter C –SpotFix</code> <br />
+<code>Repair-Volume –driverletter C -Scan –Cimsession $CIMSession</code></p>
+<h1 id="iscsi">iSCSI<a class="headerlink" href="#iscsi" title="Permanent link">&para;</a></h1>
+<p><code>New-IscsiVirtualDisk -Path D:\iSCSIVirtualDisks\iSCSI2.vhdx -Size 20GB</code> создать динамический vhdx-диск (для фиксированного размера -UseFixed) <br />
+<code>New-IscsiServerTarget -TargetName iscsi-target-2 -InitiatorIds "IQN:iqn.1991-05.com.microsoft:srv3.contoso.com"</code> создать Target <br />
+<code>Get-IscsiServerTarget | fl TargetName, LunMappings</code> <br />
+<code>Connect-IscsiTarget -NodeAddress "iqn.1995-05.com.microsoft:srv2-iscsi-target-2-target" -IsPersistent $true</code> подключиться инициатором к таргету <br />
+<code>Get-IscsiTarget | fl</code> <br />
+<code>Disconnect-IscsiTarget -NodeAddress "iqn.1995-05.com.microsoft:srv2-iscsi-target-2-target" -Confirm:$false</code> отключиться</p>
+<h1 id="base64">Base64<a class="headerlink" href="#base64" title="Permanent link">&para;</a></h1>
+<h2 id="utf8">UTF8<a class="headerlink" href="#utf8" title="Permanent link">&para;</a></h2>
+<p><code>$loginPassword = "login:password"</code> <br />
+<code>$Base64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($loginPassword))</code> закодировать логин и пароль в строку Base64 <br />
+<code>[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))</code> преобразовать в байты и обратно декодировать в исходную строку с помощью UTF-8 кодировки</p>
+<h2 id="unicode">Unicode<a class="headerlink" href="#unicode" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$text = &quot;password&quot;
+$byte = [System.Text.Encoding]::Unicode.GetBytes($text) # преобразует строку $text в последовательность байтов, используя кодировку Unicode
+$base64 = [System.Convert]::ToBase64String($byte) # байты конвертируются в строку Base64 с помощью метода ToBase64String
+$decode_base64 = [System.Convert]::FromBase64String($base64) # декодировать строку Base64 обратно в последовательность байтов с помощью метода FromBase64String
+$decode_string = [System.Text.Encoding]::Unicode.GetString($decode_base64) # закодированные байты преобразуются обратно в строку с использованием кодировки Unicode с помощью метода GetString
+</code></pre>
+<h2 id="image">Image<a class="headerlink" href="#image" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$path_image = &quot;$home\Documents\1200x800.jpg&quot;
+$BBase64 = [System.Convert]::ToBase64String((Get-Content $path_image -Encoding Byte))
+Add-Type -assembly System.Drawing
+$Image = [System.Drawing.Bitmap]::FromStream([IO.MemoryStream][Convert]::FromBase64String($BBase64))
+$Image.Save(&quot;$home\Desktop\1200x800.jpg&quot;)
+</code></pre>
+<h1 id="veeam">Veeam<a class="headerlink" href="#veeam" title="Permanent link">&para;</a></h1>
+<p>VeeamHub (https://github.com/VeeamHub/powershell)</p>
+<h2 id="get-vbrcommand">Get-VBRCommand<a class="headerlink" href="#get-vbrcommand" title="Permanent link">&para;</a></h2>
+<p><code>Set-ExecutionPolicy AllSigned</code> <br />
+<code>Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))</code> установить choco <br />
+<code>choco install veeam-backup-and-replication-console</code> установить консоль управления (https://community.chocolatey.org/packages/veeam-backup-and-replication-console) <br />
+<code>Get-Module Veeam.Backup.PowerShell</code> модуль, который устанавливается вместе с клиентской консолью по умолчанию <br />
+<code>Get-Command -Module Veeam.Backup.PowerShell</code> <br />
+<code>Get-Command -Module Get-VBRCommand</code> <br />
+<code>Connect-VBRServer -Server $srv -Credential $cred -Port 9392</code> <br />
+<code>Get-VBRJob</code> <br />
+<code>Get-VBRCommand *get*backup*</code> <br />
+<code>Get-VBRComputerBackupJob</code> <br />
+<code>Get-VBRBackup</code> <br />
+<code>Get-VBRBackupRepository</code> <br />
+<code>Get-VBRBackupSession</code> <br />
+<code>Get-VBRBackupServerCertificate</code> <br />
+<code>Get-VBRRestorePoint</code> <br />
+<code>Get-VBRViProxy</code></p>
+<h2 id="veeam-restat">Veeam-REStat<a class="headerlink" href="#veeam-restat" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$path = ($env:PSModulePath.Split(&quot;;&quot;)[0])+&quot;\Veeam-REStat\Veeam-REStat.psm1&quot;
+if (!(Test-Path $path)) {
+    New-Item $path -ItemType &quot;File&quot; -Force
+}
+$(iwr https://raw.githubusercontent.com/Lifailon/Veeam-REStat/rsa/Veeam-REStat/Veeam-REStat.psm1).Content | Out-File $path -Force
+</code></pre>
+<p><code>Veeam-REStat -Server srv-veeam-11 -Port 9419</code> при первом запуске необходимо заполнить Credential для подключения к экземпляру сервера VBR, которые сохраняются в файл с именем сервера в формате xml с применением шифрования PSCredential для последующего подключения <br />
+<code>Veeam-REStat -Reset</code> сброс учетных данных для подключения к серверу VBR <br />
+<code>Veeam-REStat -Statistic</code> статистика всех заданий с сортировкой по дате (выводит время начала, завершения и статус работы, процент прогресса, результат выполнений и сообщение с причиной в случае ошибки: Warning или Failed) <br />
+<code>Veeam-REStat -Jobs</code> подробная статистика по всем настроенным заданиям резеврного копирования: статус работы (In Active/disabled), результат последнего задания (LastResult), тип аутентификации (Standard/Linux), имя и размер виртуальной машины, тип резервного копирования (например, Incremental), дату и время последнего и следущего выполнения <br />
+<code>Veeam-REStat -ConfigBackup</code> отображает статус состояния работы резервного копирования конфигурации сервера VBR, кол-во точек восстановления, дату и время последней копии <br />
+<code>Veeam-REStat -Repositories</code> статистика по инвентарным данным репозиториев: тип хранилища, путь на сервере до директории хранения, общий (capacityGB), свободный (freeGB) и используемый (usedSpaceGB) размер диска под данные <br />
+<code>Veeam-REStat -Backup</code> список заданий резервного копирования, тип копирования (VM/Directory) и кол-во точек восстановления <br />
+<code>Veeam-REStat -Points</code> история статистики всех точек восстановления с датой создания <br />
+<code>Veeam-REStat -Hosts</code> список физически (в ручную) добавленных хостов в инфраструктуру VBR <br />
+<code>Veeam-REStat -Proxy</code> список серверов с ролью Proxy <br />
+<code>Veeam-REStat -Users</code> список УЗ, добавленных для подключения к серверам <br />
+<code>Veeam-REStat -Service</code> выводит информацию о связанных внутренних службах, подключение к этим службам может потребоваться только для интеграции с VBR</p>
+<h1 id="nas">NAS<a class="headerlink" href="#nas" title="Permanent link">&para;</a></h1>
+<h2 id="truenas">TrueNAS<a class="headerlink" href="#truenas" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/PowerTrueNas/TrueNas">PowerTrueNas</a></p>
+<p><code>Install-Module TrueNas</code> <br />
+<code>Import-Module TrueNas</code> <br />
+<code>$(Get-Module TrueNas).ExportedCommands</code> <br />
+<code>Connect-TrueNasServer -Server tnas-01 -SkipCertificateCheck</code> <br />
+<code>Get-TrueNasCertificate</code> настройки сертификата <br />
+<code>Get-TrueNasSetting</code> настройки языка, time zone, syslog level и server, https port <br />
+<code>Get-TrueNasUser</code> список пользователей <br />
+<code>Get-TrueNasSystemVersion</code> характеристики (Physical Memory, Model, Cores) и Uptime <br />
+<code>Get-TrueNasSystemAlert</code> snmp для оповещений <br />
+<code>Get-TrueNasSystemNTP</code> список используемых NTP серверов <br />
+<code>Get-TrueNasDisk</code> список разделов физического диска <br />
+<code>Get-TrueNasInterface</code> сетевые интерфейсы <br />
+<code>Get-TrueNasGlobalConfig</code> сетевые настройки <br />
+<code>Get-TrueNasDnsServer</code> настроенные DNS-сервера <br />
+<code>Get-TrueNasIscsiTarget</code> отобразить ID группы инициаторов использующих таргет, используемый portal, authentification и authen-method <br />
+<code>Get-TrueNasIscsiInitiator</code> отобразить группы инициаторов <br />
+<code>Get-TrueNasIscsiPortal</code> слушатель (Listen) и порт <br />
+<code>Get-TrueNasIscsiExtent</code> список ISCSi Target (статус работы, путь) <br />
+<code>Get-TrueNasPool</code> список pool (Id, Path, Status, Healthy) <br />
+<code>Get-TrueNasVolume -Type FILESYSTEM</code> список pool файловых систем <br />
+<code>Get-TrueNasVolume -Type VOLUME</code> список разделов в pool и их размер <br />
+<code>Get-TrueNasService | ft</code> список служб и их статус <br />
+<code>Start-TrueNasService ssh</code> запустить службу <br />
+<code>Stop-TrueNasService ssh</code> остановить службу</p>
+<h2 id="synology">Synology<a class="headerlink" href="#synology" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/pspete/pSynology">pSynology</a></p>
+<p><code>New-SYNOSession</code> аутентификация на Synology Diskstation и запуск нового сеанса API <br />
+<code>Close-SYNOSession</code> выход из сеанса API <br />
+<code>Get-SYNOInfo</code> получить информацию об API DiskStation <br />
+<code>Add-SYNOFSFAvorite</code> добавить папку в избранное пользователя <br />
+<code>Add-SYNOFSFile</code> загрузить файл <br />
+<code>Clear-SYNOFSBackgroundTask</code> удалить все завершенные фоновые задачи <br />
+<code>Clear-SYNOFSFavoriteStatus</code> удалить все избранное с неработающим статусом <br />
+<code>Clear-SYNOFSSharingLink</code> удалить все просроченные и неработающие ссылки для обмена <br />
+<code>Get-SYNOFSArchiveCompress</code> получить статус задачи сжатия <br />
+<code>Get-SYNOFSArchiveContent</code> вывести содержимое архива <br />
+<code>Get-SYNOFSArchiveExtract</code> получить статус задачи извлечения <br />
+<code>Get-SYNOFSBackgroundTask</code> список всех фоновых задач, включая копирование <br />
+<code>Get-SYNOFSCopy</code> получить статус операции копирования <br />
+<code>Get-SYNOFSDeleteItem</code> получить статус задачи удаления <br />
+<code>Get-SYNOFSDirSize</code> получить статус задачи расчета размера <br />
+<code>Get-SYNOFSFavorite</code> список избранного пользователя <br />
+<code>Get-SYNOFSFile</code> перечислить файлы в заданной папке <br />
+<code>Get-SYNOFSFileInfo</code> получить информацию о файлах или файле <br />
+<code>Get-SYNOFSInfo</code> получить информацию о файловой станции <br />
+<code>Get-SYNOFSMD5</code> получить статус вычислительной задачи MD5 <br />
+<code>Get-SYNOFSSearch</code> перечислить совпадающие файлы во временной базе данных поиска <br />
+<code>Get-SYNOFSShare</code> список всех общих папок <br />
+<code>Get-SYNOFSSharingLink</code> список ссылок пользователя на общий доступ к файлам <br />
+<code>Get-SYNOFSSharingLinkInfo</code> получить информацию о ссылке общего доступа по идентификатору ссылки общего доступа <br />
+<code>Get-SYNOFSThumbnail</code> получить миниатюру файла <br />
+<code>Get-SYNOFSVirtualFolder</code> список всех папок точек монтирования заданного типа виртуальной файловой системы <br />
+<code>New-SYNOFSFolder</code> создать папку <br />
+<code>New-SYNOFSSharingLink</code> создать одну или несколько ссылок для общего доступа по пути к файл или папку <br />
+<code>Remove-SYNOFSFAvorite</code> удаление избранного из избранного пользователя <br />
+<code>Remove-SYNOFSItem</code> удалить файл или папку <br />
+<code>Remove-SYNOFSSearch</code> удалить временные базы данных поиска <br />
+<code>Remove-SYNOFSSharingLink</code> удалить одну или несколько ссылок общего доступа <br />
+<code>Rename-SYNOFSItem</code> переименовываем файл или папку <br />
+<code>Save-SYNOFSFile</code> загрузить файл или папку <br />
+<code>Set-SYNOFSFAvorite</code> редактировать избранное имя <br />
+<code>Set-SYNOFSSharingLink</code> изменить ссылку для общего доступа <br />
+<code>Start-SYNOFSArchiveCompress</code> запустить задание сжатия файла или папки <br />
+<code>Start-SYNOFSArchiveExtract</code> запустить задание распаковки архива <br />
+<code>Start-SYNOFSCopy</code> запустить задание копирования файлов <br />
+<code>Start-SYNOFSDeleteItem</code> запустить задание удаления файлов или папок <br />
+<code>Start-SYNOFSDirSize</code> расчитать размер для одного или нескольких путей к файлам или папкам <br />
+<code>Start-SYNOFSMD5</code> получить MD5 файла <br />
+<code>Start-SYNOFSSearch</code> поиск файлов по заданным критериям <br />
+<code>Stop-SYNOFSArchiveCompress</code> остановить задачу сжатия <br />
+<code>Stop-SYNOFSArchiveExtract</code> остановить задачу извлечения <br />
+<code>Stop-SYNOFSCopy</code> остановить задачу копирования <br />
+<code>Stop-SYNOFSDeleteItem</code> остановить задачу удаления <br />
+<code>Stop-SYNOFSDirSize</code> остановить расчет размера <br />
+<code>Stop-SYNOFSMD5</code> остановить вычисление MD5 файла <br />
+<code>Stop-SYNOFSSearch</code> остановить задачу поиска <br />
+<code>Test-SYNOFSPermission</code> проверить, имеет ли вошедший в систему пользователь разрешение на запись в данную папку <br />
+<code>Update-SYNOFSFAvorite</code> заменить несколько избранных папок в избранном пользователя</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

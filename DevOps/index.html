@@ -1,0 +1,1252 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/DevOps/">
+      
+      
+        <link rel="prev" href="../Zabbix/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>DevOps - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#github-actions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DevOps
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PS-Commands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FileSystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Threads/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microsoft Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub-Actions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub-Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runner-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runner (Agent)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build (Pipeline)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psappdeploytoolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSAppDeployToolkit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PSAppDeployToolkit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-deploytoolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install-DeployToolkit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-notepad-plus-plus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy-Notepad-Plus-Plus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uninstall-notepad-plus-plus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uninstall-Notepad-Plus-Plus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-winscp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy-WinSCP
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pester" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pester
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub-Actions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub-Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runner-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runner (Agent)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build (Pipeline)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psappdeploytoolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      PSAppDeployToolkit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PSAppDeployToolkit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-deploytoolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install-DeployToolkit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-notepad-plus-plus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy-Notepad-Plus-Plus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uninstall-notepad-plus-plus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uninstall-Notepad-Plus-Plus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-winscp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy-WinSCP
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pester" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pester
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>DevOps</h1>
+
+<h2 id="github-actions">GitHub-Actions<a class="headerlink" href="#github-actions" title="Permanent link">&para;</a></h2>
+<h3 id="runner-agent">Runner (Agent)<a class="headerlink" href="#runner-agent" title="Permanent link">&para;</a></h3>
+<p><code>mkdir actions-runner; cd actions-runner</code> <br />
+<code>Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-win-x64-2.316.1.zip -OutFile actions-runner-win-x64-2.316.1.zip</code> загрузить пакет с Runner последней версии <br />
+<code>if((Get-FileHash -Path actions-runner-win-x64-2.316.1.zip -Algorithm SHA256).Hash.ToUpper() -ne 'e41debe4f0a83f66b28993eaf84dad944c8c82e2c9da81f56a850bc27fedd76b'.ToUpper()){ throw 'Computed checksum did not match' }</code> проверить валидность пакета с помощью hash-суммы <br />
+<code>Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.316.1.zip", "$PWD")</code> разархивировать <br />
+<code>Remove-Item *.zip</code> удалить архив <br />
+<code>./config.cmd --url https://github.com/Lifailon/egapi --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</code> авторизовать и сконфигурировать сборщика с помощью скрипта (что бы на последнем пункте создать службу для управления сборщиком, нужно запустить консоль с правами администратора) <br />
+<code>./run.cmd</code> запустить процесс (если не используется служба) <br />
+<code>Get-Service *actions* | Start-Service</code> запустить службу <br />
+<code>Get-Process *Runner.Listener*</code> <br />
+<code>./config.cmd remove --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</code> удалить конфигурацию</p>
+<h3 id="build-pipeline">Build (Pipeline)<a class="headerlink" href="#build-pipeline" title="Permanent link">&para;</a></h3>
+<pre><code class="language-yaml">name: build-game-list
+
+on:
+  # Разрешить ручной запуск workflow через интерфейс GitHub
+  workflow_dispatch:
+
+  # Запускать workflow по расписанию каждый час в 00 минут
+  schedule:
+  - cron: '00 * * * *'
+
+jobs:
+  Job_01:
+    # Указываем, что job будет выполняться на последней версии Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+    # Шаги, которые будут выполнены в рамках этого job
+    - name: Checkout repository
+      # Клонирования репозиторий
+      uses: actions/checkout@v2
+
+    - name: Get content and write to file
+      # Выполняем скрипт PowerShell, расположенный в ./scripts/Get-GameList.ps1
+      run: pwsh -File ./scripts/Get-GameList.ps1
+      # Указываем, что команда должна выполняться в оболочке bash
+      shell: bash 
+
+    - name: Commit and push changes
+      run: |
+        # Задаем имя пользователя и email для коммитов
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        # Добавляем все изменения в индекс
+        git add .
+        # Делаем коммит с комментарием
+        git commit -m &quot;update game list&quot;
+        # Отправляем коммит в удаленный репозиторий
+        git push
+</code></pre>
+<h2 id="dsc">DSC<a class="headerlink" href="#dsc" title="Permanent link">&para;</a></h2>
+<p><code>Import-Module PSDesiredStateConfiguration</code> <br />
+<code>Get-Command -Module PSDesiredStateConfiguration</code> <br />
+<code>(Get-Module PSDesiredStateConfiguration).ExportedCommands</code> <br />
+<code>Get-DscLocalConfigurationManager</code></p>
+<p><code>Get-DscResource</code> <br />
+<code>Get-DscResource -Name File -Syntax</code> <a href="https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1">синтаксис</a></p>
+<p><code>Ensure = Present</code> настройка должна быть включена (каталог должен присутствовать, процесс должен быть запущен, если нет – создать, запустить) <br />
+<code>Ensure = Absent</code> настройка должна быть выключена (каталога быть не должно, процесс не должен быть запущен, если нет – удалить, остановить)</p>
+<pre><code class="language-PowerShell">Configuration TestConfiguraion
+{
+    Ctrl+Space
+}
+
+Configuration DSConfigurationProxy 
+{
+    Node vproxy-01 
+    {
+        File CreateDir
+        {
+            Ensure = &quot;Present&quot;
+            Type = &quot;Directory&quot;
+            DestinationPath = &quot;C:\Temp&quot;
+        }
+        Service StopW32time
+        {
+            Name = &quot;w32time&quot;
+            State = &quot;Stopped&quot;` Running
+        }
+        WindowsProcess RunCalc
+        {
+            Ensure = &quot;Present&quot;
+            Path = &quot;C:\WINDOWS\system32\calc.exe&quot;
+            Arguments = &quot;&quot;
+        }
+        Registry RegSettings
+        {
+            Ensure = &quot;Present&quot;
+            Key = &quot;HKEY_LOCAL_MACHINE\SOFTWARE\MySoft&quot;
+            ValueName = &quot;TestName&quot;
+            ValueData = &quot;TestValue&quot;
+            ValueType = &quot;String&quot;
+        }
+#       WindowsFeature IIS
+#       {
+#            Ensure = &quot;Present&quot;
+#            Name = &quot;Web-Server&quot;
+#       }
+    }
+}
+</code></pre>
+<p><code>$Path = (DSConfigurationProxy).DirectoryName</code> <br />
+<code>Test-DscConfiguration -Path $Path | select *</code> ResourcesInDesiredState - уже настроено, ResourcesNotInDesiredState - не настроено (не соответствует) <br />
+<code>Start-DscConfiguration -Path $Path</code> <br />
+<code>Get-Job</code> <br />
+<code>$srv = "vproxy-01"</code> <br />
+<code>Get-Service -ComputerName $srv | ? name -match w32time # Start-Service</code> <br />
+<code>icm $srv {Get-Process | ? ProcessName -match calc} | ft # Stop-Process -Force</code> <br />
+<code>icm $srv {ls C:\ | ? name -match Temp} | ft</code> rm`</p>
+<pre><code class="language-PowerShell">Configuration InstallPowerShellCore {
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Node localhost {
+        Script InstallPowerShellCore {
+            GetScript = {
+                return @{
+                    GetScript = $GetScript
+                }
+            }
+            SetScript = {
+                [string]$url = $(Invoke-RestMethod https://api.github.com/repos/PowerShell/PowerShell/releases/latest).assets.browser_download_url -match &quot;win-x64.zip&quot;
+                $downloadPath = &quot;$home\Downloads\PowerShell.zip&quot;
+                $installPath = &quot;$env:ProgramFiles\PowerShell\7&quot;
+                Invoke-WebRequest -Uri $url -OutFile $downloadPath
+                Expand-Archive -Path $downloadPath -DestinationPath $installPath -Force
+            }
+            TestScript = {
+                return Test-Path &quot;$env:ProgramFiles\PowerShell\7\pwsh.exe&quot;
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>$Path = (InstallPowerShellCore).DirectoryName</code> <br />
+<code>Test-DscConfiguration -Path $Path</code> <br />
+<code>Start-DscConfiguration -Path $path -Wait -Verbose</code> <br />
+<code>Get-Job</code></p>
+<h2 id="psappdeploytoolkit">PSAppDeployToolkit<a class="headerlink" href="#psappdeploytoolkit" title="Permanent link">&para;</a></h2>
+<h3 id="install-deploytoolkit">Install-DeployToolkit<a class="headerlink" href="#install-deploytoolkit" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$githubRepository = &quot;psappdeploytoolkit/psappdeploytoolkit&quot;
+$filenamePatternMatch = &quot;PSAppDeployToolkit*.zip&quot;
+$psadtReleaseUri = &quot;https://api.github.com/repos/$githubRepository/releases/latest&quot;
+$psadtDownloadUri = ((Invoke-RestMethod -Method GET -Uri $psadtReleaseUri).assets | Where-Object name -like $filenamePatternMatch ).browser_download_url
+$zipExtractionPath = Join-Path $env:USERPROFILE &quot;Downloads&quot; &quot;PSAppDeployToolkit&quot;
+$zipTempDownloadPath = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath $(Split-Path -Path $psadtDownloadUri -Leaf)
+### Download to a temporary folder
+Invoke-WebRequest -Uri $psadtDownloadUri -Out $zipTempDownloadPath
+### Remove any Zone.Identifier alternate data streams to unblock the file (if required)
+Unblock-File -Path $zipTempDownloadPath
+New-Item -Type Directory $zipExtractionPath
+Expand-Archive -Path $zipTempDownloadPath -OutputPath $zipExtractionPath -Force
+Write-Host (&quot;File: {0} extracted to Path: {1}&quot; -f $psadtDownloadUri, $zipExtractionPath) -ForegroundColor Yellow
+Remove-Item $zipTempDownloadPath
+</code></pre>
+<h3 id="deploy-notepad-plus-plus">Deploy-Notepad-Plus-Plus<a class="headerlink" href="#deploy-notepad-plus-plus" title="Permanent link">&para;</a></h3>
+<p><code>$url_notepad = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.6.6/npp.8.6.6.Installer.x64.exe"</code> <br />
+<code>Invoke-RestMethod $url_notepad -OutFile "$home\Downloads\PSAppDeployToolkit\Toolkit\Files\npp.8.6.6.Installer.x64.exe"</code></p>
+<pre><code class="language-PowerShell">'# Подключаем модуль PSAppDeployToolkit
+Import-Module &quot;$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1&quot;
+# Название приложения
+$AppName = &quot;Notepad++&quot;
+# Версия приложения
+$AppVersion = &quot;8.6.6&quot;
+# Путь к установщику Notepad++
+$InstallerPath = &quot;$PSScriptRoot\Files\npp.$AppVersion.Installer.x64.exe&quot;
+# Проверка существования установщика
+If (-not (Test-Path $InstallerPath)) {
+    Write-Host &quot;Установщик Notepad++ не найден: $InstallerPath&quot;
+    Exit-Script -ExitCode 1
+}
+# Настройки установки Notepad++
+$InstallerArguments = &quot;/S /D=$ProgramFiles\Notepad++&quot;
+Function Install-Application {
+    # Выводим сообщение о начале установки
+    Show-InstallationWelcome -CloseApps &quot;iexplore&quot; -CheckDiskSpace -PersistPrompt
+    # Запускаем установку
+    Execute-Process -Path $InstallerPath -Parameters $InstallerArguments -WindowStyle Hidden -IgnoreExitCodes &quot;3010&quot;
+    # Выводим сообщение об успешной установке
+    Show-InstallationPrompt -Message &quot;Установка $AppName завершена.&quot; -ButtonRightText &quot;Закрыть&quot; -Icon Information -NoWait
+    # Завершаем процесс установки
+    Exit-Script -ExitCode $AppDependentExitCode
+}
+Install-Application' | Out-File &quot;$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1&quot; -Encoding unicode
+</code></pre>
+<p><code>powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"</code></p>
+<h3 id="uninstall-notepad-plus-plus">Uninstall-Notepad-Plus-Plus<a class="headerlink" href="#uninstall-notepad-plus-plus" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">'Import-Module &quot;$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1&quot;
+$AppName = &quot;Notepad++&quot;
+$UninstallerPath = &quot;C:\Program Files\Notepad++\uninstall.exe&quot;
+If (-not (Test-Path $UninstallerPath)) {
+    Write-Host &quot;Деинсталлятор Notepad++ не найден: $UninstallerPath&quot;
+    Exit-Script -ExitCode 1
+}
+Function Uninstall-Application {
+    Show-InstallationWelcome -CloseApps &quot;iexplore&quot; -CheckDiskSpace -PersistPrompt
+    Execute-Process -Path $UninstallerPath -Parameters &quot;/S&quot; -WindowStyle Hidden -IgnoreExitCodes &quot;3010&quot;
+    Show-InstallationPrompt -Message &quot;Программа $AppName удалена.&quot; -ButtonRightText &quot;Закрыть&quot; -Icon Information -NoWait
+    Exit-Script -ExitCode $AppDependentExitCode
+}
+Uninstall-Application' | Out-File &quot;$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1&quot; -Encoding unicode
+</code></pre>
+<p><code>powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"</code></p>
+<h3 id="deploy-winscp">Deploy-WinSCP<a class="headerlink" href="#deploy-winscp" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">$PSAppDeployToolkit = &quot;$home\Downloads\PSAppDeployToolkit\&quot;
+$version = &quot;6.3.3&quot;
+$url_winscp = &quot;https://cdn.winscp.net/files/WinSCP-$version.msi?secure=P2HLWGKaMDigpDQw-H9BgA==,1716466173&quot;
+$WinSCP_Template = Get-Content &quot;$PSAppDeployToolkit\Examples\WinSCP\Deploy-Application.ps1&quot; # читаем пример конфигурации для WinSCP
+$WinSCP_Template_Latest = $WinSCP_Template -replace &quot;6.3.2&quot;,&quot;$version&quot; # обновляем версию на актуальную
+$WinSCP_Template_Latest &gt; &quot;$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1&quot; # заменяем скрипт развертывания 
+Invoke-RestMethod $url_winscp -OutFile &quot;$PSAppDeployToolkit\Toolkit\Files\WinSCP-$version.msi&quot; # загружаем msi-пакет
+powershell -File &quot;$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1&quot; # запускаем установку
+</code></pre>
+<h2 id="pester">Pester<a class="headerlink" href="#pester" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/pester/Pester">Source</a></p>
+<p><code>Install-Module -Name Pester -Repository PSGallery -Force -AllowClobber</code> <br />
+<code>Import-Module Pester</code> <br />
+<code>$(Get-Module Pester -ListAvailable).Version</code></p>
+<p><code>.Tests.ps1</code></p>
+<pre><code class="language-PowerShell">function Add-Numbers {
+    param (
+        [int]$a,
+        [int]$b
+    )
+    $a + $b
+}
+Describe &quot;Add-Numbers&quot; {
+    Context &quot;При сложении двух чисел&quot; {
+        It &quot;Должна вернуться правильная сумма&quot; {
+            $result = Add-Numbers -a 3 -b 4
+            $result | Should -Be 7
+        }
+    }
+    Context &quot;При сложении двух чисел&quot; {
+        It &quot;Должна вернуться ошибка (5+0 -ne 4)&quot; {
+            $result = Add-Numbers -a 5 -b 0
+            $result | Should -Be 4
+        }
+    }
+}
+
+function Get-RunningProcess {
+    return Get-Process | Select-Object -ExpandProperty Name
+}
+Describe &quot;Get-RunningProcess&quot; {
+    Context &quot;При наличии запущенных процессов&quot; {
+        It &quot;Должен возвращать список имен процессов&quot; {
+            $result = Get-RunningProcess
+            $result | Should -Contain &quot;svchost&quot;
+            $result | Should -Contain &quot;explorer&quot;
+        }
+    }
+    Context &quot;Когда нет запущенных процессов&quot; {
+        It &quot;Должен возвращать пустой список&quot; {
+            # Замокать функцию Get-Process, чтобы она всегда возвращала пустой список процессов
+            Mock Get-Process { return @() }
+            $result = Get-RunningProcess
+            $result | Should -BeEmpty
+        }
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+    
+  </body>
+</html>

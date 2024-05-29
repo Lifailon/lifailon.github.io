@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://lifailon.github.io/dotNET/">
       
       
-        <link rel="prev" href="../COM/">
+        <link rel="prev" href="../Modules/">
       
       
-        <link rel="next" href="../Exchange/">
+        <link rel="next" href="../COM/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#object-and-method" class="md-skip">
+        <a href="#console-api" class="md-skip">
           Skip to content
         </a>
       
@@ -235,7 +235,7 @@
         
   
   <span class="md-ellipsis">
-    Home
+    PS-Commands
   </span>
   
 
@@ -271,11 +271,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../ActiveDirectory/" class="md-nav__link">
+      <a href="../FileSystem/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    ActiveDirectory
+    File System
   </span>
   
 
@@ -291,11 +291,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Ansible/" class="md-nav__link">
+      <a href="../Windows/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Ansible
+    Windows
   </span>
   
 
@@ -311,11 +311,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../API/" class="md-nav__link">
+      <a href="../Threads/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    API
+    Threads
   </span>
   
 
@@ -331,31 +331,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Apps/" class="md-nav__link">
+      <a href="../Modules/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Apps
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../COM/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    COM
+    Modules
   </span>
   
 
@@ -382,7 +362,7 @@
           
   
   <span class="md-ellipsis">
-    dotNET
+    .NET
   </span>
   
 
@@ -393,7 +373,7 @@
         
   
   <span class="md-ellipsis">
-    dotNET
+    .NET
   </span>
   
 
@@ -413,28 +393,79 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#object-and-method" class="md-nav__link">
+  <a href="#console-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Object and Method
+      Console API
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Object and Method">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drawing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htmlagilitypack" class="md-nav__link">
+    <span class="md-ellipsis">
+      HtmlAgilityPack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selenium" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selenium">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selenium-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium modules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-event" class="md-nav__link">
+    <span class="md-ellipsis">
+      Object Event
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#eventlog" class="md-nav__link">
     <span class="md-ellipsis">
       EventLog
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iopath" class="md-nav__link">
-    <span class="md-ellipsis">
-      IO.Path
     </span>
   </a>
   
@@ -476,25 +507,10 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#function" class="md-nav__link">
-    <span class="md-ellipsis">
-      Function
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Function">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
   <a href="#clicker" class="md-nav__link">
     <span class="md-ellipsis">
-      [Clicker]
+      Clicker
     </span>
   </a>
   
@@ -503,7 +519,7 @@
           <li class="md-nav__item">
   <a href="#audio" class="md-nav__link">
     <span class="md-ellipsis">
-      [Audio]
+      Audio
     </span>
   </a>
   
@@ -550,345 +566,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#objectevent" class="md-nav__link">
-    <span class="md-ellipsis">
-      ObjectEvent
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#console-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      Console API
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#drawing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Drawing
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#objectevent_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      ObjectEvent
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="ObjectEvent">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sockets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sockets
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Sockets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#udp-socket" class="md-nav__link">
-    <span class="md-ellipsis">
-      UDP Socket
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-netudpconnection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test-NetUDPConnection
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tcp-socket" class="md-nav__link">
-    <span class="md-ellipsis">
-      TCP Socket
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#wakeonlan" class="md-nav__link">
-    <span class="md-ellipsis">
-      WakeOnLan
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Encoding
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#base64" class="md-nav__link">
-    <span class="md-ellipsis">
-      Base64
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#http-listener" class="md-nav__link">
-    <span class="md-ellipsis">
-      HTTP Listener
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#webclient" class="md-nav__link">
-    <span class="md-ellipsis">
-      WebClient
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      Certificate
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#csv" class="md-nav__link">
-    <span class="md-ellipsis">
-      CSV
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="CSV">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#convertfrom-string" class="md-nav__link">
-    <span class="md-ellipsis">
-      ConvertFrom-String
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#convertfrom-stringdata" class="md-nav__link">
-    <span class="md-ellipsis">
-      ConvertFrom-StringData
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#xml" class="md-nav__link">
-    <span class="md-ellipsis">
-      XML
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="XML">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get-credtoxml" class="md-nav__link">
-    <span class="md-ellipsis">
-      Get-CredToXML
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#xmlwriter-extensible-markup-language" class="md-nav__link">
-    <span class="md-ellipsis">
-      XmlWriter (Extensible Markup Language)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#createelement" class="md-nav__link">
-    <span class="md-ellipsis">
-      CreateElement
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#json" class="md-nav__link">
-    <span class="md-ellipsis">
-      JSON
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="JSON">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#yaml" class="md-nav__link">
-    <span class="md-ellipsis">
-      YAML
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sqlite" class="md-nav__link">
-    <span class="md-ellipsis">
-      SQLite
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="SQLite">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#database-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database password
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#elasticsearch" class="md-nav__link">
-    <span class="md-ellipsis">
-      Elasticsearch
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cdata" class="md-nav__link">
-    <span class="md-ellipsis">
-      CData
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="CData">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adonet-assembly" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADO.NET Assembly
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update" class="md-nav__link">
-    <span class="md-ellipsis">
-      UPDATE
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#insert" class="md-nav__link">
-    <span class="md-ellipsis">
-      INSERT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#delete" class="md-nav__link">
-    <span class="md-ellipsis">
-      DELETE
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#odbc-open-database-connectivity" class="md-nav__link">
-    <span class="md-ellipsis">
-      ODBC (Open Database Connectivity)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#postgresql" class="md-nav__link">
-    <span class="md-ellipsis">
-      PostgreSQL
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -904,131 +581,91 @@
   
   
     <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Exchange/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Exchange
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Git/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Git
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HTML/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    HTML
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../InfluxDB/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    InfluxDB
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MSSQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MSSQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MySQL/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MySQL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Network/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Network
+    Microsoft Exchange
   </span>
   
 
@@ -1064,11 +701,91 @@
   
   
     <li class="md-nav__item">
-      <a href="../WMI/" class="md-nav__link">
+      <a href="../Database/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    WMI
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
   </span>
   
 
@@ -1089,6 +806,46 @@
   
   <span class="md-ellipsis">
     Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epic-games-radar/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Epic Games Radar
   </span>
   
 
@@ -1122,28 +879,79 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#object-and-method" class="md-nav__link">
+  <a href="#console-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Object and Method
+      Console API
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Object and Method">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drawing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htmlagilitypack" class="md-nav__link">
+    <span class="md-ellipsis">
+      HtmlAgilityPack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selenium" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selenium">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selenium-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selenium modules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-event" class="md-nav__link">
+    <span class="md-ellipsis">
+      Object Event
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#eventlog" class="md-nav__link">
     <span class="md-ellipsis">
       EventLog
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iopath" class="md-nav__link">
-    <span class="md-ellipsis">
-      IO.Path
     </span>
   </a>
   
@@ -1185,25 +993,10 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#function" class="md-nav__link">
-    <span class="md-ellipsis">
-      Function
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Function">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
   <a href="#clicker" class="md-nav__link">
     <span class="md-ellipsis">
-      [Clicker]
+      Clicker
     </span>
   </a>
   
@@ -1212,7 +1005,7 @@
           <li class="md-nav__item">
   <a href="#audio" class="md-nav__link">
     <span class="md-ellipsis">
-      [Audio]
+      Audio
     </span>
   </a>
   
@@ -1259,345 +1052,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#objectevent" class="md-nav__link">
-    <span class="md-ellipsis">
-      ObjectEvent
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#console-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      Console API
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#drawing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Drawing
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#objectevent_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      ObjectEvent
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="ObjectEvent">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sockets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sockets
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Sockets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#udp-socket" class="md-nav__link">
-    <span class="md-ellipsis">
-      UDP Socket
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-netudpconnection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test-NetUDPConnection
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tcp-socket" class="md-nav__link">
-    <span class="md-ellipsis">
-      TCP Socket
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#wakeonlan" class="md-nav__link">
-    <span class="md-ellipsis">
-      WakeOnLan
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Encoding
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#base64" class="md-nav__link">
-    <span class="md-ellipsis">
-      Base64
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#http-listener" class="md-nav__link">
-    <span class="md-ellipsis">
-      HTTP Listener
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#webclient" class="md-nav__link">
-    <span class="md-ellipsis">
-      WebClient
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      Certificate
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#csv" class="md-nav__link">
-    <span class="md-ellipsis">
-      CSV
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="CSV">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#convertfrom-string" class="md-nav__link">
-    <span class="md-ellipsis">
-      ConvertFrom-String
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#convertfrom-stringdata" class="md-nav__link">
-    <span class="md-ellipsis">
-      ConvertFrom-StringData
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#xml" class="md-nav__link">
-    <span class="md-ellipsis">
-      XML
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="XML">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get-credtoxml" class="md-nav__link">
-    <span class="md-ellipsis">
-      Get-CredToXML
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#xmlwriter-extensible-markup-language" class="md-nav__link">
-    <span class="md-ellipsis">
-      XmlWriter (Extensible Markup Language)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#createelement" class="md-nav__link">
-    <span class="md-ellipsis">
-      CreateElement
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#json" class="md-nav__link">
-    <span class="md-ellipsis">
-      JSON
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="JSON">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#yaml" class="md-nav__link">
-    <span class="md-ellipsis">
-      YAML
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sqlite" class="md-nav__link">
-    <span class="md-ellipsis">
-      SQLite
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="SQLite">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#database-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database password
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#elasticsearch" class="md-nav__link">
-    <span class="md-ellipsis">
-      Elasticsearch
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cdata" class="md-nav__link">
-    <span class="md-ellipsis">
-      CData
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="CData">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adonet-assembly" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADO.NET Assembly
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update" class="md-nav__link">
-    <span class="md-ellipsis">
-      UPDATE
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#insert" class="md-nav__link">
-    <span class="md-ellipsis">
-      INSERT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#delete" class="md-nav__link">
-    <span class="md-ellipsis">
-      DELETE
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#odbc-open-database-connectivity" class="md-nav__link">
-    <span class="md-ellipsis">
-      ODBC (Open Database Connectivity)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#postgresql" class="md-nav__link">
-    <span class="md-ellipsis">
-      PostgreSQL
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1613,8 +1067,226 @@
                   
 
 
-<h2 id="object-and-method">Object and Method<a class="headerlink" href="#object-and-method" title="Permanent link">&para;</a></h2>
-<h3 id="eventlog">EventLog<a class="headerlink" href="#eventlog" title="Permanent link">&para;</a></h3>
+<h2 id="console-api">Console API<a class="headerlink" href="#console-api" title="Permanent link">&para;</a></h2>
+<p><a href="https://powershell.one/tricks/input-devices/detect-key-press">Source</a></p>
+<p><code>[Console] | Get-Member -Static</code> <br />
+<code>[Console]::BackgroundColor = "Blue"</code> <br />
+<code>[Console]::OutputEncoding</code> используемая кодировка в текущей сессии <br />
+<code>[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")</code> изменить кодировку для отображения кириллицы <br />
+<code>[Console]::outputEncoding = [System.Text.Encoding]::GetEncoding("cp866")</code> для ISE <br />
+<code>[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("windows-1251")</code> для ps2exe <br />
+<code>Get-Service | Out-File $home\Desktop\Service.txt -Encoding oem</code> &gt; <br />
+<code>Get-Service | Out-File $home\Desktop\Service.txt -Append</code> &gt;&gt;</p>
+<pre><code class="language-PowerShell">do {
+    if ([Console]::KeyAvailable) {
+        $keyInfo = [Console]::ReadKey($true)
+        break
+    }
+    Write-Host &quot;.&quot; -NoNewline
+    Start-Sleep 1
+} while ($true)
+Write-Host
+$keyInfo
+
+function Get-KeyPress {
+    param (
+        [Parameter(Mandatory)][ConsoleKey]$Key,
+        [System.ConsoleModifiers]$ModifierKey = 0
+    )
+    if ([Console]::KeyAvailable) {
+        $pressedKey = [Console]::ReadKey($true)
+        $isPressedKey = $key -eq $pressedKey.Key
+        if ($isPressedKey) {
+            $pressedKey.Modifiers -eq $ModifierKey
+        }
+        else {
+            [Console]::Beep(1800, 200)
+            $false
+        }
+    }
+}
+
+Write-Warning 'Press Ctrl+Shift+Q to exit'
+do {
+    Write-Host &quot;.&quot; -NoNewline
+    $pressed = Get-KeyPress -Key Q -ModifierKey 'Control,Shift'
+    if ($pressed) { break }
+    Start-Sleep 1
+} while ($true)
+</code></pre>
+<h2 id="drawing">Drawing<a class="headerlink" href="#drawing" title="Permanent link">&para;</a></h2>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-7.0&amp;redirectedfrom=MSDN">API</a></p>
+<pre><code class="language-PowerShell">Add-Type -AssemblyName System.Drawing
+$Width = 800
+$Height = 400
+$image = New-Object System.Drawing.Bitmap($Width,$Height)
+$graphic = [System.Drawing.Graphics]::FromImage($image)
+$background_color = [System.Drawing.Brushes]::Blue # задать цвет фона (синий)
+$graphic.FillRectangle($background_color, 0, 0, $image.Width, $image.Height)
+$text_color = [System.Drawing.Brushes]::White # задать цвет текста (белый)
+$font = New-Object System.Drawing.Font(&quot;Arial&quot;, 20, [System.Drawing.FontStyle]::Bold) # задать шрифт
+$text = &quot;PowerShell&quot; # указать текст
+$text_position = New-Object System.Drawing.RectangleF(320, 180, 300, 100)  # задать положение текста (x, y, width, height)
+$graphic.DrawString($text, $font, $text_color, $text_position) # нанести текст на изображение
+$image.Save(&quot;$home\desktop\powershell_image.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp) # сохранить изображение
+$image.Dispose() # освобождение ресурсов
+</code></pre>
+<p><code>$path = "$home\desktop\powershell_image.bmp"</code> <br />
+<code>Invoke-Item $path</code></p>
+<pre><code class="language-PowerShell">$src_image = [System.Drawing.Image]::FromFile($path)
+$Width = 400
+$Height = 200
+$dst_image = New-Object System.Drawing.Bitmap -ArgumentList $src_image, $Width, $Height # изменить размер изображения
+$dst_image.Save(&quot;$home\desktop\powershell_image_resize.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp)
+
+$rotated_image = $src_image.Clone() # создать копию исходного изображения
+$rotated_image.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) # перевернуть изображение на 180 градусов
+$rotated_image.Save(&quot;$home\desktop\powershell_image_rotated.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp)
+$src_image.Dispose() # закрыть (отпустить) исходный файл
+</code></pre>
+<h2 id="htmlagilitypack">HtmlAgilityPack<a class="headerlink" href="#htmlagilitypack" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.nuget.org/packages/HtmlAgilityPack">Source</a></p>
+<pre><code class="language-PowerShell"># Загрузка библиотеки C#, которая позволяет парсить HTML-документы, выбирать элементы DOM и извлекать из них данные
+Add-Type -Path &quot;C:\Users\Lifailon\Downloads\HtmlAgilityPack\Net40\HtmlAgilityPack.dll&quot;
+$title = &quot;новобранец&quot;
+$url = &quot;http://fasts-torrent.net&quot;
+$ep = &quot;engine/ajax/search_torrent.php?title=$title&quot;
+$html = Invoke-RestMethod &quot;$url/$ep&quot;
+# Создание нового объекта HtmlDocument из HtmlAgilityPack, который будет использоваться для загрузки и обработки HTML-кода
+$HtmlDocument = New-Object HtmlAgilityPack.HtmlDocument
+# Загрузка HTML в созданный объект HtmlDocument
+$HtmlDocument.LoadHtml($html)
+$torrents = @()
+# Использование XPath для выбора всех элементов &lt;tr&gt; (строк таблицы) в документе
+$HtmlDocument.DocumentNode.SelectNodes(&quot;//tr&quot;) | ForEach-Object {
+    # Для каждой строки таблицы выбираем классы, соответствующие названию раздачи, размеру и ссылке для скачивания.
+    $titleNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-title']&quot;)
+    $sizeNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-sp']&quot;)
+    $downloadLinkNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-d-btn']/a&quot;)
+    # Проверяем, что все классы найдены
+    if ($titleNode -ne $null -and $sizeNode -ne $null -and $downloadLinkNode -ne $null) {
+        # Извлечение текста из классов
+        $title = $titleNode.InnerText.Trim()
+        $size = $sizeNode.InnerText.Trim()
+        $downloadLink = $downloadLinkNode.Attributes[&quot;href&quot;].Value
+        $torrent = New-Object PSObject -Property @{
+            Title = $title
+            Size = $size
+            DownloadLink = &quot;$($url)$($downloadLink)&quot;
+        }
+        $torrents += $torrent
+    }
+}
+</code></pre>
+<p><code>$torrents</code></p>
+<pre><code class="language-PowerShell">Title                                                                    Size     DownloadLink
+-----                                                                    ----     ------------
+Новобранец (6 сезон: 1-3 серии из 13) (2024) WEBRip | RuDub              1,55 ГБ  http://fasts-torrent.net/download/449613/torrent/-6-1-3-13-2024-webrip-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 1080p | RuDub       54,15 ГБ http://fasts-torrent.net/download/433749/torrent/-5-1-22-22-2023-webrip-1080p-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 720p | RuDub        30,14 ГБ http://fasts-torrent.net/download/433750/torrent/-5-1-22-22-2023-webrip-720p-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip | RuDub             11,55 ГБ http://fasts-torrent.net/download/433751/torrent/-5-1-22-22-2023-webrip-rudub/
+Новобранец (4 сезон: 1-22 серии из 22) (2021) WEB-DL 720p | RG.Paravozik 21.33 Gb http://fasts-torrent.net/download/418618/torrent/-4-1-22-22-2021-web-dl-720p-rgparavozik/
+Полицейский с половиной: Новобранец (2017) WEB-DLRip 720p| Чистый звук   3.41 Gb  http://fasts-torrent.net/download/254846/torrent/-2017-web-dlrip-720p-/
+Полицейский с половиной: Новобранец (2017) WEB-DLRip | Чистый звук       1.37 Gb  http://fasts-torrent.net/download/254845/torrent/-2017-web-dlrip-/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip | BaibaKo           11.28 Gb http://fasts-torrent.net/download/364669/torrent/-2-1-20-20-2019-webrip-baibako/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip 1080p | Octopus     45.97 Gb http://fasts-torrent.net/download/364161/torrent/-2-1-20-20-2019-webrip-1080p-octopus/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEB-DLRip | LostFilm       11.95 Gb http://fasts-torrent.net/download/364668/torrent/-2-1-20-20-2019-web-dlrip-lostfilm/
+</code></pre>
+<h2 id="selenium">Selenium<a class="headerlink" href="#selenium" title="Permanent link">&para;</a></h2>
+<p><code>Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/Deploy-Selenium/rsa/Deploy-Selenium-Drivers.ps1")</code> установка всех драйверов и Chromium соответствующий версии для драйвера</p>
+<pre><code>$path = &quot;$home\Documents\Selenium\&quot;
+$log = &quot;$path\ChromeDriver.log&quot;
+$ChromeDriver = &quot;$path\ChromeDriver.exe&quot;
+$WebDriver = &quot;$path\WebDriver.dll&quot;
+$SupportDriver = &quot;$path\WebDriver.Support.dll&quot;
+$Chromium = (Get-ChildItem $path -Recurse | Where-Object Name -like chrome.exe).FullName
+Add-Type -Path $WebDriver
+Add-Type -Path $SupportDriver
+try {
+    $ChromeOptions = New-Object OpenQA.Selenium.Chrome.ChromeOptions # создаем объект с настройками запуска браузера
+    $ChromeOptions.BinaryLocation = $Chromium # передаем путь до исполняемого файла, который отвечает за запуск браузера
+    $ChromeOptions.AddArgument(&quot;start-maximized&quot;) # добавляем аргумент, который позволяет запустить браузер на весь экран
+    #$ChromeOptions.AddArgument(&quot;start-minimized&quot;) # запускаем браузер в окне
+    #$ChromeOptions.AddArgument(&quot;window-size=400,800&quot;) # запускаем браузер с заданными размерам окна в пикселях
+    $ChromeOptions.AcceptInsecureCertificates = $True # игнорировать предупреждение на сайтах с не валидным сертификатом
+    #$ChromeOptions.AddArgument(&quot;headless&quot;) # скрывать окно браузера при запуске
+    $ChromeDriverService = [OpenQA.Selenium.Chrome.ChromeDriverService]::CreateDefaultService($ChromeDriver) # создаем объект настроек службы драйвера
+    $ChromeDriverService.HideCommandPromptWindow = $True # отключаем весь вывод логирования драйвера в консоль (этот вывод нельзя перенаправить)
+    $ChromeDriverService.LogPath = $log # указать путь до файла с журналом
+    $ChromeDriverService.EnableAppendLog = $True # не перезаписывать журнал при каждом новом запуске
+    #$ChromeDriverService.EnableVerboseLogging = $True # кроме INFO и ошибок, записывать DEBUG сообщения
+    $Selenium = New-Object OpenQA.Selenium.Chrome.ChromeDriver($ChromeDriverService, $ChromeOptions) # инициализируем запуск с указанными настройками
+
+    $Selenium.Navigate().GoToUrl(&quot;https://google.com&quot;) # переходим по указанной ссылке в браузере
+    #$Selenium.Manage().Window.Minimize() # свернуть окно браузера после запуска и перехода по нужному url (что бы считать страницу корректно)
+    # Ищем поле для ввода текста:
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::Id('APjFqb'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::XPath('//*[@id=&quot;APjFqb&quot;]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::Name('q'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::XPath('//*[@name=&quot;q&quot;]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::ClassName('gLFyf'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;yZiJbe&quot;]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::TagName('textarea')) | Where-Object ComputedAccessibleRole -eq combobox
+    $Search.SendKeys(&quot;calculator online&quot;) # передаем текст выбранному элементу
+    $Search.SendKeys([OpenQA.Selenium.Keys]::Enter) # нажимаем Enter для вызова функции поиска
+
+    Start-Sleep 1
+    $div = $Selenium.FindElements([OpenQA.Selenium.By]::TagName(&quot;div&quot;))
+    $2 = $div | Where-Object {($_.ComputedAccessibleRole -eq &quot;button&quot;) -and ($_.ComputedAccessibleLabel -eq &quot;2&quot;)}
+    $2.Click()
+    $2.Click()
+    $plus = $div | Where-Object {($_.ComputedAccessibleRole -eq &quot;button&quot;) -and ($_.Text -eq &quot;+&quot;)}
+    $plus.Click()
+    $3 = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;KN1kY&quot;]'))
+    $3.Click()
+    $3.Click()
+    $sum = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;Pt8tGc&quot;]'))
+    $sum.Click()
+    $result = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname=&quot;VssY5c&quot;]')).Text
+    Write-Host &quot;Result: $result&quot; -ForegroundColor Green
+}
+finally {
+    $Selenium.Close()
+    $Selenium.Quit()
+}
+</code></pre>
+<h3 id="selenium-modules">Selenium modules<a class="headerlink" href="#selenium-modules" title="Permanent link">&para;</a></h3>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-GPT/Get-GPT.psm1 | Out-File -FilePath &quot;$(New-Item -Path &quot;$($($Env:PSModulePath -split &quot;;&quot;)[0])\Get-GPT&quot; -ItemType Directory -Force)\Get-GPT.psm1&quot; -Force
+</code></pre>
+<p><code>Get-GPT "Исполняй роль калькулятора. Посчитай сумму чисел: 22+33"</code></p>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-Translation/Get-Translation.psm1 | Out-File -FilePath &quot;$(New-Item -Path &quot;$($($Env:PSModulePath -split &quot;;&quot;)[0])\Get-Translation&quot; -ItemType Directory -Force)\Get-Translation.psm1&quot; -Force
+</code></pre>
+<p><code>Get-Translation -Provider DeepL -Text "I translating the text"</code> <br />
+<code>Get-Translation -Provider DeepL -Text "Я перевожу текст"</code> <br />
+<code>Get-Translation -Provider Google -Text "I translating the text"</code> <br />
+<code>Get-Translation -Provider Google -Text "Я перевожу текст" -Language en</code></p>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-SpeedTest/Get-SpeedTest.psm1 | Out-File -FilePath &quot;$(New-Item -Path &quot;$($($Env:PSModulePath -split &quot;;&quot;)[0])\Get-SpeedTest&quot; -ItemType Directory -Force)\Get-SpeedTest.psm1&quot; -Force
+</code></pre>
+<p><code>Get-SpeedTest -Provider Libre</code> <br />
+<code>Get-SpeedTest -Provider Open</code> <br />
+<code>Get-SpeedTest -Provider Ookla</code></p>
+<h2 id="object-event">Object Event<a class="headerlink" href="#object-event" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$Timer = New-Object System.Timers.Timer
+$Timer.Interval = 1000
+Register-ObjectEvent -InputObject $Timer -EventName Elapsed -SourceIdentifier Timer.Output -Action {
+$Random = Get-Random -Min 0 -Max 100
+Write-Host $Random 
+}
+$Timer.Enabled = $True
+</code></pre>
+<p><code>$Timer.Enabled = $False</code> остановить <br />
+<code>$Timer | Get-Member -MemberType Event</code> отобразить список всех событий объекта <br />
+<code>Get-EventSubscriber</code> список зарегистрированных подписок на события в текущей сессии <br />
+<code>Unregister-Event -SourceIdentifier Timer.Output</code> удаляет регистрацию подписки на событие по имени события (EventName) или все * <br />
+<code>-Forward</code> перенаправляет события из удаленного сеанса (New-PSSession) в локальный сеанс <br />
+<code>-SupportEvent</code> не выводит результат регистрации события на экран (и Get-EventSubscriber и Get-Job)</p>
+<pre><code>Register-EngineEvent -SourceIdentifier PowerShell.Exiting -Action {
+$date = Get-Date -f hh:mm:ss
+(New-Object -ComObject Wscript.Shell).Popup(&quot;PowerShell Exit: $date&quot;,0,&quot;Action&quot;,64)
+}
+</code></pre>
+<h1 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h1>
+<h2 id="eventlog">EventLog<a class="headerlink" href="#eventlog" title="Permanent link">&para;</a></h2>
 <p><code>[System.Diagnostics.EventLog] | select Assembly,Module</code> <br />
 <code>$EventLog = [System.Diagnostics.EventLog]::new("Application")</code> <br />
 <code>$EventLog = New-Object -TypeName System.Diagnostics.EventLog -ArgumentList Application,192.168.3.100</code> <br />
@@ -1622,19 +1294,18 @@
 <code>$EventLog.MaximumKilobytes</code> максимальный размер журнала <br />
 <code>$EventLog.Entries</code> просмотреть журнал <br />
 <code>$EventLog.Clear()</code> очистить журнал</p>
-<h3 id="iopath">IO.Path<a class="headerlink" href="#iopath" title="Permanent link">&para;</a></h3>
 <p><code>Join-Path C: Install Test</code> <br />
 <code>[System.IO.Path]::Combine("C:", "Install", "Test")</code></p>
-<h3 id="match">Match<a class="headerlink" href="#match" title="Permanent link">&para;</a></h3>
+<h2 id="match">Match<a class="headerlink" href="#match" title="Permanent link">&para;</a></h2>
 <p><code>[System.Math] | Get-Member -Static -MemberType Methods</code> <br />
 <code>[System.Math]::Max(2,7)</code> <br />
 <code>[System.Math]::Min(2,7)</code> <br />
 <code>[System.Math]::Floor(3.9)</code> <br />
 <code>[System.Math]::Truncate(3.9)</code></p>
-<h3 id="generatepassword">GeneratePassword<a class="headerlink" href="#generatepassword" title="Permanent link">&para;</a></h3>
+<h2 id="generatepassword">GeneratePassword<a class="headerlink" href="#generatepassword" title="Permanent link">&para;</a></h2>
 <p><code>Add-Type -AssemblyName System.Web</code> <br />
 <code>[System.Web.Security.Membership]::GeneratePassword(10,2)</code></p>
-<h3 id="soundplayer">SoundPlayer<a class="headerlink" href="#soundplayer" title="Permanent link">&para;</a></h3>
+<h2 id="soundplayer">SoundPlayer<a class="headerlink" href="#soundplayer" title="Permanent link">&para;</a></h2>
 <pre><code class="language-PowerShell">$CriticalSound = New-Object System.Media.SoundPlayer
 $CriticalSound.SoundLocation = &quot;C:\WINDOWS\Media\Windows Critical Stop.wav&quot;
 $CriticalSound.Play()
@@ -1643,7 +1314,7 @@ $GoodSound = New-Object System.Media.SoundPlayer
 $GoodSound.SoundLocation = &quot;C:\WINDOWS\Media\tada.wav&quot;
 $GoodSound.Play()
 </code></pre>
-<h3 id="static-class">Static Class<a class="headerlink" href="#static-class" title="Permanent link">&para;</a></h3>
+<h2 id="static-class">Static Class<a class="headerlink" href="#static-class" title="Permanent link">&para;</a></h2>
 <p><code>[System.Environment] | Get-Member -Static</code> <br />
 <code>[System.Environment]::OSVersion</code> <br />
 <code>[System.Environment]::Version</code> <br />
@@ -1651,8 +1322,7 @@ $GoodSound.Play()
 <code>[System.Environment]::UserName</code></p>
 <p><code>[System.Diagnostics.Process] | Get-Member -Static</code> <br />
 <code>[System.Diagnostics.Process]::Start('notepad.exe')</code></p>
-<h2 id="function">Function<a class="headerlink" href="#function" title="Permanent link">&para;</a></h2>
-<h3 id="clicker">[Clicker]<a class="headerlink" href="#clicker" title="Permanent link">&para;</a></h3>
+<h2 id="clicker">Clicker<a class="headerlink" href="#clicker" title="Permanent link">&para;</a></h2>
 <pre><code class="language-PowerShell">$cSource = @'
 using System;
 using System.Drawing;
@@ -1715,7 +1385,7 @@ public static void LeftClickAtPoint(int x, int y)
 </code></pre>
 <p><code>Add-Type -TypeDefinition $cSource -ReferencedAssemblies System.Windows.Forms,System.Drawing</code> <br />
 <code>[Clicker]::LeftClickAtPoint(1900,1070)</code></p>
-<h3 id="audio">[Audio]<a class="headerlink" href="#audio" title="Permanent link">&para;</a></h3>
+<h2 id="audio">Audio<a class="headerlink" href="#audio" title="Permanent link">&para;</a></h2>
 <pre><code class="language-PowerShell">Add-Type -Language CsharpVersion3 -TypeDefinition @&quot;
 using System.Runtime.InteropServices;
 [Guid(&quot;5CDF2C82-841E-4546-9722-0CF74078229A&quot;), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -1762,7 +1432,7 @@ set { Marshal.ThrowExceptionForHR(Vol().SetMute(value, System.Guid.Empty)); }
 </code></pre>
 <p><code>[Audio]::Volume = 0.50</code> <br />
 <code>[Audio]::Mute = $true</code></p>
-<h3 id="netsessionenum">NetSessionEnum<a class="headerlink" href="#netsessionenum" title="Permanent link">&para;</a></h3>
+<h2 id="netsessionenum">NetSessionEnum<a class="headerlink" href="#netsessionenum" title="Permanent link">&para;</a></h2>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN">Function</a> <br />
 <a href="https://fuzzysecurity.com/tutorials/24.html">Source</a></p>
 <pre><code class="language-PowerShell">function Invoke-NetSessionEnum {
@@ -1834,7 +1504,7 @@ echo &quot;`nCalling NetApiBufferFree, no memleaks here!&quot;
 }
 </code></pre>
 <p><code>Invoke-NetSessionEnum localhost</code></p>
-<h3 id="copyfile">CopyFile<a class="headerlink" href="#copyfile" title="Permanent link">&para;</a></h3>
+<h2 id="copyfile">CopyFile<a class="headerlink" href="#copyfile" title="Permanent link">&para;</a></h2>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile">Function</a> <br />
 <a href="https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1/">Source</a></p>
 <pre><code class="language-PowerShell">$MethodDefinition = @&quot;
@@ -1844,7 +1514,7 @@ public static extern bool CopyFile(string lpExistingFileName, string lpNewFileNa
 $Kernel32 = Add-Type -MemberDefinition $MethodDefinition -Name &quot;Kernel32&quot; -Namespace &quot;Win32&quot; -PassThru
 $Kernel32::CopyFile(&quot;$($Env:SystemRoot)\System32\calc.exe&quot;, &quot;$($Env:USERPROFILE)\Desktop\calc.exe&quot;, $False) 
 </code></pre>
-<h3 id="showwindowasync">ShowWindowAsync<a class="headerlink" href="#showwindowasync" title="Permanent link">&para;</a></h3>
+<h2 id="showwindowasync">ShowWindowAsync<a class="headerlink" href="#showwindowasync" title="Permanent link">&para;</a></h2>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync">Function</a></p>
 <pre><code class="language-PowerShell">$Signature = @&quot;
 [DllImport(&quot;user32.dll&quot;)]public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
@@ -1855,7 +1525,7 @@ $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $pid).MainWindowHandle, 2)
 $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 3)
 $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 4)
 </code></pre>
-<h3 id="getasynckeystate">GetAsyncKeyState<a class="headerlink" href="#getasynckeystate" title="Permanent link">&para;</a></h3>
+<h2 id="getasynckeystate">GetAsyncKeyState<a class="headerlink" href="#getasynckeystate" title="Permanent link">&para;</a></h2>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-getasynckeystate">Function</a></p>
 <p><code>Add-Type -AssemblyName System.Windows.Forms</code> <br />
 <code>[int][System.Windows.Forms.Keys]::F1</code> определить номер [Int] клавиши по ее названию <br />
@@ -1877,531 +1547,6 @@ if (Get-ControlKey) {
 break
 }
 Start-Sleep -Seconds 0.5
-}
-</code></pre>
-<h2 id="objectevent">ObjectEvent<a class="headerlink" href="#objectevent" title="Permanent link">&para;</a></h2>
-<pre><code class="language-PowerShell">$Timer = New-Object System.Timers.Timer
-$Timer.Interval = 1000
-Register-ObjectEvent -InputObject $Timer -EventName Elapsed -SourceIdentifier Timer.Output -Action {
-$Random = Get-Random -Min 0 -Max 100
-Write-Host $Random 
-}
-$Timer.Enabled = $True
-</code></pre>
-<p><code>$Timer.Enabled = $False</code> остановить <br />
-<code>$Timer | Get-Member -MemberType Event</code> отобразить список всех событий объекта <br />
-<code>Get-EventSubscriber</code> список зарегистрированных подписок на события в текущей сессии <br />
-<code>Unregister-Event -SourceIdentifier Timer.Output</code> удаляет регистрацию подписки на событие по имени события (EventName) или все * <br />
-<code>-Forward</code> перенаправляет события из удаленного сеанса (New-PSSession) в локальный сеанс <br />
-<code>-SupportEvent</code> не выводит результат регистрации события на экран (и Get-EventSubscriber и Get-Job)</p>
-<pre><code>Register-EngineEvent -SourceIdentifier PowerShell.Exiting -Action {
-$date = Get-Date -f hh:mm:ss
-(New-Object -ComObject Wscript.Shell).Popup(&quot;PowerShell Exit: $date&quot;,0,&quot;Action&quot;,64)
-}
-</code></pre>
-<h2 id="console-api">Console API<a class="headerlink" href="#console-api" title="Permanent link">&para;</a></h2>
-<p><a href="https://powershell.one/tricks/input-devices/detect-key-press">Source</a></p>
-<p><code>[Console] | Get-Member -Static</code> <br />
-<code>[Console]::BackgroundColor = "Blue"</code> <br />
-<code>[Console]::OutputEncoding</code> используемая кодировка в текущей сессии <br />
-<code>[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")</code> изменить кодировку для отображения кириллицы <br />
-<code>[Console]::outputEncoding = [System.Text.Encoding]::GetEncoding("cp866")</code> для ISE <br />
-<code>[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("windows-1251")</code> для ps2exe <br />
-<code>Get-Service | Out-File $home\Desktop\Service.txt -Encoding oem</code> &gt; <br />
-<code>Get-Service | Out-File $home\Desktop\Service.txt -Append</code> &gt;&gt;</p>
-<pre><code class="language-PowerShell">do {
-if ([Console]::KeyAvailable) {
-$keyInfo = [Console]::ReadKey($true)
-break
-}
-Write-Host &quot;.&quot; -NoNewline
-sleep 1
-} while ($true)
-Write-Host
-$keyInfo
-
-function Get-KeyPress {
-param (
-[Parameter(Mandatory)][ConsoleKey]$Key,
-[System.ConsoleModifiers]$ModifierKey = 0
-)
-if ([Console]::KeyAvailable) {
-$pressedKey = [Console]::ReadKey($true)
-$isPressedKey = $key -eq $pressedKey.Key
-if ($isPressedKey) {
-$pressedKey.Modifiers -eq $ModifierKey
-} else {
-[Console]::Beep(1800, 200)
-$false
-}}}
-
-Write-Warning 'Press Ctrl+Shift+Q to exit'
-do {
-Write-Host &quot;.&quot; -NoNewline
-$pressed = Get-KeyPress -Key Q -ModifierKey 'Control,Shift'
-if ($pressed) {break}
-sleep 1
-} while ($true)
-</code></pre>
-<h2 id="drawing">Drawing<a class="headerlink" href="#drawing" title="Permanent link">&para;</a></h2>
-<p><a href="https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-7.0&amp;redirectedfrom=MSDN">API</a></p>
-<pre><code class="language-PowerShell">Add-Type -AssemblyName System.Drawing
-$Width = 800
-$Height = 400
-$image = New-Object System.Drawing.Bitmap($Width,$Height)
-$graphic = [System.Drawing.Graphics]::FromImage($image)
-$background_color = [System.Drawing.Brushes]::Blue # задать цвет фона (синий)
-$graphic.FillRectangle($background_color, 0, 0, $image.Width, $image.Height)
-$text_color = [System.Drawing.Brushes]::White # задать цвет текста (белый)
-$font = New-Object System.Drawing.Font(&quot;Arial&quot;, 20, [System.Drawing.FontStyle]::Bold) # задать шрифт
-$text = &quot;PowerShell&quot; # указать текст
-$text_position = New-Object System.Drawing.RectangleF(320, 180, 300, 100)  # задать положение текста (x, y, width, height)
-$graphic.DrawString($text, $font, $text_color, $text_position) # нанести текст на изображение
-$image.Save(&quot;$home\desktop\powershell_image.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp) # сохранить изображение
-$image.Dispose() # освобождение ресурсов
-</code></pre>
-<p><code>$path = "$home\desktop\powershell_image.bmp"</code> <br />
-<code>Invoke-Item $path</code></p>
-<pre><code class="language-PowerShell">$src_image = [System.Drawing.Image]::FromFile($path)
-$Width = 400
-$Height = 200
-$dst_image = New-Object System.Drawing.Bitmap -ArgumentList $src_image, $Width, $Height # изменить размер изображения
-$dst_image.Save(&quot;$home\desktop\powershell_image_resize.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp)
-
-$rotated_image = $src_image.Clone() # создать копию исходного изображения
-$rotated_image.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) # перевернуть изображение на 180 градусов
-$rotated_image.Save(&quot;$home\desktop\powershell_image_rotated.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp)
-$src_image.Dispose() # закрыть (отпустить) исходный файл
-</code></pre>
-<h1 id="objectevent_1">ObjectEvent<a class="headerlink" href="#objectevent_1" title="Permanent link">&para;</a></h1>
-<pre><code class="language-PowerShell">$Timer = New-Object System.Timers.Timer
-$Timer.Interval = 1000
-Register-ObjectEvent -InputObject $Timer -EventName Elapsed -SourceIdentifier Timer.Output -Action {
-$Random = Get-Random -Min 0 -Max 100
-Write-Host $Random 
-}
-$Timer.Enabled = $True
-</code></pre>
-<p><code>$Timer.Enabled = $False</code> остановить <br />
-<code>$Timer | Get-Member -MemberType Event</code> отобразить список всех событий объекта <br />
-<code>Get-EventSubscriber</code> список зарегистрированных подписок на события в текущей сессии <br />
-<code>Unregister-Event -SourceIdentifier Timer.Output</code> удаляет регистрацию подписки на событие по имени события (EventName) или все * <br />
-<code>-Forward</code> перенаправляет события из удаленного сеанса (New-PSSession) в локальный сеанс <br />
-<code>-SupportEvent</code> не выводит результат регистрации события на экран (и Get-EventSubscriber и Get-Job)</p>
-<pre><code>Register-EngineEvent -SourceIdentifier PowerShell.Exiting -Action {
-$date = Get-Date -f hh:mm:ss
-(New-Object -ComObject Wscript.Shell).Popup(&quot;PowerShell Exit: $date&quot;,0,&quot;Action&quot;,64)
-}
-</code></pre>
-<h2 id="sockets">Sockets<a class="headerlink" href="#sockets" title="Permanent link">&para;</a></h2>
-<h3 id="udp-socket">UDP Socket<a class="headerlink" href="#udp-socket" title="Permanent link">&para;</a></h3>
-<p><a href="https://cloudbrothers.info/en/test-udp-connection-powershell/">Source</a></p>
-<pre><code class="language-PowerShell">function Start-UDPServer {
-param(
-$Port = 5201
-)
-$RemoteComputer = New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any, 0)
-do {
-$UdpObject = New-Object System.Net.Sockets.UdpClient($Port)
-$ReceiveBytes = $UdpObject.Receive([ref]$RemoteComputer)
-$UdpObject.Close()
-$ASCIIEncoding = New-Object System.Text.ASCIIEncoding
-[string]$ReturnString = $ASCIIEncoding.GetString($ReceiveBytes)
-[PSCustomObject]@{
-LocalDateTime = $(Get-Date -UFormat &quot;%Y-%m-%d %T&quot;)
-ClientIP      = $RemoteComputer.address.ToString()
-ClientPort    = $RemoteComputer.Port.ToString()
-Message       = $ReturnString
-}
-} while (1)
-}
-</code></pre>
-<p><code>Start-UDPServer -Port 5201</code></p>
-<h3 id="test-netudpconnection">Test-NetUDPConnection<a class="headerlink" href="#test-netudpconnection" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">function Test-NetUDPConnection {
-param(
-[string]$ComputerName = &quot;127.0.0.1&quot;,
-[int32]$PortServer    = 5201,
-[int32]$PortClient    = 5211,
-$Message
-)
-begin {
-$UdpObject = New-Object system.Net.Sockets.Udpclient($PortClient)
-$UdpObject.Connect($ComputerName, $PortServer)
-}
-process {
-$ASCIIEncoding = New-Object System.Text.ASCIIEncoding
-if (!$Message) {$Message = Get-Date -UFormat &quot;%Y-%m-%d %T&quot;}
-$Bytes = $ASCIIEncoding.GetBytes($Message)
-[void]$UdpObject.Send($Bytes, $Bytes.length)
-}
-end {
-$UdpObject.Close()
-}
-}
-</code></pre>
-<p><code>Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 5201</code> <br />
-<code>Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 514 -Message "&lt;30&gt;May 31 00:00:00 HostName multipathd[784]: Test message"</code></p>
-<h3 id="tcp-socket">TCP Socket<a class="headerlink" href="#tcp-socket" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">function Start-TCPServer {
-param(
-$Port = 5201
-)
-do {
-$TcpObject = New-Object System.Net.Sockets.TcpListener($port)
-$ReceiveBytes = $TcpObject.Start()
-$ReceiveBytes = $TcpObject.AcceptTcpClient()
-$TcpObject.Stop()
-$ReceiveBytes.Client.RemoteEndPoint | select Address,Port
-} while (1)
-}
-</code></pre>
-<p><code>Start-TCPServer -Port 5201</code> <br />
-<code>Test-NetConnection -ComputerName 127.0.0.1 -Port 5201</code></p>
-<h3 id="wakeonlan">WakeOnLan<a class="headerlink" href="#wakeonlan" title="Permanent link">&para;</a></h3>
-<p>Broadcast package consisting of 6 byte filled "0xFF" and then 96 byte where the mac address is repeated 16 times</p>
-<pre><code class="language-PowerShell">function Send-WOL {
-param (
-[Parameter(Mandatory = $True)]$Mac,
-$IP,
-[int]$Port = 9
-)
-$Mac = $Mac.replace(&quot;:&quot;, &quot;-&quot;)
-if (!$IP) {$IP = [System.Net.IPAddress]::Broadcast}
-$SynchronizationChain = [byte[]](,0xFF * 6)
-$ByteMac = $Mac.Split(&quot;-&quot;) | %{[byte](&quot;0x&quot; + $_)}
-$Package = $SynchronizationChain + ($ByteMac * 16)
-$UdpClient = New-Object System.Net.Sockets.UdpClient
-$UdpClient.Connect($IP, $port)
-$UdpClient.Send($Package, $Package.Length)
-$UdpClient.Close()
-}
-</code></pre>
-<p><code>Send-WOL -Mac "D8-BB-C1-70-A3-4E"</code> <br />
-<code>Send-WOL -Mac "D8-BB-C1-70-A3-4E" -IP 192.168.3.100</code></p>
-<h3 id="encoding">Encoding<a class="headerlink" href="#encoding" title="Permanent link">&para;</a></h3>
-<p><code>$ByteText = [System.Text.Encoding]::UTF8.GetBytes("password")</code> <br />
-<code>$Text = [System.Text.Encoding]::UTF8.GetString($ByteText)</code></p>
-<h3 id="base64">Base64<a class="headerlink" href="#base64" title="Permanent link">&para;</a></h3>
-<p><code>$text = "password"</code> <br />
-<code>$byte = [System.Text.Encoding]::Unicode.GetBytes($text)</code> <br />
-<code>$base64 = [System.Convert]::ToBase64String($byte)</code> <br />
-<code>$decode_base64 = [System.Convert]::FromBase64String($base64)</code> <br />
-<code>$decode_string = [System.Text.Encoding]::Unicode.GetString($decode_base64)</code></p>
-<p><code>$path_image = "$home\Documents\1200x800.jpg"</code> <br />
-<code>$BBase64 = [System.Convert]::ToBase64String((Get-Content $path_image -Encoding Byte))</code> <br />
-<code>Add-Type -assembly System.Drawing</code> <br />
-<code>$Image = [System.Drawing.Bitmap]::FromStream([IO.MemoryStream][Convert]::FromBase64String($BBase64))</code> <br />
-<code>$Image.Save("$home\Desktop\1200x800.jpg")</code></p>
-<h3 id="http-listener">HTTP Listener<a class="headerlink" href="#http-listener" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">$httpListener = New-Object System.Net.HttpListener
-$httpListener.Prefixes.Add(&quot;http://+:8888/&quot;)
-$httpListener.Start()
-while (!([console]::KeyAvailable)) {
-$info = Get-Service | select name,status | ConvertTo-HTML
-$context = $httpListener.GetContext()
-$context.Response.StatusCode = 200
-$context.Response.ContentType = 'text/HTML'
-$WebContent = $info
-$EncodingWebContent = [Text.Encoding]::UTF8.GetBytes($WebContent)
-$context.Response.OutputStream.Write($EncodingWebContent , 0, $EncodingWebContent.Length)
-$context.Response.Close()
-Get-NetTcpConnection -LocalPort 8888
-(Get-Date).datetime
-}
-$httpListener.Close()
-</code></pre>
-<h3 id="webclient">WebClient<a class="headerlink" href="#webclient" title="Permanent link">&para;</a></h3>
-<p><code>[System.Net.WebClient] | Get-Member</code> <br />
-<code>(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell-Commands/rsa/README.md")</code></p>
-<h3 id="certificate">Certificate<a class="headerlink" href="#certificate" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">function Get-WebCertificate ($srv) {
-$iwr = iwr $srv
-$status_code = $iwr.StatusCode
-$status = $iwr.BaseResponse.StatusCode
-$info = $iwr.BaseResponse.Server
-$spm = [System.Net.ServicePointManager]::FindServicePoint($srv)
-$date_end = $spm.Certificate.GetExpirationDateString()
-$cert_name = ($spm.Certificate.Subject) -replace &quot;CN=&quot;
-$cert_owner = ((($spm.Certificate.Issuer) -split &quot;, &quot;) | where {$_ -match &quot;O=&quot;}) -replace &quot;O=&quot;
-$Collections = New-Object System.Collections.Generic.List[System.Object]
-$Collections.Add([PSCustomObject]@{
-Host = $srv;
-Server = $info;
-Status =  $status;
-StatusCode = $status_code;
-Certificate = $cert_name;
-Issued = $cert_owner;
-End = $date_end
-})
-$Collections
-}
-</code></pre>
-<p><code>Get-WebCertificate https://google.com</code></p>
-<h2 id="csv">CSV<a class="headerlink" href="#csv" title="Permanent link">&para;</a></h2>
-<p><code>Get-Service | Select Name,DisplayName,Status,StartType | Export-Csv -path "$home\Desktop\Get-Service.csv" -Append -Encoding Default</code> экспортировать в csv (-Encoding UTF8) <br />
-<code>Import-Csv "$home\Desktop\Get-Service.csv" -Delimiter ","</code> импортировать массив</p>
-<pre><code class="language-PowerShell">$data = ConvertFrom-Csv @&quot;
-Region,State,Units,Price
-West,Texas,927,923.71
-$null,Tennessee,466,770.67
-&quot;@
-</code></pre>
-<p><code>$systeminfo = systeminfo /FO csv | ConvertFrom-Csv</code> вывод работы программы в CSV и конвертация в объект <br />
-<code>$systeminfo."Полный объем физической памяти"</code> <br />
-<code>$systeminfo."Доступная физическая память"</code></p>
-<h3 id="convertfrom-string">ConvertFrom-String<a class="headerlink" href="#convertfrom-string" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">'
-log = 
-{
-   level = 4;
-};
-' | ConvertFrom-String` создает PSCustomObject (разбивает по пробелам, удаляет все пробелы и пустые строки)
-</code></pre>
-<h3 id="convertfrom-stringdata">ConvertFrom-StringData<a class="headerlink" href="#convertfrom-stringdata" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">&quot;
-key1 = value1
-key2 = value2
-&quot; | ConvertFrom-StringData # создает Hashtable
-</code></pre>
-<h2 id="xml">XML<a class="headerlink" href="#xml" title="Permanent link">&para;</a></h2>
-<pre><code class="language-PowerShell">$xml = [xml](Get-Content $home\desktop\test.rdg)` прочитать содержимое XML-файла
-$xml.load(&quot;$home\desktop\test.rdg&quot;)` открыть файл
-$xml.RDCMan.file.group.properties.name` имена групп
-$xml.RDCMan.file.group.server.properties` имена всех серверов
-$xml.RDCMan.file.group[3].server.properties` список серверов в 4-й группе
-($xml.RDCMan.file.group[3].server.properties | ? name -like ADIRK).Name = &quot;New-Name&quot;` изменить значение
-$xml.RDCMan.file.group[3].server[0].properties.displayName = &quot;New-displayName&quot; 
-$xml.RDCMan.file.group[3].server[1].RemoveAll()` удалить объект (2-й сервер в списке)
-$xml.Save($file)` сохранить содержимое объекта в файла
-</code></pre>
-<p><code>Get-Service | Export-Clixml -path $home\desktop\test.xml</code> экспортировать объект PowerShell в XML <br />
-<code>Import-Clixml -Path $home\desktop\test.xml</code> импортировать объект XML в PowerShell <br />
-<code>ConvertTo-Xml (Get-Service)</code></p>
-<h3 id="get-credtoxml">Get-CredToXML<a class="headerlink" href="#get-credtoxml" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">function Get-CredToXML {
-    param (
-        $CredFile = &quot;$home\Documents\cred.xml&quot;
-    )
-    if (Test-Path $CredFile) {
-        Import-Clixml -path $CredFile
-    }
-    elseif (!(Test-Path $CredFile)) {
-        $Cred = Get-Credential -Message &quot;Enter credential&quot;
-        if ($Cred -ne $null) {
-        $Cred | Export-CliXml -Path $CredFile
-        $Cred
-    }
-    else {
-        return
-    }
-    }
-}
-</code></pre>
-<p><code>$Cred = Get-CredToXML</code> <br />
-<code>$Login = $Cred.UserName</code> <br />
-<code>$PasswordText = $Cred.GetNetworkCredential().password</code> получить пароль в текстовом виде</p>
-<h3 id="xmlwriter-extensible-markup-language">XmlWriter (Extensible Markup Language)<a class="headerlink" href="#xmlwriter-extensible-markup-language" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">$XmlWriterSettings = New-Object System.Xml.XmlWriterSettings
-$XmlWriterSettings.Indent = $true` включить отступы
-$XmlWriterSettings.IndentChars = &quot;    &quot;` задать отступ
-
-$XmlFilePath = &quot;$home\desktop\test.xml&quot;
-$XmlObjectWriter = [System.XML.XmlWriter]::Create($XmlFilePath, $XmlWriterSettings)` создать документ
-$XmlObjectWriter.WriteStartDocument()` начать запись в документ
-
-$XmlObjectWriter.WriteComment(&quot;Comment&quot;)
-$XmlObjectWriter.WriteStartElement(&quot;Root&quot;)` создать стартовый элемент, который содержит дочерние объекты
-    $XmlObjectWriter.WriteStartElement(&quot;Configuration&quot;)` создать первый дочерний элемент для BaseSettings
-        $XmlObjectWriter.WriteElementString(&quot;Language&quot;,&quot;RU&quot;)
-        $XmlObjectWriter.WriteStartElement(&quot;Fonts&quot;)         # &lt;Fonts&gt;
-            $XmlObjectWriter.WriteElementString(&quot;Name&quot;,&quot;Arial&quot;)
-            $XmlObjectWriter.WriteElementString(&quot;Size&quot;,&quot;12&quot;)
-        $XmlObjectWriter.WriteEndElement()                  # &lt;/Fonts&gt;
-    $XmlObjectWriter.WriteEndElement()` конечный элемент &lt;/Configuration&gt;
-$XmlObjectWriter.WriteEndElement()` конечный элемент &lt;/Root&gt;
-
-$XmlObjectWriter.WriteEndDocument()` завершить запись в документ
-$XmlObjectWriter.Flush()
-$XmlObjectWriter.Close()
-</code></pre>
-<h3 id="createelement">CreateElement<a class="headerlink" href="#createelement" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">$xml = [xml](gc $home\desktop\test.xml)
-$xml.Root.Configuration.Fonts
-$NewElement = $xml.CreateElement(&quot;Fonts&quot;)` выбрать элемент куда добавить
-$NewElement.set_InnerXML(&quot;&lt;Name&gt;Times New Roman&lt;/Name&gt;&lt;Size&gt;14&lt;/Size&gt;&quot;)` Заполнить значениями дочерние элементы Fonts
-$xml.Root.Configuration.AppendChild($NewElement)` добавить элемент новой строкой в Configuration (родитель Fonts)
-$xml.Save(&quot;$home\desktop\test.xml&quot;)
-</code></pre>
-<h1 id="json">JSON<a class="headerlink" href="#json" title="Permanent link">&para;</a></h1>
-<pre><code class="language-PowerShell">$log = '
-{
-  &quot;log&quot;: {
-    &quot;level&quot;: 7
-  }
-}
-' | ConvertFrom-Json
-
-Get-Service | ConvertTo-Json
-
-$OOKLA  = '
-{
-&quot;result&quot; : 
-{&quot;date&quot;:1683534970,&quot;id&quot;:&quot;14708271987&quot;,&quot;connection_icon&quot;:&quot;wireless&quot;,&quot;download&quot;:33418,&quot;upload&quot;:35442,&quot;latency&quot;:15,&quot;distance&quot;:50,&quot;country_code&quot;:&quot;RU&quot;,&quot;server_id&quot;:2707,&quot;server_name&quot;:&quot;Bryansk&quot;,&quot;sponsor_name&quot;:&quot;DOM.RU&quot;,&quot;sponsor_url&quot;:null,&quot;connection_mode&quot;:&quot;multi&quot;,&quot;isp_name&quot;:&quot;Resource Link&quot;,&quot;isp_rating&quot;:&quot;4.0&quot;,&quot;test_rank&quot;:63,&quot;test_grade&quot;:&quot;B-&quot;,&quot;test_rating&quot;:4,&quot;idle_latency&quot;:&quot;17&quot;,&quot;download_latency&quot;:&quot;116&quot;,&quot;upload_latency&quot;:&quot;75&quot;,&quot;additional_servers&quot;:
-[{&quot;server_id&quot;:8191,&quot;server_name&quot;:&quot;Bryansk&quot;,&quot;sponsor_name&quot;:&quot;SectorTelecom.ru&quot;},{&quot;server_id&quot;:46278,&quot;server_name&quot;:&quot;Fokino&quot;,&quot;sponsor_name&quot;:&quot;Fokks - Promyshlennaya avtomatika Ltd.&quot;},{&quot;server_id&quot;:18218,&quot;server_name&quot;:&quot;Bryansk&quot;,&quot;sponsor_name&quot;:&quot;RIA-link Ltd.&quot;}],
-&quot;path&quot;:&quot;result\u002F14708271987&quot;,&quot;hasSecondary&quot;:true
-}
-}
-' | ConvertFrom-Json
-$ookla.result
-</code></pre>
-<h2 id="yaml">YAML<a class="headerlink" href="#yaml" title="Permanent link">&para;</a></h2>
-<pre><code class="language-PowerShell">Import-Module PSYaml` используется в Docker/Ansible
-$netplan = &quot;
-network:` словарь по типу - ключ : значение с вложенными словарями
-  ethernets:
-    ens160:
-      dhcp4: yes
-      dhcp6: no
-      nameservers:
-        addresses:` [8.8.8.8, 1.1.1.1]` список данных (строк)
-          - 8.8.8.8
-          - 1.1.1.1
-  version: 2
-&quot;
-$network = ConvertFrom-Yaml $netplan
-$network.Values.ethernets.ens160.nameservers
-
-$DataType = &quot;
-int: !!int 10.1
-flo: !!float 10.1
-str: !!str string
-bool: !!bool` boolean
-&quot;
-</code></pre>
-<h2 id="sqlite">SQLite<a class="headerlink" href="#sqlite" title="Permanent link">&para;</a></h2>
-<pre><code class="language-PowerShell">$path = &quot;$home\Documents\Get-Service.db&quot;
-$Module = Get-Module MySQLite
-if ($Module -eq $null) {
-Install-Module MySQLite -Repository PSGallery -Scope CurrentUser
-}
-Import-Module MySQLite
-New-MySQLiteDB -Path $path # создать БД
-Invoke-MySQLiteQuery -Path $path -Query &quot;CREATE TABLE Service (Name TEXT NOT NULL, DisplayName TEXT NOT NULL, Status TEXT NOT NULL);&quot; # создать таблицу
-
-$Service = Get-Service | select Name,DisplayName,Status
-foreach ($S in $Service) {
-$Name = $S.Name
-$DName = $S.DisplayName
-$Status = $S.Status
-Invoke-MySQLiteQuery -Path $path -Query &quot;INSERT INTO Service (Name, DisplayName, Status) VALUES ('$Name', '$DName', '$Status');&quot;
-}
-</code></pre>
-<p><code>(Get-MySQLiteDB $path).Tables</code> список таблиц в базе <br />
-<code>Invoke-MySQLiteQuery -Path $path -Query "SELECT name FROM sqlite_master WHERE type='table';"</code> список таблиц в базе <br />
-<code>Invoke-MySQLiteQuery -Path $path -Query "DROP TABLE Service;"</code> удалить таблицу</p>
-<pre><code class="language-PowerShell">$TableName = &quot;Service&quot;
-Invoke-MySQLiteQuery -Path $path -Query &quot;SELECT * FROM $TableName&quot; # прочитать содержимое таблицы (в формате объекта)
-</code></pre>
-<p><code>Get-Service | select  Name,DisplayName,Status | ConvertTo-MySQLiteDB -Path $path -TableName Service -force</code> конвертировать объект в таблицу</p>
-<h3 id="database-password">Database password<a class="headerlink" href="#database-password" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">$Connection = New-SQLiteConnection -DataSource $path
-$Connection.ChangePassword(&quot;password&quot;)
-$Connection.Close()
-Invoke-SqliteQuery -Query &quot;SELECT * FROM Service&quot; -DataSource &quot;$path;Password=password&quot;
-</code></pre>
-<h2 id="elasticsearch">Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permanent link">&para;</a></h2>
-<p><code>Install-Module -Name Elastic.Console -AllowPrerelease</code> <a href="https://github.com/elastic/powershell/blob/master/Elastic.Console/README.md">github source</a> <br />
-<code>Get-Command -Module Elastic.Console</code> <br />
-<code>Get-ElasticsearchVersion</code> <br />
-<code>Set-ElasticsearchVersion 7.3.0</code> <br />
-<code>Invoke-Elasticsearch</code> REST API запросы</p>
-<h2 id="cdata">CData<a class="headerlink" href="#cdata" title="Permanent link">&para;</a></h2>
-<p><a href="https://www.powershellgallery.com/profiles/CData">PowerShell Gallery CData</a> <br />
-<a href="https://www.cdata.com/kb/tech/elasticsearch-ado-powershell.rst">Automate Elasticsearch Integration Tasks from PowerShell</a></p>
-<p><code>Install-Module ElasticsearchCmdlets</code> <a href="https://www.powershellgallery.com/packages/ElasticsearchCmdlets/23.0.8565.1">пакет драйвера в psgallery</a> <br />
-<code>Import-Module ElasticsearchCmdlets</code> <br />
-<code>Get-Command -Module ElasticsearchCmdlets</code></p>
-<pre><code class="language-PowerShell">$elasticsearch = Connect-Elasticsearch  -Server &quot;$Server&quot; -Port &quot;$Port&quot; -User &quot;$User&quot; -Password &quot;$Password&quot;
-$shipcity = &quot;New York&quot;
-$orders = Select-Elasticsearch -Connection $elasticsearch -Table &quot;Orders&quot; -Where &quot;ShipCity = `'$ShipCity`'&quot;` поиск и получение данных
-$orders = Invoke-Elasticsearch -Connection $elasticsearch -Query 'SELECT * FROM Orders WHERE ShipCity = @ShipCity' -Params @{'@ShipCity'='New York'}` SQL запросы
-</code></pre>
-<h3 id="adonet-assembly">ADO.NET Assembly<a class="headerlink" href="#adonet-assembly" title="Permanent link">&para;</a></h3>
-<p><code>Install-Package CData.Elasticsearch</code> <a href="https://www.nuget.org/packages/CData.Elasticsearch">пакет драйвера в nuget</a> <br />
-<code>[Reflection.Assembly]::LoadFile("C:\Program Files\PackageManagement\NuGet\Packages\CData.Elasticsearch.23.0.8565\lib\net40\System.Data.CData.Elasticsearch.dll")</code></p>
-<pre><code class="language-PowerShell">$connect = New-Object System.Data.CData.Elasticsearch.ElasticsearchConnection(&quot;Server=127.0.0.1;Port=9200;User=admin;Password=123456;&quot;)
-$connect.Open()
-$sql = &quot;SELECT OrderName, Freight from Orders&quot;
-$da = New-Object System.Data.CData.Elasticsearch.ElasticsearchDataAdapter($sql, $conn)
-$dt = New-Object System.Data.DataTable
-$da.Fill($dt)
-$dt.Rows | foreach {
-Write-Host $_.ordername $_.freight
-}
-</code></pre>
-<h3 id="update">UPDATE<a class="headerlink" href="#update" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">Update-Elasticsearch -Connection $Elasticsearch -Columns @('OrderName','Freight') -Values @('MyOrderName', 'MyFreight') -Table Orders -Id &quot;MyId&quot;
-
-$cmd =  New-Object System.Data.CData.Elasticsearch.ElasticsearchCommand(&quot;UPDATE Orders SET ShipCity='New York' WHERE Id = @myId&quot;, $conn)
-$cmd.Parameters.Add(new System.Data.CData.Elasticsearch.ElasticsearchParameter(&quot;@myId&quot;,&quot;10456255-0015501366&quot;))
-$cmd.ExecuteNonQuery()
-</code></pre>
-<h3 id="insert">INSERT<a class="headerlink" href="#insert" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">Add-Elasticsearch -Connection $Elasticsearch -Table Orders -Columns @(&quot;OrderName&quot;, &quot;Freight&quot;) -Values @(&quot;MyOrderName&quot;, &quot;MyFreight&quot;)
-
-$cmd =  New-Object System.Data.CData.Elasticsearch.ElasticsearchCommand(&quot;INSERT INTO Orders (ShipCity) VALUES (@myShipCity)&quot;, $conn)
-$cmd.Parameters.Add(new System.Data.CData.Elasticsearch.ElasticsearchParameter(&quot;@myShipCity&quot;,&quot;New York&quot;))
-$cmd.ExecuteNonQuery()
-</code></pre>
-<h3 id="delete">DELETE<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h3>
-<pre><code class="language-PowerShell">Remove-Elasticsearch -Connection $Elasticsearch -Table &quot;Orders&quot; -Id &quot;MyId&quot;
-
-$cmd =  New-Object System.Data.CData.Elasticsearch.ElasticsearchCommand(&quot;DELETE FROM Orders WHERE Id=@myId&quot;, $conn)
-$cmd.Parameters.Add(new System.Data.CData.Elasticsearch.ElasticsearchParameter(&quot;@myId&quot;,&quot;001d000000YBRseAAH&quot;))
-$cmd.ExecuteNonQuery()
-</code></pre>
-<h2 id="odbc-open-database-connectivity">ODBC (Open Database Connectivity)<a class="headerlink" href="#odbc-open-database-connectivity" title="Permanent link">&para;</a></h2>
-<p><code>Get-Command -Module Wdac</code> <br />
-<code>Get-OdbcDriver | ft</code> список установленных драйверов</p>
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-client-apps-ps1.html">Elasticsearch ODBC драйвер для доступа к данным Elasticsearch из Microsoft PowerShell</a></p>
-<pre><code class="language-PowerShell">$connectstring = &quot;DSN=Local Elasticsearch;&quot;
-$sql = &quot;SELECT * FROM library&quot;
-$conn = New-Object System.Data.Odbc.OdbcConnection($connectstring)
-$conn.open()
-$cmd = New-Object system.Data.Odbc.OdbcCommand($sql,$conn)
-$da = New-Object system.Data.Odbc.OdbcDataAdapter($cmd)
-$dt = New-Object system.Data.datatable
-$null = $da.fill($dt)
-$conn.close()
-$dt
-</code></pre>
-<h2 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h2>
-<p><a href="https://www.postgresql.org/ftp/odbc/versions/msi/">Скачать и установить драйвер</a></p>
-<pre><code class="language-PowerShell">$dbServer = &quot;192.168.3.101&quot;
-$port = &quot;5432&quot;
-$dbName = &quot;test&quot;
-$dbUser = &quot;admin&quot;
-$dbPass = &quot;admin&quot;
-$szConnect = &quot;Driver={PostgreSQL Unicode(x64)};Server=$dbServer;Port=$port;Database=$dbName;Uid=$dbUser;Pwd=$dbPass;&quot; 
-
-$cnDB = New-Object System.Data.Odbc.OdbcConnection($szConnect)
-$dsDB = New-Object System.Data.DataSet
-try {
-    $cnDB.Open()
-    $adDB = New-Object System.Data.Odbc.OdbcDataAdapter
-    $adDB.SelectCommand = New-Object System.Data.Odbc.OdbcCommand(&quot;SELECT id, name, age, login FROM public.users&quot; , $cnDB)
-    $adDB.Fill($dsDB)
-    $cnDB.Close()
-}
-catch [System.Data.Odbc.OdbcException] {
-    $_.Exception
-    $_.Exception.Message
-    $_.Exception.ItemName
-}
-foreach ($row in $dsDB[0].Tables[0].Rows) {
-    $row.login
-    $row.age
 }
 </code></pre>
 
