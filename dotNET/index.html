@@ -235,7 +235,7 @@
         
   
   <span class="md-ellipsis">
-    PS-Commands
+    Home
   </span>
   
 
@@ -405,15 +405,6 @@
   <a href="#drawing" class="md-nav__link">
     <span class="md-ellipsis">
       Drawing
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#htmlagilitypack" class="md-nav__link">
-    <span class="md-ellipsis">
-      HtmlAgilityPack
     </span>
   </a>
   
@@ -897,15 +888,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#htmlagilitypack" class="md-nav__link">
-    <span class="md-ellipsis">
-      HtmlAgilityPack
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#selenium" class="md-nav__link">
     <span class="md-ellipsis">
       Selenium
@@ -1143,54 +1125,6 @@ $rotated_image = $src_image.Clone() # создать копию исходног
 $rotated_image.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) # перевернуть изображение на 180 градусов
 $rotated_image.Save(&quot;$home\desktop\powershell_image_rotated.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp)
 $src_image.Dispose() # закрыть (отпустить) исходный файл
-</code></pre>
-<h2 id="htmlagilitypack">HtmlAgilityPack<a class="headerlink" href="#htmlagilitypack" title="Permanent link">&para;</a></h2>
-<p><a href="https://www.nuget.org/packages/HtmlAgilityPack">Source</a></p>
-<pre><code class="language-PowerShell"># Загрузка библиотеки C#, которая позволяет парсить HTML-документы, выбирать элементы DOM и извлекать из них данные
-Add-Type -Path &quot;C:\Users\Lifailon\Downloads\HtmlAgilityPack\Net40\HtmlAgilityPack.dll&quot;
-$title = &quot;новобранец&quot;
-$url = &quot;http://fasts-torrent.net&quot;
-$ep = &quot;engine/ajax/search_torrent.php?title=$title&quot;
-$html = Invoke-RestMethod &quot;$url/$ep&quot;
-# Создание нового объекта HtmlDocument из HtmlAgilityPack, который будет использоваться для загрузки и обработки HTML-кода
-$HtmlDocument = New-Object HtmlAgilityPack.HtmlDocument
-# Загрузка HTML в созданный объект HtmlDocument
-$HtmlDocument.LoadHtml($html)
-$torrents = @()
-# Использование XPath для выбора всех элементов &lt;tr&gt; (строк таблицы) в документе
-$HtmlDocument.DocumentNode.SelectNodes(&quot;//tr&quot;) | ForEach-Object {
-    # Для каждой строки таблицы выбираем классы, соответствующие названию раздачи, размеру и ссылке для скачивания.
-    $titleNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-title']&quot;)
-    $sizeNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-sp']&quot;)
-    $downloadLinkNode = $_.SelectSingleNode(&quot;.//td[@class='torrent-d-btn']/a&quot;)
-    # Проверяем, что все классы найдены
-    if ($titleNode -ne $null -and $sizeNode -ne $null -and $downloadLinkNode -ne $null) {
-        # Извлечение текста из классов
-        $title = $titleNode.InnerText.Trim()
-        $size = $sizeNode.InnerText.Trim()
-        $downloadLink = $downloadLinkNode.Attributes[&quot;href&quot;].Value
-        $torrent = New-Object PSObject -Property @{
-            Title = $title
-            Size = $size
-            DownloadLink = &quot;$($url)$($downloadLink)&quot;
-        }
-        $torrents += $torrent
-    }
-}
-</code></pre>
-<p><code>$torrents</code></p>
-<pre><code class="language-PowerShell">Title                                                                    Size     DownloadLink
------                                                                    ----     ------------
-Новобранец (6 сезон: 1-3 серии из 13) (2024) WEBRip | RuDub              1,55 ГБ  http://fasts-torrent.net/download/449613/torrent/-6-1-3-13-2024-webrip-rudub/
-Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 1080p | RuDub       54,15 ГБ http://fasts-torrent.net/download/433749/torrent/-5-1-22-22-2023-webrip-1080p-rudub/
-Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 720p | RuDub        30,14 ГБ http://fasts-torrent.net/download/433750/torrent/-5-1-22-22-2023-webrip-720p-rudub/
-Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip | RuDub             11,55 ГБ http://fasts-torrent.net/download/433751/torrent/-5-1-22-22-2023-webrip-rudub/
-Новобранец (4 сезон: 1-22 серии из 22) (2021) WEB-DL 720p | RG.Paravozik 21.33 Gb http://fasts-torrent.net/download/418618/torrent/-4-1-22-22-2021-web-dl-720p-rgparavozik/
-Полицейский с половиной: Новобранец (2017) WEB-DLRip 720p| Чистый звук   3.41 Gb  http://fasts-torrent.net/download/254846/torrent/-2017-web-dlrip-720p-/
-Полицейский с половиной: Новобранец (2017) WEB-DLRip | Чистый звук       1.37 Gb  http://fasts-torrent.net/download/254845/torrent/-2017-web-dlrip-/
-Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip | BaibaKo           11.28 Gb http://fasts-torrent.net/download/364669/torrent/-2-1-20-20-2019-webrip-baibako/
-Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip 1080p | Octopus     45.97 Gb http://fasts-torrent.net/download/364161/torrent/-2-1-20-20-2019-webrip-1080p-octopus/
-Новобранец (2 сезон: 1-20 серии из 20) (2019) WEB-DLRip | LostFilm       11.95 Gb http://fasts-torrent.net/download/364668/torrent/-2-1-20-20-2019-web-dlrip-lostfilm/
 </code></pre>
 <h2 id="selenium">Selenium<a class="headerlink" href="#selenium" title="Permanent link">&para;</a></h2>
 <p><code>Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/Deploy-Selenium/rsa/Deploy-Selenium-Drivers.ps1")</code> установка всех драйверов и Chromium соответствующий версии для драйвера</p>

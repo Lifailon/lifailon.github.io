@@ -1,7 +1,7 @@
 site_name: PowerShell Commands
 site_url: https://lifailon.github.io
 nav:
-  - PS-Commands: index.md
+  - Home: index.md
   - Syntax: Syntax\index.md
   - File System: FileSystem\index.md
   - Windows: Windows\index.md
