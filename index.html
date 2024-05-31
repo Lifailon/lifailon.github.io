@@ -690,8 +690,8 @@
 <b>Большая база заметок PowerShell на русском языке.</b>
 </p>
 
-<p>Структура языка, синтаксис командлетов и модулей, работа с файловой системой, сетевыми утилитами, REST API, классами и методами платформы .NET, системами мониторинга, Active Directory, MS Exchange, Hyper-V, VMWare, базами данных и DevOps направления. Заметки основаны по принципу примеров и краткого описания.</p>
-<p>В исходном <a href="https://github.com/Lifailon/PS-Commands">репозитории</a> присутствует <a href="https://github.com/Lifailon/PS-Commands/tree/rsa/Scripts">библиотека скриптов и модулей</a>, а также тестовый стенд <a href="https://github.com/Lifailon/PS-Commands/tree/rsa/WinForms">WinForms</a> с примерами реализации большенства функционала (работа с DataGridView, Button, Checkbox и т.д.).</p>
+<p>Структура языка, синтаксис командлетов и модулей, работа с объектами, файловой системой, сетевыми утилитами, REST API, классами и методами платформы .NET, системами мониторинга, Active Directory, MS Exchange, Hyper-V, VMWare, базами данных и DevOps направления. Заметки основаны по принципу примеров и краткого описания.</p>
+<p>Исходный <a href="https://github.com/Lifailon/PS-Commands">репозиторий</a> содержит <a href="https://github.com/Lifailon/PS-Commands/tree/rsa/Scripts">библиотеку скриптов и модулей</a>, а также тестовый стенд <a href="https://github.com/Lifailon/PS-Commands/tree/rsa/WinForms">WinForms</a> с примерами реализации большенства функционала (DataGridView, Button, Checkbox и т.д.).</p>
 <p>Другие проекты на PowerShell:</p>
 <ul>
 <li>
@@ -701,67 +701,79 @@
 <p><a href="https://github.com/Lifailon/pSyslog">Syslog сервер и клиент</a> на базе .NET и PowerShell.</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/RSA">Remote Shadow Administrator</a>. Альтернативное средство для удаленного подключения к текущим RDP-сессиям пользователей на базе RDShadow (не требует установки серверной части). Также содержит набор модулей, направленного на автоматизацию удаленного администрирования и взаимодействия с ОС Windows.</p>
+<p><a href="https://github.com/Lifailon/RSA">Remote Shadow Administrator</a>. Инструмент удаленного подключения к текущим RDP-сессиям пользователей на базе RDShadow. Также содержит набор модулей, направленного на автоматизацию удаленного администрирования и управления ОС Windows (пользовательские процессы, службы, обновления, настройки KMS, NTP и т.д.).</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/iPerf-GUI">Графический интерфейс для iperf3</a> и модуль <a href="https://github.com/Lifailon/PS-iPerf">PSiPerf</a> для мониторинга пропускной способности канала связи.</p>
+<p><a href="https://github.com/Lifailon/iPerf-GUI">Графический интерфейс для iperf3</a> и модуль <a href="https://github.com/Lifailon/PS-iPerf">psiperf</a> для мониторинга пропускной способности канала связи.</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/PST-Export-GUI">PST-Export-GUI</a>. Графический интерфейс для сбора статистики состояния баз данных и почтовых ящиков на серверах Exchange 2010-2016, просмотр Message Tracking Log, а также создания и управления заданями экспорта почтовых ящиков в формат PST.</p>
+<p><a href="https://github.com/Lifailon/PST-Export-GUI">PST Export GUI</a>. Графический интерфейс получения состояния баз данных и почтовых ящиков на серверах Exchange 2010-2016, просмотр и фильтрация Message Tracking Log, а также создания и управления заданями экспорта почтовых ящиков в формат PST.</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/AD-Manager">AD-Manager</a>. Автоматизация создания пользователей в Active Directory и почтовых ящиков Exchange, с возможностью формирования базового отчета, управления группами и пользователями.</p>
+<p><a href="https://github.com/Lifailon/AD-Manager">AD Manager</a>. Форма автоматизации создания пользователей в Active Directory и почтовых ящиков Exchange, с возможностью формирования базового отчета, управления группами и пользователями.</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/VMW-Invent">VMWare-Inventory</a>. Вывод актуального состояния Virtual Machine (включая список подключенных vmdk), ESXi Hosts, Datastore и Network Adapters (графический интерфейс для модуля PowerCLI на базе WinForms).</p>
+<p><a href="https://github.com/Lifailon/VMW-Invent">VMWare Inventory</a>. Графический инерфейс реализующий формат отчета состояния виртуальных машин, дисков, ESXi хостов, хранилищ данных и сетевых интерфейсов в реальном времени, а также централизованное управлением питанием (на базе WinForms и модуля PowerCLI).</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/WinEvent-Viewer">WinEvent-Viewer</a>. Интерфейс просмотра и фильтрации журналов событий (логов) ОС Windows.</p>
+<p><a href="https://github.com/Lifailon/WinEvent-Viewer">WinEvent Viewer</a>. Интерфейс просмотра и фильтрации журналов событий (логов) ОС Windows.</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/DNS-Change-Tray">DNS-Change-Tray</a>. Программа для быстрой смены DNS-адреса на сетевом адаптере.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/psinfluxdb">Интеграция InfluxDB 1.x</a> и PowerShell.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/Deploy-Selenium">Автоматизированная установки всех зависимостей</a> и примеры работ с Selenium через PowerShell (<a href="https://github.com/Lifailon/gpt-cli">AI</a>, <a href="https://github.com/Lifailon/Selenium-Modules/blob/rsa/Modules/Get-SpeedTest/Get-SpeedTest.psm1">SpeedTest</a> и <a href="https://github.com/Lifailon/Selenium-Modules/blob/rsa/Modules/Get-Translation/Get-Translation.psm1">Translation</a>). Статья на habr <a href="https://habr.com/ru/articles/785538">PowerShell и Selenium. Проще, чем кажется</a>.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/PowerShell.HardwareMonitor">Модуль</a> для локального и удаленного сбора метрик температуры, нагрузки и других датчиков системы через <a href="https://github.com/LibreHardwareMonitor/LibreHardwareMonitor">LibreHardwareMonitor</a> и <a href="https://github.com/openhardwaremonitor/openhardwaremonitor">OpenHardwareMonitor</a>. Статья на habr <a href="https://habr.com/ru/articles/793296/">мониторинг температуры Windows</a> (создание метрик, настройка InfluxDB и Grafana).</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/CrystalDisk-Cli">Интерфейс командной строки</a> для <a href="https://github.com/hiyohiyo/CrystalDiskInfo">CrystalDiskInfo</a>.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/Console-Translate">Console-Translate</a>. Интерфейс командной строки для перевода текста.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/Console-Download">Console-Download</a>. Инструмент командной строки для загрузки файлов из переданного списка URL-адресов в многопоточном режиме и отображения скорости загрузки в реальном времени. Реализует тестирования пропускной способности сетевого интерфейса через хосты <a href="https://github.com/gnif/LookingGlass">Looking Glass</a> (интеграция с <a href="https://looking.house">Looking.House</a>) с целью отладки датчиков системы мониторинга и проверки скорости Интернета.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/PSDomainTest?tab=readme-ov-file">PSDomainTest</a> для тестирования DNS-записей домена с использованием API <a href="https://github.com/zonemaster/zonemaster">ZoneMaster</a> и <a href="https://github.com/Lifailon/Check-Host">кроссплатформенный модуль</a> для проверки ping, http, tcp, udp хостов в Интернете через API <a href="https://check-host.net">Check-Host</a>.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/Ookla-SpeedTest-API">Тестирование пропускной способности сети Интернет</a> в режиме командной строки через <a href="https://www.speedtest.net">Ookla SpeedTest</a> (без использования API и зависимостей) для получения метрик в формате объекта с целью мониторинга.</p>
-</li>
-<li>
-<p>Veeam Backup &amp; Replication: <a href="https://github.com/Lifailon/Veeam-REStat">состояние инфраструктуры</a> резервного копирования, <a href="https://github.com/Lifailon/Veeam-Job-Stat">статистика заданий</a>, <a href="https://github.com/Lifailon/Veeam-Rep-Stat">мониторинг репозиториев</a> и их доступности.</p>
-</li>
-<li>
-<p><a href="https://github.com/Lifailon/ConvertTo-Base64">ConvertTo-Base64</a>. Конвертация текста и изображений в формате Base64.</p>
+<p><a href="https://github.com/Lifailon/DNS-Change-Tray">DNS Change Tray</a>. Программа для быстрой смены DNS-адреса на выбранном сетевом адаптере в трее.</p>
 </li>
 <li>
 <p><a href="https://github.com/Lifailon/ACL-Backup">ACL-Backup</a>. Резервное копирование списка прав доступа файловой системы NTFS в txt-файл с возможностью восстановления.</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/ITInvent-SQL-Alert">Реализация оповещений</a> о истечении срока действия лицензий в <a href="https://it-invent.ru/">It-Invent</a>.</p>
+<p><a href="https://github.com/Lifailon/psinfluxdb">Интеграция InfluxDB 1.x</a> и PowerShell для управления базами данных, политиками хранения, пользователями и таблицами, а также вывод измерений в формате объекта.</p>
 </li>
 <li>
-<p><a href="https://github.com/Lifailon/Excel-Date-Report">Мониторинг Excel-таблицы</a> для отправки уведомлений о завершении срока действия доступа к ресурсам, ПО или лицензий.</p>
+<p><a href="https://github.com/Lifailon/Deploy-Selenium">Автоматизированная установки всех зависимостей</a> и примеры работ с Selenium через PowerShell (<a href="https://github.com/Lifailon/gpt-cli">AI</a>, <a href="https://github.com/Lifailon/Selenium-Modules/blob/rsa/Modules/Get-SpeedTest/Get-SpeedTest.psm1">SpeedTest</a> и <a href="https://github.com/Lifailon/Selenium-Modules/blob/rsa/Modules/Get-Translation/Get-Translation.psm1">Translation</a>). Статья на habr <a href="https://habr.com/ru/articles/785538">PowerShell и Selenium. Проще, чем кажется</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/PowerShell.HardwareMonitor">Модуль</a> для локального и удаленного сбора метрик температуры, нагрузки и других датчиков системы через <a href="https://github.com/LibreHardwareMonitor/LibreHardwareMonitor">LibreHardwareMonitor</a> и <a href="https://github.com/openhardwaremonitor/openhardwaremonitor">OpenHardwareMonitor</a>. Статья на habr <a href="https://habr.com/ru/articles/793296">мониторинг температуры Windows</a> (создание метрик, настройка InfluxDB и Grafana).</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/PSEverything">PSEverything</a>. Модуль мнгновенного поиска файлов на локальных и удаленных системах Windows через <a href="https://www.voidtools.com">Everything</a> и <a href="https://github.com/dipique/everythingio">библиотеку .NET</a>. </p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/CrystalDisk-Cli">Интерфейс командной строки</a> для <a href="https://github.com/hiyohiyo/CrystalDiskInfo">CrystalDiskInfo</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/Console-Translate">Console-Translate</a>. Интерфейс командной строки перевода текста (использует 3 провайдера и режим автоматического определения исходного языка).</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/Console-Download">Console-Download</a>. Инструмент командной строки для загрузки файлов из переданного списка URL-адресов в многопоточном режиме и отображения скорости загрузки в реальном времени. Реализует тестирования пропускной способности сетевого интерфейса через хосты <a href="https://github.com/gnif/LookingGlass">Looking Glass</a> (интеграция с <a href="https://looking.house">Looking.House</a>) с целью отладки датчиков системы мониторинга и проверки скорости сети Интернет.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/PSDomainTest?tab=readme-ov-file">PSDomainTest</a> для тестирования DNS-записей домена с использованием API <a href="https://github.com/zonemaster/zonemaster">ZoneMaster</a> и <a href="https://github.com/Lifailon/Check-Host">кроссплатформенный модуль</a> для проверок ping, http, tcp, udp на хостах в сети Интернете через API <a href="https://check-host.net">Check-Host</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/Ookla-SpeedTest-API">Тестирование пропускной способности сети Интернет</a> в режиме командной строки через провайдеры <a href="https://www.speedtest.net">Ookla SpeedTest</a> (без использования API и зависимостей) для передачи полученных метрик в InfluxDB и мониторинга в Grafana.</p>
+</li>
+<li>
+<p>Veeam Backup &amp; Replication: <a href="https://github.com/Lifailon/Veeam-REStat">состояние инфраструктуры</a> резервного копирования, <a href="https://github.com/Lifailon/Veeam-Job-Stat">статистика заданий</a>, <a href="https://github.com/Lifailon/Veeam-Rep-Stat">мониторинг репозиториев</a> и их доступности.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/Windows-User-Sessions">Шаблон Zabbix</a> для проверки количества активных и неактивных терминальных пользовательских сессий на машинах с ОС Windows и Windows Server через модуль <a href="https://github.com/Lifailon/Get-Query">Get-Query</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/ITInvent-SQL-Alert">Реализация оповещений</a> о истечении срока действия лицензий в <a href="https://it-invent.ru">It-Invent</a> через СУБД MS SQL.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/Get-Invent-SQLite">Get Invent SQLite</a>. Модуль сбора данных характеристик физического оборудования на компьютерах в локальной сети через WMI для наполнения базы данных SQLite.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/Excel-Date-Report">Мониторинг Excel-таблиц</a> для отправки уведомлений о завершении срока действия лицензий и доступа к ресурсам.</p>
 </li>
 <li>
 <p><a href="https://github.com/Lifailon/RDCMan-LDAP">RDCMan-LDAP</a>. Интеграция списка всех компьютеров с текущего месторасположением в доменной структуре из Active Directory.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/ConvertTo-Base64">ConvertTo-Base64</a>. Конвертация текста и изображений в формат Base64.</p>
+</li>
+<li>
+<p><a href="https://github.com/Lifailon/WMI-Class-Viewer">Браузер классов WMI</a>.</p>
 </li>
 </ul>
 
