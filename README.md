@@ -1,5 +1,4 @@
-[![lifailon.github.io](https://img.shields.io/github/deployments/lifailon/lifailon.github.io/github-pages?logo=html5&label=github%20page%20status&color=yellow)](https://lifailon.github.io
-) [![lifailon.github.io](https://img.shields.io/github/last-commit/lifailon/lifailon.github.io/mkdocs-material?logo=github&label=last%20update%20(mkdocs-material%20branch)&color=blue)](https://github.com/Lifailon/lifailon.github.io/tree/mkdocs-material) 
+[![lifailon.github.io](https://img.shields.io/github/deployments/lifailon/lifailon.github.io/github-pages?logo=html5&label=github%20page%20status&color=yellow)](https://lifailon.github.io)
 
 🚀 Web version of the 📚 [PowerShell Commands](https://github.com/Lifailon/PS-Commands).
 
