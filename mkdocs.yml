@@ -1,7 +1,7 @@
 site_name: PowerShell Commands
 site_url: https://lifailon.github.io
 nav:
-  - Home: index.md
+  - PowerShell Commands: index.md
   - Syntax: Syntax\index.md
   - File System: FileSystem\index.md
   - Windows: Windows\index.md
@@ -22,6 +22,7 @@ nav:
   - Zabbix: Zabbix\index.md
   - DevOps: DevOps\index.md
   - Epic Games Radar: epic-games-radar\index.html
+  - Magnet2Url: magnet2url\index.html
 theme:
   name: material
   features:
