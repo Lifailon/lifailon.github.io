@@ -291,6 +291,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Windows/" class="md-nav__link">
         
   
@@ -395,7 +415,7 @@
         
   
   <span class="md-ellipsis">
-    REST API
+    API
   </span>
   
 
@@ -1103,13 +1123,31 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="ODBC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#postgresql" class="md-nav__link">
     <span class="md-ellipsis">
       PostgreSQL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#odbc-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      ODBC Driver
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#npgsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      npgsql
     </span>
   </a>
   
@@ -1240,46 +1278,6 @@
   
   <span class="md-ellipsis">
     DevOps
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../epic-games-radar/index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Epic Games Radar
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../magnet2url/index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Magnet2Url
   </span>
   
 
@@ -1883,13 +1881,31 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="ODBC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#postgresql" class="md-nav__link">
     <span class="md-ellipsis">
       PostgreSQL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#odbc-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      ODBC Driver
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#npgsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      npgsql
     </span>
   </a>
   
@@ -2852,7 +2868,8 @@ $null = $da.fill($dt)
 $conn.close()
 $dt
 </code></pre>
-<h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
+<h2 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h2>
+<h3 id="odbc-driver">ODBC Driver<a class="headerlink" href="#odbc-driver" title="Permanent link">&para;</a></h3>
 <p><a href="https://www.postgresql.org/ftp/odbc/versions/msi/">Скачать и установить драйвер</a></p>
 <pre><code class="language-PowerShell">$dbServer = &quot;192.168.3.101&quot;
 $port = &quot;5432&quot;
@@ -2879,6 +2896,49 @@ foreach ($row in $dsDB[0].Tables[0].Rows) {
     $row.login
     $row.age
 }
+</code></pre>
+<h3 id="npgsql">npgsql<a class="headerlink" href="#npgsql" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/npgsql/npgsql">Source</a><br />
+<a href="https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL">Package</a></p>
+<pre><code class="language-PowerShell"># Подключаем сборку Npgsql
+Add-Type -Path &quot;$home\Documents\Npgsql.PostgreSQL\8.0.4\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll&quot;
+# Определяем строку подключения к базе данных PostgreSQL
+$connString = &quot;Host=myserver;Username=mylogin;Password=mypass;Database=mydatabase&quot;
+# Создаем объект подключения
+$conn = New-Object Npgsql.NpgsqlConnection($connString)
+# Открываем соединение с базой данных
+$conn.Open()
+try {
+    # Создаем SQL команду
+    $cmd = $conn.CreateCommand()
+    $cmd.CommandText = &quot;INSERT INTO data (some_field) VALUES (@p)&quot;
+    # Добавляем параметр и его значение
+    $param = $cmd.Parameters.Add(&quot;p&quot;, [NpgsqlTypes.NpgsqlDbType]::Text)
+    $param.Value = &quot;Hello world&quot;
+    # Выполняем команду
+    $cmd.ExecuteNonQuery() | Out-Null
+} finally {
+    $cmd.Dispose()
+}
+# Извлекаем все строки из таблицы
+try {
+    # Создаем команду SQL для извлечения данных
+    $cmd = $conn.CreateCommand()
+    $cmd.CommandText = &quot;SELECT some_field FROM data&quot;
+    # Выполняем команду и получаем объект чтения данных
+    $reader = $cmd.ExecuteReader()
+    # Читаем и выводим данные построчно
+    while ($reader.Read()) {
+        Write-Host $reader.GetString(0)
+    }
+} finally {
+    # Освобождаем ресурсы чтения данных и команды
+    $reader.Dispose()
+    $cmd.Dispose()
+}
+# Закрываем соединение с базой данных
+$conn.Close()
+$conn.Dispose()
 </code></pre>
 
 

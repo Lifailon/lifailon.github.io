@@ -291,6 +291,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Windows/" class="md-nav__link">
         
   
@@ -395,7 +415,7 @@
         
   
   <span class="md-ellipsis">
-    REST API
+    API
   </span>
   
 
@@ -802,9 +822,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#handbrake" class="md-nav__link">
+    <span class="md-ellipsis">
+      HandBrake
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#imagemagick" class="md-nav__link">
     <span class="md-ellipsis">
       ImageMagick
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#youtube" class="md-nav__link">
+    <span class="md-ellipsis">
+      YouTube
     </span>
   </a>
   
@@ -910,46 +948,6 @@
   
   <span class="md-ellipsis">
     DevOps
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../epic-games-radar/index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Epic Games Radar
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../magnet2url/index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Magnet2Url
   </span>
   
 
@@ -1232,9 +1230,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#handbrake" class="md-nav__link">
+    <span class="md-ellipsis">
+      HandBrake
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#imagemagick" class="md-nav__link">
     <span class="md-ellipsis">
       ImageMagick
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#youtube" class="md-nav__link">
+    <span class="md-ellipsis">
+      YouTube
     </span>
   </a>
   
@@ -1254,8 +1270,6 @@
                 
                   
 
-
-  <h1>Data</h1>
 
 <h2 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">&para;</a></h2>
 <h3 id="convertfrom-html">ConvertFrom-Html<a class="headerlink" href="#convertfrom-html" title="Permanent link">&para;</a></h3>
@@ -1673,6 +1687,22 @@ Remove-Item &quot;$home\Downloads\ffmpeg-*&quot; -Force -Recurse
 <code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -c:v copy -c:a aac -strict experimental output.mp4</code> запись без перекодирования (copy) RTSP-потока с камеры видеонаблюдения (+ аудио в кодеке AAC) в файл <br />
 <code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -c:v copy -c:a aac -strict experimental -movflags +faststart+frag_keyframe+empty_moov output.mp4</code> переместить метаданные в начало файла, что позволяет начать воспроизведение файла в видеоплеере до его полной загрузки <br />
 <code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -frames:v 1 -c:v mjpeg output.jpg</code> сделать скриншот</p>
+<h2 id="handbrake">HandBrake<a class="headerlink" href="#handbrake" title="Permanent link">&para;</a></h2>
+<pre><code class="language-PowerShell">$url = &quot;https://github.com/HandBrake/HandBrake/releases/download/1.8.0/HandBrakeCLI-1.8.0-win-x86_64.zip&quot;
+Invoke-RestMethod $url -OutFile $home\Downloads\HandBrakeCLI.zip
+Expand-Archive -Path $home\Downloads\HandBrakeCLI.zip -OutputPath &quot;$home\Downloads\&quot;
+Copy-Item -Path &quot;$home\Downloads\HandBrakeCLI.exe&quot; -Destination &quot;C:\Windows\System32\HandBrakeCLI.exe&quot;
+Remove-Item &quot;$home\Downloads\doc&quot; -Force -Recurse
+Remove-Item &quot;$home\Downloads\HandBrakeCLI*&quot;
+</code></pre>
+<p><code>HandBrakeCLI -i input.mp4 -o output.mkv</code> конвертирует видео в формате mp4 в формат mkv с использованием стандартных настроек HandBrake<br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -q 20</code> установить качество видео 20, значения варьируются от 0 (максимальное качество) до 51 (минимальное качество), где 20 считается хорошим качеством для большинства видео<br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -r 30</code> установить частоту кадров на 30 fps<br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv --maxWidth 1280 --maxHeight 720</code> изменить размер на 1280х720<br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -b 1500</code> установить битрейт видео 1500 кбит/с<br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -e x264</code> преобразовать видео с использованием кодека x264<br />
+<code>HandBrakeCLI -i input.mp4 -o output.mp4 --crop 0:200:0:0</code> обрезать видео снизу на 200px (верх:низ:лево:право)<br />
+<code>HandBrakeCLI -i input.mp4 -o output.mp4 --start-at duration:5 --stop-at duration:15</code> обрезать видео (на выходе будет 15-секундное видео с 5 по 20 секунду)</p>
 <h2 id="imagemagick">ImageMagick<a class="headerlink" href="#imagemagick" title="Permanent link">&para;</a></h2>
 <p>Source: <a href="https://sourceforge.net/projects/imagemagick">ImageMagick</a></p>
 <p><code>magick identify -verbose PowerShell-Commands.png</code> извлечь метаданные изображения <br />
@@ -1684,6 +1714,39 @@ Remove-Item &quot;$home\Downloads\ffmpeg-*&quot; -Force -Recurse
 <code>magick PowerShell-Commands.png -brightness-contrast +20x+10 output.jpg</code> изменить яркость и контрастность <br />
 <code>magick convert -delay 100 1.png 2.png 3.png output.gif</code> создать gif из изображений <br />
 <code>magick convert image1.jpg image2.jpg -append output.jpg</code> вертикально объединенить изображения</p>
+<h1 id="youtube">YouTube<a class="headerlink" href="#youtube" title="Permanent link">&para;</a></h1>
+<pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod &quot;https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest&quot;
+$url = $($release_latest.assets | Where-Object name -match &quot;yt-dlp.exe&quot;).browser_download_url
+Invoke-RestMethod $url -OutFile &quot;C:\Windows\System32\yt-dlp.exe&quot;
+</code></pre>
+<p><code>yt-dlp -F https://www.youtube.com/watch?v=gxplizjhqiw</code> отобразить список всех доступных форматов<br />
+<code>yt-dlp -J https://www.youtube.com/watch?v=gxplizjhqiw</code> вывести данные в формате JSON<br />
+<code>yt-dlp -J https://www.youtube.com/watch?v=gxplizjhqiw | jq -r .formats.[].format</code> id - resolution (format_note)<br />
+<code>yt-dlp -f 137 https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить только видео в указанном формате по id<br />
+<code>yt-dlp -f bestaudio https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить только аудио<br />
+<code>yt-dlp -f best https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить видео с аудио в лучшем качестве<br />
+<code>yt-dlp -f 'bestvideo[height&lt;=1080]+bestaudio/best[height&lt;=1080]' https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить в указанном качестве<br />
+<code>yt-dlp -r 2m https://www.youtube.com/watch?v=gxplizjhqiw</code> ограничить скорость загрузки до 2 МБит/с</p>
+<pre><code class="language-PowerShell">function Get-YouTube {
+    param (
+        $url
+    )
+    $result = yt-dlp -J $url
+    $($result | ConvertFrom-Json).formats | 
+    Where-Object filesize -ne $null | 
+    Select-Object format_id,
+    @{Name=&quot;FileSize&quot;; 
+        Expression={[string]([int]($_.filesize / 1024kb)).ToString(&quot;0.0&quot;)+&quot; Mb&quot;}
+    },
+    resolution,format_note,quality,fps,ext,language
+}
+
+$formats = Get-YouTube &quot;https://www.youtube.com/watch?v=gxplizjhqiw&quot;
+$video = $($formats | Where-Object format_note -match 1080 | Where-Object ext -match mp4)[-1].format_id
+$audio = $($formats | Where-Object resolution -match &quot;audio&quot; | Where-Object ext -match m4a)[-1].format_id
+cd &quot;$home\Downloads&quot;
+yt-dlp -f $video+$audio https://www.youtube.com/watch?v=gxplizjhqiw -o '%(title)s.%(ext)s'
+</code></pre>
 
 
 

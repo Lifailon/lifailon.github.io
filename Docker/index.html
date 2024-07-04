@@ -291,6 +291,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Windows/" class="md-nav__link">
         
   
@@ -395,7 +415,7 @@
         
   
   <span class="md-ellipsis">
-    REST API
+    API
   </span>
   
 
@@ -631,6 +651,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mirror" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mirror
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#run" class="md-nav__link">
     <span class="md-ellipsis">
       Run
@@ -721,9 +759,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#docker-api" class="md-nav__link">
+  <a href="#docker-socket-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker-api
+      Docker Socket API
     </span>
   </a>
   
@@ -732,7 +770,16 @@
         <li class="md-nav__item">
   <a href="#docker-tcp-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker-tcp-api
+      Docker TCP API
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
     </span>
   </a>
   
@@ -894,46 +941,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../epic-games-radar/index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Epic Games Radar
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../magnet2url/index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Magnet2Url
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -971,6 +978,24 @@
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       Install
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mirror" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mirror
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
     </span>
   </a>
   
@@ -1067,9 +1092,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#docker-api" class="md-nav__link">
+  <a href="#docker-socket-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker-api
+      Docker Socket API
     </span>
   </a>
   
@@ -1078,7 +1103,16 @@
         <li class="md-nav__item">
   <a href="#docker-tcp-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker-tcp-api
+      Docker TCP API
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
     </span>
   </a>
   
@@ -1230,6 +1264,22 @@
 <code>cat dockerToken.txt | sudo docker login --username lifailon --password-stdin</code> передать токен авторизации (https://hub.docker.com/settings/security) из файла через stdin <br />
 <code>cat /root/.docker/config.json | jq -r .auths[].auth</code> место хранения токена авторизации в системе <br />
 <code>cat /root/.docker/config.json | python3 -m json.tool</code></p>
+<h2 id="mirror">Mirror<a class="headerlink" href="#mirror" title="Permanent link">&para;</a></h2>
+<p><code>echo '{ "registry-mirrors": ["https://dockerhub.timeweb.cloud"] }' &gt; "/etc/docker/daemon.json"</code><br />
+<code>echo '{ "registry-mirrors": ["https://huecker.io"] }' &gt; "/etc/docker/daemon.json"</code><br />
+<code>echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' &gt; "/etc/docker/daemon.json"</code><br />
+<code>echo '{ "registry-mirrors": ["https://daocloud.io"] }' &gt; "/etc/docker/daemon.json"</code><br />
+<code>echo '{ "registry-mirrors": ["https://c.163.com"] }' &gt; "/etc/docker/daemon.json"</code></p>
+<p><code>systemctl restart docker</code></p>
+<h2 id="proxy">Proxy<a class="headerlink" href="#proxy" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">mkdir -p /etc/systemd/system/docker.service.d
+
+'[Service]
+Environment=&quot;HTTP_PROXY=http://docker:password@192.168.3.100:9090&quot;
+Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &gt; /etc/systemd/system/docker.service.d/http-proxy.conf
+</code></pre>
+<p><code>systemctl daemon-reload</code><br />
+<code>systemctl restart docker</code></p>
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
 <p>Commands: <code>search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/kill/rm/rmi</code></p>
 <p><code>docker search speedtest</code> поиск образа в реестре <br />
@@ -1318,7 +1368,7 @@
 <code>rm -rf /var/lib/docker</code> <br />
 <code>rm -rf /run/docker</code> <br />
 <code>rm -rf /run/docker.sock</code></p>
-<h2 id="docker-api">Docker-api<a class="headerlink" href="#docker-api" title="Permanent link">&para;</a></h2>
+<h2 id="docker-socket-api">Docker Socket API<a class="headerlink" href="#docker-socket-api" title="Permanent link">&para;</a></h2>
 <p><code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/version | jq .</code> использовать локальный сокет (/run/docker.sock) для взаимодействия с Docker daemon через его API <br />
 <code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/info | jq .</code> количество образов, запущенных и остановленных контейнеров и остальные метрики ОС <br />
 <code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/events</code> логи Docker daemon <br />
@@ -1328,7 +1378,7 @@
 <code>curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/start</code> запустить контейнер по Id <br />
 <code>curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/stop</code> остановить контейнер <br />
 <code>curl --silent -XDELETE --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1</code> удалить контейнер</p>
-<h2 id="docker-tcp-api">Docker-tcp-api<a class="headerlink" href="#docker-tcp-api" title="Permanent link">&para;</a></h2>
+<h2 id="docker-tcp-api">Docker TCP API<a class="headerlink" href="#docker-tcp-api" title="Permanent link">&para;</a></h2>
 <pre><code class="language-bash">echo '{
     &quot;hosts&quot;: [&quot;tcp://0.0.0.0:2375&quot;, &quot;unix:///var/run/docker.sock&quot;]
 }' &gt; &quot;/etc/docker/daemon.json&quot;
@@ -1338,6 +1388,12 @@ systemctl daemon-reload
 systemctl restart docker
 </code></pre>
 <p>curl --silent -XGET http://192.168.3.102:2375/version | jq .</p>
+<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<p><code>docker context create devops-01 --docker "host=tcp://192.168.3.101:2375"</code> подключиться к удаленному сокету<br />
+<code>docker context ls</code> список контекстов<br />
+<code>docker context inspect devops-01</code> конфигурация указанного контекста<br />
+<code>docker context use devops-01</code> использовать выбранный контекст по умолчанию (возможно на прямую взаимосдействовать с удаленным Docker Engine через cli)<br />
+<code>docker context rm devops-01</code> удалить контекст</p>
 <h2 id="ctop">ctop<a class="headerlink" href="#ctop" title="Permanent link">&para;</a></h2>
 <p><code>scoop install ctop</code> установка в Windows</p>
 <pre><code class="language-bash">wget https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 -O /usr/local/bin/ctop

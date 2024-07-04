@@ -4,12 +4,13 @@ nav:
   - PS-Commands: index.md
   - Syntax: Syntax\index.md
   - File System: FileSystem\index.md
+  - Network: Network\index.md
   - Windows: Windows\index.md
   - Threads: Threads\index.md
   - Modules: Modules\index.md
   - .NET: dotNET\index.md
   - COM: COM\index.md
-  - REST API: API\index.md
+  - API: API\index.md
   - Server Manager: ServerManager\index.md
   - Active Directory: ActiveDirectory\index.md
   - Microsoft Exchange: Exchange\index.md
@@ -21,8 +22,6 @@ nav:
   - Docker: Docker\index.md
   - Zabbix: Zabbix\index.md
   - DevOps: DevOps\index.md
-  - Epic Games Radar: epic-games-radar\index.html
-  - Magnet2Url: magnet2url\index.html
 theme:
   name: material
   features:
