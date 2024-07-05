@@ -512,7 +512,7 @@ Source: [ImageMagick](https://sourceforge.net/projects/imagemagick)
 `magick convert -delay 100 1.png 2.png 3.png output.gif` создать gif из изображений 
 `magick convert image1.jpg image2.jpg -append output.jpg` вертикально объединенить изображения
 
-# YouTube
+## YouTube
 ```PowerShell
 $release_latest = Invoke-RestMethod "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest"
 $url = $($release_latest.assets | Where-Object name -match "yt-dlp.exe").browser_download_url

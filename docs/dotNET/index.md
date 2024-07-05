@@ -4,7 +4,7 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## Console API
+### Console API
 
 [Source](https://powershell.one/tricks/input-devices/detect-key-press)
 
@@ -54,7 +54,7 @@ do {
     Start-Sleep 1
 } while ($true)
 ```
-## Drawing
+### Drawing
 
 [API](https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-7.0&redirectedfrom=MSDN)
 ```PowerShell
@@ -88,7 +88,7 @@ $rotated_image.Save("$home\desktop\powershell_image_rotated.bmp", [System.Drawin
 $src_image.Dispose() # закрыть (отпустить) исходный файл
 ```
 
-## Selenium
+### Selenium
 
 `Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/Deploy-Selenium/rsa/Deploy-Selenium-Drivers.ps1")` установка всех драйверов и Chromium соответствующий версии для драйвера
 ```
@@ -167,7 +167,7 @@ Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rs
 `Get-SpeedTest -Provider Open` 
 `Get-SpeedTest -Provider Ookla`
 
-## Object Event
+### Object Event
 ```PowerShell
 $Timer = New-Object System.Timers.Timer
 $Timer.Interval = 1000
@@ -190,9 +190,9 @@ $date = Get-Date -f hh:mm:ss
 }
 ```
 
-# Methods
+## Methods
 
-## EventLog
+### EventLog
 
 `[System.Diagnostics.EventLog] | select Assembly,Module` 
 `$EventLog = [System.Diagnostics.EventLog]::new("Application")` 
@@ -205,7 +205,7 @@ $date = Get-Date -f hh:mm:ss
 `Join-Path C: Install Test` 
 `[System.IO.Path]::Combine("C:", "Install", "Test")`
 
-## Match
+### Match
 
 `[System.Math] | Get-Member -Static -MemberType Methods` 
 `[System.Math]::Max(2,7)` 
@@ -213,12 +213,12 @@ $date = Get-Date -f hh:mm:ss
 `[System.Math]::Floor(3.9)` 
 `[System.Math]::Truncate(3.9)`
 
-## GeneratePassword
+### GeneratePassword
 
 `Add-Type -AssemblyName System.Web` 
 `[System.Web.Security.Membership]::GeneratePassword(10,2)`
 
-## SoundPlayer
+### SoundPlayer
 ```PowerShell
 $CriticalSound = New-Object System.Media.SoundPlayer
 $CriticalSound.SoundLocation = "C:\WINDOWS\Media\Windows Critical Stop.wav"
@@ -228,7 +228,7 @@ $GoodSound = New-Object System.Media.SoundPlayer
 $GoodSound.SoundLocation = "C:\WINDOWS\Media\tada.wav"
 $GoodSound.Play()
 ```
-## Static Class
+### Static Class
 
 `[System.Environment] | Get-Member -Static` 
 `[System.Environment]::OSVersion` 
@@ -239,7 +239,7 @@ $GoodSound.Play()
 `[System.Diagnostics.Process] | Get-Member -Static` 
 `[System.Diagnostics.Process]::Start('notepad.exe')`
 
-## Clicker
+### Clicker
 ```PowerShell
 $cSource = @'
 using System;
@@ -304,7 +304,7 @@ public static void LeftClickAtPoint(int x, int y)
 `Add-Type -TypeDefinition $cSource -ReferencedAssemblies System.Windows.Forms,System.Drawing` 
 `[Clicker]::LeftClickAtPoint(1900,1070)`
 
-## Audio
+### Audio
 ```PowerShell
 Add-Type -Language CsharpVersion3 -TypeDefinition @"
 using System.Runtime.InteropServices;
@@ -353,7 +353,7 @@ set { Marshal.ThrowExceptionForHR(Vol().SetMute(value, System.Guid.Empty)); }
 `[Audio]::Volume = 0.50` 
 `[Audio]::Mute = $true`
 
-## NetSessionEnum
+### NetSessionEnum
 
 [Function](https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN) 
 [Source](https://fuzzysecurity.com/tutorials/24.html)
@@ -428,7 +428,7 @@ echo "`nCalling NetApiBufferFree, no memleaks here!"
 ```
 `Invoke-NetSessionEnum localhost`
 
-## CopyFile
+### CopyFile
 
 [Function](https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile) 
 [Source](https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1/)
@@ -440,7 +440,7 @@ public static extern bool CopyFile(string lpExistingFileName, string lpNewFileNa
 $Kernel32 = Add-Type -MemberDefinition $MethodDefinition -Name "Kernel32" -Namespace "Win32" -PassThru
 $Kernel32::CopyFile("$($Env:SystemRoot)\System32\calc.exe", "$($Env:USERPROFILE)\Desktop\calc.exe", $False) 
 ```
-## ShowWindowAsync
+### ShowWindowAsync
 
 [Function](https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync)
 ```PowerShell
@@ -453,7 +453,7 @@ $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $pid).MainWindowHandle, 2)
 $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 3)
 $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 4)
 ```
-## GetAsyncKeyState
+### GetAsyncKeyState
 
 [Function](https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-getasynckeystate)
 

@@ -31,7 +31,7 @@ date: "2024-03-14T03:00:00+03:00"
 `cat /root/.docker/config.json | jq -r .auths[].auth` место хранения токена авторизации в системе 
 `cat /root/.docker/config.json | python3 -m json.tool`
 
-## Mirror
+### Mirror
 
 `echo '{ "registry-mirrors": ["https://dockerhub.timeweb.cloud"] }' > "/etc/docker/daemon.json"`
 `echo '{ "registry-mirrors": ["https://huecker.io"] }' > "/etc/docker/daemon.json"`
@@ -41,7 +41,7 @@ date: "2024-03-14T03:00:00+03:00"
 
 `systemctl restart docker`
 
-## Proxy
+### Proxy
 ```bash
 mkdir -p /etc/systemd/system/docker.service.d
 
@@ -52,7 +52,9 @@ Environment="HTTPS_PROXY=http://docker:password@192.168.3.100:9090"' > /etc/syst
 `systemctl daemon-reload`
 `systemctl restart docker`
 
-## Run 
+## Commands
+
+### Run 
 
 Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/kill/rm/rmi`
 
@@ -80,18 +82,18 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `docker run --name pg1 -p 5433:5432 -e POSTGRES_PASSWORD=PassWord -d postgres` создать контейнер postgres (https://hub.docker.com/_/postgres) с параметрами (-e) 
 `docker run -d --restart=always --name uptime-kuma -p 8080:3001 louislam/uptime-kuma:1` создать и запустить контейнер Uptime-Kuma (https://hub.docker.com/r/elestio/uptime-kuma) в режиме always, при котором контейнер должен перезапускаться автоматически, если он остановится или если перезапустится Docker (например, после перезагрузки хоста)
 
-## Update
+### Update
 
 `docker update --restart unless-stopped uptime-kuma` изменить режим перезапуска контейнера после его остановки на unless-stopped (режим аналогичен always, но контейнер не будет перезапущен, если он был остановлен вручную с помощью docker stop) 
 `docker update --restart on-failure uptime-kuma` контейнер будет перезапущен только в случае его завершения с ошибкой, когда код завершения отличается от 0, через двоеточие можно указать количество попыток перезапуска (например, on-failure:3) 
 `docker update --cpu-shares 512 --memory 500M uptime-kuma` задать ограничения по CPU, контейнер будет иметь доступ к указанной доле процессорного времени в диапазоне от 2 до 262,144 (2^18) или --cpus (количество процессоров), --memory/--memory-swap и --blkio-weight для IOps (относительный вес от 10 до 1000)
 
-## Stats
+### Stats
 
 `docker stats` посмотреть статистику потребляемых ресурсов запущенными контейнерами (top) 
 `docker stats --no-stream --format json` вывести результат один раз в формате json
 
-## Logs
+### Logs
 
 `docker logs uptime-kuma --tail 100` показать логи конкретного запущенного контейнера в терминале (последние 100 строк) 
 `docker system events` предоставляют события от демона dockerd в реальном времени 
@@ -100,7 +102,7 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `du -h --max-depth=1 /var/lib/docker` 
 `du -h --max-depth=2 /var/lib/docker/containers`
 
-## Volume
+### Volume
 
 `docker volume ls` показывает список томов и место хранения (механизмы хранения постояннымх данных контейнера на хостовой машине, которые сохраняются между перезапусками или пересозданиями контейнеров) 
 `docker volume inspect uptime-kuma` подробная информация конфигурации тома (отображает локальный путь к данным в системе, Mountpoint: /var/lib/docker/volumes/uptime-kuma/_data) 
@@ -108,7 +110,7 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `docker volume rm test` удалить том 
 `docker run -d --restart=always --name uptime-kuma -p 8080:3001 -v uptime-kuma:/app/data louislam/uptime-kuma:1` создать и запустить контейнер на указанном томе (том создается автоматически, в дальнейшем его можно указывать при создании контейнера, если необходимо загружать из него сохраненные данные)
 
-## Network
+### Network
 
 `docker network ls` список сетей 
 `docker network inspect bridge` подробная информация о сети bridge 
@@ -118,7 +120,7 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `docker network connect network_test uptime-kuma` подключить работающий контейнер к указанной сети 
 `docker network disconnect network_test uptime-kuma` отключить от сети
 
-## Inspect
+### Inspect
 
 `docker inspect uptime-kuma` подробная информация о контейнере (например, конфигурация NetworkSettings) 
 `docker inspect uptime-kuma --format='{{.LogPath}}'` показать, где хранятся логи для конкретного контейнера в локальной системе 
@@ -130,7 +132,7 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `id=$(docker inspect uptime-kuma | jq -r .[].Id)` узнать ID контейнера по его имени в конфигурации 
 `cat /var/lib/docker/containers/$id/config.v2.json | jq .` прочитать конфигурационный файл контейнера
 
-## Exec
+### Exec
 
 `docker exec -it uptime-kuma /bin/bash` подключиться к работающему контейнеру (при выходе из оболочки, контейнер будет работать), используя интерпритатор bash 
 `docker top uptime-kuma` отобразить работающие процессы контейнера 
@@ -144,12 +146,12 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `docker cp uptime-kuma:/app/db/ backup/db` сокпировать из контейнера в локальную систему 
 `ls backup/db`
 
-## Prune
+### Prune
 
 `docker network prune && docker image prune && docker volume prune && docker container prune` удалить все неиспользуемые сети, висящие образа, остановленные контейнеры, все неиспользуемые тома 
 `system prune –volumes` заменяет все четыре команды для очистки и дополнительно очищает кеш сборки
 
-## Remove
+### Remove
 
 `systemctl stop docker.service` 
 `systemctl stop docker.socket` 
@@ -161,7 +163,9 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `rm -rf /run/docker` 
 `rm -rf /run/docker.sock`
 
-## Docker Socket API
+## API
+
+### Docker Socket API
 
 `curl --silent -XGET --unix-socket /run/docker.sock http://localhost/version | jq .` использовать локальный сокет (/run/docker.sock) для взаимодействия с Docker daemon через его API 
 `curl --silent -XGET --unix-socket /run/docker.sock http://localhost/info | jq .` количество образов, запущенных и остановленных контейнеров и остальные метрики ОС 
@@ -173,7 +177,7 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/stop` остановить контейнер 
 `curl --silent -XDELETE --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1` удалить контейнер
 
-## Docker TCP API
+### Docker TCP API
 ```bash
 echo '{
     "hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
@@ -185,7 +189,7 @@ systemctl restart docker
 ```
 curl --silent -XGET http://192.168.3.102:2375/version | jq .
 
-## Context
+### Context
 
 `docker context create devops-01 --docker "host=tcp://192.168.3.101:2375"` подключиться к удаленному сокету
 `docker context ls` список контекстов
@@ -247,7 +251,7 @@ CMD ["npm", "start"]
 `docker build -t torapi .` собрать образ из dockerfile 
 `docker run -d --name TorAPI -p 8443:8443 torapi`
 
-## Push
+### Push
 
 `docker login` 
 `git clone https://github.com/Lifailon/TorAPI` 
@@ -281,7 +285,7 @@ volumes:
 ```
 `docker-compose up -d` при повторном запуске пересоздаст контейнер с изменениями
 
-## Uptime-Kuma
+### Uptime-Kuma
 
 `nano docker-compose.yml`
 ```yml
@@ -300,7 +304,7 @@ volumes:
 ```
 `docker-compose up -d`
 
-## Uptime-Kuma-Api
+### Uptime-Kuma-Api
 
 `nano docker-compose.yml`
 ```yml
@@ -388,13 +392,13 @@ volumes:
 `docker service scale TorAPI_torapi=3` масштабирует сервис до указанного числа реплик 
 `docker stack rm TorAPI` удалить стэк (не требует остановки контейнеров)
 
-## Dozzle
+### Dozzle
 
 `docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest` 
 `docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest --remote-host tcp://192.168.3.102:2375|mon-01` доступ к удаленному хосту через Docker-tcp-api 
 http://192.168.3.102:9999
 
-## Dozzle-Auth
+### Dozzle-Auth
 
 `echo -n DozzleAdmin | shasum -a 256` получить пароль в формате sha-256 
 `mkdir dozzle && nano ./dozzle/users.yml` создать авторизационный файл
@@ -423,7 +427,7 @@ services:
 ```
 `docker-compose up -d`
 
-## Portainer
+### Portainer
 
 `curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml` скачать yaml файл 
 `version_update=$(cat portainer-agent-stack.yml | sed "s/2.11.1/latest/g")` 
@@ -439,7 +443,7 @@ https://192.168.3.101:9443/#!/endpoints добавить удаленный хо
 `docker start portainer` 
 http://192.168.3.101:9000
 
-# Docker.DotNet
+## Docker.DotNet
 ```PowerShell
 # Импорт библиотеки Docker.DotNet (https://nuget.info/packages/Docker.DotNet/3.125.15)
 Add-Type -Path "$home\Documents\Docker.DotNet-3.125.15\lib\netstandard2.1\Docker.DotNet.dll"

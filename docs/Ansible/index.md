@@ -79,7 +79,7 @@ ansible_shell_type=powershell
 ```
 `ansible-inventory --list` проверить конфигурацию (читает в формате JSON) или YAML (-y) с просмотром все применяемых переменных
 
-# Win_Modules
+## Win_Modules
 
 `ansible us -m ping` 
 `ansible win_ssh -m ping` 

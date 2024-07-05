@@ -514,7 +514,7 @@ if ((($1 -eq 1) -and ($2 -eq 2)) -or ($1 -ne 3)) {
 `& $ping $addr &` запустить команду в фоне 
 `(Get-Job)[-1] | Receive-Job -Keep`
 
-# DataType
+## DataType
 
 `$srv.GetType()` узнать тип данных 
 `$srv -is [string]` проверка на соответствие типа данных 

@@ -4,7 +4,7 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## Module
+### Module
 
 `Get-Command *WindowsFeature*` source module ServerManager 
 `Get-WindowsFeature -ComputerName "localhost"` 
@@ -15,13 +15,13 @@ date: "2024-03-14T03:00:00+03:00"
 `Get-DnsServerSetting -ALL` 
 `Uninstall-WindowsFeature -Name DNS` удалить роль
 
-## PSWA
+### PSWA
 
 `Install-WindowsFeature -Name WindowsPowerShellWebAccess -IncludeManagementTools` 
 `Install-PswaWebApplication -UseTestCertificate` Создать веб-приложение /pswa 
 `Add-PswaAuthorizationRule -UserGroupName "$domain\Domain Admins" -ComputerName * -ConfigurationName * -RuleName "For Admins"` добавить права авторизации
 
-## WSB (Windows Server Backup)
+### WSB (Windows Server Backup)
 
 При создании backup DC через WSB, создается копия состояния системы (System State), куда попадает база AD (NTDS.DIT), объекты групповых политик, содержимое каталога SYSVOL, реестр, метаданные IIS, база AD CS, и другие системные файлы и ресурсы. Резервная копия создается через службу теневого копирования VSS. 
 `Get-WindowsFeature Windows-Server-Backup` проверить установлена ли роль 
@@ -34,7 +34,7 @@ $WBadmin_cmd = "wbadmin.exe START BACKUP -backupTarget:$TargetUNC -systemState -
 # $WBadmin_cmd = "wbadmin start backup -backuptarget:$path -include:C:\Windows\NTDS\ntds.dit -quiet" # Backup DB NTDS
 Invoke-Expression $WBadmin_cmd
 ```
-## RDS
+### RDS
 
 `Get-Command -Module RemoteDesktop` 
 `Get-RDServer -ConnectionBroker $broker` список всех серверов в фермеы, указывается полное доменное имя при обращение к серверу с ролью RDCB 
@@ -46,7 +46,7 @@ Invoke-Expression $WBadmin_cmd
 `(Get-RDSessionCollectionConfiguration -ConnectionBroker $broker -CollectionName C03 | select *).CustomRdpProperty` use redirection server name:i:1 
 `Get-RDConnectionBrokerHighAvailability`
 
-# DNSServer
+## DNSServer
 
 `Get-Command -Module DnsServer` 
 `Show-DnsServerCache` отобразить весь кэш DNS-сервера 
@@ -87,7 +87,7 @@ Import-CSV $ConvFile -Delimiter ";" | ForEach-Object {
     [Void]$DNSRR.CreateInstanceFromTextRepresentation($DNSServer,$DNSFZone,$TextA)
 }
 ```
-# DHCPServer
+## DHCPServer
 
 `Get-Command -Module DhcpServer`
 ```PowerShell
@@ -97,7 +97,7 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 ```
 `Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.10 -ClientId 00-50-56-C0-00-08 -Description "new reservation"`
 
-# DFS
+## DFS
 
 `dfsutil /root:\\domain.sys\public /export:C:\export-dfs.txt` экспорт конфигурации namespace root 
 `dfsutil /AddFtRoot /Server:\\$srv /Share:public` на новой машине предварительно создать корень на основе домена 
@@ -157,7 +157,7 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 `Write-DfsrPropagationReport` создает отчеты для тестовых файлов распространения в группе репликации 
 `Start-DfsrPropagationTest` создает тестовый файл распространения в реплицированной папке
 
-# StorageReplica
+## StorageReplica
 
 `Install-WindowsFeature Storage-Replica –IncludeManagementTools -Restart` 
 `Get-Command -Module StorageReplica` 
@@ -173,19 +173,19 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 `Get-SRPartnership | Remove-SRPartnership` удалить реплизацию на основном сервере 
 `Get-SRGroup | Remove-SRGroup` удалить реплизацию на обоих серверах
 
-# WSUS
+## WSUS
 
 `Get-Hotfix | Sort-Object -Descending  InstalledOn` список установленных обновлений (информация из cimv2) 
 `Get-Hotfix -Description "Security update"` 
 `Get-CimInstance Win32_QuickFixEngineering` 
 `Get-Service uhssvc` служба Microsoft Health Update Tools, которая отвечает за предоставление обновлений
 
-## WindowsUpdate
+### WindowsUpdate
 
 `Get-Command -Module WindowsUpdate` 
 `Get-WindowsUpdateLog` формирует отчет в $home\AppData\Local\Temp\WindowsUpdateLog в формате csv
 
-## PSWindowsUpdate
+### PSWindowsUpdate
 
 `Install-Module -Name PSWindowsUpdate -Scope CurrentUser` 
 `Import-Module PSWindowsUpdate` 
@@ -210,7 +210,7 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 `Get-WUInstallerStatus` статус службы Windows Installer 
 `Remove-WUServiceManager` отключить Windows Update Service Manager
 
-## UpdateServices
+### UpdateServices
 
 `Install-WindowsFeature -Name UpdateServices-RSAT` установить роль UpdateServices 
 `$UpdateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope` 
@@ -220,7 +220,7 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 `$UpdateScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]"NotInstalled"` выставляем статус не установленных обновлений 
 `$UpdateScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]"NotInstalled,Downloaded"` обновления загружены, но не установлены
 
-## PoshWSUS
+### PoshWSUS
 
 `Install-Module -Name PoshWSUS` 
 `Get-Command -Module PoshWSUS` нужны права администратора 

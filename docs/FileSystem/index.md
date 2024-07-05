@@ -4,7 +4,7 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## Items
+### Items
 
 `Get-Content $home/desktop\test.txt -Wait` аналог tail 
 `Test-Path $path` проверить доступность пути 
@@ -32,7 +32,7 @@ date: "2024-03-14T03:00:00+03:00"
 `$log = Copy-Item "C:\*.txt" "C:\test\" -PassThru` вывести результат копирования (логирование) в переменную, можно забирать строки с помощью индексов $log[0].FullName 
 `Unblock-File "script.ps1"` разблокирует файлы скриптов PowerShell скачанных из Интернета, чтобы их можно было запустить, даже если политика выполнения PowerShell в режиме RemoteSigned
 
-## Clear-env-Temp-14-days
+### Clear-env-Temp-14-days
 ```PowerShell
 $ls = Get-Item $env:TEMP\*.tmp # считать все файлы с указанным расширением
 $date = (Get-Date).AddDays(-14)
@@ -43,7 +43,7 @@ foreach ($l in $ls) {
     }
 }
 ```
-## System.IO.File
+### System.IO.File
 
 `$file = [System.IO.File]::Create("$home\desktop\test.txt")` создать файл 
 `$file.Close()` закрыть файл 
@@ -53,21 +53,21 @@ foreach ($l in $ls) {
 `$file.ReadLine()` построчный вывод 
 `$file.ReadToEnd()` прочитать файл целиком
 
-## Read/Write Bytes
+### Read/Write Bytes
 
 `$file = [io.file]::ReadAllBytes("$home\desktop\powershell.jpg")` метод открывает двоичный файл, считывает его в массив байт и закрывает файл 
 `[io.file]::WriteAllBytes("$home\desktop\tloztotk-2.jpg",$file)` сохранить байты в файл (можно использовать для выгрузки двоичных файлов из БД)
 
-# Archive
+## Archive
 
-## Microsoft.PowerShell.Archive
+### Microsoft.PowerShell.Archive
 
 `Compress-Archive -Path $srcPath -DestinationPath "$($srcPath).zip" -CompressionLevel Optimal` архивировать (по исходному пути и названию с добавлением расширения) 
 `Expand-Archive -Path $zip` разархивировать 
 `Expand-Archive -Path $zip -DestinationPath $dstPath` указать путь извлечения 
 `Expand-Archive -Path $zip -OutputPath $dstPath`
 
-## System.IO.Compression.FileSystem
+### System.IO.Compression.FileSystem
 ```PowerShell
 function Expand-ArchiveFile {
     param (
@@ -105,7 +105,7 @@ function Expand-ArchiveFile {
     }
 }
 ```
-## WinRAR
+### WinRAR
 ```PowerShell
 function Expand-ArchivePassword {
     param (
@@ -119,7 +119,7 @@ function Expand-ArchivePassword {
 `cd "$home\Downloads"` 
 `Expand-ArchivePassword archive.rar qwe123`
 
-# Handle
+## Handle
 
 `$url = "https://download.sysinternals.com/files/Handle.zip"` 
 `Invoke-RestMethod $url -OutFile "$env:TEMP\handle.zip"` 
@@ -130,7 +130,7 @@ function Expand-ArchivePassword {
 `$SearchProcess = & $handle "C:\Users\Lifailon\Desktop\test.txt" -nobanner -u -v | ConvertFrom-Csv` вывести список дескрипторов по пути к файлу (имя процесса, его PID и пользователь который запустил) 
 `Stop-Process $SearchProcess.PID` завершить процесс, который удерживал файл
 
-# PSEverything
+## PSEverything
 
 `Install-Module PSEverything -Repository NuGet` 
 `Find-Everything pingui` найти все файлы в системе (на всех локальных дисках) с именем *pingui* через dll csharp версии Everything (по умолчанию) 
@@ -138,7 +138,7 @@ function Expand-ArchivePassword {
 `Find-Everything pingui -es` использовать cli версию Everything для поиска (при первом использовании версии, необходимо дождаться автоматической установки файлов зависимостей) 
 `Find-Everything pingui-0.1 -ComputerName localhost` поиск на удаленном компьютере через REST API, если запущен HTTP-сервер Everything
 
-# Console-Menu
+## Console-Menu
 ```PowerShell
 # Импортируем модуль PS-Menu в текущую сессию из репозитория GitHub
 $module = "https://raw.githubusercontent.com/chrisseroka/ps-menu/master/ps-menu.psm1"
@@ -183,7 +183,7 @@ function ls-menu {
 `ls-menu $home` 
 `ls-menu "D:\"`
 
-# SMB
+## SMB
 
 `Get-SmbServerConfiguration` 
 `Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force` отключить протокол SMB v1 
@@ -220,12 +220,12 @@ function ls-menu {
 `$CIMSession = New-CIMSession –Computername $srv` создать сеанс CIM (аудентификация на SMB) 
 `Get-SmbOpenFile -CIMSession $CIMSession | select ClientUserName,ClientComputerName,Path | Out-GridView -PassThru | Close-SmbOpenFile -CIMSession $CIMSession -Confirm:$false –Force` закрыть файлы (открыть к ним сетевой доступ)
 
-# ACL
+## ACL
 
 `(Get-Acl \\$srv\xl-share).access` доступ ACL на уровне NTFS 
 `Get-Acl C:\Drivers | Set-Acl C:\Distr` скопировать NTFS разрешения с одной папки и применить их на другую
 
-# NTFS
+## NTFS
 
 `Install-Module -Name NTFSSecurity -force` 
 `Get-Item "\\$srv\xl-share" | Get-NTFSAccess` 
@@ -234,7 +234,7 @@ function ls-menu {
 `Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Clear-NTFSAccess` удалить все разрешения, без удаления унаследованных разрешений 
 `Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Enable-NTFSAccessInheritance` включить NTFS наследование для всех объектов в каталоге
 
-# Storage
+## Storage
 
 `Get-Command -Module Storage` 
 `Get-Disk` список логических дисков 
@@ -251,7 +251,7 @@ function ls-menu {
 `Repair-Volume –driveletter C –SpotFix` 
 `Repair-Volume –driverletter C -Scan –Cimsession $CIMSession`
 
-# iSCSI
+## iSCSI
 
 `New-IscsiVirtualDisk -Path D:\iSCSIVirtualDisks\iSCSI2.vhdx -Size 20GB` создать динамический vhdx-диск (для фиксированного размера -UseFixed) 
 `New-IscsiServerTarget -TargetName iscsi-target-2 -InitiatorIds "IQN:iqn.1991-05.com.microsoft:srv3.contoso.com"` создать Target 
@@ -260,15 +260,15 @@ function ls-menu {
 `Get-IscsiTarget | fl` 
 `Disconnect-IscsiTarget -NodeAddress "iqn.1995-05.com.microsoft:srv2-iscsi-target-2-target" -Confirm:$false` отключиться
 
-# Base64
+## Base64
 
-## UTF8
+### UTF8
 
 `$loginPassword = "login:password"` 
 `$Base64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($loginPassword))` закодировать логин и пароль в строку Base64 
 `[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))` преобразовать в байты и обратно декодировать в исходную строку с помощью UTF-8 кодировки
 
-## Unicode
+### Unicode
 ```PowerShell
 $text = "password"
 $byte = [System.Text.Encoding]::Unicode.GetBytes($text) # преобразует строку $text в последовательность байтов, используя кодировку Unicode
@@ -276,7 +276,7 @@ $base64 = [System.Convert]::ToBase64String($byte) # байты конверти�
 $decode_base64 = [System.Convert]::FromBase64String($base64) # декодировать строку Base64 обратно в последовательность байтов с помощью метода FromBase64String
 $decode_string = [System.Text.Encoding]::Unicode.GetString($decode_base64) # закодированные байты преобразуются обратно в строку с использованием кодировки Unicode с помощью метода GetString
 ```
-## Image
+### Image
 ```PowerShell
 $path_image = "$home\Documents\1200x800.jpg"
 $BBase64 = [System.Convert]::ToBase64String((Get-Content $path_image -Encoding Byte))
@@ -285,11 +285,11 @@ $Image = [System.Drawing.Bitmap]::FromStream([IO.MemoryStream][Convert]::FromBas
 $Image.Save("$home\Desktop\1200x800.jpg")
 ```
 
-# Veeam
+## Veeam
 
 VeeamHub (https://github.com/VeeamHub/powershell)
 
-## Get-VBRCommand
+### Get-VBRCommand
 
 `Set-ExecutionPolicy AllSigned` 
 `Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))` установить choco 
@@ -308,7 +308,7 @@ VeeamHub (https://github.com/VeeamHub/powershell)
 `Get-VBRRestorePoint` 
 `Get-VBRViProxy`
 
-## Veeam-REStat
+### Veeam-REStat
 ```PowerShell
 $path = ($env:PSModulePath.Split(";")[0])+"\Veeam-REStat\Veeam-REStat.psm1"
 if (!(Test-Path $path)) {
@@ -329,9 +329,9 @@ $(iwr https://raw.githubusercontent.com/Lifailon/Veeam-REStat/rsa/Veeam-REStat/V
 `Veeam-REStat -Users` список УЗ, добавленных для подключения к серверам 
 `Veeam-REStat -Service` выводит информацию о связанных внутренних службах, подключение к этим службам может потребоваться только для интеграции с VBR
 
-# NAS
+## NAS
 
-## TrueNAS
+### TrueNAS
 
 [PowerTrueNas](https://github.com/PowerTrueNas/TrueNas)
 
@@ -360,7 +360,7 @@ $(iwr https://raw.githubusercontent.com/Lifailon/Veeam-REStat/rsa/Veeam-REStat/V
 `Start-TrueNasService ssh` запустить службу 
 `Stop-TrueNasService ssh` остановить службу
 
-## Synology
+### Synology
 
 [pSynology](https://github.com/pspete/pSynology)
 

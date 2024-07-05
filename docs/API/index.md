@@ -4,7 +4,7 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## Property
+### Property
 
 `$url = "https://habr.com/ru/rss/users/Lifailon/publications/articles/?fl=ru"` RSS лента публикаций на Habr 
 `Invoke-RestMethod $url` 
@@ -17,7 +17,7 @@ date: "2024-03-14T03:00:00+03:00"
 `$iwr.Links | fl title,innerText,href` 
 `$iwr.Images.src`
 
-## Methods
+### Methods
 
 **GET** - Read 
 **POST** - Create 
@@ -25,7 +25,7 @@ date: "2024-03-14T03:00:00+03:00"
 **PUT** - Update/replace 
 **DELETE** - Remove
 
-## Download Image
+### Download Image
 ```PowerShell
 function Download-Image {
 param (
@@ -59,7 +59,7 @@ param (
 ```
 `Download-Image -url https://losst.pro/`
 
-## Token
+### Token
 ```PowerShell
 https://veeam-11:9419/swagger/ui/index.html
 $Header = @{
@@ -73,7 +73,7 @@ $Body = @{
 $vpost = iwr "https://veeam-11:9419/api/oauth2/token" -Method POST -Headers $Header -Body $Body -SkipCertificateCheck
 $vtoken = (($vpost.Content) -split '"')[3]
 ```
-## GET
+### GET
 ```PowerShell
 $token = $vtoken | ConvertTo-SecureString -AsPlainText –Force
 $vjob = iwr "https://veeam-11:9419/api/v1/jobs" -Method GET -Headers $Header -Authentication Bearer -Token $token -SkipCertificateCheck
@@ -88,7 +88,7 @@ $vjob = $vjob.Content | ConvertFrom-Json
 $vjob = Invoke-RestMethod "https://veeam-11:9419/api/v1/jobs" -Method GET -Headers $Header -SkipCertificateCheck
 $vjob.data.virtualMachines.includes.inventoryObject
 ```
-## Cookie
+### Cookie
 
 Получить hash торрент файла на сайте Кинозал
 ```PowerShell
@@ -112,7 +112,7 @@ function Get-KinozalTorrentHash {
 `$cookies = "uid=..."` получить cookie в браузере на вкладке сеть из загловка запросов после авторизации на сайте 
 `Get-KinozalTorrentHash $id $cookies`
 
-# Pode
+## Pode
 ```PowerShell
 Start-PodeServer {
     Add-PodeEndpoint -Address localhost -Port "8080" -Protocol "HTTP"
@@ -167,7 +167,7 @@ Start-PodeServer {
 `http://localhost:8080/api/process-html` использовать браузер 
 `irm http://localhost:8080/api/service -Method Post -Body @{"ServiceName" = "AnyDesk"}`
 
-# Telegram
+## Telegram
 
 @BotFather (https://t.me/BotFather) /newbot
 
@@ -270,7 +270,7 @@ while ($true) {
 `/Service WinRM` 
 `/Service test`
 
-## Button
+### Button
 ```PowerShell
 $keyboard = '{
     "inline_keyboard":[[
@@ -283,7 +283,7 @@ $request = (Invoke-RestMethod -Uri "https://api.telegram.org/bot$Token/getUpdate
 $request.data # прочитать callback_data нажатой кнопки
 $request.message.date
 ```
-## Send-ToTelegramFile
+### Send-ToTelegramFile
 
 https://core.telegram.org/bots/api#senddocument
 ```PowerShell
@@ -318,13 +318,13 @@ function Send-ToTelegramFile {
 ```
 `Send-ToTelegramFile -Path "C:\Users\Lifailon\Documents\lake.jpg" -Token "7777777777:AAF..." -Chat "7777777777"`
 
-# Discord
+## Discord
 
 [Developers](https://discord.com/developers/applications)
 
 Создаем Applications (General Information). В Bot привязываем к Application и копируем токен авторизации. В OAuth2 - URL Generator выбираем bot и права Administrator и копируем созданный URL для добавления на канал. Переходим по url и добавляем бота на сервер. Получаем ID канала на сервере (текстовые каналы, правой кнопкой мыши копируем ссылку и забираем последний id в url).
 
-## Send to Discord
+### Send to Discord
 ```Bash
 DISCORD_TOKEN="MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX"
 DISCORD_CHANNEL_ID="119403124XXXXXXXXXX"
@@ -345,7 +345,7 @@ $Body = @{
 } | ConvertTo-Json
 curl -s $URL -X POST -H "Authorization: Bot $DISCORD_TOKEN" -H "Content-Type: application/json" -d $Body
 ```
-## Read from Discord
+### Read from Discord
 ```Bash
 curl -s -X GET $URL 
   -H "Authorization: Bot $DISCORD_TOKEN" 
@@ -355,7 +355,7 @@ curl -s -X GET $URL
 $messages = (curl -s -X GET $URL -H "Authorization: Bot $DISCORD_TOKEN" -H "Content-Type: application/json" | ConvertFrom-Json)
 $messages | Select-Object content,timestamp,{$_.author.username}
 ```
-## HttpClient
+### HttpClient
 ```PowerShell
 $DISCORD_TOKEN = "MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX"
 $DISCORD_CHANNEL_ID = "119403124XXXXXXXXXX"
@@ -366,7 +366,7 @@ $response = $HttpClient.GetAsync($URL).Result
 $messages = $response.Content.ReadAsStringAsync().Result
 ($messages | ConvertFrom-Json).content
 ```
-## Button
+### Button
 ```Bash
 curl -X POST $URL 
   -H "Content-Type: application/json" 
@@ -389,17 +389,17 @@ curl -X POST $URL
     ]
   }'
 ```
-## Discord.Net.Webhook
+### Discord.Net.Webhook
 ```PowerShell
 Add-Type -Path $(ls "$home\Documents\Discord.NET\*.dll").FullName
-# https://discordapp.com/api/webhooks/<webhook_id>/<webhook_token> (Настроить канал - Интеграция)
+## https://discordapp.com/api/webhooks/<webhook_id>/<webhook_token> (Настроить канал - Интеграция)
 $webhookId = 1197577280000000000
 $webhookToken = "rs8AA-XXXXXXXXXXX_Vk5RUI4A6HuSGhpCCTepq25duwCwLXasfv6u23a7XXXXXXXXXX"
 $messageContent = "Test dotNET"
 $client = New-Object Discord.Webhook.DiscordWebhookClient($webhookId, $webhookToken)
 $client.SendMessageAsync($messageContent).Wait()
 ```
-## Discord.Net.WebSocket
+### Discord.Net.WebSocket
 ```PowerShell
 $DiscordAssemblies = $(ls "$home\Documents\Discord.NET\*.dll").FullName
 foreach ($assembly in $DiscordAssemblies) {
@@ -426,20 +426,20 @@ $Client.LogoutAsync().GetAwaiter().GetResult()
 $Client.Dispose()
 ```
 
-# GigaChat
+## GigaChat
 
 [Developers chat](https://developers.sber.ru/gigachat/login)
 
-## 1. Установка сертификатов:
+### 1. Установка сертификатов:
 
 `Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_root_ca.cer"` скачать сертификат минцифры 
 `Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_sub_ca.cer"` 
 `Import-Certificate -FilePath "$home\Downloads\russian_trusted_root_ca.cer" -CertStoreLocation "Cert:\CurrentUser\Root"` установить сертификат минцифры 
 `Import-Certificate -FilePath "$home\Downloads\russian_trusted_sub_ca.cer" -CertStoreLocation "Cert:\CurrentUser\CA"`
 
-## 2. Авторизация по Sber ID и генерация новых авторизационных данных для получения токена: [Developers](https://developers.sber.ru/studio) (время жизни 30 минут)
+### 2. Авторизация по Sber ID и генерация новых авторизационных данных для получения токена: [Developers](https://developers.sber.ru/studio) (время жизни 30 минут)
 
-## 3. Формирование авторизационных данных в формате Base64 из Client ID и Client Secret:
+### 3. Формирование авторизационных данных в формате Base64 из Client ID и Client Secret:
 ```PowerShell
 $Client_ID     = "7e6d2f9f-825e-49b7-98f4-62fbb7506427" # [System.Guid]::Parse("7e6d2f9f-825e-49b7-98f4-62fbb7506427")
 $Client_Secret = "c35113ee-6757-47ba-9853-ea1d0d9db1ef" # [System.Guid]::Parse("c35113ee-6757-47ba-9853-ea1d0d9db1ef")
@@ -447,7 +447,7 @@ $Client_Join   = $Client_ID+":"+$Client_Secret # объединяем два UUI
 $Bytes         = [System.Text.Encoding]::UTF8.GetBytes($Client_Join) # преобразуем строку в массив байт
 $Cred_Base64   = [Convert]::ToBase64String($Bytes) # кодируем байты в строку Base64
 ```
-## 4. Получение токена:
+### 4. Получение токена:
 
 `$Cred_Base64   = "N2U2ZDJmOWYtODI1ZS00OWI3LTk4ZjQtNjJmYmI3NTA2NDI3OmIyYzgwZmZmLTEzOGUtNDg1Mi05MjgwLWE2MGI4NTc0YTM2MQ=="` 
 `$UUID = [System.Guid]::NewGuid()` генерируем UUID для журналирования входящих вызовов и разбора инцидентов
@@ -463,7 +463,7 @@ $body = @{
 }
 $GIGA_TOKEN = $(Invoke-RestMethod -Uri $url -Method POST -Headers $headers -Body $body).access_token
 ```
-## 5. Параметры:
+### 5. Параметры:
 ```PowerShell
 [string]$content = "Посчитай сумму чисел: 22+33"
 [string]$role = "user" # роль автора сообщения (user/assistant/system)
@@ -473,7 +473,7 @@ $GIGA_TOKEN = $(Invoke-RestMethod -Uri $url -Method POST -Headers $headers -Body
 [int64]$max_tokens = 512 # максимальное количество токенов, которые будут использованы для создания ответов
 [boolean]$stream = $false # передавать сообщения по частям в потоке
 ```
-## 6. Составление запросов:
+### 6. Составление запросов:
 ```PowerShell
 $url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
 $headers = @{
@@ -499,9 +499,9 @@ $body = @{
 $Request = Invoke-RestMethod -Method POST -Uri $url -Headers $headers -Body $body
 $Request.choices.message.content
 ```
-## Curl
+### Curl
 
-## Установка сертификатов в Ubuntu:
+### Установка сертификатов в Ubuntu:
 
 `wget https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt` 
 `wget https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt` 
@@ -510,7 +510,7 @@ $Request.choices.message.content
 `update-ca-certificates -v` 
 `wget -qS --spider --max-redirect=0 https://www.sberbank.ru`
 
-## Получение токена:
+### Получение токена:
 ```Bash
 Cred_Base64="N2U2ZDJmOWYtODI1ZS00OWI3LTk4ZjQtNjJmYmI3NTA2NDI3OmIyYzgwZmZmLTEzOGUtNDg1Mi05MjgwLWE2MGI4NTc0YTM2MQ=="
 UUID=$(uuidgen)
@@ -522,7 +522,7 @@ GIGA_TOKEN=$(curl -s --location --request POST "https://ngw.devices.sberbank.ru:
 ```
 `curl -s --location "https://gigachat.devices.sberbank.ru/api/v1/models" --header "Authorization: Bearer $GIGA_TOKEN" | jq .` для проверки
 
-## Составление запроса:
+### Составление запроса:
 ```Bash
 request=$(curl -s https://gigachat.devices.sberbank.ru/api/v1/chat/completions 
   -H "Content-Type: application/json" 
@@ -539,20 +539,20 @@ request=$(curl -s https://gigachat.devices.sberbank.ru/api/v1/chat/completions
 }')
 echo $request | jq -r .choices[].message.content
 ```
-# YandexGPT
+## YandexGPT
 
-## Получить OAuth-Token:
+### Получить OAuth-Token:
 
 [Create AIM Token](https://cloud.yandex.ru/ru/docs/iam/operations/iam-token/create) время жизни IAM-токена не больше 12 часов 
 `yandexPassportOauthToken="y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"` для bash 
 `$yandexPassportOauthToken = "y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"` для PowerShell
 
-## Обменять OAuth-Token на IAM-Token:
+### Обменять OAuth-Token на IAM-Token:
 
 `IAM_TOKEN=$(curl -s -d "{\"yandexPassportOauthToken\":\"$yandexPassportOauthToken\"}" "https://iam.api.cloud.yandex.net/iam/v1/tokens" | jq -r .iamToken)` 
 `$IAM_TOKEN = $(Invoke-RestMethod -Method POST -Uri "https://iam.api.cloud.yandex.net/iam/v1/tokens" -Body $(@{yandexPassportOauthToken = "$yandexPassportOauthToken"} | ConvertTo-Json -Compress)).iamToken`
 
-## Получить FOLDER_ID:
+### Получить FOLDER_ID:
 ```Bash
 CLOUD_ID=$(curl -s -H "Authorization: Bearer $IAM_TOKEN" https://resource-manager.api.cloud.yandex.net/resource-manager/v1/clouds | jq -r .clouds[].id) # получить cloud id
 curl -s --request GET -H "Authorization: Bearer $IAM_TOKEN" https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders -d "{\"cloudId\": \"$CLOUD_ID\"}" # получить список директорий в облаке
@@ -563,7 +563,7 @@ FOLDER_ID=$(curl -s --request GET -H "Authorization: Bearer $IAM_TOKEN" https://
 $CLOUD_ID = $(Invoke-RestMethod -Method Get -Uri "https://resource-manager.api.cloud.yandex.net/resource-manager/v1/clouds" -Headers @{"Authorization"="Bearer $IAM_TOKEN"; "Content-Type"="application/json"}).clouds.id
 $FOLDER_ID = $(Invoke-RestMethod -Method Get -Uri "https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders" -Headers @{"Authorization"="Bearer $IAM_TOKEN"; "Content-Type"="application/json"} -Body (@{"cloudId"= $CLOUD_ID} | ConvertTo-Json)).folders | Where-Object name -eq test | Select-Object -ExpandProperty id
 ```
-## Составление запроса:
+### Составление запроса:
 ```Bash
 model="gpt://$FOLDER_ID/yandexgpt/latest" # https://cloud.yandex.ru/ru/docs/yandexgpt/concepts/models
 body=$(cat <<EOF
@@ -609,7 +609,7 @@ $body = @"
 "@
 Invoke-RestMethod -Method POST -Uri "https://llm.api.cloud.yandex.net/foundationModels/v1/completion" -Headers @{"Content-Type"="application/json"; "Authorization"="Bearer $IAM_TOKEN"; "x-folder-id"="$FOLDER_ID"} -Body $body
 ```
-# SuperAGI
+## SuperAGI
 
 [Source](https://github.com/TransformerOptimus/SuperAGI) 
 [Playground generate](https://models.superagi.com/playground/generate) 
@@ -650,7 +650,7 @@ $request = Invoke-RestMethod -Method Post -Uri 'https://api.superagi.com/v1/gene
 } | ConvertTo-Json)
 $($request -replace "^data: " | ConvertFrom-Json).choices.text
 ```
-# Replicate
+## Replicate
 
 [API curl examples](https://replicate.com/stability-ai/stable-diffusion/examples?input=http)
 ```Bash
@@ -693,7 +693,7 @@ while ($response.status -ne "succeeded") {
 }
 $response.output
 ```
-# Google-Filter
+## Google-Filter
 
 `https://www.google.com/search?q=the+rookie+2018+imdb` формат url-запроса поиска с пробелами 
 `https://www.google.com/search?q=the+rookie+2018+site:imdb.com` поиск по сайту 
@@ -711,9 +711,9 @@ $response.output
 `intitle:index.of "game of thrones" mkv from:2010 to:2015` фильтрация по диапазону дат 
 `https://www.google.com/search?q=the-rookie-2018+site:imdb.com&btnI` редирект на первый url
 
-# Google-API
+## Google-API
 
-## Google-Translate
+### Google-Translate
 ```PowerShell
 $Key = "<TOKEN_API>" # получить токен: https://console.cloud.google.com/apis/credentials
 $Text = "You can see in the right corner how long each translation request takes (this does not depend on the amount of text being transferred)."
@@ -735,7 +735,7 @@ foreach ($key in $Header.Keys) {
 $Response = $WebClient.UploadString($url, "POST", $Body) | ConvertFrom-Json
 $Response.data.translations.translatedText
 ```
-## Google-Search
+### Google-Search
 ```PowerShell
 $Key = "<TOKEN_API>" # получить токен: https://developers.google.com/custom-search/v1/overview?hl=ru (пользовательский поиск JSON API предоставляет 100 поисковых запросов в день бесплатно)
 $cx = "35c78340f49eb474a" # создать поисковую систему https://programmablesearchengine.google.com/controlpanel/all
@@ -746,7 +746,7 @@ $Start = 0
 $response = Invoke-RestMethod "https://www.googleapis.com/customsearch/v1?q=$Query&key=$Key&cx=$cx&lr=lang_$Lang&num=$Num&$start=$Start"
 $response.items | Select-Object title,snippet,displayLink,link | Format-List
 ```
-# RapidAPI
+## RapidAPI
 
 [Google-Search72](https://rapidapi.com/ru/neoscrap-net/api/google-search72)
 ```PowerShell
@@ -758,7 +758,7 @@ $query = "как создать бота discord"
 $response = Invoke-RestMethod "https://google-search72.p.rapidapi.com/search?q=$query%20gitgub&gl=us&lr=lang_ru&num=20&start=0" -Method GET -Headers $headers
 $response.items | Select-Object title,snippet,displayLink,link | Format-List
 ```
-## IMDb
+### IMDb
 
 [IMDb8](https://rapidapi.com/apidojo/api/imdb8)
 ```PowerShell
@@ -773,7 +773,7 @@ $response.results | select title,titletype,year,runningTimeInMinutes,id | Format
 $response.results.principals # актеры
 $response.results.image
 ```
-## MoviesDatabase
+### MoviesDatabase
 
 [MoviesDatabase](https://rapidapi.com/SAdrian/api/moviesdatabase)
 ```PowerShell
@@ -785,7 +785,7 @@ $headers.Add("X-RapidAPI-Host", "moviesdatabase.p.rapidapi.com")
 $response = Invoke-RestMethod "https://moviesdatabase.p.rapidapi.com/titles/$imdb_id" -Method GET -Headers $headers
 $response.results
 ```
-# TMDB
+## TMDB
 
 [Developer TMDB](https://developer.themoviedb.org/reference/intro/getting-started)
 ```PowerShell
@@ -803,7 +803,7 @@ $(Invoke-RestMethod -Uri $url -Method Get) # список сезонов (.seaso
 (Invoke-RestMethod -Uri "https://api.themoviedb.org/3/tv/$id/season/2?api_key=$Token" -Method Get).episodes # вывести 2 сезон
 Invoke-RestMethod -Uri "https://api.themoviedb.org/3/tv/$id/season/2/episode/8?api_key=$Token" -Method Get # вывести 8 эпизод
 ```
-# OMDb
+## OMDb
 
 Получение API ключа по [email](https://www.omdbapi.com)
 
@@ -817,7 +817,7 @@ Invoke-RestMethod -Uri "https://api.themoviedb.org/3/tv/$id/season/2/episode/8?a
 `Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&t=The Rookie&type=movie"` поиск только фильма (movie) или сериала (series) 
 `$(Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&s=The Rookie").Search` поиск всех совпадений (фильмы и сериалы)
 
-# ivi
+## ivi
 
 [ivi api doc](https://ask.ivi.ru/knowledge-bases/10/articles/51697-dokumentatsiya-dlya-api-ivi)
 
@@ -832,13 +832,13 @@ Invoke-RestMethod -Uri "https://api.themoviedb.org/3/tv/$id/season/2/episode/8?a
 `$id = (Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.kp_id` получить id в Кинопоиск (5106881) 
 `id=$(curl -s https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok | jq .result[].kp_id)` получить id в Кинопоиск
 
-# Kinopoisk
+## Kinopoisk
 ```Bash
 id=5106881
 get=$(curl -s https://www.kinopoisk.ru/film/$id/episodes/)
 printf "%s\n" "${get[@]}" | grep -A 1 "Сезон 2" | grep "эпизодов" | sed -r "s/^.+\: //" # количество эпиздовод во втором сезоне
 ```
-## kinopoisk.dev
+### kinopoisk.dev
 
 [Получить токен](https://t.me/kinopoiskdev_bot) 
 [Документация по API в формате OpenAPI](https://kinopoisk.dev/documentation)
@@ -891,7 +891,7 @@ $query = "%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA"
 $request = Invoke-RestMethod -Uri "https://api.kinopoisk.dev/v1.4/movie/search?page=$page&limit=$limit&query=$query" -Headers @{"accept"="application/json"; "X-API-KEY"="$API_KEY"}
 $request.docs | Where-Object year -eq 2022
 ```
-## UrlCode
+### UrlCode
 ```PowerShell
 function Get-PercentEncode ($str) {
    $bytes = [System.Text.Encoding]::UTF8.GetBytes($str)
@@ -926,7 +926,7 @@ percent-decode() {
 }
 percent-decode "%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA"
 ```
-## KinopoiskApiUnofficial
+### KinopoiskApiUnofficial
 
 Бесплатно 500 запросов в сутки. [Swagger documentation](https://kinopoiskapiunofficial.tech/documentation/api)
 ```PowerShell
@@ -939,7 +939,7 @@ Invoke-RestMethod -Uri 'https://kinopoiskapiunofficial.tech/api/v2.2/films/11421
 ```
 `curl -s "https://kinopoiskapiunofficial.tech/api/v2.2/films/1142153" -H "accept: application/json" -H "X-API-KEY: $API_KEY" | jq .`
 
-## Kinobox
+### Kinobox
 
 `$url = "https://www.kinopoisk.ru/film/694051"` 
 `$kp_id = $url -replace ".+/"` 
@@ -951,7 +951,7 @@ Invoke-RestMethod -Uri 'https://kinopoiskapiunofficial.tech/api/v2.2/films/11421
 `curl -s -X GET "https://kinobox.tv/api/popular/films" -H "accept: application/json"` популярные фильмы 
 `curl -s -X GET "https://kinobox.tv/api/popular/series" -H "accept: application/json"` популярные сериалы
 
-# VideoCDN
+## VideoCDN
 
 [API](https://github.com/notssh/videocdn-api) 
 [Source](https://github.com/API-Movies/videocdn) 

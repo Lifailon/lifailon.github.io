@@ -283,7 +283,7 @@ CMD ["sh", "-c", "iperf3 -s -p $PORT"]
 `$SpeedTest.Intervals` метрики измерений 
 `Get-iPerfLog` прочитать лог-файл
 
-## Firewall
+### Firewall
 ```PowerShell
 $days = 5
 $obj = @()
@@ -322,7 +322,7 @@ Enabled,Profile
 `Export-FirewallRules -Name * -CSVFile $home\documents\fw.csv` -Inbound -Outbound -Enabled -Disabled -Allow -Block (фильтр правил для экспорта) 
 `Import-FirewallRules -CSVFile $home\documents\fw.csv`
 
-## RDP
+### RDP
 
 `Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber"` отобразить номер текущего RDP порта 
 `Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber" -Value "3390"` изменить RDP-порт 
@@ -333,7 +333,7 @@ Enabled,Profile
 `Get-Service TermService | Restart-Service -Force` перезапустить rdp-службу 
 `New-NetFirewallRule -Profile Any -DisplayName "RDP 3390" -Direction Inbound -Protocol TCP -LocalPort 3390` открыть RDP-порт
 
-## IPBan
+### IPBan
 
 `auditpol /get /category:*` отобразить все политики аудита 
 `auditpol /get /category:Вход/выход` отобразить локальные политики аудита для Входа и Выхода из системы 
@@ -365,7 +365,7 @@ Get-NetFirewallRule | Where-Object DisplayName -Match "IPBan" | ForEach-Object {
 `Get-Service IPBan | Stop-Service` остановить службу 
 `sc delete IPBan` удалить службу
 
-## shutdown
+### shutdown
 
 `shutdown /r /o` перезагрузка в безопасный режим 
 `shutdown /s /t 600 /c "Power off after 10 minutes"` выключение 
@@ -415,7 +415,7 @@ function Start-Shutdown {
 }
 ```
 
-## UDP-Socket
+### UDP-Socket
 
 [Source](https://cloudbrothers.info/en/test-udp-connection-powershell/)
 ```PowerShell
@@ -468,7 +468,7 @@ function Test-NetUDPConnection {
 `Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 5201` 
 `Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 514 -Message "<30>May 31 00:00:00 HostName multipathd[784]: Test message"`
 
-## TCP-Socket
+### TCP-Socket
 ```PowerShell
 function Start-TCPServer {
     param(
@@ -486,7 +486,7 @@ function Start-TCPServer {
 `Start-TCPServer -Port 5201` 
 `Test-NetConnection -ComputerName 127.0.0.1 -Port 5201`
 
-## WakeOnLan
+### WakeOnLan
 
 Broadcast package consisting of 6 byte filled "0xFF" and then 96 byte where the mac address is repeated 16 times
 ```PowerShell
@@ -510,7 +510,7 @@ function Send-WOL {
 `Send-WOL -Mac "D8-BB-C1-70-A3-4E"` 
 `Send-WOL -Mac "D8-BB-C1-70-A3-4E" -IP 192.168.3.100`
 
-## HTTPListener
+### HTTPListener
 ```PowerShell
 $httpListener = New-Object System.Net.HttpListener
 $httpListener.Prefixes.Add("http://+:8888/")
@@ -530,12 +530,12 @@ while (!([console]::KeyAvailable)) {
 $httpListener.Close()
 ```
 
-## WebClient
+### WebClient
 
 `[System.Net.WebClient] | Get-Member` 
 `(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell-Commands/rsa/README.md")`
 
-## HttpClient
+### HttpClient
 ```PowerShell
 $url = "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip"
 $path = "$home\Downloads\$(Split-Path -Path $url -Leaf)"
@@ -560,7 +560,7 @@ finally {
     $fileStream.Dispose()
 }
 ```
-## Certificate
+### Certificate
 ```PowerShell
 function Get-WebCertificate ($srv) {
     $iwr = iwr $srv
@@ -586,7 +586,7 @@ function Get-WebCertificate ($srv) {
 ```
 `Get-WebCertificate https://google.com`
 
-## OpenVPN
+### OpenVPN
 
 `Invoke-WebRequest -Uri https://swupdate.openvpn.org/community/releases/OpenVPN-2.6.5-I001-amd64.msi -OutFile $home\Downloads\OpenVPN-2.6.5.msi` 
 `Start-Process $home\Downloads\OpenVPN-2.6.5.msi -ArgumentList '/quiet /SELECT_OPENSSL_UTILITIES=1' -Wait` 
@@ -705,7 +705,7 @@ verb 3
 `client1.crt` 
 `client1.key`
 
-## Route
+### Route
 
 `Get-Service RemoteAccess | Stop-Service` 
 `Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" -Name "IPEnableRouter" -Value 1` включает IP маршрутизацию 
@@ -743,7 +743,7 @@ verb 3
 14:36:34.533771 IP 192.168.4.6 > 192.168.3.101: ICMP echo request, id 1, seq 2962, length 40 # отправил запрос
 14:36:34.533806 IP 192.168.3.101 > 192.168.4.6: ICMP echo reply, id 1, seq 2962, length 40 # отправил ответ
 ```
-## NAT
+### NAT
 
 `Get-Command -Module NetNat` 
 `New-NetNat -Name LocalNat -InternalIPInterfaceAddressPrefix "192.168.3.0/24"` 
@@ -751,7 +751,7 @@ verb 3
 `Remove-NetNatStaticMapping -StaticMappingID 0` 
 `Remove-NetNat -Name LocalNat`
 
-## WireGuard
+### WireGuard
 
 `Invoke-WebRequest "https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi" -OutFile "$home\Downloads\WireGuard-Client-0.5.3.msi"` 
 `msiexec.exe /i "$home\Downloads\WireGuard-Client-0.5.3.msi" DO_NOT_LAUNCH=1 /qn` 
@@ -792,7 +792,7 @@ AllowedIPs = 192.168.21.0/24, 192.168.3.0/24
 Endpoint = 26.115.154.67:8181
 PersistentKeepalive = 25
 ```
-## VpnClient
+### VpnClient
 
 `Get-Command -Module VpnClient` 
 `Add-VpnConnection -Name "vpn-failon" -ServerAddress "26.115.154.67" -TunnelType L2TP -L2tpPsk "123098" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential -AllUserConnection –PassThru -Force` 
@@ -819,7 +819,7 @@ PersistentKeepalive = 25
 `(Get-VpnConnection -ConnectionName "vpn-failon").routes` отобразить таблицу маршрутизации для указанного соединения 
 `Remove-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix "172.22.23.0/24"`
 
-## ProxyClient
+### ProxyClient
 
 `$user = "lifailon"` 
 `$pass = "Proxy"` 
@@ -831,7 +831,7 @@ PersistentKeepalive = 25
 `Invoke-RestMethod http://ifconfig.me/ip` узнать внешний ip-адрес (по умолчанию в текущей сессии подключения будут происходить через заданный прокси сервер) 
 `Invoke-RestMethod https://kinozal.tv/rss.xml`
 
-## netsh
+### netsh
 
 ### Reverse Proxy
 
@@ -857,7 +857,7 @@ PersistentKeepalive = 25
 `netsh advfirewall firewall add rule name="Open Remote Desktop" protocol=TCP dir=in localport=3389 action=allow` открыть порт 3389 
 `netsh advfirewall firewall add rule name="All ICMP V4" dir=in action=allow protocol=icmpv4` открыть icmp
 
-## OpenSSH
+### OpenSSH
 
 `Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Client*'` 
 `Add-WindowsCapability -Online -Name OpenSSH.Client*` 
@@ -898,7 +898,7 @@ Subsystem powershell c:/progra~1/powershell/7/pwsh.exe -sshs -NoLogo # запу�
 `$session = New-PSSession -HostName 192.168.3.100 -Port 2121 -UserName lifailon -SSHTransport` 
 `Invoke-Command -Session $session -ScriptBlock {Get-Service}`
 
-## WinRM
+### WinRM
 
 `Enter-PSSession -ComputerName $srv` подключиться к PowerShell сессии через PSRemoting. Подключение возможно только по FQDN-имени 
 `Invoke-Command $srv -ScriptBlock {Get-ComputerInfo}` выполнение команды через PSRemoting 
@@ -982,7 +982,7 @@ New-WSManInstance -ResourceURI "winrm/config/Listener" -SelectorSet $selector_se
 `MaxFieldLength увеличить до 0000ffff (65535)` 
 `MaxRequestBytes увеличить до 0000ffff (65535)`
 
-## Console-Download
+### Console-Download
 
 `Install-Module Console-Download -Repository NuGet` устаовить модуль из менеджера пакетов NuGet 
 `Invoke-Expression $(Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Console-Download/rsa/module/Console-Download/Console-Download.psm1")` или импортировать модуль из GitHub репозитория в текущую сессию PowerShell 
@@ -1004,14 +1004,14 @@ Invoke-Download $urls # загрузить параллельно 2 файла
 `Invoke-Download $url` начать загрузку файла 
 `Invoke-Download $url -Thread 3` начать загрузку 3-х одинаковых файлов
 
-## PSDomainTest
+### PSDomainTest
 
 `Install-Module PSDomainTest -Repository NuGet -Scope CurrentUser` 
 `Get-DomainTest -Domain github.com -Warning` протестировать домен и DNS записи на ошибки (вывести только ошибки) через ZoneMaster (https://github.com/zonemaster/zonemaster) 
 `Get-DomainTest -Domain github.com -Warning -json` вывод в формате json 
 `Get-DomainTest -Domain github.com -html | Out-File .\result.html` получить отчет в формате HTML-таблицы с фильтрацией по столбцам
 
-# Check-Host
+## Check-Host
 ```PowerShell
 $path = $(($env:PSModulePath -split ";")[0]) + "\Get-CheckHost"
 if (Test-Path $path) {
@@ -1029,7 +1029,7 @@ Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Check-Host/rsa/Get
 `Get-CheckHost -Server google.com:443 -Type http -Count 5` проверить доступность порта 
 `Get-CheckHost -Server google.com:443 -Type tcp -Count 5` проверить доступность TCP или UDP порта
 
-## pSyslog
+### pSyslog
 
 `Install-Module pSyslog -Repository NuGet` 
 `Start-pSyslog -Port 514` запустить сервер на порту 514 (по умолчанию) 

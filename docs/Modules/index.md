@@ -4,7 +4,7 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## psm1
+### psm1
 
 Синтаксис модуля и его параметров
 ```PowerShell
@@ -30,7 +30,7 @@ function Get-Function {
 `Get-Function -Text Text1` 
 `Get-Function -Text Text2 -Provider Test2 -Number 3`
 
-## psd1
+### psd1
 
 Описание модуля
 ```PowerShell
@@ -53,7 +53,7 @@ function Get-Function {
 }
 ```
 
-# PackageManagement
+## PackageManagement
 
 `Import-Module PackageManagement` импортировать модуль 
 `Get-Module PackageManagement` информация о модуле 
@@ -80,7 +80,7 @@ function Get-Function {
 `Import-Module -Name VeeamLogParser` загрузить модуль 
 `Get-Module VeeamLogParser | select -ExpandProperty ExportedCommands` отобразить список функций
 
-## winget
+### winget
 
 [Source](https://github.com/microsoft/winget-cli)
 [Web](https://winget.run)
@@ -100,7 +100,7 @@ function Get-Function {
 [uri]$url = $($(irm https://api.github.com/repos/jqlang/jq/releases/latest).assets.browser_download_url -match "windows-amd64").ToString() # получить версию latest на GitHub
 irm $url -OutFile "C:\Windows\System32\jq.exe" # загрузить jq.exe
 ```
-## Scoop
+### Scoop
 
 `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` 
 `irm get.scoop.sh | iex` установка 
@@ -115,7 +115,7 @@ irm $url -OutFile "C:\Windows\System32\jq.exe" # загрузить jq.exe
 `(scoop list).version` 
 `scoop uninstall jq`
 
-## Chocolatey
+### Chocolatey
 ```PowerShell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
@@ -124,7 +124,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `choco list` 
 `choco install adobereader`
 
-## NuGet
+### NuGet
 
 `Invoke-RestMethod https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile "$home\Documents\nuget.exe"` 
 `Invoke-Expression "$home\Documents\nuget.exe search Selenium.WebDriver"` 
@@ -178,7 +178,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 `& "$home\Documents\nuget.exe" delete Console-Translate 0.2.0 -Source https://api.nuget.org/v3/index.json -ApiKey $nuget_api_key -NoPrompt`
 
-# PS2EXE
+## PS2EXE
 
 `Install-Module ps2exe -Repository PSGallery` 
 `Get-Module -ListAvailable` список всех модулей 
@@ -189,7 +189,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `-credentialGUI` вывод диалогового окна для ввода учетных данных 
 `Invoke-ps2exe -inputFile "$home\Desktop\WinEvent-Viewer-1.1.ps1" -outputFile "$home\Desktop\WEV-1.1.exe" -iconFile "$home\Desktop\log_48px.ico" -title "WinEvent-Viewer" -noConsole -noOutput -noError`
 
-# NSSM
+## NSSM
 
 `$powershell_Path = (Get-Command powershell).Source` 
 `$NSSM_Path = (Get-Command "C:\WinPerf-Agent\NSSM-2.24.exe").Source` 
@@ -204,7 +204,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `& $NSSM_Path set $Service_Name description "Check performance CPU and report email"` изменить описание 
 `& $NSSM_Path remove $Service_Name` удалить
 
-# WinAPI
+## WinAPI
 
 `Install-Module ps.win.api -Repository NuGet -AllowClobber` 
 `Import-Module ps.win.api` 
@@ -236,7 +236,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `Get-WinUpdate` список обновлений Windows (дата установки и источник) 
 `Get-Driver` список установленных драйверов (имя, провайдер, версия и дата установки)
 
-# Get-Query
+## Get-Query
 
 `Install-Module Get-Query -Repository NuGet` установить модуль 
 `Get-Help Get-Query` 
@@ -244,7 +244,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `Get-Query 192.168.1.1.1 -proc` список всех пользовательских процессов (по умолчанию -user *) 
 `Get-Query 192.168.1.1.1 -proc -user username` список процессов указанного пользователя
 
-# Console-Translate
+## Console-Translate
 
 `Install-Module Console-Translate -Repository NuGet` 
 `Get-Translate "Module for text translation"` 
@@ -260,7 +260,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `Stop-DeepLX` 
 `Get-LanguageCode` получение кодов языков по стандарту ISO-639-1
 
-# HardwareMonitor
+## HardwareMonitor
 
 `Install-Module HardwareMonitor -Repository NuGet -Scope AllUsers` 
 `Install-LibreHardwareMonitor` установить и запустить LibreHardwareMonitor в систему (https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) 
@@ -271,7 +271,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `Get-Sensor -ComputerName 192.168.3.99 -Port 8085 -User hardware -Password monitor | Where-Object Value -notmatch "^0,0" | Format-Table` использовать авторизацию и отфильтровать вывод не пустых датчиков 
 `Get-Sensor -Library | Where-Object Value -ne 0 | Format-Table` использовать динамическую библиотеку (dll) через .NET
 
-# CrystalDisk-Cli
+## CrystalDisk-Cli
 
 `Install-Module CrystalDisk-Cli -Repository NuGet` 
 `Get-DiskInfoSettings` отобразить настройки программы Crystal-DiskInfo (https://github.com/hiyohiyo/CrystalDiskInfo) 
@@ -280,7 +280,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 `Get-DiskInfo` получить результаты последнего сканирования (статус, температура и т.п.) 
 `Get-DiskInfo -Report | Select-Object Name,Date,HealthStatus,Temperature` получить актуальный отчет (запустить сканирование и дождаться результатов)
 
-# PS-Pi-Hole
+## PS-Pi-Hole
 ```PowerShell
 $path_psm = ($env:PSModulePath.Split(";")[0])+"\Invoke-Pi-Hole\Invoke-Pi-Hole.psm1"
 if (!(Test-Path $path_psm)) {

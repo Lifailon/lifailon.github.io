@@ -4,7 +4,9 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## Zabbix Agent Deploy
+## Zabbix Agent
+
+### Deploy
 ```PowerShell
 $url = "https://cdn.zabbix.com/zabbix/binaries/stable/6.4/6.4.5/zabbix_agent2-6.4.5-windows-amd64-static.zip"
 $path = "$home\Downloads\zabbix-agent2-6.4.5.zip"
@@ -26,7 +28,7 @@ $exe = "C:\zabbix-agent2-6.4.5\bin\zabbix_agent2.exe"
 Get-Service *Zabbix*Agent* | Start-Service` запустить службу
 #.$exe --config $conf --uninstall` удалить службу
 ```
-## zabbix_sender
+### zabbix_sender
 
 Создать host - задать произвольное имя (powershell-host) и добавить в группу 
 Создать Items: 
@@ -39,7 +41,7 @@ $path = "C:\zabbix-agent2-6.4.5\bin"
 $scount = (Get-Service).Count
 .$path\zabbix_sender.exe -z 192.168.3.102 -s "powershell-host" -k service.count -o $scount
 ```
-## zabbix_get
+### zabbix_get
 
 `apt install zabbix-get` 
 `nano /etc/zabbix/zabbix_agentd.conf` 
@@ -51,7 +53,7 @@ $scount = (Get-Service).Count
 `.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.in["ens33"]` 
 `.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.out["ens33"]`
 
-## UserParameter
+### UserParameter
 
 `UserParameter=process.count,powershell -Command "(Get-Process).Count"` 
 `UserParameter=process.vm[*],powershell -Command "(Get-Process $1).ws"`
@@ -65,7 +67,7 @@ Test:
 key: `process.count` 
 key: `process.vm[zabbix_agent2]`
 
-## Include
+### Include
 
 - Добавить параметр Include для включения конфигурационных файлов подключаемых плагинов
 `'Include=.\zabbix_agent2.d\plugins.d\*.conf' >> C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.conf`
@@ -114,7 +116,7 @@ if ($select -eq "INACTIVECOUNT") {
 `last(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT])>{$ACTIVEMAX}` 
 `min(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT],24h)={$ACTIVEMIN}`
 
-## zabbix_agent2.conf
+### zabbix_agent2.conf
 ```
 # Агент может работать в пассивном (сервер забирает сам информацию) и активном режиме (агент сам отправляет):
 Server=192.168.3.102
@@ -142,7 +144,10 @@ LogFileSize=100
 # Уровень логирования. 4 - для отладки (выдает много информации)
 DebugLevel=4
 ```
-## API Token
+
+## API
+
+### Token
 
 [Documentation](https://www.zabbix.com/documentation/current/en/manual/api/reference)
 
@@ -162,7 +167,7 @@ $token = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json
 ```
 `$token = "2eefd25fdf1590ebcdb7978b5bcea1fff755c65b255da8cbd723181b639bb789"` сгенерировать токен в UI (http://192.168.3.102/zabbix/zabbix.php?action=token.list)
 
-## user.get
+### user.get
 ```PowerShell
 $data = @{
     "jsonrpc"="2.0";
@@ -174,7 +179,7 @@ $data = @{
 }
 $users = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
 ```
-## problem.get
+### problem.get
 ```PowerShell
 $data = @{
     "jsonrpc"="2.0";
@@ -186,7 +191,7 @@ $data = @{
 }
 (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
 ```
-## host.get
+### host.get
 
 Получить список всех хостов (имя и id)
 
@@ -215,7 +220,7 @@ $data = @{
 $hosts = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
 $host_id = $hosts[3].hostid` забрать id хоста по индексу
 ```
-## item.get
+### item.get
 
 Получить id элементов данных по наименованию ключа для конкретного хоста
 ```PowerShell
@@ -231,7 +236,7 @@ $data = @{
 $items = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
 $items_id = ($items | where key_ -match system.uptime).itemid` забрать id элемента данных
 ```
-## history.get
+### history.get
 
 Получить всю историю элемента данных по его id
 ```PowerShell
@@ -247,7 +252,7 @@ $data = @{
 }
 $items_data_uptime = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result` получить все данные по ключу у конкретного хоста
 ```
-## Convert Secconds To TimeSpan and DateTime
+### Convert Secconds To TimeSpan and DateTime
 
 `$sec = $items_data_uptime.value`
 ```PowerShell
@@ -261,7 +266,7 @@ function ConvertSecondsTo-TimeSpan {
 ```
 `$UpTime = ConvertSecondsTo-TimeSpan $sec[-1]`
 
-## Convert From Unix Time
+### Convert From Unix Time
 
 `$time = $items_data_uptime.clock`
 ```PowerShell
@@ -281,9 +286,9 @@ function ConvertFrom-UnixTime {
 `$UpTime` последнее полученное значение времени работы хоста 
 `$GetDataTime` время последнего полученного значения
 
-# SNMP
+## SNMP
 
-## Setup SNMP Service
+### Setup SNMP Service
 
 `Install-WindowsFeature SNMP-Service,SNMP-WMI-Provider -IncludeManagementTools` установить роль SNMP и WMI провайдер через Server Manager 
 `Get-WindowsFeature SNMP*` 
@@ -292,7 +297,7 @@ function ConvertFrom-UnixTime {
 `Get-NetFirewallrule -DisplayName *snmp* | ft` 
 `Get-NetFirewallrule -DisplayName *snmp* | Enable-NetFirewallRule`
 
-## Setting SNMP Service via Regedit
+### Setting SNMP Service via Regedit
 
 Agent: 
 `New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SNMP\Parameters\RFC1156Agent" -Name "sysContact" -Value "lifailon-user"` создать (New) или изменить (Set) 
@@ -309,12 +314,12 @@ Security:
 `New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\PermittedManagers" -Name "1" -Value "192.168.3.99"` от кого разрешено принимать запросы 
 `Get-Service SNMP | Restart-Service`
 
-## snmpwalk
+### snmpwalk
 
 `snmpwalk -v 2c -c public 192.168.3.100` 
 `snmpwalk -v 2c -c public -O e 192.168.3.100`
 
-## SNMP Modules
+### SNMP Modules
 
 `Install-Module -Name SNMP` 
 `Get-SnmpData -IP 192.168.3.100 -OID 1.3.6.1.2.1.1.4.0 -UDPport 161 -Community public` 
@@ -330,7 +335,7 @@ Security:
 `Invoke-SNMPv3Walk` обход по дереву OID 
 `Invoke-SNMPv3Walk -UserName lifailon -Target 192.168.3.100 -AuthSecret password -PrivSecret password -OID 1.3.6.1.2.1.1 -AuthType MD5 -PrivType AES128`
 
-## Lextm.SharpSnmpLib
+#### Lextm.SharpSnmpLib
 
 [Синтаксис](https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1) 
 [Download lib](https://api.nuget.org/v3-flatcontainer/lextm.sharpsnmplib/12.5.2/lextm.sharpsnmplib.12.5.2.nupkg)
@@ -356,7 +361,7 @@ $TimeOut
 )
 $message.Data.ToString()
 ```
-## Walk
+#### Walk
 ```PowerShell
 [Lextm.SharpSnmpLib.ObjectIdentifier]$OID = "1.3.6.1.2.1.1" # дерево или конечный OID
 $WalkMode = [Lextm.SharpSnmpLib.Messaging.WalkMode]::WithinSubtree # режим обхода по дереву
@@ -379,7 +384,7 @@ $results2 +=[PSCustomObject]@{'ID'=$d.id.ToString();'Data'=$d.Data.ToString()} #
 $results2
 ```
 
-# SMTP
+## SMTP
 
 ```PowerShell
 function Send-SMTP {
