@@ -1186,6 +1186,8 @@
   
 
 
+  <h1>Ansible</h1>
+
 <h2 id="install">Install</h2>
 <p><code>apt -y update &amp;&amp; apt -y upgrade</code> <br />
 <code>apt -y install ansible</code> v2.10.8 <br />
@@ -1253,7 +1255,7 @@ ansible_connection=ssh
 ansible_shell_type=powershell
 </code></pre>
 <p><code>ansible-inventory --list</code> проверить конфигурацию (читает в формате JSON) или YAML (-y) с просмотром все применяемых переменных</p>
-<h1 id="win_modules">Win_Modules</h1>
+<h2 id="win_modules">Win_Modules</h2>
 <p><code>ansible us -m ping</code> <br />
 <code>ansible win_ssh -m ping</code> <br />
 <code>ansible us -m shell -a "uptime &amp;&amp; df -h | grep lv"</code> <br />

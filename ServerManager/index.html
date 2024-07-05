@@ -994,7 +994,9 @@
   
 
 
-<h2 id="module">Module</h2>
+  <h1>Server Manager</h1>
+
+<h3 id="module">Module</h3>
 <p><code>Get-Command *WindowsFeature*</code> source module ServerManager <br />
 <code>Get-WindowsFeature -ComputerName "localhost"</code> <br />
 <code>Get-WindowsFeature | where Installed -eq $True</code> список установленных ролей и компонентов <br />
@@ -1003,11 +1005,11 @@
 <code>Get-Command *DNS*</code> <br />
 <code>Get-DnsServerSetting -ALL</code> <br />
 <code>Uninstall-WindowsFeature -Name DNS</code> удалить роль</p>
-<h2 id="pswa">PSWA</h2>
+<h3 id="pswa">PSWA</h3>
 <p><code>Install-WindowsFeature -Name WindowsPowerShellWebAccess -IncludeManagementTools</code> <br />
 <code>Install-PswaWebApplication -UseTestCertificate</code> Создать веб-приложение /pswa <br />
 <code>Add-PswaAuthorizationRule -UserGroupName "$domain\Domain Admins" -ComputerName * -ConfigurationName * -RuleName "For Admins"</code> добавить права авторизации</p>
-<h2 id="wsb-windows-server-backup">WSB (Windows Server Backup)</h2>
+<h3 id="wsb-windows-server-backup">WSB (Windows Server Backup)</h3>
 <p>При создании backup DC через WSB, создается копия состояния системы (System State), куда попадает база AD (NTDS.DIT), объекты групповых политик, содержимое каталога SYSVOL, реестр, метаданные IIS, база AD CS, и другие системные файлы и ресурсы. Резервная копия создается через службу теневого копирования VSS. <br />
 <code>Get-WindowsFeature Windows-Server-Backup</code> проверить установлена ли роль <br />
 <code>Add-Windowsfeature Windows-Server-Backup –Includeallsubfeature</code> установить роль</p>
@@ -1018,7 +1020,7 @@ $WBadmin_cmd = &quot;wbadmin.exe START BACKUP -backupTarget:$TargetUNC -systemSt
 # $WBadmin_cmd = &quot;wbadmin start backup -backuptarget:$path -include:C:\Windows\NTDS\ntds.dit -quiet&quot; # Backup DB NTDS
 Invoke-Expression $WBadmin_cmd
 </code></pre>
-<h2 id="rds">RDS</h2>
+<h3 id="rds">RDS</h3>
 <p><code>Get-Command -Module RemoteDesktop</code> <br />
 <code>Get-RDServer -ConnectionBroker $broker</code> список всех серверов в фермеы, указывается полное доменное имя при обращение к серверу с ролью RDCB <br />
 <code>Get-RDRemoteDesktop -ConnectionBroker $broker</code> список коллекций <br />
@@ -1028,7 +1030,7 @@ Invoke-Expression $WBadmin_cmd
 <code>Get-RDAvailableApp -ConnectionBroker $broker -CollectionName C03</code> список установленного ПО на серверах в коллекции <br />
 <code>(Get-RDSessionCollectionConfiguration -ConnectionBroker $broker -CollectionName C03 | select *).CustomRdpProperty</code> use redirection server name:i:1 <br />
 <code>Get-RDConnectionBrokerHighAvailability</code></p>
-<h1 id="dnsserver">DNSServer</h1>
+<h2 id="dnsserver">DNSServer</h2>
 <p><code>Get-Command -Module DnsServer</code> <br />
 <code>Show-DnsServerCache</code> отобразить весь кэш DNS-сервера <br />
 <code>Show-DnsServerCache | where HostName -match ru</code> <br />
@@ -1066,14 +1068,14 @@ Import-CSV $ConvFile -Delimiter &quot;;&quot; | ForEach-Object {
     [Void]$DNSRR.CreateInstanceFromTextRepresentation($DNSServer,$DNSFZone,$TextA)
 }
 </code></pre>
-<h1 id="dhcpserver">DHCPServer</h1>
+<h2 id="dhcpserver">DHCPServer</h2>
 <p><code>Get-Command -Module DhcpServer</code></p>
 <pre><code class="language-PowerShell">$mac = icm $srv -ScriptBlock {Get-DhcpServerv4Scope | Get-DhcpServerv4Lease} | select AddressState,
 HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridView -Title &quot;HDCP Server: $srv&quot; –PassThru
 (New-Object -ComObject Wscript.Shell).Popup($mac.ClientId,0,$mac.HostName,64)
 </code></pre>
 <p><code>Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.10 -ClientId 00-50-56-C0-00-08 -Description "new reservation"</code></p>
-<h1 id="dfs">DFS</h1>
+<h2 id="dfs">DFS</h2>
 <p><code>dfsutil /root:\\domain.sys\public /export:C:\export-dfs.txt</code> экспорт конфигурации namespace root <br />
 <code>dfsutil /AddFtRoot /Server:\\$srv /Share:public</code> на новой машине предварительно создать корень на основе домена <br />
 <code>dfsutil /root:\\domain.sys\public /import:C:\export-dfs.txt /&lt;verify /set</code> Import (перед импортом данных в существующий корень DFS, утилита создает резервную копию конфигурации корня в текущем каталоге, из которого запускается утилита dfsutil) <br />
@@ -1128,7 +1130,7 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 <code>Write-DfsrHealthReport</code> создает отчет о работоспособности репликации DFS <br />
 <code>Write-DfsrPropagationReport</code> создает отчеты для тестовых файлов распространения в группе репликации <br />
 <code>Start-DfsrPropagationTest</code> создает тестовый файл распространения в реплицированной папке</p>
-<h1 id="storagereplica">StorageReplica</h1>
+<h2 id="storagereplica">StorageReplica</h2>
 <p><code>Install-WindowsFeature Storage-Replica –IncludeManagementTools -Restart</code> <br />
 <code>Get-Command -Module StorageReplica</code> <br />
 <code>Test-SRTopology</code> проверить соответствует ли сервер и канал связи технологии Storage Replica <br />
@@ -1142,15 +1144,15 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 <code>(Get-SRGroup).Replicas | Select-Object numofbytesremaining</code> проверить длину очереди копирования <br />
 <code>Get-SRPartnership | Remove-SRPartnership</code> удалить реплизацию на основном сервере <br />
 <code>Get-SRGroup | Remove-SRGroup</code> удалить реплизацию на обоих серверах</p>
-<h1 id="wsus">WSUS</h1>
+<h2 id="wsus">WSUS</h2>
 <p><code>Get-Hotfix | Sort-Object -Descending  InstalledOn</code> список установленных обновлений (информация из cimv2) <br />
 <code>Get-Hotfix -Description "Security update"</code> <br />
 <code>Get-CimInstance Win32_QuickFixEngineering</code> <br />
 <code>Get-Service uhssvc</code> служба Microsoft Health Update Tools, которая отвечает за предоставление обновлений</p>
-<h2 id="windowsupdate">WindowsUpdate</h2>
+<h3 id="windowsupdate">WindowsUpdate</h3>
 <p><code>Get-Command -Module WindowsUpdate</code> <br />
 <code>Get-WindowsUpdateLog</code> формирует отчет в $home\AppData\Local\Temp\WindowsUpdateLog в формате csv</p>
-<h2 id="pswindowsupdate">PSWindowsUpdate</h2>
+<h3 id="pswindowsupdate">PSWindowsUpdate</h3>
 <p><code>Install-Module -Name PSWindowsUpdate -Scope CurrentUser</code> <br />
 <code>Import-Module PSWindowsUpdate</code> <br />
 <code>Get-Command -Module PSWindowsUpdate</code> <br />
@@ -1173,7 +1175,7 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 <code>Get-WUServiceManager</code> выводит источники обновлений <br />
 <code>Get-WUInstallerStatus</code> статус службы Windows Installer <br />
 <code>Remove-WUServiceManager</code> отключить Windows Update Service Manager</p>
-<h2 id="updateservices">UpdateServices</h2>
+<h3 id="updateservices">UpdateServices</h3>
 <p><code>Install-WindowsFeature -Name UpdateServices-RSAT</code> установить роль UpdateServices <br />
 <code>$UpdateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope</code> <br />
 <code>[enum]::GetValues([Microsoft.UpdateServices.Administration.ApprovedStates])</code> список утвержденных состояний <br />
@@ -1181,7 +1183,7 @@ HostName,IPAddress,ClientId,DnsRegistration,DnsRR,ScopeId,ServerIP | Out-GridVie
 <code>$UpdateScope.ApprovedStates = [Microsoft.UpdateServices.Administration.ApprovedStates]"NotApproved"</code> выставляем статус не утвержденных обновлений на сервере WSUS <br />
 <code>$UpdateScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]"NotInstalled"</code> выставляем статус не установленных обновлений <br />
 <code>$UpdateScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]"NotInstalled,Downloaded"</code> обновления загружены, но не установлены</p>
-<h2 id="poshwsus">PoshWSUS</h2>
+<h3 id="poshwsus">PoshWSUS</h3>
 <p><code>Install-Module -Name PoshWSUS</code> <br />
 <code>Get-Command -Module PoshWSUS</code> нужны права администратора <br />
 <code>Add-PSWSUSClientToGroup</code> добавление клиента в группу <br />

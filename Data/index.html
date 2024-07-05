@@ -1300,6 +1300,8 @@
   
 
 
+  <h1>Data</h1>
+
 <h2 id="html">HTML</h2>
 <h3 id="convertfrom-html">ConvertFrom-Html</h3>
 <pre><code class="language-PowerShell">function ConvertFrom-Html {
@@ -1743,7 +1745,7 @@ Remove-Item &quot;$home\Downloads\HandBrakeCLI*&quot;
 <code>magick PowerShell-Commands.png -brightness-contrast +20x+10 output.jpg</code> изменить яркость и контрастность <br />
 <code>magick convert -delay 100 1.png 2.png 3.png output.gif</code> создать gif из изображений <br />
 <code>magick convert image1.jpg image2.jpg -append output.jpg</code> вертикально объединенить изображения</p>
-<h1 id="youtube">YouTube</h1>
+<h2 id="youtube">YouTube</h2>
 <pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod &quot;https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest&quot;
 $url = $($release_latest.assets | Where-Object name -match &quot;yt-dlp.exe&quot;).browser_download_url
 Invoke-RestMethod $url -OutFile &quot;C:\Windows\System32\yt-dlp.exe&quot;

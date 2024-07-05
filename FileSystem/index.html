@@ -1264,7 +1264,9 @@
   
 
 
-<h2 id="items">Items</h2>
+  <h1>File System</h1>
+
+<h3 id="items">Items</h3>
 <p><code>Get-Content $home/desktop\test.txt -Wait</code> аналог tail <br />
 <code>Test-Path $path</code> проверить доступность пути <br />
 <code>Get-FileHash -Algorithm SHA256 "$path"</code> узнать хэш файла по алгоритму sha256 <br />
@@ -1290,7 +1292,7 @@
 <code>Copy-Item -Path "C:\*" -Destination "C:\test\" -Exclude '*.jpeg'</code> копировать объекты, за исключением файлов с расширением (Exclude) <br />
 <code>$log = Copy-Item "C:\*.txt" "C:\test\" -PassThru</code> вывести результат копирования (логирование) в переменную, можно забирать строки с помощью индексов $log[0].FullName <br />
 <code>Unblock-File "script.ps1"</code> разблокирует файлы скриптов PowerShell скачанных из Интернета, чтобы их можно было запустить, даже если политика выполнения PowerShell в режиме RemoteSigned</p>
-<h2 id="clear-env-temp-14-days">Clear-env-Temp-14-days</h2>
+<h3 id="clear-env-temp-14-days">Clear-env-Temp-14-days</h3>
 <pre><code class="language-PowerShell">$ls = Get-Item $env:TEMP\*.tmp # считать все файлы с указанным расширением
 $date = (Get-Date).AddDays(-14)
 foreach ($l in $ls) {
@@ -1300,7 +1302,7 @@ foreach ($l in $ls) {
     }
 }
 </code></pre>
-<h2 id="systemiofile">System.IO.File</h2>
+<h3 id="systemiofile">System.IO.File</h3>
 <p><code>$file = [System.IO.File]::Create("$home\desktop\test.txt")</code> создать файл <br />
 <code>$file.Close()</code> закрыть файл <br />
 <code>[System.IO.File]::ReadAllLines("$home\desktop\test.txt")</code> прочитать файл <br />
@@ -1308,16 +1310,16 @@ foreach ($l in $ls) {
 <code>$file | Get-Member</code> <br />
 <code>$file.ReadLine()</code> построчный вывод <br />
 <code>$file.ReadToEnd()</code> прочитать файл целиком</p>
-<h2 id="readwrite-bytes">Read/Write Bytes</h2>
+<h3 id="readwrite-bytes">Read/Write Bytes</h3>
 <p><code>$file = [io.file]::ReadAllBytes("$home\desktop\powershell.jpg")</code> метод открывает двоичный файл, считывает его в массив байт и закрывает файл <br />
 <code>[io.file]::WriteAllBytes("$home\desktop\tloztotk-2.jpg",$file)</code> сохранить байты в файл (можно использовать для выгрузки двоичных файлов из БД)</p>
-<h1 id="archive">Archive</h1>
-<h2 id="microsoftpowershellarchive">Microsoft.PowerShell.Archive</h2>
+<h2 id="archive">Archive</h2>
+<h3 id="microsoftpowershellarchive">Microsoft.PowerShell.Archive</h3>
 <p><code>Compress-Archive -Path $srcPath -DestinationPath "$($srcPath).zip" -CompressionLevel Optimal</code> архивировать (по исходному пути и названию с добавлением расширения) <br />
 <code>Expand-Archive -Path $zip</code> разархивировать <br />
 <code>Expand-Archive -Path $zip -DestinationPath $dstPath</code> указать путь извлечения <br />
 <code>Expand-Archive -Path $zip -OutputPath $dstPath</code></p>
-<h2 id="systemiocompressionfilesystem">System.IO.Compression.FileSystem</h2>
+<h3 id="systemiocompressionfilesystem">System.IO.Compression.FileSystem</h3>
 <pre><code class="language-PowerShell">function Expand-ArchiveFile {
     param (
         # Путь к архиву
@@ -1354,7 +1356,7 @@ foreach ($l in $ls) {
     }
 }
 </code></pre>
-<h2 id="winrar">WinRAR</h2>
+<h3 id="winrar">WinRAR</h3>
 <pre><code class="language-PowerShell">function Expand-ArchivePassword {
     param (
         $Path,
@@ -1366,7 +1368,7 @@ foreach ($l in $ls) {
 </code></pre>
 <p><code>cd "$home\Downloads"</code> <br />
 <code>Expand-ArchivePassword archive.rar qwe123</code></p>
-<h1 id="handle">Handle</h1>
+<h2 id="handle">Handle</h2>
 <p><code>$url = "https://download.sysinternals.com/files/Handle.zip"</code> <br />
 <code>Invoke-RestMethod $url -OutFile "$env:TEMP\handle.zip"</code> <br />
 <code>Expand-ArchiveFile -Path "$env:TEMP\handle.zip" -DestinationPath "$home\Documents" -FileName "handle.exe"</code> извлекаем выбранный файл из архива <br />
@@ -1375,13 +1377,13 @@ foreach ($l in $ls) {
 <code>$test = New-Object System.IO.StreamReader("$home\desktop\test.txt")</code> занять файл текущим процессом pwsh ($pid) <br />
 <code>$SearchProcess = &amp; $handle "C:\Users\Lifailon\Desktop\test.txt" -nobanner -u -v | ConvertFrom-Csv</code> вывести список дескрипторов по пути к файлу (имя процесса, его PID и пользователь который запустил) <br />
 <code>Stop-Process $SearchProcess.PID</code> завершить процесс, который удерживал файл</p>
-<h1 id="pseverything">PSEverything</h1>
+<h2 id="pseverything">PSEverything</h2>
 <p><code>Install-Module PSEverything -Repository NuGet</code> <br />
 <code>Find-Everything pingui</code> найти все файлы в системе (на всех локальных дисках) с именем <em>pingui</em> через dll csharp версии Everything (по умолчанию) <br />
 <code>Find-Everything pingui-0.1.py | Format-List</code> <br />
 <code>Find-Everything pingui -es</code> использовать cli версию Everything для поиска (при первом использовании версии, необходимо дождаться автоматической установки файлов зависимостей) <br />
 <code>Find-Everything pingui-0.1 -ComputerName localhost</code> поиск на удаленном компьютере через REST API, если запущен HTTP-сервер Everything</p>
-<h1 id="console-menu">Console-Menu</h1>
+<h2 id="console-menu">Console-Menu</h2>
 <pre><code class="language-PowerShell"># Импортируем модуль PS-Menu в текущую сессию из репозитория GitHub
 $module = &quot;https://raw.githubusercontent.com/chrisseroka/ps-menu/master/ps-menu.psm1&quot;
 Invoke-Expression $(Invoke-RestMethod $module)
@@ -1423,7 +1425,7 @@ Invoke-Expression $(Invoke-RestMethod $module)
 <p><code>ls-menu</code> <br />
 <code>ls-menu $home</code> <br />
 <code>ls-menu "D:\"</code></p>
-<h1 id="smb">SMB</h1>
+<h2 id="smb">SMB</h2>
 <p><code>Get-SmbServerConfiguration</code> <br />
 <code>Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force</code> отключить протокол SMB v1 <br />
 <code>Get-WindowsFeature | Where-Object {$_.name -eq "FS-SMB1"} | ft Name,Installstate</code> модуль ServerManager, проверить установлен ли компонент SMB1 <br />
@@ -1458,17 +1460,17 @@ Invoke-Expression $(Invoke-RestMethod $module)
 <code>Remove-SmbMapping X: -force</code> отмонтировать сетевой диск <br />
 <code>$CIMSession = New-CIMSession –Computername $srv</code> создать сеанс CIM (аудентификация на SMB) <br />
 <code>Get-SmbOpenFile -CIMSession $CIMSession | select ClientUserName,ClientComputerName,Path | Out-GridView -PassThru | Close-SmbOpenFile -CIMSession $CIMSession -Confirm:$false –Force</code> закрыть файлы (открыть к ним сетевой доступ)</p>
-<h1 id="acl">ACL</h1>
+<h2 id="acl">ACL</h2>
 <p><code>(Get-Acl \\$srv\xl-share).access</code> доступ ACL на уровне NTFS <br />
 <code>Get-Acl C:\Drivers | Set-Acl C:\Distr</code> скопировать NTFS разрешения с одной папки и применить их на другую</p>
-<h1 id="ntfs">NTFS</h1>
+<h2 id="ntfs">NTFS</h2>
 <p><code>Install-Module -Name NTFSSecurity -force</code> <br />
 <code>Get-Item "\\$srv\xl-share" | Get-NTFSAccess</code> <br />
 <code>Add-NTFSAccess -Path "\\$srv\xl-share" -Account "domain\xl-share" -AccessRights Fullcontrol -PassThru</code> добавить <br />
 <code>Remove-NTFSAccess -Path "\\$srv\xl-share" -Account "domain\xl-share" -AccessRights FullControl -PassThru</code> удалить <br />
 <code>Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Clear-NTFSAccess</code> удалить все разрешения, без удаления унаследованных разрешений <br />
 <code>Get-ChildItem -Path "\\$srv\xl-share" -Recurse -Force | Enable-NTFSAccessInheritance</code> включить NTFS наследование для всех объектов в каталоге</p>
-<h1 id="storage">Storage</h1>
+<h2 id="storage">Storage</h2>
 <p><code>Get-Command -Module Storage</code> <br />
 <code>Get-Disk</code> список логических дисков <br />
 <code>Get-Partition</code> отобразить разделы на всех дисках <br />
@@ -1483,35 +1485,35 @@ Invoke-Expression $(Invoke-RestMethod $module)
 <code>Repair-Volume –driveletter C –Scan</code> Check disk <br />
 <code>Repair-Volume –driveletter C –SpotFix</code> <br />
 <code>Repair-Volume –driverletter C -Scan –Cimsession $CIMSession</code></p>
-<h1 id="iscsi">iSCSI</h1>
+<h2 id="iscsi">iSCSI</h2>
 <p><code>New-IscsiVirtualDisk -Path D:\iSCSIVirtualDisks\iSCSI2.vhdx -Size 20GB</code> создать динамический vhdx-диск (для фиксированного размера -UseFixed) <br />
 <code>New-IscsiServerTarget -TargetName iscsi-target-2 -InitiatorIds "IQN:iqn.1991-05.com.microsoft:srv3.contoso.com"</code> создать Target <br />
 <code>Get-IscsiServerTarget | fl TargetName, LunMappings</code> <br />
 <code>Connect-IscsiTarget -NodeAddress "iqn.1995-05.com.microsoft:srv2-iscsi-target-2-target" -IsPersistent $true</code> подключиться инициатором к таргету <br />
 <code>Get-IscsiTarget | fl</code> <br />
 <code>Disconnect-IscsiTarget -NodeAddress "iqn.1995-05.com.microsoft:srv2-iscsi-target-2-target" -Confirm:$false</code> отключиться</p>
-<h1 id="base64">Base64</h1>
-<h2 id="utf8">UTF8</h2>
+<h2 id="base64">Base64</h2>
+<h3 id="utf8">UTF8</h3>
 <p><code>$loginPassword = "login:password"</code> <br />
 <code>$Base64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($loginPassword))</code> закодировать логин и пароль в строку Base64 <br />
 <code>[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))</code> преобразовать в байты и обратно декодировать в исходную строку с помощью UTF-8 кодировки</p>
-<h2 id="unicode">Unicode</h2>
+<h3 id="unicode">Unicode</h3>
 <pre><code class="language-PowerShell">$text = &quot;password&quot;
 $byte = [System.Text.Encoding]::Unicode.GetBytes($text) # преобразует строку $text в последовательность байтов, используя кодировку Unicode
 $base64 = [System.Convert]::ToBase64String($byte) # байты конвертируются в строку Base64 с помощью метода ToBase64String
 $decode_base64 = [System.Convert]::FromBase64String($base64) # декодировать строку Base64 обратно в последовательность байтов с помощью метода FromBase64String
 $decode_string = [System.Text.Encoding]::Unicode.GetString($decode_base64) # закодированные байты преобразуются обратно в строку с использованием кодировки Unicode с помощью метода GetString
 </code></pre>
-<h2 id="image">Image</h2>
+<h3 id="image">Image</h3>
 <pre><code class="language-PowerShell">$path_image = &quot;$home\Documents\1200x800.jpg&quot;
 $BBase64 = [System.Convert]::ToBase64String((Get-Content $path_image -Encoding Byte))
 Add-Type -assembly System.Drawing
 $Image = [System.Drawing.Bitmap]::FromStream([IO.MemoryStream][Convert]::FromBase64String($BBase64))
 $Image.Save(&quot;$home\Desktop\1200x800.jpg&quot;)
 </code></pre>
-<h1 id="veeam">Veeam</h1>
+<h2 id="veeam">Veeam</h2>
 <p>VeeamHub (https://github.com/VeeamHub/powershell)</p>
-<h2 id="get-vbrcommand">Get-VBRCommand</h2>
+<h3 id="get-vbrcommand">Get-VBRCommand</h3>
 <p><code>Set-ExecutionPolicy AllSigned</code> <br />
 <code>Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))</code> установить choco <br />
 <code>choco install veeam-backup-and-replication-console</code> установить консоль управления (https://community.chocolatey.org/packages/veeam-backup-and-replication-console) <br />
@@ -1528,7 +1530,7 @@ $Image.Save(&quot;$home\Desktop\1200x800.jpg&quot;)
 <code>Get-VBRBackupServerCertificate</code> <br />
 <code>Get-VBRRestorePoint</code> <br />
 <code>Get-VBRViProxy</code></p>
-<h2 id="veeam-restat">Veeam-REStat</h2>
+<h3 id="veeam-restat">Veeam-REStat</h3>
 <pre><code class="language-PowerShell">$path = ($env:PSModulePath.Split(&quot;;&quot;)[0])+&quot;\Veeam-REStat\Veeam-REStat.psm1&quot;
 if (!(Test-Path $path)) {
     New-Item $path -ItemType &quot;File&quot; -Force
@@ -1547,8 +1549,8 @@ $(iwr https://raw.githubusercontent.com/Lifailon/Veeam-REStat/rsa/Veeam-REStat/V
 <code>Veeam-REStat -Proxy</code> список серверов с ролью Proxy <br />
 <code>Veeam-REStat -Users</code> список УЗ, добавленных для подключения к серверам <br />
 <code>Veeam-REStat -Service</code> выводит информацию о связанных внутренних службах, подключение к этим службам может потребоваться только для интеграции с VBR</p>
-<h1 id="nas">NAS</h1>
-<h2 id="truenas">TrueNAS</h2>
+<h2 id="nas">NAS</h2>
+<h3 id="truenas">TrueNAS</h3>
 <p><a href="https://github.com/PowerTrueNas/TrueNas">PowerTrueNas</a></p>
 <p><code>Install-Module TrueNas</code> <br />
 <code>Import-Module TrueNas</code> <br />
@@ -1574,7 +1576,7 @@ $(iwr https://raw.githubusercontent.com/Lifailon/Veeam-REStat/rsa/Veeam-REStat/V
 <code>Get-TrueNasService | ft</code> список служб и их статус <br />
 <code>Start-TrueNasService ssh</code> запустить службу <br />
 <code>Stop-TrueNasService ssh</code> остановить службу</p>
-<h2 id="synology">Synology</h2>
+<h3 id="synology">Synology</h3>
 <p><a href="https://github.com/pspete/pSynology">pSynology</a></p>
 <p><code>New-SYNOSession</code> аутентификация на Synology Diskstation и запуск нового сеанса API <br />
 <code>Close-SYNOSession</code> выход из сеанса API <br />

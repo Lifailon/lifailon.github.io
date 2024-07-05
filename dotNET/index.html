@@ -463,20 +463,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Selenium">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#selenium-modules" class="md-nav__link">
     <span class="md-ellipsis">
       Selenium modules
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -920,20 +914,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Selenium">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#selenium-modules" class="md-nav__link">
     <span class="md-ellipsis">
       Selenium modules
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1078,7 +1066,9 @@
   
 
 
-<h2 id="console-api">Console API</h2>
+  <h1>.NET</h1>
+
+<h3 id="console-api">Console API</h3>
 <p><a href="https://powershell.one/tricks/input-devices/detect-key-press">Source</a></p>
 <p><code>[Console] | Get-Member -Static</code> <br />
 <code>[Console]::BackgroundColor = "Blue"</code> <br />
@@ -1125,7 +1115,7 @@ do {
     Start-Sleep 1
 } while ($true)
 </code></pre>
-<h2 id="drawing">Drawing</h2>
+<h3 id="drawing">Drawing</h3>
 <p><a href="https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-7.0&amp;redirectedfrom=MSDN">API</a></p>
 <pre><code class="language-PowerShell">Add-Type -AssemblyName System.Drawing
 $Width = 800
@@ -1155,7 +1145,7 @@ $rotated_image.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) # 
 $rotated_image.Save(&quot;$home\desktop\powershell_image_rotated.bmp&quot;, [System.Drawing.Imaging.ImageFormat]::Bmp)
 $src_image.Dispose() # закрыть (отпустить) исходный файл
 </code></pre>
-<h2 id="selenium">Selenium</h2>
+<h3 id="selenium">Selenium</h3>
 <p><code>Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/Deploy-Selenium/rsa/Deploy-Selenium-Drivers.ps1")</code> установка всех драйверов и Chromium соответствующий версии для драйвера</p>
 <pre><code>$path = &quot;$home\Documents\Selenium\&quot;
 $log = &quot;$path\ChromeDriver.log&quot;
@@ -1228,7 +1218,7 @@ finally {
 <p><code>Get-SpeedTest -Provider Libre</code> <br />
 <code>Get-SpeedTest -Provider Open</code> <br />
 <code>Get-SpeedTest -Provider Ookla</code></p>
-<h2 id="object-event">Object Event</h2>
+<h3 id="object-event">Object Event</h3>
 <pre><code class="language-PowerShell">$Timer = New-Object System.Timers.Timer
 $Timer.Interval = 1000
 Register-ObjectEvent -InputObject $Timer -EventName Elapsed -SourceIdentifier Timer.Output -Action {
@@ -1248,8 +1238,8 @@ $date = Get-Date -f hh:mm:ss
 (New-Object -ComObject Wscript.Shell).Popup(&quot;PowerShell Exit: $date&quot;,0,&quot;Action&quot;,64)
 }
 </code></pre>
-<h1 id="methods">Methods</h1>
-<h2 id="eventlog">EventLog</h2>
+<h2 id="methods">Methods</h2>
+<h3 id="eventlog">EventLog</h3>
 <p><code>[System.Diagnostics.EventLog] | select Assembly,Module</code> <br />
 <code>$EventLog = [System.Diagnostics.EventLog]::new("Application")</code> <br />
 <code>$EventLog = New-Object -TypeName System.Diagnostics.EventLog -ArgumentList Application,192.168.3.100</code> <br />
@@ -1259,16 +1249,16 @@ $date = Get-Date -f hh:mm:ss
 <code>$EventLog.Clear()</code> очистить журнал</p>
 <p><code>Join-Path C: Install Test</code> <br />
 <code>[System.IO.Path]::Combine("C:", "Install", "Test")</code></p>
-<h2 id="match">Match</h2>
+<h3 id="match">Match</h3>
 <p><code>[System.Math] | Get-Member -Static -MemberType Methods</code> <br />
 <code>[System.Math]::Max(2,7)</code> <br />
 <code>[System.Math]::Min(2,7)</code> <br />
 <code>[System.Math]::Floor(3.9)</code> <br />
 <code>[System.Math]::Truncate(3.9)</code></p>
-<h2 id="generatepassword">GeneratePassword</h2>
+<h3 id="generatepassword">GeneratePassword</h3>
 <p><code>Add-Type -AssemblyName System.Web</code> <br />
 <code>[System.Web.Security.Membership]::GeneratePassword(10,2)</code></p>
-<h2 id="soundplayer">SoundPlayer</h2>
+<h3 id="soundplayer">SoundPlayer</h3>
 <pre><code class="language-PowerShell">$CriticalSound = New-Object System.Media.SoundPlayer
 $CriticalSound.SoundLocation = &quot;C:\WINDOWS\Media\Windows Critical Stop.wav&quot;
 $CriticalSound.Play()
@@ -1277,7 +1267,7 @@ $GoodSound = New-Object System.Media.SoundPlayer
 $GoodSound.SoundLocation = &quot;C:\WINDOWS\Media\tada.wav&quot;
 $GoodSound.Play()
 </code></pre>
-<h2 id="static-class">Static Class</h2>
+<h3 id="static-class">Static Class</h3>
 <p><code>[System.Environment] | Get-Member -Static</code> <br />
 <code>[System.Environment]::OSVersion</code> <br />
 <code>[System.Environment]::Version</code> <br />
@@ -1285,7 +1275,7 @@ $GoodSound.Play()
 <code>[System.Environment]::UserName</code></p>
 <p><code>[System.Diagnostics.Process] | Get-Member -Static</code> <br />
 <code>[System.Diagnostics.Process]::Start('notepad.exe')</code></p>
-<h2 id="clicker">Clicker</h2>
+<h3 id="clicker">Clicker</h3>
 <pre><code class="language-PowerShell">$cSource = @'
 using System;
 using System.Drawing;
@@ -1348,7 +1338,7 @@ public static void LeftClickAtPoint(int x, int y)
 </code></pre>
 <p><code>Add-Type -TypeDefinition $cSource -ReferencedAssemblies System.Windows.Forms,System.Drawing</code> <br />
 <code>[Clicker]::LeftClickAtPoint(1900,1070)</code></p>
-<h2 id="audio">Audio</h2>
+<h3 id="audio">Audio</h3>
 <pre><code class="language-PowerShell">Add-Type -Language CsharpVersion3 -TypeDefinition @&quot;
 using System.Runtime.InteropServices;
 [Guid(&quot;5CDF2C82-841E-4546-9722-0CF74078229A&quot;), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -1395,7 +1385,7 @@ set { Marshal.ThrowExceptionForHR(Vol().SetMute(value, System.Guid.Empty)); }
 </code></pre>
 <p><code>[Audio]::Volume = 0.50</code> <br />
 <code>[Audio]::Mute = $true</code></p>
-<h2 id="netsessionenum">NetSessionEnum</h2>
+<h3 id="netsessionenum">NetSessionEnum</h3>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN">Function</a> <br />
 <a href="https://fuzzysecurity.com/tutorials/24.html">Source</a></p>
 <pre><code class="language-PowerShell">function Invoke-NetSessionEnum {
@@ -1467,7 +1457,7 @@ echo &quot;`nCalling NetApiBufferFree, no memleaks here!&quot;
 }
 </code></pre>
 <p><code>Invoke-NetSessionEnum localhost</code></p>
-<h2 id="copyfile">CopyFile</h2>
+<h3 id="copyfile">CopyFile</h3>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile">Function</a> <br />
 <a href="https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1/">Source</a></p>
 <pre><code class="language-PowerShell">$MethodDefinition = @&quot;
@@ -1477,7 +1467,7 @@ public static extern bool CopyFile(string lpExistingFileName, string lpNewFileNa
 $Kernel32 = Add-Type -MemberDefinition $MethodDefinition -Name &quot;Kernel32&quot; -Namespace &quot;Win32&quot; -PassThru
 $Kernel32::CopyFile(&quot;$($Env:SystemRoot)\System32\calc.exe&quot;, &quot;$($Env:USERPROFILE)\Desktop\calc.exe&quot;, $False) 
 </code></pre>
-<h2 id="showwindowasync">ShowWindowAsync</h2>
+<h3 id="showwindowasync">ShowWindowAsync</h3>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync">Function</a></p>
 <pre><code class="language-PowerShell">$Signature = @&quot;
 [DllImport(&quot;user32.dll&quot;)]public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
@@ -1488,7 +1478,7 @@ $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $pid).MainWindowHandle, 2)
 $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 3)
 $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 4)
 </code></pre>
-<h2 id="getasynckeystate">GetAsyncKeyState</h2>
+<h3 id="getasynckeystate">GetAsyncKeyState</h3>
 <p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-getasynckeystate">Function</a></p>
 <p><code>Add-Type -AssemblyName System.Windows.Forms</code> <br />
 <code>[int][System.Windows.Forms.Keys]::F1</code> определить номер [Int] клавиши по ее названию <br />
