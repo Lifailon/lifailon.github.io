@@ -48,6 +48,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -948,8 +950,8 @@
 
   <h1>DevOps</h1>
 
-<h2 id="github-actions">GitHub-Actions<a class="headerlink" href="#github-actions" title="Permanent link">&para;</a></h2>
-<h3 id="runner-agent">Runner (Agent)<a class="headerlink" href="#runner-agent" title="Permanent link">&para;</a></h3>
+<h2 id="github-actions">GitHub-Actions</h2>
+<h3 id="runner-agent">Runner (Agent)</h3>
 <p><code>mkdir actions-runner; cd actions-runner</code> <br />
 <code>Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-win-x64-2.316.1.zip -OutFile actions-runner-win-x64-2.316.1.zip</code> загрузить пакет с Runner последней версии <br />
 <code>if((Get-FileHash -Path actions-runner-win-x64-2.316.1.zip -Algorithm SHA256).Hash.ToUpper() -ne 'e41debe4f0a83f66b28993eaf84dad944c8c82e2c9da81f56a850bc27fedd76b'.ToUpper()){ throw 'Computed checksum did not match' }</code> проверить валидность пакета с помощью hash-суммы <br />
@@ -960,7 +962,7 @@
 <code>Get-Service *actions* | Start-Service</code> запустить службу <br />
 <code>Get-Process *Runner.Listener*</code> <br />
 <code>./config.cmd remove --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</code> удалить конфигурацию</p>
-<h3 id="build-pipeline">Build (Pipeline)<a class="headerlink" href="#build-pipeline" title="Permanent link">&para;</a></h3>
+<h3 id="build-pipeline">Build (Pipeline)</h3>
 <pre><code class="language-yaml">name: build-game-list
 
 on:
@@ -1000,7 +1002,7 @@ jobs:
         # Отправляем коммит в удаленный репозиторий
         git push
 </code></pre>
-<h2 id="dsc">DSC<a class="headerlink" href="#dsc" title="Permanent link">&para;</a></h2>
+<h2 id="dsc">DSC</h2>
 <p><code>Import-Module PSDesiredStateConfiguration</code> <br />
 <code>Get-Command -Module PSDesiredStateConfiguration</code> <br />
 <code>(Get-Module PSDesiredStateConfiguration).ExportedCommands</code> <br />
@@ -1086,8 +1088,8 @@ Configuration DSConfigurationProxy
 <code>Test-DscConfiguration -Path $Path</code> <br />
 <code>Start-DscConfiguration -Path $path -Wait -Verbose</code> <br />
 <code>Get-Job</code></p>
-<h2 id="psappdeploytoolkit">PSAppDeployToolkit<a class="headerlink" href="#psappdeploytoolkit" title="Permanent link">&para;</a></h2>
-<h3 id="install-deploytoolkit">Install-DeployToolkit<a class="headerlink" href="#install-deploytoolkit" title="Permanent link">&para;</a></h3>
+<h2 id="psappdeploytoolkit">PSAppDeployToolkit</h2>
+<h3 id="install-deploytoolkit">Install-DeployToolkit</h3>
 <pre><code class="language-PowerShell">$githubRepository = &quot;psappdeploytoolkit/psappdeploytoolkit&quot;
 $filenamePatternMatch = &quot;PSAppDeployToolkit*.zip&quot;
 $psadtReleaseUri = &quot;https://api.github.com/repos/$githubRepository/releases/latest&quot;
@@ -1103,7 +1105,7 @@ Expand-Archive -Path $zipTempDownloadPath -OutputPath $zipExtractionPath -Force
 Write-Host (&quot;File: {0} extracted to Path: {1}&quot; -f $psadtDownloadUri, $zipExtractionPath) -ForegroundColor Yellow
 Remove-Item $zipTempDownloadPath
 </code></pre>
-<h3 id="deploy-notepad-plus-plus">Deploy-Notepad-Plus-Plus<a class="headerlink" href="#deploy-notepad-plus-plus" title="Permanent link">&para;</a></h3>
+<h3 id="deploy-notepad-plus-plus">Deploy-Notepad-Plus-Plus</h3>
 <p><code>$url_notepad = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.6.6/npp.8.6.6.Installer.x64.exe"</code> <br />
 <code>Invoke-RestMethod $url_notepad -OutFile "$home\Downloads\PSAppDeployToolkit\Toolkit\Files\npp.8.6.6.Installer.x64.exe"</code></p>
 <pre><code class="language-PowerShell">'# Подключаем модуль PSAppDeployToolkit
@@ -1134,7 +1136,7 @@ Function Install-Application {
 Install-Application' | Out-File &quot;$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1&quot; -Encoding unicode
 </code></pre>
 <p><code>powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"</code></p>
-<h3 id="uninstall-notepad-plus-plus">Uninstall-Notepad-Plus-Plus<a class="headerlink" href="#uninstall-notepad-plus-plus" title="Permanent link">&para;</a></h3>
+<h3 id="uninstall-notepad-plus-plus">Uninstall-Notepad-Plus-Plus</h3>
 <pre><code class="language-PowerShell">'Import-Module &quot;$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1&quot;
 $AppName = &quot;Notepad++&quot;
 $UninstallerPath = &quot;C:\Program Files\Notepad++\uninstall.exe&quot;
@@ -1151,7 +1153,7 @@ Function Uninstall-Application {
 Uninstall-Application' | Out-File &quot;$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1&quot; -Encoding unicode
 </code></pre>
 <p><code>powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"</code></p>
-<h3 id="deploy-winscp">Deploy-WinSCP<a class="headerlink" href="#deploy-winscp" title="Permanent link">&para;</a></h3>
+<h3 id="deploy-winscp">Deploy-WinSCP</h3>
 <pre><code class="language-PowerShell">$PSAppDeployToolkit = &quot;$home\Downloads\PSAppDeployToolkit\&quot;
 $version = &quot;6.3.3&quot;
 $url_winscp = &quot;https://cdn.winscp.net/files/WinSCP-$version.msi?secure=P2HLWGKaMDigpDQw-H9BgA==,1716466173&quot;
@@ -1161,7 +1163,7 @@ $WinSCP_Template_Latest &gt; &quot;$PSAppDeployToolkit\Toolkit\Deploy-Applicatio
 Invoke-RestMethod $url_winscp -OutFile &quot;$PSAppDeployToolkit\Toolkit\Files\WinSCP-$version.msi&quot; # загружаем msi-пакет
 powershell -File &quot;$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1&quot; # запускаем установку
 </code></pre>
-<h2 id="pester">Pester<a class="headerlink" href="#pester" title="Permanent link">&para;</a></h2>
+<h2 id="pester">Pester</h2>
 <p><a href="https://github.com/pester/Pester">Source</a></p>
 <p><code>Install-Module -Name Pester -Repository PSGallery -Force -AllowClobber</code> <br />
 <code>Import-Module Pester</code> <br />
@@ -1288,9 +1290,11 @@ Describe &quot;Get-RunningProcess&quot; {
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

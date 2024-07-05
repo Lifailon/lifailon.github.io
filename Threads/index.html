@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -836,7 +838,7 @@
 
   <h1>Threads</h1>
 
-<h2 id="jobs">Jobs<a class="headerlink" href="#jobs" title="Permanent link">&para;</a></h2>
+<h2 id="jobs">Jobs</h2>
 <p><code>Get-Job</code> получение списка задач <br />
 <code>Start-Job</code> запуск процесса <br />
 <code>Stop-Job</code> остановка процесса <br />
@@ -865,7 +867,7 @@
 </code></pre>
 <p><code>Start-PingJob -Network 192.168.3.0</code> <br />
 <code>$(Measure-Command {Start-PingJob -Network 192.168.3.0}).TotalSeconds</code> 60 Seconds</p>
-<h2 id="threadjob">ThreadJob<a class="headerlink" href="#threadjob" title="Permanent link">&para;</a></h2>
+<h2 id="threadjob">ThreadJob</h2>
 <p><code>Install-Module -Name ThreadJob</code> <br />
 <code>Get-Module ThreadJob -list</code> <br />
 <code>Start-ThreadJob {ping ya.ru} | Out-Null</code> создать фоновую задачу <br />
@@ -893,7 +895,7 @@
 </code></pre>
 <p><code>Start-PingThreadJob -Network 192.168.3.0</code> <br />
 <code>$(Measure-Command {Start-PingThread -Network 192.168.3.0}).TotalSeconds</code> 24 Seconds</p>
-<h2 id="poshrsjob">PoshRSJob<a class="headerlink" href="#poshrsjob" title="Permanent link">&para;</a></h2>
+<h2 id="poshrsjob">PoshRSJob</h2>
 <p>Install-Module -Name PoshRSJob</p>
 <pre><code class="language-PowerShell">function Start-PingRSJob ($Network) {
     $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
@@ -916,7 +918,7 @@
 </code></pre>
 <p><code>Start-PingRSJob -Network 192.168.3.0</code> <br />
 <code>$(Measure-Command {Start-PingRSJob -Network 192.168.3.0}).TotalSeconds</code> 10 Seconds</p>
-<h2 id="parallel">Parallel<a class="headerlink" href="#parallel" title="Permanent link">&para;</a></h2>
+<h2 id="parallel">Parallel</h2>
 <pre><code class="language-PowerShell"># Import function from GitHub to current session
 $module = &quot;https://raw.githubusercontent.com/RamblingCookieMonster/Invoke-Parallel/master/Invoke-Parallel/Invoke-Parallel.ps1&quot;
 Invoke-Expression $(Invoke-RestMethod $module)
@@ -940,7 +942,7 @@ Invoke-Parallel -InputObject $(0..$($array_main.Count-1)) -ScriptBlock {
     }
 } -ImportVariables
 </code></pre>
-<h2 id="foreach-object-parallel">ForEach-Object-Parallel<a class="headerlink" href="#foreach-object-parallel" title="Permanent link">&para;</a></h2>
+<h2 id="foreach-object-parallel">ForEach-Object-Parallel</h2>
 <pre><code class="language-PowerShell">function Start-PingParallel ($Network) {
     $RNetwork = $Network -replace &quot;\.\d{1,3}$&quot;,&quot;.&quot;
     1..254 | ForEach-Object -Parallel {
@@ -1057,9 +1059,11 @@ $(0..$($array_main.Count-1)) | ForEach-Object -Parallel {
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

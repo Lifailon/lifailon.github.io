@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -926,7 +928,7 @@
 
   <h1>COM</h1>
 
-<h2 id="shell">Shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h2>
+<h2 id="shell">Shell</h2>
 <p><code>$wshell = New-Object -ComObject Wscript.Shell</code> <br />
 <code>$wshell | Get-Member</code> <br />
 <code>$link = $wshell.CreateShortcut("$Home\Desktop\Yandex.lnk")</code> создать ярлык <br />
@@ -934,7 +936,7 @@
 <code>$link.TargetPath = "https://yandex.ru"</code> куда ссылается (метод TargetPath объекта $link где хранится объект CreateShortcut) <br />
 <code>$link.Save()</code> сохранить</p>
 <p><code>Set-WinUserLanguageList -LanguageList en-us,ru -Force</code> изменить языковую раскладку клавиатуры</p>
-<h2 id="sendkeys">SendKeys<a class="headerlink" href="#sendkeys" title="Permanent link">&para;</a></h2>
+<h2 id="sendkeys">SendKeys</h2>
 <p><code>(New-Object -ComObject Wscript.shell).SendKeys([char]173)</code> включить/выключить звук <br />
 <code>$wshell.Exec("notepad.exe")</code> запустить приложение <br />
 <code>$wshell.AppActivate("Блокнот")</code> развернуть запущенное приложение</p>
@@ -973,7 +975,7 @@
 }
 </code></pre>
 <p><code>Get-AltTab</code></p>
-<h2 id="popup">Popup<a class="headerlink" href="#popup" title="Permanent link">&para;</a></h2>
+<h2 id="popup">Popup</h2>
 <p><code>$wshell = New-Object -ComObject Wscript.Shell</code> <br />
 <code>$output = $wshell.Popup("Выберите действие?",0,"Заголовок",4)</code> <br />
 <code>if ($output -eq 6) {"yes"} elseif ($output -eq 7) {"no"} else {"no good"}</code></p>
@@ -999,7 +1001,7 @@ Output:
 6 Да
 7 Нет
 </code></pre>
-<h2 id="internet-explorer">Internet Explorer<a class="headerlink" href="#internet-explorer" title="Permanent link">&para;</a></h2>
+<h2 id="internet-explorer">Internet Explorer</h2>
 <p><code>$ie.document.IHTMLDocument3_getElementsByTagName("input")  | select name</code> получить имена всех Input Box <br />
 <code>$ie.document.IHTMLDocument3_getElementsByTagName("button") | select innerText</code> получить имена всех Button <br />
 <code>$ie.Document.documentElement.innerHTML</code> прочитать сырой Web Content (&lt;input name="login" tabindex="100" class="input__control input__input" id="uniq32005644019429136" spellcheck="false" placeholder="Логин") <br />
@@ -1017,7 +1019,7 @@ $Button_Auth.Click()
 $Result = $ie.Document.documentElement.innerHTML
 $ie.Quit()
 </code></pre>
-<h2 id="excel">Excel<a class="headerlink" href="#excel" title="Permanent link">&para;</a></h2>
+<h2 id="excel">Excel</h2>
 <pre><code class="language-PowerShell">$path = &quot;$home\Desktop\Services-to-Excel.xlsx&quot;
 $Excel = New-Object -ComObject Excel.Application
 $Excel.Visible = $false` отключить открытие GUI
@@ -1069,7 +1071,7 @@ $ExcelWorkBook.SaveAs($path)
 $ExcelWorkBook.close($true)
 $Excel.Quit()
 </code></pre>
-<h2 id="excelapplicationopen">Excel.Application.Open<a class="headerlink" href="#excelapplicationopen" title="Permanent link">&para;</a></h2>
+<h2 id="excelapplicationopen">Excel.Application.Open</h2>
 <pre><code class="language-PowerShell">$path = &quot;$home\Desktop\Services-to-Excel.xlsx&quot;
 $Excel = New-Object -ComObject Excel.Application
 $Excel.Visible = $false
@@ -1079,13 +1081,13 @@ $ExcelWorkSheet = $ExcelWorkBook.Sheets.Item(1)` открыть лист по н
 1..100 | %{$ExcelWorkSheet.Range(&quot;A$_&quot;).Text}` прочитать значение из столбца А строки c 1 по 100
 $Excel.Quit()
 </code></pre>
-<h2 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h2>
+<h2 id="network">Network</h2>
 <p><code>$wshell = New-Object -ComObject WScript.Network</code> <br />
 <code>$wshell | Get-Member</code> <br />
 <code>$wshell.UserName</code> <br />
 <code>$wshell.ComputerName</code> <br />
 <code>$wshell.UserDomain</code></p>
-<h2 id="application">Application<a class="headerlink" href="#application" title="Permanent link">&para;</a></h2>
+<h2 id="application">Application</h2>
 <p><code>$wshell = New-Object -ComObject Shell.Application</code> <br />
 <code>$wshell | Get-Member</code> <br />
 <code>$wshell.Explore("C:\")</code> <br />
@@ -1093,7 +1095,7 @@ $Excel.Quit()
 <p><code>$shell = New-Object -Com Shell.Application</code> <br />
 <code>$RecycleBin = $shell.Namespace(10)</code> <br />
 <code>$RecycleBin.Items()</code></p>
-<h2 id="outlook">Outlook<a class="headerlink" href="#outlook" title="Permanent link">&para;</a></h2>
+<h2 id="outlook">Outlook</h2>
 <p><code>$Outlook = New-Object -ComObject Outlook.Application</code> <br />
 <code>$Outlook | Get-Member</code> <br />
 <code>$Outlook.Version</code></p>
@@ -1105,7 +1107,7 @@ $Explorer = $Folder.GetExplorer()
 $Explorer.Display() 
 $Outlook.Quit()
 </code></pre>
-<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<h2 id="update">Update</h2>
 <p><code>(New-Object -com 'Microsoft.Update.AutoUpdate').Settings</code> <br />
 <code>(New-Object -com 'Microsoft.Update.AutoUpdate').Results</code> <br />
 <code>(New-Timespan -Start ((New-Object -com 'Microsoft.Update.AutoUpdate').Results|Select -ExpandProperty LastInstallationSuccessDate) -End (Get-Date)).hours</code> кол-во часов, прошедших с последней даты установки обновления безопасности в Windows.</p>
@@ -1187,9 +1189,11 @@ $Outlook.Quit()
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

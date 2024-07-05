@@ -26,12 +26,6 @@ nav:
   - Zabbix: Zabbix\index.md
   - DevOps: DevOps\index.md
 
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/Lifailon/PS-Commands
-      name: PS-Commands on Github
-
   # alternate:
   #   - name: Русский
   #     link: .
@@ -43,6 +37,12 @@ extra:
 # theme: readthedocs
 # theme: bootstrap4
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Lifailon/PS-Commands
+      name: PS-Commands on Github
+
 theme:
   name: material
 
@@ -50,12 +50,12 @@ theme:
   favicon: Logo/PS-Commands-logo-x256.png
 
   font:
-     text: Inter
-     code: Inter
+    text: Inter
+    code: Inter
 
   features:
     - content.code.copy
-  
+
   palette:
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
@@ -65,7 +65,7 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
     - media: "(prefers-color-scheme: light)"
-      scheme: default 
+      scheme: default
       primary: blue
       accent: blue
       toggle:
@@ -74,12 +74,14 @@ theme:
 
 markdown_extensions:
   - markdown.extensions.nl2br
-  - toc:
-      permalink: true
 
 plugins:
   - search
 
+extra_css:
+  - _highlight/obsidian.min.css
+
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js
+  - _highlight//highlight.min.js
+  - _highlight/powershell.min.js
+  - _highlight/init.js

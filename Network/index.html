@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -712,7 +714,7 @@
   
 
 
-<h1 id="ping">ping<a class="headerlink" href="#ping" title="Permanent link">&para;</a></h1>
+<h1 id="ping">ping</h1>
 <p><code>Test-Connection -Count 1 $srv1, $srv2</code> отправить icmp-пакет двум хостам <br />
 <code>Test-Connection $srv -ErrorAction SilentlyContinue</code> не выводить ошибок, если хост не отвечает <br />
 <code>Test-Connection -Source $srv1 -ComputerName $srv2</code> пинг с удаленного компьютера</p>
@@ -738,59 +740,59 @@ foreach ($n in $net) {
 <code>Get-CimInstance -Class Win32_PingStatus -Filter "Address='127.0.0.1'" | Format-Table -Property Address,ResponseTime,StatusCode -Autosize</code> 0 - успех <br />
 <code>'127.0.0.1','8.8.8.8' | ForEach-Object -Process {Get-CimInstance -Class Win32_PingStatus -Filter ("Address='$_'") | Select-Object -Property Address,ResponseTime,StatusCode}</code> <br />
 <code>$ips = 1..254 | ForEach-Object -Process {'192.168.1.' + $_}</code> сформировать массив из ip-адресов подсети</p>
-<h1 id="dhcp">dhcp<a class="headerlink" href="#dhcp" title="Permanent link">&para;</a></h1>
+<h1 id="dhcp">dhcp</h1>
 <p><code>Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true"</code> отобразить адаптеры с включенным DHCP <br />
 <code>$wql = 'SELECT * from Win32_NetworkAdapterConfiguration WHERE IPEnabled=True and DHCPEnabled=False'</code> <br />
 <code>Invoke-CimMethod -MethodName ReleaseDHCPLease -Query $wql</code> включение DHCP на всех адаптерах <br />
 <code>Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName ReleaseDHCPLeaseAll</code> отменить аренду адресов DHCP на всех адаптерах <br />
 <code>Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName RenewDHCPLeaseAll</code> обновить аренду адресов DHCP на всех адаптерах</p>
-<h1 id="port">port<a class="headerlink" href="#port" title="Permanent link">&para;</a></h1>
+<h1 id="port">port</h1>
 <p><code>tnc $srv -p 5985</code> <br />
 <code>tnc $srv -CommonTCPPort WINRM</code> HTTP,RDP,SMB <br />
 <code>tnc ya.ru –TraceRoute -Hops 2</code> TTL=2 <br />
 <code>tnc ya.ru -DiagnoseRouting</code> маршрутизация до хоста, куда (DestinationPrefix: 0.0.0.0/0) через (NextHop: 192.168.1.254)</p>
-<h1 id="netstat">netstat<a class="headerlink" href="#netstat" title="Permanent link">&para;</a></h1>
+<h1 id="netstat">netstat</h1>
 <p><code>netstat -anop tcp</code> -n/-f/-b <br />
 <code>Get-NetTCPConnection -State Established,Listen | ? LocalPort -Match 3389</code> <br />
 <code>Get-NetTCPConnection -State Established,Listen | ? RemotePort -Match 22</code> <br />
 <code>Get-NetUDPEndpoint | ? LocalPort -Match 514</code> netstat -ap udp`</p>
-<h1 id="nslookup">nslookup<a class="headerlink" href="#nslookup" title="Permanent link">&para;</a></h1>
+<h1 id="nslookup">nslookup</h1>
 <p><code>nslookup ya.ru 1.1.1.1</code> с указанием DNS сервера <br />
 <code>nslookup -type=any ya.ru</code> указать тип записи <br />
 <code>Resolve-DnsName ya.ru -Type MX</code> ALL,ANY,A,NS,SRV,CNAME,PTR,TXT(spf) <br />
 <code>[System.Net.Dns]::GetHostEntry("ya.ru")</code></p>
-<h1 id="ipconfig">ipconfig<a class="headerlink" href="#ipconfig" title="Permanent link">&para;</a></h1>
+<h1 id="ipconfig">ipconfig</h1>
 <p><code>Get-NetIPConfiguration</code> <br />
 <code>Get-NetIPConfiguration -InterfaceIndex 14 -Detailed</code></p>
-<h1 id="adapter">Adapter<a class="headerlink" href="#adapter" title="Permanent link">&para;</a></h1>
+<h1 id="adapter">Adapter</h1>
 <p><code>Get-NetAdapter</code> <br />
 <code>Set-NetIPInterface -InterfaceIndex 14 -Dhcp Disabled</code> отключить DHCP <br />
 <code>Get-NetAdapter -InterfaceIndex 14 | New-NetIPAddress –IPAddress 192.168.3.99 -DefaultGateway 192.168.3.1 -PrefixLength 24</code> задать/добавить статический IP-адрес <br />
 <code>Set-NetIPAddress -InterfaceIndex 14 -IPAddress 192.168.3.98</code> изменить IP-адреас на адаптере <br />
 <code>Remove-NetIPAddress -InterfaceIndex 14 -IPAddress 192.168.3.99</code> удалить IP-адрес на адаптере <br />
 <code>Set-NetIPInterface -InterfaceIndex 14 -Dhcp Enabled</code> включить DHCP</p>
-<h1 id="dnsclient">DNSClient<a class="headerlink" href="#dnsclient" title="Permanent link">&para;</a></h1>
+<h1 id="dnsclient">DNSClient</h1>
 <p><code>Get-DNSClientServerAddress</code> список интерфейсов и настроенные на них адреса DNS сервера <br />
 <code>Set-DNSClientServerAddress -InterfaceIndex 14 -ServerAddresses 8.8.8.8</code> изменить адрес DNS сервера на указанного интерфейсе</p>
-<h1 id="dnscache">DNSCache<a class="headerlink" href="#dnscache" title="Permanent link">&para;</a></h1>
+<h1 id="dnscache">DNSCache</h1>
 <p><code>Get-DnsClientCache</code> отобразить кэшированные записи клиента DNS <br />
 <code>Clear-DnsClientCache</code> очистить кэш</p>
-<h1 id="binding">Binding<a class="headerlink" href="#binding" title="Permanent link">&para;</a></h1>
+<h1 id="binding">Binding</h1>
 <p><code>Get-NetAdapterBinding -Name Ethernet -IncludeHidden -AllBindings</code> <br />
 <code>Get-NetAdapterBinding -Name "Беспроводная сеть" -DisplayName "IP версии 6 (TCP/IPv6)" | Set-NetAdapterBinding -Enabled $false</code> отключить IPv6 на адаптере</p>
-<h1 id="tcpsetting">TCPSetting<a class="headerlink" href="#tcpsetting" title="Permanent link">&para;</a></h1>
+<h1 id="tcpsetting">TCPSetting</h1>
 <p><code>Get-NetTCPSetting</code> <br />
 <code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CongestionProvider DCTCP</code> настраивает провайдера управления перегрузкой (Congestion Control Provider) на DCTCP (Data Center TCP) для профилей TCP с именами DatacenterCustom и Datacenter <br />
 <code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CwndRestart True</code> включает функцию перезапуска окна перегрузки (Congestion Window Restart, CwndRestart) для указанных профилей TCP. Это означает, что после периода идле (когда нет передачи данных) TCP окно перегрузки будет сбрасываться <br />
 <code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -ForceWS Disabled</code> отключает принудительное масштабирование окна (Forced Window Scaling) для указанных профилей TCP. Масштабирование окна — это механизм, который позволяет увеличивать размер окна перегрузки TCP, чтобы улучшить производительность передачи данных по сети с высокой пропускной способностью и большой задержкой</p>
-<h1 id="hostname">hostname<a class="headerlink" href="#hostname" title="Permanent link">&para;</a></h1>
+<h1 id="hostname">hostname</h1>
 <p><code>$env:computername</code> <br />
 <code>hostname.exe</code> <br />
 <code>(Get-CIMInstance CIM_ComputerSystem).Name</code> <br />
 <code>(New-Object -ComObject WScript.Network).ComputerName</code> <br />
 <code>[System.Environment]::MachineName</code> <br />
 <code>[System.Net.Dns]::GetHostName()</code></p>
-<h1 id="arp">arp<a class="headerlink" href="#arp" title="Permanent link">&para;</a></h1>
+<h1 id="arp">arp</h1>
 <p><code>ipconfig /all | Select-String "физ"</code> grep <br />
 <code>Get-NetNeighbor -AddressFamily IPv4</code></p>
 <pre><code class="language-PowerShell">function Get-ARP {
@@ -837,10 +839,10 @@ foreach ($n in $net) {
 </code></pre>
 <p><code>Get-ARP -search 192.168.3.100</code> <br />
 <code>Get-ARP -search 192.168.3.100 -proxy dc-01</code></p>
-<h1 id="network-adapter-statistics">Network Adapter Statistics<a class="headerlink" href="#network-adapter-statistics" title="Permanent link">&para;</a></h1>
+<h1 id="network-adapter-statistics">Network Adapter Statistics</h1>
 <p><code>netstat -se</code> <br />
 <code>Get-NetAdapterStatistics</code></p>
-<h1 id="speedtest">SpeedTest<a class="headerlink" href="#speedtest" title="Permanent link">&para;</a></h1>
+<h1 id="speedtest">SpeedTest</h1>
 <pre><code class="language-PowerShell">function Get-SpeedTestOokla {
     param (
         $Server = 3682,
@@ -873,8 +875,8 @@ foreach ($n in $net) {
     }
 }
 </code></pre>
-<h1 id="iperf">iPerf<a class="headerlink" href="#iperf" title="Permanent link">&para;</a></h1>
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<h1 id="iperf">iPerf</h1>
+<h2 id="install">Install</h2>
 <pre><code class="language-PowerShell">$url = $($(Invoke-RestMethod https://api.github.com/repos/ar51an/iperf3-win-builds/releases/latest).assets | Where-Object name -match &quot;win64.zip&quot;).browser_download_url
 Invoke-RestMethod $url -OutFile $home\Downloads\iperf.zip
 New-Item &quot;$home\Documents\iperf3&quot; -Type Directory | Out-Null
@@ -882,7 +884,7 @@ Expand-Archive -Path &quot;$home\Downloads\iperf.zip&quot; -OutputPath &quot;$ho
 Remove-Item &quot;$home\Downloads\iperf*&quot; -Force -Recurse
 </code></pre>
 <p><code>&amp; "$home\Documents\iperf3\iperf3.exe" -h</code></p>
-<h2 id="env-update-exec-path">Env-Update-Exec-Path<a class="headerlink" href="#env-update-exec-path" title="Permanent link">&para;</a></h2>
+<h2 id="env-update-exec-path">Env-Update-Exec-Path</h2>
 <pre><code class="language-PowerShell">$EnvPath = [Environment]::GetEnvironmentVariable(&quot;Path&quot;, [EnvironmentVariableTarget]::Machine)
 $EnvPath -split &quot;;&quot;
 $iperfPath = &quot;$home\Documents\iperf3\&quot;
@@ -891,10 +893,10 @@ $EnvAddPath = $EnvPath + &quot;;&quot; + $iperfPath
 $([Environment]::GetEnvironmentVariable(&quot;Path&quot;, [EnvironmentVariableTarget]::Machine)) -split &quot;;&quot;
 </code></pre>
 <p><code>iperf3 -h</code></p>
-<h2 id="iperf-gui">iPerf-GUI<a class="headerlink" href="#iperf-gui" title="Permanent link">&para;</a></h2>
+<h2 id="iperf-gui">iPerf-GUI</h2>
 <p><code>Invoke-RestMethod "https://github.com/Lifailon/iPerf-GUI/raw/rsa/iPerf-GUI-Install.exe" -OutFile "$home\Downloads\iPerf-GUI-Install.exe"</code> скачать установочную версию собранную с помощью WinRAR <br />
 <code>Start-Process -FilePath "$home\Downloads\iPerf-GUI-Install.exe" -ArgumentList "/S" -NoNewWindow -Wait</code> установить в тихом режиме</p>
-<h2 id="iperf-docker">iPerf-Docker<a class="headerlink" href="#iperf-docker" title="Permanent link">&para;</a></h2>
+<h2 id="iperf-docker">iPerf-Docker</h2>
 <pre><code class="language-PowerShell">echo '
 FROM alpine:latest
 RUN apk update &amp;&amp; apk add --no-cache iperf3
@@ -905,7 +907,7 @@ CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;iperf3 -s -p $PORT&quot;]
 </code></pre>
 <p><code>docker build -t iperf3-alpine-server .</code> <br />
 <code>docker run -d -p 5201:5201 --name iperf3-alpine-server iperf3-alpine-server</code></p>
-<h2 id="server">Server<a class="headerlink" href="#server" title="Permanent link">&para;</a></h2>
+<h2 id="server">Server</h2>
 <p><code>iperf3 -s</code> запуск сервера <br />
 <code>iperf3 -s -D</code> запустить сервер в фоновом режиме как службу (--daemon) <br />
 <code>Get-NetTCPConnection -State Established,Listen | ? LocalPort -Match 5201</code> проверить, что порт сервера слушает <br />
@@ -916,7 +918,7 @@ CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;iperf3 -s -p $PORT&quot;]
 <code>iperf3 -s -p 5211 -f M</code> изменить формат выводимых данных (измерять в байтах а не в битах, доступные значения: K,M,G,T) <br />
 <code>iperf3 -s -p 5211 -f M -J</code> вывод в формате json <br />
 <code>iperf3 -s -p 5211 -f M -V</code> вывод подробной информации</p>
-<h2 id="client">Client<a class="headerlink" href="#client" title="Permanent link">&para;</a></h2>
+<h2 id="client">Client</h2>
 <p><code>iperf3 -c 192.168.3.100 -p 5211</code> подключение к серверу (по умолчанию проверяется отдача на сервер с клиента) <br />
 <code>iperf3 -c 192.168.3.100 -p 5211 -R</code> обратный тест, проверка скачивания с сервера (--reverse, сервер отправляет данные клиенту) <br />
 <code>iperf3 -c 192.168.3.100 -p 5211 -R -P 2</code> количество одновременных потоков ([SUM] - суммарная скорость нескольки потоков) <br />
@@ -926,13 +928,13 @@ CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;iperf3 -s -p $PORT&quot;]
 <code>iperf3 -c 192.168.3.100 -p 5211 -R -t 30</code> время одного теста в секундах (по умолчанию 10 секунд) <br />
 <code>iperf3 -c 192.168.3.100 -p 5211 -R -n 1gb</code> указать объем данных для проверки (применяется вместо времени -t) <br />
 <code>iperf3 -c 192.168.3.100 -p 5211 -R --get-server-output</code> вывести вывод сервера на клиенте</p>
-<h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">&para;</a></h2>
+<h2 id="output">Output</h2>
 <p><code>sender</code> upload (скорость передачи на удаленный сервер) <br />
 <code>receiver</code> download (скорость скачивания с удаленного сервера) <br />
 <code>Interval</code> общее время сканирования <br />
 <code>Transfer</code> кол-во переданных и полученных МБайт <br />
 <code>Bandwidth</code> скорость передачи (измеряется в Мбит/c)</p>
-<h2 id="ps-iperf">PS-iPerf<a class="headerlink" href="#ps-iperf" title="Permanent link">&para;</a></h2>
+<h2 id="ps-iperf">PS-iPerf</h2>
 <p><code>Install-Module ps-iperf -Repository NuGet</code> <br />
 <code>Import-Module PS-iPerf</code> <br />
 <code>Start-iPerfServer -Port 5211</code> запустить сервер <br />
@@ -942,7 +944,7 @@ CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;iperf3 -s -p $PORT&quot;]
 <code>$SpeedTest = Connect-iPerfServer -Server 192.168.3.100 -Port 5211 -MBytes 500 -LogWrite</code> передать 500 МБайт на сервер (вести запись в лог-файл) <br />
 <code>$SpeedTest.Intervals</code> метрики измерений <br />
 <code>Get-iPerfLog</code> прочитать лог-файл</p>
-<h1 id="firewall">Firewall<a class="headerlink" href="#firewall" title="Permanent link">&para;</a></h1>
+<h1 id="firewall">Firewall</h1>
 <pre><code class="language-PowerShell">$days = 5
 $obj = @()
 $fw = Get-WinEvent &quot;Microsoft-Windows-Windows Firewall With Advanced Security/Firewall&quot;
@@ -973,11 +975,11 @@ $obj | Where-Object time -gt (Get-Date).AddDays(-$days)
 @{Name='RemoteAddress';Expression={($_ | Get-NetFirewallAddressFilter).RemoteAddress}},
 Enabled,Profile
 </code></pre>
-<h2 id="firewall-manager">Firewall-Manager<a class="headerlink" href="#firewall-manager" title="Permanent link">&para;</a></h2>
+<h2 id="firewall-manager">Firewall-Manager</h2>
 <p><code>Install-Module Firewall-Manager</code> <br />
 <code>Export-FirewallRules -Name * -CSVFile $home\documents\fw.csv</code> -Inbound -Outbound -Enabled -Disabled -Allow -Block (фильтр правил для экспорта) <br />
 <code>Import-FirewallRules -CSVFile $home\documents\fw.csv</code></p>
-<h1 id="rdp">RDP<a class="headerlink" href="#rdp" title="Permanent link">&para;</a></h1>
+<h1 id="rdp">RDP</h1>
 <p><code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber"</code> отобразить номер текущего RDP порта <br />
 <code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber" -Value "3390"</code> изменить RDP-порт <br />
 <code>$(Get-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\" -Name "fDenyTSConnections").fDenyTSConnections</code> если 0, то включен <br />
@@ -986,7 +988,7 @@ Enabled,Profile
 <code>(gcim -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(0)</code> включить RDP (для Windows Server) <br />
 <code>Get-Service TermService | Restart-Service -Force</code> перезапустить rdp-службу <br />
 <code>New-NetFirewallRule -Profile Any -DisplayName "RDP 3390" -Direction Inbound -Protocol TCP -LocalPort 3390</code> открыть RDP-порт</p>
-<h1 id="ipban">IPBan<a class="headerlink" href="#ipban" title="Permanent link">&para;</a></h1>
+<h1 id="ipban">IPBan</h1>
 <p><code>auditpol /get /category:*</code> отобразить все политики аудита <br />
 <code>auditpol /get /category:Вход/выход</code> отобразить локальные политики аудита для Входа и Выхода из системы <br />
 <code>auditpol /set /subcategory:"Вход в систему" /success:enable /failure:enable</code> включить локальные политики - Аудит входа в систему <br />
@@ -1014,7 +1016,7 @@ Enabled,Profile
 <p><code>Get-Content -Wait "$path\logfile.txt"</code> читать лог <br />
 <code>Get-Service IPBan | Stop-Service</code> остановить службу <br />
 <code>sc delete IPBan</code> удалить службу</p>
-<h1 id="shutdown">shutdown<a class="headerlink" href="#shutdown" title="Permanent link">&para;</a></h1>
+<h1 id="shutdown">shutdown</h1>
 <p><code>shutdown /r /o</code> перезагрузка в безопасный режим <br />
 <code>shutdown /s /t 600 /c "Power off after 10 minutes"</code> выключение <br />
 <code>shutdown /s /f</code> принудительное закрытие приложений <br />
@@ -1061,7 +1063,7 @@ Enabled,Profile
     }
 }
 </code></pre>
-<h1 id="udp-socket">UDP-Socket<a class="headerlink" href="#udp-socket" title="Permanent link">&para;</a></h1>
+<h1 id="udp-socket">UDP-Socket</h1>
 <p><a href="https://cloudbrothers.info/en/test-udp-connection-powershell/">Source</a></p>
 <pre><code class="language-PowerShell">function Start-UDPServer {
     param(
@@ -1084,7 +1086,7 @@ Enabled,Profile
 }
 </code></pre>
 <p><code>Start-UDPServer -Port 5201</code></p>
-<h2 id="test-netudpconnection">Test-NetUDPConnection<a class="headerlink" href="#test-netudpconnection" title="Permanent link">&para;</a></h2>
+<h2 id="test-netudpconnection">Test-NetUDPConnection</h2>
 <pre><code class="language-PowerShell">function Test-NetUDPConnection {
     param(
         [string]$ComputerName = &quot;127.0.0.1&quot;,
@@ -1109,7 +1111,7 @@ Enabled,Profile
 </code></pre>
 <p><code>Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 5201</code> <br />
 <code>Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 514 -Message "&lt;30&gt;May 31 00:00:00 HostName multipathd[784]: Test message"</code></p>
-<h1 id="tcp-socket">TCP-Socket<a class="headerlink" href="#tcp-socket" title="Permanent link">&para;</a></h1>
+<h1 id="tcp-socket">TCP-Socket</h1>
 <pre><code class="language-PowerShell">function Start-TCPServer {
     param(
         $Port = 5201
@@ -1125,7 +1127,7 @@ Enabled,Profile
 </code></pre>
 <p><code>Start-TCPServer -Port 5201</code> <br />
 <code>Test-NetConnection -ComputerName 127.0.0.1 -Port 5201</code></p>
-<h1 id="wakeonlan">WakeOnLan<a class="headerlink" href="#wakeonlan" title="Permanent link">&para;</a></h1>
+<h1 id="wakeonlan">WakeOnLan</h1>
 <p>Broadcast package consisting of 6 byte filled "0xFF" and then 96 byte where the mac address is repeated 16 times</p>
 <pre><code class="language-PowerShell">function Send-WOL {
     param (
@@ -1146,7 +1148,7 @@ Enabled,Profile
 </code></pre>
 <p><code>Send-WOL -Mac "D8-BB-C1-70-A3-4E"</code> <br />
 <code>Send-WOL -Mac "D8-BB-C1-70-A3-4E" -IP 192.168.3.100</code></p>
-<h1 id="httplistener">HTTPListener<a class="headerlink" href="#httplistener" title="Permanent link">&para;</a></h1>
+<h1 id="httplistener">HTTPListener</h1>
 <pre><code class="language-PowerShell">$httpListener = New-Object System.Net.HttpListener
 $httpListener.Prefixes.Add(&quot;http://+:8888/&quot;)
 $httpListener.Start()
@@ -1164,10 +1166,10 @@ while (!([console]::KeyAvailable)) {
 }
 $httpListener.Close()
 </code></pre>
-<h1 id="webclient">WebClient<a class="headerlink" href="#webclient" title="Permanent link">&para;</a></h1>
+<h1 id="webclient">WebClient</h1>
 <p><code>[System.Net.WebClient] | Get-Member</code> <br />
 <code>(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell-Commands/rsa/README.md")</code></p>
-<h1 id="httpclient">HttpClient<a class="headerlink" href="#httpclient" title="Permanent link">&para;</a></h1>
+<h1 id="httpclient">HttpClient</h1>
 <pre><code class="language-PowerShell">$url = &quot;https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip&quot;
 $path = &quot;$home\Downloads\$(Split-Path -Path $url -Leaf)&quot;
 $httpClient = [System.Net.Http.HttpClient]::new()
@@ -1191,7 +1193,7 @@ finally {
     $fileStream.Dispose()
 }
 </code></pre>
-<h1 id="certificate">Certificate<a class="headerlink" href="#certificate" title="Permanent link">&para;</a></h1>
+<h1 id="certificate">Certificate</h1>
 <pre><code class="language-PowerShell">function Get-WebCertificate ($srv) {
     $iwr = iwr $srv
     $status_code = $iwr.StatusCode
@@ -1215,7 +1217,7 @@ finally {
 }
 </code></pre>
 <p><code>Get-WebCertificate https://google.com</code></p>
-<h1 id="openvpn">OpenVPN<a class="headerlink" href="#openvpn" title="Permanent link">&para;</a></h1>
+<h1 id="openvpn">OpenVPN</h1>
 <p><code>Invoke-WebRequest -Uri https://swupdate.openvpn.org/community/releases/OpenVPN-2.6.5-I001-amd64.msi -OutFile $home\Downloads\OpenVPN-2.6.5.msi</code> <br />
 <code>Start-Process $home\Downloads\OpenVPN-2.6.5.msi -ArgumentList '/quiet /SELECT_OPENSSL_UTILITIES=1' -Wait</code> <br />
 <code>msiexec /i $home\Downloads\OpenVPN-2.6.5.msi ADDLOCAL=EasyRSA /passive /quiet # установить отдельный компонент EasyRSA Certificate Management Scripts</code> <br />
@@ -1249,7 +1251,7 @@ set_var EASYRSA_REQ_OU &quot;IT&quot;
 <code>cd "C:\Program Files\OpenVPN\bin"</code> <br />
 <code>.\openvpn --genkey secret ta.key</code> генерация ключа tls-auth (\bin\ta.key) <br />
 <code>Move-Item "C:\Program Files\OpenVPN\bin\ta.key" "C:\Program Files\OpenVPN\easy-rsa\pki\"</code></p>
-<h2 id="serverovpn">server.ovpn<a class="headerlink" href="#serverovpn" title="Permanent link">&para;</a></h2>
+<h2 id="serverovpn">server.ovpn</h2>
 <p><code># Copy-Item "C:\Program Files\OpenVPN\sample-config\server.ovpn" "C:\Program Files\OpenVPN\config-auto\server.ovpn"</code> <br />
 <code>New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\server.ovpn"</code></p>
 <pre><code>port 1194
@@ -1292,7 +1294,7 @@ push &quot;route 192.168.4.0 255.255.255.0&quot;
 <p><code>New-NetFirewallRule -DisplayName "AllowOpenVPN-In" -Direction Inbound -Protocol UDP –LocalPort 1194 -Action Allow</code> на сервере <br />
 <code>New-NetFirewallRule -DisplayName "AllowOpenVPN-Out" -Direction Outbound -Protocol UDP –LocalPort 1194 -Action Allow</code> на клиенте <br />
 <code>Get-Service *openvpn* | Restart-Service</code></p>
-<h2 id="clientovpn">client.ovpn<a class="headerlink" href="#clientovpn" title="Permanent link">&para;</a></h2>
+<h2 id="clientovpn">client.ovpn</h2>
 <p><code># Copy-Item "C:\Program Files\OpenVPN\sample-config\client.ovpn" "C:\Program Files\OpenVPN\config-auto\client.ovpn"</code> <br />
 <code>New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\client.ovpn"</code></p>
 <pre><code>client
@@ -1314,7 +1316,7 @@ connect-retry-max 25
 windows-driver wintun
 verb 3
 </code></pre>
-<h2 id="client_1">Client<a class="headerlink" href="#client_1" title="Permanent link">&para;</a></h2>
+<h2 id="client_1">Client</h2>
 <p><code>iwr -Uri https://openvpn.net/downloads/openvpn-connect-v3-windows.msi -OutFile "$home\downloads\OpenVPN-Connect-3.msi"</code> <br />
 Передать конфигурацию и ключи: <br />
 <code>client.ovpn</code> <br />
@@ -1323,7 +1325,7 @@ verb 3
 <code>ta.key</code> <br />
 <code>client1.crt</code> <br />
 <code>client1.key</code></p>
-<h1 id="route">Route<a class="headerlink" href="#route" title="Permanent link">&para;</a></h1>
+<h1 id="route">Route</h1>
 <p><code>Get-Service RemoteAccess | Stop-Service</code> <br />
 <code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" -Name "IPEnableRouter" -Value 1</code> включает IP маршрутизацию <br />
 <code>(Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters").IPEnableRouter</code> <br />
@@ -1353,13 +1355,13 @@ verb 3
 <pre><code>14:36:34.533771 IP 192.168.4.6 &gt; 192.168.3.101: ICMP echo request, id 1, seq 2962, length 40 # отправил запрос
 14:36:34.533806 IP 192.168.3.101 &gt; 192.168.4.6: ICMP echo reply, id 1, seq 2962, length 40 # отправил ответ
 </code></pre>
-<h1 id="nat">NAT<a class="headerlink" href="#nat" title="Permanent link">&para;</a></h1>
+<h1 id="nat">NAT</h1>
 <p><code>Get-Command -Module NetNat</code> <br />
 <code>New-NetNat -Name LocalNat -InternalIPInterfaceAddressPrefix "192.168.3.0/24"</code> <br />
 <code>Add-NetNatStaticMapping -NatName LocalNat -Protocol TCP -ExternalIPAddress 0.0.0.0 -ExternalPort 80 -InternalIPAddress 192.168.3.102 -InternalPort 80</code> <br />
 <code>Remove-NetNatStaticMapping -StaticMappingID 0</code> <br />
 <code>Remove-NetNat -Name LocalNat</code></p>
-<h1 id="wireguard">WireGuard<a class="headerlink" href="#wireguard" title="Permanent link">&para;</a></h1>
+<h1 id="wireguard">WireGuard</h1>
 <p><code>Invoke-WebRequest "https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi" -OutFile "$home\Downloads\WireGuard-Client-0.5.3.msi"</code> <br />
 <code>msiexec.exe /i "$home\Downloads\WireGuard-Client-0.5.3.msi" DO_NOT_LAUNCH=1 /qn</code> <br />
 <code>Invoke-WebRequest "http://www.wiresock.net/downloads/wiresock-vpn-gateway-x64-1.1.4.1.msi" -OutFile "$home\Downloads\WireSock-VPN-Gateway-1.1.4.1.msi"</code> <br />
@@ -1396,7 +1398,7 @@ AllowedIPs = 192.168.21.0/24, 192.168.3.0/24
 Endpoint = 26.115.154.67:8181
 PersistentKeepalive = 25
 </code></pre>
-<h1 id="vpnclient">VpnClient<a class="headerlink" href="#vpnclient" title="Permanent link">&para;</a></h1>
+<h1 id="vpnclient">VpnClient</h1>
 <p><code>Get-Command -Module VpnClient</code> <br />
 <code>Add-VpnConnection -Name "vpn-failon" -ServerAddress "26.115.154.67" -TunnelType L2TP -L2tpPsk "123098" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential -AllUserConnection –PassThru -Force</code> <br />
 <code>-TunnelType PPTP/L2TP/SSTP/IKEv2/Automatic</code> <br />
@@ -1418,7 +1420,7 @@ PersistentKeepalive = 25
 <code>Add-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix 172.22.22.0/24</code> настроить маршрутизацию к указанной подсети через VPN-соединение <br />
 <code>(Get-VpnConnection -ConnectionName "vpn-failon").routes</code> отобразить таблицу маршрутизации для указанного соединения <br />
 <code>Remove-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix "172.22.23.0/24"</code></p>
-<h1 id="proxyclient">ProxyClient<a class="headerlink" href="#proxyclient" title="Permanent link">&para;</a></h1>
+<h1 id="proxyclient">ProxyClient</h1>
 <p><code>$user = "lifailon"</code> <br />
 <code>$pass = "Proxy"</code> <br />
 <code>$SecureString = ConvertTo-SecureString $pass -AsPlainText -Force</code> <br />
@@ -1428,12 +1430,12 @@ PersistentKeepalive = 25
 <code>[System.Net.Http.HttpClient]::DefaultProxy.Credentials = $Credential</code> <br />
 <code>Invoke-RestMethod http://ifconfig.me/ip</code> узнать внешний ip-адрес (по умолчанию в текущей сессии подключения будут происходить через заданный прокси сервер) <br />
 <code>Invoke-RestMethod https://kinozal.tv/rss.xml</code></p>
-<h1 id="netsh">netsh<a class="headerlink" href="#netsh" title="Permanent link">&para;</a></h1>
-<h2 id="reverse-proxy">Reverse Proxy<a class="headerlink" href="#reverse-proxy" title="Permanent link">&para;</a></h2>
+<h1 id="netsh">netsh</h1>
+<h2 id="reverse-proxy">Reverse Proxy</h2>
 <p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=192.168.3.108</code> настраивает входящее подключение на 8080 порту и переадресует трафик на 80 порт указанного хоста <br />
 <code>netsh interface portproxy show all</code> отобразить список всех настроек <br />
 <code>netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=0.0.0.0</code> удалить переадресацию</p>
-<h2 id="wlan">Wlan<a class="headerlink" href="#wlan" title="Permanent link">&para;</a></h2>
+<h2 id="wlan">Wlan</h2>
 <p><code>netsh wlan show profile</code> список сохраненны профилей Wi-Fi и паролей <br />
 <code>netsh wlan show interfaces</code> хар-ки текущей сети (MAC, speed) <br />
 <code>netsh wlan show profile SSID-Name-Network key=clear</code> очистить пароль <br />
@@ -1442,12 +1444,12 @@ PersistentKeepalive = 25
 <code>netsh wlan connect name="SSID-Name-Network"</code> подключиться <br />
 <code>netsh wlan show drivers</code> драйвер Wi-Fi <br />
 <code>netsh wlan set hostednetwork mode=allow ssid="WiFi-Test" key="password"</code> создание точки доступа Wi-Fi (SoftAP)</p>
-<h2 id="firewall_1">Firewall<a class="headerlink" href="#firewall_1" title="Permanent link">&para;</a></h2>
+<h2 id="firewall_1">Firewall</h2>
 <p><code>netsh advfirewall set allprofiles state off</code> отключить fw <br />
 <code>netsh advfirewall reset</code> сбросить настройки <br />
 <code>netsh advfirewall firewall add rule name="Open Remote Desktop" protocol=TCP dir=in localport=3389 action=allow</code> открыть порт 3389 <br />
 <code>netsh advfirewall firewall add rule name="All ICMP V4" dir=in action=allow protocol=icmpv4</code> открыть icmp</p>
-<h1 id="openssh">OpenSSH<a class="headerlink" href="#openssh" title="Permanent link">&para;</a></h1>
+<h1 id="openssh">OpenSSH</h1>
 <p><code>Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Client*'</code> <br />
 <code>Add-WindowsCapability -Online -Name OpenSSH.Client*</code> <br />
 <code>dism /Online /Add-Capability /CapabilityName:OpenSSH.Client~~~~0.0.1.0</code> <br />
@@ -1466,7 +1468,7 @@ PersistentKeepalive = 25
 <code>ssh Lifailon@192.168.3.99 -p 22</code> <br />
 <code>pwsh -command Get-Service</code> <br />
 <code>ssh -L 3101:192.168.3.101:22 -R 3101:192.168.3.101:22 lifailon@192.168.3.101 -p 22</code> SSH Tunnel lifailon@localhost:3101 -&gt; 192.168.3.101:3101</p>
-<h2 id="psremoting-over-ssh">PSRemoting over SSH<a class="headerlink" href="#psremoting-over-ssh" title="Permanent link">&para;</a></h2>
+<h2 id="psremoting-over-ssh">PSRemoting over SSH</h2>
 <p><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0</code> установка OpenSSH Server <br />
 <code>Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Ser*'</code> <br />
 <code>iex "&amp; { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI"</code> установка PowerShell Core последней версии (требуется на клиентской стороне) <br />
@@ -1481,7 +1483,7 @@ Subsystem powershell c:/progra~1/powershell/7/pwsh.exe -sshs -NoLogo # запу�
 <p><code>Restart-Service sshd</code></p>
 <p><code>$session = New-PSSession -HostName 192.168.3.100 -Port 2121 -UserName lifailon -SSHTransport</code> <br />
 <code>Invoke-Command -Session $session -ScriptBlock {Get-Service}</code></p>
-<h1 id="winrm">WinRM<a class="headerlink" href="#winrm" title="Permanent link">&para;</a></h1>
+<h1 id="winrm">WinRM</h1>
 <p><code>Enter-PSSession -ComputerName $srv</code> подключиться к PowerShell сессии через PSRemoting. Подключение возможно только по FQDN-имени <br />
 <code>Invoke-Command $srv -ScriptBlock {Get-ComputerInfo}</code> выполнение команды через PSRemoting <br />
 <code>$session = New-PSSession $srv</code> открыть сессию <br />
@@ -1490,7 +1492,7 @@ Subsystem powershell c:/progra~1/powershell/7/pwsh.exe -sshs -NoLogo # запу�
 <code>Disconnect-PSSession $session</code> закрыть сессию <br />
 <code>Remove-PSSession $session</code> удалить сессию <br />
 <code>Import-Module -Name ActiveDirectory -PSSession $srv</code> импортировать модуль с удаленного компьютера в локальную сессию</p>
-<h2 id="windows-remote-management-configuration">Windows Remote Management Configuration<a class="headerlink" href="#windows-remote-management-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="windows-remote-management-configuration">Windows Remote Management Configuration</h2>
 <p><code>winrm quickconfig -quiet</code> изменит запуск службы WinRM на автоматический, задаст стандартные настройки WinRM и добавить исключения для портов в fw <br />
 <code>Enable-PSRemoting –Force</code> включить PowerShell Remoting, работает только для доменного и частного сетевых профилей Windows <br />
 <code>Enable-PSRemoting -SkipNetworkProfileCheck -Force</code> для настройки компьютера в общей (public) сети (работает с версии powershell 6)</p>
@@ -1547,13 +1549,13 @@ New-WSManInstance -ResourceURI &quot;winrm/config/Listener&quot; -SelectorSet $s
 <code>winrs -r:http://192.168.3.100:5985/wsman -u:WinRM-Writer -p:123098 ipconfig</code> передать команду через winrs (-?) <br />
 <code>winrs -r:https://192.168.3.100:5985/wsman -u:WinRM-Writer -p:123098 -ssl ipconfig</code> через https <br />
 <code>pwsh -Command "Install-Module -Name PSWSMan"</code> установить модуль для использования в Linux системе</p>
-<h2 id="kerberos">Kerberos<a class="headerlink" href="#kerberos" title="Permanent link">&para;</a></h2>
+<h2 id="kerberos">Kerberos</h2>
 <p><code>.\CheckMaxTokenSize.ps1 -Principals login -OSEmulation $true -Details $true</code> узнать размер токена пользователя в домене <br />
 <code>Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Parameters | select maxtokensize</code> максимальный размер токена на сервере <br />
 <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\HTTP\Parameters</code> изменить размера, если заголовок пакета аутентификации превышает 16 Кб (из за большого кол-ва групп) <br />
 <code>MaxFieldLength увеличить до 0000ffff (65535)</code> <br />
 <code>MaxRequestBytes увеличить до 0000ffff (65535)</code></p>
-<h1 id="console-download">Console-Download<a class="headerlink" href="#console-download" title="Permanent link">&para;</a></h1>
+<h1 id="console-download">Console-Download</h1>
 <p><code>Install-Module Console-Download -Repository NuGet</code> устаовить модуль из менеджера пакетов NuGet <br />
 <code>Invoke-Expression $(Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Console-Download/rsa/module/Console-Download/Console-Download.psm1")</code> или импортировать модуль из GitHub репозитория в текущую сессию PowerShell <br />
 <code>Invoke-Download -Url "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip"</code> загрузить файл в один поток с отображением скорости загрузки в реальном времен (путь загрузки файла по умолчанию: $home\downloads) <br />
@@ -1571,12 +1573,12 @@ Invoke-Download $urls # загрузить параллельно 2 файла
 <code>$url = $usaNy[0].url100mb</code> забрать первую ссылку с файлов на 100 МБайт <br />
 <code>Invoke-Download $url</code> начать загрузку файла <br />
 <code>Invoke-Download $url -Thread 3</code> начать загрузку 3-х одинаковых файлов</p>
-<h1 id="psdomaintest">PSDomainTest<a class="headerlink" href="#psdomaintest" title="Permanent link">&para;</a></h1>
+<h1 id="psdomaintest">PSDomainTest</h1>
 <p><code>Install-Module PSDomainTest -Repository NuGet -Scope CurrentUser</code> <br />
 <code>Get-DomainTest -Domain github.com -Warning</code> протестировать домен и DNS записи на ошибки (вывести только ошибки) через ZoneMaster (https://github.com/zonemaster/zonemaster) <br />
 <code>Get-DomainTest -Domain github.com -Warning -json</code> вывод в формате json <br />
 <code>Get-DomainTest -Domain github.com -html | Out-File .\result.html</code> получить отчет в формате HTML-таблицы с фильтрацией по столбцам</p>
-<h1 id="check-host">Check-Host<a class="headerlink" href="#check-host" title="Permanent link">&para;</a></h1>
+<h1 id="check-host">Check-Host</h1>
 <pre><code class="language-PowerShell">$path = $(($env:PSModulePath -split &quot;;&quot;)[0]) + &quot;\Get-CheckHost&quot;
 if (Test-Path $path) {
     Remove-Item $path -Force -Recurse
@@ -1592,7 +1594,7 @@ Invoke-RestMethod &quot;https://raw.githubusercontent.com/Lifailon/Check-Host/rs
 <code>Get-CheckHost -Server google.com -Type dns -Count 5</code> проверить DNS (возвращает А-запись или диапазон с ip-адресом) <br />
 <code>Get-CheckHost -Server google.com:443 -Type http -Count 5</code> проверить доступность порта <br />
 <code>Get-CheckHost -Server google.com:443 -Type tcp -Count 5</code> проверить доступность TCP или UDP порта</p>
-<h1 id="psyslog">pSyslog<a class="headerlink" href="#psyslog" title="Permanent link">&para;</a></h1>
+<h1 id="psyslog">pSyslog</h1>
 <p><code>Install-Module pSyslog -Repository NuGet</code> <br />
 <code>Start-pSyslog -Port 514</code> запустить сервер на порту 514 (по умолчанию) <br />
 <code>Start-pSyslog -RotationSize 500</code> указать размер файла локального журнала для его ротации (обрезания) в КБ <br />
@@ -1614,7 +1616,7 @@ Invoke-RestMethod &quot;https://raw.githubusercontent.com/Lifailon/Check-Host/rs
 <code>Show-pSyslog -LogFile 05-06 | Out-GridView</code> прочитать локальный журнал логирования и вывести в GridView для фильтрации сообщений <br />
 <code>Show-pSyslog -Count</code> отобразить количество сообщений локального журнала <br />
 <code>Show-pSyslog -Count -LogFile 10-06</code> выбрать журнал по дате</p>
-<h2 id="syslog-source-message">Syslog source message<a class="headerlink" href="#syslog-source-message" title="Permanent link">&para;</a></h2>
+<h2 id="syslog-source-message">Syslog source message</h2>
 <pre><code class="language-PowerShell">Add-Type -TypeDefinition @&quot;
 public enum Syslog_Facility {
     kern,     // 0  kernel (core) messages
@@ -1644,7 +1646,7 @@ public enum Syslog_Facility {
 }
 &quot;@
 </code></pre>
-<h2 id="syslog-type-message">Syslog type message<a class="headerlink" href="#syslog-type-message" title="Permanent link">&para;</a></h2>
+<h2 id="syslog-type-message">Syslog type message</h2>
 <pre><code class="language-PowerShell">Add-Type -TypeDefinition @&quot;
 public enum Syslog_Severity {
     Emergency,     // 0 emerg
@@ -1736,9 +1738,11 @@ public enum Syslog_Severity {
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

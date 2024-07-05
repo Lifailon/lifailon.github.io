@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1998,12 +2000,12 @@
   
 
 
-<h2 id="cheat-sheet">Cheat Sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<h2 id="cheat-sheet">Cheat Sheet</h2>
 <p align="center">
 <a href="https://github.com/Lifailon/PS-Commands"><img title="PowerShell Cheat Sheet RU"src="PowerShell-Cheat-Sheet-RU.jpg"></a>
 </p>
 
-<h2 id="help">Help<a class="headerlink" href="#help" title="Permanent link">&para;</a></h2>
+<h2 id="help">Help</h2>
 <p><code>Get-Verb</code> действия/глаголы, утвержденные для использования в командлетах <br />
 <code>Get-Command *Language*</code> поиск команды по имени <br />
 <code>(Get-Command Get-Language).Module</code> узнать к какому модулю принадлежит команда <br />
@@ -2025,8 +2027,8 @@
 <code>Get-ExecutionPolicy</code> <br />
 <code>$Metadata = New-Object System.Management.Automation.CommandMetaData (Get-Command Get-Service)</code> получить информацию о командлете <br />
 <code>[System.Management.Automation.ProxyCommand]::Create($Metadata)</code> исходный код функции</p>
-<h1 id="object">Object<a class="headerlink" href="#object" title="Permanent link">&para;</a></h1>
-<h2 id="variable">Variable<a class="headerlink" href="#variable" title="Permanent link">&para;</a></h2>
+<h1 id="object">Object</h1>
+<h2 id="variable">Variable</h2>
 <p><code>$var = Read-Host "Enter"</code> ручной ввод <br />
 <code>$pass = Read-Host "Enter Password" -AsSecureString</code> скрывать набор <br />
 <code>$global:path = "\\path"</code> задать глобальную переменную, например в функции <br />
@@ -2038,7 +2040,7 @@
 <code>Get-Variable Error</code> последняя команда с ошибкой <br />
 <code>Remove-Variable -Name *</code> очистить все переменные <br />
 <code>$LASTEXITCODE</code> содержит код вывода последней запущенной программы, например ping. Если код возврата положительный (True), то $LastExitCode = 0</p>
-<h2 id="env">ENV<a class="headerlink" href="#env" title="Permanent link">&para;</a></h2>
+<h2 id="env">ENV</h2>
 <p><code>Get-ChildItem Env:</code> отобразить все переменные окружения <br />
 <code>$env:PSModulePath</code> директории импорта модулей <br />
 <code>$env:userprofile</code> <br />
@@ -2048,7 +2050,7 @@
 <code>$env:logonserver</code> <br />
 <code>([DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()).Name</code> <br />
 <code>[Environment]::GetFolderPath('ApplicationData')</code></p>
-<h2 id="history">History<a class="headerlink" href="#history" title="Permanent link">&para;</a></h2>
+<h2 id="history">History</h2>
 <p><code>Get-History</code> история команд текущей сессии <br />
 <code>(Get-History)[-1].Duration.TotalSeconds</code> время выполнения последней команды <br />
 <code>(Get-PSReadLineOption).HistorySavePath</code> путь к сохраненному файлу с 4096 последних команд (из модуля PSReadLine) <br />
@@ -2057,33 +2059,33 @@
 <code>Get-PSReadLineOption | select MaximumHistoryCount</code> <br />
 <code>Set-PSReadlineOption -HistorySaveStyle SaveNothing</code> отключить ведение журнала <br />
 <code>F2</code> переключиться с InlineView на ListView</p>
-<h2 id="clipboard">Clipboard<a class="headerlink" href="#clipboard" title="Permanent link">&para;</a></h2>
+<h2 id="clipboard">Clipboard</h2>
 <p><code>Set-Clipboard $srv</code> скопировать в буфер обмена <br />
 <code>Get-Clipboard</code> вставить</p>
-<h2 id="write-host">Write-Host<a class="headerlink" href="#write-host" title="Permanent link">&para;</a></h2>
+<h2 id="write-host">Write-Host</h2>
 <pre><code class="language-PowerShell">Write-Host -BackgroundColor Green &quot;Test:&quot; -NoNewline # изменить цвет фона и запретить перенос строки
 Write-Host &quot; True&quot; -ForegroundColor Green # данная строка будет печататься продолжая предыдущую с новыми параметрами цвета (фон по умолчанию, изменяем цвет текста)
 </code></pre>
 <p><code>Write-Error "False"</code> <br />
 <code>Write-Warning "False"</code></p>
-<h2 id="write-progress">Write-Progress<a class="headerlink" href="#write-progress" title="Permanent link">&para;</a></h2>
+<h2 id="write-progress">Write-Progress</h2>
 <pre><code class="language-PowerShell">foreach ($n in 1..100) {
     Write-Progress -Activity &quot;Test Progress&quot; -PercentComplete $n
     Start-Sleep -Milliseconds 100
 }
 </code></pre>
-<h2 id="for">for<a class="headerlink" href="#for" title="Permanent link">&para;</a></h2>
+<h2 id="for">for</h2>
 <pre><code class="language-PowerShell">for ($i = 0; $i -le 100; $i+=10) {
     Write-Progress -Activity &quot;Test Progress&quot; -PercentComplete $i
     Start-Sleep -Seconds 1
 }
 </code></pre>
-<h2 id="array">Array<a class="headerlink" href="#array" title="Permanent link">&para;</a></h2>
+<h2 id="array">Array</h2>
 <p><code>$srv = @("server-01", "server-02")</code>  создать массив <br />
 <code>$srv += @("server-03")</code> добавить в массив новый элемент <br />
 <code>$srv.Count</code> отобразить кол-во элементов в массиве <br />
 <code>Out-String</code> построчный вывод</p>
-<h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
+<h2 id="index">Index</h2>
 <p><code>$srv[0]</code> вывести первое значение элемента массива <br />
 <code>$srv[0] = Name</code> замена элемента в массиве <br />
 <code>$srv[0].Length</code> узнать кол-во символов первого значения в массиве <br />
@@ -2096,7 +2098,7 @@ foreach ($a in $array) {
     $array[$index] = $num # пересобрать исходный массив
 }
 </code></pre>
-<h2 id="hashtable">HashTable<a class="headerlink" href="#hashtable" title="Permanent link">&para;</a></h2>
+<h2 id="hashtable">HashTable</h2>
 <pre><code class="language-PowerShell">$hashtable = @{ # Создать (инициализировать)
     &quot;User&quot; = $env:USERNAME; 
     &quot;Server&quot; = $env:COMPUTERNAME
@@ -2111,30 +2113,30 @@ $hashtable += @{ # Добавить ключи
 <code>$hashtable["User"]</code> получить значение (Values) по ключу <br />
 <code>$hashtable["User"] = "Test"</code> изменить <br />
 <code>$hashtable.Remove("User")</code> удалить ключ</p>
-<h2 id="collectionslist">Collections/List<a class="headerlink" href="#collectionslist" title="Permanent link">&para;</a></h2>
+<h2 id="collectionslist">Collections/List</h2>
 <pre><code class="language-PowerShell">$Collections = New-Object System.Collections.Generic.List[System.Object]
 $Collections.Add([PSCustomObject]@{
     User = $env:username;
     Server = $env:computername
 })
 </code></pre>
-<h2 id="pscustomobject">PSCustomObject<a class="headerlink" href="#pscustomobject" title="Permanent link">&para;</a></h2>
+<h2 id="pscustomobject">PSCustomObject</h2>
 <pre><code class="language-PowerShell">$CustomObject = [PSCustomObject][ordered]@{
     User = $env:username;
     Server = $env:computername
 }
 </code></pre>
-<h2 id="add-and-remove-property">Add and Remove Property<a class="headerlink" href="#add-and-remove-property" title="Permanent link">&para;</a></h2>
+<h2 id="add-and-remove-property">Add and Remove Property</h2>
 <p><code>$CustomObject | Add-Member –MemberType NoteProperty –Name Arr –Value @(1,2,3)</code> добавить свойство/стобец <br />
 <code>$CustomObject.Arr = @(1,3,5)</code> изменить содержимое <br />
 <code>$CustomObject.PsObject.Properties.Remove('User')</code> удалить Property</p>
-<h2 id="add-method">Add Method<a class="headerlink" href="#add-method" title="Permanent link">&para;</a></h2>
+<h2 id="add-method">Add Method</h2>
 <pre><code class="language-PowerShell">$ScriptBlock = {Get-Service}
 $CustomObject | Add-Member -Name &quot;TestMethod&quot; -MemberType ScriptMethod -Value $ScriptBlock
 $CustomObject | Get-Member
 $CustomObject.TestMethod()
 </code></pre>
-<h2 id="class">Class<a class="headerlink" href="#class" title="Permanent link">&para;</a></h2>
+<h2 id="class">Class</h2>
 <pre><code class="language-PowerShell">Class CustomClass {
     [string]$User
     [string]$Server
@@ -2149,16 +2151,16 @@ $CustomObject.TestMethod()
 <code>$Class.User = $env:username</code> <br />
 <code>$Class.Server = $env:computername</code> <br />
 <code>$Class.Start(1)</code></p>
-<h2 id="pipeline">Pipeline<a class="headerlink" href="#pipeline" title="Permanent link">&para;</a></h2>
+<h2 id="pipeline">Pipeline</h2>
 <p><code>$CustomObject | Add-Member -MemberType NoteProperty -Name "Type" -Value "user" -Force</code> добавление объкта вывода NoteProperty <br />
 <code>$CustomObject | Add-Member -MemberType NoteProperty -Name "User" -Value "admin" -Force</code> изменеие содержимого для сущности объекта User <br />
 <code>ping $srv | Out-Null</code> перенаправить результат вывода в Out-Null</p>
-<h2 id="select-object">Select-Object<a class="headerlink" href="#select-object" title="Permanent link">&para;</a></h2>
+<h2 id="select-object">Select-Object</h2>
 <p><code>Get-Process | Select-Object -Property *</code> отобразить все доступные объекты вывода <br />
 <code>Get-Process | select -Unique "Name"</code> удалить повторяющиеся значения в массиве <br />
 <code>Get-Process | select -ExpandProperty ProcessName</code> преобразовать из объекта-коллекции в массив (вывести содержимое без наименовая столбца) <br />
 <code>(Get-Process | ? Name -match iperf).Modules</code> список используемых модулей процессом</p>
-<h2 id="expression">Expression<a class="headerlink" href="#expression" title="Permanent link">&para;</a></h2>
+<h2 id="expression">Expression</h2>
 <pre><code class="language-PowerShell">Get-Process | Sort-Object -Descending CPU | select -first 10 ProcessName, # сортировка по CPU, вывести первых 10 значений (-first)
 @{Name=&quot;ProcessorTime&quot;;
     Expression={$_.TotalProcessorTime -replace &quot;\.\d+$&quot;} # затрачено процессорного времени в минутах
@@ -2170,18 +2172,18 @@ $CustomObject.TestMethod()
     Expression={((Get-Date) - $_.StartTime) -replace &quot;\.\d+$&quot;} # вычесть из текущего времени - время запуска, и удалить milisec
 }
 </code></pre>
-<h2 id="select-string">Select-String<a class="headerlink" href="#select-string" title="Permanent link">&para;</a></h2>
+<h2 id="select-string">Select-String</h2>
 <p><code>$(ipconfig | Select-String IPv4) -replace ".+: " | Where-Object {$_ -match "^172."}</code> узнать только IP <br />
 <code>$Current_IP = Get-Content $RDCMan_RDG_PATH | Select-String $RDCMan_Display_Name -Context 0,1</code> получить две строки <br />
 <code>$Current_IP = $Current_IP.Context.DisplayPostContext[0] -replace ".+&lt;name&gt;|&lt;\/name&gt;"</code> забрать только вторую строку и удалить тэги</p>
-<h2 id="format-listformat-table">Format-List/Format-Table<a class="headerlink" href="#format-listformat-table" title="Permanent link">&para;</a></h2>
+<h2 id="format-listformat-table">Format-List/Format-Table</h2>
 <p><code>Get-Process | fl ProcessName, StartTime</code> <br />
 <code>Get-Process | ft ProcessName, StartTime -Autosize</code> автоматическая группировка размера столбцов</p>
-<h2 id="measure-object">Measure-Object<a class="headerlink" href="#measure-object" title="Permanent link">&para;</a></h2>
+<h2 id="measure-object">Measure-Object</h2>
 <p><code>Get-Process | Measure | select Count</code> кол-во объектов <br />
 <code>Get-Process | Measure -Line -Word -Character</code> кол-во строк, слов и Char объектов <br />
 <code>Get-Process | Measure-Object PM -sum | Select-Object Count,@{Name="MEM_MB"; Expression={[int]($_.Sum/1mb)}}</code> кол-во процессов и общий объем занятой памяти в МБайт</p>
-<h2 id="compare-object">Compare-Object<a class="headerlink" href="#compare-object" title="Permanent link">&para;</a></h2>
+<h2 id="compare-object">Compare-Object</h2>
 <p><code>Compare-Object -ReferenceObject (Get-Content -Path .\file1.txt) -DifferenceObject (Get-Content -Path .\file2.txt)</code> сравнение двух файлов <br />
 <code>$group1 = Get-ADGroupMember -Identity "Domain Admins"</code> <br />
 <code>$group2 = Get-ADGroupMember -Identity "Enterprise Admins"</code> <br />
@@ -2189,7 +2191,7 @@ $CustomObject.TestMethod()
 <code>==</code> нет изменений <br />
 <code>&lt;=</code> есть изменения в $group1 <br />
 <code>=&gt;</code> есть изменения в $group2</p>
-<h2 id="where-object">Where-Object (?)<a class="headerlink" href="#where-object" title="Permanent link">&para;</a></h2>
+<h2 id="where-object">Where-Object (?)</h2>
 <p><code>Get-Process | Where-Object {$_.ProcessName -match "zabbix"}</code> фильтрация/поиск процессов по имени свойства объекта <br />
 <code>Get-Process | where CPU -gt 10 | Sort-Object -Descending CPU</code> вывести объекты, где значения CPU больше 10 <br />
 <code>Get-Process | where WS -gt 200MB</code> отобразить процессы где WS выше 200МБ <br />
@@ -2199,15 +2201,15 @@ $CustomObject.TestMethod()
 <code>netstat -an | where {$_ -match 443}</code> <br />
 <code>netstat -an | ?{$_ -match 443}</code> <br />
 <code>(netstat -an) -match 443</code></p>
-<h2 id="sort-object">Sort-Object<a class="headerlink" href="#sort-object" title="Permanent link">&para;</a></h2>
+<h2 id="sort-object">Sort-Object</h2>
 <p><code>Get-Process | Sort-Object -Descending CPU | ft</code> обратная (-Descending) сортировка по CPU <br />
 <code>Get-Process | Sort-Object -Descending cpu,ws</code> сортировка по двум свойствам <br />
 <code>$path[-1..-10]</code> обратная сборка массива без сортировки <br />
 <code>$arr = @(1..20); $arr[$($arr.Count - 1)..0]</code> пересобрать массив с конца</p>
-<h2 id="lastfirst">Last/First<a class="headerlink" href="#lastfirst" title="Permanent link">&para;</a></h2>
+<h2 id="lastfirst">Last/First</h2>
 <p><code>Get-Process | Sort-Object -Descending CPU | select -First 10</code> вывести первых 10 объектов <br />
 <code>Get-Process | Sort-Object -Descending CPU | select -Last 10</code> вывести последних 10 объектов</p>
-<h2 id="group-object">Group-Object<a class="headerlink" href="#group-object" title="Permanent link">&para;</a></h2>
+<h2 id="group-object">Group-Object</h2>
 <pre><code class="language-PowerShell">$Groups = Get-CimInstance -Class Win32_PnPSignedDriver |
 Select-Object DriverProviderName, FriendlyName, Description, DriverVersion, DriverDate |
 Group-Object DriverProviderName, FriendlyName, Description, DriverVersion, DriverDate
@@ -2215,12 +2217,12 @@ $(foreach ($Group in $Groups) {
     $Group.Group[0]
 }) | Format-Table
 </code></pre>
-<h2 id="property">Property<a class="headerlink" href="#property" title="Permanent link">&para;</a></h2>
+<h2 id="property">Property</h2>
 <p><code>$srv.Count</code> кол-во элементов в массиве <br />
 <code>$srv.Length</code> содержит количество символом строки переменной [string] или количество значений (строк) объекта <br />
 <code>$srv.Chars(2)</code> отобразить 3-й символ в строке <br />
 <code>$srv[2]</code> отобразить 3-ю строку в массиве</p>
-<h2 id="method">Method<a class="headerlink" href="#method" title="Permanent link">&para;</a></h2>
+<h2 id="method">Method</h2>
 <p><code>$srv = "127.0.0.1"</code> <br />
 <code>$srv.Insert(0,"https://")</code> добавить значение перед первым символом <br />
 <code>$srv.Substring(4)</code> удалить (из всего массива) первые 4 символа <br />
@@ -2233,20 +2235,20 @@ $(foreach ($Group in $Groups) {
 <code>[string]::Equals($text,$num)</code> производит сравнение двух строк и выдает $true при их совпадении или $false при несовпадении <br />
 <code>[string]::IsNullOrEmpty($text)</code> проверяет наличие строки, если строка пуста $true, если нет $false <br />
 <code>[string]::IsNullOrWhiteSpace($text2)</code> проверяет на наличие только символов пробел, табуляция или символ новой строки</p>
-<h1 id="error">Error<a class="headerlink" href="#error" title="Permanent link">&para;</a></h1>
+<h1 id="error">Error</h1>
 <p><code>$Error</code> выводит все ошибки текущего сеанса <br />
 <code>$Error[0].InvocationInfo</code> развернутый отчет об ошибке <br />
 <code>$Error.clear()</code> <br />
 <code>$LASTEXITCODE</code> результат выполнения последней команды (0 - успех) <br />
 <code>exit 1</code> код завершения, который возвращается $LASTEXITCODE</p>
-<h2 id="executionstatus">ExecutionStatus<a class="headerlink" href="#executionstatus" title="Permanent link">&para;</a></h2>
+<h2 id="executionstatus">ExecutionStatus</h2>
 <pre><code class="language-PowerShell">$(Get-History)[-1] | Select-Object @{
     Name=&quot;RunTime&quot;; Expression={$_.EndExecutionTime - $_.StartExecutionTime}
 },ExecutionStatus,CommandLine # посчитать время работы последней [-1] (или Select-Object -Last 1) выполненной команды и ее узнать статус
 </code></pre>
-<h2 id="measure-command">Measure-Command<a class="headerlink" href="#measure-command" title="Permanent link">&para;</a></h2>
+<h2 id="measure-command">Measure-Command</h2>
 <p><code>$(Measure-Command {ping ya.ru}).TotalSeconds</code> получить время выполнения в секундах</p>
-<h1 id="datetime">DateTime<a class="headerlink" href="#datetime" title="Permanent link">&para;</a></h1>
+<h1 id="datetime">DateTime</h1>
 <p><code>[DateTime]::UtcNow</code> время в формате UTC 0 <br />
 <code>$(Get-Date).AddHours(-3)</code> вычесть три часа из текущего времени <br />
 <code>$Date = $(Get-Date -Format "dd/MM/yyyy HH:mm:ss")</code> изменить формат отображения времени <br />
@@ -2256,12 +2258,12 @@ $(foreach ($Group in $Groups) {
 <code>$BeforeDate = Get-Date "12.05.2024"</code> <br />
 <code>[int32]$days=$($Date - $BeforeDate).Days</code> посчитать разницу в днях <br />
 <code>"5/7/07" -as [DateTime]</code> преобразовать входные данные в тип данных [DateTime]</p>
-<h1 id="timespan">TimeSpan<a class="headerlink" href="#timespan" title="Permanent link">&para;</a></h1>
+<h1 id="timespan">TimeSpan</h1>
 <p><code>New-TimeSpan -Start $(Get-Date) -End $($(Get-Date).AddMinutes(+1))</code> получить разницу во времени <br />
 <code>$TimeZone = (Get-TimeZone).BaseUtcOffset.TotalMinutes</code> получить разницу в минутах от текущего часового пояса относительно UTC 0 <br />
 <code>$UnixTime  = (New-TimeSpan -Start (Get-Date "01/01/1970") -End ((Get-Date).AddMinutes(-$tz))).TotalSeconds</code> вычесть минуты для получения UTC 0 <br />
 <code>$TimeStamp = ([string]$UnixTime -replace "\..+") + "000000000"</code> получить текущий TimeStamp</p>
-<h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h2>
+<h2 id="format">Format</h2>
 <pre><code>HH   # Часы в 24-часовом формате (00 до 23)
 hh   # Часы в 12-часовом формате (01 до 12)
 mm   # Минуты (00 до 59)
@@ -2281,7 +2283,7 @@ yy   # Год без века с ведущим нулём (00-99)
 yyyy # Год с веком (например, 2024)
 g    # Период или эра (например, &quot;н.э.&quot;)
 </code></pre>
-<h2 id="timer">Timer<a class="headerlink" href="#timer" title="Permanent link">&para;</a></h2>
+<h2 id="timer">Timer</h2>
 <p><code>$start_time = Get-Date</code> зафиксировать время до выполнения команды <br />
 <code>$end_time = Get-Date</code> зафиксировать время по завершению <br />
 <code>$time = $end_time - $start_time</code> высчитать время работы скрипта <br />
@@ -2292,7 +2294,7 @@ g    # Период или эра (например, &quot;н.э.&quot;)
 <code>$timer.IsRunning</code> статус работы таймера <br />
 <code>$timer.Elapsed.TotalSeconds</code> отобразить время с момента запуска (в секундах) <br />
 <code>$timer.Stop()</code> остановить таймер</p>
-<h1 id="regex">Regex<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h1>
+<h1 id="regex">Regex</h1>
 <pre><code>.       # Обозначает любой символ, кроме новой строки
 \       # Экранирует любой специальный символ (метасимвол). Используется, если нужно указать конкретный символ, вместо специального ({ } [ ] / \ + * . $ ^ | ?)
 \A (^)  # Начало строки
@@ -2318,14 +2320,14 @@ g    # Период или эра (например, &quot;н.э.&quot;)
 \d{2,4} # Найти две или четыре
 {4,}    # Найти четыре и более
 </code></pre>
-<h2 id="_1">Якори<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">Якори</h2>
 <p><code>^</code> или <code>\A</code> определяет начало строки. $url -replace '^','https:'<code>добавить в начало;</code>$<code>или</code>\Z<code>обозначают конец строки. $ip -replace "\d{1,3}$","0"</code>(?=text)<code>поиск слова слева. Пишем слева на право от искомого (ищет только целые словосочетания) "Server:\s(.{1,30})\s(?=$username)"</code>(?&lt;=text)<code>поиск слова справа. $in_time -replace ".+(?&lt;=Last)"</code> удалить все до слова Last <br />
 <code>(?!text)</code> не совпадает со словом слева <br />
 <code>(?&lt;!text)</code> не совпадает со словом справа</p>
 <p><code>$test = "string"</code> <br />
 <code>$test -replace ".{1}$"</code> удалить любое кол-во символов в конце строки <br />
 <code>$test -replace "^.{1}"</code> удалить любое кол-во символов в начале строки </p>
-<h2 id="_2">Группы захвата<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_2">Группы захвата</h2>
 <p><code>$date = '12.31.2021'</code> <br />
 <code>$date -replace '^(\d{2}).(\d{2})','$2.$1'</code> поменять местами <br />
 <code>$1</code> содержимое первой группы в скобках <br />
@@ -2339,7 +2341,7 @@ g    # Период или эра (например, &quot;н.э.&quot;)
 <code>-match txt</code> поиска по шаблонам, проверка на соответствие содержимого текста <br />
 <code>-match "zabbix|rpc"</code> условия, для поиска по нескольким словам <br />
 <code>-NotMatch</code> проверка на отсутствие вхождения </p>
-<h2 id="matches">Matches<a class="headerlink" href="#matches" title="Permanent link">&para;</a></h2>
+<h2 id="matches">Matches</h2>
 <p><code>"num: 777" -match "num: ([0-9]+)" | Out-Null</code> <br />
 <code>$Matches[1]</code> выводим только номер</p>
 <p><code>$ip = "192.168.10.1"</code> <br />
@@ -2349,7 +2351,7 @@ g    # Период или эра (например, &quot;н.э.&quot;)
 <code>$String -Match ".*(?=\.txt)" | Out-Null</code> <br />
 <code>$Matches[0][-4..-1] -Join ""</code></p>
 <p><code>$string.Substring($string.IndexOf(".txt")-4, 4)</code> 2-й вариант (IndexOf)</p>
-<h2 id="net-method-format">Форматирование (.NET method format)<a class="headerlink" href="#net-method-format" title="Permanent link">&para;</a></h2>
+<h2 id="net-method-format">Форматирование (.NET method format)</h2>
 <p><code>[string]::Format("{1} {0}","Index0","Index1")</code> <br />
 <code>"{1} {0}" -f "Index0","Index1"</code> <br />
 <code>"{0:##-##-##}" -f 1234567</code> записать число в другом формате (#) <br />
@@ -2362,7 +2364,7 @@ foreach ($p in $gp) {
     &quot;{0} - {1:N2}&quot; -f $p.processname, $p.cpu # округлить
 }
 </code></pre>
-<h2 id="_3">Условный оператор<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_3">Условный оператор</h2>
 <pre><code class="language-PowerShell">$rh = Read-Host
 if ($rh -eq 1) {
     ipconfig
@@ -2384,7 +2386,7 @@ if ($rh -eq 1) {
     &quot;Closed port&quot;
 }
 </code></pre>
-<h2 id="_4">Логические операторы сравнения<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_4">Логические операторы сравнения</h2>
 <p><code>-eq</code> равно (equal) <br />
 <code>-ceq</code> учитывать регистр <br />
 <code>-ne</code> не равно (not equal) <br />
@@ -2403,18 +2405,18 @@ if ($rh -eq 1) {
     $false
 } # два условия: (если $1 = 1 И $2 = 2) ИЛИ $1 не равно 3 вернуть $true
 </code></pre>
-<h2 id="pipeline-operators">Pipeline Operators<a class="headerlink" href="#pipeline-operators" title="Permanent link">&para;</a></h2>
+<h2 id="pipeline-operators">Pipeline Operators</h2>
 <p><code>Write-Output "First" &amp;&amp; Write-Output "Second"</code> две успешные команды выполняются <br />
 <code>Write-Error "Bad" &amp;&amp; Write-Output "Second"</code> первая команда завершается ошибкой, из-за чего вторая команда не выполняется <br />
 <code>Write-Error "Bad" || Write-Output "Second"</code> первая команда завершается ошибкой, поэтому выполняется вторая команда <br />
 <code>Write-Output "First" || Write-Output "Second"</code> первая команда выполнена успешно, поэтому вторая команда не выполняется</p>
-<h2 id="invocation-operator">Invocation Operator<a class="headerlink" href="#invocation-operator" title="Permanent link">&para;</a></h2>
+<h2 id="invocation-operator">Invocation Operator</h2>
 <p><code>$addr = "8.8.8.8"</code> <br />
 <code>$ping = "ping"</code> <br />
 <code>&amp; $ping $addr</code> запускает текст как команду</p>
 <p><code>&amp; $ping $addr &amp;</code> запустить команду в фоне <br />
 <code>(Get-Job)[-1] | Receive-Job -Keep</code></p>
-<h1 id="datatype">DataType<a class="headerlink" href="#datatype" title="Permanent link">&para;</a></h1>
+<h1 id="datatype">DataType</h1>
 <p><code>$srv.GetType()</code> узнать тип данных <br />
 <code>$srv -is [string]</code> проверка на соответствие типа данных <br />
 <code>$srv -isnot [System.Object]</code> проверка на несоответствие <br />
@@ -2429,7 +2431,7 @@ if ($rh -eq 1) {
 <code>[Single]</code> число с плавающей запятой (32-разрядное) <br />
 <code>[Double]</code> число с плавающей запятой с двойной точностью (64-разрядное) <br />
 <code>[String]</code> неизменяемая строка символов Юникода фиксированной длины (BaseType:System.Object)</p>
-<h2 id="math">Math<a class="headerlink" href="#math" title="Permanent link">&para;</a></h2>
+<h2 id="math">Math</h2>
 <p><code>[math] | Get-Member -Static</code> <br />
 <code>[math]::Pow(2,4)</code> 2 в 4 степени <br />
 <code>[math]::Truncate(1.8)</code> грубое округление, удаляет дробную часть <br />
@@ -2437,17 +2439,17 @@ if ($rh -eq 1) {
 <code>[math]::Floor(-1.8)</code> округляет число в меньшую сторону <br />
 <code>[math]::Min(33,22)</code> возвращает наименьшее значение двух значений <br />
 <code>[math]::Max(33,22)</code> возвращает наибольшее значение двух значений</p>
-<h2 id="round">Round<a class="headerlink" href="#round" title="Permanent link">&para;</a></h2>
+<h2 id="round">Round</h2>
 <p><code>[double]::Round(87.5, 0)</code> 88 (нечетное), в .NET по умолчанию используется округление в средней точке ToEven, где *.5 значения округляются до ближайшего четного целого числа <br />
 <code>[double]::Round(88.5, 0)</code> 88 (четное) <br />
 <code>[double]::Round(88.5, 0, 1)</code> 89 (округлять в большую сторону) <br />
 <code>[double]::Round(1234.56789, 2)</code> округлить до 2 символов после запятой</p>
-<h2 id="tostring">ToString<a class="headerlink" href="#tostring" title="Permanent link">&para;</a></h2>
+<h2 id="tostring">ToString</h2>
 <p><code>(4164539/1MB).ToString("0.00")</code> разделить на дважды на 1024/1024 и округлить до 3,97</p>
-<h2 id="char">Char<a class="headerlink" href="#char" title="Permanent link">&para;</a></h2>
+<h2 id="char">Char</h2>
 <p><code>[Char]</code> cимвол Юникода (16-разрядный) <br />
 <code>$char = $srv.ToCharArray()</code> разбить строку [string] на массив [System.Array] из букв</p>
-<h2 id="switch-function">Switch function<a class="headerlink" href="#switch-function" title="Permanent link">&para;</a></h2>
+<h2 id="switch-function">Switch function</h2>
 <pre><code class="language-PowerShell">$MMM = Get-Date -UFormat &quot;%m&quot;
 switch($MMM) {
     &quot;01&quot; {$Month = 'Jan'}
@@ -2464,7 +2466,7 @@ switch($MMM) {
     &quot;12&quot; {$Month = 'Dec'}
 }
 </code></pre>
-<h2 id="switch-param">Switch param<a class="headerlink" href="#switch-param" title="Permanent link">&para;</a></h2>
+<h2 id="switch-param">Switch param</h2>
 <pre><code class="language-PowerShell">Function fun-switch (
     [switch]$param
 ) {
@@ -2472,7 +2474,7 @@ switch($MMM) {
 }
 </code></pre>
 <p><code>fun-switch -param</code></p>
-<h1 id="bit">Bit<a class="headerlink" href="#bit" title="Permanent link">&para;</a></h1>
+<h1 id="bit">Bit</h1>
 <pre><code>Двоичное    Десятичное
 1           1
 10          2
@@ -2531,7 +2533,7 @@ switch($MMM) {
 1   - 2   = остаток 1, (1-1)/2 = 0
 Результат деления записывается снизу вверх
 </code></pre>
-<h2 id="bit-convertor">Bit Convertor<a class="headerlink" href="#bit-convertor" title="Permanent link">&para;</a></h2>
+<h2 id="bit-convertor">Bit Convertor</h2>
 <pre><code class="language-PowerShell">function ConvertTo-Bit {
     param (
         [Int]$int
@@ -2577,14 +2579,14 @@ switch($MMM) {
 <code>$(Get-Process pwsh).ProcessorAffinity = 15</code> 0000000000001111 присвоить 4 первых ядра <br />
 <code>$(Get-Process pwsh).ProcessorAffinity = 61440</code> 1111000000000000 присвоить 4 последних ядра <br />
 <code>$(Get-Process pwsh).ProcessorAffinity = (ConvertFrom-Bit 1111000000000000)</code></p>
-<h1 id="cycle">Cycle<a class="headerlink" href="#cycle" title="Permanent link">&para;</a></h1>
-<h2 id="foreach">Foreach<a class="headerlink" href="#foreach" title="Permanent link">&para;</a></h2>
+<h1 id="cycle">Cycle</h1>
+<h2 id="foreach">Foreach</h2>
 <p><code>$list = 100..110</code> создать массив из цифр от 100 до 110 <br />
 <code>foreach ($srv in $list) {ping 192.168.3.$srv -n 1 -w 50}</code> $srv хранит текущий элемент из $list и повторяет команду до последнего элемента в массиве <br />
 <code>$foreach.Current</code> текущий элемент в цикле <br />
 <code>$foreach.Reset()</code> обнуляет итерацию, перебор начнется заново, что приводит к бесконечному циклу <br />
 <code>$foreach.MoveNext()</code> переход к следующему элементу в цикле</p>
-<h2 id="foreach-object">ForEach-Object (%)<a class="headerlink" href="#foreach-object" title="Permanent link">&para;</a></h2>
+<h2 id="foreach-object">ForEach-Object (%)</h2>
 <pre><code class="language-PowerShell">100..110 | %{
     ping -n 1 -w 50 192.168.3.$_ &gt; $null
     if ($LastExitCode -eq 0) {
@@ -2597,7 +2599,7 @@ switch($MMM) {
 <p><code>%</code> передать цикл через конвеер (ForEach-Object) <br />
 <code>$_</code> переменная цикла и конвеера ($PSItem) <br />
 <code>gwmi Win32_QuickFixEngineering | where {$_.InstalledOn.ToString() -match "2022"} | %{($_.HotFixID.Substring(2))}</code> gwmi создает массив, вывод команды передается where для поиска подходящих под критерии объектов. По конвееру передается в цикл для удаления первых (2) символов методом Substring из всех объектов HotFixID.</p>
-<h2 id="while">While<a class="headerlink" href="#while" title="Permanent link">&para;</a></h2>
+<h2 id="while">While</h2>
 <pre><code class="language-PowerShell">$srv = &quot;yandex.ru&quot;
 $out2 = &quot;Есть пинг&quot;
 $out3 = &quot;Нет пинга&quot;
@@ -2617,18 +2619,18 @@ while ($True) { # запустить бесконечный цикл
     }
 }
 </code></pre>
-<h2 id="try-catch-finally">Try-Catch-Finally<a class="headerlink" href="#try-catch-finally" title="Permanent link">&para;</a></h2>
+<h2 id="try-catch-finally">Try-Catch-Finally</h2>
 <pre><code class="language-PowerShell">Try {$out = pping 192.168.3.1}
 Catch {Write-Warning &quot;$($error[0])&quot;} # выводит в случае ошибки (вместо ошибки)
 finally {$out = &quot;End&quot;} # выполняется в конце в любом случае
 </code></pre>
-<h2 id="out-gridview">Out-Gridview<a class="headerlink" href="#out-gridview" title="Permanent link">&para;</a></h2>
+<h2 id="out-gridview">Out-Gridview</h2>
 <p><code>Get-Service -cn $srv | Out-GridView -Title "Service $srv" -OutputMode Single –PassThru | Restart-Service</code> перезапустить выбранную службу</p>
-<h2 id="out-file">Out-File<a class="headerlink" href="#out-file" title="Permanent link">&para;</a></h2>
+<h2 id="out-file">Out-File</h2>
 <p><code>Read-Host –AsSecureString | ConvertFrom-SecureString | Out-File "$env:userprofile\desktop\password.txt"</code> писать в файл. Преобразовать пароль в формат SecureString с использованием шифрования Windows Data Protection API (DPAPI)</p>
-<h2 id="get-content-gccattype">Get-Content (gc/cat/type)<a class="headerlink" href="#get-content-gccattype" title="Permanent link">&para;</a></h2>
+<h2 id="get-content-gccattype">Get-Content (gc/cat/type)</h2>
 <p><code>$password = gc "$env:userprofile\desktop\password.txt" | ConvertTo-SecureString</code> читать хэш пароля из файла с помощью ключей, хранящихся в профиле текущего пользователя, который невозможно прочитать на другом копьютере</p>
-<h2 id="aes-key">AES Key<a class="headerlink" href="#aes-key" title="Permanent link">&para;</a></h2>
+<h2 id="aes-key">AES Key</h2>
 <p><code>$AESKey = New-Object Byte[] 32</code> <br />
 <code>[Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($AESKey)</code> <br />
 <code>$AESKey | Out-File "C:\password.key"</code> <br />
@@ -2712,9 +2714,11 @@ finally {$out = &quot;End&quot;} # выполняется в конце в лю�
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1266,7 +1268,7 @@
   
 
 
-<h2 id="wsl">WSL<a class="headerlink" href="#wsl" title="Permanent link">&para;</a></h2>
+<h2 id="wsl">WSL</h2>
 <p><code>wsl --list</code> список установленных дистрибутивов Linux <br />
 <code>wsl --list --online</code> список доступных дистрибутивов <br />
 <code>wsl --install -d Ubuntu</code> установить Ubuntu в Windows Subsystem for Linux <br />
@@ -1274,7 +1276,7 @@
 <code>wsl --exec "htop"</code> выполнить команду в подсистеме Linux по умолчанию <br />
 <code>wsl -e bash -c "docker -v"</code> <br />
 <code>wsl -e bash -c "systemctl status docker"</code></p>
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<h2 id="install">Install</h2>
 <p><code>apt update &amp;&amp; apt upgrade -y</code> <br />
 <code>apt install docker.io</code> <br />
 <code>systemctl status docker</code> <br />
@@ -1289,14 +1291,14 @@
 <code>cat dockerToken.txt | sudo docker login --username lifailon --password-stdin</code> передать токен авторизации (https://hub.docker.com/settings/security) из файла через stdin <br />
 <code>cat /root/.docker/config.json | jq -r .auths[].auth</code> место хранения токена авторизации в системе <br />
 <code>cat /root/.docker/config.json | python3 -m json.tool</code></p>
-<h2 id="mirror">Mirror<a class="headerlink" href="#mirror" title="Permanent link">&para;</a></h2>
+<h2 id="mirror">Mirror</h2>
 <p><code>echo '{ "registry-mirrors": ["https://dockerhub.timeweb.cloud"] }' &gt; "/etc/docker/daemon.json"</code><br />
 <code>echo '{ "registry-mirrors": ["https://huecker.io"] }' &gt; "/etc/docker/daemon.json"</code><br />
 <code>echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' &gt; "/etc/docker/daemon.json"</code><br />
 <code>echo '{ "registry-mirrors": ["https://daocloud.io"] }' &gt; "/etc/docker/daemon.json"</code><br />
 <code>echo '{ "registry-mirrors": ["https://c.163.com"] }' &gt; "/etc/docker/daemon.json"</code></p>
 <p><code>systemctl restart docker</code></p>
-<h2 id="proxy">Proxy<a class="headerlink" href="#proxy" title="Permanent link">&para;</a></h2>
+<h2 id="proxy">Proxy</h2>
 <pre><code class="language-bash">mkdir -p /etc/systemd/system/docker.service.d
 
 '[Service]
@@ -1305,7 +1307,7 @@ Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &
 </code></pre>
 <p><code>systemctl daemon-reload</code><br />
 <code>systemctl restart docker</code></p>
-<h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
+<h2 id="run">Run</h2>
 <p>Commands: <code>search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/kill/rm/rmi</code></p>
 <p><code>docker search speedtest</code> поиск образа в реестре <br />
 <code>docker pull adolfintel/speedtest</code> скачать образ LibreSpeed из реестра Docker Hub (https://hub.docker.com/r/adolfintel/speedtest) <br />
@@ -1330,27 +1332,27 @@ Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &
 <code>docker rm openspeedtest &amp;&amp; docker rmi openspeedtest/latest</code> удаляем контейнер и образ в одну команду <br />
 <code>docker run --name pg1 -p 5433:5432 -e POSTGRES_PASSWORD=PassWord -d postgres</code> создать контейнер postgres (https://hub.docker.com/_/postgres) с параметрами (-e) <br />
 <code>docker run -d --restart=always --name uptime-kuma -p 8080:3001 louislam/uptime-kuma:1</code> создать и запустить контейнер Uptime-Kuma (https://hub.docker.com/r/elestio/uptime-kuma) в режиме always, при котором контейнер должен перезапускаться автоматически, если он остановится или если перезапустится Docker (например, после перезагрузки хоста)</p>
-<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<h2 id="update">Update</h2>
 <p><code>docker update --restart unless-stopped uptime-kuma</code> изменить режим перезапуска контейнера после его остановки на unless-stopped (режим аналогичен always, но контейнер не будет перезапущен, если он был остановлен вручную с помощью docker stop) <br />
 <code>docker update --restart on-failure uptime-kuma</code> контейнер будет перезапущен только в случае его завершения с ошибкой, когда код завершения отличается от 0, через двоеточие можно указать количество попыток перезапуска (например, on-failure:3) <br />
 <code>docker update --cpu-shares 512 --memory 500M uptime-kuma</code> задать ограничения по CPU, контейнер будет иметь доступ к указанной доле процессорного времени в диапазоне от 2 до 262,144 (2^18) или --cpus (количество процессоров), --memory/--memory-swap и --blkio-weight для IOps (относительный вес от 10 до 1000)</p>
-<h2 id="stats">Stats<a class="headerlink" href="#stats" title="Permanent link">&para;</a></h2>
+<h2 id="stats">Stats</h2>
 <p><code>docker stats</code> посмотреть статистику потребляемых ресурсов запущенными контейнерами (top) <br />
 <code>docker stats --no-stream --format json</code> вывести результат один раз в формате json</p>
-<h2 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">&para;</a></h2>
+<h2 id="logs">Logs</h2>
 <p><code>docker logs uptime-kuma --tail 100</code> показать логи конкретного запущенного контейнера в терминале (последние 100 строк) <br />
 <code>docker system events</code> предоставляют события от демона dockerd в реальном времени <br />
 <code>journalctl -xeu docker.service</code> <br />
 <code>docker system df</code> отобразить сводную информацию занятого пространства образами и контейнерами <br />
 <code>du -h --max-depth=1 /var/lib/docker</code> <br />
 <code>du -h --max-depth=2 /var/lib/docker/containers</code></p>
-<h2 id="volume">Volume<a class="headerlink" href="#volume" title="Permanent link">&para;</a></h2>
+<h2 id="volume">Volume</h2>
 <p><code>docker volume ls</code> показывает список томов и место хранения (механизмы хранения постояннымх данных контейнера на хостовой машине, которые сохраняются между перезапусками или пересозданиями контейнеров) <br />
 <code>docker volume inspect uptime-kuma</code> подробная информация конфигурации тома (отображает локальный путь к данным в системе, Mountpoint: /var/lib/docker/volumes/uptime-kuma/_data) <br />
 <code>docker volume create test</code> создать том <br />
 <code>docker volume rm test</code> удалить том <br />
 <code>docker run -d --restart=always --name uptime-kuma -p 8080:3001 -v uptime-kuma:/app/data louislam/uptime-kuma:1</code> создать и запустить контейнер на указанном томе (том создается автоматически, в дальнейшем его можно указывать при создании контейнера, если необходимо загружать из него сохраненные данные)</p>
-<h2 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h2>
+<h2 id="network">Network</h2>
 <p><code>docker network ls</code> список сетей <br />
 <code>docker network inspect bridge</code> подробная информация о сети bridge <br />
 <code>docker inspect uptime-kuma | jq .[].NetworkSettings.Networks</code> узнать наименование сетевого адаптера указанного контейнера <br />
@@ -1358,7 +1360,7 @@ Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &
 <code>docker network create network_test</code> создать новую сеть <br />
 <code>docker network connect network_test uptime-kuma</code> подключить работающий контейнер к указанной сети <br />
 <code>docker network disconnect network_test uptime-kuma</code> отключить от сети</p>
-<h2 id="inspect">Inspect<a class="headerlink" href="#inspect" title="Permanent link">&para;</a></h2>
+<h2 id="inspect">Inspect</h2>
 <p><code>docker inspect uptime-kuma</code> подробная информация о контейнере (например, конфигурация NetworkSettings) <br />
 <code>docker inspect uptime-kuma --format='{{.LogPath}}'</code> показать, где хранятся логи для конкретного контейнера в локальной системе <br />
 <code>docker inspect uptime-kuma | grep LogPath</code> <br />
@@ -1368,7 +1370,7 @@ Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &
 <code>for ps in $(docker ps -q); do docker port $ps | sed -n 2p | awk -F ":" '{print $NF}'; done</code> отобразить внешние порты всех запущенных контейнеров <br />
 <code>id=$(docker inspect uptime-kuma | jq -r .[].Id)</code> узнать ID контейнера по его имени в конфигурации <br />
 <code>cat /var/lib/docker/containers/$id/config.v2.json | jq .</code> прочитать конфигурационный файл контейнера</p>
-<h2 id="exec">Exec<a class="headerlink" href="#exec" title="Permanent link">&para;</a></h2>
+<h2 id="exec">Exec</h2>
 <p><code>docker exec -it uptime-kuma /bin/bash</code> подключиться к работающему контейнеру (при выходе из оболочки, контейнер будет работать), используя интерпритатор bash <br />
 <code>docker top uptime-kuma</code> отобразить работающие процессы контейнера <br />
 <code>docker exec -it --user root uptime-kuma bash apt-get install -y procps</code> авторизоваться под пользователем root и установить procps <br />
@@ -1380,10 +1382,10 @@ Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &
 <code>docker exec -it uptime-kuma ls</code> <br />
 <code>docker cp uptime-kuma:/app/db/ backup/db</code> сокпировать из контейнера в локальную систему <br />
 <code>ls backup/db</code></p>
-<h2 id="prune">Prune<a class="headerlink" href="#prune" title="Permanent link">&para;</a></h2>
+<h2 id="prune">Prune</h2>
 <p><code>docker network prune &amp;&amp; docker image prune &amp;&amp; docker volume prune &amp;&amp; docker container prune</code> удалить все неиспользуемые сети, висящие образа, остановленные контейнеры, все неиспользуемые тома <br />
 <code>system prune –volumes</code> заменяет все четыре команды для очистки и дополнительно очищает кеш сборки</p>
-<h2 id="remove">Remove<a class="headerlink" href="#remove" title="Permanent link">&para;</a></h2>
+<h2 id="remove">Remove</h2>
 <p><code>systemctl stop docker.service</code> <br />
 <code>systemctl stop docker.socket</code> <br />
 <code>pkill -f docker</code> <br />
@@ -1393,7 +1395,7 @@ Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &
 <code>rm -rf /var/lib/docker</code> <br />
 <code>rm -rf /run/docker</code> <br />
 <code>rm -rf /run/docker.sock</code></p>
-<h2 id="docker-socket-api">Docker Socket API<a class="headerlink" href="#docker-socket-api" title="Permanent link">&para;</a></h2>
+<h2 id="docker-socket-api">Docker Socket API</h2>
 <p><code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/version | jq .</code> использовать локальный сокет (/run/docker.sock) для взаимодействия с Docker daemon через его API <br />
 <code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/info | jq .</code> количество образов, запущенных и остановленных контейнеров и остальные метрики ОС <br />
 <code>curl --silent -XGET --unix-socket /run/docker.sock http://localhost/events</code> логи Docker daemon <br />
@@ -1403,7 +1405,7 @@ Environment=&quot;HTTPS_PROXY=http://docker:password@192.168.3.100:9090&quot;' &
 <code>curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/start</code> запустить контейнер по Id <br />
 <code>curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/stop</code> остановить контейнер <br />
 <code>curl --silent -XDELETE --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1</code> удалить контейнер</p>
-<h2 id="docker-tcp-api">Docker TCP API<a class="headerlink" href="#docker-tcp-api" title="Permanent link">&para;</a></h2>
+<h2 id="docker-tcp-api">Docker TCP API</h2>
 <pre><code class="language-bash">echo '{
     &quot;hosts&quot;: [&quot;tcp://0.0.0.0:2375&quot;, &quot;unix:///var/run/docker.sock&quot;]
 }' &gt; &quot;/etc/docker/daemon.json&quot;
@@ -1413,13 +1415,13 @@ systemctl daemon-reload
 systemctl restart docker
 </code></pre>
 <p>curl --silent -XGET http://192.168.3.102:2375/version | jq .</p>
-<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<h2 id="context">Context</h2>
 <p><code>docker context create devops-01 --docker "host=tcp://192.168.3.101:2375"</code> подключиться к удаленному сокету<br />
 <code>docker context ls</code> список контекстов<br />
 <code>docker context inspect devops-01</code> конфигурация указанного контекста<br />
 <code>docker context use devops-01</code> использовать выбранный контекст по умолчанию (возможно на прямую взаимосдействовать с удаленным Docker Engine через cli)<br />
 <code>docker context rm devops-01</code> удалить контекст</p>
-<h2 id="ctop">ctop<a class="headerlink" href="#ctop" title="Permanent link">&para;</a></h2>
+<h2 id="ctop">ctop</h2>
 <p><code>scoop install ctop</code> установка в Windows</p>
 <pre><code class="language-bash">wget https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 -O /usr/local/bin/ctop
 chmod +x /usr/local/bin/ctop
@@ -1432,7 +1434,7 @@ chmod +x /usr/local/bin/ctop
 <code>p</code> - pause/unpause <br />
 <code>r</code> - restart <br />
 <code>e</code> - exec shell</p>
-<h2 id="lazydocker">LazyDocker<a class="headerlink" href="#lazydocker" title="Permanent link">&para;</a></h2>
+<h2 id="lazydocker">LazyDocker</h2>
 <p><code>scoop install lazydocker || choco install lazydocker</code> установка в Windows</p>
 <pre><code class="language-bash">wget https://github.com/jesseduffield/lazydocker/releases/download/v0.23.1/lazydocker_0.23.1_Linux_x86.tar.gz -O ~/lazydocker.tar.gz
 tar -xzf ~/lazydocker.tar.gz lazydocker
@@ -1441,7 +1443,7 @@ mv lazydocker /usr/local/bin/lazydocker
 chmod +x /usr/local/bin/lazydocker
 </code></pre>
 <p>lazydocker</p>
-<h2 id="dockerfile">Dockerfile<a class="headerlink" href="#dockerfile" title="Permanent link">&para;</a></h2>
+<h2 id="dockerfile">Dockerfile</h2>
 <p><code>git clone https://github.com/Lifailon/TorAPI</code> <br />
 <code>cd TorAPI</code> <br />
 <code>nano Dockerfile</code></p>
@@ -1464,7 +1466,7 @@ CMD [&quot;npm&quot;, &quot;start&quot;]
 </code></pre>
 <p><code>docker build -t torapi .</code> собрать образ из dockerfile <br />
 <code>docker run -d --name TorAPI -p 8443:8443 torapi</code></p>
-<h2 id="push">Push<a class="headerlink" href="#push" title="Permanent link">&para;</a></h2>
+<h2 id="push">Push</h2>
 <p><code>docker login</code> <br />
 <code>git clone https://github.com/Lifailon/TorAPI</code> <br />
 <code>cd TorAPI</code> <br />
@@ -1472,7 +1474,7 @@ CMD [&quot;npm&quot;, &quot;start&quot;]
 <code>docker push lifailon/torapi</code> загрузить образ на Docker Hub</p>
 <p><code>docker pull lifailon/torapi:latest</code> загрузить образ из Docker Hub <br />
 <code>docker run -d --name TorAPI -p 8443:8443 lifailon/torapi:latest</code> загрузить образ и создать контейнер</p>
-<h2 id="docker-compose">Docker-Compose<a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h2>
+<h2 id="docker-compose">Docker-Compose</h2>
 <pre><code class="language-bash">curl -L &quot;https://github.com/docker/compose/releases/download/1.27.0/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 docker-compose --version
@@ -1492,7 +1494,7 @@ volumes:
   torapi:
 </code></pre>
 <p><code>docker-compose up -d</code> при повторном запуске пересоздаст контейнер с изменениями</p>
-<h2 id="uptime-kuma">Uptime-Kuma<a class="headerlink" href="#uptime-kuma" title="Permanent link">&para;</a></h2>
+<h2 id="uptime-kuma">Uptime-Kuma</h2>
 <p><code>nano docker-compose.yml</code></p>
 <pre><code class="language-yml">version: &quot;3.8&quot;
 services:
@@ -1508,7 +1510,7 @@ volumes:
   uptime-kuma:
 </code></pre>
 <p><code>docker-compose up -d</code></p>
-<h2 id="uptime-kuma-api">Uptime-Kuma-Api<a class="headerlink" href="#uptime-kuma-api" title="Permanent link">&para;</a></h2>
+<h2 id="uptime-kuma-api">Uptime-Kuma-Api</h2>
 <p><code>nano docker-compose.yml</code></p>
 <pre><code class="language-yml">version: &quot;3.9&quot;
 services:
@@ -1544,7 +1546,7 @@ volumes:
 <code>TOKEN=$(curl -s -X POST http://192.168.3.102:8081/login/access-token --data "username=admin" --data "password=KumaApiAdmin" | jq -r .access_token)</code> <br />
 <code>curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://127.0.0.1:8081/monitors | jq .</code> <br />
 <code>curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://127.0.0.1:8081/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'</code></p>
-<h2 id="swarm">Swarm<a class="headerlink" href="#swarm" title="Permanent link">&para;</a></h2>
+<h2 id="swarm">Swarm</h2>
 <p><code>docker swarm init</code> инициализировать manager node и получить токен для подключения worker node (сервер) <br />
 <code>docker swarm join-token manager</code> узнать токен подключения <br />
 <code>docker swarm join --token SWMTKN-1-1a078rm7vuenefp6me84t4swqtvdoveu6dh2pw34xjcf2gyw33-81f8r32jt3kkpk4dqnt0oort9 192.168.3.101:2377</code> подключение на worker node (клиент) <br />
@@ -1589,11 +1591,11 @@ volumes:
 <code>docker service logs TorAPI_torapi</code> журнала конкретного сервиса по всем серверам кластера <br />
 <code>docker service scale TorAPI_torapi=3</code> масштабирует сервис до указанного числа реплик <br />
 <code>docker stack rm TorAPI</code> удалить стэк (не требует остановки контейнеров)</p>
-<h2 id="dozzle">Dozzle<a class="headerlink" href="#dozzle" title="Permanent link">&para;</a></h2>
+<h2 id="dozzle">Dozzle</h2>
 <p><code>docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest</code> <br />
 <code>docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest --remote-host tcp://192.168.3.102:2375|mon-01</code> доступ к удаленному хосту через Docker-tcp-api <br />
 http://192.168.3.102:9999</p>
-<h2 id="dozzle-auth">Dozzle-Auth<a class="headerlink" href="#dozzle-auth" title="Permanent link">&para;</a></h2>
+<h2 id="dozzle-auth">Dozzle-Auth</h2>
 <p><code>echo -n DozzleAdmin | shasum -a 256</code> получить пароль в формате sha-256 <br />
 <code>mkdir dozzle &amp;&amp; nano ./dozzle/users.yml</code> создать авторизационный файл</p>
 <pre><code class="language-yml">users:
@@ -1618,7 +1620,7 @@ services:
       DOZZLE_REMOTE_HOST: tcp://192.168.3.102:2375|mon-01
 </code></pre>
 <p><code>docker-compose up -d</code></p>
-<h2 id="portainer">Portainer<a class="headerlink" href="#portainer" title="Permanent link">&para;</a></h2>
+<h2 id="portainer">Portainer</h2>
 <p><code>curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml</code> скачать yaml файл <br />
 <code>version_update=$(cat portainer-agent-stack.yml | sed "s/2.11.1/latest/g")</code> <br />
 <code>printf "%s\n" "$version_update" &gt; portainer-agent-stack.yml</code> обновить версию в yaml файле на последнюю доступную в Docker Hub (2.19.5) <br />
@@ -1630,7 +1632,7 @@ https://192.168.3.101:9443/#!/endpoints добавить удаленный хо
 <code>docker create -it --name=portainer -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</code> создать локальный контейнер <br />
 <code>docker start portainer</code> <br />
 http://192.168.3.101:9000</p>
-<h1 id="dockerdotnet">Docker.DotNet<a class="headerlink" href="#dockerdotnet" title="Permanent link">&para;</a></h1>
+<h1 id="dockerdotnet">Docker.DotNet</h1>
 <pre><code class="language-PowerShell"># Импорт библиотеки Docker.DotNet (https://nuget.info/packages/Docker.DotNet/3.125.15)
 Add-Type -Path &quot;$home\Documents\Docker.DotNet-3.125.15\lib\netstandard2.1\Docker.DotNet.dll&quot;
 # Указываем адрес удаленного сервера Docker, на котором слушает сокет Docker API
@@ -1730,9 +1732,11 @@ $client.Containers.StartContainerAsync($kuma_id, $StartParameters)
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1958,16 +1960,16 @@
 
   <h1>Database</h1>
 
-<h2 id="influxdb">InfluxDB<a class="headerlink" href="#influxdb" title="Permanent link">&para;</a></h2>
+<h2 id="influxdb">InfluxDB</h2>
 <p><a href="https://www.influxdata.com/downloads">Download InfluxDB 1.x Open Source</a><br />
 <a href="https://github.com/CymaticLabs/InfluxDBStudio">InfluxDB-Studio</a></p>
-<h3 id="install-windows">Install Windows<a class="headerlink" href="#install-windows" title="Permanent link">&para;</a></h3>
+<h3 id="install-windows">Install Windows</h3>
 <pre><code class="language-PowerShell">Invoke-RestMethod &quot;https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip&quot; -OutFile &quot;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&quot;
 Expand-Archive &quot;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&quot; -DestinationPath &quot;$home\Documents\&quot;
 Remove-Item &quot;$home\Downloads\influxdb-1.8.10_windows_amd64.zip&quot;
 &amp; &quot;$home\Downloads\influxdb-1.8.10-1\influxd.exe&quot;
 </code></pre>
-<h3 id="install-ubuntu">Install Ubuntu<a class="headerlink" href="#install-ubuntu" title="Permanent link">&para;</a></h3>
+<h3 id="install-ubuntu">Install Ubuntu</h3>
 <pre><code class="language-Bash">wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
 sudo dpkg -i influxdb_1.8.10_amd64.deb
 systemctl start influxdb
@@ -1976,7 +1978,7 @@ systemctl status influxdb
 ps aux | grep influxdb | grep -Ev &quot;grep&quot;
 netstat -natpl | grep 80[8-9][3-9]
 </code></pre>
-<h3 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
+<h3 id="api">API</h3>
 <pre><code class="language-Bash">nano /etc/influxdb/influxdb.conf
 
 [http]
@@ -1986,7 +1988,7 @@ netstat -natpl | grep 80[8-9][3-9]
 
 systemctl restart influxdb
 </code></pre>
-<h3 id="chronograf">Chronograf<a class="headerlink" href="#chronograf" title="Permanent link">&para;</a></h3>
+<h3 id="chronograf">Chronograf</h3>
 <pre><code>wget https://dl.influxdata.com/chronograf/releases/chronograf-1.10.2_windows_amd64.zip -UseBasicParsing -OutFile chronograf-1.10.2_windows_amd64.zip
 Expand-Archive .\chronograf-1.10.2_windows_amd64.zip -DestinationPath 'C:\Program Files\InfluxData\chronograf\'
 
@@ -1995,7 +1997,7 @@ sudo dpkg -i chronograf_1.10.2_amd64.deb
 systemctl status influxdb
 http://192.168.3.102:8888
 </code></pre>
-<h3 id="grafana">Grafana<a class="headerlink" href="#grafana" title="Permanent link">&para;</a></h3>
+<h3 id="grafana">Grafana</h3>
 <p><a href="https://grafana.com/grafana/download">Download</a></p>
 <p><code>invoke-RestMethod https://dl.grafana.com/enterprise/release/grafana-enterprise-10.3.1.windows-amd64.msi -OutFile "$home\Download\grafana.msi"</code></p>
 <pre><code class="language-Bash">apt-get install -y adduser libfontconfig1 musl
@@ -2004,7 +2006,7 @@ dpkg -i grafana-enterprise_10.3.1_amd64.deb
 systemctl start grafana-server
 systemctl status grafana-server
 </code></pre>
-<h3 id="cli-client">CLI Client<a class="headerlink" href="#cli-client" title="Permanent link">&para;</a></h3>
+<h3 id="cli-client">CLI Client</h3>
 <p><code>apt install influxdb-client</code> <br />
 <code>influx</code> <br />
 <code>influx --host 192.168.3.102 --username admin --password password</code></p>
@@ -2015,7 +2017,7 @@ show databases
 use PowerShell
 SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m
 </code></pre>
-<h3 id="users">USERS<a class="headerlink" href="#users" title="Permanent link">&para;</a></h3>
+<h3 id="users">USERS</h3>
 <p><code>SHOW USERS</code> отобразить пользователей и их права доступа <br />
 <code>CREATE USER admin WITH PASSWORD 'password' WITH ALL PRIVILEGES</code> создать пользователя <br />
 <code>GRANT ALL PRIVILEGES TO "admin"</code> предоставить права доступа <br />
@@ -2024,21 +2026,21 @@ SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m
 <code>SHOW GRANTS FOR "admin"</code> БД и привелегии доступа для указанного пользователя <br />
 <code>SET PASSWORD FOR "admin" = 'new_password'</code> изменить пароль <br />
 <code>DROP USER "admin"</code> удалить пользователя</p>
-<h3 id="database">DATABASE<a class="headerlink" href="#database" title="Permanent link">&para;</a></h3>
+<h3 id="database">DATABASE</h3>
 <p><code>CREATE DATABASE powershell</code> создать БД <br />
 <code>SHOW DATABASES</code> отобразить список БД <br />
 <code>DROP DATABASE powershell</code> удалить БД <br />
 <code>USE powershell</code> <br />
 <code>SHOW measurements</code> отобразить все таблицы <br />
 <code>INSERT performance,host=console,counter=CPU value=0.88</code> записать данные в таблицу performance</p>
-<h3 id="measurement">MEASUREMENT<a class="headerlink" href="#measurement" title="Permanent link">&para;</a></h3>
+<h3 id="measurement">MEASUREMENT</h3>
 <p><code>SHOW TAG KEYS FROM "HardwareMonitor"</code> отобразить все тэги в таблице <br />
 <code>SHOW TAG VALUES FROM "HardwareMonitor" WITH KEY = "HardwareName"</code> отобразить все значения указанного тэга <br />
 <code>SHOW FIELD KEYS FROM "HardwareMonitor"</code> отобразить все Field Tags и их тип данных <br />
 <code>SHOW SERIES FROM "HardwareMonitor"</code> отобразить список всех уникальных серий в указанной таблице. Серия - это набор точек данных, которые имеют одинаковые значения для всех тегов, за исключением времени. <br />
 <code>DROP SERIES FROM "HardwareMonitor"</code> очистить все данные в таблице <br />
 <code>DROP MEASUREMENT "HardwareMonitor"</code> удалить таблицу</p>
-<h3 id="selectwhere">SELECT/WHERE<a class="headerlink" href="#selectwhere" title="Permanent link">&para;</a></h3>
+<h3 id="selectwhere">SELECT/WHERE</h3>
 <p><code>SELECT * FROM performance</code> отобразить все данные в таблице <br />
 <code>SELECT value FROM performance</code> отфильтровать по столбцу value (только Field Keys) <br />
 <code>SELECT * FROM performance limit 10</code> отобразить 10 единиц данных <br />
@@ -2048,7 +2050,7 @@ SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m
 <code>SELECT upload/1000 FROM speedtest WHERE upload/1000 &lt;= 250</code> выборка по столбцу upload и разделить вывод на 1000, вывести upload меньше 250 <br />
 <code>DELETE FROM performance WHERE time &gt; now() -1h</code> удалить данные за последние 1/4 часа <br />
 <code>DELETE FROM performance WHERE time &lt; now() -24h</code> удалить данные старше 24 часов</p>
-<h3 id="regex">REGEX<a class="headerlink" href="#regex" title="Permanent link">&para;</a></h3>
+<h3 id="regex">REGEX</h3>
 <p><code>SELECT * FROM "win_pdisk" WHERE instance =~/.*C:/ and time &gt; now() - 5m</code> и <br />
 <code>SELECT * FROM "win_pdisk" WHERE instance =~/.*E:/ or instance =~ /.*F:/</code> или <br />
 <code>SELECT * FROM "win_pdisk" WHERE instance !~ /.*Total/</code> не равно (исключить) <br />
@@ -2056,10 +2058,10 @@ SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m
 <code>SELECT * FROM "HardwareMonitor" WHERE time &gt; now() - 5m and HardwareName =~ /Intel.+i7/</code> эквивалент 12th_Gen_Intel_Core_i7-1260P <br />
 <code>SELECT * FROM "HardwareMonitor" WHERE time &gt; now() - 5m and HardwareName =~ /^Intel/</code> начинается на Intel <br />
 <code>SELECT * FROM "HardwareMonitor" WHERE time &gt; now() - 5m and HardwareName =~ /00$/</code> заканчивается на 00</p>
-<h3 id="group-by-tag_key">GROUP BY tag_key<a class="headerlink" href="#group-by-tag_key" title="Permanent link">&para;</a></h3>
+<h3 id="group-by-tag_key">GROUP BY tag_key</h3>
 <p><code>SELECT * FROM "HardwareMonitor" WHERE time &gt; now() - 5m and SensorName = 'Temperature' GROUP BY HardwareName</code> создать уникальные группы по тэгу HardwareName <br />
 <code>SELECT * FROM "HardwareMonitor" WHERE time &gt; now() - 5m and SensorName = 'Temperature' GROUP BY Host,HardwareName</code> больше групп по двум тэгаам</p>
-<h3 id="functionsfield_key">Functions(field_key)<a class="headerlink" href="#functionsfield_key" title="Permanent link">&para;</a></h3>
+<h3 id="functionsfield_key">Functions(field_key)</h3>
 <p><a href="https://docs.influxdata.com/influxdb/v1.8/query_language/functions">Functions</a></p>
 <p><code>SELECT instance,LAST(Avg._Disk_Read_Queue_Length) FROM "win_pdisk" GROUP BY instance</code> отфильтровать вывод по последнему/текущему значению <br />
 <code>SELECT instance,FIRST(Avg._Disk_Read_Queue_Length) FROM "win_pdisk" GROUP BY instance</code> отфильтровать вывод по первому значению за весь или указанный отрезок времени <br />
@@ -2071,14 +2073,14 @@ SELECT * FROM &quot;HardwareMonitor&quot; WHERE time &gt; now() - 5m
 <p><code>SELECT *,MAX(Value) FROM "HardwareMonitor" WHERE time &gt; now() -1h GROUP BY SensorName,Host</code> создать группы для выявления максимального значения значения стобца Value каждого тэга SensorName и хоста за последний час <br />
 <code>SELECT *,MAX(Value) FROM "HardwareMonitor" WHERE time &gt; now() -1h and SensorName = 'CPU_Package' GROUP BY Host</code> масимальное значение CPU_Package за последний час для каждого хоста <br />
 <code>SELECT MEAN(Value) FROM "HardwareMonitor" WHERE time &gt; now() -1h and SensorName = 'CPU_Package' GROUP BY Host</code> среднее значение CPU_Package за последний час</p>
-<h3 id="policy">POLICY<a class="headerlink" href="#policy" title="Permanent link">&para;</a></h3>
+<h3 id="policy">POLICY</h3>
 <p><code>CREATE DATABASE powershell WITH DURATION 48h REPLICATION 1 NAME "del2d"</code> создать БД с политикой хранения 2 дня <br />
 <code>CREATE RETENTION POLICY del2h ON powershell DURATION 2h REPLICATION 1</code> создать новую политику хранения для БД <br />
 <code>CREATE RETENTION POLICY del6h ON powershell DURATION 6h REPLICATION 1 SHARD DURATION 2h</code> указать период хранения 6 часов + 2 часа до очистки (по умолчанию 1ч или больше) <br />
 <code>ALTER RETENTION POLICY del6h ON powershell DEFAULT</code> изменить (ALTER) политику хранения для БД на del6h (DEFAULT) <br />
 <code>DROP RETENTION POLICY del2d ON powershell</code> удаление политики хранения приводит к безвозвратному удалению всех измерений (таблиц) и данных, хранящихся в политике хранения <br />
 <code>SHOW RETENTION POLICIES ON PowerShell</code> отобразить действующие политики базы данных PowerShell</p>
-<h2 id="influxdb-api">InfluxDB-api<a class="headerlink" href="#influxdb-api" title="Permanent link">&para;</a></h2>
+<h2 id="influxdb-api">InfluxDB-api</h2>
 <pre><code class="language-PowerShell">$data = Invoke-RestMethod http://192.168.3.102:8086/query?q=&quot;SHOW RETENTION POLICIES ON PowerShell&quot;
 $col = $data.results.series.columns
 $val = $data.results.series.values
@@ -2092,7 +2094,7 @@ $mass = $mass -replace '$','&quot;'
 $mass = $mass -replace '\s','&quot;,&quot;'
 $mass | ConvertFrom-Csv
 </code></pre>
-<h3 id="api-post">API POST<a class="headerlink" href="#api-post" title="Permanent link">&para;</a></h3>
+<h3 id="api-post">API POST</h3>
 <p>Вместо таблиц в InfluxDB имеются измерения. Вместо столбцов в ней есть теги и поля.</p>
 <pre><code>   Table                        Tag (string/int)                          Field (double/int)           TIMESTAMP
 measurement,Tag_Keys1=Tag_Values1,Tag_Keys2=Tag_Values2 Field_Keys1=&quot;Values&quot;,Field_Keys2=&quot;Values&quot; 0000000000000000000
@@ -2112,7 +2114,7 @@ $timestamp = ([string]$unixtime -replace &quot;\..+&quot;) + &quot;000000000&quo
 
 Invoke-RestMethod -Method POST -Uri $url -Body &quot;$table,host=$(hostname) download=200000,upload=300000,ping=3 $timestamp&quot;
 </code></pre>
-<h3 id="api-get">API GET<a class="headerlink" href="#api-get" title="Permanent link">&para;</a></h3>
+<h3 id="api-get">API GET</h3>
 <p><code>curl http://192.168.3.104:8086/query --data-urlencode "q=SHOW DATABASES"</code> pwsh7 (ConvertFrom-Json) and bash</p>
 <p><code>$dbs = irm "http://192.168.3.104:8086/query?q=SHOW DATABASES"</code> <br />
 <code>$dbs = irm "http://192.168.3.104:8086/query?epoch=ms&amp;u=admin&amp;p=password&amp;q=SHOW DATABASES"</code> <br />
@@ -2129,7 +2131,7 @@ $data.results.series.name   ` имя таблицы
 $data.results.series.columns` столбцы/ключи
 $data.results.series.values ` данные построчно
 </code></pre>
-<h3 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h3>
+<h3 id="endpoints">Endpoints</h3>
 <p><a href="https://docs.influxdata.com/influxdb/v1.7/tools/api/">API doc</a></p>
 <pre><code class="language-PowerShell">$stats = irm http://192.168.3.104:8086/debug/vars` статистика сервера
 $stats.&quot;database:powershell&quot;.values` кол-во таблиц к БД
@@ -2145,7 +2147,7 @@ $stats.system.uptime
 <p><code>http://192.168.3.99:8086/api/v2/setup</code> <br />
 <code>http://192.168.3.99:8086/api/v2/config</code> <br />
 <code>http://192.168.3.99:8086/api/v2/write</code></p>
-<h3 id="pingto-influxdb">PingTo-InfluxDB<a class="headerlink" href="#pingto-influxdb" title="Permanent link">&para;</a></h3>
+<h3 id="pingto-influxdb">PingTo-InfluxDB</h3>
 <pre><code class="language-PowerShell">while ($true) {
     $tz = (Get-TimeZone).BaseUtcOffset.TotalMinutes
     $unixtime  = (New-TimeSpan -Start (Get-Date &quot;01/01/1970&quot;) -End ((Get-Date).AddMinutes(-$tz))).TotalSeconds` -3h UTC
@@ -2158,7 +2160,7 @@ $stats.system.uptime
 }
 </code></pre>
 <p><code>SELECT * FROM ping WHERE status = false</code></p>
-<h3 id="performanceto-influxdb">PerformanceTo-InfluxDB<a class="headerlink" href="#performanceto-influxdb" title="Permanent link">&para;</a></h3>
+<h3 id="performanceto-influxdb">PerformanceTo-InfluxDB</h3>
 <pre><code class="language-PowerShell">function ConvertTo-Encoding ([string]$From, [string]$To) {
     Begin {
         $encFrom = [System.Text.Encoding]::GetEncoding($from)
@@ -2187,7 +2189,7 @@ while ($true) {
     sleep 5
 }
 </code></pre>
-<h3 id="service">Service<a class="headerlink" href="#service" title="Permanent link">&para;</a></h3>
+<h3 id="service">Service</h3>
 <pre><code class="language-PowerShell">$powershell_Path = (Get-Command powershell).Source
 $NSSM_Path = &quot;C:\NSSM\NSSM-2.24.exe&quot;
 $Script_Path = &quot;C:\NSSM\PerformanceTo-InfluxDB.ps1&quot;
@@ -2196,7 +2198,7 @@ $Service_Name = &quot;PerformanceTo-InfluxDB&quot;
 Get-Service $Service_Name | Start-Service
 Get-Service $Service_Name | Set-Service -StartupType Automatic
 </code></pre>
-<h2 id="psinfluxdb">PSInfluxDB<a class="headerlink" href="#psinfluxdb" title="Permanent link">&para;</a></h2>
+<h2 id="psinfluxdb">PSInfluxDB</h2>
 <p><code>Install-Module psinfluxdb -Repository NuGet</code> <br />
 <code>Get-InfluxUsers -server 192.168.3.102</code> список пользователей на сенвере InfluxDB и права доступа <br />
 <code>Get-InfluxDatabases -server 192.168.3.102</code> список баз данных <br />
@@ -2210,7 +2212,7 @@ Get-Service $Service_Name | Set-Service -StartupType Automatic
 <code>$Data | Where-Object {$_.SensorName -match "CPU_Package" -and $_.Value -gt 90} | Format-Table</code> отфильтровать данные по двум параметрам (сенсоры процессора с показателем выше 90) <br />
 <code>$influx = Get-InfluxData -server 192.168.3.104 -database PowerShell -table speedtest</code> <br />
 <code>Get-InfluxChart -time ($influx.time) -data ($influx.download) -title "SpeedTest Download" -path "C:\Users\Lifailon\Desktop"</code> создать график (WinForms Chart) измерений и сохранить в jpeg-файл</p>
-<h2 id="telegraf">Telegraf<a class="headerlink" href="#telegraf" title="Permanent link">&para;</a></h2>
+<h2 id="telegraf">Telegraf</h2>
 <p><a href="https://docs.influxdata.com/telegraf/v1.27/plugins/#input-plugins">Plugins</a></p>
 <p><code>iwr https://dl.influxdata.com/telegraf/releases/telegraf-1.27.1_windows_amd64.zip -UseBasicParsing -OutFile telegraf-1.27.1_windows_amd64.zip</code> <br />
 <code>Expand-Archive .\telegraf-1.27.1_windows_amd64.zip -DestinationPath "C:\Telegraf"</code> <br />
@@ -2241,7 +2243,7 @@ Get-Service $Service_Name | Set-Service -StartupType Automatic
 <code>.\telegraf.exe --service uninstall</code></p>
 <p><code>USE telegraf</code> <br />
 <code>SELECT usage_idle,usage_system,usage_user FROM cpu</code></p>
-<h2 id="sqlite">SQLite<a class="headerlink" href="#sqlite" title="Permanent link">&para;</a></h2>
+<h2 id="sqlite">SQLite</h2>
 <pre><code class="language-PowerShell">$path = &quot;$home\Documents\Get-Service.db&quot;
 $Module = Get-Module MySQLite
 if ($Module -eq $null) {
@@ -2266,13 +2268,13 @@ foreach ($S in $Service) {
 Invoke-MySQLiteQuery -Path $path -Query &quot;SELECT * FROM $TableName&quot; # прочитать содержимое таблицы (в формате объекта)
 </code></pre>
 <p><code>Get-Service | select  Name,DisplayName,Status | ConvertTo-MySQLiteDB -Path $path -TableName Service -force</code> конвертировать объект в таблицу</p>
-<h3 id="database-password">Database password<a class="headerlink" href="#database-password" title="Permanent link">&para;</a></h3>
+<h3 id="database-password">Database password</h3>
 <pre><code class="language-PowerShell">$Connection = New-SQLiteConnection -DataSource $path
 $Connection.ChangePassword(&quot;password&quot;)
 $Connection.Close()
 Invoke-SqliteQuery -Query &quot;SELECT * FROM Service&quot; -DataSource &quot;$path;Password=password&quot;
 </code></pre>
-<h2 id="mysql">MySQL<a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h2>
+<h2 id="mysql">MySQL</h2>
 <p><code>apt -y install mysql-server mysql-client</code> <br />
 <code>mysql -V</code> <br />
 <code>systemctl status mysql</code> <br />
@@ -2310,7 +2312,7 @@ log_error = /var/log/mysql/error.log
 <code>SELECT</code> отобразить выбранную БД, вывести список пользователей, выборка данных в таблице <br />
 <code>INSERT</code> внести данные <br />
 <code>DELETE</code> удалить данные в (FROM) таблице</p>
-<h3 id="data-type">DATA TYPE<a class="headerlink" href="#data-type" title="Permanent link">&para;</a></h3>
+<h3 id="data-type">DATA TYPE</h3>
 <p><code>VARCHAR(N)</code> строка переменной длины, в формате ASCII, где один символ занимает 1 байт, числом N указывается максимальная возможная длина строки <br />
 <code>NVARCHAR(N)</code> строка переменной длины, в формате Unicode, где один символ занимает 2 байта <br />
 <code>CHAR(N)/nchar(N)</code> строка фиксированной длины, которая всегда дополняется справа пробелами до длины N и в базе данных она занимает ровно N символов <br />
@@ -2320,7 +2322,7 @@ log_error = /var/log/mysql/error.log
 <code>DATE</code> формат даты, например 25.05.2023 <br />
 <code>TIME</code> 23:30:55.1234567 <br />
 <code>DATETIME</code> 25.05.2023 23:30:55.1234567</p>
-<h3 id="database_1">DATABASE<a class="headerlink" href="#database_1" title="Permanent link">&para;</a></h3>
+<h3 id="database_1">DATABASE</h3>
 <pre><code>SHOW databases;                                                                     # вывести список БД
 CREATE DATABASE db_aduser;                                                          # создать БД
 CREATE DATABASE db_rep DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;  # создать БД с кодировкой UTF-8
@@ -2328,7 +2330,7 @@ DROP DATABASE db_rep;                                                           
 USE db_aduser;                                                                      # выбрать/переключиться на выбранную БД
 SELECT database();                                                                  # отобразить выбранную БД
 </code></pre>
-<h3 id="user">USER<a class="headerlink" href="#user" title="Permanent link">&para;</a></h3>
+<h3 id="user">USER</h3>
 <pre><code>SELECT USER,HOST FROM mysql.user;                                     # вывести список УЗ
 CREATE USER posh@localhost IDENTIFIED BY '1qaz!QAZ';                  # создать УЗ, которая будет подключаться с локального сервера
 CREATE USER posh@localhost IDENTIFIED BY '1qaz!QAZ';                  # создать УЗ, которая будет подключаться с указанного сервера
@@ -2344,26 +2346,26 @@ UPDATE mysql.user SET super_priv='Y' WHERE USER='posh' AND host='%';  # изме
 SELECT USER,HOST,super_priv FROM mysql.user;                          # список УЗ и таблица с правами SUPER privilege
 FLUSH PRIVILEGES;                                                     # обновить права доступа
 </code></pre>
-<h3 id="table">TABLE<a class="headerlink" href="#table" title="Permanent link">&para;</a></h3>
+<h3 id="table">TABLE</h3>
 <pre><code>SHOW TABLES;               # отобразить список всех таблиц
 SHOW TABLES LIKE '%user';  # поиск таблицы по wildcard-имени
 CREATE TABLE table_aduser (id INT NOT NULL AUTO_INCREMENT, Name VARCHAR(100), email VARCHAR(100), PRIMARY KEY (ID));  # создать таблицу
 DROP TABLE table_aduser;   # удалить таблицу
 </code></pre>
-<h3 id="column">COLUMN<a class="headerlink" href="#column" title="Permanent link">&para;</a></h3>
+<h3 id="column">COLUMN</h3>
 <pre><code>SHOW COLUMNS FROM table_aduser;                                                         # отобразить название стобцов и их свойства
 ALTER TABLE table_aduser DROP COLUMN id;                                                # удалить столбец id
 ALTER TABLE table_aduser ADD COLUMN info VARCHAR(10);                                   # добавить столбец info
 ALTER TABLE table_aduser CHANGE info new_info VARCHAR(100);                             # изменить имя столбца info на new_info и его тип данных
 ALTER TABLE table_aduser ADD COLUMN (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (ID)); # добавить столбец id
 </code></pre>
-<h3 id="insert">INSERT<a class="headerlink" href="#insert" title="Permanent link">&para;</a></h3>
+<h3 id="insert">INSERT</h3>
 <pre><code>INSERT table_aduser (Name,email) VALUES ('Alex','no-email');
 INSERT table_aduser (Name,email) VALUES ('Alex','no-email');
 INSERT table_aduser (Name) VALUES ('Support');
 INSERT table_aduser (Name) VALUES ('Jack');
 </code></pre>
-<h3 id="select">SELECT<a class="headerlink" href="#select" title="Permanent link">&para;</a></h3>
+<h3 id="select">SELECT</h3>
 <pre><code>SELECT * FROM table_aduser;                     # содержимое всех стобцов в выбранной (FROM) таблице
 SELECT Name,email FROM table_aduser;            # содержимое указанных стобцов
 SELECT DISTINCT Name,Email FROM table_aduser;   # отобразить уникальные записи (без повторений)
@@ -2372,7 +2374,7 @@ SELECT * FROM table_aduser ORDER BY Name DESC;  # обратная сортир�
 SELECT COUNT(*) FROM table_aduser;              # количество строк в таблице
 SELECT COUNT(new_info) FROM table_aduser;       # количество строк в столбце
 </code></pre>
-<h3 id="where">WHERE<a class="headerlink" href="#where" title="Permanent link">&para;</a></h3>
+<h3 id="where">WHERE</h3>
 <pre><code>NOT; AND; OR                                                  # по приоритетам условий
 SELECT * FROM table_aduser WHERE Name = 'Alex';               # поиск по содержимому
 SELECT * FROM table_aduser WHERE NOT Name != 'Alex';          # условие NOT где Name не равен значению
@@ -2381,24 +2383,24 @@ SELECT * FROM table_aduser WHERE email != '' OR id &gt; 1000;    # или id в�
 SELECT * FROM table_aduser WHERE Name RLIKE &quot;support&quot;;        # регистронезависемый (RLIKE) поиск
 SELECT * FROM table_aduser WHERE Name RLIKE &quot;^support&quot;;       # начинаются только с этого словосочетания
 </code></pre>
-<h3 id="delete">DELETE<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h3>
+<h3 id="delete">DELETE</h3>
 <pre><code>SELECT * FROM table_aduser WHERE Name RLIKE &quot;alex&quot;;   # найти и проверить значения перед удалением
 DELETE FROM table_aduser WHERE Name RLIKE &quot;alex&quot;;     # Query OK, 2 rows affected # удалено две строки
 DELETE FROM table_aduser;                             # удалить ВСЕ значения
 </code></pre>
-<h3 id="update">UPDATE<a class="headerlink" href="#update" title="Permanent link">&para;</a></h3>
+<h3 id="update">UPDATE</h3>
 <pre><code>SELECT * FROM table_aduser WHERE Name = 'Jack';             # найти и проверить значение перед изменением
 UPDATE table_aduser SET Name = 'Alex' WHERE Name = 'Jack';  # изменить значение 'Jack' на 'Alex'
 UPDATE db_aduser.table_aduser SET Name='BCA' WHERE id=1;    # изменить значение в строке с ID 1
 </code></pre>
-<h3 id="check">CHECK<a class="headerlink" href="#check" title="Permanent link">&para;</a></h3>
+<h3 id="check">CHECK</h3>
 <pre><code>CHECK TABLE db_aduser.table_aduser;     # проверить
 ANALYZE TABLE db_aduser.table_aduser;   # анализировать
 OPTIMIZE TABLE db_aduser.table_aduser;  # оптимизировать
 REPAIR TABLE db_aduser.table_aduser;    # восстановить
 TRUNCATE TABLE db_aduser.table_aduser;  # очистить
 </code></pre>
-<h3 id="dump">DUMP<a class="headerlink" href="#dump" title="Permanent link">&para;</a></h3>
+<h3 id="dump">DUMP</h3>
 <pre><code>mysqldump -u root -p --databases db_aduser &gt; /bak/db_aduser.sql
 mysql -u root -p db_aduser &lt; /bak/db_aduser.sql
 
@@ -2411,7 +2413,7 @@ mysqldump -u root --single-transaction db_zabbix &gt; /dump/zabbix/db_zabbix.sql
 mysql -u user_zabbix -p -e 'CREATE DATABASE db_zabbix;'
 mysql -u user_zabbix -p db_zabbix &lt; /root/db_zabbix.sql
 </code></pre>
-<h3 id="innodb_force_recovery">innodb_force_recovery<a class="headerlink" href="#innodb_force_recovery" title="Permanent link">&para;</a></h3>
+<h3 id="innodb_force_recovery">innodb_force_recovery</h3>
 <pre><code>sed -i '/innodb_force_recovery/d' /etc/mysql/my.cnf # удалить
 mode=6; sed -i &quot;/^\[mysqld\]/{N;s/$/\ninnodb_force_recovery=$mode/}&quot; /etc/mysql/my.cnf # добавить mode 6
 systemctl restart mysql
@@ -2422,8 +2424,8 @@ innodb_force_recovery=2 # удается восстановить работу �
 innodb_force_recovery=3 # отменяет откат после восстановления поврежденных файлов (не пытается откатить транзакции)
 innodb_force_recovery=6 # запуск СУБД в режиме read only
 </code></pre>
-<h2 id="mysql-connector-net">MySQL Connector NET<a class="headerlink" href="#mysql-connector-net" title="Permanent link">&para;</a></h2>
-<h3 id="add-aduser">Add-ADUser<a class="headerlink" href="#add-aduser" title="Permanent link">&para;</a></h3>
+<h2 id="mysql-connector-net">MySQL Connector NET</h2>
+<h3 id="add-aduser">Add-ADUser</h3>
 <pre><code class="language-PowerShell">$ip = &quot;192.168.1.253&quot;
 $user = &quot;posh&quot;
 $pass = &quot;1qaz!QAZ&quot;
@@ -2444,7 +2446,7 @@ foreach ($user in $UserList) {
 }
 $Connection.Close()
 </code></pre>
-<h3 id="get-aduser">Get-ADUser<a class="headerlink" href="#get-aduser" title="Permanent link">&para;</a></h3>
+<h3 id="get-aduser">Get-ADUser</h3>
 <pre><code class="language-PowerShell">$ip = &quot;192.168.1.253&quot;
 $user = &quot;posh&quot;
 $pass = &quot;1qaz!QAZ&quot;
@@ -2471,7 +2473,7 @@ foreach($DataSet in $MYSQLDataSet.tables[0]) {
 $Connection.Close()
 $Collections
 </code></pre>
-<h2 id="mssql">MSSQL<a class="headerlink" href="#mssql" title="Permanent link">&para;</a></h2>
+<h2 id="mssql">MSSQL</h2>
 <p><code>wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add -</code> импортировать GPG-ключ для репозитория <br />
 <code>https://packages.microsoft.com/config/ubuntu/</code> выбрать репозиторий и скопировать URL <br />
 <code>add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2019.list)"</code> <br />
@@ -2492,7 +2494,7 @@ go
 SELECT name FROM master.dbo.sysdatabases
 go
 </code></pre>
-<h3 id="systemdatasqlclient">System.Data.SqlClient<a class="headerlink" href="#systemdatasqlclient" title="Permanent link">&para;</a></h3>
+<h3 id="systemdatasqlclient">System.Data.SqlClient</h3>
 <pre><code class="language-PowerShell">$user = &quot;itinvent&quot;
 $pass = &quot;itinvent&quot;
 $db   = &quot;itinvent&quot;
@@ -2513,7 +2515,7 @@ $SqlConnection.Close()
 $Data = $DataSet.Tables
 $Data[0] | ft
 </code></pre>
-<h3 id="sqlclient-insert">SqlClient INSERT<a class="headerlink" href="#sqlclient-insert" title="Permanent link">&para;</a></h3>
+<h3 id="sqlclient-insert">SqlClient INSERT</h3>
 <pre><code class="language-PowerShell">$user = &quot;itinvent&quot;
 $pass = &quot;itinvent&quot;
 $db   = &quot;db_test&quot;
@@ -2528,7 +2530,7 @@ $SqlConnection.Open()
 $rowsAffected = $SqlCommand.ExecuteNonQuery();` для запросов INSERT/UPDATE/DELETE не используется SqlDataAdapter
 $SqlConnection.Close()
 </code></pre>
-<h3 id="ssms-insert">SSMS INSERT<a class="headerlink" href="#ssms-insert" title="Permanent link">&para;</a></h3>
+<h3 id="ssms-insert">SSMS INSERT</h3>
 <pre><code>USE [db_test]
 GO
 INSERT INTO [dbo].[table_test]
@@ -2539,7 +2541,7 @@ GO
 SELECT TOP (1000) [column_user]
 FROM [db_test].[dbo].[table_test]
 </code></pre>
-<h2 id="t-sql">T-SQL<a class="headerlink" href="#t-sql" title="Permanent link">&para;</a></h2>
+<h2 id="t-sql">T-SQL</h2>
 <ul>
 <li>
 <p>DDL (Data Definition Language / Язык определения данных). К этому типу относятся команды, которые создают базу данных, таблицы, индексы, хранимые процедуры. <br />
@@ -2781,19 +2783,19 @@ GO
 -- Указать размер файла:
 MODIFY FILE (NAME = temp2, FILENAME = 'F:\tempdb_mssql_2.ndf' , SIZE = 1048576KB , FILEGROWTH = 524288KB);
 </code></pre>
-<h2 id="_1">Тип резервной копии<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">Тип резервной копии</h2>
 <ul>
 <li>Full (Полная копия). Когда стартует полное резервирование, записывается Log Sequence Number (LSN - последовательный номер журнала), а так же LSN записывается и при завершении полного резервирования. Этот LSN является механизмом, используемым SQL Server, чтобы знать, в каком порядке выполнялись операторы INSERT, UPDATE или DELETE. При этом наличие записанных LSN начала и окончания, как части полного бэкапа, обеспечивает согласованное с точки зрения транзакций резервное копирование, поскольку при полном резервном копировании учитываются изменения, произошедшие во время резервного копирования. Это обеспечивает обработку таких транзакций в процессе восстановления бэкапа.</li>
 <li>Differential (дифференциальная/разностная копия). Хранит данных, изменившиеся с момента последней Полной резервной копии. При восстановлении нужно сначала восстановить Полную резервную копию в режиме NORECOVERY, потом можно применить любую из последующих Разностных копий, без предыдущей Полной резервной копии Разностная копия бесполезна. Каждая последующая Разностная копия будет хранить все данные, входящие в предыдущую Разностную резервную копию, сделанную после предыдущей Полной копии.</li>
 <li>Incremental (инкрементальная/копия журналов транзакций). Резервное копирования журнала транзакций копирует все транзакции, которые произошли с момента последнего резервного копирования, а затем урезает журнал транзакций для освобождения дискового пространства. Транзакции происходят в определенном порядке (LSN), бэкап журнала поддерживает этот порядок транзакций. Бэкапы журналов транзакций должны восстанавливаться по порядку. Для восстановления базы данных потребуется вся цепочка резервных копий: полная и все последующие инкрементальные журнала транзакций.</li>
 </ul>
-<h2 id="_2">Модели восстановления<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_2">Модели восстановления</h2>
 <ul>
 <li>Simple (Простая). Хранится только необходимый для жизни остаток журнала транзакций. Журнал транзакций (лог) автоматически очищается. Создание резервных копий журнала транзакций невозможна, поэтому остается самое ограниченное число опций по восстановлению. Недоступен функционал: Always On, Point-In-Time восстановление, Резервные копии журнала транзакций.</li>
 <li>Full (Полная). Хранится журнал транзакций всех изменений в БД с момента последнего резервного копирования журнала транзакций. Журнал транзакций не будет очищаться до тех пор, пока не будет сделана резервная копия журнала транзакций.</li>
 <li>Bulk logged (С неполным протоколированием). Идентична Full, за исключение: SELECT INTO, BULK INSERT и BCP, INSERT INTO SELECT, операции с индексами (CREATE INDEX, ALTER INDEX REBUILD, DROP INDEX)</li>
 </ul>
-<h2 id="_3">Системные БД<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_3">Системные БД</h2>
 <ul>
 <li>master. Хранятся все данные системного уровня (конфигурация системы, сведенья об учетных записях входа, информация обо всех других базах данных) для экземпляра SQL Server.</li>
 <li>tempdb. Рабочее пространство для временных объектов, таких как глобальные или локальные временные таблицы, временные хранимые процедуры, табличные переменные и курсоры. Пересоздаётся при каждом запуске SQL Server.</li>
@@ -2801,7 +2803,7 @@ MODIFY FILE (NAME = temp2, FILENAME = 'F:\tempdb_mssql_2.ndf' , SIZE = 1048576KB
 <li>msdb. Используется агентом SQL Server для создания расписания предупреждений (оператор) и выполнение заданий, а также другими компонентами. SQL Server хранит полный журнал резервного копирования и восстановления в базе данных msdb. Для отправки почты оператору используется: USE [msdb].</li>
 <li>resource. Доступная только для чтения база данных, которая содержит все системные объекты, например sys.objects, физически хранятся в базе данных resource, но логически присутствуют в схеме sys каждой базы данных.</li>
 </ul>
-<h2 id="_4">Регламентные операции<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_4">Регламентные операции</h2>
 <ul>
 <li>Проверка целостности базы данных</li>
 </ul>
@@ -2827,13 +2829,13 @@ MODIFY FILE (NAME = temp2, FILENAME = 'F:\tempdb_mssql_2.ndf' , SIZE = 1048576KB
 <li>Очистка процедурного кэша, выполняется после обновления статистики. Оптимизатор MS SQL Server кэширует планы запросов для их повторного выполнения. Это делается для того, чтобы экономить время, затрачиваемое на компиляцию запроса в том случае, если такой же запрос уже выполнялся и его план известен. После обновия статистики, не будет очищен процедурный кэш, то SQL Server может выбрать старый (неоптимальный) план запроса из кэша вместо того, чтобы построить новый (более оптимальный) план.</li>
 </ul>
 <p><code>DBCC FREEPROCCACHE</code></p>
-<h2 id="elasticsearch">Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permanent link">&para;</a></h2>
+<h2 id="elasticsearch">Elasticsearch</h2>
 <p><code>Install-Module -Name Elastic.Console -AllowPrerelease</code> <a href="https://github.com/elastic/powershell/blob/master/Elastic.Console/README.md">github source</a> <br />
 <code>Get-Command -Module Elastic.Console</code> <br />
 <code>Get-ElasticsearchVersion</code> <br />
 <code>Set-ElasticsearchVersion 7.3.0</code> <br />
 <code>Invoke-Elasticsearch</code> REST API запросы</p>
-<h2 id="cdata">CData<a class="headerlink" href="#cdata" title="Permanent link">&para;</a></h2>
+<h2 id="cdata">CData</h2>
 <p><a href="https://www.powershellgallery.com/profiles/CData">PowerShell Gallery CData</a> <br />
 <a href="https://www.cdata.com/kb/tech/elasticsearch-ado-powershell.rst">Automate Elasticsearch Integration Tasks from PowerShell</a></p>
 <p><code>Install-Module ElasticsearchCmdlets</code> <a href="https://www.powershellgallery.com/packages/ElasticsearchCmdlets/23.0.8565.1">пакет драйвера в psgallery</a> <br />
@@ -2844,7 +2846,7 @@ $shipcity = &quot;New York&quot;
 $orders = Select-Elasticsearch -Connection $elasticsearch -Table &quot;Orders&quot; -Where &quot;ShipCity = `'$ShipCity`'&quot;` поиск и получение данных
 $orders = Invoke-Elasticsearch -Connection $elasticsearch -Query 'SELECT * FROM Orders WHERE ShipCity = @ShipCity' -Params @{'@ShipCity'='New York'}` SQL запросы
 </code></pre>
-<h3 id="adonet-assembly">ADO.NET Assembly<a class="headerlink" href="#adonet-assembly" title="Permanent link">&para;</a></h3>
+<h3 id="adonet-assembly">ADO.NET Assembly</h3>
 <p><code>Install-Package CData.Elasticsearch</code> <a href="https://www.nuget.org/packages/CData.Elasticsearch">пакет драйвера в nuget</a> <br />
 <code>[Reflection.Assembly]::LoadFile("C:\Program Files\PackageManagement\NuGet\Packages\CData.Elasticsearch.23.0.8565\lib\net40\System.Data.CData.Elasticsearch.dll")</code></p>
 <pre><code class="language-PowerShell">$connect = New-Object System.Data.CData.Elasticsearch.ElasticsearchConnection(&quot;Server=127.0.0.1;Port=9200;User=admin;Password=123456;&quot;)
@@ -2857,28 +2859,28 @@ $dt.Rows | foreach {
 Write-Host $_.ordername $_.freight
 }
 </code></pre>
-<h3 id="update_1">UPDATE<a class="headerlink" href="#update_1" title="Permanent link">&para;</a></h3>
+<h3 id="update_1">UPDATE</h3>
 <pre><code class="language-PowerShell">Update-Elasticsearch -Connection $Elasticsearch -Columns @('OrderName','Freight') -Values @('MyOrderName', 'MyFreight') -Table Orders -Id &quot;MyId&quot;
 
 $cmd =  New-Object System.Data.CData.Elasticsearch.ElasticsearchCommand(&quot;UPDATE Orders SET ShipCity='New York' WHERE Id = @myId&quot;, $conn)
 $cmd.Parameters.Add(new System.Data.CData.Elasticsearch.ElasticsearchParameter(&quot;@myId&quot;,&quot;10456255-0015501366&quot;))
 $cmd.ExecuteNonQuery()
 </code></pre>
-<h3 id="insert_1">INSERT<a class="headerlink" href="#insert_1" title="Permanent link">&para;</a></h3>
+<h3 id="insert_1">INSERT</h3>
 <pre><code class="language-PowerShell">Add-Elasticsearch -Connection $Elasticsearch -Table Orders -Columns @(&quot;OrderName&quot;, &quot;Freight&quot;) -Values @(&quot;MyOrderName&quot;, &quot;MyFreight&quot;)
 
 $cmd =  New-Object System.Data.CData.Elasticsearch.ElasticsearchCommand(&quot;INSERT INTO Orders (ShipCity) VALUES (@myShipCity)&quot;, $conn)
 $cmd.Parameters.Add(new System.Data.CData.Elasticsearch.ElasticsearchParameter(&quot;@myShipCity&quot;,&quot;New York&quot;))
 $cmd.ExecuteNonQuery()
 </code></pre>
-<h3 id="delete_1">DELETE<a class="headerlink" href="#delete_1" title="Permanent link">&para;</a></h3>
+<h3 id="delete_1">DELETE</h3>
 <pre><code class="language-PowerShell">Remove-Elasticsearch -Connection $Elasticsearch -Table &quot;Orders&quot; -Id &quot;MyId&quot;
 
 $cmd =  New-Object System.Data.CData.Elasticsearch.ElasticsearchCommand(&quot;DELETE FROM Orders WHERE Id=@myId&quot;, $conn)
 $cmd.Parameters.Add(new System.Data.CData.Elasticsearch.ElasticsearchParameter(&quot;@myId&quot;,&quot;001d000000YBRseAAH&quot;))
 $cmd.ExecuteNonQuery()
 </code></pre>
-<h2 id="odbc">ODBC<a class="headerlink" href="#odbc" title="Permanent link">&para;</a></h2>
+<h2 id="odbc">ODBC</h2>
 <p><code>Get-Command -Module Wdac</code> <br />
 <code>Get-OdbcDriver | ft</code> список установленных драйверов</p>
 <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-client-apps-ps1.html">Elasticsearch ODBC драйвер для доступа к данным Elasticsearch из Microsoft PowerShell</a></p>
@@ -2893,8 +2895,8 @@ $null = $da.fill($dt)
 $conn.close()
 $dt
 </code></pre>
-<h2 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h2>
-<h3 id="odbc-driver">ODBC Driver<a class="headerlink" href="#odbc-driver" title="Permanent link">&para;</a></h3>
+<h2 id="postgresql">PostgreSQL</h2>
+<h3 id="odbc-driver">ODBC Driver</h3>
 <p><a href="https://www.postgresql.org/ftp/odbc/versions/msi/">Скачать и установить драйвер</a></p>
 <pre><code class="language-PowerShell">$dbServer = &quot;192.168.3.101&quot;
 $port = &quot;5432&quot;
@@ -2922,7 +2924,7 @@ foreach ($row in $dsDB[0].Tables[0].Rows) {
     $row.age
 }
 </code></pre>
-<h3 id="npgsql">npgsql<a class="headerlink" href="#npgsql" title="Permanent link">&para;</a></h3>
+<h3 id="npgsql">npgsql</h3>
 <p><a href="https://github.com/npgsql/npgsql">Source</a><br />
 <a href="https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL">Package</a></p>
 <pre><code class="language-PowerShell"># Подключаем сборку Npgsql
@@ -3043,9 +3045,11 @@ $conn.Dispose()
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

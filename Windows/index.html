@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1190,8 +1192,8 @@
 
   <h1>Windows</h1>
 
-<h2 id="wmi">WMI<a class="headerlink" href="#wmi" title="Permanent link">&para;</a></h2>
-<h3 id="wmicim-windows-management-instrumentationcommon-information-model">WMI/CIM (Windows Management Instrumentation/Common Information Model)<a class="headerlink" href="#wmicim-windows-management-instrumentationcommon-information-model" title="Permanent link">&para;</a></h3>
+<h2 id="wmi">WMI</h2>
+<h3 id="wmicim-windows-management-instrumentationcommon-information-model">WMI/CIM (Windows Management Instrumentation/Common Information Model)</h3>
 <p><code>Get-WmiObjec -ComputerName localhost -Namespace root -class "__NAMESPACE" | select name,__namespace</code> отобразить дочернии Namespace (логические иерархические группы) <br />
 <code>Get-WmiObject -List</code> отобразить все классы пространства имен "root\cimv2" (по умолчанию), свойства (описывают конфигурацию и текущее состояние управляемого ресурса) и их методы (какие действия позволяет выполнить над этим ресурсом) <br />
 <code>Get-WmiObject -List | Where-Object {$_.name -match "video"}</code> поиск класса по имени, его свойств и методов <br />
@@ -1233,7 +1235,7 @@ Label=&quot;Value&quot;; Expression={$_.DeviceID}}, @{Label=&quot;AllSize&quot;;
 [string]([int]($_.FreeSpace/1Gb))+&quot; GB&quot;}}, @{Label=&quot;Free%&quot;; Expression={
 [string]([int]($_.FreeSpace/$_.Size*100))+&quot; %&quot;}}
 </code></pre>
-<h3 id="nla-network-level-authentication">NLA (Network Level Authentication)<a class="headerlink" href="#nla-network-level-authentication" title="Permanent link">&para;</a></h3>
+<h3 id="nla-network-level-authentication">NLA (Network Level Authentication)</h3>
 <p><code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").UserAuthenticationRequired</code> <br />
 <code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(1)</code> включить NLA <br />
 <code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer</code> отобразить значение (2) <br />
@@ -1241,7 +1243,7 @@ Label=&quot;Value&quot;; Expression={$_.DeviceID}}, @{Label=&quot;AllSize&quot;;
 <code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer -Value 0</code> изменить значение <br />
 <code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -Value 0</code> <br />
 <code>REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters /v AllowEncryptionOracle /t REG_DWORD /d 2</code> отключить на клиентском компьютере проверку версии CredSSP, если на целевом комьютере-сервере не установлены обновления KB4512509 от мая 2018 года</p>
-<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
+<h2 id="performance">Performance</h2>
 <p><code>lodctr /R</code> пересоздать счетчиков производительности из системного хранилища архивов (так же исправляет счетчики для CIM, например, для cpu Win32_PerfFormattedData_PerfOS_Processor и iops Win32_PerfFormattedData_PerfDisk_PhysicalDisk) <br />
 <code>(Get-Counter -ListSet *).CounterSetName</code> вывести список всех доступных счетчиков производительности в системе <br />
 <code>(Get-Counter -ListSet *memory*).Counter</code> поиск по wildcard-имени во всех счетчиках (включая дочернии) <br />
@@ -1269,7 +1271,7 @@ Write-Output &quot;WARNING: $($NetworkUtilisation) % Network utilisation, $($Tra
 Write-Output &quot;OK: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s&quot;   
 #exit 0
 </code></pre>
-<h2 id="windows-event">Windows Event<a class="headerlink" href="#windows-event" title="Permanent link">&para;</a></h2>
+<h2 id="windows-event">Windows Event</h2>
 <p><code>Get-WinEvent -ListLog *</code> отобразить все доступные журналы логов <br />
 <code>Get-WinEvent -ListLog * | where RecordCount -ne 0 | where RecordCount -ne $null | sort -Descending RecordCount</code> отобразить не пустые журналы с сортировкой по кол-ву записей <br />
 <code>Get-WinEvent -ListProvider * | ft</code> отобразить всех провайдеров приложений <br />
@@ -1278,7 +1280,7 @@ Write-Output &quot;OK: $($NetworkUtilisation) % Network utilisation, $($Transfer
 <code>Get-WinEvent -ListLog * | where logname -match SMB | sort -Descending RecordCount</code> найти все журналы по имени <br />
 <code>Get-WinEvent -LogName "Microsoft-Windows-SmbClient/Connectivity"</code> <br />
 <code>Get-WinEvent -ListProvider *firewall*</code></p>
-<h3 id="filter-xpathhashtable">Filter XPath/Hashtable<a class="headerlink" href="#filter-xpathhashtable" title="Permanent link">&para;</a></h3>
+<h3 id="filter-xpathhashtable">Filter XPath/Hashtable</h3>
 <p><code>Get-WinEvent -FilterHashtable @{LogName="Security";ID=4624}</code> найти логи по ID в журнале Security <br />
 <code>Get-WinEvent -FilterHashtable @{LogName="System";Level=2}</code> найти все записи ошибки (1 - критический, 3 - предупреждение, 4 - сведения) <br />
 <code>Get-WinEvent -FilterHashtable @{LogName="System";Level=2;ProviderName="Service Control Manager"}</code> отфильтровать по имени провайдера</p>
@@ -1297,7 +1299,7 @@ Write-Output &quot;OK: $($NetworkUtilisation) % Network utilisation, $($Transfer
 
 Get-WinEvent -LogName Security -FilterXPath $query
 </code></pre>
-<h3 id="reboot">Reboot<a class="headerlink" href="#reboot" title="Permanent link">&para;</a></h3>
+<h3 id="reboot">Reboot</h3>
 <pre><code>$query = '
 &lt;QueryList&gt;
     &lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&gt;
@@ -1329,7 +1331,7 @@ Get-WinEvent -LogName System -FilterXPath $query
 6009` Версия операционной системы, зафиксированная при загрузке системы.
 6013` Время работы системы (system uptime) в секундах.
 </code></pre>
-<h3 id="logon">Logon<a class="headerlink" href="#logon" title="Permanent link">&para;</a></h3>
+<h3 id="logon">Logon</h3>
 <pre><code class="language-PowerShell">$srv = &quot;localhost&quot;
 $FilterXPath = '&lt;QueryList&gt;&lt;Query Id=&quot;0&quot;&gt;&lt;Select&gt;*[System[EventID=21]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;'
 $RDPAuths = Get-WinEvent -ComputerName $srv -LogName &quot;Microsoft-Windows-TerminalServices-LocalSessionManager/Operational&quot; -FilterXPath $FilterXPath
@@ -1345,11 +1347,11 @@ $EventData = Foreach ($event in $xml.Event) {
 }
 $EventData | ft
 </code></pre>
-<h3 id="eventlog">EventLog<a class="headerlink" href="#eventlog" title="Permanent link">&para;</a></h3>
+<h3 id="eventlog">EventLog</h3>
 <p><code>Get-EventLog -List</code> отобразить все корневые журналы логов и их размер <br />
 <code>Clear-EventLog Application</code> очистить логи указанного журнала <br />
 <code>Get-EventLog -LogName Security -InstanceId 4624</code> найти логи по ID в журнале Security</p>
-<h2 id="defender">Defender<a class="headerlink" href="#defender" title="Permanent link">&para;</a></h2>
+<h2 id="defender">Defender</h2>
 <p><code>Import-Module Defender</code> <br />
 <code>Get-Command -Module Defender</code> <br />
 <code>Get-MpComputerStatus</code> <br />
@@ -1384,7 +1386,7 @@ $EventData | ft
 <code>cd "C:\Program Files\Windows Defender\"</code> <br />
 <code>.\MpCmdRun.exe -restore -name $ThreatName</code> восстановить файл из карантина <br />
 <code>.\MpCmdRun.exe -restore -filepath $path_file</code></p>
-<h2 id="dism">DISM<a class="headerlink" href="#dism" title="Permanent link">&para;</a></h2>
+<h2 id="dism">DISM</h2>
 <p><code>Get-Command -Module Dism -Name *Driver*</code> <br />
 <code>Export-WindowsDriver -Online -Destination C:\Users\Lifailon\Documents\Drivers\</code> извлечение драйверов из текущей системы (C:\Windows\System32\DriverStore\FileRepository), выгружает список файлов, которые необходимы для установки драйвера (dll,sys,exe) в соответствии со списком файлов, указанных в секции [CopyFiles] inf-файла драйвера. <br />
 <code>Export-WindowsDriver -Path C:\win_image -Destination C:\drivers</code> извлечь драйвера из офлайн образа Windows, смонтированного в каталог c:\win_image <br />
@@ -1398,7 +1400,7 @@ $EventData | ft
 <code>Repair-WindowsImage -Online –ScanHealth</code> <br />
 <code>Repair-WindowsImage -Online -RestoreHealth</code> восстановление хранилища системных компонентов <br />
 <code>Repair-WindowsImage -Online -RestoreHealth -Source E:\sources\install.wim:3 –LimitAccess</code> восстановление в оффлайн режиме из образа по номеру индекса</p>
-<h2 id="scheduled">Scheduled<a class="headerlink" href="#scheduled" title="Permanent link">&para;</a></h2>
+<h2 id="scheduled">Scheduled</h2>
 <p><code>$Trigger = New-ScheduledTaskTrigger -At 01:00am -Daily</code> 1:00 ночи <br />
 <code>$Trigger = New-ScheduledTaskTrigger –AtLogon</code> запуск при входе пользователя в систему <br />
 <code>$Trigger = New-ScheduledTaskTrigger -AtStartup</code> при запуске системы <br />
@@ -1413,7 +1415,7 @@ $EventData | ft
 <code>Unregister-ScheduledTask DNS-Change-Tray-Startup</code> удалить задание <br />
 <code>Export-ScheduledTask DNS-Change-Tray-Startup | Out-File $home\Desktop\Task-Export-Startup.xml</code> экспортировать задание в xml <br />
 <code>Register-ScheduledTask -Xml (Get-Content $home\Desktop\Task-Export-Startup.xml | Out-String) -TaskName "DNS-Change-Tray-Startup"</code></p>
-<h2 id="localaccounts">LocalAccounts<a class="headerlink" href="#localaccounts" title="Permanent link">&para;</a></h2>
+<h2 id="localaccounts">LocalAccounts</h2>
 <p><code>Get-Command -Module Microsoft.PowerShell.LocalAccounts</code> <br />
 <code>Get-LocalUser</code> список пользователей <br />
 <code>Get-LocalGroup</code> список групп <br />
@@ -1426,7 +1428,7 @@ $EventData | ft
     icm $_ {Get-LocalGroupMember &quot;Administrators&quot;}
 }
 </code></pre>
-<h2 id="credential">Credential<a class="headerlink" href="#credential" title="Permanent link">&para;</a></h2>
+<h2 id="credential">Credential</h2>
 <p><code>$Cred = Get-Credential</code> сохраняет креды в переменные <code>$Cred.Username</code> и <code>$Cred.Password</code> <br />
 <code>$Cred.GetNetworkCredential().password</code> извлечь пароль <br />
 <code>cmdkey /generic:"TERMSRV/$srv" /user:"$username" /pass:"$password"</code> добавить указанные креды аудентификации на на терминальный сервер для подключения без пароля <br />
@@ -1444,7 +1446,7 @@ $EventData | ft
 <code>$pass = $cred.password</code> <br />
 <code>$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass)</code> <br />
 <code>[System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)</code></p>
-<h2 id="regedit">Regedit<a class="headerlink" href="#regedit" title="Permanent link">&para;</a></h2>
+<h2 id="regedit">Regedit</h2>
 <p><code>Get-PSDrive</code> список всех доступных дисков/разделов, их размер и веток реестра <br />
 <code>cd HKLM:\</code> HKEY_LOCAL_MACHINE <br />
 <code>cd HKCU:\</code> HKEY_CURRENT_USER <br />
@@ -1466,7 +1468,7 @@ $EventData | ft
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe]
 &quot;Debugger&quot;=&quot;\&quot;C:\\Windows\\System32\\Taskmgr.exe\&quot;&quot;
 </code></pre>
-<h2 id="pki">pki<a class="headerlink" href="#pki" title="Permanent link">&para;</a></h2>
+<h2 id="pki">pki</h2>
 <p><code>New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName "$env:computername" -FriendlyName "Test Certificate" -NotAfter (Get-Date).AddYears(5)</code> создать самоподписанный сертификат (в LocalMachine\My - Сертификаты компьютера\Личное) с сроком действия 5 лет</p>
 <p><code>Get-ChildItem -Path Cert:\CurrentUser\Root\</code> список всех установленных сертификатов в хранилище Доверенные корневые ЦС Текущего пользователя <br />
 <code>Get-ChildItem -Path Cert:\CurrentUser\My\</code> список самозаверяющих сертификатов в Личное хранилище Текущего пользователя <br />
@@ -1484,7 +1486,7 @@ $EventData | ft
 <code>Export-PfxCertificate -FilePath $home\Desktop\certificate.pfx -Password $pass -Cert $certificate</code> экспортировать сертификат с закрытым ключем</p>
 <p><code>Import-Certificate -FilePath $home\Desktop\certificate.cer -CertStoreLocation Cert:\CurrentUser\My</code> импортировать сертификат <br />
 <code>Import-PfxCertificate -Exportable -Password $pass -CertStoreLocation Cert:\CurrentUser\My -FilePath $home\Desktop\certificate.pfx</code></p>
-<h2 id="openssl">OpenSSL<a class="headerlink" href="#openssl" title="Permanent link">&para;</a></h2>
+<h2 id="openssl">OpenSSL</h2>
 <pre><code class="language-PowerShell">Invoke-WebRequest -Uri https://slproweb.com/download/Win64OpenSSL_Light-3_1_1.msi -OutFile $home\Downloads\OpenSSL-Light-3.1.1.msi
 Start-Process $home\Downloads\OpenSSL-Light-3.1.1.msi -ArgumentList '/quiet' -Wait` установить msi пакет в тихом режиме (запуск от имени Администратора)
 rm $home\Downloads\OpenSSL-Light-3.1.1.msi
@@ -1521,7 +1523,7 @@ out – путь до файла, в который будет конверти�
 <code>openssl pkcs12 -inkey certificate.key -in certificate.crt -export -out certificate.pfx</code></p>
 </li>
 </ul>
-<h2 id="oh-my-posh">oh-my-posh<a class="headerlink" href="#oh-my-posh" title="Permanent link">&para;</a></h2>
+<h2 id="oh-my-posh">oh-my-posh</h2>
 <p><a href="https://ohmyposh.dev/docs/installation/windows">Install</a></p>
 <p><code>winget install JanDeDobbeleer.OhMyPosh -s winget</code> <br />
 <code>choco install oh-my-posh -y</code> <br />
@@ -1533,7 +1535,7 @@ out – путь до файла, в который будет конверти�
 <code>oh-my-posh init pwsh --config "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cert.omp.json" | Invoke-Expression</code> считать тему из репозитория <br />
 <code>New-Item -Path $PROFILE -Type File -Force</code> создайт файл профилья PowerShell <br />
 <code>'oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/di4am0nd.omp.json" | Invoke-Expression' &gt; $PROFILE</code> сохранить тему профиля (загружать тему при запуске PowerShell)</p>
-<h3 id="themes-performance">themes-performance<a class="headerlink" href="#themes-performance" title="Permanent link">&para;</a></h3>
+<h3 id="themes-performance">themes-performance</h3>
 <p><code>Install-Module themes-performance -Repository NuGet</code> установить модуль с темами <br />
 <code>Set-PoshTheme -Theme System-Sensors</code> использовать тему с датчиками из LibreHardwareMonitor <br />
 <code>Set-PoshTheme -Theme System-Sensors -Save</code> загрузить тему из репозитория на локальный компьютер и сохранить тему в профиле <br />
@@ -1541,8 +1543,8 @@ out – путь до файла, в который будет конверти�
 <code>Set-PoshTheme -Theme System-Performance -Save</code> <br />
 <code>Set-PoshTheme -Theme Pwsh-Process-Performance</code> время работы текущего процесса pwsh (процессорное время), количество работающих/общее (статус успех/ошибка) фоновых заданий, Working Set текущего процесса и всех процессов PowerShell в системе <br />
 <code>Set-PoshTheme -Theme Pwsh-Process-Performance -Save</code></p>
-<h2 id="windows-terminal">Windows-Terminal<a class="headerlink" href="#windows-terminal" title="Permanent link">&para;</a></h2>
-<h3 id="terminal-icons">Terminal-Icons<a class="headerlink" href="#terminal-icons" title="Permanent link">&para;</a></h3>
+<h2 id="windows-terminal">Windows-Terminal</h2>
+<h3 id="terminal-icons">Terminal-Icons</h3>
 <p><code>Install-Module -Name Terminal-Icons -Repository PSGallery</code> <br />
 <code>scoop bucket add extras</code> <br />
 <code>scoop install terminal-icons</code></p>
@@ -1594,7 +1596,7 @@ out – путь до файла, в который будет конверти�
     ]
 }
 </code></pre>
-<h3 id="custom-actions">Custom Actions<a class="headerlink" href="#custom-actions" title="Permanent link">&para;</a></h3>
+<h3 id="custom-actions">Custom Actions</h3>
 <p>Custom actions: https://learn.microsoft.com/ru-ru/windows/terminal/customize-settings/actions <br />
 Escape-последовательности: https://learn.microsoft.com/ru-ru/cpp/c-language/escape-sequences?view=msvc-170</p>
 <pre><code class="language-json">&quot;actions&quot;: 
@@ -1753,9 +1755,11 @@ Escape-последовательности: https://learn.microsoft.com/ru-ru/c
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -866,7 +868,7 @@
 
   <h1>Git</h1>
 
-<h2 id="git">Git<a class="headerlink" href="#git" title="Permanent link">&para;</a></h2>
+<h2 id="git">Git</h2>
 <p><code>git --version</code> <br />
 <code>git config --global user.name "Lifailon"</code> добавить имя для коммитов <br />
 <code>git config --global user.email "lifailon@yandex.ru"</code> <br />
@@ -918,7 +920,7 @@
 <code>git revert d01f09dead3a6a8d75dda848162831c58ca0ee13</code> создает новый коммит, который отменяет изменения, внесенные в указанный коммит с хешем (не изменяет историю коммитов, а создает новый коммит с изменениями отмены) <br />
 <code>git stash</code> сохраняет текущие изменения в стэш (временное хранилище) и очищает рабочую директорию <br />
 <code>git stash pop</code> применяет последние изменения из стэша к текущей ветке</p>
-<h2 id="github-api">GitHub-api<a class="headerlink" href="#github-api" title="Permanent link">&para;</a></h2>
+<h2 id="github-api">GitHub-api</h2>
 <p><code>$user = "Lifailon"</code> <br />
 <code>$repository = "ReverseProxyNET"</code> <br />
 <code>Invoke-RestMethod https://api.github.com/users/$($user)</code> получаем информацию о пользователе <br />
@@ -943,8 +945,8 @@
 <code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/forks</code> получаем список форков (forks) <br />
 <code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/stargazers?per_page=4000</code> получаем список пользователей, которые поставили звезды репозиторию <br />
 <code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/subscribers</code> получаем список подписчиков (watchers) репозитория</p>
-<h2 id="atlassian">Atlassian<a class="headerlink" href="#atlassian" title="Permanent link">&para;</a></h2>
-<h3 id="bitbucket">Bitbucket<a class="headerlink" href="#bitbucket" title="Permanent link">&para;</a></h3>
+<h2 id="atlassian">Atlassian</h2>
+<h3 id="bitbucket">Bitbucket</h3>
 <pre><code class="language-PowerShell">$url = &quot;https://github.com/AtlassianPS/BitbucketPS/archive/refs/heads/master.zip&quot;
 Invoke-RestMethod $url -OutFile $home\Downloads\BitbucketPS.zip
 Expand-Archive -Path &quot;$home\Downloads\BitbucketPS.zip&quot; -OutputPath &quot;$home\Downloads&quot;
@@ -962,7 +964,7 @@ Remove-Item &quot;$home\Downloads\Bitbucket*&quot; -Recurse -Force
 <code>Get-CommitMessage -Repository pSyslog -CommitHash $hash</code> получить сообщение коммита по его хэшу <br />
 <code>Get-Commits -Repository pSyslog -Limit 10</code> список последних 10 коммитов в репозитории <br />
 <code>Get-CommitsForBranch -Repository pSyslog -Branch main</code> список коммитов для конкретной ветки в репозитории</p>
-<h3 id="jira">Jira<a class="headerlink" href="#jira" title="Permanent link">&para;</a></h3>
+<h3 id="jira">Jira</h3>
 <p><code>Install-Module JiraPS -Scope CurrentUser -Repository PSGallery -AllowClobber -Force</code> <br />
 <code>Get-Command -Module JiraPS</code> <br />
 <code>Get-JiraServerInfo</code> информация о сервере <br />
@@ -1027,7 +1029,7 @@ Remove-Item &quot;$home\Downloads\Bitbucket*&quot; -Recurse -Force
 <code>Set-JiraIssueLabel</code> установка метки задачи <br />
 <code>Set-JiraUser</code> установка пользователя <br />
 <code>Set-JiraVersion</code> установка версии проекта</p>
-<h3 id="confluence">Confluence<a class="headerlink" href="#confluence" title="Permanent link">&para;</a></h3>
+<h3 id="confluence">Confluence</h3>
 <p><code>Install-Module ConfluencePS -Scope CurrentUser -Repository PSGallery -AllowClobber -Force</code> <br />
 <code>Get-Command -Module ConfluencePS</code> <br />
 <code>Add-ConfluenceAttachment</code> добавить вложения к странице <br />
@@ -1129,9 +1131,11 @@ Remove-Item &quot;$home\Downloads\Bitbucket*&quot; -Recurse -Force
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

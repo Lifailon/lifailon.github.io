@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1056,7 +1058,7 @@
   
 
 
-<h2 id="psm1">psm1<a class="headerlink" href="#psm1" title="Permanent link">&para;</a></h2>
+<h2 id="psm1">psm1</h2>
 <p>Синтаксис модуля и его параметров</p>
 <pre><code class="language-PowerShell">function Get-Function {
     &lt;#
@@ -1079,7 +1081,7 @@
 </code></pre>
 <p><code>Get-Function -Text Text1</code> <br />
 <code>Get-Function -Text Text2 -Provider Test2 -Number 3</code></p>
-<h2 id="psd1">psd1<a class="headerlink" href="#psd1" title="Permanent link">&para;</a></h2>
+<h2 id="psd1">psd1</h2>
 <p>Описание модуля</p>
 <pre><code class="language-PowerShell">@{
     RootModule        = &quot;Get-Function.psm1&quot;
@@ -1099,7 +1101,7 @@
     }
 }
 </code></pre>
-<h1 id="packagemanagement">PackageManagement<a class="headerlink" href="#packagemanagement" title="Permanent link">&para;</a></h1>
+<h1 id="packagemanagement">PackageManagement</h1>
 <p><code>Import-Module PackageManagement</code> импортировать модуль <br />
 <code>Get-Module PackageManagement</code> информация о модуле <br />
 <code>Get-Command -Module PackageManagement</code> отобразить все командлеты модуля <br />
@@ -1124,7 +1126,7 @@
 <code>Get-Command *Veeam*</code> <br />
 <code>Import-Module -Name VeeamLogParser</code> загрузить модуль <br />
 <code>Get-Module VeeamLogParser | select -ExpandProperty ExportedCommands</code> отобразить список функций</p>
-<h2 id="winget">winget<a class="headerlink" href="#winget" title="Permanent link">&para;</a></h2>
+<h2 id="winget">winget</h2>
 <p><a href="https://github.com/microsoft/winget-cli">Source</a><br />
 <a href="https://winget.run">Web</a></p>
 <p><code>winget list</code> список установленных пакетов <br />
@@ -1136,11 +1138,11 @@
 <code>winget download jqlang.jq</code> загрузкить пакет (https://github.com/jqlang/jq/releases/download/jq-1.7/jq-windows-amd64.exe) <br />
 <code>winget install jqlang.jq</code> добавляет в переменную среду и псевдоним командной строки jq <br />
 <code>winget uninstall jqlang.jq</code></p>
-<h3 id="jqlang">jqlang<a class="headerlink" href="#jqlang" title="Permanent link">&para;</a></h3>
+<h3 id="jqlang">jqlang</h3>
 <pre><code class="language-PowerShell">[uri]$url = $($(irm https://api.github.com/repos/jqlang/jq/releases/latest).assets.browser_download_url -match &quot;windows-amd64&quot;).ToString() # получить версию latest на GitHub
 irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq.exe
 </code></pre>
-<h2 id="scoop">Scoop<a class="headerlink" href="#scoop" title="Permanent link">&para;</a></h2>
+<h2 id="scoop">Scoop</h2>
 <p><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> <br />
 <code>irm get.scoop.sh | iex</code> установка <br />
 <code>scoop help</code> <br />
@@ -1153,14 +1155,14 @@ irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq
 <code>scoop list</code> <br />
 <code>(scoop list).version</code> <br />
 <code>scoop uninstall jq</code></p>
-<h2 id="chocolatey">Chocolatey<a class="headerlink" href="#chocolatey" title="Permanent link">&para;</a></h2>
+<h2 id="chocolatey">Chocolatey</h2>
 <pre><code class="language-PowerShell">Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 </code></pre>
 <p><code>choco -v</code> <br />
 <code>choco -help</code> <br />
 <code>choco list</code> <br />
 <code>choco install adobereader</code></p>
-<h2 id="nuget">NuGet<a class="headerlink" href="#nuget" title="Permanent link">&para;</a></h2>
+<h2 id="nuget">NuGet</h2>
 <p><code>Invoke-RestMethod https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile "$home\Documents\nuget.exe"</code> <br />
 <code>Invoke-Expression "$home\Documents\nuget.exe search Selenium.WebDriver"</code> <br />
 <code>Invoke-Expression "$home\Documents\nuget.exe install Selenium.WebDriver"</code> <br />
@@ -1207,7 +1209,7 @@ irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq
 <code>Find-Module -Name Console-Translate</code> <br />
 <code>Install-Module Console-Translate -Repository NuGet</code></p>
 <p><code>&amp; "$home\Documents\nuget.exe" delete Console-Translate 0.2.0 -Source https://api.nuget.org/v3/index.json -ApiKey $nuget_api_key -NoPrompt</code></p>
-<h1 id="ps2exe">PS2EXE<a class="headerlink" href="#ps2exe" title="Permanent link">&para;</a></h1>
+<h1 id="ps2exe">PS2EXE</h1>
 <p><code>Install-Module ps2exe -Repository PSGallery</code> <br />
 <code>Get-Module -ListAvailable</code> список всех модулей <br />
 <code>-noConsole</code> использовать GUI, без окна консоли powershell <br />
@@ -1216,7 +1218,7 @@ irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq
 <code>-requireAdmin</code> при запуске запросить права администратора <br />
 <code>-credentialGUI</code> вывод диалогового окна для ввода учетных данных <br />
 <code>Invoke-ps2exe -inputFile "$home\Desktop\WinEvent-Viewer-1.1.ps1" -outputFile "$home\Desktop\WEV-1.1.exe" -iconFile "$home\Desktop\log_48px.ico" -title "WinEvent-Viewer" -noConsole -noOutput -noError</code></p>
-<h1 id="nssm">NSSM<a class="headerlink" href="#nssm" title="Permanent link">&para;</a></h1>
+<h1 id="nssm">NSSM</h1>
 <p><code>$powershell_Path = (Get-Command powershell).Source</code> <br />
 <code>$NSSM_Path = (Get-Command "C:\WinPerf-Agent\NSSM-2.24.exe").Source</code> <br />
 <code>$Script_Path = "C:\WinPerf-Agent\WinPerf-Agent-1.1.ps1"</code> <br />
@@ -1229,7 +1231,7 @@ irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq
 <code>$Service_Name | Stop-Service</code> остановить <br />
 <code>&amp; $NSSM_Path set $Service_Name description "Check performance CPU and report email"</code> изменить описание <br />
 <code>&amp; $NSSM_Path remove $Service_Name</code> удалить</p>
-<h1 id="winapi">WinAPI<a class="headerlink" href="#winapi" title="Permanent link">&para;</a></h1>
+<h1 id="winapi">WinAPI</h1>
 <p><code>Install-Module ps.win.api -Repository NuGet -AllowClobber</code> <br />
 <code>Import-Module ps.win.api</code> <br />
 <code>Get-Command -Module ps.win.api</code> <br />
@@ -1259,13 +1261,13 @@ irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq
 <code>Get-Software</code> список установленного програмного обеспечения <br />
 <code>Get-WinUpdate</code> список обновлений Windows (дата установки и источник) <br />
 <code>Get-Driver</code> список установленных драйверов (имя, провайдер, версия и дата установки)</p>
-<h1 id="get-query">Get-Query<a class="headerlink" href="#get-query" title="Permanent link">&para;</a></h1>
+<h1 id="get-query">Get-Query</h1>
 <p><code>Install-Module Get-Query -Repository NuGet</code> установить модуль <br />
 <code>Get-Help Get-Query</code> <br />
 <code>Get-Query localhost</code> отобразить всех авторизованных пользователей, их статус и время работы (по умолчанию localhost) <br />
 <code>Get-Query 192.168.1.1.1 -proc</code> список всех пользовательских процессов (по умолчанию -user *) <br />
 <code>Get-Query 192.168.1.1.1 -proc -user username</code> список процессов указанного пользователя</p>
-<h1 id="console-translate">Console-Translate<a class="headerlink" href="#console-translate" title="Permanent link">&para;</a></h1>
+<h1 id="console-translate">Console-Translate</h1>
 <p><code>Install-Module Console-Translate -Repository NuGet</code> <br />
 <code>Get-Translate "Module for text translation"</code> <br />
 <code>Get-Translate "Модуль для перевода текста"</code> <br />
@@ -1279,7 +1281,7 @@ irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq
 <code>Get-DeepLX -Server 192.168.3.99 -Text "Module for text translation" ru</code> <br />
 <code>Stop-DeepLX</code> <br />
 <code>Get-LanguageCode</code> получение кодов языков по стандарту ISO-639-1</p>
-<h1 id="hardwaremonitor">HardwareMonitor<a class="headerlink" href="#hardwaremonitor" title="Permanent link">&para;</a></h1>
+<h1 id="hardwaremonitor">HardwareMonitor</h1>
 <p><code>Install-Module HardwareMonitor -Repository NuGet -Scope AllUsers</code> <br />
 <code>Install-LibreHardwareMonitor</code> установить и запустить LibreHardwareMonitor в систему (https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) <br />
 <code>Install-OpenHardwareMonitor</code> установить OpenHardwareMonitor (https://github.com/openhardwaremonitor/openhardwaremonitor) <br />
@@ -1288,14 +1290,14 @@ irm $url -OutFile &quot;C:\Windows\System32\jq.exe&quot; # загрузить jq
 <code>Get-Sensor -ComputerName 192.168.3.99 -Port 8086 | Format-Table</code> вывести датчики системы через REST API <br />
 <code>Get-Sensor -ComputerName 192.168.3.99 -Port 8085 -User hardware -Password monitor | Where-Object Value -notmatch "^0,0" | Format-Table</code> использовать авторизацию и отфильтровать вывод не пустых датчиков <br />
 <code>Get-Sensor -Library | Where-Object Value -ne 0 | Format-Table</code> использовать динамическую библиотеку (dll) через .NET</p>
-<h1 id="crystaldisk-cli">CrystalDisk-Cli<a class="headerlink" href="#crystaldisk-cli" title="Permanent link">&para;</a></h1>
+<h1 id="crystaldisk-cli">CrystalDisk-Cli</h1>
 <p><code>Install-Module CrystalDisk-Cli -Repository NuGet</code> <br />
 <code>Get-DiskInfoSettings</code> отобразить настройки программы Crystal-DiskInfo (https://github.com/hiyohiyo/CrystalDiskInfo) <br />
 <code>Get-DiskInfoSettings -AutoRefresh 5</code> изминить время сканирования на 5 минут <br />
 <code>Get-DiskInfo -List</code> отобразить список дисков <br />
 <code>Get-DiskInfo</code> получить результаты последнего сканирования (статус, температура и т.п.) <br />
 <code>Get-DiskInfo -Report | Select-Object Name,Date,HealthStatus,Temperature</code> получить актуальный отчет (запустить сканирование и дождаться результатов)</p>
-<h1 id="ps-pi-hole">PS-Pi-Hole<a class="headerlink" href="#ps-pi-hole" title="Permanent link">&para;</a></h1>
+<h1 id="ps-pi-hole">PS-Pi-Hole</h1>
 <pre><code class="language-PowerShell">$path_psm = ($env:PSModulePath.Split(&quot;;&quot;)[0])+&quot;\Invoke-Pi-Hole\Invoke-Pi-Hole.psm1&quot;
 if (!(Test-Path $path_psm)) {
     New-Item $path_psm -ItemType File -Force
@@ -1397,9 +1399,11 @@ irm https://raw.githubusercontent.com/Lifailon/PS-Pi-Hole/rsa/Invoke-Pi-Hole/Inv
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

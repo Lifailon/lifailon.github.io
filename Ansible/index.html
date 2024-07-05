@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1182,7 +1184,7 @@
   
 
 
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<h2 id="install">Install</h2>
 <p><code>apt -y update &amp;&amp; apt -y upgrade</code> <br />
 <code>apt -y install ansible</code> v2.10.8 <br />
 <code>apt -y install ansible-core</code> v2.12.0 <br />
@@ -1206,7 +1208,7 @@ inventory = /etc/ansible/hosts
 # Отключить проверку ключа ssh (для подключения используя пароль)
 host_key_checking = False
 </code></pre>
-<h3 id="hosts">Hosts<a class="headerlink" href="#hosts" title="Permanent link">&para;</a></h3>
+<h3 id="hosts">Hosts</h3>
 <p><code>nano /etc/ansible/hosts</code></p>
 <pre><code>[us]
 pi-hole-01 ansible_host=192.168.3.101
@@ -1249,7 +1251,7 @@ ansible_connection=ssh
 ansible_shell_type=powershell
 </code></pre>
 <p><code>ansible-inventory --list</code> проверить конфигурацию (читает в формате JSON) или YAML (-y) с просмотром все применяемых переменных</p>
-<h1 id="win_modules">Win_Modules<a class="headerlink" href="#win_modules" title="Permanent link">&para;</a></h1>
+<h1 id="win_modules">Win_Modules</h1>
 <p><code>ansible us -m ping</code> <br />
 <code>ansible win_ssh -m ping</code> <br />
 <code>ansible us -m shell -a "uptime &amp;&amp; df -h | grep lv"</code> <br />
@@ -1269,7 +1271,7 @@ ansible_shell_type=powershell
 <code>ansible ws -m win_shell -a 'Get-Service | where name -match "ssh|winrm"'</code> <br />
 <code>ansible ws -m win_service -a "name=sshd state=stopped"</code> <br />
 <code>ansible ws -m win_service -a "name=sshd state=started"</code></p>
-<h3 id="win_shell-varsdebug">win_shell (vars/debug)<a class="headerlink" href="#win_shell-varsdebug" title="Permanent link">&para;</a></h3>
+<h3 id="win_shell-varsdebug">win_shell (vars/debug)</h3>
 <p><code>nano /etc/ansible/PowerShell-Vars.yml</code></p>
 <pre><code>- hosts: ws
  ` Указать коллекцию модулей
@@ -1291,7 +1293,7 @@ ansible_shell_type=powershell
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/PowerShell-Vars.yml</code> <br />
 <code>ansible-playbook /etc/ansible/PowerShell-Vars.yml --extra-vars "SearchName='LogLevel|Syslog'"</code> передать переменную</p>
-<h3 id="win_powershell">win_powershell<a class="headerlink" href="#win_powershell" title="Permanent link">&para;</a></h3>
+<h3 id="win_powershell">win_powershell</h3>
 <p><code>nano /etc/ansible/powershell-param.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1309,7 +1311,7 @@ ansible_shell_type=powershell
         New-Item -Path $Path -ItemType Directory -Force:$Force
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/powershell-param.yml</code></p>
-<h3 id="win_chocolatey">win_chocolatey<a class="headerlink" href="#win_chocolatey" title="Permanent link">&para;</a></h3>
+<h3 id="win_chocolatey">win_chocolatey</h3>
 <p><code>nano /etc/ansible/setup-adobe-acrobat.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1329,7 +1331,7 @@ ansible_shell_type=powershell
       state: present
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/setup-openssh.yml</code></p>
-<h3 id="win_regedit">win_regedit<a class="headerlink" href="#win_regedit" title="Permanent link">&para;</a></h3>
+<h3 id="win_regedit">win_regedit</h3>
 <p><code>nano /etc/ansible/win-set-shell-ssh-ps7.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1343,7 +1345,7 @@ ansible_shell_type=powershell
       state: present
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/win-set-shell-ssh-ps7.yml</code></p>
-<h3 id="win_service">win_service<a class="headerlink" href="#win_service" title="Permanent link">&para;</a></h3>
+<h3 id="win_service">win_service</h3>
 <p><code>nano /etc/ansible/win-service.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1356,7 +1358,7 @@ ansible_shell_type=powershell
 #     start_mode: auto
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/win-service.yml</code></p>
-<h3 id="win_service_info">win_service_info<a class="headerlink" href="#win_service_info" title="Permanent link">&para;</a></h3>
+<h3 id="win_service_info">win_service_info</h3>
 <p><code>nano /etc/ansible/get-service.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1369,7 +1371,7 @@ ansible_shell_type=powershell
       var: service_info.services
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/get-service.yml</code></p>
-<h3 id="fetchslurp">fetch/slurp<a class="headerlink" href="#fetchslurp" title="Permanent link">&para;</a></h3>
+<h3 id="fetchslurp">fetch/slurp</h3>
 <p><code>nano /etc/ansible/copy-from-win-to-local.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1387,7 +1389,7 @@ ansible_shell_type=powershell
       msg: &quot;{{ telegraf_conf['content'] | b64decode }}&quot;
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/copy-from-win-to-local.yml</code></p>
-<h3 id="win_copy">win_copy<a class="headerlink" href="#win_copy" title="Permanent link">&para;</a></h3>
+<h3 id="win_copy">win_copy</h3>
 <p><code>echo "Get-Service | where name -eq vss | Start-Service" &gt; /home/lifailon/Start-Service-VSS.ps1</code> <br />
 <code>nano /etc/ansible/copy-file-to-win.yml</code></p>
 <pre><code>- hosts: ws
@@ -1408,7 +1410,7 @@ ansible_shell_type=powershell
       dest: C:\Install\PowerShell-7.3.6.msi
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/copy-file-to-win.yml</code></p>
-<h3 id="win_command">win_command<a class="headerlink" href="#win_command" title="Permanent link">&para;</a></h3>
+<h3 id="win_command">win_command</h3>
 <p><code>nano /etc/ansible/run-script-ps1.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1416,7 +1418,7 @@ ansible_shell_type=powershell
     win_command: powershell -ExecutionPolicy ByPass -File C:\Users\Lifailon\Desktop\Start-Service-VSS.ps1
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/run-script-ps1.yml</code></p>
-<h3 id="win_package">win_package<a class="headerlink" href="#win_package" title="Permanent link">&para;</a></h3>
+<h3 id="win_package">win_package</h3>
 <p><code>nano /etc/ansible/setup-msi-package.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1430,7 +1432,7 @@ ansible_shell_type=powershell
         - /norestart
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/setup-msi-package.yml</code></p>
-<h3 id="win_firewall_rule">win_firewall_rule<a class="headerlink" href="#win_firewall_rule" title="Permanent link">&para;</a></h3>
+<h3 id="win_firewall_rule">win_firewall_rule</h3>
 <p><code>nano /etc/ansible/win-fw-open.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1445,7 +1447,7 @@ ansible_shell_type=powershell
       enabled: yes
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/win-fw-open.yml</code></p>
-<h3 id="win_group">win_group<a class="headerlink" href="#win_group" title="Permanent link">&para;</a></h3>
+<h3 id="win_group">win_group</h3>
 <p><code>nano /etc/ansible/win-creat-group.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1456,7 +1458,7 @@ ansible_shell_type=powershell
       state: present
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/win-creat-group.yml</code></p>
-<h3 id="win_group_membership">win_group_membership<a class="headerlink" href="#win_group_membership" title="Permanent link">&para;</a></h3>
+<h3 id="win_group_membership">win_group_membership</h3>
 <p><code>nano /etc/ansible/add-user-to-group.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1468,7 +1470,7 @@ ansible_shell_type=powershell
       state: present
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/add-user-to-group.yml</code></p>
-<h3 id="win_user">win_user<a class="headerlink" href="#win_user" title="Permanent link">&para;</a></h3>
+<h3 id="win_user">win_user</h3>
 <p><code>nano /etc/ansible/creat-win-user.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1490,7 +1492,7 @@ ansible_shell_type=powershell
       state: absent
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/delete-win-user.yml</code></p>
-<h3 id="win_feature">win_feature<a class="headerlink" href="#win_feature" title="Permanent link">&para;</a></h3>
+<h3 id="win_feature">win_feature</h3>
 <p><code>nano /etc/ansible/install-feature.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1500,7 +1502,7 @@ ansible_shell_type=powershell
         state: present
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/install-feature.yml</code></p>
-<h3 id="win_reboot">win_reboot<a class="headerlink" href="#win_reboot" title="Permanent link">&para;</a></h3>
+<h3 id="win_reboot">win_reboot</h3>
 <p><code>nano /etc/ansible/win-reboot.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1509,7 +1511,7 @@ ansible_shell_type=powershell
       reboot_timeout: 3600
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/win-reboot.yml</code></p>
-<h3 id="win_find">win_find<a class="headerlink" href="#win_find" title="Permanent link">&para;</a></h3>
+<h3 id="win_find">win_find</h3>
 <p><code>nano /etc/ansible/win-ls.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1530,7 +1532,7 @@ ansible_shell_type=powershell
       var: command_output
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/win-ls.yml</code></p>
-<h3 id="win_uri">win_uri<a class="headerlink" href="#win_uri" title="Permanent link">&para;</a></h3>
+<h3 id="win_uri">win_uri</h3>
 <p><code>nano /etc/ansible/rest-get.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1543,7 +1545,7 @@ ansible_shell_type=powershell
       var: http_output
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/rest-get.yml</code></p>
-<h3 id="win_updates">win_updates<a class="headerlink" href="#win_updates" title="Permanent link">&para;</a></h3>
+<h3 id="win_updates">win_updates</h3>
 <p><code>nano /etc/ansible/win-update.yml</code></p>
 <pre><code>- hosts: ws
   tasks:
@@ -1571,7 +1573,7 @@ ansible_shell_type=powershell
       var: wu_output
 </code></pre>
 <p><code>ansible-playbook /etc/ansible/win-update.yml</code></p>
-<h3 id="win_chocolatey_1">win_chocolatey<a class="headerlink" href="#win_chocolatey_1" title="Permanent link">&para;</a></h3>
+<h3 id="win_chocolatey_1">win_chocolatey</h3>
 <p><a href="https://chocolatey.org/install">Install</a> <br />
 <a href="https://community.chocolatey.org/api/v2/package/chocolatey">API</a> <br />
 <a href="https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment-guide">Deployment</a></p>
@@ -1660,9 +1662,11 @@ ansible_shell_type=powershell
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

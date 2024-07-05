@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -878,7 +880,7 @@
 
   <h1>Virtualization</h1>
 
-<h2 id="vmwarepowercli">VMWare/PowerCLI<a class="headerlink" href="#vmwarepowercli" title="Permanent link">&para;</a></h2>
+<h2 id="vmwarepowercli">VMWare/PowerCLI</h2>
 <p><code>Install-Module -Name VMware.PowerCLI # -AllowClobber</code> установить модуль (PackageProvider: nuget) <br />
 <code>Get-Module -ListAvailable VMware* | Select Name,Version</code> <br />
 <code>Import-Module VMware.VimAutomation.Core</code> импортировать в сессию <br />
@@ -940,7 +942,7 @@ CreateDate,CpuHotAddEnabled,MemoryHotAddEnabled,CpuHotRemoveEnabled,Notes
 <p><code>Get-Command –Module *vmware* -name *syslog*</code> <br />
 <code>Set-VMHostSysLogServer -VMHost esxi-05 -SysLogServer "tcp://192.168.3.100" -SysLogServerPort 3515</code> установить сервер syslog сервер для хранения системных логов для хоста esxi-05 <br />
 <code>Get-VMHostSysLogServer -VMHost esxi-05</code></p>
-<h2 id="hyper-v">Hyper-V<a class="headerlink" href="#hyper-v" title="Permanent link">&para;</a></h2>
+<h2 id="hyper-v">Hyper-V</h2>
 <p><code>Install-WindowsFeature -Name Hyper-V -IncludeManagementTools -Restart</code> установить роль на Windows Server <br />
 <code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V –All</code> установить роль на Windows Desktop <br />
 <code>Get-Command -Module hyper-v</code> <br />
@@ -980,7 +982,7 @@ $VM = @{
 <code>Get-VM -Name $VMName | Checkpoint-VM -SnapshotName "Snapshot-1"</code> создать снапшот <br />
 <code>Restore-VMCheckpoint -Name "Snapshot-1" -VMName $VMName -Confirm:$false</code> восстановление из снапшота <br />
 <code>Get-VM | Select -ExpandProperty NetworkAdapters | Select VMName,IPAddresses,Status</code> получить IP адрес всех ВМ</p>
-<h3 id="vmconnect-via-rdcman">VMConnect via RDCMan<a class="headerlink" href="#vmconnect-via-rdcman" title="Permanent link">&para;</a></h3>
+<h3 id="vmconnect-via-rdcman">VMConnect via RDCMan</h3>
 <p><code>vmconnect.exe localhost $VMHost</code> подключиться к виртуальной машине через VMConnect (используется в диспетчере Hyper-V) <br />
 <code>Get-NetTCPConnection -State Established,Listen | Where-Object LocalPort -Match 2179</code> найти порт слушателя<br />
 <code>Get-Process -Id (Get-NetTCPConnection -State Established,Listen | Where-Object LocalPort -Match 2179).OwningProcess</code> найти процесс по ID (vmms/VMConnect) <br />
@@ -1003,7 +1005,7 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\Policy
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowSavedCredentials -Name Hyper-V -PropertyType String -Value &quot;Microsoft Virtual Console Service/*&quot; -Force
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowSavedCredentialsDomain -Name Hyper-V -PropertyType String -Value &quot;Microsoft Virtual Console Service/*&quot; -Force
 </code></pre>
-<h2 id="azure">Azure<a class="headerlink" href="#azure" title="Permanent link">&para;</a></h2>
+<h2 id="azure">Azure</h2>
 <p><code>Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force</code> установить все модули для работы с Azure <br />
 <code>Get-Module *Az.*</code> список всех модулей</p>
 <p><code>Get-Command -Module Az.Accounts</code> отобразить список команд модуля Az.Accounts <br />
@@ -1053,7 +1055,7 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\Policy
 <code>Get-AzADGroup</code> получить информацию о группах <br />
 <code>New-AzADGroup</code> создать новую группу <br />
 <code>Remove-AzADGroup</code> удалить группу</p>
-<h3 id="manage-vm">Manage-VM<a class="headerlink" href="#manage-vm" title="Permanent link">&para;</a></h3>
+<h3 id="manage-vm">Manage-VM</h3>
 <p>Source: https://learn.microsoft.com/ru-ru/azure/virtual-machines/windows/tutorial-manage-vm</p>
 <p><code>New-AzResourceGroup -Name "Resource-Group-01" -Location "EastUS"</code> создать группу ресурсов (логический контейнер, в котором происходит развертывание ресурсов Azure) <br />
 <code>Get-AzVMImageOffer -Location "EastUS" -PublisherName "MicrosoftWindowsServer"</code> список доступных образов Windows Server для установки <br />
@@ -1063,7 +1065,7 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\Policy
 <code>Start-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01"</code> запустить виртуальную машину <br />
 <code>Stop-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01" -Force</code> остановить виртуальную машину <br />
 <code>Invoke-AzVMRunCommand -ResourceGroupName "Resource-Group-01" -VMName "vm-01" -CommandId "RunPowerShellScript" -ScriptString "Install-WindowsFeature -Name Web-Server -IncludeManagementTools"</code> установить роль веб-сервера IIS</p>
-<h3 id="manage-disk">Manage-Disk<a class="headerlink" href="#manage-disk" title="Permanent link">&para;</a></h3>
+<h3 id="manage-disk">Manage-Disk</h3>
 <p>Source: https://learn.microsoft.com/ru-ru/azure/virtual-machines/windows/tutorial-manage-data-disk</p>
 <p><code>$diskConfig = New-AzDiskConfig -Location "EastUS" -CreateOption Empty -DiskSizeGB 512 -SkuName "Standard_LRS"</code> создать диск на 512 Гб <br />
 <code>$dataDisk = New-AzDisk -ResourceGroupName "Resource-Group-01" -DiskName "disk-512" -Disk $diskConfig</code> создание объекта диска для подготовки диска данных к работе <br />
@@ -1150,9 +1152,11 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\Policy
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

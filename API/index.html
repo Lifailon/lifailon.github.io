@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1746,7 +1748,7 @@
   
 
 
-<h2 id="property">Property<a class="headerlink" href="#property" title="Permanent link">&para;</a></h2>
+<h2 id="property">Property</h2>
 <p><code>$url = "https://habr.com/ru/rss/users/Lifailon/publications/articles/?fl=ru"</code> RSS лента публикаций на Habr <br />
 <code>Invoke-RestMethod $url</code> <br />
 <code>$iwr = Invoke-WebRequest -Uri $url</code> <br />
@@ -1757,13 +1759,13 @@
 <code>$iwr.ParsedHtml | Select lastModified</code> <br />
 <code>$iwr.Links | fl title,innerText,href</code> <br />
 <code>$iwr.Images.src</code></p>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h2 id="methods">Methods</h2>
 <p><strong>GET</strong> - Read <br />
 <strong>POST</strong> - Create <br />
 <strong>PATCH</strong> - Partial update/modify <br />
 <strong>PUT</strong> - Update/replace <br />
 <strong>DELETE</strong> - Remove</p>
-<h2 id="download-image">Download Image<a class="headerlink" href="#download-image" title="Permanent link">&para;</a></h2>
+<h2 id="download-image">Download Image</h2>
 <pre><code class="language-PowerShell">function Download-Image {
 param (
     [Parameter(Mandatory = $True)]$url
@@ -1795,7 +1797,7 @@ param (
 }
 </code></pre>
 <p><code>Download-Image -url https://losst.pro/</code></p>
-<h2 id="token">Token<a class="headerlink" href="#token" title="Permanent link">&para;</a></h2>
+<h2 id="token">Token</h2>
 <pre><code class="language-PowerShell">https://veeam-11:9419/swagger/ui/index.html
 $Header = @{
     &quot;x-api-version&quot; = &quot;1.0-rev2&quot;
@@ -1808,7 +1810,7 @@ $Body = @{
 $vpost = iwr &quot;https://veeam-11:9419/api/oauth2/token&quot; -Method POST -Headers $Header -Body $Body -SkipCertificateCheck
 $vtoken = (($vpost.Content) -split '&quot;')[3]
 </code></pre>
-<h2 id="get">GET<a class="headerlink" href="#get" title="Permanent link">&para;</a></h2>
+<h2 id="get">GET</h2>
 <pre><code class="language-PowerShell">$token = $vtoken | ConvertTo-SecureString -AsPlainText –Force
 $vjob = iwr &quot;https://veeam-11:9419/api/v1/jobs&quot; -Method GET -Headers $Header -Authentication Bearer -Token $token -SkipCertificateCheck
 
@@ -1822,7 +1824,7 @@ $vjob = $vjob.Content | ConvertFrom-Json
 $vjob = Invoke-RestMethod &quot;https://veeam-11:9419/api/v1/jobs&quot; -Method GET -Headers $Header -SkipCertificateCheck
 $vjob.data.virtualMachines.includes.inventoryObject
 </code></pre>
-<h2 id="cookie">Cookie<a class="headerlink" href="#cookie" title="Permanent link">&para;</a></h2>
+<h2 id="cookie">Cookie</h2>
 <p>Получить hash торрент файла на сайте Кинозал</p>
 <pre><code class="language-PowerShell">function Get-KinozalTorrentHash {
     param (
@@ -1843,7 +1845,7 @@ $vjob.data.virtualMachines.includes.inventoryObject
 <p><code>$id = 1656552</code> <br />
 <code>$cookies = "uid=..."</code> получить cookie в браузере на вкладке сеть из загловка запросов после авторизации на сайте <br />
 <code>Get-KinozalTorrentHash $id $cookies</code></p>
-<h1 id="pode">Pode<a class="headerlink" href="#pode" title="Permanent link">&para;</a></h1>
+<h1 id="pode">Pode</h1>
 <pre><code class="language-PowerShell">Start-PodeServer {
     Add-PodeEndpoint -Address localhost -Port &quot;8080&quot; -Protocol &quot;HTTP&quot;
     ## Get info endpoints
@@ -1896,7 +1898,7 @@ $vjob.data.virtualMachines.includes.inventoryObject
 <code>irm http://localhost:8080/api/process -Method Get</code> <br />
 <code>http://localhost:8080/api/process-html</code> использовать браузер <br />
 <code>irm http://localhost:8080/api/service -Method Post -Body @{"ServiceName" = "AnyDesk"}</code></p>
-<h1 id="telegram">Telegram<a class="headerlink" href="#telegram" title="Permanent link">&para;</a></h1>
+<h1 id="telegram">Telegram</h1>
 <p>@BotFather (https://t.me/BotFather) /newbot</p>
 <p>Format: <code>https://api.telegram.org/bot&lt;token&gt;/&lt;endpoint&gt;</code></p>
 <p><a href="https://core.telegram.org/bots/api#getupdates">getupdates</a></p>
@@ -1991,7 +1993,7 @@ while ($true) {
 <p><code>/Service vpnagent</code> <br />
 <code>/Service WinRM</code> <br />
 <code>/Service test</code></p>
-<h2 id="button">Button<a class="headerlink" href="#button" title="Permanent link">&para;</a></h2>
+<h2 id="button">Button</h2>
 <pre><code class="language-PowerShell">$keyboard = '{
     &quot;inline_keyboard&quot;:[[
         {&quot;text&quot;:&quot;Uptime&quot;,&quot;callback_data&quot;:&quot;/Uptime&quot;},
@@ -2003,7 +2005,7 @@ $request = (Invoke-RestMethod -Uri &quot;https://api.telegram.org/bot$Token/getU
 $request.data # прочитать callback_data нажатой кнопки
 $request.message.date
 </code></pre>
-<h2 id="send-totelegramfile">Send-ToTelegramFile<a class="headerlink" href="#send-totelegramfile" title="Permanent link">&para;</a></h2>
+<h2 id="send-totelegramfile">Send-ToTelegramFile</h2>
 <p>https://core.telegram.org/bots/api#senddocument</p>
 <pre><code class="language-PowerShell">function Send-ToTelegramFile {
     param (
@@ -2035,10 +2037,10 @@ $request.message.date
 }
 </code></pre>
 <p><code>Send-ToTelegramFile -Path "C:\Users\Lifailon\Documents\lake.jpg" -Token "7777777777:AAF..." -Chat "7777777777"</code></p>
-<h1 id="discord">Discord<a class="headerlink" href="#discord" title="Permanent link">&para;</a></h1>
+<h1 id="discord">Discord</h1>
 <p><a href="https://discord.com/developers/applications">Developers</a></p>
 <p>Создаем Applications (General Information). В Bot привязываем к Application и копируем токен авторизации. В OAuth2 - URL Generator выбираем bot и права Administrator и копируем созданный URL для добавления на канал. Переходим по url и добавляем бота на сервер. Получаем ID канала на сервере (текстовые каналы, правой кнопкой мыши копируем ссылку и забираем последний id в url).</p>
-<h2 id="send-to-discord">Send to Discord<a class="headerlink" href="#send-to-discord" title="Permanent link">&para;</a></h2>
+<h2 id="send-to-discord">Send to Discord</h2>
 <pre><code class="language-Bash">DISCORD_TOKEN=&quot;MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX&quot;
 DISCORD_CHANNEL_ID=&quot;119403124XXXXXXXXXX&quot;
 TEXT=&quot;test from bash&quot;
@@ -2057,7 +2059,7 @@ $Body = @{
 } | ConvertTo-Json
 curl -s $URL -X POST -H &quot;Authorization: Bot $DISCORD_TOKEN&quot; -H &quot;Content-Type: application/json&quot; -d $Body
 </code></pre>
-<h2 id="read-from-discord">Read from Discord<a class="headerlink" href="#read-from-discord" title="Permanent link">&para;</a></h2>
+<h2 id="read-from-discord">Read from Discord</h2>
 <pre><code class="language-Bash">curl -s -X GET $URL 
   -H &quot;Authorization: Bot $DISCORD_TOKEN&quot; 
   -H &quot;Content-Type: application/json&quot; | jq -r .[0].content
@@ -2065,7 +2067,7 @@ curl -s $URL -X POST -H &quot;Authorization: Bot $DISCORD_TOKEN&quot; -H &quot;C
 <pre><code class="language-PowerShell">$messages = (curl -s -X GET $URL -H &quot;Authorization: Bot $DISCORD_TOKEN&quot; -H &quot;Content-Type: application/json&quot; | ConvertFrom-Json)
 $messages | Select-Object content,timestamp,{$_.author.username}
 </code></pre>
-<h2 id="httpclient">HttpClient<a class="headerlink" href="#httpclient" title="Permanent link">&para;</a></h2>
+<h2 id="httpclient">HttpClient</h2>
 <pre><code class="language-PowerShell">$DISCORD_TOKEN = &quot;MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX&quot;
 $DISCORD_CHANNEL_ID = &quot;119403124XXXXXXXXXX&quot;
 $URL = &quot;https://discordapp.com/api/channels/$DISCORD_CHANNEL_ID/messages&quot;
@@ -2075,7 +2077,7 @@ $response = $HttpClient.GetAsync($URL).Result
 $messages = $response.Content.ReadAsStringAsync().Result
 ($messages | ConvertFrom-Json).content
 </code></pre>
-<h2 id="button_1">Button<a class="headerlink" href="#button_1" title="Permanent link">&para;</a></h2>
+<h2 id="button_1">Button</h2>
 <pre><code class="language-Bash">curl -X POST $URL 
   -H &quot;Content-Type: application/json&quot; 
   -H &quot;Authorization: Bot $DISCORD_TOKEN&quot; 
@@ -2097,7 +2099,7 @@ $messages = $response.Content.ReadAsStringAsync().Result
     ]
   }'
 </code></pre>
-<h2 id="discordnetwebhook">Discord.Net.Webhook<a class="headerlink" href="#discordnetwebhook" title="Permanent link">&para;</a></h2>
+<h2 id="discordnetwebhook">Discord.Net.Webhook</h2>
 <pre><code class="language-PowerShell">Add-Type -Path $(ls &quot;$home\Documents\Discord.NET\*.dll&quot;).FullName
 # https://discordapp.com/api/webhooks/&lt;webhook_id&gt;/&lt;webhook_token&gt; (Настроить канал - Интеграция)
 $webhookId = 1197577280000000000
@@ -2106,7 +2108,7 @@ $messageContent = &quot;Test dotNET&quot;
 $client = New-Object Discord.Webhook.DiscordWebhookClient($webhookId, $webhookToken)
 $client.SendMessageAsync($messageContent).Wait()
 </code></pre>
-<h2 id="discordnetwebsocket">Discord.Net.WebSocket<a class="headerlink" href="#discordnetwebsocket" title="Permanent link">&para;</a></h2>
+<h2 id="discordnetwebsocket">Discord.Net.WebSocket</h2>
 <pre><code class="language-PowerShell">$DiscordAssemblies = $(ls &quot;$home\Documents\Discord.NET\*.dll&quot;).FullName
 foreach ($assembly in $DiscordAssemblies) {
     Add-Type -Path $assembly
@@ -2131,22 +2133,22 @@ $Client.ConnectionState
 $Client.LogoutAsync().GetAwaiter().GetResult()
 $Client.Dispose()
 </code></pre>
-<h1 id="gigachat">GigaChat<a class="headerlink" href="#gigachat" title="Permanent link">&para;</a></h1>
+<h1 id="gigachat">GigaChat</h1>
 <p><a href="https://developers.sber.ru/gigachat/login">Developers chat</a></p>
-<h2 id="1">1. Установка сертификатов:<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h2 id="1">1. Установка сертификатов:</h2>
 <p><code>Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_root_ca.cer"</code> скачать сертификат минцифры <br />
 <code>Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_sub_ca.cer"</code> <br />
 <code>Import-Certificate -FilePath "$home\Downloads\russian_trusted_root_ca.cer" -CertStoreLocation "Cert:\CurrentUser\Root"</code> установить сертификат минцифры <br />
 <code>Import-Certificate -FilePath "$home\Downloads\russian_trusted_sub_ca.cer" -CertStoreLocation "Cert:\CurrentUser\CA"</code></p>
-<h2 id="2-sber-id-developers-30">2. Авторизация по Sber ID и генерация новых авторизационных данных для получения токена: <a href="https://developers.sber.ru/studio">Developers</a> (время жизни 30 минут)<a class="headerlink" href="#2-sber-id-developers-30" title="Permanent link">&para;</a></h2>
-<h2 id="3-base64-client-id-client-secret">3. Формирование авторизационных данных в формате Base64 из Client ID и Client Secret:<a class="headerlink" href="#3-base64-client-id-client-secret" title="Permanent link">&para;</a></h2>
+<h2 id="2-sber-id-developers-30">2. Авторизация по Sber ID и генерация новых авторизационных данных для получения токена: <a href="https://developers.sber.ru/studio">Developers</a> (время жизни 30 минут)</h2>
+<h2 id="3-base64-client-id-client-secret">3. Формирование авторизационных данных в формате Base64 из Client ID и Client Secret:</h2>
 <pre><code class="language-PowerShell">$Client_ID     = &quot;7e6d2f9f-825e-49b7-98f4-62fbb7506427&quot; # [System.Guid]::Parse(&quot;7e6d2f9f-825e-49b7-98f4-62fbb7506427&quot;)
 $Client_Secret = &quot;c35113ee-6757-47ba-9853-ea1d0d9db1ef&quot; # [System.Guid]::Parse(&quot;c35113ee-6757-47ba-9853-ea1d0d9db1ef&quot;)
 $Client_Join   = $Client_ID+&quot;:&quot;+$Client_Secret # объединяем два UUID в одну строку, разделяя их символом ':'
 $Bytes         = [System.Text.Encoding]::UTF8.GetBytes($Client_Join) # преобразуем строку в массив байт
 $Cred_Base64   = [Convert]::ToBase64String($Bytes) # кодируем байты в строку Base64
 </code></pre>
-<h2 id="4">4. Получение токена:<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h2 id="4">4. Получение токена:</h2>
 <p><code>$Cred_Base64   = "N2U2ZDJmOWYtODI1ZS00OWI3LTk4ZjQtNjJmYmI3NTA2NDI3OmIyYzgwZmZmLTEzOGUtNDg1Mi05MjgwLWE2MGI4NTc0YTM2MQ=="</code> <br />
 <code>$UUID = [System.Guid]::NewGuid()</code> генерируем UUID для журналирования входящих вызовов и разбора инцидентов</p>
 <pre><code class="language-PowerShell">$url = &quot;https://ngw.devices.sberbank.ru:9443/api/v2/oauth&quot;
@@ -2160,7 +2162,7 @@ $body = @{
 }
 $GIGA_TOKEN = $(Invoke-RestMethod -Uri $url -Method POST -Headers $headers -Body $body).access_token
 </code></pre>
-<h2 id="5">5. Параметры:<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h2 id="5">5. Параметры:</h2>
 <pre><code class="language-PowerShell">[string]$content = &quot;Посчитай сумму чисел: 22+33&quot;
 [string]$role = &quot;user&quot; # роль автора сообщения (user/assistant/system)
 [float]$temperature = 0.7 # температура выборки в диапазоне от 0 до 2. Чем выше значение, тем более случайным будет ответ модели.
@@ -2169,7 +2171,7 @@ $GIGA_TOKEN = $(Invoke-RestMethod -Uri $url -Method POST -Headers $headers -Body
 [int64]$max_tokens = 512 # максимальное количество токенов, которые будут использованы для создания ответов
 [boolean]$stream = $false # передавать сообщения по частям в потоке
 </code></pre>
-<h2 id="6">6. Составление запросов:<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h2 id="6">6. Составление запросов:</h2>
 <pre><code class="language-PowerShell">$url = &quot;https://gigachat.devices.sberbank.ru/api/v1/chat/completions&quot;
 $headers = @{
     &quot;Authorization&quot; = &quot;Bearer $GIGA_TOKEN&quot;
@@ -2194,15 +2196,15 @@ $body = @{
 $Request = Invoke-RestMethod -Method POST -Uri $url -Headers $headers -Body $body
 $Request.choices.message.content
 </code></pre>
-<h2 id="curl">Curl<a class="headerlink" href="#curl" title="Permanent link">&para;</a></h2>
-<h2 id="ubuntu">Установка сертификатов в Ubuntu:<a class="headerlink" href="#ubuntu" title="Permanent link">&para;</a></h2>
+<h2 id="curl">Curl</h2>
+<h2 id="ubuntu">Установка сертификатов в Ubuntu:</h2>
 <p><code>wget https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt</code> <br />
 <code>wget https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt</code> <br />
 <code>mkdir /usr/local/share/ca-certificates/russian_trusted</code> <br />
 <code>cp russian_trusted_root_ca_pem.crt russian_trusted_sub_ca_pem.crt /usr/local/share/ca-certificates/russian_trusted</code> <br />
 <code>update-ca-certificates -v</code> <br />
 <code>wget -qS --spider --max-redirect=0 https://www.sberbank.ru</code></p>
-<h2 id="_1">Получение токена:<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">Получение токена:</h2>
 <pre><code class="language-Bash">Cred_Base64=&quot;N2U2ZDJmOWYtODI1ZS00OWI3LTk4ZjQtNjJmYmI3NTA2NDI3OmIyYzgwZmZmLTEzOGUtNDg1Mi05MjgwLWE2MGI4NTc0YTM2MQ==&quot;
 UUID=$(uuidgen)
 GIGA_TOKEN=$(curl -s --location --request POST &quot;https://ngw.devices.sberbank.ru:9443/api/v2/oauth&quot; 
@@ -2212,7 +2214,7 @@ GIGA_TOKEN=$(curl -s --location --request POST &quot;https://ngw.devices.sberban
 --data-urlencode 'scope=GIGACHAT_API_PERS' | jq -r .access_token)
 </code></pre>
 <p><code>curl -s --location "https://gigachat.devices.sberbank.ru/api/v1/models" --header "Authorization: Bearer $GIGA_TOKEN" | jq .</code> для проверки</p>
-<h2 id="_2">Составление запроса:<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_2">Составление запроса:</h2>
 <pre><code class="language-Bash">request=$(curl -s https://gigachat.devices.sberbank.ru/api/v1/chat/completions 
   -H &quot;Content-Type: application/json&quot; 
   -H &quot;Authorization: Bearer $GIGA_TOKEN&quot; 
@@ -2228,15 +2230,15 @@ GIGA_TOKEN=$(curl -s --location --request POST &quot;https://ngw.devices.sberban
 }')
 echo $request | jq -r .choices[].message.content
 </code></pre>
-<h1 id="yandexgpt">YandexGPT<a class="headerlink" href="#yandexgpt" title="Permanent link">&para;</a></h1>
-<h2 id="oauth-token">Получить OAuth-Token:<a class="headerlink" href="#oauth-token" title="Permanent link">&para;</a></h2>
+<h1 id="yandexgpt">YandexGPT</h1>
+<h2 id="oauth-token">Получить OAuth-Token:</h2>
 <p><a href="https://cloud.yandex.ru/ru/docs/iam/operations/iam-token/create">Create AIM Token</a> время жизни IAM-токена не больше 12 часов <br />
 <code>yandexPassportOauthToken="y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"</code> для bash <br />
 <code>$yandexPassportOauthToken = "y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"</code> для PowerShell</p>
-<h2 id="oauth-token-iam-token">Обменять OAuth-Token на IAM-Token:<a class="headerlink" href="#oauth-token-iam-token" title="Permanent link">&para;</a></h2>
+<h2 id="oauth-token-iam-token">Обменять OAuth-Token на IAM-Token:</h2>
 <p><code>IAM_TOKEN=$(curl -s -d "{\"yandexPassportOauthToken\":\"$yandexPassportOauthToken\"}" "https://iam.api.cloud.yandex.net/iam/v1/tokens" | jq -r .iamToken)</code> <br />
 <code>$IAM_TOKEN = $(Invoke-RestMethod -Method POST -Uri "https://iam.api.cloud.yandex.net/iam/v1/tokens" -Body $(@{yandexPassportOauthToken = "$yandexPassportOauthToken"} | ConvertTo-Json -Compress)).iamToken</code></p>
-<h2 id="folder_id">Получить FOLDER_ID:<a class="headerlink" href="#folder_id" title="Permanent link">&para;</a></h2>
+<h2 id="folder_id">Получить FOLDER_ID:</h2>
 <pre><code class="language-Bash">CLOUD_ID=$(curl -s -H &quot;Authorization: Bearer $IAM_TOKEN&quot; https://resource-manager.api.cloud.yandex.net/resource-manager/v1/clouds | jq -r .clouds[].id) # получить cloud id
 curl -s --request GET -H &quot;Authorization: Bearer $IAM_TOKEN&quot; https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders -d &quot;{\&quot;cloudId\&quot;: \&quot;$CLOUD_ID\&quot;}&quot; # получить список директорий в облаке
 curl -s --request POST -H &quot;Authorization: Bearer $IAM_TOKEN&quot; https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders -d &quot;{\&quot;cloudId\&quot;: \&quot;$CLOUD_ID\&quot;, \&quot;name\&quot;: \&quot;test\&quot;}&quot; # создать директорию в облаке
@@ -2245,7 +2247,7 @@ FOLDER_ID=$(curl -s --request GET -H &quot;Authorization: Bearer $IAM_TOKEN&quot
 <pre><code class="language-PowerShell">$CLOUD_ID = $(Invoke-RestMethod -Method Get -Uri &quot;https://resource-manager.api.cloud.yandex.net/resource-manager/v1/clouds&quot; -Headers @{&quot;Authorization&quot;=&quot;Bearer $IAM_TOKEN&quot;; &quot;Content-Type&quot;=&quot;application/json&quot;}).clouds.id
 $FOLDER_ID = $(Invoke-RestMethod -Method Get -Uri &quot;https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders&quot; -Headers @{&quot;Authorization&quot;=&quot;Bearer $IAM_TOKEN&quot;; &quot;Content-Type&quot;=&quot;application/json&quot;} -Body (@{&quot;cloudId&quot;= $CLOUD_ID} | ConvertTo-Json)).folders | Where-Object name -eq test | Select-Object -ExpandProperty id
 </code></pre>
-<h2 id="_3">Составление запроса:<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_3">Составление запроса:</h2>
 <pre><code class="language-Bash">model=&quot;gpt://$FOLDER_ID/yandexgpt/latest&quot; # https://cloud.yandex.ru/ru/docs/yandexgpt/concepts/models
 body=$(cat &lt;&lt;EOF
 {
@@ -2289,7 +2291,7 @@ $body = @&quot;
 &quot;@
 Invoke-RestMethod -Method POST -Uri &quot;https://llm.api.cloud.yandex.net/foundationModels/v1/completion&quot; -Headers @{&quot;Content-Type&quot;=&quot;application/json&quot;; &quot;Authorization&quot;=&quot;Bearer $IAM_TOKEN&quot;; &quot;x-folder-id&quot;=&quot;$FOLDER_ID&quot;} -Body $body
 </code></pre>
-<h1 id="superagi">SuperAGI<a class="headerlink" href="#superagi" title="Permanent link">&para;</a></h1>
+<h1 id="superagi">SuperAGI</h1>
 <p><a href="https://github.com/TransformerOptimus/SuperAGI">Source</a> <br />
 <a href="https://models.superagi.com/playground/generate">Playground generate</a> <br />
 <a href="https://documenter.getpostman.com/view/30119783/2s9YR3cFJG">API Doc (exaples)</a></p>
@@ -2327,7 +2329,7 @@ $request = Invoke-RestMethod -Method Post -Uri 'https://api.superagi.com/v1/gene
 } | ConvertTo-Json)
 $($request -replace &quot;^data: &quot; | ConvertFrom-Json).choices.text
 </code></pre>
-<h1 id="replicate">Replicate<a class="headerlink" href="#replicate" title="Permanent link">&para;</a></h1>
+<h1 id="replicate">Replicate</h1>
 <p><a href="https://replicate.com/stability-ai/stable-diffusion/examples?input=http">API curl examples</a></p>
 <pre><code class="language-Bash">REPLICATE_API_TOKEN=&quot;r8_STyeUNXiGonkLfxE1FSKaqll26lXXXXXXXXXX&quot;
 prompt=&quot;Жираф в полоску зебры&quot;
@@ -2367,7 +2369,7 @@ while ($response.status -ne &quot;succeeded&quot;) {
 }
 $response.output
 </code></pre>
-<h1 id="google-filter">Google-Filter<a class="headerlink" href="#google-filter" title="Permanent link">&para;</a></h1>
+<h1 id="google-filter">Google-Filter</h1>
 <p><code>https://www.google.com/search?q=the+rookie+2018+imdb</code> формат url-запроса поиска с пробелами <br />
 <code>https://www.google.com/search?q=the+rookie+2018+site:imdb.com</code> поиск по сайту <br />
 <code>https://www.google.com/search?q=the+rookie+intitle:index.of+"last modified"+(mkv|avi)</code> искать страницы, на которых указано "last modified" (последние изменения), заголовок страницы через расширенный оператор поиска (все перечисленные слова должны встречаться в заголовке) содержит слово "index.of" (указывает на директорию на веб-сервере, которая содержит список файлов) и искать файлы с расширениями .mkv или (|) .avi <br />
@@ -2383,8 +2385,8 @@ $response.output
 <code>intitle:index.of "game of thrones" mkv after:2015</code> ограничить результаты поиска файлов, измененных до (before) или после (after) указанной даты <br />
 <code>intitle:index.of "game of thrones" mkv from:2010 to:2015</code> фильтрация по диапазону дат <br />
 <code>https://www.google.com/search?q=the-rookie-2018+site:imdb.com&amp;btnI</code> редирект на первый url</p>
-<h1 id="google-api">Google-API<a class="headerlink" href="#google-api" title="Permanent link">&para;</a></h1>
-<h2 id="google-translate">Google-Translate<a class="headerlink" href="#google-translate" title="Permanent link">&para;</a></h2>
+<h1 id="google-api">Google-API</h1>
+<h2 id="google-translate">Google-Translate</h2>
 <pre><code class="language-PowerShell">$Key = &quot;&lt;TOKEN_API&gt;&quot; # получить токен: https://console.cloud.google.com/apis/credentials
 $Text = &quot;You can see in the right corner how long each translation request takes (this does not depend on the amount of text being transferred).&quot;
 $LanguageTarget = &quot;RU&quot;
@@ -2405,7 +2407,7 @@ foreach ($key in $Header.Keys) {
 $Response = $WebClient.UploadString($url, &quot;POST&quot;, $Body) | ConvertFrom-Json
 $Response.data.translations.translatedText
 </code></pre>
-<h2 id="google-search">Google-Search<a class="headerlink" href="#google-search" title="Permanent link">&para;</a></h2>
+<h2 id="google-search">Google-Search</h2>
 <pre><code class="language-PowerShell">$Key = &quot;&lt;TOKEN_API&gt;&quot; # получить токен: https://developers.google.com/custom-search/v1/overview?hl=ru (пользовательский поиск JSON API предоставляет 100 поисковых запросов в день бесплатно)
 $cx = &quot;35c78340f49eb474a&quot; # создать поисковую систему https://programmablesearchengine.google.com/controlpanel/all
 $Query = &quot;как создать бота discord&quot;
@@ -2415,7 +2417,7 @@ $Start = 0
 $response = Invoke-RestMethod &quot;https://www.googleapis.com/customsearch/v1?q=$Query&amp;key=$Key&amp;cx=$cx&amp;lr=lang_$Lang&amp;num=$Num&amp;$start=$Start&quot;
 $response.items | Select-Object title,snippet,displayLink,link | Format-List
 </code></pre>
-<h1 id="rapidapi">RapidAPI<a class="headerlink" href="#rapidapi" title="Permanent link">&para;</a></h1>
+<h1 id="rapidapi">RapidAPI</h1>
 <p><a href="https://rapidapi.com/ru/neoscrap-net/api/google-search72">Google-Search72</a></p>
 <pre><code class="language-PowerShell">$Key = &quot;&lt;TOKEN_API&gt;&quot;
 $headers=@{}
@@ -2425,7 +2427,7 @@ $query = &quot;как создать бота discord&quot;
 $response = Invoke-RestMethod &quot;https://google-search72.p.rapidapi.com/search?q=$query%20gitgub&amp;gl=us&amp;lr=lang_ru&amp;num=20&amp;start=0&quot; -Method GET -Headers $headers
 $response.items | Select-Object title,snippet,displayLink,link | Format-List
 </code></pre>
-<h2 id="imdb">IMDb<a class="headerlink" href="#imdb" title="Permanent link">&para;</a></h2>
+<h2 id="imdb">IMDb</h2>
 <p><a href="https://rapidapi.com/apidojo/api/imdb8">IMDb8</a></p>
 <pre><code class="language-PowerShell">$key = &quot;&lt;TOKEN_API&gt;&quot; # 500 запросов в месяц
 $query=&quot;Break&quot;
@@ -2438,7 +2440,7 @@ $response.results | select title,titletype,year,runningTimeInMinutes,id | Format
 $response.results.principals # актеры
 $response.results.image
 </code></pre>
-<h2 id="moviesdatabase">MoviesDatabase<a class="headerlink" href="#moviesdatabase" title="Permanent link">&para;</a></h2>
+<h2 id="moviesdatabase">MoviesDatabase</h2>
 <p><a href="https://rapidapi.com/SAdrian/api/moviesdatabase">MoviesDatabase</a></p>
 <pre><code class="language-PowerShell">$key = &quot;&lt;TOKEN_API&gt;&quot;
 $imdb_id = &quot;tt0455275&quot;
@@ -2448,7 +2450,7 @@ $headers.Add(&quot;X-RapidAPI-Host&quot;, &quot;moviesdatabase.p.rapidapi.com&qu
 $response = Invoke-RestMethod &quot;https://moviesdatabase.p.rapidapi.com/titles/$imdb_id&quot; -Method GET -Headers $headers
 $response.results
 </code></pre>
-<h1 id="tmdb">TMDB<a class="headerlink" href="#tmdb" title="Permanent link">&para;</a></h1>
+<h1 id="tmdb">TMDB</h1>
 <p><a href="https://developer.themoviedb.org/reference/intro/getting-started">Developer TMDB</a></p>
 <pre><code class="language-PowerShell">$TOKEN = &quot;548e444e7812575caa0a7eXXXXXXXXXX&quot;
 $Endpoint = &quot;search/tv&quot; # поиск сериала (tv) и фильма (movie) по названию
@@ -2464,7 +2466,7 @@ $(Invoke-RestMethod -Uri $url -Method Get) # список сезонов (.seaso
 (Invoke-RestMethod -Uri &quot;https://api.themoviedb.org/3/tv/$id/season/2?api_key=$Token&quot; -Method Get).episodes # вывести 2 сезон
 Invoke-RestMethod -Uri &quot;https://api.themoviedb.org/3/tv/$id/season/2/episode/8?api_key=$Token&quot; -Method Get # вывести 8 эпизод
 </code></pre>
-<h1 id="omdb">OMDb<a class="headerlink" href="#omdb" title="Permanent link">&para;</a></h1>
+<h1 id="omdb">OMDb</h1>
 <p>Получение API ключа по <a href="https://www.omdbapi.com">email</a></p>
 <p><code>$API_KEY = "XXXXXXXX"</code> <br />
 <code>$IMDb_ID = "tt7587890"</code> <br />
@@ -2475,7 +2477,7 @@ Invoke-RestMethod -Uri &quot;https://api.themoviedb.org/3/tv/$id/season/2/episod
 <code>Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;t=The Rookie&amp;y=1990"</code> поиск по Title и году выхода <br />
 <code>Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;t=The Rookie&amp;type=movie"</code> поиск только фильма (movie) или сериала (series) <br />
 <code>$(Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;s=The Rookie").Search</code> поиск всех совпадений (фильмы и сериалы)</p>
-<h1 id="ivi">ivi<a class="headerlink" href="#ivi" title="Permanent link">&para;</a></h1>
+<h1 id="ivi">ivi</h1>
 <p><a href="https://ask.ivi.ru/knowledge-bases/10/articles/51697-dokumentatsiya-dlya-api-ivi">ivi api doc</a></p>
 <p><code>Invoke-RestMethod https://api.ivi.ru/mobileapi/categories</code> список категорий и жанров (genres/meta_genres) <br />
 <code>Invoke-RestMethod https://api.ivi.ru/mobileapi/collections</code> подборки</p>
@@ -2485,12 +2487,12 @@ Invoke-RestMethod -Uri &quot;https://api.themoviedb.org/3/tv/$id/season/2/episod
 <code>(Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.kp_rating</code> рейтинг в Кинопоиск (8.04)</p>
 <p><code>$id = (Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.kp_id</code> получить id в Кинопоиск (5106881) <br />
 <code>id=$(curl -s https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok | jq .result[].kp_id)</code> получить id в Кинопоиск</p>
-<h1 id="kinopoisk">Kinopoisk<a class="headerlink" href="#kinopoisk" title="Permanent link">&para;</a></h1>
+<h1 id="kinopoisk">Kinopoisk</h1>
 <pre><code class="language-Bash">id=5106881
 get=$(curl -s https://www.kinopoisk.ru/film/$id/episodes/)
 printf &quot;%s\n&quot; &quot;${get[@]}&quot; | grep -A 1 &quot;Сезон 2&quot; | grep &quot;эпизодов&quot; | sed -r &quot;s/^.+\: //&quot; # количество эпиздовод во втором сезоне
 </code></pre>
-<h2 id="kinopoiskdev">kinopoisk.dev<a class="headerlink" href="#kinopoiskdev" title="Permanent link">&para;</a></h2>
+<h2 id="kinopoiskdev">kinopoisk.dev</h2>
 <p><a href="https://t.me/kinopoiskdev_bot">Получить токен</a> <br />
 <a href="https://kinopoisk.dev/documentation">Документация по API в формате OpenAPI</a></p>
 <p><code>GET /v1.4/movie/{id}</code> поиск по id</p>
@@ -2537,7 +2539,7 @@ $query = &quot;%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA&quot;
 $request = Invoke-RestMethod -Uri &quot;https://api.kinopoisk.dev/v1.4/movie/search?page=$page&amp;limit=$limit&amp;query=$query&quot; -Headers @{&quot;accept&quot;=&quot;application/json&quot;; &quot;X-API-KEY&quot;=&quot;$API_KEY&quot;}
 $request.docs | Where-Object year -eq 2022
 </code></pre>
-<h2 id="urlcode">UrlCode<a class="headerlink" href="#urlcode" title="Permanent link">&para;</a></h2>
+<h2 id="urlcode">UrlCode</h2>
 <pre><code class="language-PowerShell">function Get-PercentEncode ($str) {
    $bytes = [System.Text.Encoding]::UTF8.GetBytes($str)
    ($bytes | ForEach-Object { &quot;{0:X2}&quot; -f $_ }) -join '%' -replace &quot;^&quot;,&quot;%&quot;
@@ -2567,7 +2569,7 @@ Get-UrlDecode &quot;%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA&quot;
 }
 percent-decode &quot;%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA&quot;
 </code></pre>
-<h2 id="kinopoiskapiunofficial">KinopoiskApiUnofficial<a class="headerlink" href="#kinopoiskapiunofficial" title="Permanent link">&para;</a></h2>
+<h2 id="kinopoiskapiunofficial">KinopoiskApiUnofficial</h2>
 <p>Бесплатно 500 запросов в сутки. <a href="https://kinopoiskapiunofficial.tech/documentation/api">Swagger documentation</a></p>
 <pre><code class="language-PowerShell">API_KEY=&quot;828ec96a-f45d-4e3d-84b1-XXXXXXXXXXXX&quot;
 $headers = @{
@@ -2577,7 +2579,7 @@ $headers = @{
 Invoke-RestMethod -Uri 'https://kinopoiskapiunofficial.tech/api/v2.2/films/1142153' -Headers $headers
 </code></pre>
 <p><code>curl -s "https://kinopoiskapiunofficial.tech/api/v2.2/films/1142153" -H "accept: application/json" -H "X-API-KEY: $API_KEY" | jq .</code></p>
-<h2 id="kinobox">Kinobox<a class="headerlink" href="#kinobox" title="Permanent link">&para;</a></h2>
+<h2 id="kinobox">Kinobox</h2>
 <p><code>$url = "https://www.kinopoisk.ru/film/694051"</code> <br />
 <code>$kp_id = $url -replace ".+/"</code> <br />
 <code>https://kinomix.web.app/#694051</code> <br />
@@ -2587,7 +2589,7 @@ Invoke-RestMethod -Uri 'https://kinopoiskapiunofficial.tech/api/v2.2/films/11421
 <code>curl -s -X GET "https://kinobox.tv/api/players/all?title=minions" -H "accept: application/json"</code> поиск всех плееров <br />
 <code>curl -s -X GET "https://kinobox.tv/api/popular/films" -H "accept: application/json"</code> популярные фильмы <br />
 <code>curl -s -X GET "https://kinobox.tv/api/popular/series" -H "accept: application/json"</code> популярные сериалы</p>
-<h1 id="videocdn">VideoCDN<a class="headerlink" href="#videocdn" title="Permanent link">&para;</a></h1>
+<h1 id="videocdn">VideoCDN</h1>
 <p><a href="https://github.com/notssh/videocdn-api">API</a> <br />
 <a href="https://github.com/API-Movies/videocdn">Source</a> <br />
 <a href="https://api-movies.github.io/videocdn/index.json">API JSON</a></p>
@@ -2680,9 +2682,11 @@ curl -s &quot;https://videocdn.tv/api/$ep?api_token=$token&amp;field=kinopoisk_i
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

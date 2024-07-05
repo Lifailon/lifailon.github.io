@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1178,12 +1180,12 @@
 
   <h1>Microsoft Exchange</h1>
 
-<h2 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">&para;</a></h2>
+<h2 id="connect">Connect</h2>
 <p><code>$srv_cas = "exchange-cas"</code> <br />
 <code>$session_exchange = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://$srv_cas/PowerShell/</code> -Credential $Cred -Authentication Kerberos <br />
 <code>Get-PSSession</code> <br />
 <code>Import-PSSession $session_exchange -DisableNameChecking</code> импортировать в текущую сессию</p>
-<h2 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h2>
+<h2 id="settings">Settings</h2>
 <p><code>Get-ExchangeServer | select name,serverrole,admindisplayversion,Edition,OriginatingServer,WhenCreated,WhenChanged,DataPath | ft</code> список всех серверов<br />
 <code>Get-ImapSettings</code> настройки IMAP <br />
 <code>Get-ExchangeCertificate</code> список сертификатов <br />
@@ -1197,14 +1199,14 @@
 <code>Get-ActiveSyncVirtualDirectory</code> <br />
 <code>Get-OabVirtualDirectory</code> виртуальная директория автономной адресной книги <br />
 <code>Get-OabVirtualDirectory -Server $srv | Set-OabVirtualDirectory -InternalUrl "https://mail.domain.ru/OAB" -ExternalUrl "https://mail.domain.ru/OAB"</code></p>
-<h2 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h2>
+<h2 id="roles">Roles</h2>
 <p>MS (Mailbox) - сервер с БД почтовых ящиков и общих папок, отвечает только за их размещение и не выполняет маршрутизацию никаких сообщений. <br />
 CAS (Client Access Server) - обработка клиентских подключений к почтовым ящикам, которые создаются клиентами Outlook Web Access (HTTP для Outlook Web App), Outlook Anywhere, ActiveSync (для мобильных устройств), интернет протоколы POP3 и IMAP4, MAPI для клиентов Microsoft Outlook. <br />
 Hub Transort - ответвечает за маршрутизацию сообщений интернета и инфраструктурой Exchange, а также между серверами Exchange. Сообщения всегда маршрутизируются с помощью роли транспортного сервера-концентратора, даже если почтовые ящики источника и назначения находятся в одной базе данных почтовых ящиков. <br />
 Relay - роль пограничного транспортного сервера (шлюз SMTP в периметре сети).</p>
 <p>SCP (Service Connection Point) - запись прописывается в AD, при создание сервера CAS. Outlook запрашивает SCP, выбирает те, которые находятся в одном сайте с ним и по параметру WhenCreated – по дате создания, выбирая самый старый. <br />
 Autodiscover. Outlook выбирает в качестве сервера Client Access тот, который прописан в атрибуте RPCClientAccessServer базы данных пользователя. Сведения о базе данных и сервере mailbox, на котором она лежит, берутся из AD.</p>
-<h2 id="messagetrackinglog">MessageTrackingLog<a class="headerlink" href="#messagetrackinglog" title="Permanent link">&para;</a></h2>
+<h2 id="messagetrackinglog">MessageTrackingLog</h2>
 <p><code>Get-MessageTrackingLog -ResultSize Unlimited | select Timestamp,Sender,Recipients,RecipientCount,MessageSubject,Source,EventID,ClientHostname,ServerHostname,ConnectorId, @{Name="MessageSize"; Expression={[string]([int]($_.TotalBytes / 1024))+" KB"}},@{Name="MessageLatency"; Expression={$_.MessageLatency -replace "\.\d+$"}}</code> <br />
 <code>Get-MessageTrackingLog -Start (Get-Date).AddHours(-24) -ResultSize Unlimited | where {[string]$_.recipients -like "*@yandex.ru"}</code> вывести сообщения за последние 24 часа, где получателем был указанный домен <br />
 -Start "04/01/2023 09:00:00" -End "04/01/2023 18:00:00" - поиск по указанному промежутку времени <br />
@@ -1214,7 +1216,7 @@ Autodiscover. Outlook выбирает в качестве сервера Client
 -EventID – поиск по коду события сервера (RECEIVE, SEND, FAIL, DSN, DELIVER, BADMAIL, RESOLVE, EXPAND, REDIRECT, TRANSFER, SUBMIT, POISONMESSAGE, DEFER) <br />
 -Server – поиск на определенном транспортном сервере <br />
 -messageID – трекинг письма по его ID</p>
-<h2 id="mailbox">Mailbox<a class="headerlink" href="#mailbox" title="Permanent link">&para;</a></h2>
+<h2 id="mailbox">Mailbox</h2>
 <p><code>Get-Mailbox -Database "it2"</code> список почтовых серверов в базе данных <br />
 <code>Get-Mailbox -resultsize unlimited | ? Emailaddresses -like "support4" | format-list name,emailaddresses,database,servername</code> какую БД, сервер и smtp-адреса использует почтовый ящик <br />
 <code>Get-Mailbox -Database $db_name -Archive</code> отобразить архивные почтовые ящики</p>
@@ -1226,7 +1228,7 @@ Autodiscover. Outlook выбирает в качестве сервера Client
 <code>Get-MailboxDatabase -Database $db_name | Remove-MailboxDatabase</code> удалить БД</p>
 <p><code>Set-MailBox "support4" -PrimarySmtpAddress support24@domain.ru -EmailAddressPolicyEnabled $false</code> добавить и изменить основной SMTP-адрес электронной почты для пользователя <br />
 <code>Set-Mailbox -Identity "support4" -DeliverToMailboxAndForward $true -ForwardingSMTPAddress "username@outlook.com"</code> включить переадресацию почты (электронная почта попадает в почтовый ящик пользователя support4 и одновременно пересылается по адресу username@outlook.com)</p>
-<h2 id="moverequest">MoveRequest<a class="headerlink" href="#moverequest" title="Permanent link">&para;</a></h2>
+<h2 id="moverequest">MoveRequest</h2>
 <p><code>Get-Mailbox -Database $db_in | New-MoveRequest -TargetDatabase $db_out</code> переместить все почтовые ящики из одной БД в другую <br />
 <code>New-MoveRequest -Identity $db_in -TargetDatabase $db_out</code> переместить один почтовый ящик <br />
 <code>Get-MoveRequest | Suspend-MoveRequest</code> остановить запросы перемещения <br />
@@ -1242,14 +1244,14 @@ Completed - завершено</p>
 <p><code>Remove-MoveRequest -Identity $db_name</code> завершить процесс перемещения (убрать статус перемещения с почтового ящика и очистить список перемещений) <br />
 <code>Get-MailboxDatabase | Select Name, MailboxRetention</code> после перемещения ящиков, размер базы не изменится, полное удаление из базы произойдет, как пройдет количество дней, выставленное в параметре MailboxRetention <br />
 <code>Set-MailboxDatabase -MailboxRetention '0.00:00:00' -Identity $db_name</code> изменить значение</p>
-<h2 id="archive">Archive<a class="headerlink" href="#archive" title="Permanent link">&para;</a></h2>
+<h2 id="archive">Archive</h2>
 <p><code>Enable-Mailbox -Identity $name -Archive</code> включить архив для пользователя <br />
 <code>Get-Mailbox $name | New-MoveReques –ArchiveOnly –ArchiveTargetDatabase DBArch</code> переместить архивный почтовый ящик в другую БД <br />
 <code>Get-Mailbox $name | fl Name,Database,ArchiveDatabase</code> место расположения БД пользователя и БД его архива <br />
 <code>Disable-Mailbox -Identity $name -Archive</code> отключить архив <br />
 <code>Connect-Mailbox -Identity "8734c04e-981e-4ccf-a547-1c1ac7ebf3e2" -Archive -User $name -Database it2</code> подключение архива пользователя к указанному почтовому ящику <br />
 <code>Get-Mailbox $name | Set-Mailbox -ArchiveQuota 20GB -ArchiveWarningQuota 19GB</code> настроить квоты хранения архива</p>
-<h2 id="quota">Quota<a class="headerlink" href="#quota" title="Permanent link">&para;</a></h2>
+<h2 id="quota">Quota</h2>
 <p><code>Get-Mailbox -Identity $mailbox | fl IssueWarningQuota, ProhibitSendQuota, ProhibitSendReceiveQuota, UseDatabaseQuotaDefaults</code> отобразить квоты почтового ящика <br />
 IssueWarningQuota — квота, при достижении которой Exchange отправит уведомление <br />
 ProhibitSendQuota — при достижении будет запрещена отправка <br />
@@ -1258,7 +1260,7 @@ UseDatabaseQuotaDefaults — используется ли квота БД ил�
 <code>Set-Mailbox -Identity $mailbox -UseDatabaseQuotaDefaults $false -IssueWarningQuota "3 GB" -ProhibitSendQuota "4 GB" -ProhibitSendReceiveQuota "5 GB"</code> задать квоту для пользователя</p>
 <p><code>Get-MailboxDatabase $db_name | fl Name, *Quota</code> отобразить квоты наложенные на БД <br />
 <code>Set-MailboxDatabase $db -ProhibitSendReceiveQuota "5 GB" -ProhibitSendQuota "4 GB" -IssueWarningQuota "3 GB"</code> настроить квоты на БД</p>
-<h2 id="database">Database<a class="headerlink" href="#database" title="Permanent link">&para;</a></h2>
+<h2 id="database">Database</h2>
 <p><code>Get-MailboxDatabase -Status | select ServerName,Name,DatabaseSize</code> список и размер всех БД на всех MX-серверах <br />
 <code>New-MailboxDatabase -Name it_2022 -EdbFilePath E:\Bases\it_2022\it_2022.edb -LogFolderPath G:\Logs\it_2022 -OfflineAddressBook "Default Offline Address List" -server exch-mx-01</code> создать БД <br />
 <code>Restart-Service MSExchangeIS</code> <br />
@@ -1269,7 +1271,7 @@ UseDatabaseQuotaDefaults — используется ли квота БД ил�
 <code>Set-MailboxDatabase -CircularLoggingEnabled $true -Identity $db_name</code> включить циклическое ведение журнала (Circular Logging), где последовательно пишутся 4 файла логов по 5 МБ, после чего первый лог-файл перезаписывается <br />
 <code>Set-MailboxDatabase -CircularLoggingEnabled $false -Identity $db_name</code> отключить циклическое ведение журнала <br />
 <code>Get-MailboxDatabase -Server "exch-mx-01" -Status | select EdbFilePath,LogFolderPath,LogFilePrefix</code> путь к БД, логам, имя текущего актуального лог-файла</p>
-<h2 id="mailboxrepairrequest">MailboxRepairRequest<a class="headerlink" href="#mailboxrepairrequest" title="Permanent link">&para;</a></h2>
+<h2 id="mailboxrepairrequest">MailboxRepairRequest</h2>
 <p><code>New-MailboxRepairRequest -Database it2 -CorruptionType ProvisionedFolder, SearchFolder, AggregateCounts, Folderview</code> запустить последовательный тест (в конкретный момент времени не доступен один почтовый ящик) и исправление ошибок на прикладном уровне <br />
 <code>Get-MailboxRepairRequest -Database it2</code> прогресс выполнения <br />
 Позволяет исправить: <br />
@@ -1277,7 +1279,7 @@ ProvisionedFolder – нарушения логической структуры
 SearchFolder – ошибки в папках поиска <br />
 AggregateCounts – проверка и исправление информации о количестве элементов в папках и их размере <br />
 FolderView – неверное содержимое, отображаемое представлениями папок</p>
-<h2 id="eseutil">eseutil<a class="headerlink" href="#eseutil" title="Permanent link">&para;</a></h2>
+<h2 id="eseutil">eseutil</h2>
 <p>При отправке/получении любого письма Exchange сначала вносит информацию в транзакционный лог, и только потом сохраняет элемент непосредственно в базу данных. Размер одного лог файла - 1 Мб. Есть три способа урезания логов: DAG, Backup на базе Volume Shadow Copy, Circular Logging.</p>
 <p>Ручное удаление журналов транзакций: <br />
 <code>cd E:\MS_Exchange_2010\MailBox\Reg_v1_MailBoxes\</code> перейти в каталог с логами <br />
@@ -1341,14 +1343,14 @@ State: Clear shutdown - успешный статус <br />
 <code>Get-Mailbox -Database Mailbox_DB_02 | where {$_.ObjectClass -NotMatch '(SystemAttendantMailbox|ExOleDbSystemMailbox)'} | Set-Mailbox -Database Mailbox_DB_02_02</code><br />
 6. Восстановление логической целостности данных:<br />
 <code>New-MailboxRepairRequest -Database "Mailbox_DB_02_02" -CorruptionType ProvisionedFolder, SearchFolder, AggregateCounts, Folderview</code></p>
-<h2 id="dial-tone-recovery">Dial Tone Recovery<a class="headerlink" href="#dial-tone-recovery" title="Permanent link">&para;</a></h2>
+<h2 id="dial-tone-recovery">Dial Tone Recovery</h2>
 <p><code>Get-Mailbox -Database "MailboxDB" | Set-Mailbox -Database "TempDB"</code> перенацелить ящики с одной БД (нерабочей) на другую (пустую) <br />
 <code>Get-Mailbox -Database TempDB</code> отобразить почтовые ящики в БД TempDB <br />
 <code>Restart-Service MSExchangeIS</code> перезапустить службу Mailbox Information Store (банка данных), иначе пользователи будут по-прежнему пытаться подключиться к старой БД <br />
 <code>iisreset</code> <br />
 <code>Get-Mailbox -Database "TempDB" | Set-Mailbox -Database "MailboxDB"</code> после восстановления старой БД, нужно переключить пользователей с временной БД обратно <br />
 После этого сделать слияние с временной БД с помощью Recovery.</p>
-<h2 id="recovery-database-rdb">Recovery database (RDB)<a class="headerlink" href="#recovery-database-rdb" title="Permanent link">&para;</a></h2>
+<h2 id="recovery-database-rdb">Recovery database (RDB)</h2>
 <p><code>New-MailboxDatabase –Recovery –Name RecoveryDB –Server $exch_mx –EdbFilePath "D:\TempDB\TempDB.edb" -LogFolderPath "D:\TempDB"</code> для переноса новых писем из временной БД в основную необходим только сам файл TempDB.edb со статусом Clean Shutdown, из нее необходимо создать служебную БД (ключ -Recovery) <br />
 <code>Mount-Database "D:\TempDB\TempDB.edb"</code> примонтировать БД <br />
 <code>Get-MailboxStatistics -Database RecoveryDB</code> <br />
@@ -1357,7 +1359,7 @@ State: Clear shutdown - успешный статус <br />
 <code>Get-MailboxRestoreRequest | Get-MailboxRestoreRequestStatistics</code> статус запроса восстановления <br />
 <code>Get-MailboxRestoreRequestStatistics -Identity support</code> <br />
 <code>Get-MailboxRestoreRequest -Status Completed | Remove-MailboxRestoreRequest</code> удалить все успешные запросы</p>
-<h2 id="transport">Transport<a class="headerlink" href="#transport" title="Permanent link">&para;</a></h2>
+<h2 id="transport">Transport</h2>
 <p><code>Get-TransportServer $srv_cas | select MaxConcurrentMailboxDeliveries,MaxConcurrentMailboxSubmissions,MaxConnectionRatePerMinute,MaxOutboundConnections,MaxPerDomainOutboundConnections,PickupDirectoryMaxMessagesPerMinute</code> настройки пропускной способности транспортного сервера <br />
 MaxConcurrentMailboxDeliveries — максимальное количество одновременных потоков, которое может открыть сервер для отправки писем. <br />
 MaxConcurrentMailboxSubmissions — максимальное количество одновременных потоков, которое может открыть сервер для получения писем. <br />
@@ -1368,7 +1370,7 @@ PickupDirectoryMaxMessagesPerMinute — скорость внутренней о
 <code>Set-TransportServer exchange-cas -MaxConcurrentMailboxDeliveries 21 -MaxConcurrentMailboxSubmissions 21 -MaxConnectionRatePerMinute 1201 -MaxOutboundConnections 1001 -MaxPerDomainOutboundConnections 21 -PickupDirectoryMaxMessagesPerMinute 101</code> изменить значения</p>
 <p><code>Get-TransportConfig | select MaxSendSize, MaxReceiveSize</code> ограничение размера сообщения на уровне траспорта (наименьший приоритет, после коннектора и почтового ящика). <br />
 <code>New-TransportRule -Name AttachmentLimit -AttachmentSizeOver 15MB -RejectMessageReasonText "Sorry, messages with attachments over 15 MB are not accepted"</code> создать транспортное правило для проверки размера вложения</p>
-<h2 id="connector">Connector<a class="headerlink" href="#connector" title="Permanent link">&para;</a></h2>
+<h2 id="connector">Connector</h2>
 <p><code>Get-ReceiveConnector | select Name,MaxMessageSize,RemoteIPRanges,WhenChanged</code> ограничения размера сообщения на уровне коннектора (приоритет ниже, чем у почтового ящика) <br />
 <code>Set-ReceiveConnector ((Get-ReceiveConnector).Identity)[-1] -MaxMessageSize 30Mb</code> изменить размер у последнего коннектора в списке (приоритет выше, чем у траспорта) <br />
 <code>Get-Mailbox "support4" | select MaxSendSize, MaxReceiveSize</code> наивысший приоритет <br />
@@ -1380,21 +1382,21 @@ PickupDirectoryMaxMessagesPerMinute — скорость внутренней о
 <code>Set-ReceiveConnector ((Get-ReceiveConnector).Identity)[-1] -MessageRateLimit 1000</code> задать лимит обработки сообщений в минуту для коннектора</p>
 <p><code>Get-OfflineAddressbook | Update-OfflineAddressbook</code> обновить OAB <br />
 <code>Get-ClientAccessServer | Update-FileDistributionService</code></p>
-<h2 id="pst">PST<a class="headerlink" href="#pst" title="Permanent link">&para;</a></h2>
+<h2 id="pst">PST</h2>
 <p><code>New-MailboxExportRequest -Mailbox $name -filepath "\\$srv\pst\$name.PST" ## -ContentFilter {(Received -lt "01/01/2021")} -Priority Highest/Lower ## -IsArchive</code> выполнить экспорт из архива пользователя <br />
 <code>New-MailboxExportRequest -Mailbox $name -IncludeFolders "##Inbox##" -FilePath "\\$srv\pst\$name.PST"</code> только папку входящие <br />
 <code>New-MailboxImportRequest -Mailbox $name "\\$srv\pst\$name.PST"</code> импорт из PST <br />
 <code>Get-MailboxExportRequest</code> статус запросов <br />
 <code>Get-MailboxExportRequest -Status Completed | Remove-MailboxExportRequest</code> удалить успешно завершенные запросы <br />
 <code>Remove-MailboxExportRequest -RequestQueue MBXDB01 -RequestGuid 25e0eaf2-6cc2-4353-b83e-5cb7b72d441f</code> отменить экспорт</p>
-<h2 id="distributiongroup">DistributionGroup<a class="headerlink" href="#distributiongroup" title="Permanent link">&para;</a></h2>
+<h2 id="distributiongroup">DistributionGroup</h2>
 <p><code>Get-DistributionGroup</code> список групп рассылки <br />
 <code>Get-DistributionGroupMember "!_Офис"</code> список пользователей в группе <br />
 <code>Add-DistributionGroupMember -Identity "!_Офис" -Member "$name@$domain"</code> добавить в группу рассылки <br />
 <code>Remove-DistributionGroupMember -Identity "!_Офис" -Member "$name@$domain"</code> <br />
 <code>New-DistributionGroup -Name "!_Тест" -Members "$name@$domain"</code> создать группу <br />
 <code>Set-DistributionGroup -Identity "support4" -HiddenFromAddressListsEnabled $true (или Set-Mailbox)</code> скрыть из списка адресов Exchange</p>
-<h2 id="search">Search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h2>
+<h2 id="search">Search</h2>
 <p><code>Search-Mailbox -Identity "support4" -SearchQuery 'Тема:"Mikrotik DOWN"'</code> поиск писем по теме <br />
 <code>Search-Mailbox -Identity "support4" -SearchQuery 'Subject:"Mikrotik DOWN"'</code><br />
 <code>Search-Mailbox -Identity "support4" -SearchQuery 'attachment -like:"*.rar"'</code><br />
@@ -1404,21 +1406,21 @@ PickupDirectoryMaxMessagesPerMinute — скорость внутренней о
 <code>07/20/2018</code> <br />
 <code>20-Jul-2018</code> <br />
 <code>20/July/2018</code></p>
-<h2 id="auditlog">AuditLog<a class="headerlink" href="#auditlog" title="Permanent link">&para;</a></h2>
+<h2 id="auditlog">AuditLog</h2>
 <p><code>Get-AdminAuditLogConfig</code> настройки аудита <br />
 <code>Set-Mailbox -Identity "support4" -AuditOwner HardDelete</code> добавить логирование HardDelete писем <br />
 <code>Set-mailbox -identity "support4" -AuditlogAgelimit 120</code> указать время хранения <br />
 <code>Get-mailbox -identity "support4" | Format-list Audit*</code> данные аудита <br />
 <code>Search-MailboxAuditLog -Identity "support4" -LogonTypes Delegate -ShowDetails -Start "2022-02-22 18:00" -End "2022-03-22 18:00"</code> просмотр логов <br />
 <code>Search-AdminAuditLog -StartDate "02/20/2022" | ft CmdLetName,Caller,RunDate,ObjectModified -Autosize</code> поиск событий истории выполненых команд в журнале аудита Exchange</p>
-<h2 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
+<h2 id="test">Test</h2>
 <p><code>Test-ServiceHealth</code> проверить доступность ролей сервера: почтовых ящиков, клиентского доступа, единой системы обмена сообщениями, траспортного сервера <br />
 <code>$mx_srv_list | %{Test-MapiConnectivity -Server $_}</code> проверка подключения MX-серверов к БД <br />
 <code>Test-MAPIConnectivity -Database $db</code> проверка возможности логина в базу <br />
 <code>Test-MAPIConnectivity –Identity $user@$domain</code> проверка возможности логина в почтовый ящик <br />
 <code>Test-ComputerSecureChannel</code> проверка работы службы AD <br />
 <code>Test-MailFlow</code> результат тестового потока почты</p>
-<h2 id="queue">Queue<a class="headerlink" href="#queue" title="Permanent link">&para;</a></h2>
+<h2 id="queue">Queue</h2>
 <p><code>Get-TransportServer | %{Get-Queue -Server $_.Name}</code> отобразить очереди на всех транспортных серверах <br />
 <code>Get-Queue -Identity EXCHANGE-CAS\155530 | Format-List</code> подробная информация об очереди <br />
 <code>Get-Queue -Identity EXCHANGE-CAS\155530 | Get-Message -ResultSize Unlimited | Select FromAddress,Recipients</code> отобразить список отправителей (FromAddress) и список получателей в очереди (Recipients) <br />
@@ -1436,7 +1438,7 @@ PickupDirectoryMaxMessagesPerMinute — скорость внутренней о
 <code>C:\Program Files\Microsoft\Exchange Server\V15\Bin\EdgeTransport.exe.config</code> конфигурационный файл, который содержит путь к бд с очередью (блок <appSettings> ключи <add key="QueueDatabasePath" value="$new_path" /> и QueueDatabaseLoggingPath) <br />
 Для переноса БД, необходимо переместить существующие файлы базы данных Mail.que и Trn.chk (контрольные точки для отслеживания записи в логах) из исходного местоположения в новое. Переместите существующие файлы журнала транзакций Trn.log, Trntmp.log, Trn nnnn.log , Trnres00001.jrs, Trnres00002.jrs и Temp.edb из старого расположения в новое. tmp.edb — временный файл для проверки схемы самой базы, перености не нужно. <br />
 После запуска службы транспорта удалить старую базу данных очереди и файлы журнала транзакций из старого расположения.</p>
-<h2 id="defrag">Defrag<a class="headerlink" href="#defrag" title="Permanent link">&para;</a></h2>
+<h2 id="defrag">Defrag</h2>
 <p><code>Get-MailboxDatabase -Status | ft Name, DatabaseSize, AvailableNewMailboxSpace</code> <br />
 DatabaseSize - текущий размер базы <br />
 AvailableNewMailboxSpace - объём пустых страниц, пространство, которое можно освободить при дефрагментации <br />
@@ -1445,7 +1447,7 @@ AvailableNewMailboxSpace - объём пустых страниц, простр�
 <code>Dismount-Database "$path\$db_name"</code> отмонтировать БД <br />
 <code>eseutil /d "$path\$db_name.edb"</code> <br />
 <code>Mount-Database "$path\$db"</code> примонтировать БД</p>
-<h2 id="dag-database-availability-group">DAG (Database Availability Group)<a class="headerlink" href="#dag-database-availability-group" title="Permanent link">&para;</a></h2>
+<h2 id="dag-database-availability-group">DAG (Database Availability Group)</h2>
 <p><code>Install-WindowsFeature -Name Failover-Clustering -ComputerName EXCH-MX-01</code> основывается на технологии Windows Server Failover Cluster <br />
 <code>New-DatabaseAvailabilityGroup -Name dag-01 -WitnessServer fs-05 -WitnessDirectory C:\witness_exchange1</code> создать группу с указанием файлового свидетеля для кворума <br />
 Quorum - это процесс голосования, в котором для принятия решения нужно иметь большинство голосов, что бы сделать текущую копию базы данных активной. <br />
@@ -1475,7 +1477,7 @@ CopyQueue Length - длина репликационной очереди коп
 <code>Import-Module FailoverClusters</code> <br />
 <code>Get-ClusterNode EXCH-MX-04 | Remove-ClusterNode -Force</code> удалить отказавший узел из Windows Failover Cluster</p>
 <p><code>Get-DatabaseAvailabilityGroup | Get-DatabaseAvailabilityGroupHealth</code> мониторинг</p>
-<h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
+<h2 id="index">Index</h2>
 <p><code>Get-MailboxDatabaseCopyStatus * | select name,status,ContentIndexState,ContentIndexErrorMessage,ActiveDatabaseCopy,LatestCopyBackupTime,CopyQueueLength</code> узнать состояние работы индксов БД и текст ошибки, на каком сервере активная копия БД, дата последней копии и текущая очередь <br />
 <code>Get-MailboxDatabaseCopyStatus -Identity $db_name\* | Format-List Name,ContentIndexState</code> отобразить список всех копий конкретной БД на всех серверах, и статус их индексов, если у второго сервера статус Healthy, можно восстановить из него <br />
 <code>Get-MailboxDatabaseCopyStatus -Identity $db_name\EXCH-MX-04 | Update-MailboxDatabaseCopy -SourceServer EXCH-MX-01 -CatalogOnly</code> восстановить БД из копии <br />
@@ -1560,9 +1562,11 @@ CopyQueue Length - длина репликационной очереди коп
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1034,7 +1036,7 @@
 
   <h1>Active Directory</h1>
 
-<h2 id="rsat-remote-server-administration-tools">RSAT (Remote Server Administration Tools)<a class="headerlink" href="#rsat-remote-server-administration-tools" title="Permanent link">&para;</a></h2>
+<h2 id="rsat-remote-server-administration-tools">RSAT (Remote Server Administration Tools)</h2>
 <p><code>DISM.exe /Online /add-capability /CapabilityName:Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0 /CapabilityName:Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0</code> <br />
 <code>Add-WindowsCapability –online –Name Rsat.Dns.Tools~~~~0.0.1.0</code> <br />
 <code>Add-WindowsCapability -Online -Name Rsat.DHCP.Tools~~~~0.0.1.0</code> <br />
@@ -1043,13 +1045,13 @@
 <code>Add-WindowsCapability -Online -Name Rsat.CertificateServices.Tools~~~~0.0.1.0</code> <br />
 <code>Add-WindowsCapability -Online -Name Rsat.RemoteDesktop.Services.Tools~~~~0.0.1.0</code> <br />
 <code>Get-WindowsCapability -Name RSAT* -Online | Select-Object -Property DisplayName, State</code> отобразить список установленных компанентов</p>
-<h2 id="import-module-activedirectory">Import-Module ActiveDirectory<a class="headerlink" href="#import-module-activedirectory" title="Permanent link">&para;</a></h2>
+<h2 id="import-module-activedirectory">Import-Module ActiveDirectory</h2>
 <p><code>$Session = New-PSSession -ComputerName $srv</code> -Credential $cred <br />
 <code>Export-PSsession -Session $Session -Module ActiveDirectory -OutputModule ActiveDirectory</code> экспортировать модуль из удаленной сесси (например, с DC) <br />
 <code>Remove-PSSession -Session $Session</code> <br />
 <code>Import-Module ActiveDirectory</code> <br />
 <code>Get-Command -Module ActiveDirectory</code></p>
-<h2 id="adsi-active-directory-service-interface">ADSI (Active Directory Service Interface)<a class="headerlink" href="#adsi-active-directory-service-interface" title="Permanent link">&para;</a></h2>
+<h2 id="adsi-active-directory-service-interface">ADSI (Active Directory Service Interface)</h2>
 <p><code>$d0 = $env:userdnsdomain</code> <br />
 <code>$d0 = $d0 -split "\."</code> <br />
 <code>$d1 = $d0[0]</code> <br />
@@ -1060,7 +1062,7 @@
 <code>$Local_User | Get-Member</code> <br />
 <code>$Local_User.Description</code> <br />
 <code>$Local_User.LastLogin</code> время последней авторизации локального пользователя</p>
-<h2 id="ldap-lightweight-directory-access-protocol">LDAP (Lightweight Directory Access Protocol)<a class="headerlink" href="#ldap-lightweight-directory-access-protocol" title="Permanent link">&para;</a></h2>
+<h2 id="ldap-lightweight-directory-access-protocol">LDAP (Lightweight Directory Access Protocol)</h2>
 <p><code>$ldapsearcher = New-Object System.DirectoryServices.DirectorySearcher</code> <br />
 <code>$ldapsearcher.SearchRoot = "LDAP://OU=Domain Controllers,DC=$d1,DC=$d2"</code> <br />
 <code>$ldapsearcher.Filter = "(objectclass=computer)"</code> <br />
@@ -1079,13 +1081,13 @@ CN (Common Name) - общее имя</p>
 <p><code>(Get-ADObject (Get-ADRootDSE).DefaultNamingContext -Properties wellKnownObjects).wellKnownObjects</code> отобразить отобразить контейнеры по умолчанию <br />
 <code>redircmp OU=Client Computers,DC=root,DC=domain,DC=local</code> изменить контейнер компьютеров по умолчанию <br />
 <code>redirusr</code> изменить контейнер пользователей по умолчанию</p>
-<h2 id="laps-local-admin-password-management">LAPS (Local Admin Password Management)<a class="headerlink" href="#laps-local-admin-password-management" title="Permanent link">&para;</a></h2>
+<h2 id="laps-local-admin-password-management">LAPS (Local Admin Password Management)</h2>
 <p><code>Import-module AdmPwd.ps</code> импортировать модуль <br />
 <code>Get-AdmPwdPassword -ComputerName NAME</code> посмотреть пароль <br />
 <code>Reset-AdmPwdPassword -ComputerName NAME</code> изменить пароль <br />
 <code>Get-ADComputer -Filter * -SearchBase "DC=$d1,DC=$d2" | Get-AdmPwdPassword -ComputerName {$_.Name} | select ComputerName,Password,ExpirationTimestamp | Out-GridView</code> <br />
 <code>Get-ADComputer -Identity $srv | Get-AdmPwdPassword -ComputerName {$_.Name} | select ComputerName,Password,ExpirationTimestamp</code></p>
-<h2 id="recycle-bin">Recycle Bin<a class="headerlink" href="#recycle-bin" title="Permanent link">&para;</a></h2>
+<h2 id="recycle-bin">Recycle Bin</h2>
 <p>Удаленные объекты хранятся в корзине AD в течении времени захоронения (определяется в атрибуте домена msDS-deletedObjectLifetime), заданном для леса. По умолчанию это 180 дней. Если данный срок прошел, объект все еще остается в контейнере Deleted Objects, но большинство его атрибутов и связей очищаются (Recycled Object). После истечения периода tombstoneLifetime (по умолчанию также 180 дней, но можно увеличить) объект полностью удаляется из AD автоматическим процессом очистки. <br />
 <code>Get-ADForest domain.local</code> отобразить уровень работы леса <br />
 <code>Set-ADForestMode -Identity domain.local -ForestMode Windows2008R2Forest -force</code> увеличить уровень работы леса <br />
@@ -1097,10 +1099,10 @@ CN (Common Name) - общее имя</p>
 <code>Restore-ADObject -Identity "3dc33c7c-b912-4a19-b1b7-415c1395a34e"</code> восстановить по значению атрибута ObjectGUID <br />
 <code>Get-ADObject -Filter 'SAMAccountName -eq "tnas-01"' –IncludeDeletedObjects | Restore-ADObject</code> восстановить по SAMAccountName <br />
 <code>Get-ADObject -Filter {Deleted -eq $True -and ObjectClass -eq 'group' -and Name -like '*Allow*'} –IncludeDeletedObjects | Restore-ADObject –Verbose</code> восстановить группу или компьютер</p>
-<h2 id="thumbnailphoto">thumbnailPhoto<a class="headerlink" href="#thumbnailphoto" title="Permanent link">&para;</a></h2>
+<h2 id="thumbnailphoto">thumbnailPhoto</h2>
 <p><code>$photo = [byte[]](Get-Content C:\Install\adm.jpg -Encoding byte)</code> преобразовать файл картинки в массив байтов (jpeg/bmp файл, размером фото до 100 Кб и разрешением 96?96) <br />
 <code>Set-ADUser support4 -Replace @{thumbnailPhoto=$photo}</code> задать значение атрибута thumbnailPhoto</p>
-<h2 id="addomaincontroller">ADDomainController<a class="headerlink" href="#addomaincontroller" title="Permanent link">&para;</a></h2>
+<h2 id="addomaincontroller">ADDomainController</h2>
 <p><code>Get-ADDomainController</code> выводит информацию о текущем контроллере домена (LogonServer), который используется данным компьютером для аутентификации (DC выбирается при загрузке в соответствии с топологией сайтов AD) <br />
 <code>Get-ADDomainController -Discover -Service PrimaryDC</code> найти контроллер с ролью PDC в домене <br />
 <code>Get-ADDomainController -Filter * | ft HostName,IPv4Address,Name,Site,OperatingSystem,IsGlobalCatalog</code> список все DC, принадлежность к сайту, версии ОС и GC</p>
@@ -1108,7 +1110,7 @@ CN (Common Name) - общее имя</p>
 <p>USN (Update Sequence Numbers) - счетчик номера последовательного обновления, который существует у каждого объекта AD. При репликации контроллеры обмениваются значениями USN, объект с более низким USN будет при репликации перезаписан объектом с более высоким USN. Находится в свойствах - Object (включить View - Advanced Features). Каждый контроллер домена содержит отдельный счетчик USN, который начинает отсчет в момент запуска процесса Dcpromo и продолжает увеличивать значения в течение всего времени существования контроллера домена. Значение счетчика USN увеличивается каждый раз, когда на контроллере домена происходит транзакция, это операции создания, обновления или удаления объекта.</p>
 <p><code>Get-ADDomainController -Filter * | % {</code> отобразить USN объекта на всех DC в домене<code></code>Get-ADUser -Server $_.HostName -Identity support4 -Properties uSNChanged | select SamAccountName,uSNChanged<code></code>}`</p>
 <p><code>dcpromo /forceremoval</code> принудительно выполнит понижение в роли контроллера домена до уровня рядового сервера. После понижения роли выполняется удаление всех ссылок в домене на этот контроллер. Далее производит включение сервера в состав домена, и выполнение обратного процесса, т.е. повышение сервера до уровня контроллера домена.</p>
-<h2 id="adcomputer">ADComputer<a class="headerlink" href="#adcomputer" title="Permanent link">&para;</a></h2>
+<h2 id="adcomputer">ADComputer</h2>
 <p><code>nltest /DSGETDC:$env:userdnsdomain</code> узнать на каком DC аудентифицирован хост (Logon Server) <br />
 <code>nltest /SC_RESET:$env:userdnsdomain\srv-dc2.$env:userdnsdomain</code> переключить компьютер на другой контроллер домена AD вручную (The command completed successfully) <br />
 <code>Get-ADComputer –Identity $env:computername -Properties PasswordLastSet</code> время последней смены пароля на сервере <br />
@@ -1129,7 +1131,7 @@ CN (Common Name) - общее имя</p>
 <code>if ($_.Enabled -eq "True") {$_.Enabled -replace "True","Active"} else {$_.Enabled -replace "False","Blocked"}</code> <br />
 <code>}}, Name, IPv4Address, OperatingSystem, @{Label="UserOwner"; Expression={$_.ManagedBy -replace "(CN=|,.+)"}</code> <br />
 <code>},Created | Out-GridView</code></p>
-<h2 id="aduser">ADUser<a class="headerlink" href="#aduser" title="Permanent link">&para;</a></h2>
+<h2 id="aduser">ADUser</h2>
 <p><code>Get-ADUser -Identity support4 -Properties *</code> список всех атрибутов <br />
 <code>Get-ADUser -Identity support4 -Properties DistinguishedName, EmailAddress, Description</code> путь DN, email и описание <br />
 <code>Get-ADUser -Filter {(Enabled -eq "True") -and (mail -ne "null")} -Properties mail | ft Name,mail</code> список активных пользователей и есть почтовый ящик <br />
@@ -1157,19 +1159,19 @@ CN (Common Name) - общее имя</p>
 <code>Get-ADUser -Filter {(LastLogonTimestamp -le $day)} -Property LastLogonTimestamp | select Name,SamAccountName,@{n='LastLogonTimestamp';e={[DateTime]::FromFileTime($_.LastLogonTimestamp)}} | sort -Descending LastLogonTimestamp</code> пользователи, которые не логинились больше 360 дней. Репликация атрибута LastLogonTimestamp составляет от 9 до 14 дней. <br />
 <code>| Disable-ADAccount $_.SamAccountName</code> заблокировать <br />
 <code>-WhatIf</code> отобразить вывод без применения изменений</p>
-<h2 id="adgroupmember">ADGroupMember<a class="headerlink" href="#adgroupmember" title="Permanent link">&para;</a></h2>
+<h2 id="adgroupmember">ADGroupMember</h2>
 <p><code>(Get-ADUser -Identity support4 -Properties MemberOf).memberof</code> список групп в которых состоит пользователь <br />
 <code>Get-ADGroupMember -Identity "Domain Admins" | Select Name,SamAccountName</code> список пользователей в группе <br />
 <code>Add-ADGroupMember -Identity "Domain Admins" -Members support5</code> добавить в группу <br />
 <code>Remove-ADGroupMember -Identity "Domain Admins" -Members support5 -force</code> удалить из группы <br />
 <code>Get-ADGroup -filter * | where {!($_ | Get-ADGroupMember)} | Select Name</code> отобразить список пустых групп (-Not)</p>
-<h2 id="adreplication">ADReplication<a class="headerlink" href="#adreplication" title="Permanent link">&para;</a></h2>
+<h2 id="adreplication">ADReplication</h2>
 <p><code>Get-Command -Module ActiveDirectory -Name *Replication*</code> список всех командлетов модуля <br />
 <code>Get-ADReplicationFailure -Target dc-01</code> список ошибок репликации с партнерами <br />
 <code>Get-ADReplicationFailure -Target $env:userdnsdomain -Scope Domain</code> <br />
 <code>Get-ADReplicationPartnerMetadata -Target dc-01 | select Partner,LastReplicationAttempt,LastReplicationSuccess,LastReplicationResult,LastChangeUsn</code> время последней и время успешной репликации с партнерами <br />
 <code>Get-ADReplicationUpToDatenessVectorTable -Target dc-01</code> Update Sequence Number (USN) увеличивается каждый раз, когда на контроллере домена происходит транзакция (операции создания, обновления или удаления объекта), при репликации DC обмениваются значениями USN, объект с более низким USN при репликации будет перезаписан высоким USN.</p>
-<h2 id="repadmin">repadmin<a class="headerlink" href="#repadmin" title="Permanent link">&para;</a></h2>
+<h2 id="repadmin">repadmin</h2>
 <p><code>repadmin /replsummary</code> отображает время последней репликации на всех DC по направлению (Source и Destination) и их состояние с учетом партнеров <br />
 <code>repadmin /showrepl $srv</code> отображает всех партнеров по реплкации и их статус для всех разделов Naming Contexts (DC=ForestDnsZones, DC=DomainDnsZones, CN=Schema, CN=Configuration) <br />
 <code>repadmin /replicate $srv2 $srv1 DC=domain,DC=local</code> выполнить репликацию с $srv1 на $srv2 только указанный раздела домена <br />
@@ -1200,7 +1202,7 @@ CN (Common Name) - общее имя</p>
 <code>##define DSA_WRITABLE_NO_SPACE 2</code> на диске, где размещена база данных Active Directory или файлы журналов (логи), недостаточно свободного места <br />
 <code>##define DSA_WRITABLE_USNROLLBCK 4</code> откат USN произошел из-за неправильного отката базы данных Active Directory во времени (восстановление из снапшота) <br />
 <code>##define DSA_WRITABLE_CORRUPT_UTDV 8</code> вектор актуальности поврежден на локальном контроллере домена</p>
-<h2 id="dcdiag">dcdiag<a class="headerlink" href="#dcdiag" title="Permanent link">&para;</a></h2>
+<h2 id="dcdiag">dcdiag</h2>
 <p><code>dcdiag /s:&lt;DomainController&gt; [/n:&lt;NamingContext&gt;] [[/u:&lt;domain\user&gt;] [/p:&lt;password&gt;]] [{/a|/e}{/q|/v}] [/f:&lt;LogFile&gt;] [/ferr:&lt;ErrorLog&gt;] [/test:&lt;test&gt;] [/fix]</code> <br />
 <code>dcdiag /Test:replications /s:dc-01</code> отображает ошибки репликации <br />
 <code>dcdiag /Test:DNS /e /v /q</code> тест DNS <br />
@@ -1232,7 +1234,7 @@ CN (Common Name) - общее имя</p>
 <code>VerifyEnterpriseReferences</code> проверяет действительность системных ссылок службы репликации файлов для всех объектов на всех контроллерах домена в лесу <br />
 <code>VerifyReferences</code> проверяет действительность системных ссылок службы репликации файлов для всех объектов на указанном контроллере домена <br />
 <code>VerifyReplicas</code> проверяет действительность всех разделов каталога приложения на всех серверах, принимающих участие в репликации</p>
-<h2 id="ntdsutil">ntdsutil<a class="headerlink" href="#ntdsutil" title="Permanent link">&para;</a></h2>
+<h2 id="ntdsutil">ntdsutil</h2>
 <p>Перенос БД AD (ntds.dit): <br />
 <code>Get-Acl C:\Windows\NTDS | Set-Acl D:\AD-DB</code> скопировать NTFS разрешения на новый каталог <br />
 <code>Stop-Service -ComputerName dc -name NTDS</code> остановить службу Active Directory Domain Services <br />
@@ -1287,7 +1289,7 @@ CN (Common Name) - общее имя</p>
 <code>compact to C:\Windows\NTDS\TEMP</code> <br />
 <code>copy C:\Windows\NTDS\TEMP\ntds.dit C:\Windows\NTDS\ntds.dit</code> заменить оригинальный файл ntds.dit <br />
 <code>Del C:\Windows\NTDS\*.log</code> удалить все лог файлы из каталога NTDS</p>
-<h2 id="gpo">GPO<a class="headerlink" href="#gpo" title="Permanent link">&para;</a></h2>
+<h2 id="gpo">GPO</h2>
 <p><code>Get-Command -Module GroupPolicy</code> <br />
 <code>Get-GPO -Domain domain.local -All | ft</code> <br />
 <code>Get-GPO -Name LAPS</code> <br />
@@ -1376,9 +1378,11 @@ CN (Common Name) - общее имя</p>
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>

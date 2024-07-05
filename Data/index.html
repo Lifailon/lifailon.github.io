@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="../_highlight/obsidian.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1296,8 +1298,8 @@
   
 
 
-<h2 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">&para;</a></h2>
-<h3 id="convertfrom-html">ConvertFrom-Html<a class="headerlink" href="#convertfrom-html" title="Permanent link">&para;</a></h3>
+<h2 id="html">HTML</h2>
+<h3 id="convertfrom-html">ConvertFrom-Html</h3>
 <pre><code class="language-PowerShell">function ConvertFrom-Html {
     param (
         [Parameter(ValueFromPipeline)]$url
@@ -1312,7 +1314,7 @@
 $apache_status = &quot;http://192.168.3.102/server-status&quot;
 $apache_status | ConvertFrom-Html
 </code></pre>
-<h3 id="convertto-html">ConvertTo-Html<a class="headerlink" href="#convertto-html" title="Permanent link">&para;</a></h3>
+<h3 id="convertto-html">ConvertTo-Html</h3>
 <p><code>Get-Process | select Name, CPU | ConvertTo-Html -As Table &gt; "$home\desktop\proc-table.html"</code> вывод в формате List (Format-List) или Table (Format-Table)</p>
 <pre><code class="language-PowerShell">$servers = &quot;ya.ru&quot;,&quot;ya.com&quot;,&quot;google.com&quot;
 $path = &quot;$home\Desktop\Ping.html&quot; 
@@ -1357,12 +1359,12 @@ $results | ConvertTo-Html -head $header -body $body | foreach {
 } | Out-File $path
 Invoke-Item $path
 </code></pre>
-<h3 id="pswritehtml">PSWriteHTML<a class="headerlink" href="#pswritehtml" title="Permanent link">&para;</a></h3>
+<h3 id="pswritehtml">PSWriteHTML</h3>
 <pre><code class="language-PowerShell">Import-Module PSWriteHTML
 (Get-Module PSWriteHTML).ExportedCommands
 Get-Service | Out-GridHtml -FilePath ~\Desktop\Get-Service-Out-GridHtml.html
 </code></pre>
-<h3 id="htmlreport">HtmlReport<a class="headerlink" href="#htmlreport" title="Permanent link">&para;</a></h3>
+<h3 id="htmlreport">HtmlReport</h3>
 <pre><code class="language-PowerShell">Import-Module HtmlReport
 $topVM = ps | Sort PrivateMemorySize -Descending | Select -First 10 | %{,@(($_.ProcessName + &quot; &quot; + $_.Id), $_.PrivateMemorySize)}
 $topCPU = ps | Sort CPU -Descending | Select -First 10 | %{,@(($_.ProcessName + &quot; &quot; + $_.Id), $_.CPU)}
@@ -1372,7 +1374,7 @@ New-Chart Column &quot;Top CPU Overall&quot; -input $topCPU
 ps | Select ProcessName, Id, CPU, WorkingSet, *MemorySize | New-Table &quot;All Processes&quot;
 } &gt; ~\Desktop\Get-Process-HtmlReport.html
 </code></pre>
-<h3 id="htmlagilitypack">HtmlAgilityPack<a class="headerlink" href="#htmlagilitypack" title="Permanent link">&para;</a></h3>
+<h3 id="htmlagilitypack">HtmlAgilityPack</h3>
 <p><a href="https://www.nuget.org/packages/HtmlAgilityPack">Source</a></p>
 <pre><code class="language-PowerShell"># Загрузка библиотеки C#, которая позволяет парсить HTML-документы, выбирать элементы DOM и извлекать из них данные
 Add-Type -Path &quot;C:\Users\Lifailon\Downloads\HtmlAgilityPack\Net40\HtmlAgilityPack.dll&quot;
@@ -1420,8 +1422,8 @@ $HtmlDocument.DocumentNode.SelectNodes(&quot;//tr&quot;) | ForEach-Object {
 Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip 1080p | Octopus     45.97 Gb http://fasts-torrent.net/download/364161/torrent/-2-1-20-20-2019-webrip-1080p-octopus/
 Новобранец (2 сезон: 1-20 серии из 20) (2019) WEB-DLRip | LostFilm       11.95 Gb http://fasts-torrent.net/download/364668/torrent/-2-1-20-20-2019-web-dlrip-lostfilm/
 </code></pre>
-<h2 id="markdown">Markdown<a class="headerlink" href="#markdown" title="Permanent link">&para;</a></h2>
-<h3 id="convert-markdown-to-html">Convert Markdown to HTML<a class="headerlink" href="#convert-markdown-to-html" title="Permanent link">&para;</a></h3>
+<h2 id="markdown">Markdown</h2>
+<h3 id="convert-markdown-to-html">Convert Markdown to HTML</h3>
 <pre><code class="language-PowerShell">function ConvertFrom-MarkdownToHtml {
     param (
         [Parameter(Mandatory = $true,ValueFromPipeline = $true)]$Markdown
@@ -1440,9 +1442,9 @@ $HtmlDocument.DocumentNode.SelectNodes(&quot;//tr&quot;) | ForEach-Object {
 }
 </code></pre>
 <p><code>Get-Content index.md -Raw | ConvertFrom-MarkdownToHtml | Out-File index.html</code></p>
-<h3 id="psmarkdown">PSMarkdown<a class="headerlink" href="#psmarkdown" title="Permanent link">&para;</a></h3>
+<h3 id="psmarkdown">PSMarkdown</h3>
 <p>Install-Module PSMarkdown</p>
-<h3 id="convertfrom-markdownv2">ConvertFrom-MarkdownV2<a class="headerlink" href="#convertfrom-markdownv2" title="Permanent link">&para;</a></h3>
+<h3 id="convertfrom-markdownv2">ConvertFrom-MarkdownV2</h3>
 <pre><code class="language-PowerShell">Function ConvertFrom-MarkdownV2 {
     [CmdletBinding()]
     [OutputType([PSObject])]
@@ -1468,7 +1470,7 @@ $HtmlDocument.DocumentNode.SelectNodes(&quot;//tr&quot;) | ForEach-Object {
     }
 }
 </code></pre>
-<h3 id="convertto-markdown">ConvertTo-Markdown<a class="headerlink" href="#convertto-markdown" title="Permanent link">&para;</a></h3>
+<h3 id="convertto-markdown">ConvertTo-Markdown</h3>
 <pre><code class="language-PowerShell">Function ConvertTo-Markdown {
     [CmdletBinding()]
     [OutputType([string])]
@@ -1520,7 +1522,7 @@ $HtmlDocument.DocumentNode.SelectNodes(&quot;//tr&quot;) | ForEach-Object {
     }
 }
 </code></pre>
-<h2 id="xml">XML<a class="headerlink" href="#xml" title="Permanent link">&para;</a></h2>
+<h2 id="xml">XML</h2>
 <pre><code class="language-PowerShell">$xml = [xml](Get-Content $home\desktop\test.rdg)` прочитать содержимое XML-файла
 $xml.load(&quot;$home\desktop\test.rdg&quot;)` открыть файл
 $xml.RDCMan.file.group.properties.name` имена групп
@@ -1534,7 +1536,7 @@ $xml.Save($file)` сохранить содержимое объекта в фа
 <p><code>Get-Service | Export-Clixml -path $home\desktop\test.xml</code> экспортировать объект PowerShell в XML <br />
 <code>Import-Clixml -Path $home\desktop\test.xml</code> импортировать объект XML в PowerShell <br />
 <code>ConvertTo-Xml (Get-Service)</code></p>
-<h3 id="get-credtoxml">Get-CredToXML<a class="headerlink" href="#get-credtoxml" title="Permanent link">&para;</a></h3>
+<h3 id="get-credtoxml">Get-CredToXML</h3>
 <pre><code class="language-PowerShell">function Get-CredToXML {
     param (
         $CredFile = &quot;$home\Documents\cred.xml&quot;
@@ -1557,7 +1559,7 @@ $xml.Save($file)` сохранить содержимое объекта в фа
 <p><code>$Cred = Get-CredToXML</code> <br />
 <code>$Login = $Cred.UserName</code> <br />
 <code>$PasswordText = $Cred.GetNetworkCredential().password</code> получить пароль в текстовом виде</p>
-<h3 id="xmlwriter-extensible-markup-language">XmlWriter (Extensible Markup Language)<a class="headerlink" href="#xmlwriter-extensible-markup-language" title="Permanent link">&para;</a></h3>
+<h3 id="xmlwriter-extensible-markup-language">XmlWriter (Extensible Markup Language)</h3>
 <pre><code class="language-PowerShell">$XmlWriterSettings = New-Object System.Xml.XmlWriterSettings
 $XmlWriterSettings.Indent = $true` включить отступы
 $XmlWriterSettings.IndentChars = &quot;    &quot;` задать отступ
@@ -1581,7 +1583,7 @@ $XmlObjectWriter.WriteEndDocument()` завершить запись в доку
 $XmlObjectWriter.Flush()
 $XmlObjectWriter.Close()
 </code></pre>
-<h3 id="createelement">CreateElement<a class="headerlink" href="#createelement" title="Permanent link">&para;</a></h3>
+<h3 id="createelement">CreateElement</h3>
 <pre><code class="language-PowerShell">$xml = [xml](gc $home\desktop\test.xml)
 $xml.Root.Configuration.Fonts
 $NewElement = $xml.CreateElement(&quot;Fonts&quot;)` выбрать элемент куда добавить
@@ -1589,14 +1591,14 @@ $NewElement.set_InnerXML(&quot;&lt;Name&gt;Times New Roman&lt;/Name&gt;&lt;Size&
 $xml.Root.Configuration.AppendChild($NewElement)` добавить элемент новой строкой в Configuration (родитель Fonts)
 $xml.Save(&quot;$home\desktop\test.xml&quot;)
 </code></pre>
-<h2 id="excel">Excel<a class="headerlink" href="#excel" title="Permanent link">&para;</a></h2>
+<h2 id="excel">Excel</h2>
 <p><code>Install-Module -Name ImportExcel</code> <br />
 <code>$data | Export-Excel .\Data.xlsx</code> <br />
 <code>$data = Import-Excel .\Data.xlsx</code></p>
 <p><code>$data = ps</code> <br />
 <code>$Chart = New-ExcelChartDefinition -XRange CPU -YRange WS -Title "Process" -NoLegend</code> <br />
 <code>$data | Export-Excel .\ps.xlsx -AutoNameRange -ExcelChartDefinition $Chart -Show</code></p>
-<h2 id="csv">CSV<a class="headerlink" href="#csv" title="Permanent link">&para;</a></h2>
+<h2 id="csv">CSV</h2>
 <p><code>Get-Service | Select Name,DisplayName,Status,StartType | Export-Csv -path "$home\Desktop\Get-Service.csv" -Append -Encoding Default</code> экспортировать в csv (-Encoding UTF8) <br />
 <code>Import-Csv "$home\Desktop\Get-Service.csv" -Delimiter ","</code> импортировать массив</p>
 <pre><code class="language-PowerShell">$data = ConvertFrom-Csv @&quot;
@@ -1608,7 +1610,7 @@ $null,Tennessee,466,770.67
 <p><code>$systeminfo = systeminfo /FO csv | ConvertFrom-Csv</code> вывод работы программы в CSV и конвертация в объект <br />
 <code>$systeminfo."Полный объем физической памяти"</code> <br />
 <code>$systeminfo."Доступная физическая память"</code></p>
-<h2 id="json">JSON<a class="headerlink" href="#json" title="Permanent link">&para;</a></h2>
+<h2 id="json">JSON</h2>
 <pre><code class="language-PowerShell">$log = '
 {
   &quot;log&quot;: {
@@ -1630,7 +1632,7 @@ $OOKLA  = '
 ' | ConvertFrom-Json
 $ookla.result
 </code></pre>
-<h2 id="yaml">YAML<a class="headerlink" href="#yaml" title="Permanent link">&para;</a></h2>
+<h2 id="yaml">YAML</h2>
 <pre><code class="language-PowerShell">Import-Module PSYaml` используется в Docker/Ansible
 $netplan = &quot;
 network:` словарь по типу - ключ : значение с вложенными словарями
@@ -1654,12 +1656,12 @@ str: !!str string
 bool: !!bool` boolean
 &quot;
 </code></pre>
-<h2 id="toml">TOML<a class="headerlink" href="#toml" title="Permanent link">&para;</a></h2>
+<h2 id="toml">TOML</h2>
 <p><code>Install-Module -Name PSToml -Scope CurrentUser</code> Устанавливаем модуль для чтения toml (PSToml) <br />
 <code>$toml = Get-Content "$home\Documents\Git\lifailon.github.io\hugo.toml"</code> Читаем содержимое конфигурации Hugo в формате toml <br />
 <code>$json = ConvertFrom-Toml $toml | ConvertTo-Json -Depth 3</code> Конвертируем TOML в JSON <br />
 <code>$json | Out-File "$home\Documents\Git\lifailon.github.io\hugo.json"</code> Сохраняем конфигурационный файл в формате JSON</p>
-<h2 id="convertfrom-string">ConvertFrom-String<a class="headerlink" href="#convertfrom-string" title="Permanent link">&para;</a></h2>
+<h2 id="convertfrom-string">ConvertFrom-String</h2>
 <pre><code class="language-PowerShell">'
 log = 
 {
@@ -1667,13 +1669,13 @@ log =
 };
 ' | ConvertFrom-String` создает PSCustomObject (разбивает по пробелам, удаляет все пробелы и пустые строки)
 </code></pre>
-<h2 id="convertfrom-stringdata">ConvertFrom-StringData<a class="headerlink" href="#convertfrom-stringdata" title="Permanent link">&para;</a></h2>
+<h2 id="convertfrom-stringdata">ConvertFrom-StringData</h2>
 <pre><code class="language-PowerShell">&quot;
 key1 = value1
 key2 = value2
 &quot; | ConvertFrom-StringData # создает Hashtable
 </code></pre>
-<h2 id="pandoc">Pandoc<a class="headerlink" href="#pandoc" title="Permanent link">&para;</a></h2>
+<h2 id="pandoc">Pandoc</h2>
 <pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod &quot;https://api.github.com/repos/jgm/pandoc/releases/latest&quot;
 $url = $($release_latest.assets | Where-Object name -match &quot;windows-x86_64.zip&quot;).browser_download_url
 Invoke-RestMethod $url -OutFile $home\Downloads\pandoc.zip
@@ -1689,12 +1691,12 @@ Remove-Item &quot;$home\Downloads\pandoc*&quot; -Force -Recurse
 <code>pandoc -s README.md -o README.epub</code> конвертация в открытый формат электронных версий книг <br />
 <code>pandoc -s README.md -o README.pdf</code> конвертация в PDF (требуется rsvg-convert) <br />
 <code>pandoc input.md -f markdown+hard_line_breaks -o output.md</code> конвертация из markdown документа, который не содержит обратный слэш в конце каждой строки для переноса (), который их добавит</p>
-<h3 id="convert-excel-to-markdown">Convert Excel to Markdown<a class="headerlink" href="#convert-excel-to-markdown" title="Permanent link">&para;</a></h3>
+<h3 id="convert-excel-to-markdown">Convert Excel to Markdown</h3>
 <pre><code class="language-PowerShell">Import-Module ImportExcel
 Import-Excel -Path srv.xlsx | Export-Csv -Path $csvFilePath -NoTypeInformation -Encoding UTF8 # конвертация Excel в csv
 pandoc -s -f csv -t markdown input.csv -o output.md # конвертация таблицу csv в markdown
 </code></pre>
-<h2 id="ffmpeg">FFmpeg<a class="headerlink" href="#ffmpeg" title="Permanent link">&para;</a></h2>
+<h2 id="ffmpeg">FFmpeg</h2>
 <pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod &quot;https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest&quot;
 $url = $($release_latest.assets | Where-Object name -match &quot;ffmpeg-master-latest-win64-gpl.zip&quot;).browser_download_url
 Invoke-RestMethod $url -OutFile $home\Downloads\ffmpeg-master-latest-win64-gpl.zip
@@ -1712,7 +1714,7 @@ Remove-Item &quot;$home\Downloads\ffmpeg-*&quot; -Force -Recurse
 <code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -c:v copy -c:a aac -strict experimental output.mp4</code> запись без перекодирования (copy) RTSP-потока с камеры видеонаблюдения (+ аудио в кодеке AAC) в файл <br />
 <code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -c:v copy -c:a aac -strict experimental -movflags +faststart+frag_keyframe+empty_moov output.mp4</code> переместить метаданные в начало файла, что позволяет начать воспроизведение файла в видеоплеере до его полной загрузки <br />
 <code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -frames:v 1 -c:v mjpeg output.jpg</code> сделать скриншот</p>
-<h2 id="handbrake">HandBrake<a class="headerlink" href="#handbrake" title="Permanent link">&para;</a></h2>
+<h2 id="handbrake">HandBrake</h2>
 <pre><code class="language-PowerShell">$url = &quot;https://github.com/HandBrake/HandBrake/releases/download/1.8.0/HandBrakeCLI-1.8.0-win-x86_64.zip&quot;
 Invoke-RestMethod $url -OutFile $home\Downloads\HandBrakeCLI.zip
 Expand-Archive -Path $home\Downloads\HandBrakeCLI.zip -OutputPath &quot;$home\Downloads\&quot;
@@ -1728,7 +1730,7 @@ Remove-Item &quot;$home\Downloads\HandBrakeCLI*&quot;
 <code>HandBrakeCLI -i input.mp4 -o output.mkv -e x264</code> преобразовать видео с использованием кодека x264<br />
 <code>HandBrakeCLI -i input.mp4 -o output.mp4 --crop 0:200:0:0</code> обрезать видео снизу на 200px (верх:низ:лево:право)<br />
 <code>HandBrakeCLI -i input.mp4 -o output.mp4 --start-at duration:5 --stop-at duration:15</code> обрезать видео (на выходе будет 15-секундное видео с 5 по 20 секунду)</p>
-<h2 id="imagemagick">ImageMagick<a class="headerlink" href="#imagemagick" title="Permanent link">&para;</a></h2>
+<h2 id="imagemagick">ImageMagick</h2>
 <p>Source: <a href="https://sourceforge.net/projects/imagemagick">ImageMagick</a></p>
 <p><code>magick identify -verbose PowerShell-Commands.png</code> извлечь метаданные изображения <br />
 <code>magick PowerShell-Commands.png output.jpg</code> конвертация формата изображения <br />
@@ -1739,7 +1741,7 @@ Remove-Item &quot;$home\Downloads\HandBrakeCLI*&quot;
 <code>magick PowerShell-Commands.png -brightness-contrast +20x+10 output.jpg</code> изменить яркость и контрастность <br />
 <code>magick convert -delay 100 1.png 2.png 3.png output.gif</code> создать gif из изображений <br />
 <code>magick convert image1.jpg image2.jpg -append output.jpg</code> вертикально объединенить изображения</p>
-<h1 id="youtube">YouTube<a class="headerlink" href="#youtube" title="Permanent link">&para;</a></h1>
+<h1 id="youtube">YouTube</h1>
 <pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod &quot;https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest&quot;
 $url = $($release_latest.assets | Where-Object name -match &quot;yt-dlp.exe&quot;).browser_download_url
 Invoke-RestMethod $url -OutFile &quot;C:\Windows\System32\yt-dlp.exe&quot;
@@ -1850,9 +1852,11 @@ yt-dlp -f $video+$audio https://www.youtube.com/watch?v=gxplizjhqiw -o '%(title)
     
       <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script src="../_highlight/highlight.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/languages/powershell.min.js"></script>
+        <script src="../_highlight/powershell.min.js"></script>
+      
+        <script src="../_highlight/init.js"></script>
       
     
   </body>
