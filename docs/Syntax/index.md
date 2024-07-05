@@ -4,13 +4,13 @@ author: "Lifailon"
 date: "2024-03-14T04:00:00+03:00"
 ---
 
-## Cheat Sheet
+### Cheat Sheet
 
 <p align="center">
 <a href="https://github.com/Lifailon/PS-Commands"><img title="PowerShell Cheat Sheet RU"src="PowerShell-Cheat-Sheet-RU.jpg"></a>
 </p>
 
-## Help
+### Help
 
 `Get-Verb` действия/глаголы, утвержденные для использования в командлетах 
 `Get-Command *Language*` поиск команды по имени 
@@ -34,9 +34,9 @@ date: "2024-03-14T04:00:00+03:00"
 `$Metadata = New-Object System.Management.Automation.CommandMetaData (Get-Command Get-Service)` получить информацию о командлете 
 `[System.Management.Automation.ProxyCommand]::Create($Metadata)` исходный код функции
 
-# Object
+## Object
 
-## Variable
+### Variable
 
 `$var = Read-Host "Enter"` ручной ввод 
 `$pass = Read-Host "Enter Password" -AsSecureString` скрывать набор 
@@ -50,7 +50,7 @@ date: "2024-03-14T04:00:00+03:00"
 `Remove-Variable -Name *` очистить все переменные 
 `$LASTEXITCODE` содержит код вывода последней запущенной программы, например ping. Если код возврата положительный (True), то $LastExitCode = 0
 
-## ENV
+### ENV
 
 `Get-ChildItem Env:` отобразить все переменные окружения 
 `$env:PSModulePath` директории импорта модулей 
@@ -62,7 +62,7 @@ date: "2024-03-14T04:00:00+03:00"
 `([DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()).Name` 
 `[Environment]::GetFolderPath('ApplicationData')`
 
-## History
+### History
 
 `Get-History` история команд текущей сессии 
 `(Get-History)[-1].Duration.TotalSeconds` время выполнения последней команды 
@@ -73,12 +73,12 @@ date: "2024-03-14T04:00:00+03:00"
 `Set-PSReadlineOption -HistorySaveStyle SaveNothing` отключить ведение журнала 
 `F2` переключиться с InlineView на ListView
 
-## Clipboard
+### Clipboard
 
 `Set-Clipboard $srv` скопировать в буфер обмена 
 `Get-Clipboard` вставить
 
-## Write-Host
+### Write-Host
 ```PowerShell
 Write-Host -BackgroundColor Green "Test:" -NoNewline # изменить цвет фона и запретить перенос строки
 Write-Host " True" -ForegroundColor Green # данная строка будет печататься продолжая предыдущую с новыми параметрами цвета (фон по умолчанию, изменяем цвет текста)
@@ -86,28 +86,28 @@ Write-Host " True" -ForegroundColor Green # данная строка будет
 `Write-Error "False"` 
 `Write-Warning "False"`
 
-## Write-Progress
+### Write-Progress
 ```PowerShell
 foreach ($n in 1..100) {
     Write-Progress -Activity "Test Progress" -PercentComplete $n
     Start-Sleep -Milliseconds 100
 }
 ```
-## for
+### for
 ```PowerShell
 for ($i = 0; $i -le 100; $i+=10) {
     Write-Progress -Activity "Test Progress" -PercentComplete $i
     Start-Sleep -Seconds 1
 }
 ```
-## Array
+### Array
 
 `$srv = @("server-01", "server-02")`  создать массив 
 `$srv += @("server-03")` добавить в массив новый элемент 
 `$srv.Count` отобразить кол-во элементов в массиве 
 `Out-String` построчный вывод
 
-## Index
+### Index
 
 `$srv[0]` вывести первое значение элемента массива 
 `$srv[0] = Name` замена элемента в массиве 
@@ -122,7 +122,7 @@ foreach ($a in $array) {
     $array[$index] = $num # пересобрать исходный массив
 }
 ```
-## HashTable
+### HashTable
 ```PowerShell
 $hashtable = @{ # Создать (инициализировать)
     "User" = $env:USERNAME; 
@@ -139,7 +139,7 @@ $hashtable += @{ # Добавить ключи
 `$hashtable["User"] = "Test"` изменить 
 `$hashtable.Remove("User")` удалить ключ
 
-## Collections/List
+### Collections/List
 ```PowerShell
 $Collections = New-Object System.Collections.Generic.List[System.Object]
 $Collections.Add([PSCustomObject]@{
@@ -147,27 +147,27 @@ $Collections.Add([PSCustomObject]@{
     Server = $env:computername
 })
 ```
-## PSCustomObject
+### PSCustomObject
 ```PowerShell
 $CustomObject = [PSCustomObject][ordered]@{
     User = $env:username;
     Server = $env:computername
 }
 ```
-## Add and Remove Property
+### Add and Remove Property
 
 `$CustomObject | Add-Member –MemberType NoteProperty –Name Arr –Value @(1,2,3)` добавить свойство/стобец 
 `$CustomObject.Arr = @(1,3,5)` изменить содержимое 
 `$CustomObject.PsObject.Properties.Remove('User')` удалить Property
 
-## Add Method
+### Add Method
 ```PowerShell
 $ScriptBlock = {Get-Service}
 $CustomObject | Add-Member -Name "TestMethod" -MemberType ScriptMethod -Value $ScriptBlock
 $CustomObject | Get-Member
 $CustomObject.TestMethod()
 ```
-## Class
+### Class
 ```PowerShell
 Class CustomClass {
     [string]$User
@@ -184,20 +184,20 @@ Class CustomClass {
 `$Class.Server = $env:computername` 
 `$Class.Start(1)`
 
-## Pipeline
+### Pipeline
 
 `$CustomObject | Add-Member -MemberType NoteProperty -Name "Type" -Value "user" -Force` добавление объкта вывода NoteProperty 
 `$CustomObject | Add-Member -MemberType NoteProperty -Name "User" -Value "admin" -Force` изменеие содержимого для сущности объекта User 
 `ping $srv | Out-Null` перенаправить результат вывода в Out-Null
 
-## Select-Object
+### Select-Object
 
 `Get-Process | Select-Object -Property *` отобразить все доступные объекты вывода 
 `Get-Process | select -Unique "Name"` удалить повторяющиеся значения в массиве 
 `Get-Process | select -ExpandProperty ProcessName` преобразовать из объекта-коллекции в массив (вывести содержимое без наименовая столбца) 
 `(Get-Process | ? Name -match iperf).Modules` список используемых модулей процессом
 
-## Expression
+### Expression
 ```PowerShell
 Get-Process | Sort-Object -Descending CPU | select -first 10 ProcessName, # сортировка по CPU, вывести первых 10 значений (-first)
 @{Name="ProcessorTime";
@@ -210,24 +210,24 @@ Get-Process | Sort-Object -Descending CPU | select -first 10 ProcessName, # со
     Expression={((Get-Date) - $_.StartTime) -replace "\.\d+$"} # вычесть из текущего времени - время запуска, и удалить milisec
 }
 ```
-## Select-String
+### Select-String
 
 `$(ipconfig | Select-String IPv4) -replace ".+: " | Where-Object {$_ -match "^172."}` узнать только IP 
 `$Current_IP = Get-Content $RDCMan_RDG_PATH | Select-String $RDCMan_Display_Name -Context 0,1` получить две строки 
 `$Current_IP = $Current_IP.Context.DisplayPostContext[0] -replace ".+<name>|<\/name>"` забрать только вторую строку и удалить тэги
 
-## Format-List/Format-Table
+### Format-List/Format-Table
 
 `Get-Process | fl ProcessName, StartTime` 
 `Get-Process | ft ProcessName, StartTime -Autosize` автоматическая группировка размера столбцов
 
-## Measure-Object
+### Measure-Object
 
 `Get-Process | Measure | select Count` кол-во объектов 
 `Get-Process | Measure -Line -Word -Character` кол-во строк, слов и Char объектов 
 `Get-Process | Measure-Object PM -sum | Select-Object Count,@{Name="MEM_MB"; Expression={[int]($_.Sum/1mb)}}` кол-во процессов и общий объем занятой памяти в МБайт
 
-## Compare-Object
+### Compare-Object
 
 `Compare-Object -ReferenceObject (Get-Content -Path .\file1.txt) -DifferenceObject (Get-Content -Path .\file2.txt)` сравнение двух файлов 
 `$group1 = Get-ADGroupMember -Identity "Domain Admins"` 
@@ -237,7 +237,7 @@ Get-Process | Sort-Object -Descending CPU | select -first 10 ProcessName, # со
 `<=` есть изменения в $group1 
 `=>` есть изменения в $group2
 
-## Where-Object (?)
+### Where-Object (?)
 
 `Get-Process | Where-Object {$_.ProcessName -match "zabbix"}` фильтрация/поиск процессов по имени свойства объекта 
 `Get-Process | where CPU -gt 10 | Sort-Object -Descending CPU` вывести объекты, где значения CPU больше 10 
@@ -249,19 +249,19 @@ Get-Process | Sort-Object -Descending CPU | select -first 10 ProcessName, # со
 `netstat -an | ?{$_ -match 443}` 
 `(netstat -an) -match 443`
 
-## Sort-Object
+### Sort-Object
 
 `Get-Process | Sort-Object -Descending CPU | ft` обратная (-Descending) сортировка по CPU 
 `Get-Process | Sort-Object -Descending cpu,ws` сортировка по двум свойствам 
 `$path[-1..-10]` обратная сборка массива без сортировки 
 `$arr = @(1..20); $arr[$($arr.Count - 1)..0]` пересобрать массив с конца
 
-## Last/First
+### Last/First
 
 `Get-Process | Sort-Object -Descending CPU | select -First 10` вывести первых 10 объектов 
 `Get-Process | Sort-Object -Descending CPU | select -Last 10` вывести последних 10 объектов
 
-## Group-Object
+### Group-Object
 ```PowerShell
 $Groups = Get-CimInstance -Class Win32_PnPSignedDriver |
 Select-Object DriverProviderName, FriendlyName, Description, DriverVersion, DriverDate |
@@ -270,14 +270,14 @@ $(foreach ($Group in $Groups) {
     $Group.Group[0]
 }) | Format-Table
 ```
-## Property
+### Property
 
 `$srv.Count` кол-во элементов в массиве 
 `$srv.Length` содержит количество символом строки переменной [string] или количество значений (строк) объекта 
 `$srv.Chars(2)` отобразить 3-й символ в строке 
 `$srv[2]` отобразить 3-ю строку в массиве
 
-## Method
+### Method
 
 `$srv = "127.0.0.1"` 
 `$srv.Insert(0,"https://")` добавить значение перед первым символом 
@@ -292,7 +292,7 @@ $(foreach ($Group in $Groups) {
 `[string]::IsNullOrEmpty($text)` проверяет наличие строки, если строка пуста $true, если нет $false 
 `[string]::IsNullOrWhiteSpace($text2)` проверяет на наличие только символов пробел, табуляция или символ новой строки
 
-# Error
+## Error
 
 `$Error` выводит все ошибки текущего сеанса 
 `$Error[0].InvocationInfo` развернутый отчет об ошибке 
@@ -300,17 +300,17 @@ $(foreach ($Group in $Groups) {
 `$LASTEXITCODE` результат выполнения последней команды (0 - успех) 
 `exit 1` код завершения, который возвращается $LASTEXITCODE
 
-## ExecutionStatus
+### ExecutionStatus
 ```PowerShell
 $(Get-History)[-1] | Select-Object @{
     Name="RunTime"; Expression={$_.EndExecutionTime - $_.StartExecutionTime}
 },ExecutionStatus,CommandLine # посчитать время работы последней [-1] (или Select-Object -Last 1) выполненной команды и ее узнать статус
 ```
-## Measure-Command
+### Measure-Command
 
 `$(Measure-Command {ping ya.ru}).TotalSeconds` получить время выполнения в секундах
 
-# DateTime
+## DateTime
 
 `[DateTime]::UtcNow` время в формате UTC 0 
 `$(Get-Date).AddHours(-3)` вычесть три часа из текущего времени 
@@ -322,14 +322,14 @@ $(Get-History)[-1] | Select-Object @{
 `[int32]$days=$($Date - $BeforeDate).Days` посчитать разницу в днях 
 `"5/7/07" -as [DateTime]` преобразовать входные данные в тип данных [DateTime]
 
-# TimeSpan
+## TimeSpan
 
 `New-TimeSpan -Start $(Get-Date) -End $($(Get-Date).AddMinutes(+1))` получить разницу во времени 
 `$TimeZone = (Get-TimeZone).BaseUtcOffset.TotalMinutes` получить разницу в минутах от текущего часового пояса относительно UTC 0 
 `$UnixTime  = (New-TimeSpan -Start (Get-Date "01/01/1970") -End ((Get-Date).AddMinutes(-$tz))).TotalSeconds` вычесть минуты для получения UTC 0 
 `$TimeStamp = ([string]$UnixTime -replace "\..+") + "000000000"` получить текущий TimeStamp
 
-## Format
+### Format
 ```
 HH   # Часы в 24-часовом формате (00 до 23)
 hh   # Часы в 12-часовом формате (01 до 12)
@@ -350,7 +350,7 @@ yy   # Год без века с ведущим нулём (00-99)
 yyyy # Год с веком (например, 2024)
 g    # Период или эра (например, "н.э.")
 ```
-## Timer
+### Timer
 
 `$start_time = Get-Date` зафиксировать время до выполнения команды 
 `$end_time = Get-Date` зафиксировать время по завершению 
@@ -364,7 +364,7 @@ g    # Период или эра (например, "н.э.")
 `$timer.Elapsed.TotalSeconds` отобразить время с момента запуска (в секундах) 
 `$timer.Stop()` остановить таймер
 
-# Regex
+## Regex
 ```
 .       # Обозначает любой символ, кроме новой строки
 \       # Экранирует любой специальный символ (метасимвол). Используется, если нужно указать конкретный символ, вместо специального ({ } [ ] / \ + * . $ ^ | ?)
@@ -391,7 +391,7 @@ g    # Период или эра (например, "н.э.")
 \d{2,4} # Найти две или четыре
 {4,}    # Найти четыре и более
 ```
-## Якори
+### Якори
 
 `^` или `\A` определяет начало строки. $url -replace '^','https:'` добавить в начало; 
 `$` или `\Z` обозначают конец строки. $ip -replace "\d{1,3}$","0" 
@@ -404,7 +404,7 @@ g    # Период или эра (например, "н.э.")
 `$test -replace ".{1}$"` удалить любое кол-во символов в конце строки 
 `$test -replace "^.{1}"` удалить любое кол-во символов в начале строки 
 
-## Группы захвата
+### Группы захвата
 
 `$date = '12.31.2021'` 
 `$date -replace '^(\d{2}).(\d{2})','$2.$1'` поменять местами 
@@ -423,7 +423,7 @@ g    # Период или эра (например, "н.э.")
 `-match "zabbix|rpc"` условия, для поиска по нескольким словам 
 `-NotMatch` проверка на отсутствие вхождения 
 
-## Matches
+### Matches
 
 `"num: 777" -match "num: ([0-9]+)" | Out-Null` 
 `$Matches[1]` выводим только номер
@@ -438,11 +438,11 @@ g    # Период или эра (например, "н.э.")
 
 `$string.Substring($string.IndexOf(".txt")-4, 4)` 2-й вариант (IndexOf)
 
-## Форматирование (.NET method format)
+### Форматирование (.NET method format)
 
 `[string]::Format("{1} {0}","Index0","Index1")` 
 `"{1} {0}" -f "Index0","Index1"` 
-`"{0:##-##-##}" -f 1234567` записать число в другом формате (#) 
+`"{0:###-###-###}" -f 1234567` записать число в другом формате (#) 
 `"{0:0000}" -f 123` вывести число в формате не меньше 4 знаков (0123) 
 `"{0:P0}" -f (220/1000)` посчитать в процентах (P) 
 `"{0:P}" -f (512MB/1GB)` сколько % составляет 512Мб от 1Гб 
@@ -453,7 +453,7 @@ foreach ($p in $gp) {
     "{0} - {1:N2}" -f $p.processname, $p.cpu # округлить
 }
 ```
-## Условный оператор
+### Условный оператор
 ```PowerShell
 $rh = Read-Host
 if ($rh -eq 1) {
@@ -477,7 +477,7 @@ if ($(Test-NetConnection $srv -Port 80).TcpTestSucceeded) {
     "Closed port"
 }
 ```
-## Логические операторы сравнения
+### Логические операторы сравнения
 
 `-eq` равно (equal) 
 `-ceq` учитывать регистр 
@@ -498,14 +498,14 @@ if ((($1 -eq 1) -and ($2 -eq 2)) -or ($1 -ne 3)) {
     $false
 } # два условия: (если $1 = 1 И $2 = 2) ИЛИ $1 не равно 3 вернуть $true
 ```
-## Pipeline Operators
+### Pipeline Operators
 
 `Write-Output "First" && Write-Output "Second"` две успешные команды выполняются 
 `Write-Error "Bad" && Write-Output "Second"` первая команда завершается ошибкой, из-за чего вторая команда не выполняется 
 `Write-Error "Bad" || Write-Output "Second"` первая команда завершается ошибкой, поэтому выполняется вторая команда 
 `Write-Output "First" || Write-Output "Second"` первая команда выполнена успешно, поэтому вторая команда не выполняется
 
-## Invocation Operator
+### Invocation Operator
 
 `$addr = "8.8.8.8"` 
 `$ping = "ping"` 
@@ -531,7 +531,7 @@ if ((($1 -eq 1) -and ($2 -eq 2)) -or ($1 -ne 3)) {
 `[Double]` число с плавающей запятой с двойной точностью (64-разрядное) 
 `[String]` неизменяемая строка символов Юникода фиксированной длины (BaseType:System.Object)
 
-## Math
+### Math
 
 `[math] | Get-Member -Static` 
 `[math]::Pow(2,4)` 2 в 4 степени 
@@ -541,23 +541,23 @@ if ((($1 -eq 1) -and ($2 -eq 2)) -or ($1 -ne 3)) {
 `[math]::Min(33,22)` возвращает наименьшее значение двух значений 
 `[math]::Max(33,22)` возвращает наибольшее значение двух значений
 
-## Round
+### Round
 
 `[double]::Round(87.5, 0)` 88 (нечетное), в .NET по умолчанию используется округление в средней точке ToEven, где *.5 значения округляются до ближайшего четного целого числа 
 `[double]::Round(88.5, 0)` 88 (четное) 
 `[double]::Round(88.5, 0, 1)` 89 (округлять в большую сторону) 
 `[double]::Round(1234.56789, 2)` округлить до 2 символов после запятой
 
-## ToString
+### ToString
 
 `(4164539/1MB).ToString("0.00")` разделить на дважды на 1024/1024 и округлить до 3,97
 
-## Char
+### Char
 
 `[Char]` cимвол Юникода (16-разрядный) 
 `$char = $srv.ToCharArray()` разбить строку [string] на массив [System.Array] из букв
 
-## Switch function
+### Switch function
 ```PowerShell
 $MMM = Get-Date -UFormat "%m"
 switch($MMM) {
@@ -575,7 +575,7 @@ switch($MMM) {
     "12" {$Month = 'Dec'}
 }
 ```
-## Switch param
+### Switch param
 ```PowerShell
 Function fun-switch (
     [switch]$param
@@ -585,7 +585,7 @@ Function fun-switch (
 ```
 `fun-switch -param`
 
-# Bit
+## Bit
 ```
 Двоичное    Десятичное
 1           1
@@ -645,7 +645,7 @@ Function fun-switch (
 1   - 2   = остаток 1, (1-1)/2 = 0
 Результат деления записывается снизу вверх
 ```
-## Bit Convertor
+### Bit Convertor
 ```PowerShell
 function ConvertTo-Bit {
     param (
@@ -695,9 +695,9 @@ function ConvertFrom-Bit {
 `$(Get-Process pwsh).ProcessorAffinity = 61440` 1111000000000000 присвоить 4 последних ядра 
 `$(Get-Process pwsh).ProcessorAffinity = (ConvertFrom-Bit 1111000000000000)`
 
-# Cycle
+## Cycle
 
-## Foreach
+### Foreach
 
 `$list = 100..110` создать массив из цифр от 100 до 110 
 `foreach ($srv in $list) {ping 192.168.3.$srv -n 1 -w 50}` $srv хранит текущий элемент из $list и повторяет команду до последнего элемента в массиве 
@@ -705,7 +705,7 @@ function ConvertFrom-Bit {
 `$foreach.Reset()` обнуляет итерацию, перебор начнется заново, что приводит к бесконечному циклу 
 `$foreach.MoveNext()` переход к следующему элементу в цикле
 
-## ForEach-Object (%)
+### ForEach-Object (%)
 ```PowerShell
 100..110 | %{
     ping -n 1 -w 50 192.168.3.$_ > $null
@@ -720,7 +720,7 @@ function ConvertFrom-Bit {
 `$_` переменная цикла и конвеера ($PSItem) 
 `gwmi Win32_QuickFixEngineering | where {$_.InstalledOn.ToString() -match "2022"} | %{($_.HotFixID.Substring(2))}` gwmi создает массив, вывод команды передается where для поиска подходящих под критерии объектов. По конвееру передается в цикл для удаления первых (2) символов методом Substring из всех объектов HotFixID.
 
-## While
+### While
 ```PowerShell
 $srv = "yandex.ru"
 $out2 = "Есть пинг"
@@ -741,22 +741,22 @@ while ($True) { # запустить бесконечный цикл
     }
 }
 ```
-## Try-Catch-Finally
+### Try-Catch-Finally
 ```PowerShell
 Try {$out = pping 192.168.3.1}
 Catch {Write-Warning "$($error[0])"} # выводит в случае ошибки (вместо ошибки)
 finally {$out = "End"} # выполняется в конце в любом случае
 ```
-## Out-Gridview
+### Out-Gridview
 `Get-Service -cn $srv | Out-GridView -Title "Service $srv" -OutputMode Single –PassThru | Restart-Service` перезапустить выбранную службу
 
-## Out-File
+### Out-File
 `Read-Host –AsSecureString | ConvertFrom-SecureString | Out-File "$env:userprofile\desktop\password.txt"` писать в файл. Преобразовать пароль в формат SecureString с использованием шифрования Windows Data Protection API (DPAPI)
 
-## Get-Content (gc/cat/type)
+### Get-Content (gc/cat/type)
 `$password = gc "$env:userprofile\desktop\password.txt" | ConvertTo-SecureString` читать хэш пароля из файла с помощью ключей, хранящихся в профиле текущего пользователя, который невозможно прочитать на другом копьютере
 
-## AES Key
+### AES Key
 `$AESKey = New-Object Byte[] 32` 
 `[Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($AESKey)` 
 `$AESKey | Out-File "C:\password.key"` 

@@ -4,7 +4,7 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-# ping
+### ping
 
 `Test-Connection -Count 1 $srv1, $srv2` отправить icmp-пакет двум хостам 
 `Test-Connection $srv -ErrorAction SilentlyContinue` не выводить ошибок, если хост не отвечает 
@@ -34,7 +34,7 @@ foreach ($n in $net) {
 `'127.0.0.1','8.8.8.8' | ForEach-Object -Process {Get-CimInstance -Class Win32_PingStatus -Filter ("Address='$_'") | Select-Object -Property Address,ResponseTime,StatusCode}` 
 `$ips = 1..254 | ForEach-Object -Process {'192.168.1.' + $_}` сформировать массив из ip-адресов подсети
 
-# dhcp
+### dhcp
 
 `Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true"` отобразить адаптеры с включенным DHCP 
 `$wql = 'SELECT * from Win32_NetworkAdapterConfiguration WHERE IPEnabled=True and DHCPEnabled=False'` 
@@ -42,33 +42,33 @@ foreach ($n in $net) {
 `Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName ReleaseDHCPLeaseAll` отменить аренду адресов DHCP на всех адаптерах 
 `Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName RenewDHCPLeaseAll` обновить аренду адресов DHCP на всех адаптерах
 
-# port
+### port
 
 `tnc $srv -p 5985` 
 `tnc $srv -CommonTCPPort WINRM` HTTP,RDP,SMB 
 `tnc ya.ru –TraceRoute -Hops 2` TTL=2 
 `tnc ya.ru -DiagnoseRouting` маршрутизация до хоста, куда (DestinationPrefix: 0.0.0.0/0) через (NextHop: 192.168.1.254)
 
-# netstat
+### netstat
 
 `netstat -anop tcp` -n/-f/-b 
 `Get-NetTCPConnection -State Established,Listen | ? LocalPort -Match 3389` 
 `Get-NetTCPConnection -State Established,Listen | ? RemotePort -Match 22` 
 `Get-NetUDPEndpoint | ? LocalPort -Match 514` netstat -ap udp`
 
-# nslookup
+### nslookup
 
 `nslookup ya.ru 1.1.1.1` с указанием DNS сервера 
 `nslookup -type=any ya.ru` указать тип записи 
 `Resolve-DnsName ya.ru -Type MX` ALL,ANY,A,NS,SRV,CNAME,PTR,TXT(spf) 
 `[System.Net.Dns]::GetHostEntry("ya.ru")`
 
-# ipconfig
+### ipconfig
 
 `Get-NetIPConfiguration` 
 `Get-NetIPConfiguration -InterfaceIndex 14 -Detailed`
 
-# Adapter
+### Adapter
 
 `Get-NetAdapter` 
 `Set-NetIPInterface -InterfaceIndex 14 -Dhcp Disabled` отключить DHCP 
@@ -77,29 +77,29 @@ foreach ($n in $net) {
 `Remove-NetIPAddress -InterfaceIndex 14 -IPAddress 192.168.3.99` удалить IP-адрес на адаптере 
 `Set-NetIPInterface -InterfaceIndex 14 -Dhcp Enabled` включить DHCP
 
-# DNSClient
+### DNSClient
 
 `Get-DNSClientServerAddress` список интерфейсов и настроенные на них адреса DNS сервера 
 `Set-DNSClientServerAddress -InterfaceIndex 14 -ServerAddresses 8.8.8.8` изменить адрес DNS сервера на указанного интерфейсе
 
-# DNSCache
+### DNSCache
 
 `Get-DnsClientCache` отобразить кэшированные записи клиента DNS 
 `Clear-DnsClientCache` очистить кэш
 
-# Binding
+### Binding
 
 `Get-NetAdapterBinding -Name Ethernet -IncludeHidden -AllBindings` 
 `Get-NetAdapterBinding -Name "Беспроводная сеть" -DisplayName "IP версии 6 (TCP/IPv6)" | Set-NetAdapterBinding -Enabled $false` отключить IPv6 на адаптере
 
-# TCPSetting
+### TCPSetting
 
 `Get-NetTCPSetting` 
 `Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CongestionProvider DCTCP` настраивает провайдера управления перегрузкой (Congestion Control Provider) на DCTCP (Data Center TCP) для профилей TCP с именами DatacenterCustom и Datacenter 
 `Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CwndRestart True` включает функцию перезапуска окна перегрузки (Congestion Window Restart, CwndRestart) для указанных профилей TCP. Это означает, что после периода идле (когда нет передачи данных) TCP окно перегрузки будет сбрасываться 
 `Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -ForceWS Disabled` отключает принудительное масштабирование окна (Forced Window Scaling) для указанных профилей TCP. Масштабирование окна — это механизм, который позволяет увеличивать размер окна перегрузки TCP, чтобы улучшить производительность передачи данных по сети с высокой пропускной способностью и большой задержкой
 
-# hostname
+### hostname
 
 `$env:computername` 
 `hostname.exe` 
@@ -108,7 +108,7 @@ foreach ($n in $net) {
 `[System.Environment]::MachineName` 
 `[System.Net.Dns]::GetHostName()`
 
-# arp
+### arp
 
 `ipconfig /all | Select-String "физ"` grep 
 `Get-NetNeighbor -AddressFamily IPv4`
@@ -158,12 +158,12 @@ function Get-ARP {
 `Get-ARP -search 192.168.3.100` 
 `Get-ARP -search 192.168.3.100 -proxy dc-01`
 
-# Network Adapter Statistics
+### Network Adapter Statistics
 
 `netstat -se` 
 `Get-NetAdapterStatistics`
 
-# SpeedTest
+### SpeedTest
 ```PowerShell
 function Get-SpeedTestOokla {
     param (
@@ -197,9 +197,9 @@ function Get-SpeedTestOokla {
     }
 }
 ```
-# iPerf
+### iPerf
 
-## Install
+### Install
 ```PowerShell
 $url = $($(Invoke-RestMethod https://api.github.com/repos/ar51an/iperf3-win-builds/releases/latest).assets | Where-Object name -match "win64.zip").browser_download_url
 Invoke-RestMethod $url -OutFile $home\Downloads\iperf.zip
@@ -209,7 +209,7 @@ Remove-Item "$home\Downloads\iperf*" -Force -Recurse
 ```
 `& "$home\Documents\iperf3\iperf3.exe" -h`
 
-## Env-Update-Exec-Path
+### Env-Update-Exec-Path
 ```PowerShell
 $EnvPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
 $EnvPath -split ";"
@@ -220,12 +220,12 @@ $([Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Mac
 ```
 `iperf3 -h`
 
-## iPerf-GUI
+### iPerf-GUI
 
 `Invoke-RestMethod "https://github.com/Lifailon/iPerf-GUI/raw/rsa/iPerf-GUI-Install.exe" -OutFile "$home\Downloads\iPerf-GUI-Install.exe"` скачать установочную версию собранную с помощью WinRAR 
 `Start-Process -FilePath "$home\Downloads\iPerf-GUI-Install.exe" -ArgumentList "/S" -NoNewWindow -Wait` установить в тихом режиме
 
-## iPerf-Docker
+### iPerf-Docker
 ```PowerShell
 echo '
 FROM alpine:latest
@@ -238,7 +238,7 @@ CMD ["sh", "-c", "iperf3 -s -p $PORT"]
 `docker build -t iperf3-alpine-server .` 
 `docker run -d -p 5201:5201 --name iperf3-alpine-server iperf3-alpine-server`
 
-## Server
+### Server
 
 `iperf3 -s` запуск сервера 
 `iperf3 -s -D` запустить сервер в фоновом режиме как службу (--daemon) 
@@ -251,7 +251,7 @@ CMD ["sh", "-c", "iperf3 -s -p $PORT"]
 `iperf3 -s -p 5211 -f M -J` вывод в формате json 
 `iperf3 -s -p 5211 -f M -V` вывод подробной информации
 
-## Client
+### Client
 
 `iperf3 -c 192.168.3.100 -p 5211` подключение к серверу (по умолчанию проверяется отдача на сервер с клиента) 
 `iperf3 -c 192.168.3.100 -p 5211 -R` обратный тест, проверка скачивания с сервера (--reverse, сервер отправляет данные клиенту) 
@@ -263,7 +263,7 @@ CMD ["sh", "-c", "iperf3 -s -p $PORT"]
 `iperf3 -c 192.168.3.100 -p 5211 -R -n 1gb` указать объем данных для проверки (применяется вместо времени -t) 
 `iperf3 -c 192.168.3.100 -p 5211 -R --get-server-output` вывести вывод сервера на клиенте
 
-## Output
+### Output
 
 `sender` upload (скорость передачи на удаленный сервер) 
 `receiver` download (скорость скачивания с удаленного сервера) 
@@ -271,7 +271,7 @@ CMD ["sh", "-c", "iperf3 -s -p $PORT"]
 `Transfer` кол-во переданных и полученных МБайт 
 `Bandwidth` скорость передачи (измеряется в Мбит/c)
 
-## PS-iPerf
+### PS-iPerf
 
 `Install-Module ps-iperf -Repository NuGet` 
 `Import-Module PS-iPerf` 
@@ -283,7 +283,7 @@ CMD ["sh", "-c", "iperf3 -s -p $PORT"]
 `$SpeedTest.Intervals` метрики измерений 
 `Get-iPerfLog` прочитать лог-файл
 
-# Firewall
+## Firewall
 ```PowerShell
 $days = 5
 $obj = @()
@@ -316,13 +316,13 @@ Get-NetFirewallRule -Enabled True -Direction Inbound | select -Property DisplayN
 @{Name='RemoteAddress';Expression={($_ | Get-NetFirewallAddressFilter).RemoteAddress}},
 Enabled,Profile
 ```
-## Firewall-Manager
+### Firewall-Manager
 
 `Install-Module Firewall-Manager` 
 `Export-FirewallRules -Name * -CSVFile $home\documents\fw.csv` -Inbound -Outbound -Enabled -Disabled -Allow -Block (фильтр правил для экспорта) 
 `Import-FirewallRules -CSVFile $home\documents\fw.csv`
 
-# RDP
+## RDP
 
 `Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber"` отобразить номер текущего RDP порта 
 `Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber" -Value "3390"` изменить RDP-порт 
@@ -333,7 +333,7 @@ Enabled,Profile
 `Get-Service TermService | Restart-Service -Force` перезапустить rdp-службу 
 `New-NetFirewallRule -Profile Any -DisplayName "RDP 3390" -Direction Inbound -Protocol TCP -LocalPort 3390` открыть RDP-порт
 
-# IPBan
+## IPBan
 
 `auditpol /get /category:*` отобразить все политики аудита 
 `auditpol /get /category:Вход/выход` отобразить локальные политики аудита для Входа и Выхода из системы 
@@ -365,7 +365,7 @@ Get-NetFirewallRule | Where-Object DisplayName -Match "IPBan" | ForEach-Object {
 `Get-Service IPBan | Stop-Service` остановить службу 
 `sc delete IPBan` удалить службу
 
-# shutdown
+## shutdown
 
 `shutdown /r /o` перезагрузка в безопасный режим 
 `shutdown /s /t 600 /c "Power off after 10 minutes"` выключение 
@@ -415,7 +415,7 @@ function Start-Shutdown {
 }
 ```
 
-# UDP-Socket
+## UDP-Socket
 
 [Source](https://cloudbrothers.info/en/test-udp-connection-powershell/)
 ```PowerShell
@@ -441,7 +441,7 @@ function Start-UDPServer {
 ```
 `Start-UDPServer -Port 5201`
 
-## Test-NetUDPConnection
+### Test-NetUDPConnection
 ```PowerShell
 function Test-NetUDPConnection {
     param(
@@ -468,7 +468,7 @@ function Test-NetUDPConnection {
 `Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 5201` 
 `Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 514 -Message "<30>May 31 00:00:00 HostName multipathd[784]: Test message"`
 
-# TCP-Socket
+## TCP-Socket
 ```PowerShell
 function Start-TCPServer {
     param(
@@ -486,7 +486,7 @@ function Start-TCPServer {
 `Start-TCPServer -Port 5201` 
 `Test-NetConnection -ComputerName 127.0.0.1 -Port 5201`
 
-# WakeOnLan
+## WakeOnLan
 
 Broadcast package consisting of 6 byte filled "0xFF" and then 96 byte where the mac address is repeated 16 times
 ```PowerShell
@@ -510,7 +510,7 @@ function Send-WOL {
 `Send-WOL -Mac "D8-BB-C1-70-A3-4E"` 
 `Send-WOL -Mac "D8-BB-C1-70-A3-4E" -IP 192.168.3.100`
 
-# HTTPListener
+## HTTPListener
 ```PowerShell
 $httpListener = New-Object System.Net.HttpListener
 $httpListener.Prefixes.Add("http://+:8888/")
@@ -530,12 +530,12 @@ while (!([console]::KeyAvailable)) {
 $httpListener.Close()
 ```
 
-# WebClient
+## WebClient
 
 `[System.Net.WebClient] | Get-Member` 
 `(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell-Commands/rsa/README.md")`
 
-# HttpClient
+## HttpClient
 ```PowerShell
 $url = "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip"
 $path = "$home\Downloads\$(Split-Path -Path $url -Leaf)"
@@ -560,7 +560,7 @@ finally {
     $fileStream.Dispose()
 }
 ```
-# Certificate
+## Certificate
 ```PowerShell
 function Get-WebCertificate ($srv) {
     $iwr = iwr $srv
@@ -586,7 +586,7 @@ function Get-WebCertificate ($srv) {
 ```
 `Get-WebCertificate https://google.com`
 
-# OpenVPN
+## OpenVPN
 
 `Invoke-WebRequest -Uri https://swupdate.openvpn.org/community/releases/OpenVPN-2.6.5-I001-amd64.msi -OutFile $home\Downloads\OpenVPN-2.6.5.msi` 
 `Start-Process $home\Downloads\OpenVPN-2.6.5.msi -ArgumentList '/quiet /SELECT_OPENSSL_UTILITIES=1' -Wait` 
@@ -624,7 +624,7 @@ set_var EASYRSA_REQ_OU "IT"
 `.\openvpn --genkey secret ta.key` генерация ключа tls-auth (\bin\ta.key) 
 `Move-Item "C:\Program Files\OpenVPN\bin\ta.key" "C:\Program Files\OpenVPN\easy-rsa\pki\"`
 
-## server.ovpn
+### server.ovpn
 
 `# Copy-Item "C:\Program Files\OpenVPN\sample-config\server.ovpn" "C:\Program Files\OpenVPN\config-auto\server.ovpn"` 
 `New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\server.ovpn"`
@@ -670,7 +670,7 @@ push "route 192.168.4.0 255.255.255.0"
 `New-NetFirewallRule -DisplayName "AllowOpenVPN-Out" -Direction Outbound -Protocol UDP –LocalPort 1194 -Action Allow` на клиенте 
 `Get-Service *openvpn* | Restart-Service`
 
-## client.ovpn
+### client.ovpn
 
 `# Copy-Item "C:\Program Files\OpenVPN\sample-config\client.ovpn" "C:\Program Files\OpenVPN\config-auto\client.ovpn"` 
 `New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\client.ovpn"`
@@ -694,7 +694,7 @@ connect-retry-max 25
 windows-driver wintun
 verb 3
 ```
-## Client
+### Client
 
 `iwr -Uri https://openvpn.net/downloads/openvpn-connect-v3-windows.msi -OutFile "$home\downloads\OpenVPN-Connect-3.msi"` 
 Передать конфигурацию и ключи: 
@@ -705,7 +705,7 @@ verb 3
 `client1.crt` 
 `client1.key`
 
-# Route
+## Route
 
 `Get-Service RemoteAccess | Stop-Service` 
 `Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" -Name "IPEnableRouter" -Value 1` включает IP маршрутизацию 
@@ -743,7 +743,7 @@ verb 3
 14:36:34.533771 IP 192.168.4.6 > 192.168.3.101: ICMP echo request, id 1, seq 2962, length 40 # отправил запрос
 14:36:34.533806 IP 192.168.3.101 > 192.168.4.6: ICMP echo reply, id 1, seq 2962, length 40 # отправил ответ
 ```
-# NAT
+## NAT
 
 `Get-Command -Module NetNat` 
 `New-NetNat -Name LocalNat -InternalIPInterfaceAddressPrefix "192.168.3.0/24"` 
@@ -751,7 +751,7 @@ verb 3
 `Remove-NetNatStaticMapping -StaticMappingID 0` 
 `Remove-NetNat -Name LocalNat`
 
-# WireGuard
+## WireGuard
 
 `Invoke-WebRequest "https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi" -OutFile "$home\Downloads\WireGuard-Client-0.5.3.msi"` 
 `msiexec.exe /i "$home\Downloads\WireGuard-Client-0.5.3.msi" DO_NOT_LAUNCH=1 /qn` 
@@ -792,7 +792,7 @@ AllowedIPs = 192.168.21.0/24, 192.168.3.0/24
 Endpoint = 26.115.154.67:8181
 PersistentKeepalive = 25
 ```
-# VpnClient
+## VpnClient
 
 `Get-Command -Module VpnClient` 
 `Add-VpnConnection -Name "vpn-failon" -ServerAddress "26.115.154.67" -TunnelType L2TP -L2tpPsk "123098" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential -AllUserConnection –PassThru -Force` 
@@ -819,7 +819,7 @@ PersistentKeepalive = 25
 `(Get-VpnConnection -ConnectionName "vpn-failon").routes` отобразить таблицу маршрутизации для указанного соединения 
 `Remove-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix "172.22.23.0/24"`
 
-# ProxyClient
+## ProxyClient
 
 `$user = "lifailon"` 
 `$pass = "Proxy"` 
@@ -831,15 +831,15 @@ PersistentKeepalive = 25
 `Invoke-RestMethod http://ifconfig.me/ip` узнать внешний ip-адрес (по умолчанию в текущей сессии подключения будут происходить через заданный прокси сервер) 
 `Invoke-RestMethod https://kinozal.tv/rss.xml`
 
-# netsh
+## netsh
 
-## Reverse Proxy
+### Reverse Proxy
 
 `netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=192.168.3.108` настраивает входящее подключение на 8080 порту и переадресует трафик на 80 порт указанного хоста 
 `netsh interface portproxy show all` отобразить список всех настроек 
 `netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=0.0.0.0` удалить переадресацию
 
-## Wlan
+### Wlan
 
 `netsh wlan show profile` список сохраненны профилей Wi-Fi и паролей 
 `netsh wlan show interfaces` хар-ки текущей сети (MAC, speed) 
@@ -850,14 +850,14 @@ PersistentKeepalive = 25
 `netsh wlan show drivers` драйвер Wi-Fi 
 `netsh wlan set hostednetwork mode=allow ssid="WiFi-Test" key="password"` создание точки доступа Wi-Fi (SoftAP)
 
-## Firewall
+### Firewall
 
 `netsh advfirewall set allprofiles state off` отключить fw 
 `netsh advfirewall reset` сбросить настройки 
 `netsh advfirewall firewall add rule name="Open Remote Desktop" protocol=TCP dir=in localport=3389 action=allow` открыть порт 3389 
 `netsh advfirewall firewall add rule name="All ICMP V4" dir=in action=allow protocol=icmpv4` открыть icmp
 
-# OpenSSH
+## OpenSSH
 
 `Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Client*'` 
 `Add-WindowsCapability -Online -Name OpenSSH.Client*` 
@@ -878,7 +878,7 @@ PersistentKeepalive = 25
 `pwsh -command Get-Service` 
 `ssh -L 3101:192.168.3.101:22 -R 3101:192.168.3.101:22 lifailon@192.168.3.101 -p 22` SSH Tunnel lifailon@localhost:3101 -> 192.168.3.101:3101
 
-## PSRemoting over SSH
+### PSRemoting over SSH
 
 `Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0` установка OpenSSH Server 
 `Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Ser*'` 
@@ -898,7 +898,7 @@ Subsystem powershell c:/progra~1/powershell/7/pwsh.exe -sshs -NoLogo # запу�
 `$session = New-PSSession -HostName 192.168.3.100 -Port 2121 -UserName lifailon -SSHTransport` 
 `Invoke-Command -Session $session -ScriptBlock {Get-Service}`
 
-# WinRM
+## WinRM
 
 `Enter-PSSession -ComputerName $srv` подключиться к PowerShell сессии через PSRemoting. Подключение возможно только по FQDN-имени 
 `Invoke-Command $srv -ScriptBlock {Get-ComputerInfo}` выполнение команды через PSRemoting 
@@ -909,7 +909,7 @@ Subsystem powershell c:/progra~1/powershell/7/pwsh.exe -sshs -NoLogo # запу�
 `Remove-PSSession $session` удалить сессию 
 `Import-Module -Name ActiveDirectory -PSSession $srv` импортировать модуль с удаленного компьютера в локальную сессию
 
-## Windows Remote Management Configuration
+### Windows Remote Management Configuration
 
 `winrm quickconfig -quiet` изменит запуск службы WinRM на автоматический, задаст стандартные настройки WinRM и добавить исключения для портов в fw 
 `Enable-PSRemoting –Force` включить PowerShell Remoting, работает только для доменного и частного сетевых профилей Windows 
@@ -974,7 +974,7 @@ New-WSManInstance -ResourceURI "winrm/config/Listener" -SelectorSet $selector_se
 `winrs -r:https://192.168.3.100:5985/wsman -u:WinRM-Writer -p:123098 -ssl ipconfig` через https 
 `pwsh -Command "Install-Module -Name PSWSMan"` установить модуль для использования в Linux системе
 
-## Kerberos
+### Kerberos
 
 `.\CheckMaxTokenSize.ps1 -Principals login -OSEmulation $true -Details $true` узнать размер токена пользователя в домене 
 `Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Parameters | select maxtokensize` максимальный размер токена на сервере 
@@ -982,7 +982,7 @@ New-WSManInstance -ResourceURI "winrm/config/Listener" -SelectorSet $selector_se
 `MaxFieldLength увеличить до 0000ffff (65535)` 
 `MaxRequestBytes увеличить до 0000ffff (65535)`
 
-# Console-Download
+## Console-Download
 
 `Install-Module Console-Download -Repository NuGet` устаовить модуль из менеджера пакетов NuGet 
 `Invoke-Expression $(Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Console-Download/rsa/module/Console-Download/Console-Download.psm1")` или импортировать модуль из GitHub репозитория в текущую сессию PowerShell 
@@ -1004,7 +1004,7 @@ Invoke-Download $urls # загрузить параллельно 2 файла
 `Invoke-Download $url` начать загрузку файла 
 `Invoke-Download $url -Thread 3` начать загрузку 3-х одинаковых файлов
 
-# PSDomainTest
+## PSDomainTest
 
 `Install-Module PSDomainTest -Repository NuGet -Scope CurrentUser` 
 `Get-DomainTest -Domain github.com -Warning` протестировать домен и DNS записи на ошибки (вывести только ошибки) через ZoneMaster (https://github.com/zonemaster/zonemaster) 
@@ -1029,7 +1029,7 @@ Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Check-Host/rsa/Get
 `Get-CheckHost -Server google.com:443 -Type http -Count 5` проверить доступность порта 
 `Get-CheckHost -Server google.com:443 -Type tcp -Count 5` проверить доступность TCP или UDP порта
 
-# pSyslog
+## pSyslog
 
 `Install-Module pSyslog -Repository NuGet` 
 `Start-pSyslog -Port 514` запустить сервер на порту 514 (по умолчанию) 
@@ -1053,7 +1053,7 @@ Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Check-Host/rsa/Get
 `Show-pSyslog -Count` отобразить количество сообщений локального журнала 
 `Show-pSyslog -Count -LogFile 10-06` выбрать журнал по дате
 
-## Syslog source message
+### Syslog source message
 ```PowerShell
 Add-Type -TypeDefinition @"
 public enum Syslog_Facility {
@@ -1084,7 +1084,7 @@ public enum Syslog_Facility {
 }
 "@
 ```
-## Syslog type message
+### Syslog type message
 ```PowerShell
 Add-Type -TypeDefinition @"
 public enum Syslog_Severity {
