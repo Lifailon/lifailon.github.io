@@ -79,9 +79,12 @@ plugins:
   - search
 
 extra_css:
-  - _highlight/obsidian.min.css
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/obsidian.min.css
+  # - _highlight/obsidian.min.css
 
 extra_javascript:
-  - _highlight//highlight.min.js
-  - _highlight/powershell.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/powershell.min.js
+  # - _highlight//highlight.min.js
+  # - _highlight/powershell.min.js
   - _highlight/init.js
