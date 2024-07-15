@@ -1029,6 +1029,8 @@ Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Check-Host/rsa/Get
 `Get-CheckHost -Server google.com:443 -Type http -Count 5` проверить доступность порта 
 `Get-CheckHost -Server google.com:443 -Type tcp -Count 5` проверить доступность TCP или UDP порта
 
+## Syslog
+
 ### pSyslog
 
 `Install-Module pSyslog -Repository NuGet` 
