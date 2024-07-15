@@ -8,10 +8,9 @@ hide:
 </p>
 
 <p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands"><img title="GitHub top language"src="https://img.shields.io/badge/GitHub-34495E?style=for-the-badge&logo=github&logoColor=white"></a>
-    <a href="https://www.nuget.org/profiles/Lifailon"><img title="NuGet"src="https://img.shields.io/badge/nuget-4479A1.svg?style=for-the-badge&logo=nuget&logoColor=white"></a>
-    <a href="https://github.com/PowerShell/PowerShell"><img title="GitHub top language"src="https://img.shields.io/badge/PowerShell%20Core-161637?style=for-the-badge&logo=powershell&logoColor=white"></a>
-    <a href="https://github.com/dotnet"><img title="GitHub top language"src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=dotnet&logoColor=white"></a>
+    <a href="https://github.com/Lifailon/PS-Commands"><img title="GitHub Source"src="https://img.shields.io/badge/GitHub_Source-34495E?style=for-the-badge&logo=github&logoColor=white"></a>
+    <a href="https://www.nuget.org/profiles/Lifailon"><img title="NuGet Modules"src="https://img.shields.io/badge/NuGet_Modules-4479A1.svg?style=for-the-badge&logo=nuget&logoColor=white"></a>
+    <a href="linux"><img title="Linux Commands"src="https://img.shields.io/badge/Linux_Commands-FCC624?style=for-the-badge&logo=linux&logoColor=black"></a>
 </p>
 
 <p align="center">
