@@ -8,6 +8,7 @@ nav:
   - Syntax: Syntax/index.md
   - File System: FileSystem/index.md
   - Network: Network/index.md
+  - Windows: Windows/index.md
   - Threads: Threads/index.md
   - Modules: Modules/index.md
   - .NET: dotNET/index.md
@@ -21,11 +22,10 @@ nav:
   - DevOps: DevOps/index.md
   - API: API/index.md
   - SCM: SCM/index.md
-  - Docker: Docker/index.md
   - Ansible: Ansible/index.md
+  - 🐳 Docker: Docker/index.md
   - Zabbix: Zabbix/index.md
-  - Windows: Windows/index.md
-  - 🐧 Linux: Linux/index.md
+  - 🐧 Linux Commands: Linux/index.md
 
   # alternate:
   #   - name: Русский

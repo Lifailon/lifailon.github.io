@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://lifailon.github.io/Linux/">
       
       
-        <link rel="prev" href="../Windows/">
+        <link rel="prev" href="../Zabbix/">
       
       
       
@@ -335,6 +335,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Threads/" class="md-nav__link">
         
   
@@ -595,11 +615,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Docker/" class="md-nav__link">
+      <a href="../Ansible/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Docker
+    Ansible
   </span>
   
 
@@ -615,11 +635,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Ansible/" class="md-nav__link">
+      <a href="../Docker/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Ansible
+    🐳 Docker
   </span>
   
 
@@ -652,26 +672,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../Windows/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Windows
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -686,7 +686,7 @@
           
   
   <span class="md-ellipsis">
-    🐧 Linux
+    🐧 Linux Commands
   </span>
   
 
@@ -697,7 +697,7 @@
         
   
   <span class="md-ellipsis">
-    🐧 Linux
+    🐧 Linux Commands
   </span>
   
 
@@ -4234,7 +4234,7 @@
   
 
 
-  <h1>🐧 Linux</h1>
+  <h1>🐧 Linux Commands</h1>
 
 <p align="center">
     <a href="https://github.com/Lifailon/PS-Commands"><img title="PS-Commands Logo"src="Linux-Commands-Logo.png"></a>
@@ -4710,7 +4710,14 @@ EOF
 <code>dd if=/dev/zero of=/var/log/test.log count=11 bs=1M</code> создать файл заполненный нулями указанного размера<br />
 <code>find /var/log -type f -name "*.log" -size +10M -exec rm -f {} \;</code> удалить все лог-файлы, объёмом больше 10 Мбайт</p>
 <h3 id="locate">locate</h3>
-<p><code>cargo install locate</code>updatedb<code>обновить индексы базы данных</code>locate filename.txt<code>найти по имени файла</code>locate -i filename.txt<code>игнорировать регистр</code>locate '<em>.jpg'<code>найти все файлы по расширению</code>locate -n 10 filename.txt<code>вывести 10 результатов</code>locate -d /path/to/directory filename.txt<code></code>locate -r 'pattern.</em>.txt$'` использовать регулярные выражения</p>
+<p><code>cargo install locate</code><br />
+<code>updatedb</code> обновить индексы базы данных<br />
+<code>locate filename.txt</code> найти по имени файла<br />
+<code>locate -i filename.txt</code> игнорировать регистр<br />
+<code>locate '*.jpg'</code> найти все файлы по расширению<br />
+<code>locate -n 10 filename.txt</code> вывести 10 результатов<br />
+<code>locate -d /path/to/directory filename.txt</code><br />
+<code>locate -r 'pattern.*\.txt$'</code> использовать регулярные выражения</p>
 <h2 id="cron">cron</h2>
 <p><code>ls /etc/cron.d/</code> директория хранения задач различных пакетов (atop, sysstat)<br />
 <code>ls -l /etc/cron.hourly &amp;&amp; ls -l /etc/cron.daily &amp;&amp; ls -l /etc/cron.weekly &amp;&amp; ls -l /etc/cron.monthly</code> директории для скриптов, которые надо выполнять раз в час, день, неделю и месяц<br />
@@ -4773,7 +4780,7 @@ fi
 <code>systemctl list-dependencies ssh</code> дерево зависимостей<br />
 <code>systemctl list-dependencies ssh --reverse</code> зависящие сервисы от указанного юнита<br />
 <code>systemctl list-units --type service --all</code> отображение статуса всех сервисов<br />
-<code>systemctl list-unit-files | sed "1d;$ d" | sed "$ d" | wc</code> отобразить кол-во всех файлов конфигурации сервисов на диске;<br />
+<code>systemctl list-unit-files | sed "1d;$ d" | sed "$ d" | wc</code> отобразить кол-во всех файлов конфигурации сервисов на диске<br />
 <code>systemctl list-unit-files | grep zabbix</code> отфильтровать по имени<br />
 <code>systemctl list-unit-files --type=service</code> список всех сервисов<br />
 <code>systemctl list-unit-files --type=service --state=enabled</code> список сервисов, добавленных в автозагрузку<br />
