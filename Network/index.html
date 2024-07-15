@@ -878,7 +878,16 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Check-Host">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#syslog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syslog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Syslog">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1825,7 +1834,16 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Check-Host">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#syslog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syslog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Syslog">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2760,6 +2778,7 @@ Invoke-RestMethod &quot;https://raw.githubusercontent.com/Lifailon/Check-Host/rs
 <code>Get-CheckHost -Server google.com -Type dns -Count 5</code> проверить DNS (возвращает А-запись или диапазон с ip-адресом) <br />
 <code>Get-CheckHost -Server google.com:443 -Type http -Count 5</code> проверить доступность порта <br />
 <code>Get-CheckHost -Server google.com:443 -Type tcp -Count 5</code> проверить доступность TCP или UDP порта</p>
+<h2 id="syslog">Syslog</h2>
 <h3 id="psyslog">pSyslog</h3>
 <p><code>Install-Module pSyslog -Repository NuGet</code> <br />
 <code>Start-pSyslog -Port 514</code> запустить сервер на порту 514 (по умолчанию) <br />
