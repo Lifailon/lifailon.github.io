@@ -5,26 +5,27 @@ copyright: Copyright © 2023-2024 Alex Kup (Lifailon)
 
 nav:
   - Home: index.md
-  - Syntax: Syntax\index.md
-  - File System: FileSystem\index.md
-  - Network: Network\index.md
-  - Windows: Windows\index.md
-  - Threads: Threads\index.md
-  - Modules: Modules\index.md
-  - .NET: dotNET\index.md
-  - COM: COM\index.md
-  - API: API\index.md
-  - Server Manager: ServerManager\index.md
-  - Active Directory: ActiveDirectory\index.md
-  - Microsoft Exchange: Exchange\index.md
-  - Virtualization: Virtualization\index.md
-  - Database: Database\index.md
-  - Data: Data\index.md
-  - Git: Git\index.md
-  - Ansible: Ansible\index.md
-  - Docker: Docker\index.md
-  - Zabbix: Zabbix\index.md
-  - DevOps: DevOps\index.md
+  - Syntax: Syntax/index.md
+  - File System: FileSystem/index.md
+  - Network: Network/index.md
+  - Threads: Threads/index.md
+  - Modules: Modules/index.md
+  - .NET: dotNET/index.md
+  - COM: COM/index.md
+  - Server Manager: ServerManager/index.md
+  - Active Directory: ActiveDirectory/index.md
+  - Microsoft Exchange: Exchange/index.md
+  - Virtualization: Virtualization/index.md
+  - Database: Database/index.md
+  - Markup Languages : MarkupLanguages/index.md
+  - DevOps: DevOps/index.md
+  - API: API/index.md
+  - SCM: SCM/index.md
+  - Docker: Docker/index.md
+  - Ansible: Ansible/index.md
+  - Zabbix: Zabbix/index.md
+  - Windows: Windows/index.md
+  - 🐧 Linux: Linux/index.md
 
   # alternate:
   #   - name: Русский
@@ -46,8 +47,8 @@ extra:
 theme:
   name: material
 
-  logo: Logo/PS-Commands-logo-x256.png
-  favicon: Logo/PS-Commands-logo-x256.png
+  logo: Logo/PowerShell-Logo.png
+  favicon: Logo/PowerShell-Logo.png
 
   font:
     text: Inter
