@@ -4,63 +4,6 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## GitHub-Actions
-
-### Runner (Agent)
-
-`mkdir actions-runner; cd actions-runner` 
-`Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-win-x64-2.316.1.zip -OutFile actions-runner-win-x64-2.316.1.zip` загрузить пакет с Runner последней версии 
-`if((Get-FileHash -Path actions-runner-win-x64-2.316.1.zip -Algorithm SHA256).Hash.ToUpper() -ne 'e41debe4f0a83f66b28993eaf84dad944c8c82e2c9da81f56a850bc27fedd76b'.ToUpper()){ throw 'Computed checksum did not match' }` проверить валидность пакета с помощью hash-суммы 
-`Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.316.1.zip", "$PWD")` разархивировать 
-`Remove-Item *.zip` удалить архив 
-`./config.cmd --url https://github.com/Lifailon/egapi --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX` авторизовать и сконфигурировать сборщика с помощью скрипта (что бы на последнем пункте создать службу для управления сборщиком, нужно запустить консоль с правами администратора) 
-`./run.cmd` запустить процесс (если не используется служба) 
-`Get-Service *actions* | Start-Service` запустить службу 
-`Get-Process *Runner.Listener*` 
-`./config.cmd remove --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX` удалить конфигурацию
-
-### Build (Pipeline)
-```yaml
-name: build-game-list
-
-on:
-  # Разрешить ручной запуск workflow через интерфейс GitHub
-  workflow_dispatch:
-  
-  # Запускать workflow по расписанию каждый час в 00 минут
-  schedule:
-  - cron: '00 * * * *'
-
-jobs:
-  Job_01:
-    # Указываем, что job будет выполняться на последней версии Ubuntu
-    runs-on: ubuntu-latest
-    
-    steps:
-    # Шаги, которые будут выполнены в рамках этого job
-    - name: Checkout repository
-      # Клонирования репозиторий
-      uses: actions/checkout@v2
-    
-    - name: Get content and write to file
-      # Выполняем скрипт PowerShell, расположенный в ./scripts/Get-GameList.ps1
-      run: pwsh -File ./scripts/Get-GameList.ps1
-      # Указываем, что команда должна выполняться в оболочке bash
-      shell: bash 
-
-    - name: Commit and push changes
-      run: |
-        # Задаем имя пользователя и email для коммитов
-        git config --global user.name 'GitHub Actions'
-        git config --global user.email 'actions@github.com'
-        # Добавляем все изменения в индекс
-        git add .
-        # Делаем коммит с комментарием
-        git commit -m "update game list"
-        # Отправляем коммит в удаленный репозиторий
-        git push
-```
-
 ## DSC
 
 `Import-Module PSDesiredStateConfiguration` 
@@ -152,6 +95,63 @@ Configuration InstallPowerShellCore {
 `Test-DscConfiguration -Path $Path` 
 `Start-DscConfiguration -Path $path -Wait -Verbose` 
 `Get-Job`
+
+## GitHub-Actions
+
+### Runner (Agent)
+
+`mkdir actions-runner; cd actions-runner` 
+`Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-win-x64-2.316.1.zip -OutFile actions-runner-win-x64-2.316.1.zip` загрузить пакет с Runner последней версии 
+`if((Get-FileHash -Path actions-runner-win-x64-2.316.1.zip -Algorithm SHA256).Hash.ToUpper() -ne 'e41debe4f0a83f66b28993eaf84dad944c8c82e2c9da81f56a850bc27fedd76b'.ToUpper()){ throw 'Computed checksum did not match' }` проверить валидность пакета с помощью hash-суммы 
+`Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.316.1.zip", "$PWD")` разархивировать 
+`Remove-Item *.zip` удалить архив 
+`./config.cmd --url https://github.com/Lifailon/egapi --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX` авторизовать и сконфигурировать сборщика с помощью скрипта (что бы на последнем пункте создать службу для управления сборщиком, нужно запустить консоль с правами администратора) 
+`./run.cmd` запустить процесс (если не используется служба) 
+`Get-Service *actions* | Start-Service` запустить службу 
+`Get-Process *Runner.Listener*` 
+`./config.cmd remove --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX` удалить конфигурацию
+
+### Build (Pipeline)
+```yaml
+name: build-game-list
+
+on:
+  # Разрешить ручной запуск workflow через интерфейс GitHub
+  workflow_dispatch:
+  
+  # Запускать workflow по расписанию каждый час в 00 минут
+  schedule:
+  - cron: '00 * * * *'
+
+jobs:
+  Job_01:
+    # Указываем, что job будет выполняться на последней версии Ubuntu
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Шаги, которые будут выполнены в рамках этого job
+    - name: Checkout repository
+      # Клонирования репозиторий
+      uses: actions/checkout@v2
+    
+    - name: Get content and write to file
+      # Выполняем скрипт PowerShell, расположенный в ./scripts/Get-GameList.ps1
+      run: pwsh -File ./scripts/Get-GameList.ps1
+      # Указываем, что команда должна выполняться в оболочке bash
+      shell: bash 
+
+    - name: Commit and push changes
+      run: |
+        # Задаем имя пользователя и email для коммитов
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        # Добавляем все изменения в индекс
+        git add .
+        # Делаем коммит с комментарием
+        git commit -m "update game list"
+        # Отправляем коммит в удаленный репозиторий
+        git push
+```
 
 ## PSAppDeployToolkit
 

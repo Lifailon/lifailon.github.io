@@ -430,16 +430,16 @@ $Client.Dispose()
 
 [Developers chat](https://developers.sber.ru/gigachat/login)
 
-### 1. Установка сертификатов:
+- 1. Установка сертификатов:
 
 `Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_root_ca.cer"` скачать сертификат минцифры 
 `Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_sub_ca.cer"` 
 `Import-Certificate -FilePath "$home\Downloads\russian_trusted_root_ca.cer" -CertStoreLocation "Cert:\CurrentUser\Root"` установить сертификат минцифры 
 `Import-Certificate -FilePath "$home\Downloads\russian_trusted_sub_ca.cer" -CertStoreLocation "Cert:\CurrentUser\CA"`
 
-### 2. Авторизация по Sber ID и генерация новых авторизационных данных для получения токена: [Developers](https://developers.sber.ru/studio) (время жизни 30 минут)
+- 2. Авторизация по Sber ID и генерация новых авторизационных данных для получения токена: [Developers](https://developers.sber.ru/studio) (время жизни 30 минут)
 
-### 3. Формирование авторизационных данных в формате Base64 из Client ID и Client Secret:
+- 3. Формирование авторизационных данных в формате Base64 из Client ID и Client Secret:
 ```PowerShell
 $Client_ID     = "7e6d2f9f-825e-49b7-98f4-62fbb7506427" # [System.Guid]::Parse("7e6d2f9f-825e-49b7-98f4-62fbb7506427")
 $Client_Secret = "c35113ee-6757-47ba-9853-ea1d0d9db1ef" # [System.Guid]::Parse("c35113ee-6757-47ba-9853-ea1d0d9db1ef")
@@ -447,7 +447,7 @@ $Client_Join   = $Client_ID+":"+$Client_Secret # объединяем два UUI
 $Bytes         = [System.Text.Encoding]::UTF8.GetBytes($Client_Join) # преобразуем строку в массив байт
 $Cred_Base64   = [Convert]::ToBase64String($Bytes) # кодируем байты в строку Base64
 ```
-### 4. Получение токена:
+- 4. Получение токена:
 
 `$Cred_Base64   = "N2U2ZDJmOWYtODI1ZS00OWI3LTk4ZjQtNjJmYmI3NTA2NDI3OmIyYzgwZmZmLTEzOGUtNDg1Mi05MjgwLWE2MGI4NTc0YTM2MQ=="` 
 `$UUID = [System.Guid]::NewGuid()` генерируем UUID для журналирования входящих вызовов и разбора инцидентов
@@ -463,7 +463,7 @@ $body = @{
 }
 $GIGA_TOKEN = $(Invoke-RestMethod -Uri $url -Method POST -Headers $headers -Body $body).access_token
 ```
-### 5. Параметры:
+- 5. Параметры:
 ```PowerShell
 [string]$content = "Посчитай сумму чисел: 22+33"
 [string]$role = "user" # роль автора сообщения (user/assistant/system)
@@ -473,7 +473,7 @@ $GIGA_TOKEN = $(Invoke-RestMethod -Uri $url -Method POST -Headers $headers -Body
 [int64]$max_tokens = 512 # максимальное количество токенов, которые будут использованы для создания ответов
 [boolean]$stream = $false # передавать сообщения по частям в потоке
 ```
-### 6. Составление запросов:
+- 6. Составление запросов:
 ```PowerShell
 $url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
 $headers = @{
@@ -969,3 +969,60 @@ ep="tv-series"
 curl -s "https://videocdn.tv/api/$ep?api_token=$token&field=kinopoisk_id&query=$kp_id" | jq ".data[].episodes | length" # количество серий
 curl -s "https://videocdn.tv/api/$ep?api_token=$token&field=kinopoisk_id&query=$kp_id" | jq ".data[].episodes[] | select(.season_num == 2) | {episode: .ru_title, voice: .media[].translation.title}" # отфильтровать параметры вывода
 ```
+
+## Torrent
+
+### Jackett
+
+[Source](https://github.com/Jackett/Jackett)
+
+`mkdir /jackett`
+`docker-compose.yml`
+```yaml
+---
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /jackett/data:/config
+      - /jackett/blackhole:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+```
+`docker-compose up -d jackett`
+`docker exec -it jackett /bin/bash` доступ к оболочке во время работы контейнера
+`docker logs -f jackett` мониторинг журналов контейнера
+
+`/jackett/data/Jackett/ServerConfig.json` место хранения конфигурации сервера
+`/jackett/data/Jackett/Indexers/*.json` место хранения конфигурации индексаторов
+
+`$API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"`
+`Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/rutor/results/torznab/api?apikey=$API_KEY"` Прочитать RSS ленту RuTor
+`$query = "the+rookie"`
+`Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/rutor/results/torznab/api?apikey=$API_KEY&t=search&cat=&q=$query"` поиск в RuTor
+`Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/kinozal/results/torznab/api?apikey=$API_KEY&t=search&q=$query"` поиск в кинозал
+`Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/kinozal/results/torznab/api?apikey=$API_KEY&t=search&q=$query&cat=5000"` отфильтровать вывод по сериалам (Capabilities: 5000)
+`Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/all/results/torznab/api?apikey=$API_KEY&t=search&q=riverdale"` поиск во всех индексаторах
+`$(Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/all/results/torznab/api?apikey=$API_KEY&t=indexers&configured=true").indexers.indexer` cписок всех настроенных индексаторов (трекеров)
+
+### Jellyfin
+
+[Source](https://github.com/jellyfin/jellyfin)
+[API Docs](https://api.jellyfin.org)
+
+`$API_TOKEN "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"`
+`Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Users` список пользователей и их id
+`$Users = Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Users`
+`$UserId = $($Users | Where-Object Name -match "Lifailon").Id` забрать id пользователя
+`Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/System/Info` информация о системе
+`$(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Items).Items` список добавленных объектов директорий
+`$ItemId = $(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Items).Items[-1].Id` забрать id директории
+`$Data = $(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} "http://localhost:8096/Users/$UserId/Items?ParentId=$ItemId").Items` получить содержимое корневой директории по Id из Items
+`$TvId = $($data | Where-Object Name -match "Rookie").Id` найти сериал или фильм по имени и забрать его Id
+`$(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} "http://localhost:8096/Users/$UserId/Items?ParentId=$TvId").Items` получить содержимое дочерней директории по Id ее родительской директории

@@ -4,96 +4,6 @@ author: "Lifailon"
 date: "2024-03-14T03:00:00+03:00"
 ---
 
-## WMI
-
-### WMI/CIM (Windows Management Instrumentation/Common Information Model)	
-`Get-WmiObjec -ComputerName localhost -Namespace root -class "__NAMESPACE" | select name,__namespace` отобразить дочернии Namespace (логические иерархические группы) 
-`Get-WmiObject -List` отобразить все классы пространства имен "root\cimv2" (по умолчанию), свойства (описывают конфигурацию и текущее состояние управляемого ресурса) и их методы (какие действия позволяет выполнить над этим ресурсом) 
-`Get-WmiObject -List | Where-Object {$_.name -match "video"}` поиск класса по имени, его свойств и методов 
-`Get-WmiObject -ComputerName localhost -Class Win32_VideoController` отобразить содержимое свойств класса
-
-`gwmi -List | where name -match "service" | ft -auto` если в таблице присутствуют Methods, то можно взаимодействовать {StartService, StopService} 
-`gwmi -Class win32_service | select *` отобразить список всех служб и всех их свойств 
-`Get-CimInstance Win32_service` обращается на прямую к "root\cimv2" 
-`gwmi win32_service -Filter "name='Zabbix Agent'"` отфильтровать вывод по имени 
-`(gwmi win32_service -Filter "name='Zabbix Agent'").State` отобразить конкретное свойство 
-`gwmi win32_service -Filter "State = 'Running'"` отфильтровать запущенные службы 
-`gwmi win32_service -Filter "StartMode = 'Auto'"` отфильтровать службы по методу запуска 
-`gwmi -Query 'select * from win32_service where startmode="Auto"'` WQL-запрос (WMI Query Language) 
-`gwmi win32_service | Get-Member -MemberType Method` отобразить все методы взаимодействия с описание применения (Delete, StartService) 
-`(gwmi win32_service -Filter 'name="Zabbix Agent"').Delete()` удалить службу 
-`(gwmi win32_service -Filter 'name="MSSQL$MSSQLE"').StartService()` запустить службу
-
-`Get-CimInstance -ComputerName $srv Win32_OperatingSystem | select LastBootUpTime` время последнего включения 
-`gwmi -ComputerName $srv -Class Win32_OperatingSystem | select LocalDateTime,LastBootUpTime` текущее время и время последнего включения 
-`gwmi Win32_OperatingSystem | Get-Member -MemberType Method` методы reboot и shutdown 
-`(gwmi Win32_OperatingSystem -EnableAllPrivileges).Reboot()` используется с ключем повышения привелегий 
-`(gwmi Win32_OperatingSystem -EnableAllPrivileges).Win32Shutdown(0)` завершение сеанса пользователя
-```PowerShell
-$system = Get-WmiObject -Class Win32_OperatingSystem
-$InstallDate = [Management.ManagementDateTimeconverter]::ToDateTime($system.installdate)` Получаем дату установки ОС
-$AfterInstallDays = ((Get-Date) — $Installdate).Days` Вычисляем время, прошедшее с момента установки
-$ShortInstallDate = "{0:yyyy-MM-dd HH:MM}" -f ($InstallDate)
-"Система установлена: $ShortInstallDate (Прошло $AfterInstalldays дней)"
-```
-`(Get-WmiObject win32_battery).estimatedChargeRemaining` заряд батареи в процентах 
-`gwmi Win32_UserAccount` доменные пользователи 
-`(gwmi Win32_SystemUsers).PartComponent` 
-`Get-CimInstance -ClassName Win32_LogonSession` 
-`Get-CimInstance -ClassName Win32_BIOS`
-
-`gwmi -list -Namespace root\CIMV2\Terminalservices` 
-`(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).AllowTSConnections` 
-`(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(1)` включить RDP
-```
-$srv = "localhost"
-gwmi Win32_logicalDisk -ComputerName $srv | where {$_.Size -ne $null} | select @{
-Label="Value"; Expression={$_.DeviceID}}, @{Label="AllSize"; Expression={
-[string]([int]($_.Size/1Gb))+" GB"}},@{Label="FreeSize"; Expression={
-[string]([int]($_.FreeSpace/1Gb))+" GB"}}, @{Label="Free%"; Expression={
-[string]([int]($_.FreeSpace/$_.Size*100))+" %"}}
-```
-### NLA (Network Level Authentication)
-`(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").UserAuthenticationRequired` 
-`(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(1)` включить NLA 
-`Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer` отобразить значение (2) 
-`Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication` отобразить значение (1) 
-`Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer -Value 0` изменить значение 
-`Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -Value 0` 
-`REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters /v AllowEncryptionOracle /t REG_DWORD /d 2` отключить на клиентском компьютере проверку версии CredSSP, если на целевом комьютере-сервере не установлены обновления KB4512509 от мая 2018 года
-
-## Performance
-
-`lodctr /R` пересоздать счетчиков производительности из системного хранилища архивов (так же исправляет счетчики для CIM, например, для cpu Win32_PerfFormattedData_PerfOS_Processor и iops Win32_PerfFormattedData_PerfDisk_PhysicalDisk) 
-`(Get-Counter -ListSet *).CounterSetName` вывести список всех доступных счетчиков производительности в системе 
-`(Get-Counter -ListSet *memory*).Counter` поиск по wildcard-имени во всех счетчиках (включая дочернии) 
-`Get-Counter "\Memory\Available MBytes"` объем свободной оперативной памяти 
-`Get-Counter -cn $srv "\LogicalDisk(*)\% Free Space"` % свободного места на всех разделах дисков 
-`(Get-Counter "\Process(*)\ID Process").CounterSamples` 
-`Get-Counter "\Processor(_Total)\% Processor Time" –ComputerName $srv -MaxSamples 5 -SampleInterval 2` 5 проверок каждые 2 секунды 
-`Get-Counter "\Процессор(_Total)\% загруженности процессора" -Continuous` непрерывно 
-`(Get-Counter "\Процессор(*)\% загруженности процессора").CounterSamples`
-
-`(Get-Counter -ListSet *интерфейс*).Counter` найти все счетчики 
-`Get-Counter "\Сетевой интерфейс(*)\Всего байт/с"` отобразить все адаптеры (выбрать действующий по трафику)
-```PowerShell
-$WARNING = 25
-$CRITICAL = 50
-$TransferRate = ((Get-Counter "\\huawei-mb-x-pro\сетевой интерфейс(intel[r] wi-fi 6e ax211 160mhz)\всего байт/с"
-).countersamples | select -ExpandProperty CookedValue)*8
-$NetworkUtilisation = [math]::round($TransferRate/1000000000*100,2)
-if ($NetworkUtilisation -gt $CRITICAL){
-Write-Output "CRITICAL: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"   
-#exit 2		
-}
-if ($NetworkUtilisation -gt $WARNING){
-Write-Output "WARNING: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"
-#exit 1
-}
-Write-Output "OK: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"   
-#exit 0
-```
-
 ## Windows Event
 
 `Get-WinEvent -ListLog *` отобразить все доступные журналы логов 
@@ -182,6 +92,38 @@ $EventData | ft
 `Get-EventLog -List` отобразить все корневые журналы логов и их размер 
 `Clear-EventLog Application` очистить логи указанного журнала 
 `Get-EventLog -LogName Security -InstanceId 4624` найти логи по ID в журнале Security
+
+## Performance
+
+`lodctr /R` пересоздать счетчиков производительности из системного хранилища архивов (так же исправляет счетчики для CIM, например, для cpu Win32_PerfFormattedData_PerfOS_Processor и iops Win32_PerfFormattedData_PerfDisk_PhysicalDisk) 
+`(Get-Counter -ListSet *).CounterSetName` вывести список всех доступных счетчиков производительности в системе 
+`(Get-Counter -ListSet *memory*).Counter` поиск по wildcard-имени во всех счетчиках (включая дочернии) 
+`Get-Counter "\Memory\Available MBytes"` объем свободной оперативной памяти 
+`Get-Counter -cn $srv "\LogicalDisk(*)\% Free Space"` % свободного места на всех разделах дисков 
+`(Get-Counter "\Process(*)\ID Process").CounterSamples` 
+`Get-Counter "\Processor(_Total)\% Processor Time" –ComputerName $srv -MaxSamples 5 -SampleInterval 2` 5 проверок каждые 2 секунды 
+`Get-Counter "\Процессор(_Total)\% загруженности процессора" -Continuous` непрерывно 
+`(Get-Counter "\Процессор(*)\% загруженности процессора").CounterSamples`
+
+`(Get-Counter -ListSet *интерфейс*).Counter` найти все счетчики 
+`Get-Counter "\Сетевой интерфейс(*)\Всего байт/с"` отобразить все адаптеры (выбрать действующий по трафику)
+```PowerShell
+$WARNING = 25
+$CRITICAL = 50
+$TransferRate = ((Get-Counter "\\huawei-mb-x-pro\сетевой интерфейс(intel[r] wi-fi 6e ax211 160mhz)\всего байт/с"
+).countersamples | select -ExpandProperty CookedValue)*8
+$NetworkUtilisation = [math]::round($TransferRate/1000000000*100,2)
+if ($NetworkUtilisation -gt $CRITICAL){
+Write-Output "CRITICAL: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"   
+#exit 2		
+}
+if ($NetworkUtilisation -gt $WARNING){
+Write-Output "WARNING: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"
+#exit 1
+}
+Write-Output "OK: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"   
+#exit 0
+```
 
 ## Defender
 
@@ -376,6 +318,64 @@ out – путь до файла, в который будет конверти�
 
 - CRT и KEY в PFX: 
 `openssl pkcs12 -inkey certificate.key -in certificate.crt -export -out certificate.pfx`
+
+## WMI
+
+### WMI/CIM (Windows Management Instrumentation/Common Information Model)	
+`Get-WmiObjec -ComputerName localhost -Namespace root -class "__NAMESPACE" | select name,__namespace` отобразить дочернии Namespace (логические иерархические группы) 
+`Get-WmiObject -List` отобразить все классы пространства имен "root\cimv2" (по умолчанию), свойства (описывают конфигурацию и текущее состояние управляемого ресурса) и их методы (какие действия позволяет выполнить над этим ресурсом) 
+`Get-WmiObject -List | Where-Object {$_.name -match "video"}` поиск класса по имени, его свойств и методов 
+`Get-WmiObject -ComputerName localhost -Class Win32_VideoController` отобразить содержимое свойств класса
+
+`gwmi -List | where name -match "service" | ft -auto` если в таблице присутствуют Methods, то можно взаимодействовать {StartService, StopService} 
+`gwmi -Class win32_service | select *` отобразить список всех служб и всех их свойств 
+`Get-CimInstance Win32_service` обращается на прямую к "root\cimv2" 
+`gwmi win32_service -Filter "name='Zabbix Agent'"` отфильтровать вывод по имени 
+`(gwmi win32_service -Filter "name='Zabbix Agent'").State` отобразить конкретное свойство 
+`gwmi win32_service -Filter "State = 'Running'"` отфильтровать запущенные службы 
+`gwmi win32_service -Filter "StartMode = 'Auto'"` отфильтровать службы по методу запуска 
+`gwmi -Query 'select * from win32_service where startmode="Auto"'` WQL-запрос (WMI Query Language) 
+`gwmi win32_service | Get-Member -MemberType Method` отобразить все методы взаимодействия с описание применения (Delete, StartService) 
+`(gwmi win32_service -Filter 'name="Zabbix Agent"').Delete()` удалить службу 
+`(gwmi win32_service -Filter 'name="MSSQL$MSSQLE"').StartService()` запустить службу
+
+`Get-CimInstance -ComputerName $srv Win32_OperatingSystem | select LastBootUpTime` время последнего включения 
+`gwmi -ComputerName $srv -Class Win32_OperatingSystem | select LocalDateTime,LastBootUpTime` текущее время и время последнего включения 
+`gwmi Win32_OperatingSystem | Get-Member -MemberType Method` методы reboot и shutdown 
+`(gwmi Win32_OperatingSystem -EnableAllPrivileges).Reboot()` используется с ключем повышения привелегий 
+`(gwmi Win32_OperatingSystem -EnableAllPrivileges).Win32Shutdown(0)` завершение сеанса пользователя
+```PowerShell
+$system = Get-WmiObject -Class Win32_OperatingSystem
+$InstallDate = [Management.ManagementDateTimeconverter]::ToDateTime($system.installdate)` Получаем дату установки ОС
+$AfterInstallDays = ((Get-Date) — $Installdate).Days` Вычисляем время, прошедшее с момента установки
+$ShortInstallDate = "{0:yyyy-MM-dd HH:MM}" -f ($InstallDate)
+"Система установлена: $ShortInstallDate (Прошло $AfterInstalldays дней)"
+```
+`(Get-WmiObject win32_battery).estimatedChargeRemaining` заряд батареи в процентах 
+`gwmi Win32_UserAccount` доменные пользователи 
+`(gwmi Win32_SystemUsers).PartComponent` 
+`Get-CimInstance -ClassName Win32_LogonSession` 
+`Get-CimInstance -ClassName Win32_BIOS`
+
+`gwmi -list -Namespace root\CIMV2\Terminalservices` 
+`(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).AllowTSConnections` 
+`(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(1)` включить RDP
+```
+$srv = "localhost"
+gwmi Win32_logicalDisk -ComputerName $srv | where {$_.Size -ne $null} | select @{
+Label="Value"; Expression={$_.DeviceID}}, @{Label="AllSize"; Expression={
+[string]([int]($_.Size/1Gb))+" GB"}},@{Label="FreeSize"; Expression={
+[string]([int]($_.FreeSpace/1Gb))+" GB"}}, @{Label="Free%"; Expression={
+[string]([int]($_.FreeSpace/$_.Size*100))+" %"}}
+```
+### NLA (Network Level Authentication)
+`(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").UserAuthenticationRequired` 
+`(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(1)` включить NLA 
+`Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer` отобразить значение (2) 
+`Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication` отобразить значение (1) 
+`Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer -Value 0` изменить значение 
+`Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -Value 0` 
+`REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters /v AllowEncryptionOracle /t REG_DWORD /d 2` отключить на клиентском компьютере проверку версии CredSSP, если на целевом комьютере-сервере не установлены обновления KB4512509 от мая 2018 года
 
 ## oh-my-posh
 

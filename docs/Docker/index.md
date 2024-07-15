@@ -215,7 +215,7 @@ chmod +x /usr/local/bin/ctop
 
 ## LazyDocker
 
-`scoop install lazydocker || choco install lazydocker` установка в Windows
+`scoop install lazydocker || choco install lazydocker` установка в Windows (https://github.com/jesseduffield/lazydocker)
 ```bash
 wget https://github.com/jesseduffield/lazydocker/releases/download/v0.23.1/lazydocker_0.23.1_Linux_x86.tar.gz -O ~/lazydocker.tar.gz
 tar -xzf ~/lazydocker.tar.gz lazydocker
