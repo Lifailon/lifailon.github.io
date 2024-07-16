@@ -21,10 +21,10 @@ nav:
   - Markup Languages : MarkupLanguages/index.md
   - DevOps: DevOps/index.md
   - API: API/index.md
+  - Zabbix: Zabbix/index.md
   - SCM: SCM/index.md
   - Ansible: Ansible/index.md
   - 🐳 Docker: Docker/index.md
-  - Zabbix: Zabbix/index.md
   - 🐧 Linux Commands: Linux/index.md
 
   # alternate:
