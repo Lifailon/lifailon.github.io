@@ -269,11 +269,19 @@ EOF
 ### xq
 
 `apt-get install xq || brew install xq` установить xq (https://github.com/sibprogrammer/xq) для XML и HTML на GoLang
+`curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -nx /rss/channel/item` вывод содержимого дочерних элементов с тегами
+`curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -x /rss/channel/item/link` вывести только содержимое (массив ссылок)
 `curl -s https://kinozal.tv -x kinozal:proxy@192.168.3.100:9090 | xq -nq "head"` вывести блок head целиком (с тегами)
 `curl -s https://kinozal.tv -x kinozal:proxy@192.168.3.100:9090 | xq -q "head"` вывести только текст из дочерних элементов выбранного тега (содержимое title)
 `curl -s https://kinozal.tv/browse.php?s=the+rookie -x kinozal:proxy@192.168.3.100:9090 | xq -nq "body > div > div > div > div > table > tbody > tr > td"`
-`curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -nx /rss/channel/item` вывод содержимого дочерних элементов с тегами
-`curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -x /rss/channel/item/link` вывести только содержимое (массив ссылок)
+`curl -s -X POST -u "Login:Password" "http://localhost:9091/transmission/rpc" | xq -q a -a href` забрать X-Transmission-Session-Id для дальнейших запросов к API (обратиться к тэгу a и атрибуту href)
+
+### htmlq
+
+`brew install htmlq` установить htmlq (https://github.com/mgdm/htmlq) like jq for HTML
+`curl -s https://kinozal.tv/browse.php?s=the+rookie -x kinozal:proxy@192.168.3.100:9090 | htmlq table tr td a -t` получить содержимое таблицы (вывести только текст содержимого)
+`curl -s https://kinozal.tv/browse.php?s=the+rookie -x kinozal:proxy@192.168.3.100:9090 | htmlq table tr td a -a href` получить только ссылки
+`curl -s -X POST -u "Login:Password" "http://localhost:9091/transmission/rpc" | htmlq a -a href` забрать X-Transmission-Session-Id для дальнейших запросов к API (обратиться к тэгу a и атрибуту href)
 
 ### yq
 
@@ -1681,6 +1689,17 @@ done
 `Z` [zombie] завершенный процесс, ожидающий пока родительский процесс примет результат
 `T` остановленный сигналом SIGSTOP (-19/CTRL+Z)
 `X` мертвый (не должен показываться)
+
+### bpytop
+
+`sudo apt install bpytop`
+`pip3 list | grep psutil` проверить пакет
+`pip3 install psutil --break-system-packages` установить пакет в обход ограничений
+`python3 -m venv myenv` создать виртуальное окружение
+`source myenv/bin/activate` активировать виртуальное окружение
+`pip install psutil` установить библиотеку для получения информации о системе
+`bpytop`
+`deactivate`
 
 ### atop
 
