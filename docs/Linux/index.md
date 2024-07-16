@@ -1,11 +1,11 @@
 ---
-title: "🐧 Linux"
+title: "🐧 Linux Commands"
 author: "Lifailon"
-date: "2024-03-14T03:00:00+03:00"
+date: "2024-07-15T03:00:00+03:00"
 ---
 
 <p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands"><img title="PS-Commands Logo"src="Linux-Commands-Logo.png"></a>
+    <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/linux.md"><img title="Linux Commands Logo"src="Linux-Commands-Logo.png"></a>
 </p>
 
 Заметки по работе с системными командами и консольными утилитами 🐧 **Linux**.

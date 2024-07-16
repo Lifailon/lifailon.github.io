@@ -10,7 +10,7 @@ hide:
 <p align="center">
     <a href="https://github.com/Lifailon/PS-Commands"><img title="GitHub Source"src="https://img.shields.io/badge/GitHub_Source-34495E?style=for-the-badge&logo=github&logoColor=white"></a>
     <a href="https://www.nuget.org/profiles/Lifailon"><img title="NuGet Modules"src="https://img.shields.io/badge/NuGet_Modules-4479A1.svg?style=for-the-badge&logo=nuget&logoColor=white"></a>
-    <a href="linux"><img title="Linux Commands"src="https://img.shields.io/badge/Linux_Commands-FCC624?style=for-the-badge&logo=linux&logoColor=black"></a>
+    <a href="Linux"><img title="Linux Commands"src="https://img.shields.io/badge/Linux_Commands-FCC624?style=for-the-badge&logo=linux&logoColor=black"></a>
 </p>
 
 <p align="center">
@@ -21,7 +21,12 @@ hide:
 
 Исходный репозиторий содержит набор полезных [скриптов и модулей](https://github.com/Lifailon/PS-Commands/tree/rsa/Scripts) автора, а также [тестовый стенд WinForms](https://github.com/Lifailon/PS-Commands/tree/rsa/WinForms) с примерами реализации большинства функционала (DataGridView, Button, Checkbox и т.д.), который можно использовать как шаблон для создания своей программы с графическим интерфейсом.
 
-Проект продолжает развиваться в направлении DevOps технологий (SCM, Docker, Ansible и другие), а также добавлены заметки по работе с системными командами и консольными утилитами 🐧 [Linux](Linux)
+---
+
+- 💬 **20.05.2024**: Добавлены заметки по работе с Docker 🐳 [Docker](Docker)
+- 💬 **15.07.2024**: Добавлены заметки по работе с системными командами и консольными утилитами 🐧 [Linux](Linux)
+
+---
 
 Другие проекты на PowerShell:
 
