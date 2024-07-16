@@ -1085,6 +1085,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#torrent-api-py" class="md-nav__link">
+    <span class="md-ellipsis">
+      Torrent-API-py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plex" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plex
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#jellyfin" class="md-nav__link">
     <span class="md-ellipsis">
       Jellyfin
@@ -1197,7 +1215,7 @@
         
   
   <span class="md-ellipsis">
-    🐧 Linux Commands
+    🐧 Linux
   </span>
   
 
@@ -1691,6 +1709,24 @@
   <a href="#jackett" class="md-nav__link">
     <span class="md-ellipsis">
       Jackett
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrent-api-py" class="md-nav__link">
+    <span class="md-ellipsis">
+      Torrent-API-py
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plex" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plex
     </span>
   </a>
   
@@ -2654,6 +2690,42 @@ services:
 <code>Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/kinozal/results/torznab/api?apikey=$API_KEY&amp;t=search&amp;q=$query&amp;cat=5000"</code> отфильтровать вывод по сериалам (Capabilities: 5000)<br />
 <code>Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/all/results/torznab/api?apikey=$API_KEY&amp;t=search&amp;q=riverdale"</code> поиск во всех индексаторах<br />
 <code>$(Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/all/results/torznab/api?apikey=$API_KEY&amp;t=indexers&amp;configured=true").indexers.indexer</code> cписок всех настроенных индексаторов (трекеров)</p>
+<h3 id="torrent-api-py">Torrent-API-py</h3>
+<p><a href="https://github.com/Ryuk-me/Torrent-Api-py">Source</a><br />
+<a href="https://torrent-api-py-nx0x.onrender.com/docs#/default/health_route_health_get">Documentation</a></p>
+<pre><code>git clone https://github.com/Ryuk-me/Torrent-Api-py
+cd Torrent-Api-py
+pip install virtualenv
+py -3 -m venv api-py
+# Активировать виртуальную среду для Windows
+.\api-py\Scripts\activate
+# Активировать виртуальную среду для Linux
+# $ source api-py/bin/activate
+# Установить зависимости и запустить
+pip install -r requirements.txt
+python main.py
+# Proxy: https://github.com/dperson/torproxy
+# export HTTP_PROXY=&quot;http://proxy-host:proxy-port&quot;
+</code></pre>
+<p><code>$srv = "http://localhost:8009"</code> local<br />
+<code>$srv = "https://torrent-api-py-nx0x.onrender.com"</code> public<br />
+<code>Invoke-RestMethod $srv/api/v1/sites</code> список доступных трекеров<br />
+<code>Invoke-RestMethod "$srv/api/v1/search/?site=torlock&amp;query=the+rookie&amp;limit=0&amp;page=1"</code> поиск в выбранном трекере<br />
+<code>Invoke-RestMethod "$srv/api/v1/all/search?query=the+rookie&amp;limit=0"</code> поиск по названию во всех трекерах</p>
+<h3 id="plex">Plex</h3>
+<p><code>$API_TOKEN = "XXXXXXXXXXXXXXXXXXXX"</code></p>
+<pre><code>$headers = @{
+    &quot;X-Plex-Token&quot; = $API_TOKEN
+    &quot;accept&quot; = &quot;application/json&quot;
+}
+</code></pre>
+<p><code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/servers).MediaContainer.Server</code> версия сервера<br />
+<code>Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/diagnostics/logs -OutFile log.zip</code> выгруить лог с сервера<br />
+<code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections).MediaContainer.Directory</code> список секций добавленных на сервер<br />
+<code>$section_key = $(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections).MediaContainer.Directory.key[0]</code><br />
+<code>Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections/$section_key/refresh</code> синхронизация указанной секции в Plex по ключу<br />
+<code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections/2/folder).MediaContainer.Metadata</code> получить список директорий и файлов в корне выбранной секции<br />
+<code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections/2/folder?parent=204).MediaContainer.Metadata</code> получить список всех файлов в указанной директории через ключ (MediaContainer.Metadata.key) конечной точки</p>
 <h3 id="jellyfin">Jellyfin</h3>
 <p><a href="https://github.com/jellyfin/jellyfin">Source</a><br />
 <a href="https://api.jellyfin.org">API Docs</a></p>

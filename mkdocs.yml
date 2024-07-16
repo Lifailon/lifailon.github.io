@@ -25,7 +25,7 @@ nav:
   - SCM: SCM/index.md
   - Ansible: Ansible/index.md
   - 🐳 Docker: Docker/index.md
-  - 🐧 Linux Commands: Linux/index.md
+  - 🐧 Linux: Linux/index.md
 
   # alternate:
   #   - name: Русский

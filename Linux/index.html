@@ -686,7 +686,7 @@
           
   
   <span class="md-ellipsis">
-    🐧 Linux Commands
+    🐧 Linux
   </span>
   
 
@@ -697,7 +697,7 @@
         
   
   <span class="md-ellipsis">
-    🐧 Linux Commands
+    🐧 Linux
   </span>
   
 
@@ -877,6 +877,15 @@
   <a href="#xq" class="md-nav__link">
     <span class="md-ellipsis">
       xq
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#htmlq" class="md-nav__link">
+    <span class="md-ellipsis">
+      htmlq
     </span>
   </a>
   
@@ -1660,6 +1669,15 @@
   <a href="#htop" class="md-nav__link">
     <span class="md-ellipsis">
       htop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpytop" class="md-nav__link">
+    <span class="md-ellipsis">
+      bpytop
     </span>
   </a>
   
@@ -2649,6 +2667,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#htmlq" class="md-nav__link">
+    <span class="md-ellipsis">
+      htmlq
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#yq" class="md-nav__link">
     <span class="md-ellipsis">
       yq
@@ -3426,6 +3453,15 @@
   <a href="#htop" class="md-nav__link">
     <span class="md-ellipsis">
       htop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpytop" class="md-nav__link">
+    <span class="md-ellipsis">
+      bpytop
     </span>
   </a>
   
@@ -4234,7 +4270,7 @@
   
 
 
-  <h1>🐧 Linux Commands</h1>
+  <h1>🐧 Linux</h1>
 
 <p align="center">
     <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/linux.md"><img title="Linux Commands Logo"src="Linux-Commands-Logo.png"></a>
@@ -4464,11 +4500,17 @@ EOF
 <p><code>dasel -f users.xml -r xml ".users.user.[0].email"</code></p>
 <h3 id="xq">xq</h3>
 <p><code>apt-get install xq || brew install xq</code> установить xq (https://github.com/sibprogrammer/xq) для XML и HTML на GoLang<br />
+<code>curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -nx /rss/channel/item</code> вывод содержимого дочерних элементов с тегами<br />
+<code>curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -x /rss/channel/item/link</code> вывести только содержимое (массив ссылок)<br />
 <code>curl -s https://kinozal.tv -x kinozal:proxy@192.168.3.100:9090 | xq -nq "head"</code> вывести блок head целиком (с тегами)<br />
 <code>curl -s https://kinozal.tv -x kinozal:proxy@192.168.3.100:9090 | xq -q "head"</code> вывести только текст из дочерних элементов выбранного тега (содержимое title)<br />
 <code>curl -s https://kinozal.tv/browse.php?s=the+rookie -x kinozal:proxy@192.168.3.100:9090 | xq -nq "body &gt; div &gt; div &gt; div &gt; div &gt; table &gt; tbody &gt; tr &gt; td"</code><br />
-<code>curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -nx /rss/channel/item</code> вывод содержимого дочерних элементов с тегами<br />
-<code>curl -s https://kinozal.tv/rss.xml -x kinozal:proxy@192.168.3.100:9090 | xq -x /rss/channel/item/link</code> вывести только содержимое (массив ссылок)</p>
+<code>curl -s -X POST -u "Login:Password" "http://localhost:9091/transmission/rpc" | xq -q a -a href</code> забрать X-Transmission-Session-Id для дальнейших запросов к API (обратиться к тэгу a и атрибуту href)</p>
+<h3 id="htmlq">htmlq</h3>
+<p><code>brew install htmlq</code> установить htmlq (https://github.com/mgdm/htmlq) like jq for HTML<br />
+<code>curl -s https://kinozal.tv/browse.php?s=the+rookie -x kinozal:proxy@192.168.3.100:9090 | htmlq table tr td a -t</code> получить содержимое таблицы (вывести только текст содержимого)<br />
+<code>curl -s https://kinozal.tv/browse.php?s=the+rookie -x kinozal:proxy@192.168.3.100:9090 | htmlq table tr td a -a href</code> получить только ссылки<br />
+<code>curl -s -X POST -u "Login:Password" "http://localhost:9091/transmission/rpc" | htmlq a -a href</code> забрать X-Transmission-Session-Id для дальнейших запросов к API (обратиться к тэгу a и атрибуту href)</p>
 <h3 id="yq">yq</h3>
 <p><code>snap install yq || pip install yq</code> установить yq (https://github.com/kislyuk/yq) для YAML/XML/TOML на Python<br />
 <code>cat /etc/netplan/*.yaml | yq .network.ethernets</code> список адаптеров netplan<br />
@@ -5663,6 +5705,15 @@ done
 <code>Z</code> [zombie] завершенный процесс, ожидающий пока родительский процесс примет результат<br />
 <code>T</code> остановленный сигналом SIGSTOP (-19/CTRL+Z)<br />
 <code>X</code> мертвый (не должен показываться)</p>
+<h3 id="bpytop">bpytop</h3>
+<p><code>sudo apt install bpytop</code><br />
+<code>pip3 list | grep psutil</code> проверить пакет<br />
+<code>pip3 install psutil --break-system-packages</code> установить пакет в обход ограничений<br />
+<code>python3 -m venv myenv</code> создать виртуальное окружение<br />
+<code>source myenv/bin/activate</code> активировать виртуальное окружение<br />
+<code>pip install psutil</code> установить библиотеку для получения информации о системе<br />
+<code>bpytop</code><br />
+<code>deactivate</code></p>
 <h3 id="atop">atop</h3>
 <p><code>apt install atop</code><br />
 <code>nano /etc/default/atop</code><br />
