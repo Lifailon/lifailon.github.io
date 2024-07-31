@@ -153,6 +153,54 @@ jobs:
         git push
 ```
 
+### CI
+
+```yaml
+name: Docker Build and Push Image
+
+on:
+  # Запусать при git push в ветку main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Клонируем репозиторий
+      uses: actions/checkout@v2
+
+    - name: Авторизация в Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Сборка образа и отправка в Docker Hub
+      run: |
+        docker build -t lifailon/torapi:latest .
+        docker push lifailon/torapi:latest
+```
+
+### Logs
+
+`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).total_count `получить количество запусков всех рабочих процессов
+`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows `подробная информации о запускаемых рабочих процессах
+`$actions_last_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows[-1].id `получить идентификатор последнего события
+`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs `подробная информация о последней сборке
+`$run_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs.id `получить идентификатор запуска рабочего процесса
+`$(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs.steps `подробная информация для всех шагов выполнения (время работы и статус выполнения)
+`$jobs_id = $(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs[0].id `получить идентификатор последнего задания указанного рабочего процесса
+```PowerShell
+$url = "https://api.github.com/repos/Lifailon/TorAPI/actions/jobs/$jobs_id/logs"
+$headers = @{
+    Authorization = "token ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+Invoke-RestMethod -Uri $url -Headers $headers # получить логи задания
+```
+
 ## PSAppDeployToolkit
 
 ### Install-DeployToolkit
@@ -172,6 +220,7 @@ Expand-Archive -Path $zipTempDownloadPath -OutputPath $zipExtractionPath -Force
 Write-Host ("File: {0} extracted to Path: {1}" -f $psadtDownloadUri, $zipExtractionPath) -ForegroundColor Yellow
 Remove-Item $zipTempDownloadPath
 ```
+
 ### Deploy-Notepad-Plus-Plus
 
 `$url_notepad = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.6.6/npp.8.6.6.Installer.x64.exe"` 

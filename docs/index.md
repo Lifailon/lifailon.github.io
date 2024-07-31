@@ -25,6 +25,7 @@ hide:
 
 - 💬 **20.05.2024**: Добавлены заметки по работе с 🐳 [Docker](Docker)
 - 💬 **15.07.2024**: Добавлены заметки по работе с системными командами и консольными утилитами 🐧 [Linux](Linux)
+- 💬 **01.08.2024**: Добавлена статическая документация для 📚 [TorAPI](TorAPI)
 
 ---
 
@@ -55,6 +56,8 @@ hide:
 - [Сценарий развертывания](https://github.com/Lifailon/Deploy-Selenium) всех зависимостей для работы с Selenium через PowerShell и модули для [AI (GPT)](https://github.com/Lifailon/gpt-cli), [SpeedTest](https://github.com/Lifailon/Selenium-Modules/blob/rsa/Modules/Get-SpeedTest/Get-SpeedTest.psm1) и [Translation](https://github.com/Lifailon/Selenium-Modules/blob/rsa/Modules/Get-Translation/Get-Translation.psm1) с использованием разных провайдеров. Статья на habr [PowerShell и Selenium. Проще, чем кажется](https://habr.com/ru/articles/785538).
 
 - [Модуль](https://github.com/Lifailon/PowerShell.HardwareMonitor) для локального и удаленного сбора метрик температуры, нагрузки и других датчиков системы через [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) и [OpenHardwareMonitor](https://github.com/openhardwaremonitor/openhardwaremonitor). Статья на habr [мониторинг температуры Windows](https://habr.com/ru/articles/793296) (создание метрик, настройка InfluxDB и Grafana).
+
+- [Темы производительности системы](https://github.com/Lifailon/oh-my-posh-themes-performance) для [oh-my-posh](https://github.com/jandedobbeleer/oh-my-posh).
 
 - [PSEverything](https://github.com/Lifailon/PSEverything). Модуль мнгновенного поиска файлов на локальных и удаленных системах Windows через [Everything](https://www.voidtools.com) и [библиотеку .NET](https://github.com/dipique/everythingio). 
 
