@@ -1,0 +1,2010 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Lifailon">
+      
+      
+        <link rel="canonical" href="https://lifailon.github.io/TorAPI/">
+      
+      
+        <link rel="prev" href="../Linux/">
+      
+      
+      
+      <link rel="icon" href="../Logo/PowerShell-Logo.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+    
+    
+      
+        <title>TorAPI - PowerShell Commands</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CInter:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Inter"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/highlight/obsidian.min.css">
+    
+      <link rel="stylesheet" href="../assets/custom/headers.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#endpoint-format" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PowerShell Commands" class="md-header__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  <img src="../Logo/PowerShell-Logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerShell Commands
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TorAPI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lifailon/PS-Commands" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PowerShell Commands" class="md-nav__button md-logo" aria-label="PowerShell Commands" data-md-component="logo">
+      
+  <img src="../Logo/PowerShell-Logo.png" alt="logo">
+
+    </a>
+    PowerShell Commands
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lifailon/PS-Commands" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FileSystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Threads/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dotNET/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    .NET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ActiveDirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exchange/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microsoft Exchange
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Virtualization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MarkupLanguages/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Markup Languages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zabbix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zabbix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SCM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ansible/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ansible
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🐳 Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🐧 Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    📚 TorAPI Docs
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    📚 TorAPI Docs
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#header-parametres" class="md-nav__link">
+    <span class="md-ellipsis">
+      Header parametres
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provider-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provider List
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-by-title" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search by Title
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by Title">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all" class="md-nav__link">
+    <span class="md-ellipsis">
+      All
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rutracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kinozal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kinozal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nonameclub" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoNameClub
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-by-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search by ID
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by ID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rutracker_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kinozal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kinozal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rutor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nonameclub_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoNameClub
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests endpoints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-torrent-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Save torrent file
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#header-parametres" class="md-nav__link">
+    <span class="md-ellipsis">
+      Header parametres
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provider-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provider List
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-by-title" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search by Title
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by Title">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all" class="md-nav__link">
+    <span class="md-ellipsis">
+      All
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rutracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kinozal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kinozal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nonameclub" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoNameClub
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-by-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search by ID
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Search by ID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rutracker_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kinozal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kinozal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rutor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      RuTor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nonameclub_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      NoNameClub
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests endpoints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-torrent-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Save torrent file
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>📚 TorAPI Docs</h1>
+
+<p align="center">
+    <a href="https://github.com/Lifailon/TorAPI"><img title="Linux Commands Logo"src="TorAPI-Logo.png"></a>
+</p>
+
+<p><a href="https://github.com/Lifailon/TorAPI">Unofficial API</a> (backend) for RuTracker, Kinozal, RuTor, NoNameClub and other torrent trackers to get torrent files and information by movie title, TV series or id.</p>
+<p align="center">
+    API <b>static documentation</b> with output examples.
+</p>
+
+<h3 id="endpoint-format">Endpoint format</h3>
+<pre><code class="language-js">/api/search/&lt;TITLE/ID&gt;/&lt;PROVIDER/ALL&gt;
+</code></pre>
+<p><strong>Method</strong> only: <code>GET</code></p>
+<h3 id="header-parametres">Header parametres</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Mandatory</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>query</code></td>
+<td>True*</td>
+<td><em>str</em></td>
+<td>Movie or TV series title to <em>search by title</em> in the path parameter, or identifier to <em>search by ID</em>. Cyrillic characters are supported. You can use spaces if the query is in quotation marks, or use the symbol <code>+</code> instead of a space.</td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td>False</td>
+<td><em>int</em></td>
+<td>Page number from which the response will be received (<code>0 to 20</code>).</td>
+</tr>
+<tr>
+<td><code>year</code></td>
+<td>False</td>
+<td><em>int</em></td>
+<td>Year of release of the film or TV series for filtering (supported only by the provider <strong>Kinozal</strong>).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="provider-list">Provider List</h3>
+<p>Get a list of available providers:</p>
+<p>🔹 <code>curl -s http://localhost:8443/api/provider/list</code></p>
+<pre><code class="language-json">{
+  &quot;Provider_List&quot;: [
+    {
+      &quot;Provider&quot;: &quot;RuTracker&quot;,
+      &quot;Url&quot;: &quot;https://rutracker.org&quot;
+    },
+    {
+      &quot;Provider&quot;: &quot;Kinozal&quot;,
+      &quot;Url&quot;: &quot;https://kinozal.tv&quot;
+    },
+    {
+      &quot;Provider&quot;: &quot;RuTor&quot;,
+      &quot;Url&quot;: &quot;https://rutor.info&quot;
+    },
+    {
+      &quot;Provider&quot;: &quot;NoNameClub&quot;,
+      &quot;Url&quot;: &quot;https://nnmclub.to&quot;
+    }
+  ]
+}
+</code></pre>
+<h3 id="search-by-title">Search by Title</h3>
+<h4 id="all">All</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/title/all?query=Bo+Path+of+the+Teal+Lotus&amp;page=0&amp;year=0</code></p>
+<pre><code class="language-json">{
+  &quot;RuTracker&quot;: [
+    {
+      &quot;Name&quot;: &quot;[DL] Bō (Bo): Path of the Teal Lotus [P] [ENG + 8] (2024, Arcade) [Scene]&quot;,
+      &quot;Id&quot;: &quot;6553038&quot;,
+      &quot;Url&quot;: &quot;https://rutracker.net/forum/viewtopic.php?t=6553038&quot;,
+      &quot;Torrent&quot;: &quot;https://rutracker.net/forum/dl.php?t=6553038&quot;,
+      &quot;Size&quot;: &quot;5.28 GB&quot;,
+      &quot;Download_Count&quot;: &quot;554&quot;,
+      &quot;Checked&quot;: &quot;True&quot;,
+      &quot;Type&quot;: &quot;Горячие Новинки&quot;,
+      &quot;Type_Link&quot;: &quot;https://rutracker.net/forum/tracker.php?f=635&quot;,
+      &quot;Seeds&quot;: &quot;28&quot;,
+      &quot;Peers&quot;: &quot;2&quot;,
+      &quot;Date&quot;: &quot;20.07.2024&quot;
+    },
+    {
+      &quot;Name&quot;: &quot;[Nintendo Switch] Bo: Path of the Teal Lotus [NSZ][ENG]&quot;,
+      &quot;Id&quot;: &quot;6552174&quot;,
+      &quot;Url&quot;: &quot;https://rutracker.net/forum/viewtopic.php?t=6552174&quot;,
+      &quot;Torrent&quot;: &quot;https://rutracker.net/forum/dl.php?t=6552174&quot;,
+      &quot;Size&quot;: &quot;800.8 MB&quot;,
+      &quot;Download_Count&quot;: &quot;617&quot;,
+      &quot;Checked&quot;: &quot;True&quot;,
+      &quot;Type&quot;: &quot;Switch&quot;,
+      &quot;Type_Link&quot;: &quot;https://rutracker.net/forum/tracker.php?f=1605&quot;,
+      &quot;Seeds&quot;: &quot;75&quot;,
+      &quot;Peers&quot;: &quot;4&quot;,
+      &quot;Date&quot;: &quot;17.07.2024&quot;
+    }
+  ],
+  &quot;Kinozal&quot;: {
+    &quot;Result&quot;: &quot;No matches were found for your title&quot;
+  },
+  &quot;RuTor&quot;: {
+    &quot;Result&quot;: &quot;No matches were found for your title&quot;
+  },
+  &quot;NoNameClub&quot;: [
+    {
+      &quot;Name&quot;: &quot;Bo: Path of the Teal Lotus (2024) [Multi] (1.0) Scene Tenoke&quot;,
+      &quot;Id&quot;: &quot;1739268&quot;,
+      &quot;Url&quot;: &quot;https://nnmclub.to/forum/viewtopic.php?t=1739268&quot;,
+      &quot;Torrent&quot;: &quot;https://nnmclub.to/forum/download.php?id=1333049&quot;,
+      &quot;Size&quot;: &quot;5.28 GB&quot;,
+      &quot;Comments&quot;: &quot;0&quot;,
+      &quot;Type&quot;: &quot;Горячие новинки Игр&quot;,
+      &quot;Seeds&quot;: &quot;0&quot;,
+      &quot;Peers&quot;: &quot;0&quot;,
+      &quot;Date&quot;: &quot;27.07.2024 03:28&quot;
+    }
+  ]
+}
+</code></pre>
+<h4 id="rutracker">RuTracker</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/title/rutracker?query=The+Rookie+2024&amp;page=0&amp;year=0</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie / Сезон: 6 / Серии: 1-10 из 10 (Билл Роу, Майкл Гои) [2024, США, драма, комедия, криминал, WEB-DL 1080p] 3 x MVO (LostFilm, TVShows, HDrezka) + Original + Sub (Rus, Eng)&quot;,
+    &quot;Id&quot;: &quot;6489949&quot;,
+    &quot;Url&quot;: &quot;https://rutracker.net/forum/viewtopic.php?t=6489949&quot;,
+    &quot;Torrent&quot;: &quot;https://rutracker.net/forum/dl.php?t=6489949&quot;,
+    &quot;Size&quot;: &quot;32.79 GB&quot;,
+    &quot;Download_Count&quot;: &quot;999&quot;,
+    &quot;Checked&quot;: &quot;True&quot;,
+    &quot;Type&quot;: &quot;Сериалы США и Канады (HD Video)&quot;,
+    &quot;Type_Link&quot;: &quot;https://rutracker.net/forum/tracker.php?f=266&quot;,
+    &quot;Seeds&quot;: &quot;36&quot;,
+    &quot;Peers&quot;: &quot;9&quot;,
+    &quot;Date&quot;: &quot;26.06.2024&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie / Сезон: 6 / Серии: 1-10 из 10 (Билл Роу) [2024, США, драма, комедия, криминал, WEB-DL 720p] MVO (LostFilm) + MVO (TVShows) + MVO (HDrezka) + Original + Sub (Rus, Eng)&quot;,
+    &quot;Id&quot;: &quot;6498673&quot;,
+    &quot;Url&quot;: &quot;https://rutracker.net/forum/viewtopic.php?t=6498673&quot;,
+    &quot;Torrent&quot;: &quot;https://rutracker.net/forum/dl.php?t=6498673&quot;,
+    &quot;Size&quot;: &quot;18.33 GB&quot;,
+    &quot;Download_Count&quot;: &quot;1637&quot;,
+    &quot;Checked&quot;: &quot;True&quot;,
+    &quot;Type&quot;: &quot;Сериалы США и Канады (HD Video)&quot;,
+    &quot;Type_Link&quot;: &quot;https://rutracker.net/forum/tracker.php?f=266&quot;,
+    &quot;Seeds&quot;: &quot;29&quot;,
+    &quot;Peers&quot;: &quot;8&quot;,
+    &quot;Date&quot;: &quot;25.05.2024&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie / Сезон: 6 / Серии: 1-10 из 10 (Билл Роу, Майкл Гои) [2024, США, боевик, драма, криминал, WEB-DLRip] MVO (LostFilm) + Original&quot;,
+    &quot;Id&quot;: &quot;6489937&quot;,
+    &quot;Url&quot;: &quot;https://rutracker.net/forum/viewtopic.php?t=6489937&quot;,
+    &quot;Torrent&quot;: &quot;https://rutracker.net/forum/dl.php?t=6489937&quot;,
+    &quot;Size&quot;: &quot;5.95 GB&quot;,
+    &quot;Download_Count&quot;: &quot;3669&quot;,
+    &quot;Checked&quot;: &quot;True&quot;,
+    &quot;Type&quot;: &quot;Сериалы США и Канады&quot;,
+    &quot;Type_Link&quot;: &quot;https://rutracker.net/forum/tracker.php?f=235&quot;,
+    &quot;Seeds&quot;: &quot;90&quot;,
+    &quot;Peers&quot;: &quot;31&quot;,
+    &quot;Date&quot;: &quot;24.05.2024&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;(Soundtrack, Rock) Новичок / Новобранец / The Rookie (Daddy Cop (From The TV Show \&quot;The Rookie\&quot;)) (by Zander Hawley) - 2024 (2018), MP3 (tracks), 320 kbps&quot;,
+    &quot;Id&quot;: &quot;6499482&quot;,
+    &quot;Url&quot;: &quot;https://rutracker.net/forum/viewtopic.php?t=6499482&quot;,
+    &quot;Torrent&quot;: &quot;https://rutracker.net/forum/dl.php?t=6499482&quot;,
+    &quot;Size&quot;: &quot;5.3 MB&quot;,
+    &quot;Download_Count&quot;: &quot;50&quot;,
+    &quot;Checked&quot;: &quot;True&quot;,
+    &quot;Type&quot;: &quot;Саундтреки к сериалам (lossy)&quot;,
+    &quot;Type_Link&quot;: &quot;https://rutracker.net/forum/tracker.php?f=1499&quot;,
+    &quot;Seeds&quot;: &quot;2&quot;,
+    &quot;Peers&quot;: &quot;0&quot;,
+    &quot;Date&quot;: &quot;14.03.2024&quot;
+  }
+]
+</code></pre>
+<h4 id="kinozal">Kinozal</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/title/kinozal?query=The+Rookie&amp;page=0&amp;year=2024</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок (Новобранец) (6 сезон: 1-10 серии из 10)&quot;,
+    &quot;Id&quot;: &quot;2023066&quot;,
+    &quot;Original_Name&quot;: &quot;The Rookie&quot;,
+    &quot;Year&quot;: &quot;2024&quot;,
+    &quot;Language&quot;: &quot;3 x ПМ, СТ&quot;,
+    &quot;Format&quot;: &quot;WEB-DL (1080p)&quot;,
+    &quot;Url&quot;: &quot;https://kinozal.tv/details.php?id=2023066&quot;,
+    &quot;Torrent&quot;: &quot;https://dl.kinozal.tv/download.php?id=2023066&quot;,
+    &quot;Size&quot;: &quot;32.79 ГБ&quot;,
+    &quot;Comments&quot;: &quot;34&quot;,
+    &quot;Seeds&quot;: &quot;9&quot;,
+    &quot;Peers&quot;: &quot;2&quot;,
+    &quot;Date&quot;: &quot;26.06.2024 01:17&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок (Новобранец) (1-6 сезоны: 1-108 серии из 108)&quot;,
+    &quot;Id&quot;: &quot;2042752&quot;,
+    &quot;Original_Name&quot;: &quot;The Rookie&quot;,
+    &quot;Year&quot;: &quot;2018-2024&quot;,
+    &quot;Language&quot;: &quot;ПМ (LostFilm)&quot;,
+    &quot;Format&quot;: &quot;WEB-DLRip (720p)&quot;,
+    &quot;Url&quot;: &quot;https://kinozal.tv/details.php?id=2042752&quot;,
+    &quot;Torrent&quot;: &quot;https://dl.kinozal.tv/download.php?id=2042752&quot;,
+    &quot;Size&quot;: &quot;153.07 ГБ&quot;,
+    &quot;Comments&quot;: &quot;1&quot;,
+    &quot;Seeds&quot;: &quot;3&quot;,
+    &quot;Peers&quot;: &quot;4&quot;,
+    &quot;Date&quot;: &quot;25.06.2024 09:30&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок (Новобранец) (6 сезон: 1-10 серии из 10)&quot;,
+    &quot;Id&quot;: &quot;2026484&quot;,
+    &quot;Original_Name&quot;: &quot;The Rookie&quot;,
+    &quot;Year&quot;: &quot;2024&quot;,
+    &quot;Language&quot;: &quot;3 x ПМ, СТ&quot;,
+    &quot;Format&quot;: &quot;WEB-DL (720p)&quot;,
+    &quot;Url&quot;: &quot;https://kinozal.tv/details.php?id=2026484&quot;,
+    &quot;Torrent&quot;: &quot;https://dl.kinozal.tv/download.php?id=2026484&quot;,
+    &quot;Size&quot;: &quot;18.33 ГБ&quot;,
+    &quot;Comments&quot;: &quot;4&quot;,
+    &quot;Seeds&quot;: &quot;9&quot;,
+    &quot;Peers&quot;: &quot;4&quot;,
+    &quot;Date&quot;: &quot;25.05.2024 11:02&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок (Новобранец) (6 сезон: 1-10 серии из 10)&quot;,
+    &quot;Id&quot;: &quot;2022944&quot;,
+    &quot;Original_Name&quot;: &quot;The Rookie&quot;,
+    &quot;Year&quot;: &quot;2024&quot;,
+    &quot;Language&quot;: &quot;ПМ (LostFilm)&quot;,
+    &quot;Format&quot;: &quot;WEB-DLRip&quot;,
+    &quot;Url&quot;: &quot;https://kinozal.tv/details.php?id=2022944&quot;,
+    &quot;Torrent&quot;: &quot;https://dl.kinozal.tv/download.php?id=2022944&quot;,
+    &quot;Size&quot;: &quot;5.95 ГБ&quot;,
+    &quot;Comments&quot;: &quot;22&quot;,
+    &quot;Seeds&quot;: &quot;43&quot;,
+    &quot;Peers&quot;: &quot;13&quot;,
+    &quot;Date&quot;: &quot;24.05.2024 14:31&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок (Новобранец) (1-6 сезоны: 1-108 серии из 108)&quot;,
+    &quot;Id&quot;: &quot;1656552&quot;,
+    &quot;Original_Name&quot;: &quot;The Rookie&quot;,
+    &quot;Year&quot;: &quot;2018-2024&quot;,
+    &quot;Language&quot;: &quot;ПМ (LostFilm)&quot;,
+    &quot;Format&quot;: &quot;WEB-DLRip (1080p)&quot;,
+    &quot;Url&quot;: &quot;https://kinozal.tv/details.php?id=1656552&quot;,
+    &quot;Torrent&quot;: &quot;https://dl.kinozal.tv/download.php?id=1656552&quot;,
+    &quot;Size&quot;: &quot;249.58 ГБ&quot;,
+    &quot;Comments&quot;: &quot;148&quot;,
+    &quot;Seeds&quot;: &quot;7&quot;,
+    &quot;Peers&quot;: &quot;11&quot;,
+    &quot;Date&quot;: &quot;24.05.2024 10:58&quot;
+  }
+]
+</code></pre>
+<h4 id="rutor">RuTor</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/title/rutor?query=The+Rookie+2024&amp;page=0&amp;year=0</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie [S06] (2024) WEB-DL 720p | LostFilm, TVShows, HDrezka Studio&quot;,
+    &quot;Id&quot;: &quot;986185&quot;,
+    &quot;Url&quot;: &quot;https://rutor.info/torrent/986185/novichok_novobranec_the-rookie-s06-2024-web-dl-720p-lostfilm-tvshows-hdrezka-studio&quot;,
+    &quot;Torrent&quot;: &quot;https://d.rutor.info/download/986185&quot;,
+    &quot;Hash&quot;: &quot;6c3fa72ddc8f39afc7743f147e8ca3ee66ee99df&quot;,
+    &quot;Size&quot;: &quot;18.33 GB&quot;,
+    &quot;Comments&quot;: &quot;0&quot;,
+    &quot;Seeds&quot;: &quot;5&quot;,
+    &quot;Peers&quot;: &quot;2&quot;,
+    &quot;Date&quot;: &quot;25.05.2024&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie [S06] (2024) WEB-DLRip | LostFilm&quot;,
+    &quot;Id&quot;: &quot;986139&quot;,
+    &quot;Url&quot;: &quot;https://rutor.info/torrent/986139/novichok_novobranec_the-rookie-s06-2024-web-dlrip-lostfilm&quot;,
+    &quot;Torrent&quot;: &quot;https://d.rutor.info/download/986139&quot;,
+    &quot;Hash&quot;: &quot;3348d0a58dd8f5b251c7a361c9d235549260ba60&quot;,
+    &quot;Size&quot;: &quot;5.95 GB&quot;,
+    &quot;Comments&quot;: &quot;0&quot;,
+    &quot;Seeds&quot;: &quot;36&quot;,
+    &quot;Peers&quot;: &quot;19&quot;,
+    &quot;Date&quot;: &quot;25.05.2024&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie [S06] (2024) WEB-DL 1080p | LostFilm, TVShows, HDrezka Studio&quot;,
+    &quot;Id&quot;: &quot;986138&quot;,
+    &quot;Url&quot;: &quot;https://rutor.info/torrent/986138/novichok_novobranec_the-rookie-s06-2024-web-dl-1080p-lostfilm-tvshows-hdrezka-studio&quot;,
+    &quot;Torrent&quot;: &quot;https://d.rutor.info/download/986138&quot;,
+    &quot;Hash&quot;: &quot;2fdb28133eee0e3842ed855a08c07f35e482eedc&quot;,
+    &quot;Size&quot;: &quot;32.79 GB&quot;,
+    &quot;Comments&quot;: &quot;0&quot;,
+    &quot;Seeds&quot;: &quot;16&quot;,
+    &quot;Peers&quot;: &quot;8&quot;,
+    &quot;Date&quot;: &quot;25.05.2024&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie [S06] (2024) WEBRip от Kerob | L2&quot;,
+    &quot;Id&quot;: &quot;970650&quot;,
+    &quot;Url&quot;: &quot;https://rutor.info/torrent/970650/novichok_novobranec_the-rookie-s06-2024-webrip-ot-kerob-l2&quot;,
+    &quot;Torrent&quot;: &quot;https://d.rutor.info/download/970650&quot;,
+    &quot;Hash&quot;: &quot;b7a46e99dd9164787baf77d4f98d84ceb5301ac0&quot;,
+    &quot;Size&quot;: &quot;5.92 GB&quot;,
+    &quot;Comments&quot;: &quot;7&quot;,
+    &quot;Seeds&quot;: &quot;6&quot;,
+    &quot;Peers&quot;: &quot;2&quot;,
+    &quot;Date&quot;: &quot;22.05.2024&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie [S06] (2024) WEBRip 720p от Kerob | L2&quot;,
+    &quot;Id&quot;: &quot;970647&quot;,
+    &quot;Url&quot;: &quot;https://rutor.info/torrent/970647/novichok_novobranec_the-rookie-s06-2024-webrip-720p-ot-kerob-l2&quot;,
+    &quot;Torrent&quot;: &quot;https://d.rutor.info/download/970647&quot;,
+    &quot;Hash&quot;: &quot;99bb9749164676d36d17b2b72497d6f02bf88c50&quot;,
+    &quot;Size&quot;: &quot;12.18 GB&quot;,
+    &quot;Comments&quot;: &quot;0&quot;,
+    &quot;Seeds&quot;: &quot;1&quot;,
+    &quot;Peers&quot;: &quot;3&quot;,
+    &quot;Date&quot;: &quot;22.05.2024&quot;
+  }
+]
+</code></pre>
+<h4 id="nonameclub">NoNameClub</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/title/nonameclub?query=The+Rookie+2018&amp;page=0&amp;year=0</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок / The Rookie (2018) WEB-DL [H.264/1080p-LQ] (сезон 1, серии 1-20 из 20) TVShows&quot;,
+    &quot;Id&quot;: &quot;1259608&quot;,
+    &quot;Url&quot;: &quot;https://nnmclub.to/forum/viewtopic.php?t=1259608&quot;,
+    &quot;Torrent&quot;: &quot;https://nnmclub.to/forum/download.php?id=1018672&quot;,
+    &quot;Size&quot;: &quot;51.2 GB&quot;,
+    &quot;Comments&quot;: &quot;6&quot;,
+    &quot;Type&quot;: &quot;Зарубежные сериалы&quot;,
+    &quot;Seeds&quot;: &quot;1&quot;,
+    &quot;Peers&quot;: &quot;0&quot;,
+    &quot;Date&quot;: &quot;22.04.2019 09:09&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / The Rookie (2018) WEB-DL [H.264/1080p-LQ] (сезон 1, серии 1-20 из 20) LostFilm&quot;,
+    &quot;Id&quot;: &quot;1278446&quot;,
+    &quot;Url&quot;: &quot;https://nnmclub.to/forum/viewtopic.php?t=1278446&quot;,
+    &quot;Torrent&quot;: &quot;https://nnmclub.to/forum/download.php?id=1030902&quot;,
+    &quot;Size&quot;: &quot;52.7 GB&quot;,
+    &quot;Comments&quot;: &quot;6&quot;,
+    &quot;Type&quot;: &quot;Зарубежные сериалы&quot;,
+    &quot;Seeds&quot;: &quot;6&quot;,
+    &quot;Peers&quot;: &quot;1&quot;,
+    &quot;Date&quot;: &quot;20.04.2019 00:30&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новичок / The Rookie (2018) WEB-DLRip (сезон 1, серии 1-20 из 20) LostFilm&quot;,
+    &quot;Id&quot;: &quot;1256703&quot;,
+    &quot;Url&quot;: &quot;https://nnmclub.to/forum/viewtopic.php?t=1256703&quot;,
+    &quot;Torrent&quot;: &quot;https://nnmclub.to/forum/download.php?id=1016767&quot;,
+    &quot;Size&quot;: &quot;10.5 GB&quot;,
+    &quot;Comments&quot;: &quot;31&quot;,
+    &quot;Type&quot;: &quot;Зарубежные сериалы&quot;,
+    &quot;Seeds&quot;: &quot;10&quot;,
+    &quot;Peers&quot;: &quot;0&quot;,
+    &quot;Date&quot;: &quot;18.04.2019 22:55&quot;
+  },
+  {
+    &quot;Name&quot;: &quot;Новобранец / The Rookie (2018) WEB-DLRip [H.264/720p] (сезон 1, серия 1-8 из 20) LostFilm (обновляемая)&quot;,
+    &quot;Id&quot;: &quot;1265982&quot;,
+    &quot;Url&quot;: &quot;https://nnmclub.to/forum/viewtopic.php?t=1265982&quot;,
+    &quot;Torrent&quot;: &quot;https://nnmclub.to/forum/download.php?id=1022722&quot;,
+    &quot;Size&quot;: &quot;10.2 GB&quot;,
+    &quot;Comments&quot;: &quot;6&quot;,
+    &quot;Type&quot;: &quot;Архив Сериалов и Архив Старого многосерийного кино до 90-х&quot;,
+    &quot;Seeds&quot;: &quot;0&quot;,
+    &quot;Peers&quot;: &quot;0&quot;,
+    &quot;Date&quot;: &quot;22.12.2018 04:00&quot;
+  }
+]
+</code></pre>
+<h3 id="search-by-id">Search by ID</h3>
+<h4 id="rutracker_1">RuTracker</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/id/rutracker?query=6489937</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie / Сезон: 6 / Серии: 1-10 из 10 (Билл Роу, Майкл Гои) [2024, США, боевик, драма, криминал, WEB-DLRip] MVO (LostFilm) + Original&quot;,
+    &quot;Url&quot;: &quot;https://rutracker.org/forum/viewtopic.php?t=6489937&quot;,
+    &quot;Hash&quot;: &quot;3348D0A58DD8F5B251C7A361C9D235549260BA60&quot;,
+    &quot;Magnet&quot;: &quot;magnet:?xt=urn:btih:3348D0A58DD8F5B251C7A361C9D235549260BA60&amp;tr=http%3A%2F%2Fretracker.local%2Fannounce&amp;tr=http%3A%2F%2Fbt.t-ru.org%2Fann&amp;tr=http%3A%2F%2Fbt2.t-ru.org%2Fann&amp;tr=http%3A%2F%2Fbt3.t-ru.org%2Fann&amp;tr=http%3A%2F%2Fbt4.t-ru.org%2Fann&quot;,
+    &quot;Torrent&quot;: &quot;https://rutracker.org/forum/dl.php?t=6489937&quot;,
+    &quot;IMDb_link&quot;: &quot;https://www.imdb.com/title/tt7587890/&quot;,
+    &quot;Kinopoisk_link&quot;: &quot;https://www.kinopoisk.ru/series/1142153/&quot;,
+    &quot;IMDb_id&quot;: &quot;7587890&quot;,
+    &quot;Kinopoisk_id&quot;: &quot;1142153&quot;,
+    &quot;Year&quot;: &quot;2024&quot;,
+    &quot;Release&quot;: &quot;США&quot;,
+    &quot;Type&quot;: &quot;боевик, драма, криминал&quot;,
+    &quot;Duration&quot;: &quot;00:43:00&quot;,
+    &quot;Audio&quot;: &quot;Профессиональный (многоголосый закадровый) -&quot;,
+    &quot;Directer&quot;: &quot;Билл Роу, Майкл Гои&quot;,
+    &quot;Actors&quot;: &quot;Нэйтан Филлион, Мелисса О’Нил, Эрик Винтер, Дженна Деван, Шон Эшмор, Лиззет Чавез, Мекиа Кокс, Алисса Диас, Тру Валентино, Ричард Т. Джонс ,Бриджет Риган, Трой Кастанеда, Мэллори Томпсон, Алекс Элин Гойко, Констанс Эджума&quot;,
+    &quot;Description&quot;: &quot;Начинать с чистого листа всегда нелегко, особенно для уроженца маленького городка Джона Нолана, который после перевернувшего его жизнь случая решил воплотить в жизнь давнюю мечту и вступить в ряды полиции Лос-Анджелеса. Возрастного новичка встречают с понятным скептицизмом, однако жизненный опыт, упорство и чувство юмора дают Джону преимущество.&quot;,
+    &quot;Quality&quot;: &quot;WEB-DLRip&quot;,
+    &quot;Video&quot;: &quot;XviD, 720x400 (16:9), 23.976 fps, 1600 Kbps&quot;,
+    &quot;Files&quot;: [
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E01.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;614.25 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E02.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;615.56 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E03.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;596.67 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E04.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;614.88 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E05.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;596.57 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E06.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;614.89 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E07.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;607.10 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E08.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;610.67 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E09.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;614.24 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E10.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;611.32 MB&quot;
+      }
+    ]
+  }
+]
+</code></pre>
+<h4 id="kinozal_1">Kinozal</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/id/kinozal?query=2022944</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок (Новобранец)&quot;,
+    &quot;Original_Name&quot;: &quot;The Rookie&quot;,
+    &quot;Url&quot;: &quot;https://kinozal.tv/details.php?id=2022944&quot;,
+    &quot;Hash&quot;: &quot;3348D0A58DD8F5B251C7A361C9D235549260BA60&quot;,
+    &quot;Magnet&quot;: &quot;magnet:?xt=urn:btih:3348D0A58DD8F5B251C7A361C9D235549260BA60&amp;tr=http%3A%2F%2Fretracker.local%2Fannounce&amp;tr=http%3A%2F%2Ftr0.torrent4me.com%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr1.torrent4me.com%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr2.torrent4me.com%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr3.torrent4me.com%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr4.torrent4me.com%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr5.torrent4me.com%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr0.tor4me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr1.tor4me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr2.tor4me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr3.tor4me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr4.tor4me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr5.tor4me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr0.tor2me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr1.tor2me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr2.tor2me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr3.tor2me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr4.tor2me.info%2Fann%3Fuk%3DkCm7WcIM00&amp;tr=http%3A%2F%2Ftr5.tor2me.info%2Fann%3Fuk%3DkCm7WcIM00&quot;,
+    &quot;IMDb_link&quot;: &quot;https://www.imdb.com/title/tt7587890/&quot;,
+    &quot;Kinopoisk_link&quot;: &quot;https://www.kinopoisk.ru/film/1142153&quot;,
+    &quot;IMDB_id&quot;: &quot;7587890&quot;,
+    &quot;Kinopoisk_id&quot;: &quot;1142153&quot;,
+    &quot;Year&quot;: &quot;2024&quot;,
+    &quot;Type&quot;: &quot;Боевик, детектив, драма, криминал, полицейский, процедурал&quot;,
+    &quot;Release&quot;: &quot;США, eOne Television, Perfectmon Pictures, ABC Studios&quot;,
+    &quot;Directer&quot;: &quot;Тори Гаррет, Дэвид МакУиртер, Роберт Белла, Чери Ноулан, Джон Уэртас&quot;,
+    &quot;Actors&quot;: &quot;Натан Филлион, Шон Эшмор, Эрик Винтер, Мелисса О`Нил, Алисса Диас, Ричард Т. Джонс, Мекиа Кокс, Тру Валентино, Эрджей Смит, Каноа Гу, Майкл Трукко, Пейтон Лист (I), Брент Хафф&quot;,
+    &quot;Description&quot;: &quot;Начинать с чистого листа всегда нелегко, особенно для уроженца маленького городка Джона Нолана, который после инцидента, перевернувшего его жизнь, решил воплотить в жизнь давнюю мечту и присоединиться к полиции Лос-Анджелеса. Возрастного новичка встречают с понятным скептицизмом, однако жизненный опыт, упорство и чувство юмора дают Джону преимущество.&quot;,
+    &quot;Quality&quot;: &quot;WEB-DLRip&quot;,
+    &quot;Video&quot;: &quot;XviD, ~ 1600 Кбит/с, 720x400&quot;,
+    &quot;Audio&quot;: &quot;Русский, английский (АС3, 2 ch, 192 Кбит/с)&quot;,
+    &quot;Size&quot;: &quot;5.95 ГБ&quot;,
+    &quot;Duration&quot;: &quot;10 x ~ 00:44:00&quot;,
+    &quot;Transcript&quot;: &quot;Профессиональный многоголосый&quot;,
+    &quot;Seeds&quot;: &quot;43&quot;,
+    &quot;Peers&quot;: &quot;12&quot;,
+    &quot;Download_Count&quot;: &quot;2058&quot;,
+    &quot;Files_Count&quot;: &quot;10&quot;,
+    &quot;Comments&quot;: &quot;22&quot;,
+    &quot;IMDb_Rating&quot;: &quot;8.0&quot;,
+    &quot;Kinopoisk_Rating&quot;: &quot;8.4&quot;,
+    &quot;Kinozal_Rating&quot;: &quot;8.9&quot;,
+    &quot;Votes&quot;: &quot;35&quot;,
+    &quot;Added_Date&quot;: &quot;23 февраля 2024 в 00:46&quot;,
+    &quot;Update_Date&quot;: &quot;24 мая 2024 в 14:31&quot;,
+    &quot;Files&quot;: [
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E01.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;614 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E02.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;616 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E03.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;597 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E04.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;615 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E05.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;597 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E06.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;615 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E07.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;607 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E08.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;611 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E09.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;614 МБ&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06E10.WEB-DLRip.RGzsRutracker.avi&quot;,
+        &quot;Size&quot;: &quot;611 МБ&quot;
+      }
+    ]
+  }
+]
+</code></pre>
+<h4 id="rutor_1">RuTor</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/id/rutor?query=970650</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок / Новобранец / The Rookie [S06] (2024) WEBRip от Kerob | L2&quot;,
+    &quot;Url&quot;: &quot;https://rutor.info/torrent/970650&quot;,
+    &quot;Hash&quot;: &quot;b7a46e99dd9164787baf77d4f98d84ceb5301ac0&quot;,
+    &quot;Magnet&quot;: &quot;magnet:?xt=urn:btih:b7a46e99dd9164787baf77d4f98d84ceb5301ac0&amp;tr=http%3A%2F%2Fretracker.local%2Fannounce&amp;tr=udp%3A%2F%2Fopentor.net%3A6969&amp;tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&amp;tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&amp;tr=http%3A%2F%2Ftracker.grepler.com%3A6969%2Fannounce&amp;tr=udp%3A%2F%2Ftracker.dler.com%3A6969%2Fannounce&amp;tr=udp%3A%2F%2Ftracker.bitsearch.to%3A1337%2Fannounce&amp;tr=http%3A%2F%2Fh1.trakx.nibba.trade%3A80%2Fannounce&amp;tr=http%3A%2F%2Fh2.trakx.nibba.trade%3A80%2Fannounce&amp;tr=http%3A%2F%2Fh3.trakx.nibba.trade%3A80%2Fannounce&amp;tr=http%3A%2F%2Fh4.trakx.nibba.trade%3A80%2Fannounce&amp;tr=http%3A%2F%2Fh5.trakx.nibba.trade%3A80%2Fannounce&quot;,
+    &quot;Torrent&quot;: &quot;https://d.rutor.info/download/970650&quot;,
+    &quot;IMDb_link&quot;: &quot;http://www.imdb.com/title/tt7587890/&quot;,
+    &quot;Kinopoisk_link&quot;: &quot;http://www.kinopoisk.ru/film/1142153/&quot;,
+    &quot;IMDb_id&quot;: &quot;7587890&quot;,
+    &quot;Kinopoisk_id&quot;: &quot;1142153&quot;,
+    &quot;Rating&quot;: &quot;10 из 10 (2 голосов, самая низкая оценка - 10, самая высокая - 10)&quot;,
+    &quot;Category&quot;: &quot;Зарубежные сериалы&quot;,
+    &quot;Seeds&quot;: &quot;6&quot;,
+    &quot;Peers&quot;: &quot;2&quot;,
+    &quot;Seed_Date&quot;: &quot;30-07-2024 7:19:07 (54 минуты назад)&quot;,
+    &quot;Add_Date&quot;: &quot;22-05-2024 17:51:28  (2 месяца назад)&quot;,
+    &quot;Size&quot;: &quot;5.92 GB (6360685830 Bytes)&quot;,
+    &quot;Files&quot;: [
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E01.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;602.01 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E02.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;562.48 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E03.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;621.50 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E04.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;690.81 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E05.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;460.92 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E06.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;531.88 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E07.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;931.94 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E08.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;506.55 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E09.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;523.90 MB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S06.400p.Kerob/The.Rookie.S06E10.400p.Kerob.avi&quot;,
+        &quot;Size&quot;: &quot;634.04 MB&quot;
+      }
+    ]
+  }
+]
+</code></pre>
+<h4 id="nonameclub_1">NoNameClub</h4>
+<p>🔹 <code>curl -s http://localhost:8443/api/search/id/nonameclub?query=1259608</code></p>
+<pre><code class="language-json">[
+  {
+    &quot;Name&quot;: &quot;Новичок / The Rookie (2018) WEB-DL [H.264/1080p-LQ] (сезон 1, серии 1-20 из 20) TVShows&quot;,
+    &quot;Url&quot;: &quot;https://nnmclub.to/forum/viewtopic.php?t=1259608&quot;,
+    &quot;Hash&quot;: &quot;C4E5F91AB1F8BBDF79B51C6E6167CFC806E2AA2B&quot;,
+    &quot;Magnet&quot;: &quot;magnet:?xt=urn:btih:C4E5F91AB1F8BBDF79B51C6E6167CFC806E2AA2B&amp;tr=http%3A%2F%2Fretracker.local%2Fannounce&amp;tr=http%3A%2F%2Fbt01.nnm-club.info%3A2710%2Fannounce&amp;tr=http%3A%2F%2Fbt02.nnm-club.info%3A2710%2Fannounce&amp;tr=http%3A%2F%2Fbt01.nnm-club.cc%3A2710%2Fannounce&amp;tr=http%3A%2F%2Fbt02.nnm-club.cc%3A2710%2Fannounce&quot;,
+    &quot;Torrent&quot;: &quot;https://nnmclub.to/forum/download.php?id=1018672&quot;,
+    &quot;IMDb_link&quot;: &quot;https://www.imdb.com/title/tt7587890/?ref_=plg_rt_1&quot;,
+    &quot;Kinopoisk_link&quot;: &quot;https://www.kinopoisk.ru/film/1142153/&quot;,
+    &quot;IMDb_id&quot;: &quot;75878901&quot;,
+    &quot;Kinopoisk_id&quot;: &quot;1142153&quot;,
+    &quot;Release&quot;: &quot;США / eOne Television, Perfectmon Pictures, ABC Studios&quot;,
+    &quot;Type&quot;: &quot;драма&quot;,
+    &quot;Directer&quot;: &quot;Грег Биман, Адам Дэвидсон, Тоа Фрейзер&quot;,
+    &quot;Actors&quot;: &quot;Нэйтан Филлион, Алисса Диас, Титус Макин мл., Эрик Винтер, Ричард Т. Джонс, Мелисса О’Нил, Мерседес Масон, Эфтон Уильямсон, Марсей Монро, Дэвид ДеСантос и др.&quot;,
+    &quot;Description&quot;: &quot;Начинать с чистого листа всегда нелегко, особенно для уроженца маленького городка Джона Нолана, который после инцидента, перевернувшего его жизнь, решил воплотить в жизнь давнюю мечту и присоединиться к полиции Лос-Анджелеса. Возрастного новичка встречают с понятным скептицизмом, однако жизненный опыт, упорство и чувство юмора дают Джону преимущество&quot;,
+    &quot;Duration&quot;: &quot;00:43:00 серия&quot;,
+    &quot;Quality&quot;: &quot;WEB-DL&quot;,
+    &quot;Video&quot;: &quot;AVC/H.264, 1920x1080 (16:9), ~7024 kbps&quot;,
+    &quot;Audio&quot;: &quot;Многоголосый закадровый, любительский (TVShows)&quot;,
+    &quot;Registration&quot;: &quot;22 Апр 2019 12:09:12&quot;,
+    &quot;Rating&quot;: &quot;4.6&quot;,
+    &quot;Votes&quot;: &quot;59&quot;,
+    &quot;Size&quot;: &quot;51.2 GB&quot;,
+    &quot;Files&quot;: [
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01.1080p.TVShows&quot;,
+        &quot;Size&quot;: &quot;Directory&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E01.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.42 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E02.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.68 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E03.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.61 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E04.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.11 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E05.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.16 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E06.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.43 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E07.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.23 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E08.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;1.85 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E09.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.03 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E10.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.81 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E11.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;3 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E12.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.74 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E13.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.88 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E14.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.88 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E15.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.68 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E16.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.85 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E17.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.68 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E18.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.67 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E19.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.76 GB&quot;
+      },
+      {
+        &quot;Name&quot;: &quot;The.Rookie.S01E20.1080p.TVShows.mkv&quot;,
+        &quot;Size&quot;: &quot;2.7 GB&quot;
+      }
+    ]
+  }
+]
+</code></pre>
+<h3 id="tests-endpoints">Tests endpoints</h3>
+<p>Example of building a Docker container via GitHub Actions:</p>
+<pre><code class="language-shell">- Checking the availability of data on the server:
+
+RuTracker data avaliable: false
+Kinozal data avaliable: true
+RuTor data avaliable: true
+NoNameClub data avaliable: true
+
+- Search by Title:
+
+--- RuTracker:
+Response time (ms): 799
+Status code: 200
+Check data: true
+Data: Новичок / Новобранец / The Rookie / Сезон: 6 / Серии: 1-10 из 10 (Билл Роу, Майкл Гои) [2024, США, драма, комедия, криминал, WEB-DL 1080p] 3 x MVO (LostFilm, TVShows, HDrezka) + Original + Sub (Rus, Eng)
+
+--- Kinozal:
+Response time (ms): 411
+Status code: 200
+Check data: true
+Data: Новичок (Новобранец) (6 сезон: 1-10 серии из 10)
+
+--- RuTor:
+Response time (ms): 706
+Status code: 200
+Check data: true
+Data: Новичок / Новобранец / The Rookie [S06] (2024) WEB-DL 720p | LostFilm, TVShows, HDrezka Studio
+
+--- NoNameClub:
+Response time (ms): 105
+Status code: 200
+Check data: true
+Data: Агент Три нуля / Новички / Su ren te gong / The Rookies (2019) WEBRip [H.264/1080p]
+
+- Search by ID:
+
+--- RuTracker:
+Response time (ms): 31022
+Status code: 400
+! Skip counter, data is not available on the server
+Check data: false
+! Skip counter, data is not available on the server
+Data: 
+
+--- Kinozal:
+Response time (ms): 630
+Status code: 200
+Check data: true
+Data: Новичок (Новобранец)
+
+--- RuTor:
+Response time (ms): 757
+Status code: 200
+Check data: true
+Data: Новичок / Новобранец / The Rookie [S06] (2024) WEBRip от Kerob | L2
+
+--- NoNameClub:
+Response time (ms): 1354
+Status code: 200
+Check data: true
+Data: Новичок / The Rookie (2018) WEB-DL [H.264/1080p-LQ] (сезон 1, серии 1-20 из 20) TVShows
+
+Number all tests: 16
+Number successful tests: 14
+Number failed tests: 0
+</code></pre>
+<h3 id="save-torrent-file">Save torrent file</h3>
+<p>To save the torrent file on your computer, you can use one of the following constructs:</p>
+<ul>
+<li><strong>Linux</strong> via <code>Bash</code>:</li>
+</ul>
+<pre><code class="language-bash">id=970650
+url=$(curl -s &quot;http://127.0.0.1:8443/api/search/id/rutor?query=$id&quot; | jq -r .[].Torrent)
+curl -s $url --output ~/downloads/$id.torrent
+</code></pre>
+<ul>
+<li><strong>Windows</strong> via <code>PowerShell</code>:</li>
+</ul>
+<pre><code class="language-PowerShell">$id = 970650
+$url = $(Invoke-RestMethod &quot;http://127.0.0.1:8443/api/search/id/rutor?query=$id&quot;).Torrent
+Invoke-RestMethod $url -OutFile &quot;$home\Downloads\$id.torrent&quot;
+</code></pre>
+<ul>
+<li><strong>Node.js</strong> via <code>Axios</code>:</li>
+</ul>
+<pre><code class="language-js">const axios = require('axios')
+const os = require('os')
+const fs = require('fs')
+const path = require('path')
+
+const id = 970650
+const url = `http://localhost:8443/api/search/id/rutor?query=${id}`
+const homeDir = os.homedir()
+
+axios.get(url).then(response =&gt; {
+    const torrentUrl = response.data[0].Torrent
+    return axios({
+        url: torrentUrl,
+        method: 'GET',
+        responseType: 'stream'
+    })
+    }).then(response =&gt; {
+        const filePath = path.join(homeDir, 'downloads', `${id}.torrent`)
+        const writer = fs.createWriteStream(filePath)
+        response.data.pipe(writer)
+    })
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023-2024 Alex Kup (Lifailon)
+    </div>
+  
+  
+  PowerShell Commands on
+  <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener">
+    GitHub
+  </a>
+  | Theme
+  <a href="https://github.com/squidfunk/mkdocs-material" target="_blank" rel="noopener">
+    Material
+  </a>
+  for
+  <a href="https://github.com/mkdocs/mkdocs" target="_blank" rel="noopener">
+    MkDocs
+  </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/Lifailon/PS-Commands" target="_blank" rel="noopener" title="PS-Commands on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      
+        <script src="../assets/highlight/highlight.min.js"></script>
+      
+        <script src="../assets/highlight/powershell.min.js"></script>
+      
+        <script src="../assets/highlight/init.js"></script>
+      
+    
+  </body>
+</html>

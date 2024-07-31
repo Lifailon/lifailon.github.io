@@ -26,6 +26,7 @@ nav:
   - Ansible: Ansible/index.md
   - 🐳 Docker: Docker/index.md
   - 🐧 Linux: Linux/index.md
+  - 📚 TorAPI Docs: TorAPI/index.md
 
   # alternate:
   #   - name: Русский

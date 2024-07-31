@@ -635,6 +635,24 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -828,6 +846,26 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TorAPI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📚 TorAPI Docs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -884,6 +922,24 @@
   <a href="#build-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       Build (Pipeline)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs
     </span>
   </a>
   
@@ -1111,6 +1167,48 @@ jobs:
         git commit -m &quot;update game list&quot;
         # Отправляем коммит в удаленный репозиторий
         git push
+</code></pre>
+<h3 id="ci">CI</h3>
+<pre><code class="language-yaml">name: Docker Build and Push Image
+
+on:
+  # Запусать при git push в ветку main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Клонируем репозиторий
+      uses: actions/checkout@v2
+
+    - name: Авторизация в Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Сборка образа и отправка в Docker Hub
+      run: |
+        docker build -t lifailon/torapi:latest .
+        docker push lifailon/torapi:latest
+</code></pre>
+<h3 id="logs">Logs</h3>
+<p><code>$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).total_count</code>получить количество запусков всех рабочих процессов<br />
+<code>$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows</code>подробная информации о запускаемых рабочих процессах<br />
+<code>$actions_last_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows[-1].id</code>получить идентификатор последнего события<br />
+<code>$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs</code>подробная информация о последней сборке<br />
+<code>$run_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs.id</code>получить идентификатор запуска рабочего процесса<br />
+<code>$(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs.steps</code>подробная информация для всех шагов выполнения (время работы и статус выполнения)<br />
+<code>$jobs_id = $(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs[0].id</code>получить идентификатор последнего задания указанного рабочего процесса</p>
+<pre><code class="language-PowerShell">$url = &quot;https://api.github.com/repos/Lifailon/TorAPI/actions/jobs/$jobs_id/logs&quot;
+$headers = @{
+    Authorization = &quot;token ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+}
+Invoke-RestMethod -Uri $url -Headers $headers # получить логи задания
 </code></pre>
 <h2 id="psappdeploytoolkit">PSAppDeployToolkit</h2>
 <h3 id="install-deploytoolkit">Install-DeployToolkit</h3>
