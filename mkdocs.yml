@@ -19,14 +19,12 @@ nav:
   - Virtualization: Virtualization/index.md
   - Database: Database/index.md
   - Markup Languages : MarkupLanguages/index.md
-  - DevOps: DevOps/index.md
   - API: API/index.md
   - Zabbix: Zabbix/index.md
-  - SCM: SCM/index.md
-  - Ansible: Ansible/index.md
+  - DevOps: DevOps/index.md
   - 🐳 Docker: Docker/index.md
   - 🐧 Linux: Linux/index.md
-  - 📚 TorAPI Docs: TorAPI/index.md
+  - 🍿 TorAPI: TorAPI/index.md
 
   # alternate:
   #   - name: Русский
