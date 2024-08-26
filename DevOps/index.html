@@ -825,6 +825,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#graylog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graylog
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ansible" class="md-nav__link">
     <span class="md-ellipsis">
       Ansible
@@ -1160,26 +1169,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../TorAPI/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    🍿 TorAPI
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1387,6 +1376,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#graylog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graylog
+    </span>
+  </a>
   
 </li>
       
@@ -2205,6 +2203,66 @@ return versions
     }
 }
 </code></pre>
+<h2 id="graylog">Graylog</h2>
+<p><a href="https://hub.docker.com/r/itzg/graylog">Graylog Docker Image</a></p>
+<ul>
+<li>Установка MongoDB:</li>
+</ul>
+<pre><code class="language-shell">docker run --name mongo -d mongo:3
+</code></pre>
+<ul>
+<li>Используем прокси для установки Elassticsearch:</li>
+</ul>
+<pre><code class="language-shell">docker run --name elasticsearch \
+    -e &quot;http.host=0.0.0.0&quot; -e &quot;xpack.security.enabled=false&quot; \
+    -d dockerhub.timeweb.cloud/library/elasticsearch:5.5.1
+</code></pre>
+<ul>
+<li>Указать статический IP адрес для подключения к API</li>
+</ul>
+<pre><code class="language-shell">docker run --name Graylog \
+    --link mongo \
+    --link elasticsearch \
+    -p 9000:9000 -p 12201:12201 -p 514:514 -p 5044:5044 \
+    -e GRAYLOG_WEB_ENDPOINT_URI=&quot;http://192.168.3.101:9000/api&quot; \
+    -d graylog/graylog:2.3.2-1
+</code></pre>
+<ul>
+<li>Настройка syslog на клиенте Linux:</li>
+</ul>
+<p><code>nano /etc/rsyslog.d/graylog.conf</code></p>
+<pre><code class="language-shell">*.* @@192.168.3.101:514;RSYSLOG_SyslogProtocol23Format
+</code></pre>
+<p><code>systemctl restart rsyslog</code></p>
+<ul>
+<li>Создать входящий поток (inputs) для Syslog на порту 514 по протоколу TCP:</li>
+</ul>
+<p>http://192.168.3.101:9000/system/inputs</p>
+<ul>
+<li>Фильтр для логов Kinozal-Bot:</li>
+</ul>
+<p><code>facility:"system daemon" AND application_name:bash AND message:\[ AND message:\]</code></p>
+<ul>
+<li>Настройка Winlogbeat на клиенте Windows:</li>
+</ul>
+<p>Установка агента:</p>
+<pre><code class="language-PowerShell">irm https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-8.15.0-windows-x86_64.zip -OutFile $home\Documents\winlogbeat-8.15.0.zip
+Expand-Archive $home\Documents\winlogbeat-8.15.0.zip
+cd $home\Documents\winlogbeat-8.15.0-windows-x86_64
+</code></pre>
+<p>Добавить отправку в Logstash:</p>
+<p><code>code winlogbeat.yml</code></p>
+<pre><code class="language-shell">output.logstash:
+  hosts: [&quot;192.168.3.101:5044&quot;]
+</code></pre>
+<p>И закомментировать отправку данных в Elasticsearch (output.elasticsearch)</p>
+<p><code>.\winlogbeat.exe -c winlogbeat.yml</code> запустить агент с правами администратора в консоли</p>
+<pre><code class="language-shell">.\install-service-winlogbeat.ps1 # установить службу
+Get-Service winlogbeat | Start-Service
+</code></pre>
+<ul>
+<li>Настроить Inputs для приема Beats на порту 5044</li>
+</ul>
 <h2 id="ansible">Ansible</h2>
 <p><code>apt -y update &amp;&amp; apt -y upgrade</code> <br />
 <code>apt -y install ansible</code> v2.10.8 <br />
