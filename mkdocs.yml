@@ -24,7 +24,7 @@ nav:
   - 🐳 Docker: Docker/index.md
   - DevOps: DevOps/index.md
   - 🐧 Linux: Linux/index.md
-  - JavaScript (Node.js): Node.js/index.md
+  - Node.js: Node.js/index.md
 
   # alternate:
   #   - name: Русский
