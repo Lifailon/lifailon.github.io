@@ -7,6 +7,8 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
+        <meta name="author" content="Lifailon">
+      
       
         <link rel="canonical" href="https://lifailon.github.io/Node.js/">
       
@@ -593,26 +595,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../Docker/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    🐳 Docker
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../DevOps/" class="md-nav__link">
         
   
@@ -633,11 +615,31 @@
   
   
     <li class="md-nav__item">
+      <a href="../Docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Linux/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    🐧 Linux
+    Linux
   </span>
   
 
@@ -769,6 +771,15 @@
         <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
+      Асинхронные операции
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
       Регулярные выражения
     </span>
   </a>
@@ -785,9 +796,45 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#express" class="md-nav__link">
     <span class="md-ellipsis">
-      Асинхронные операции
+      Express
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#axios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Axios
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fetch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheerio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cheerio
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#puppeteer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Puppeteer
     </span>
   </a>
   
@@ -900,6 +947,15 @@
         <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
+      Асинхронные операции
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
       Регулярные выражения
     </span>
   </a>
@@ -916,9 +972,45 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#express" class="md-nav__link">
     <span class="md-ellipsis">
-      Асинхронные операции
+      Express
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#axios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Axios
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fetch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheerio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cheerio
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#puppeteer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Puppeteer
     </span>
   </a>
   
@@ -944,7 +1036,11 @@
 
   <h1>Node.js</h1>
 
-<p>Памятка по синтаксису <code>JavaScript</code> для <a href="https://github.com/nodejs/node">Node.js</a> в примерах.</p>
+<div style="display: flex; align-items: center;">
+    <img src="/Logo/node.js.png" alt="img" width="64" height="64" style="margin-right: 10px;" />
+    <span>Памятка по синтаксису <b>JavaScript</b> <br> для <b>Node.js</b> в примерах.</span>
+</div>
+
 <h3 id="_1">Переменные</h3>
 <p>Переменная <code>var</code> поддерживает любую область видимости и ее возможно объявить повторно (считается устаревшим методом и рекомендуется не использовать).</p>
 <pre><code class="language-js">console.log(varVariable) // Uncaught ReferenceError: varVariable is not defined (не определена)
@@ -967,7 +1063,7 @@ let letVariable = 'string' // Uncaught SyntaxError: Identifier 'letVariable' has
 letVariable = 123
 console.log(letVariable)
 </code></pre>
-<p>Переменная <code>const</code> требует обязательной инициализации, и не позволяет изменять значение переменной после ее объявления.</p>
+<p>Переменная константа <code>const</code> требует обязательной инициализации во время объявления, и не позволяет изменять значение переменной после ее объявления.</p>
 <pre><code class="language-js">const constVariable = 'string'
 constVariable = '123' // Uncaught TypeError: Assignment to constant variable (ошибка присвоения значения к постоянной переменной)
 </code></pre>
@@ -1037,7 +1133,10 @@ getRandomInt(1,100) // Например, 44
 </code></pre>
 <h3 id="_4">Условия</h3>
 <pre><code class="language-js">function functionName (paramName) {
-    if (paramName &lt; 10) {
+    if (paramName === 0) {
+        console.log(`${paramName} равно 0`)
+    }
+    else if (paramName &lt; 10) {
         console.log(`${paramName} меньше 10`)
     }
     else if (paramName &gt;= 10) {
@@ -1048,9 +1147,44 @@ getRandomInt(1,100) // Например, 44
     }
 }
 
+functionName(0)       // 0 равно 0
 functionName(5)       // 5 меньше 10
 functionName(15)      // 15 больше или равно 10
 functionName('test')  // Переданное значение - test - не подходит под заданные условия
+</code></pre>
+<p>Однострочный формат условия <code>?:</code>, который подходит для использования в теле переменной</p>
+<pre><code class="language-js">let input = 1
+input === 1 ? true : false // true
+input = 2
+input === 1 ? true : false // false
+</code></pre>
+<p>Проверить одно значение сразу на большое количество условий с помощью конструкции <code>switch</code></p>
+<pre><code class="language-js">function getDayOfWeek(day) {
+    switch (day) {
+        case 1:
+            return 'Понедельник'
+        case 2:
+            return 'Вторник'
+        case 3:
+            return 'Среда'
+        case 4:
+            return 'Четверг'
+        case 5:
+            return 'Пятница'
+        case 6:
+            return 'Суббота'
+        case 7:
+            return 'Воскресенье'
+        default:
+            return 'Неправильно задан параметр'
+    }
+}
+
+console.log(getDayOfWeek(1)) // Понедельник
+console.log(getDayOfWeek(5)) // Пятница
+console.log(getDayOfWeek(7)) // Воскресенье
+console.log(getDayOfWeek(8)) // Неправильно задан параметр
+
 </code></pre>
 <h3 id="_5">Обработка ошибок</h3>
 <pre><code class="language-js">function errorTest(a, b) {
@@ -1085,12 +1219,14 @@ errorTest(10, 0)
 Array.isArray(array) // Проверка, является ли переменная массивом (true)
 array[2] = 1 // Изменить содержимое элемента в массиве по индексу
 array.sort() // сортировка по умолчанию: [ 1, 2, 3 ]
+array.reverse() // Поменять порядок следования: [ 3, 2, 1 ]
 array[0] + array[1] + array[2] // 6
 array[3] // undefined (не определено)
 array[3] = 4 // Добавить новый элемент в массив по индексу
 array.push(5) // Добавить новый элемент с конца
 array[4] // 5
-array.unshift(0) // Добавить элемент в начало массива
+array.slice(3,5) // Вывести содержимое массива с 4-го по 5-й индекс: [ 4, 5 ]
+array.unshift(0) // Добавить элемент(ы) (через запятую) в начало массива
 array.shift() // Удалить первый элемент из массива
 array.pop() // Удалить последний элемент из массива
 array[array.length-1] // Вывести содержимое последнего элемента в массиве
@@ -1111,6 +1247,10 @@ const filterArray = nameArray.filter(item =&gt; item.length &gt;= 4) // отфи
 
 [...nameArray, ...filterArray] // объеденить два массива
 // [ 'red', 'blue', 'green', 'blue', 'green' ]
+
+const idArray = data.map(item =&gt; item.id)
+// Метод reduce выполняет функцию для каждого элемента массива, чтобы получить одно итоговое значение (сумму)
+idArray.reduce((accumulator, current) =&gt; accumulator + current, 0) // 3
 </code></pre>
 <h3 id="_7">Объекты</h3>
 <p>Преобразовать объект в массив и наоборот:</p>
@@ -1122,7 +1262,7 @@ const arr = Object.entries(obj)  // [[&quot;a&quot;, 1], [&quot;b&quot;, 2], [&q
 arr[1][1] // 2
 Object.fromEntries(arr)          // { a: 1, b: 2, c: 3 }
 </code></pre>
-<p>Используя переменную <code>const</code> при объявлении объектов, возможно изменять содержимое дочерних элементов.</p>
+<p>Объект представляет из себя список пар (ключ-значение), разделенного запятыми. Используя переменную <code>const</code> при объявлении объектов, возможно изменять содержимое дочерних элементов.</p>
 <pre><code class="language-js">const box = {
     height: 8,
     width: 40,
@@ -1160,6 +1300,28 @@ box.style.fg // blue
 <pre><code class="language-js">const jsonString = JSON.stringify(obj)  // Конвертация из объекта JavaScript в JSON
 const obj = JSON.parse(jsonString)      // Конвертация из JSON в JavaScript
 </code></pre>
+<p>Методы объекта назначаются через функции</p>
+<pre><code class="language-js">const obj = {
+    default: 10,
+    get() {
+        return this.default
+    },
+    plus(num) {
+        if (isNaN(num)) {return}
+        this.default += num
+    },
+    minus(num) {
+        if (isNaN(num)) {return}
+        this.default -= num
+    }
+}
+
+obj.minus(1)
+obj.get() // 9
+obj.plus(2)
+obj.get() // 11
+</code></pre>
+<p>Оператор <code>return</code> используется для выхода из функции (т.е. последующий код не читается), который возвращает значение указанное после ключевого слова.</p>
 <h3 id="_8">Циклы</h3>
 <p>Примеры циклов взяты из проекта <a href="https://github.com/Lifailon/multranslate">multranslate</a>, для проверки всех строк в массиве и увеличения количества видимых строк с учетом <code>autowrap</code>. Имеется две реальных строки, необходимо узнать количество виртуальных строк с учетом длинны символов в строке. Например, если максимальная длинна одной строки составляет, <code>36</code>, то на одну реальную строку в <code>92</code> символа приходится дополнительно еще <code>2</code> виртуальных. Количество найденных виртуальных строк прибавляется к изначально зафиксированному значению количества всех реальных строк.</p>
 <pre><code class="language-js">// На входе 2 строки, разделенные символом \r
@@ -1254,75 +1416,32 @@ do {
 } while (i &lt; bufferLine.length)
 console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 4
 </code></pre>
-<h3 id="_9">Регулярные выражения</h3>
-<p>Преобразовать строку в массив из букв (<code>char</code>).</p>
-<pre><code class="language-js">let line = &quot;javascript&quot;
-let arr = Array.from(str) // ['j', 'a', 'v', 'a',  's', 'c', 'r', 'i', 'p', 't']
-</code></pre>
-<p>Метод <code>split()</code> используется для преобразования строки в массив.</p>
-<pre><code class="language-js">line = &quot;1,2,3,4,5&quot;              // '1,2,3,4,5'
-arr = line.split(&quot;,&quot;)           // [ '1', '2', '3', '4', '5' ]
-</code></pre>
-<p>Метод <code>join()</code> используется для объединение массива в строку.</p>
-<pre><code class="language-js">let arrSlice = arr.slice(1, 3)  // Срез, выводит содержимое массива с 1 по 3 индекс (два элемента)
-arrSlice.join()                 // Собирает массив в строку: '2,3'
-arrSlice.join(&quot; - &quot;)            // '2 - 3'
-</code></pre>
-<p>Метод <code>match()</code> используется для поиска совпадений с регулярным выражением в строке. Он возвращает массив с найденными совпадениями или <code>null</code>, если совпадений не найдено.</p>
-<pre><code class="language-js">let stringForRegex = &quot;Текст для проверки текста&quot;
-stringForRegex.match(/текст/)[0]     // Получить содержимое первого совпадения
-stringForRegex.match(/текст/).index  // Возвращает порядковый индекс первого совпадения в тексте (19)
-stringForRegex.match(/текст/i)[0]    // Возвращает только первое совпадение без учета регистра
-stringForRegex.match(/текст/gi)      // Получить массив всех совпадений: [ 'Текст', 'текст' ]
+<p>Операторы:</p>
+<ul>
+<li><code>continue</code> - прерывает текущую интерацию, для продолжения цикла с следующим значением</li>
+<li><code>break</code> - прерывает и завершает цикл</li>
+</ul>
+<pre><code class="language-js">let arr = [0, 1, 2, 4]
+for (const value of arr) {
+    console.log(`Начало ${value}-й итерации`)
+    if (value === 1) {
+        console.log('Пропустить оставшуюся часть кода и перейти к следующей итерации')
+        continue
+    } else if (value === 2) {
+        console.log('Полностью выйти из цикла')
+        break
+    }
+    console.log(`Конец ${value}-й итерации`)
+}
 
-stringForRegex = &quot;2024-10-25&quot;
-stringForRegex.match(/(\d{4})-(\d{2})-(\d{2})/) // Группа захвата, которая возвращает полное совпадение, а также значения отдельных групп
-// [ '2024-10-25', '2024', '10', '25', index: 0, input: '25-10-2024', groups: undefined ]
+// Начало 0-й итерации
+// Конец 0-й итерации
+// Начало 1-й итерации
+// Пропустить оставшуюся часть кода и перейти к следующей итерации
+// Начало 2-й итерации
+// Полностью выйти из цикла
 </code></pre>
-<p>Метод <code>search()</code> возвращает только индекс первого совпадения.</p>
-<pre><code class="language-js">&quot;Текст для проверки текста&quot;.search('про') // 10
-</code></pre>
-<p>Метод <code>replace()</code> заменяет найденные совпадения в строке на другие значения.</p>
-<pre><code class="language-js">stringForRegex = &quot;Текст для замены&quot;
-stringForRegex.replace(/для/, &quot;после&quot;)              // 'Текст после замены'
-stringForRegex.replace(/^т/i, &quot;Этот т&quot;)             // 'Этот текст для замены'
-stringForRegex.replace(/$/, &quot;!&quot;)                    // 'Текст для замены!'
-stringForRegex.replace(/(Текст)/, &quot;$1 только&quot;)      // 'Текст только для замены'
-stringForRegex.replace(/\s[а-яА-Я]{3}/, &quot;&quot;)         // 'Текст замены'
-stringForRegex.replace(/\s\p{L}+$/u, &quot; кириллицы&quot;)  // 'Текст для кириллицы'
-
-stringForRegex = &quot;Text for regex&quot;
-stringForRegex.replace(/\s\w{3}/, &quot;&quot;)         // Используется для замены любых латинских букв: 'Text regex'
-stringForRegex.replace(/\s[a-zA-Z_]{3}/, &quot;&quot;)  // эквивалент \w
-
-stringForRegex = &quot;2024-10-25&quot;
-stringForRegex = stringForRegex.replace(/(\d{4})-(\d{2})-(\d{2})/,&quot;$3.$2.$1&quot;) // Поменять порядок через группы захвата: '25.10.2024'
-stringForRegex.replace(/\d{2}\./g, &quot;11.&quot;)   // Заменяет найденные две идущие цифры подряд: '11.11.2024'
-stringForRegex.replace(/\d{4}/, &quot;2025&quot;)     // Заменяет четыре идущие цифры подряд: '25.10.2025'
-stringForRegex.replace(/20\d+/, &quot;2025&quot;)     // Заменяет 20 и любые идущие за ним цифры: '25.10.2025'
-stringForRegex.replace(/10.+/g, &quot;11.2025&quot;)  // Заменяет 10 и любое количетво символов идущее за ним: '25.11.2025'
-stringForRegex.replace(/\d{2,4}/g, &quot;11&quot;)    // Заменяет найденные цифры следующие в порядке от 2 до 4: ('11.11.11')
-stringForRegex.replace(/[45]/g, &quot;1&quot;)        // Заменить 4 или 5 на 1: '21.10.2021'
-</code></pre>
-<h3 id="math">Math</h3>
-<pre><code class="language-js">Math.min(9, 10)        // Получить наименьшее значение двух чисел: 9
-Math.max(9, 10)        // Получить максимальное значение двух чисел: 10
-Math.floor(10 / 3)     // Округлить в меньшую сторону: 3
-Math.ceil(10/3)        // Откруглить в большую сторону: 4
-Math.trunc(4.9)        // Отбрасывание дробной части: 4
-Math.round(4.5)        // Округление до ближайшего целого: 5
-Math.round(4.45)       // Округление до ближайшего целого: 4
-Math.fround(5.05)      // Ближайшее число с плавающей точкой одинарной точности: 5.050000190734863
-Math.random()          // Псевдослучайное число между 0 и 1, например, 0.2309471255442206
-Math.abs(-7)           // Получить абсолютное значение: 7
-Math.sign(-3)          // Определение знака числа (-1, 0, 1): -1
-Math.pow(2, 3)         // Возведение в степень: 8
-Math.sqrt(16)          // Квадратный корень: 4
-Math.cbrt(27)          // Кубический корень: 3
-Math.imul(2, 4)        // Целочисленное 32-битное умножение: 8
-Math.clz32(1)          // Количество ведущих нулей в 32-битном представлении: 31
-</code></pre>
-<h3 id="_10">Асинхронные операции</h3>
+<h3 id="_9">Асинхронные операции</h3>
 <p><code>Promise</code> (промис) — это объект, который используется для обработки асинхронных операций, позволяя работать с результатами, когда они станут доступны, не блокируя основной поток выполнения. Он может находиться в одном из трех состояний:</p>
 <ul>
 <li><code>Pending</code> (Ожидание): Операция только отправлена на выполнение или еще выполняется.</li>
@@ -1433,12 +1552,444 @@ pingSubnet('192.168.3.0')
 <p><code>await Promise.all()</code> - дожидается успешного выполнения всех запросов.<br />
 <code>await Promise.allSettled()</code> - дожидается выполнения всех запросов не зависимо от успеха (возвращает статус и результат).<br />
 <code>await Promise.race()</code> - дожидается первого успешного выполнения, что бы получить результат от него не зависимо от его успеха.</p>
+<h3 id="_10">Регулярные выражения</h3>
+<p>Преобразовать строку в массив из букв (<code>char</code>).</p>
+<pre><code class="language-js">let line = &quot;javascript&quot;
+let arr = Array.from(str) // ['j', 'a', 'v', 'a',  's', 'c', 'r', 'i', 'p', 't']
+</code></pre>
+<p>Метод <code>split()</code> используется для преобразования строки в массив.</p>
+<pre><code class="language-js">line = &quot;1,2,3,4,5&quot;              // '1,2,3,4,5'
+arr = line.split(&quot;,&quot;)           // [ '1', '2', '3', '4', '5' ]
+</code></pre>
+<p>Метод <code>join()</code> используется для объединение массива в строку.</p>
+<pre><code class="language-js">let arrSlice = arr.slice(1, 3)  // Срез, выводит содержимое массива с 1 по 3 индекс (два элемента)
+arrSlice.join()                 // Собирает массив в строку: '2,3'
+arrSlice.join(&quot; - &quot;)            // '2 - 3'
+</code></pre>
+<p>Метод <code>match()</code> используется для поиска совпадений с регулярным выражением в строке. Он возвращает массив с найденными совпадениями или <code>null</code>, если совпадений не найдено.</p>
+<pre><code class="language-js">let stringForRegex = &quot;Текст для проверки текста&quot;
+stringForRegex.match(/текст/)[0]     // Получить содержимое первого совпадения
+stringForRegex.match(/текст/).index  // Возвращает порядковый индекс первого совпадения в тексте (19)
+stringForRegex.match(/текст/i)[0]    // Возвращает только первое совпадение без учета регистра
+stringForRegex.match(/текст/gi)      // Получить массив всех совпадений: [ 'Текст', 'текст' ]
+
+stringForRegex = &quot;2024-10-25&quot;
+stringForRegex.match(/(\d{4})-(\d{2})-(\d{2})/) // Группа захвата, которая возвращает полное совпадение, а также значения отдельных групп
+// [ '2024-10-25', '2024', '10', '25', index: 0, input: '25-10-2024', groups: undefined ]
+</code></pre>
+<p>Метод <code>search()</code> возвращает только индекс первого совпадения.</p>
+<pre><code class="language-js">&quot;Текст для проверки текста&quot;.search('про') // 10
+</code></pre>
+<p>Метод <code>replace()</code> заменяет найденные совпадения в строке на другие значения.</p>
+<pre><code class="language-js">stringForRegex = &quot;Текст для замены&quot;
+stringForRegex.replace(/для/, &quot;после&quot;)              // 'Текст после замены'
+stringForRegex.replace(/^т/i, &quot;Этот т&quot;)             // 'Этот текст для замены'
+stringForRegex.replace(/$/, &quot;!&quot;)                    // 'Текст для замены!'
+stringForRegex.replace(/(Текст)/, &quot;$1 только&quot;)      // 'Текст только для замены'
+stringForRegex.replace(/\s[а-яА-Я]{3}/, &quot;&quot;)         // 'Текст замены'
+stringForRegex.replace(/\s\p{L}+$/u, &quot; кириллицы&quot;)  // 'Текст для кириллицы'
+
+stringForRegex = &quot;Text for regex&quot;
+stringForRegex.replace(/\s\w{3}/, &quot;&quot;)         // Используется для замены любых латинских букв: 'Text regex'
+stringForRegex.replace(/\s[a-zA-Z_]{3}/, &quot;&quot;)  // эквивалент \w
+
+stringForRegex = &quot;2024-10-25&quot;
+stringForRegex = stringForRegex.replace(/(\d{4})-(\d{2})-(\d{2})/,&quot;$3.$2.$1&quot;) // Поменять порядок через группы захвата: '25.10.2024'
+stringForRegex.replace(/\d{2}\./g, &quot;11.&quot;)   // Заменяет найденные две идущие цифры подряд: '11.11.2024'
+stringForRegex.replace(/\d{4}/, &quot;2025&quot;)     // Заменяет четыре идущие цифры подряд: '25.10.2025'
+stringForRegex.replace(/20\d+/, &quot;2025&quot;)     // Заменяет 20 и любые идущие за ним цифры: '25.10.2025'
+stringForRegex.replace(/10.+/g, &quot;11.2025&quot;)  // Заменяет 10 и любое количетво символов идущее за ним: '25.11.2025'
+stringForRegex.replace(/\d{2,4}/g, &quot;11&quot;)    // Заменяет найденные цифры следующие в порядке от 2 до 4: ('11.11.11')
+stringForRegex.replace(/[45]/g, &quot;1&quot;)        // Заменить 4 или 5 на 1: '21.10.2021'
+</code></pre>
+<h3 id="math">Math</h3>
+<pre><code class="language-js">Math.min(9, 10)        // Получить наименьшее значение двух чисел: 9
+Math.max(9, 10)        // Получить максимальное значение двух чисел: 10
+Math.floor(10 / 3)     // Округлить в меньшую сторону: 3
+Math.ceil(10/3)        // Откруглить в большую сторону: 4
+Math.trunc(4.9)        // Отбрасывание дробной части: 4
+Math.round(4.5)        // Округление до ближайшего целого: 5
+Math.round(4.45)       // Округление до ближайшего целого: 4
+Math.fround(5.05)      // Ближайшее число с плавающей точкой одинарной точности: 5.050000190734863
+Math.random()          // Псевдослучайное число между 0 и 1, например, 0.2309471255442206
+Math.abs(-7)           // Получить абсолютное значение: 7
+Math.sign(-3)          // Определение знака числа (-1, 0, 1): -1
+Math.pow(2, 3)         // Возведение в степень: 8
+Math.sqrt(16)          // Квадратный корень: 4
+Math.cbrt(27)          // Кубический корень: 3
+Math.imul(2, 4)        // Целочисленное 32-битное умножение: 8
+Math.clz32(1)          // Количество ведущих нулей в 32-битном представлении: 31
+</code></pre>
+<h3 id="express">Express</h3>
+<p>Создаем директорию, инициализируем проект и устанавливаем зависимости</p>
+<pre><code class="language-shell">mkdir api &amp;&amp; cd api
+npm init -y
+npm install express
+</code></pre>
+<p>Серверная часть <code>API</code> сервера в файле <code>server.js</code></p>
+<pre><code class="language-js">const express = require('express')
+
+const web = express()
+
+// Middleware для парсинга JSON данных в теле запроса
+web.use(express.json())
+
+// Обработка GET запроса с параметрами в пути и заголовками
+web.get('/user/:id', (req, res) =&gt; {
+    const userId = req.params.id // Получаем параметр id из пути
+    const customHeader = req.headers['custom-header'] // Чтение заголовка custom-header
+    res.json({
+        message: `GET запрос для пользователя с ID ${userId}`,
+        customHeader: customHeader || 'Заголовок отсутствует'
+    })
+})
+
+// Обработка POST запроса с данными в теле запроса и заголовками
+web.post('/user', (req, res) =&gt; {
+    const { name, age } = req.body // Получаем данные из тела POST запроса
+    const authHeader = req.headers['authorization'] // Чтение содержимого из заголовка `authorization`
+    if (authHeader !== 'Bearer TOKEN') {
+        res.json({
+            message: `Авторизация не пройдена, переданный токен: ${authHeader}`
+        })
+    } else {
+        res.json({
+            name: name || 'Не указано',
+            age: age || 'Не указано',
+        })
+    }
+})
+
+// Запуск сервера на порту 3000
+const PORT = 3000
+web.listen(PORT, () =&gt; {
+    console.log(`Сервер запущен на http://localhost:${PORT}`)
+})
+</code></pre>
+<p>Запуск сервера</p>
+<pre><code class="language-shell">node server.js
+</code></pre>
+<h3 id="axios">Axios</h3>
+<p>Клиентская часть для работы с <code>API</code></p>
+<pre><code class="language-shell">npm install axios
+</code></pre>
+<p>Пример <code>GET</code> запроса</p>
+<pre><code class="language-js">const axios = require('axios')
+
+// URL сервера
+const url = 'http://localhost:3000'
+
+// Пример GET запроса с параметром id в пути и кастомным заголовком
+async function getUser(userId, Header) {
+    try {
+        const response = await axios.get(`${url}/user/${userId}`, {
+            headers: {
+                'custom-header': Header
+            }
+        })
+        console.log('GET Ответ:', response.data)
+    } catch (error) {
+        console.error('Ошибка GET запроса:', error.message)
+    }
+}
+
+await getUser(1, 'Value')
+// GET Ответ: {
+//   message: 'GET запрос для пользователя с ID 1',
+//   customHeader: 'Value'
+// }
+</code></pre>
+<p>Пример <code>POST</code> запроса</p>
+<pre><code class="language-js">// Пример POST запроса с телом и заголовком авторизации
+async function createUser(key, name, age) {
+    try {
+        const response = await axios.post(`${url}/user`, {
+            name: name,
+            age: age
+        }, {
+            headers: {
+                'Authorization': `Bearer ${key}`
+            }
+        })
+        console.log('POST Ответ:', response.data)
+    } catch (error) {
+        console.error('Ошибка POST запроса:', error.message)
+    }
+}
+
+await createUser('KEY', 'Alex', 29)
+// POST Ответ: { message: 'Авторизация не пройдена, переданный токен: Bearer KEY' }
+
+await createUser('TOKEN', 'Alex', 29)
+// POST Ответ: { name: 'Alex', age: 29 }
+</code></pre>
+<h3 id="fetch">Fetch</h3>
+<pre><code class="language-js">async function fetchData(url) {
+    try {
+        // Отправляем GET-запрос на указанный URL
+        const response = await fetch(url)
+        // Проверяем, что ответ успешен
+        if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`)
+        }
+        // Получаем и выводим данные в формате JSON
+        const data = await response.json()
+        return data
+    }
+    // Обрабатываем ошибки
+    catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+const result = await fetchData('https://jsonplaceholder.typicode.com/todos/1')
+result // { userId: 1, id: 1, title: 'delectus aut autem', completed: false }
+JSON.stringify(result) // '{&quot;userId&quot;:1,&quot;id&quot;:1,&quot;title&quot;:&quot;delectus aut autem&quot;,&quot;completed&quot;:false}'
+</code></pre>
+<h3 id="cheerio">Cheerio</h3>
+<p>Cheerio - это библиотека для работы с <code>HTML</code> и <code>XML</code> в <code>Node.js</code></p>
+<pre><code class="language-shell">npm install axios cheerio https-proxy-agent iconv-lite
+</code></pre>
+<p>Подключаем библиотеки и получаем содержимое страницы с помощью <code>Axios</code> через <code>Proxy</code></p>
+<pre><code class="language-js">const axios    = require('axios')
+const cheerio  = require('cheerio')
+const proxy    = require('https-proxy-agent')
+const iconv    = require('iconv-lite')
+
+// Имя агента в заголовке запросов (вместо axios)
+const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+}
+
+const proxyAddress = '192.168.3.100'
+const proxyPort = 9090
+const username = 'test'
+const password = 'test'
+
+// Создание экземпляра Axios с использованием конфигурации Proxy
+const createAxiosProxy = () =&gt; {
+    const config = {}
+    config.httpsAgent = new proxy.HttpsProxyAgent(`http://${username}:${password}@${proxyAddress}:${proxyPort}`)
+    return axios.create(config)
+}
+const axiosProxy = createAxiosProxy()
+
+const url = &quot;https://rutor.info&quot;
+
+// Отправляем запрос
+const response = await axiosProxy.get(url, {
+    responseType: 'arraybuffer',
+    headers: headers
+})
+
+// Декодируем ответ
+html = iconv.decode(response.data, 'utf8')
+</code></pre>
+<p>Вытаскиваем данные с помощью <code>Cheerio</code></p>
+<pre><code class="language-js">const data = cheerio.load(html)
+
+// Обращаемся к элементу div (не обязательно указывать название элемента) с id=&quot;ws&quot; &gt; div с id=&quot;index&quot; &gt; элемент &quot;tbody&quot; (таблица) &gt; элемент &quot;tr&quot; (строки)
+data('div#ws #index tbody tr').length // 171
+// Исключить из вывода строку с class=&quot;backgr&quot; (загловки столбцов)
+data('#ws #index tbody tr').not('.backgr').length // 170
+
+// Получить содержимое первого элемента &quot;tr&quot; в формате HTML, строки или текста без тегов
+data('#ws #index tbody tr').not('.backgr').eq(0).html()
+data('#ws #index tbody tr').not('.backgr').eq(0).toString()
+data('#ws #index tbody tr').not('.backgr').eq(0).text()
+
+// Получить содержимое элемента по частичному совпадению
+data('#ws #index tbody tr').not('.backgr').find('td:contains(&quot;слово&quot;)').text().replace('\n','').trim()
+// 'Мужское слово (2024) WEB-DLRip'
+
+// Получить содержимое второго элемента по индексу в строке (столбцe)
+data('#ws #index tbody tr').not('.backgr').eq(0).find('td').eq(1).text().replace('\n','').trim()
+// 'Launcher for Zapret [v 1.3] (2024) PC | Portable'
+
+// Получить содержимое атрибута &quot;href&quot; из элемента с классом &quot;downgif&quot;
+data('#ws #index tbody tr').not('.backgr').eq(0).find('td a.downgif').attr('href')
+// '//d.rutor.info/download/1008549'
+
+// Получить содержимое атрибута &quot;href&quot; из второго элемента &quot;a&quot; в элементе &quot;td&quot;
+data('#ws #index tbody tr').not('.backgr').eq(0).find('td a:nth-child(2)').attr('href')
+// 'magnet:?xt=urn:btih:f1ca88b9421b243b6cb3d4da90e8fe133f381817&amp;dn=rutor.info&amp;tr=udp://opentor.net:6969&amp;tr=http://retracker.local/announce'
+
+// Фильтруем все элементы по частичному совпадению
+data('#ws #index tbody tr').not('.backgr').filter((index, element) =&gt; {
+    // Проверяем, содержит ли текущая строка &quot;tr&quot; слово &quot;Крит&quot; в одном из столбцов &quot;td&quot;
+    return data(element).find('td:contains(&quot;Крит&quot;)').length &gt; 0
+}).map((index, element) =&gt; {
+    // Если слово найдено, извлекаем текст всех &quot;td&quot; в этой строке с помощью map()
+    return data(element).find('td').map((index, element) =&gt; data(element).text()).get().join(' | ').replace('\n','')
+}).get()
+
+// [
+//   '29 Окт 24 | Критик / The Critic (2023) WEB-DLRip 1080p от ExKinoRay | P  | 6.10 GB |  1  4',
+//   '28 Окт 24 | Критик / The Critic (2023) WEB-DLRip | P  | 1.46 GB |  58  22',
+//   '28 Окт 24 | Критик / The Critic (2023) WEB-DLRip-AVC от DoMiNo &amp; селезень | P  | 1.46 GB |  64  19',
+//   '28 Окт 24 | Критик / The Critic (2023) WEB-DL 1080p | P | RGB  | 1 | 5.63 GB |  115  54'
+// ]
+
+const torrents = []
+
+// Собираем объект из всех элементов
+data('#ws #index tbody tr').not('.backgr').each((index, element) =&gt; {
+    const row = data(element)
+    const torrent = {
+        'Date': row.find('td').eq(0).text().trim(),
+        'Name': row.find('td').eq(1).find('a').last().text().trim(),
+        'Link': 'https://rutor.info' + row.find('td').eq(1).find('a[href^=&quot;/torrent&quot;]').attr('href'),
+        'DownloadLink': 'https://' + row.find('td').eq(1).find('a.downgif').attr('href'),
+        'Magnet': row.find('td').eq(1).find('a[href^=&quot;magnet:&quot;]').attr('href')
+    }
+    torrents.push(torrent)
+})
+
+// Конвертируем объект в формат JSON
+console.log(JSON.stringify(torrents, null, 2))
+
+// [
+//   {
+//     &quot;Date&quot;: &quot;29 Окт 24&quot;,
+//     &quot;Name&quot;: &quot;Launcher for Zapret [v 1.3] (2024) PC | Portable&quot;,
+//     &quot;Link&quot;: &quot;https://rutor.info/torrent/1008549/launcher-for-zapret-v-1.3-2024-pc-portable&quot;,
+//     &quot;DownloadLink&quot;: &quot;https:////d.rutor.info/download/1008549&quot;,
+//     &quot;Magnet&quot;: &quot;magnet:?xt=urn:btih:f1ca88b9421b243b6cb3d4da90e8fe133f381817&amp;dn=rutor.info&amp;tr=udp://opentor.net:6969&amp;tr=http://retracker.local/announce&quot;
+//   },
+//   ...
+// ]
+</code></pre>
+<h3 id="puppeteer">Puppeteer</h3>
+<p>Puppeteer — это библиотека, которая предоставляет <code>API</code> для автоматизации любых действий в браузерах <strong>Google Chrome</strong> и <strong>Mozilla Firefox</strong> через протокол <code>Chrome DevTools</code> и <code>WebDriver BiDi</code>.</p>
+<pre><code class="language-shell">mkdir api &amp;&amp; cd api &amp;&amp; npm init -y &amp;&amp; npm install puppeteer
+</code></pre>
+<p>Пример получения списка файлов раздачи с сайта <a href="https://rutor.info">RuTor</a>.</p>
+<pre><code class="language-js">const puppeteer = require('puppeteer')
+// Запускаем браузер и открываем новую пустую страницу 
+const browser = await puppeteer.launch({
+    headless: true // Отключить отображение браузера (параметр по умолчанию)
+})
+const page = await browser.newPage()
+// Открываем страницу с ожиданием загрузки 60 сек
+const query = 721221
+await page.goto(`https://rutor.info/torrent/${query}`, {
+    timeout: 60000,
+    waitUntil: 'domcontentloaded' // ожидать только полной загрузки DOM (не ждать загрузки внешних ресурсов, таких как изображения, стили и скрипты)
+})
+await page.evaluate(() =&gt; {
+    // Находим кнопку по JavaScript пути и нажимаем на нее
+    // document.querySelector(&quot;#details &gt; tbody &gt; tr:nth-child(11) &gt; td.header &gt; span&quot;).click()
+    // document.querySelector(&quot;#details &gt; tbody &gt; tr:nth-child(12) &gt; td.header &gt; span&quot;).click()
+    // Находим все кпноки которые содержат class=&quot;button&quot;
+    const buttons = document.querySelectorAll('span.button')
+    // Проходимся по найденным кнопкам
+    buttons.forEach(button =&gt; {
+        // Проверяем, содержит ли кнопка текст &quot;Файлы&quot; и нажимаем на нее
+        if (button.textContent.includes('Файлы')) {
+            button.click()
+        }
+    })
+})
+// Дождаться загрузки результатов
+// const elementHandle = await page.waitForSelector('#files')
+// Ищем элемент с идентификатором #files и проверяем, что элемент существует его содержимое не содержит текст загрузки
+await page.waitForFunction(() =&gt; {
+    const element = document.querySelector('#files')
+    return element &amp;&amp; !element.textContent.includes(&quot;Происходит загрузка списка файлов...&quot;)
+}, {
+    timeout: 30000, // Ожидать результат 30 секунд
+    polling: 50   // Проверка каждые 50мс (по умолчанию 100мс)
+})
+// Забираем результат после успешной проверки
+const elementContent = await page.evaluate(() =&gt; {
+    const element = document.querySelector('#files')
+    return element ? element.textContent : null
+})
+// Закрываем браузер
+await browser.close()
+// Разбиваем полученные результаты на массив из строк (split) исключая первую строку (slince)
+const lines = elementContent.trim().split('\n').slice(1)
+// Регулярное выражение для разбиения строки на название и размер
+const regex = /^(.+?)([\d.]+\s*\S+)\s+\((\d+)\)$/
+const torrents = []
+for (const line of lines) {
+    const match = line.match(regex)
+    const torrent = {
+        'Name': match[1],
+        'Size': match[2]
+    }
+    torrents.push(torrent)
+}
+console.log(JSON.stringify(torrents, null, 2))
+</code></pre>
+<p>Пример создания <code>API</code> для получения результатов проверки скорости интернета в формате <code>JSON</code> через <a href="https://www.speedtest.net">Ookla SpeedTest</a>.</p>
+<pre><code class="language-js">const puppeteer = require('puppeteer')
+const browser = await puppeteer.launch({
+    headless: false
+})
+const page = await browser.newPage()
+await page.goto(`https://www.speedtest.net`, {
+    waitUntil: 'domcontentloaded'
+})
+// Дождаться, когда кнопка &quot;Go&quot; станет доступной
+await page.waitForSelector('span[data-testid=&quot;start-button&quot;]')
+// Возвращаем массив всех элементов span на странице с их текстом
+await page.evaluate(() =&gt; {
+    return Array.from(document.querySelectorAll('span')).map(elemet =&gt; ({
+        Text: elemet.innerText, // Текст, отображаемый внутри элемента
+        Content: elemet.textContent, // Весь текст внутри элемента, включая скрытые части
+        // HTML: elemet.innerHTML, // HTML-код, который находится внутри элемента
+        // AllHTML: elemet.outerHTML , // Весь HTML-код, который находится внутри элемента
+        id: elemet.id, // Уникальный идентификатор элемента (#)
+        className: elemet.className,
+        tagName: elemet.tagName // Имя тега элемента (например, SPAN)
+    }))
+})
+// Находим и нажимаем на кнопку
+await page.evaluate(() =&gt; {
+    const buttons = document.querySelectorAll('span')
+    buttons.forEach(button =&gt; {
+        if (button.textContent.includes('Go') || button.innerText.includes('GO')) {
+            button.click()
+        }
+    })
+})
+// Функция для получения результата
+async function checkResult () {
+    return await page.evaluate(() =&gt; {
+        const element = document.querySelector('div.result-data a')
+        return element ? element.getAttribute('href') : null
+    })
+}
+// Цикл для проверки получения результата
+let resultUrl = '#'
+// Проверяем, что результат содержит в начале строки 'http'
+while (!resultUrl.startsWith('http')) {
+    resultUrl = await checkResult()
+}
+await browser.close()
+
+// Считываем данные из полученного url с помощью Fetch
+const result = await fetch(resultUrl)
+const resultHTML = await result.text()
+// Вытаскиваем JSON из HTML страницы
+const resultJSON = resultHTML.split('window.OOKLA')[3].replace('.INIT_DATA  = ','').replace(';\n','')
+const resultObj = JSON.parse(resultJSON)
+
+resultObj.result.id // 16947429430
+resultObj.result.download // 7169 (7.17)
+resultObj.result.upload // 4939 (4.94)
+resultObj.result.idle_latency // 171 (ping)
+</code></pre>
 
 
 
 
 
 
+
+  
+  
 
 
 
