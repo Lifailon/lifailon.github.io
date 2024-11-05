@@ -5,7 +5,7 @@ date: "2024-03-14T04:00:00+03:00"
 ---
 
 <p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands"><img title="PS-Commands Logo"src="PS-Commands-Logo.png"></a>
+    <a href="https://github.com/Lifailon/PS-Commands"><img title="PS-Commands Logo"src="/Logo/PS-Commands-Logo.png"></a>
 </p>
 
 <p align="center">

@@ -1,5 +1,5 @@
 ---
-title: "🐧 Linux Commands"
+title: "Linux"
 author: "Lifailon"
 date: "2024-07-15T03:00:00+03:00"
 ---
