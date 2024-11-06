@@ -1,3 +1,7 @@
 # mkdocs build
 site
 site/*
+
+# zola build
+/themes/*
+/static/*
