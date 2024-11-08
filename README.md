@@ -15,3 +15,22 @@
 | **[pandoc-solarized](https://github.com/Lifailon/lifailon.github.io/tree/pandoc-solarized)**    | Assembled from Markdown using [Pandoc](https://github.com/jgm/pandoc) and Solarized Dark theme.                                                     |
 
 Статья на Хабр: [Создание статических сайтов из Markdown без HTML](https://habr.com/ru/articles/826474)
+
+---
+
+## Build Zola
+
+```shell
+### Clone repository and theme
+git clone lifailon.github.io
+cd lifailon.github.io
+git clone https://codeberg.org/daudix/duckquill.git themes/duckquill
+
+### Install zola
+Invoke-RestMethod "https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-pc-windows-msvc.zip" -OutFile zola.zip
+Expand-Archive -Path zola.zip
+Remove-Item zola.zip
+
+.\zola.exe serve
+.\zola.exe build
+```

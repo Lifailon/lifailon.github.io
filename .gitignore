@@ -3,5 +3,6 @@ site
 site/*
 
 # zola build
+*.exe
 /themes/*
 /static/*
