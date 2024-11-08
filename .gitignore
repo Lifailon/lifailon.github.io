@@ -5,4 +5,4 @@
 *.exe
 /public
 /themes
-/static
+/static/*.css

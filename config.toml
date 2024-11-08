@@ -43,7 +43,8 @@ fix_contrast = true
 fix_contrast_dark = true
 
 # emoji_favicon = "🦆"
-favicon = "/logo.png"
+# favicon = "/docs/Logo/PowerShell-Logo.png"
+# logo = "/docs/Logo/PowerShell-Logo.png"
 
 source_url = "https://github.com/Lifailon/PS-Commands"
 issues_url = "https://github.com/Lifailon/PS-Commands/issues"
