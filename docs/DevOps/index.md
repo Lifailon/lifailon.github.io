@@ -291,13 +291,14 @@ jobs:
 
 ### Actions Logs
 
-`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).total_count `получить количество запусков всех рабочих процессов
-`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows `подробная информации о запускаемых рабочих процессах
-`$actions_last_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows[-1].id `получить идентификатор последнего события
-`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs `подробная информация о последней сборке
-`$run_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs.id `получить идентификатор запуска рабочего процесса
-`$(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs.steps `подробная информация для всех шагов выполнения (время работы и статус выполнения)
-`$jobs_id = $(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs[0].id `получить идентификатор последнего задания указанного рабочего процесса
+`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).total_count` получить количество запусков всех рабочих процессов
+`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows` подробная информации о запускаемых рабочих процессах
+`$actions_last_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows[-1].id` получить идентификатор последнего события
+`$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs` подробная информация о последней сборке
+`$run_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs.id` получить идентификатор запуска рабочего процесса
+`$(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs.steps` подробная информация для всех шагов выполнения (время работы и статус выполнения)
+`$jobs_id = $(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs[0].id` получить идентификатор последнего задания указанного рабочего процесса
+
 ```PowerShell
 $url = "https://api.github.com/repos/Lifailon/TorAPI/actions/jobs/$jobs_id/logs"
 $headers = @{
@@ -360,26 +361,28 @@ jobs:
     
     steps:
     - name: Clone repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Install Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '20'
 
     - name: Install dependencies
       run: npm install
 
-    - name: Install Vercel CLI
-      run: npm install --global vercel@latest
-
     - name: Deploy to Vercel
-      run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
 ```
 
 ## GitLab
 
-```
+```shell
 docker run --detach \
     --hostname 192.168.3.101 \
     --publish 443:443 --publish 80:80 --publish 2222:22 \
@@ -399,7 +402,7 @@ docker run --detach \
 `curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64` загрузить исполняемый файл Runner
 `chmod +x /usr/local/bin/gitlab-runner`
 
-```
+```shell
 docker run -d --name gitlab-runner --restart always \
     -v /srv/gitlab-runner/config:/etc/gitlab-runner \
     gitlab/gitlab-runner:latest
@@ -423,6 +426,7 @@ Enter an executor: shell
 `cat /etc/gitlab-runner/config.toml` конфигурация
 
 Включить импорт проектов из GitHub: http://192.168.3.101/admin/application_settings/general#js-import-export-settings
+
 ```yaml
 variables:
   PORT: 2024
@@ -501,6 +505,7 @@ pipeline {
     }
 }
 ```
+
 ### HttpURLConnection
 
 Пример **REST API** запроса к фейковому серверу [jsonplaceholder](https://jsonplaceholder.typicode.com)
@@ -532,6 +537,7 @@ pipeline {
     }
 }
 ```
+
 ### Active Choices Parameter
 
 [Plugin](https://plugins.jenkins.io/uno-choice)
@@ -541,6 +547,7 @@ pipeline {
 Name: `selectedVersion`
 
 Groovy Script:
+
 ```groovy
 import groovy.json.JsonSlurper
 def apiUrl = "https://api.github.com/repos/PowerShell/PowerShell/tags"
@@ -732,7 +739,7 @@ ansible_shell_type=powershell
 #### win_shell (vars/debug)
 
 `nano /etc/ansible/PowerShell-Vars.yml`
-```
+```yaml
 - hosts: ws
  ` Указать коллекцию модулей
   collections:
@@ -757,7 +764,7 @@ ansible_shell_type=powershell
 #### win_powershell
 
 `nano /etc/ansible/powershell-param.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Run PowerShell script with parameters
@@ -778,7 +785,7 @@ ansible_shell_type=powershell
 #### win_chocolatey
 
 `nano /etc/ansible/setup-adobe-acrobat.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Install Acrobat Reader
@@ -789,7 +796,7 @@ ansible_shell_type=powershell
 `ansible-playbook /etc/ansible/setup-adobe-acrobat.yml`
 
 `nano /etc/ansible/setup-openssh.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: install the Win32-OpenSSH service
@@ -803,7 +810,7 @@ ansible_shell_type=powershell
 #### win_regedit
 
 `nano /etc/ansible/win-set-shell-ssh-ps7.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Set the default shell to PowerShell 7 for Windows OpenSSH
@@ -820,7 +827,7 @@ ansible_shell_type=powershell
 #### win_service
 
 `nano /etc/ansible/win-service.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Start service
@@ -836,7 +843,7 @@ ansible_shell_type=powershell
 #### win_service_info
 
 `nano /etc/ansible/get-service.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Get info for a single service
@@ -852,7 +859,7 @@ ansible_shell_type=powershell
 #### fetch/slurp
 
 `nano /etc/ansible/copy-from-win-to-local.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Retrieve remote file on a Windows host
@@ -874,7 +881,7 @@ ansible_shell_type=powershell
 
 `echo "Get-Service | where name -eq vss | Start-Service" > /home/lifailon/Start-Service-VSS.ps1` 
 `nano /etc/ansible/copy-file-to-win.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Copy file to win hosts
@@ -886,7 +893,7 @@ ansible_shell_type=powershell
 
 `curl -OL https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/PowerShell-7.3.6-win-x64.msi` 
 `nano /etc/ansible/copy-file-to-win.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Copy file to win hosts
@@ -899,7 +906,7 @@ ansible_shell_type=powershell
 #### win_command
 
 `nano /etc/ansible/run-script-ps1.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Run PowerShell Script
@@ -910,7 +917,7 @@ ansible_shell_type=powershell
 #### win_package
 
 `nano /etc/ansible/setup-msi-package.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Install MSI Package
@@ -927,7 +934,7 @@ ansible_shell_type=powershell
 #### win_firewall_rule
 
 `nano /etc/ansible/win-fw-open.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Open RDP port
@@ -945,7 +952,7 @@ ansible_shell_type=powershell
 #### win_group
 
 `nano /etc/ansible/win-creat-group.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Create a new group
@@ -959,7 +966,7 @@ ansible_shell_type=powershell
 #### win_group_membership
 
 `nano /etc/ansible/add-user-to-group.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Add a local and domain user to a local group
@@ -974,7 +981,7 @@ ansible_shell_type=powershell
 #### win_user
 
 `nano /etc/ansible/creat-win-user.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Creat user
@@ -988,7 +995,7 @@ ansible_shell_type=powershell
 `ansible-playbook /etc/ansible/creat-win-user.yml`
 
 `nano /etc/ansible/delete-win-user.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Delete user
@@ -1001,7 +1008,7 @@ ansible_shell_type=powershell
 #### win_feature
 
 `nano /etc/ansible/install-feature.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Install Windows Feature
@@ -1014,7 +1021,7 @@ ansible_shell_type=powershell
 #### win_reboot
 
 `nano /etc/ansible/win-reboot.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Reboot a slow machine that might have lots of updates to apply
@@ -1026,7 +1033,7 @@ ansible_shell_type=powershell
 #### win_find
 
 `nano /etc/ansible/win-ls.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Find files in multiple paths
@@ -1050,7 +1057,7 @@ ansible_shell_type=powershell
 #### win_uri
 
 `nano /etc/ansible/rest-get.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: REST GET request to endpoint github
@@ -1066,7 +1073,7 @@ ansible_shell_type=powershell
 #### win_updates
 
 `nano /etc/ansible/win-update.yml`
-```
+```yaml
 - hosts: ws
   tasks:
   - name: Install only particular updates based on the KB numbers
@@ -1099,7 +1106,7 @@ ansible_shell_type=powershell
 [Install](https://chocolatey.org/install) 
 [API](https://community.chocolatey.org/api/v2/package/chocolatey) 
 [Deployment](https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment-guide)
-```
+```yaml
 - name: Ensure Chocolatey installed from internal repo
   win_chocolatey:
     name: chocolatey
@@ -1120,6 +1127,7 @@ ansible_shell_type=powershell
 
 `Ensure = Present` настройка должна быть включена (каталог должен присутствовать, процесс должен быть запущен, если нет – создать, запустить) 
 `Ensure = Absent` настройка должна быть выключена (каталога быть не должно, процесс не должен быть запущен, если нет – удалить, остановить)
+
 ```PowerShell
 Configuration TestConfiguraion
 {
@@ -1163,6 +1171,7 @@ Configuration DSConfigurationProxy
     }
 }
 ```
+
 `$Path = (DSConfigurationProxy).DirectoryName` 
 `Test-DscConfiguration -Path $Path | select *` ResourcesInDesiredState - уже настроено, ResourcesNotInDesiredState - не настроено (не соответствует) 
 `Start-DscConfiguration -Path $Path` 
@@ -1171,6 +1180,7 @@ Configuration DSConfigurationProxy
 `Get-Service -ComputerName $srv | ? name -match w32time # Start-Service` 
 `icm $srv {Get-Process | ? ProcessName -match calc} | ft # Stop-Process -Force` 
 `icm $srv {ls C:\ | ? name -match Temp} | ft` rm`
+
 ```PowerShell
 Configuration InstallPowerShellCore {
     Import-DscResource -ModuleName PSDesiredStateConfiguration
@@ -1195,6 +1205,7 @@ Configuration InstallPowerShellCore {
     }
 }
 ```
+
 `$Path = (InstallPowerShellCore).DirectoryName` 
 `Test-DscConfiguration -Path $Path` 
 `Start-DscConfiguration -Path $path -Wait -Verbose` 
@@ -1203,6 +1214,7 @@ Configuration InstallPowerShellCore {
 ## PSAppDeployToolkit
 
 ### Install-DeployToolkit
+
 ```PowerShell
 $githubRepository = "psappdeploytoolkit/psappdeploytoolkit"
 $filenamePatternMatch = "PSAppDeployToolkit*.zip"
@@ -1255,6 +1267,7 @@ Install-Application' | Out-File "$home\Downloads\PSAppDeployToolkit\Toolkit\Depl
 `powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"`
 
 ### Uninstall-Notepad-Plus-Plus
+
 ```PowerShell
 'Import-Module "$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1"
 $AppName = "Notepad++"
@@ -1274,6 +1287,7 @@ Uninstall-Application' | Out-File "$home\Downloads\PSAppDeployToolkit\Toolkit\De
 `powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"`
 
 ### Deploy-WinSCP
+
 ```PowerShell
 $PSAppDeployToolkit = "$home\Downloads\PSAppDeployToolkit\"
 $version = "6.3.3"
@@ -1294,6 +1308,7 @@ powershell -File "$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" # запу
 `$(Get-Module Pester -ListAvailable).Version`
 
 `.Tests.ps1`
+
 ```PowerShell
 function Add-Numbers {
     param (

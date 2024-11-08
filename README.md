@@ -8,6 +8,7 @@
 
 | **Branch**                                                                                      | **Description**                                                                                                                                     |
 | -                                                                                               | -                                                                                                                                                   |
+| **main**                                                                                        | Markdown sources for building **MkDocs** and **Zola**                                                                                               |
 | **[zola-duckquill](https://github.com/Lifailon/lifailon.github.io/tree/zola-duckquill)**        | Assembled from Markdown using [Zola](https://github.com/getzola/zola) and [Duckquill theme](https://codeberg.org/daudix/duckquill).                 |
 | ✔️ **[mkdocs-material](https://github.com/Lifailon/lifailon.github.io/tree/mkdocs-material)**  | Assembled from Markdown using [MkDocs](https://github.com/mkdocs/mkdocs) and [Material theme](https://github.com/squidfunk/mkdocs-material).         |
 | **[hugo-dark](https://github.com/Lifailon/lifailon.github.io/tree/hugo-dark)**                  | Assembled from Markdown using [Hugo](https://github.com/gohugoio/hugo) and [Dark Theme Editor](https://github.com/JingWangTW/dark-theme-editor).    |

@@ -1,8 +1,8 @@
 # mkdocs build
-site
-site/*
+/site
 
 # zola build
 *.exe
-/themes/*
-/static/*
+/public
+/themes
+/static
