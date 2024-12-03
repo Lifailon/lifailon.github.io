@@ -61,10 +61,17 @@ date: "2024-03-14T03:00:00+03:00"
   - [SSH Steps](#ssh-steps)
   - [HttpURLConnection](#httpurlconnection)
   - [Active Choices Parameter](#active-choices-parameter)
-- [Graylog](#graylog)
 - [Ansible](#ansible)
   - [Hosts](#hosts)
   - [Windows Modules](#windows-modules)
+- [Zabbix](#zabbix)
+  - [Zabbix Agent](#zabbix-agent)
+  - [Zabbix Sender](#zabbix-sender)
+  - [Zabbix Get](#zabbix-get)
+  - [UserParameter](#userparameter)
+  - [Include Plugins](#include-plugins)
+  - [Zabbix API](#zabbix-api)
+- [Graylog](#graylog)
 
 ---
 
@@ -97,6 +104,7 @@ date: "2024-03-14T03:00:00+03:00"
 `git push origin mkdocs-material` отправить в конкретную ветку \
 `git push origin --delete mkdocs` удалить ветку на удаленном сервере \
 `git commit --amend` изменить комментарий в последнем коммите (до push) \
+`git commit --amend --no-edit --date="Sun Oct 27 23:20:00 2024 +0300"` изменить дату последнего коммита \
 `git branch -a` отобразить все ветки (в том числе удаленные remotes/origin) \
 `git branch hugo` создать новую ветку \
 `git branch -m hugo-public` переименовать текущую ветку \
@@ -516,69 +524,6 @@ pipeline {
     }
 }
 ```
-
-# Graylog
-
-[Graylog Docker Image](https://hub.docker.com/r/itzg/graylog)
-
-- Установка MongoDB:
-```bash
-docker run --name mongo -d mongo:3
-```
-- Используем прокси для установки Elassticsearch:
-```bash
-docker run --name elasticsearch \
-    -e "http.host=0.0.0.0" -e "xpack.security.enabled=false" \
-    -d dockerhub.timeweb.cloud/library/elasticsearch:5.5.1
-```
-- Указать статический IP адрес для подключения к API
-```bash
-docker run --name Graylog \
-    --link mongo \
-    --link elasticsearch \
-    -p 9000:9000 -p 12201:12201 -p 514:514 -p 5044:5044 \
-    -e GRAYLOG_WEB_ENDPOINT_URI="http://192.168.3.101:9000/api" \
-    -d graylog/graylog:2.3.2-1
-```
-- Настройка syslog на клиенте Linux:
-
-`nano /etc/rsyslog.d/graylog.conf`
-```bash
-*.* @@192.168.3.101:514;RSYSLOG_SyslogProtocol23Format
-```
-`systemctl restart rsyslog`
-
-- Создать входящий поток (inputs) для Syslog на порту 514 по протоколу TCP:
-
-http://192.168.3.101:9000/system/inputs
-
-- Фильтр для логов Kinozal-Bot:
-
-`facility:"system daemon" AND application_name:bash AND message:\[ AND message:\]`
-
-- Настройка Winlogbeat на клиенте Windows
-
-Установка агента:
-```PowerShell
-irm https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-8.15.0-windows-x86_64.zip -OutFile $home\Documents\winlogbeat-8.15.0.zip
-Expand-Archive $home\Documents\winlogbeat-8.15.0.zip
-cd $home\Documents\winlogbeat-8.15.0-windows-x86_64
-```
-Добавить отправку в Logstash:
-
-`code winlogbeat.yml`
-```bash
-output.logstash:
-  hosts: ["192.168.3.101:5044"]
-```
-И закомментировать отправку данных в Elasticsearch (output.elasticsearch)
-
-`.\winlogbeat.exe -c winlogbeat.yml` запустить агент с правами администратора в консоли
-```bash
-.\install-service-winlogbeat.ps1 # установить службу
-Get-Service winlogbeat | Start-Service
-```
-- Настроить Inputs для приема Beats на порту 5044
 
 # Ansible
 
@@ -1058,3 +1003,361 @@ ansible_shell_type=powershell
 	# source: URL-адрес внутреннего репозитория
     source: https://community.chocolatey.org/api/v2/ChocolateyInstall.ps1
 ```
+
+# Zabbix
+
+## Zabbix Agent
+
+**Zabbix Agent Deploy:**
+```PowerShell
+$url = "https://cdn.zabbix.com/zabbix/binaries/stable/6.4/6.4.5/zabbix_agent2-6.4.5-windows-amd64-static.zip"
+$path = "$home\Downloads\zabbix-agent2-6.4.5.zip"
+$WebClient = New-Object System.Net.WebClient
+$WebClient.DownloadFile($url, $path) # скачать файл
+Expand-Archive $path -DestinationPath "C:\zabbix-agent2-6.4.5\" # разархивировать
+Remove-Item $path # удалить архив
+New-NetFirewallRule -DisplayName "Zabbix-Agent" -Profile Any -Direction Inbound -Action Allow -Protocol TCP -LocalPort 10050,10051 # открыть порты в FW
+
+$Zabbix_Server = "192.168.3.102"
+$conf = "C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.conf"
+$cat = cat $conf
+$rep = $cat -replace "Server=.+","Server=$Zabbix_Server"
+$rep | Select-String Server=
+$rep > $conf
+
+$exe = "C:\zabbix-agent2-6.4.5\bin\zabbix_agent2.exe"
+.$exe --config $conf --install # установить службу
+Get-Service *Zabbix*Agent* | Start-Service # запустить службу
+#.$exe --config $conf --uninstall # удалить службу
+```
+**zabbix_agent2.conf**
+```conf
+# Агент может работать в пассивном (сервер забирает сам информацию) и активном режиме (агент сам отправляет):
+Server=192.168.3.102
+ServerActive=192.168.3.102
+# Требуется указать hostname для ServerActive:
+Hostname=huawei-book-01
+# Если не указано, используется для генерации имени хоста (игнорируется, если имя хоста определено):
+# HostnameItem=system.hostname
+# Как часто обновляется список активных проверок, в секундах (Range: 60-3600):
+RefreshActiveChecks=120
+# IP-адрес источника для исходящих соединений:
+# SourceIP=
+# Агент будет слушать на этом порту соединения с сервером (Range: 1024-32767):
+# ListenPort=10050
+# Список IP-адресов, которые агент должен прослушивать через запятую
+# ListenIP=0.0.0.0
+# Агент будет прослушивать этот порт для запросов статуса HTTP (Range: 1024-32767):
+# StatusPort=
+ControlSocket=\\.\pipe\agent.sock
+# Куда вести журнал (file/syslog/console):
+LogType=file
+LogFile=C:\zabbix-agent2-6.4.5\zabbix_agent2.log
+# Размер лога от 0-1024 MB (0 - отключить автоматическую ротацию логов)
+LogFileSize=100
+# Уровень логирования. 4 - для отладки (выдает много информации)
+DebugLevel=4
+```
+## Zabbix Sender
+
+Используется для отправки данных на сервер
+
+Создать host - задать произвольное имя (powershell-host) и добавить в группу на сервере
+
+Создать Items вручную:
+
+`Name`: Service Count \
+`Type`: Zabbix trapper \
+`Key`: service.count \
+`Type of Information`: Numeric
+```PowerShell
+$path = "C:\zabbix-agent2-6.4.5\bin"
+$scount = (Get-Service).Count
+.$path\zabbix_sender.exe -z 192.168.3.102 -s "powershell-host" -k service.count -o $scount # отправить данные на сервер
+```
+## Zabbix Get
+
+Используется для получения данных с агента (как их запрашивает сервер)
+
+`apt install zabbix-get` \
+`nano /etc/zabbix/zabbix_agentd.conf` \
+`Server=127.0.0.1,192.168.3.102,192.168.3.99` добавить сервера для получения данных через zabbix_get с агента (как их запрашивает сервер)
+
+`.$path\zabbix_get -s 192.168.3.101 -p 10050 -k agent.version` проверить версию агента \
+`.$path\zabbix_get -s 192.168.3.101 -p 10050 -k agent.ping` 1 - ok \
+`.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.discovery` список сетевых интерфейсов \
+`.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.in["ens33"]` \
+`.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.out["ens33"]`
+
+## UserParameter
+
+Пользовательские параметры
+
+`UserParameter=process.count,powershell -Command "(Get-Process).Count"` \
+`UserParameter=process.vm[*],powershell -Command "(Get-Process $1).ws"`
+
+Получение данных:
+
+`C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.count` \
+`C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.vm[zabbix_agent2] `\
+`C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.vm[powershell]`
+
+Создать новые Items на сервере:
+
+key: `process.count` \
+key: `process.vm[zabbix_agent2]`
+
+## Include Plugins
+
+- Добавить параметр Include для включения конфигурационных файлов подключаемых плагинов
+
+`'Include=.\zabbix_agent2.d\plugins.d\*.conf' >> C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.conf`
+
+- Создать конфигурационный файл с пользовательскими параметрами в каталоге, путь к которому указан в zabbix_agentd.conf
+
+`'UserParameter=Get-Query-Param[*],powershell.exe -noprofile -executionpolicy bypass -File C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\scripts\User-Sessions\Get-Query-Param.ps1 $1' > C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\plugins.d\User-Sessions.conf`
+
+- Поместить скрипт Get-Query-Param.ps1 в каталог, путь к которому указан в User-Sessions.conf. Скрипт содержим пользовательские параметры, которые он принимает от Zabbix сервера для передачи их в функции скрипта.
+```PowerShell
+Param([string]$select)
+if ($select -eq "ACTIVEUSER") {
+    (Get-Query | where status -match "Active").User
+}
+if ($select -eq "INACTIVEUSER") {
+    (Get-Query | where status -match "Disconnect").User
+}
+if ($select -eq "ACTIVECOUNT") {
+    (Get-Query | where status -match "Active").Status.Count
+}
+if ($select -eq "INACTIVECOUNT") {
+    (Get-Query | where status -match "Disconnect").Status.Count
+}
+```
+- Проверить работу скрипта:
+
+`$path = "C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\scripts\User-Sessions"` \
+`.$path\Get-Query-Param.ps1 ACTIVEUSER` \
+`.$path\Get-Query-Param.ps1 INACTIVEUSER` \
+`.$path\Get-Query-Param.ps1 ACTIVECOUNT` \
+`.$path\Get-Query-Param.ps1 INACTIVECOUNT`
+
+- Создать Items с ключами:
+
+`Get-Query-Param[ACTIVEUSER]` Type: Text \
+`Get-Query-Param[INACTIVEUSER]` Type: Text \
+`Get-Query-Param[ACTIVECOUNT]` Type: Int \
+`Get-Query-Param[INACTIVECOUNT]` Type: Int
+
+- Макросы:
+
+`{$ACTIVEMAX} = 16` \
+`{$ACTIVEMIN} = 0`
+
+- Триггеры:
+
+`last(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT])>{$ACTIVEMAX}` \
+`min(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT],24h)={$ACTIVEMIN}`
+
+## Zabbix API
+
+[Documentation](https://www.zabbix.com/documentation/current/en/manual/api/reference)
+
+`$ip = "192.168.3.102"` \
+`$url = "http://$ip/zabbix/api_jsonrpc.php"`
+
+Получение токена доступа:
+```PowerShell
+$data = @{
+    "jsonrpc"="2.0";
+    "method"="user.login";
+    "params"=@{
+        "username"="Admin"; # в версии до 6.4 параметр "user"
+        "password"="zabbix";
+    };
+    "id"=1;
+}
+$token = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+```
+`$token = "2eefd25fdf1590ebcdb7978b5bcea1fff755c65b255da8cbd723181b639bb789"` сгенерировать токен в UI (http://192.168.3.102/zabbix/zabbix.php?action=token.list)
+
+- user.get method
+```PowerShell
+$data = @{
+    "jsonrpc"="2.0";
+    "method"="user.get";
+    "params"=@{
+    };
+    "auth"=$token;
+    "id"=1;
+}
+$users = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+```
+- problem.get method
+```PowerShell
+$data = @{
+    "jsonrpc"="2.0";
+    "method"="problem.get";
+    "params"=@{
+    };
+    "auth"=$token;
+    "id"=1;
+}
+(Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+```
+- host.get method
+
+Получить список всех хостов (имя и id)
+
+[Endpoint host documentation](https://www.zabbix.com/documentation/current/en/manual/api/reference/host)
+
+**host.create** — создание новых хостов \
+**host.delete** — удаление хостов \
+**host.get** — получить список хостов \
+**host.massadd** - добавление (привязка) объектов на хосты \
+**host.massremove** - удаление объектов \
+**host.massupdate** - замена или обновление объектов \
+**host.update** - обновление хостов
+```PowerShell
+$data = @{
+    "jsonrpc"="2.0";
+    "method"="host.get";
+    "params"=@{
+        "output"=@( # отфильтровать вывод
+            "hostid";
+            "host";
+        );
+    };
+    "id"=2;
+    "auth"=$token;
+}
+$hosts = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+$host_id = $hosts[3].hostid # забрать id хоста по индексу
+```
+- item.get
+
+Получить id элементов данных по наименованию ключа для конкретного хоста
+```PowerShell
+$data = @{
+    "jsonrpc"="2.0";
+    "method"="item.get";
+    "params"=@{
+        "hostids"=@($host_id); # отфильтровать по хосту
+    };
+    "auth"=$token;
+    "id"=1;
+}
+$items = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+$items_id = ($items | where key_ -match system.uptime).itemid # забрать id элемента данных
+```
+- history.get
+
+Получить всю историю элемента данных по его id
+```PowerShell
+$data = @{
+    "jsonrpc"="2.0";
+    "method"="history.get";
+    "params"=@{
+        "hostids"=@($host_id);  # фильтрация по хосту
+        "itemids"=@($items_id); # фильтрация по элементу данных
+    };
+    "auth"=$token;
+    "id"=1;
+}
+$items_data_uptime = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result # получить все данные по ключу у конкретного хоста
+```
+Ковенртация секунд в `TimeSpan`:
+
+`$sec = $items_data_uptime.value`
+```PowerShell
+function ConvertSecondsTo-TimeSpan {
+    param (
+        $insec
+    )
+    $TimeSpan = [TimeSpan]::fromseconds($insec)
+    "{0:dd' day 'hh\:mm\:ss}" -f $TimeSpan
+}
+```
+`$UpTime = ConvertSecondsTo-TimeSpan $sec[-1]`
+
+Конвертация из времени `Unix`:
+
+`$time = $items_data_uptime.clock`
+```PowerShell
+function ConvertFrom-UnixTime {
+    param (
+        $intime
+    )
+    $EpochTime = [DateTime]"1/1/1970"
+    $TimeZone = Get-TimeZone
+    $UTCTime = $EpochTime.AddSeconds($intime)
+    $UTCTime.AddMinutes($TimeZone.BaseUtcOffset.TotalMinutes)
+}
+```
+`$GetDataTime = ConvertFrom-UnixTime $time[-1]`
+
+`($hosts | where hostid -eq $host_id).host` получить имя хоста \
+`$UpTime` последнее полученное значение времени работы хоста \
+`$GetDataTime` время последнего полученного значения
+
+# Graylog
+
+[Graylog Docker Image](https://hub.docker.com/r/itzg/graylog)
+
+- Установка MongoDB:
+```bash
+docker run --name mongo -d mongo:3
+```
+- Используем прокси для установки Elassticsearch:
+```bash
+docker run --name elasticsearch \
+    -e "http.host=0.0.0.0" -e "xpack.security.enabled=false" \
+    -d dockerhub.timeweb.cloud/library/elasticsearch:5.5.1
+```
+- Указать статический IP адрес для подключения к API
+```bash
+docker run --name Graylog \
+    --link mongo \
+    --link elasticsearch \
+    -p 9000:9000 -p 12201:12201 -p 514:514 -p 5044:5044 \
+    -e GRAYLOG_WEB_ENDPOINT_URI="http://192.168.3.101:9000/api" \
+    -d graylog/graylog:2.3.2-1
+```
+- Настройка syslog на клиенте Linux:
+
+`nano /etc/rsyslog.d/graylog.conf`
+```bash
+*.* @@192.168.3.101:514;RSYSLOG_SyslogProtocol23Format
+```
+`systemctl restart rsyslog`
+
+- Создать входящий поток (inputs) для Syslog на порту 514 по протоколу TCP:
+
+http://192.168.3.101:9000/system/inputs
+
+- Фильтр для логов Kinozal-Bot:
+
+`facility:"system daemon" AND application_name:bash AND message:\[ AND message:\]`
+
+- Настройка Winlogbeat на клиенте Windows
+
+Установка агента:
+```PowerShell
+irm https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-8.15.0-windows-x86_64.zip -OutFile $home\Documents\winlogbeat-8.15.0.zip
+Expand-Archive $home\Documents\winlogbeat-8.15.0.zip
+cd $home\Documents\winlogbeat-8.15.0-windows-x86_64
+```
+Добавить отправку в Logstash:
+
+`code winlogbeat.yml`
+```bash
+output.logstash:
+  hosts: ["192.168.3.101:5044"]
+```
+И закомментировать отправку данных в Elasticsearch (output.elasticsearch)
+
+`.\winlogbeat.exe -c winlogbeat.yml` запустить агент с правами администратора в консоли
+```bash
+.\install-service-winlogbeat.ps1 # установить службу
+Get-Service winlogbeat | Start-Service
+```
+- Настроить Inputs для приема Beats на порту 5044

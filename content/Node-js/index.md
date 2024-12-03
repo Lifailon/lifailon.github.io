@@ -22,13 +22,13 @@ date: "2024-10-25T04:00:00+03:00"
 ---
 
 - [Variable](#variable)
-- [Data Type](#data-type)
+- [Data type](#data-type)
 - [Function](#function)
-- [Term](#term)
+- [Else if](#else-if)
 - [Error handling](#error-handling)
 - [Array](#array)
-- [Object](#object)
-- [Cycle](#cycle)
+- [Objects](#objects)
+- [Cycles](#cycles)
 - [Async operations](#async-operations)
 - [Regex](#regex)
 - [Math](#math)
@@ -76,7 +76,7 @@ const constVariable = 'string'
 constVariable = '123' // Uncaught TypeError: Assignment to constant variable (ошибка присвоения значения к постоянной переменной)
 ```
 
-### Data Type
+### Data type
 
 ```js
 typeof 32 // number
@@ -161,7 +161,7 @@ function getRandomInt(min, max) {
 getRandomInt(1,100) // Например, 44
 ```
 
-### Term
+### Else if
 
 ```js
 function functionName (paramName) {
@@ -301,7 +301,7 @@ const idArray = data.map(item => item.id)
 idArray.reduce((accumulator, current) => accumulator + current, 0) // 3
 ```
 
-### Object
+### Objects
 
 Преобразовать объект в массив и наоборот:
 
@@ -388,7 +388,7 @@ obj.get() // 11
 
 Оператор `return` используется для выхода из функции (т.е. последующий код не читается), который возвращает значение указанное после ключевого слова.
 
-### Cycle
+### Cycles
 
 Примеры циклов взяты из проекта [multranslate](https://github.com/Lifailon/multranslate), для проверки всех строк в массиве и увеличения количества видимых строк с учетом `autowrap`. Имеется две реальных строки, необходимо узнать количество виртуальных строк с учетом длинны символов в строке. Например, если максимальная длинна одной строки составляет, `36`, то на одну реальную строку в `92` символа приходится дополнительно еще `2` виртуальных. Количество найденных виртуальных строк прибавляется к изначально зафиксированному значению количества всех реальных строк.
 

@@ -13,13 +13,17 @@ date: "2024-07-15T03:00:00+03:00"
 
 ---
 
+- [bash](#bash)
 - [filesystem](#filesystem)
   - [ln](#ln)
   - [zip](#zip)
   - [gpg](#gpg)
-- [curl](#curl)
+- [api](#api)
+  - [curl](#curl)
   - [influxdb](#influxdb)
   - [wget](#wget)
+  - [curlie](#curlie)
+  - [httpie](#httpie)
 - [json](#json)
   - [jq](#jq)
   - [netcheck](#netcheck)
@@ -37,6 +41,7 @@ date: "2024-07-15T03:00:00+03:00"
   - [csv](#csv)
   - [sttr](#sttr)
 - [grep](#grep)
+  - [ripgrep](#ripgrep)
   - [sig](#sig)
 - [sed](#sed)
 - [awk](#awk)
@@ -49,6 +54,7 @@ date: "2024-07-15T03:00:00+03:00"
   - [tldr](#tldr)
 - [debug](#debug)
 - [tools](#tools)
+- [dust](#dust)
 - [find](#find)
   - [exec](#exec)
   - [locate](#locate)
@@ -56,16 +62,19 @@ date: "2024-07-15T03:00:00+03:00"
 - [bashrc](#bashrc)
   - [fzf](#fzf)
   - [hstr](#hstr)
+  - [mcfly](#mcfly)
 - [compgen](#compgen)
 - [cron](#cron)
 - [systemctl](#systemctl)
+  - [systemctl-tui](#systemctl-tui)
   - [unit](#unit)
 - [journalctl](#journalctl)
-  - [dmesg](#dmesg)
+- [dmesg](#dmesg)
 - [hardware](#hardware)
 - [sysctl](#sysctl)
 - [limits](#limits)
 - [quota](#quota)
+- [fetch](#fetch)
 - [networkmanager](#networkmanager)
 - [wireless](#wireless)
 - [networking](#networking)
@@ -79,12 +88,16 @@ date: "2024-07-15T03:00:00+03:00"
   - [resolved](#resolved)
   - [dig](#dig)
   - [mtr](#mtr)
+  - [doggo](#doggo)
 - [vnstat](#vnstat)
 - [netcat](#netcat)
-  - [api](#api)
-  - [proxy](#proxy)
+  - [socket api](#socket-api)
+  - [socket proxy](#socket-proxy)
+- [proxy](#proxy)
 - [nmap](#nmap)
+  - [masscan](#masscan)
   - [rustscan](#rustscan)
+  - [tcp](#tcp)
 - [tcpdump](#tcpdump)
 - [tshark](#tshark)
 - [ping](#ping)
@@ -117,9 +130,12 @@ date: "2024-07-15T03:00:00+03:00"
   - [atop](#atop)
   - [iftop](#iftop)
   - [iotop](#iotop)
+  - [top other](#top-other)
 - [ps](#ps)
   - [kill](#kill)
+  - [procs](#procs)
 - [jobs](#jobs)
+  - [nohub](#nohub)
 - [mem](#mem)
   - [fincore](#fincore)
   - [lspage](#lspage)
@@ -171,6 +187,7 @@ date: "2024-07-15T03:00:00+03:00"
   - [zabbix-agent](#zabbix-agent)
   - [ommail](#ommail)
 - [logrotate](#logrotate)
+- [log](#log)
 - [smb](#smb)
   - [cifs](#cifs)
   - [samba](#samba)
@@ -185,7 +202,7 @@ date: "2024-07-15T03:00:00+03:00"
   - [ftps](#ftps)
 - [rsync](#rsync)
 - [apache](#apache)
-  - [api](#api-1)
+  - [api server](#api-server)
   - [status](#status)
   - [webdav](#webdav)
 - [haproxy](#haproxy)
@@ -193,6 +210,190 @@ date: "2024-07-15T03:00:00+03:00"
 
 ---
 
+## bash
+
+- Переменные
+
+`text="(ip a)"` передает текст \
+`echo $text` \
+`ipaddr=$(ip a)` передает вывод команды \
+`echo $ipaddr` \
+`echo '$ipaddr'` в одинарных кавычках не происходит подстановка переменных \
+`var=$((5+5))` \
+`echo $var` \
+`read -p "Enter: " enter` ручной ввод переменной
+`echo $enter` \
+`read -s -p "Enter password: " pass` ввод пароля \
+`echo $pass` \
+`echo -e "text\ntext"` экранирование \
+`echo -e "# comment\nparam comment" > ~/test.txt` записать в файл \
+`cat ~/test.txt | grep -v "^#"` прочитать без комментариев в начале строки
+
+`original_value="Это длинная строка, которую нужно сократить до 50 символов."` \
+`shortened_value="${original_value:0:50}"` обрезаем до 50 символов
+
+`true ; echo $?` код возврата 0 (успех) \
+`false ; echo $?` код возврата 1 (ошибка)
+
+- Массивы
+
+`range={1..254}` создать срез от 1 до 254 \
+`array=(1 2 3 4 5)` создать массив \
+`array=($(ls /))` передает вывод команды `$(command)` разделенных через пробел \
+`echo ${array[@]}` отобразить содержимое всего массива `@/*` \
+`echo ${array[0]}` отобразить первый индекс в массиве \
+`echo ${array[-1]}` отобразить последний индекс \
+`echo ${array[@]:1:3}` вывести 3 элемента (срез) \
+`echo ${#array[@]}` отобразить кол-во (`#`) элементов в массиве \
+`echo ${#array[0]}` отобразить длинну (`#`) первого элемента в массиве \
+`array[1]="22"` изменить значение по номеру индекса
+```bash
+declare -A dict=(
+    ["key 1"]=1
+    ["key 2"]="text"
+)
+echo ${dict[key 1]}
+echo ${dict[key 2]}
+```
+- Цикл for
+```bash
+for ((i=1; i <= 10; i++)); do
+    echo $i
+done
+
+array=($(ls /))
+for arr in ${array[@]}; do
+    echo $arr
+done
+```
+`break` прерывает цикл \
+`continue` прерывает текущую интерацию в цикле и переходит к следующей
+```bash
+array=(1 2 3 4 5)
+for var in ${array[@]}; do
+    if [ $var -gt 4 ]; then
+        break
+    elif [ $var -gt 3 ]; then
+        echo "Last number: $var"
+        continue
+    fi
+    echo "Number: $var"
+done
+```
+- Цикл while
+```bash
+p=1
+while [ $p -le 101 ]; do
+    # если условие истинно, выполнять цикл в блоке do, пока не станет ложным
+    echo "Значение переменной: $p"
+    # ((p++)) # увеличить на +1
+    # p=$(($p+10)) # прибавлять +10
+    p+=0 # добавить текст в конец переменной
+done
+```
+- Построчная передача вывода через pipe
+```bash
+num=0
+ps | sed 1d | while read line; do
+    ((num++)) # ((num+=1))
+    echo "Line $num : $line"
+done
+```
+- Условия
+
+`if []`   если \
+`then`    условие истинно \
+`elif []` дополнительное условие \
+`then`    дополнительное условие истинно \
+`else`    условие ложно \
+`fi`      больше нет условий
+
+`-z`          строка пуста \
+`-n`          строка не пуста \
+`=, (==)`     строки равны \
+`!=`          строки неравны \
+`-eq`         равно \
+`-ne`         неравно \
+`-lt, (<)`    меньше \
+`-le, (<=)`   меньше или равно \
+`-gt, (>)`    больше \
+`-ge, (>=)`   больше или равно \
+`!`           отрицание логического выражения \
+`-a, (&&)`    логическое «и» (первая команда исполняется всегда, вторая — только в случае успешного завершения первой) \
+`-o, (||)`    логическое «или» (первая команда исполняется всегда, вторая — только в случае неудачного завершения первой)
+```bash
+if [[ -z "$variable" ]]; then
+    echo "Переменная пустая"
+else
+    echo "Переменная не пустая"
+fi
+```
+- Функции
+```bash
+function calc {
+    if [ $2 = "+" ]
+        then
+        echo $(( $1 + $3 ))
+    elif [ $2 = "-" ]
+        then
+        echo $(( $1 - $3 ))
+    fi
+}
+```
+`calc 3 + 2` \
+`calc 3 - 2`
+
+- Параметры
+
+`nano script.sh`
+```bash
+#!/bin/bash
+if [ -n "$1" -a "$2" ]; then
+    echo Имя исполняемого файла: $0
+    echo Первый переданный параметр: $1
+    echo Второй переданный параметр $2
+    echo Кол-во переданных параметров: $#
+    echo Значение последнего переданного параметра: ${!#}
+    echo Массив: $@
+else
+    echo "Параметры не заданы"
+fi
+```
+`chmod +x script.sh` сделать скрипт исполняемым \
+`bash script.sh 1 2 3 4 5` передать параметры в скрипт
+
+`-e file` проверяет, существует ли файл \
+`-d file` проверяет, существует ли файл, и является ли он директорией \
+`-f file` проверяет, существует ли файл, и является ли он файлом \
+`-r file` проверяет, существует ли файл, и доступен ли он для чтения \
+`-w file` проверяет, существует ли файл, и доступен ли он для записи \
+`-x file` проверяет, существует ли файл, и является ли он исполняемым \
+`-s file` проверяет, существует ли файл, и не является ли он пустым
+```bash
+# Получить список директорий и исполняемых файлов в дочерних директориях
+path="/etc/*"
+for folder in $path; do
+    echo "$folder:"
+    for file in $folder/*; do
+        if [ -x $file ]; then
+            echo "- $file"
+        fi
+    done
+done
+```
+- case
+```bash
+read -rsn1 key
+case $key in
+  "1")
+    echo выполнить действия, если $key равно 1 ;;
+  "2")
+    echo выполнить действия, если $key равно 2 ;;
+  *)
+    echo выполнить действия по умолчанию, если значение $key не соответствует ни одному условию
+  ;;
+esac
+```
 ## filesystem
 
 `file Console-Performance.sh` узнать тип файла (текстовый, исполняемый файл, архив или другой) \
@@ -248,7 +449,9 @@ date: "2024-07-15T03:00:00+03:00"
 `gpg --sign filename` подписывать данные с использованием приватного ключа для подтверждения их подлинности и целостности \
 `gpg --verify signedfile.gpg` проверка подписи с использованием публичного ключа отправителя
 
-## curl
+## api
+
+### curl
 
 `curl ifconfig.me` узнать внешний ip \
 `curl -v telnet://192.168.3.100:22` првоерить доступность порта и отобразить кому он принадлежит \
@@ -288,6 +491,20 @@ curl -i -XPOST "http://$ip:8086/write?db=$db" --data-binary "$table,host=$host,s
 `wget -O nextcloud.tar.bz2 https://download.nextcloud.com/server/releases/nextcloud-21.0.1.tar.bz2` скачать с указанным именем (-O)  \
 `wget -P /tmp https://download.nextcloud.com/server/releases/nextcloud-21.0.1.tar.bz2` скачать в указанную директорию (-P) \
 `wget -b -o ~/wget.log https://download.nextcloud.com/server/releases/nextcloud-21.0.1.tar.bz2` загрузить в фоновом режиме (-b) и записать вывод в лог-файл (-o)
+
+### curlie
+
+`curl -sS https://webinstall.dev/curlie | bash` альтернатива curl и httpie (https://github.com/rs/curlie) \
+`curlie get https://jsonplaceholder.typicode.com/posts` возвращает заголовки ответа и отформатированный вывод JSON \
+`curlie get https://jsonplaceholder.typicode.com/posts/1` \
+`curlie get https://jsonplaceholder.typicode.com/posts -H "Authorization: Bearer YOUR_TOKEN"` \
+`curlie post https://jsonplaceholder.typicode.com/posts -d '{"title": "foo", "body": "bar", "userId": 1}'`
+
+### httpie
+
+`sudo snap install httpie` HTTP-клиент командной строки (https://github.com/httpie/cli) \
+`https httpie.io/hello` \
+`https POST pie.dev/post X-API-Token:123 name=John`
 
 ## json
 
@@ -511,31 +728,41 @@ EOF
 ## grep
 
 `cat /var/log/auth.log | grep sshd` логи всех SSH-подключений \
-`cat /etc/passwd | grep -w sys` поиск целого слова, окруженное пробелами (-w) \
-`cat /etc/ssh/sshd_config | grep -win port` не учитывать регистр (-i) и отобразить номера строк (-n) \
-`ss -n | grep -P ":22|:80|:443|:8080"` искать по нескольким шаблонам, использовать Regex (-E) \
-`ss -n | grep -Pc ":22|:80"` вывести кол-во (--count) совпадений \
-`ss -n | grep "192.168.3...:"` поиск любых двух символов (.) \
-`ss -n | grep "192.168.3.*:"` поиск любого кол-ва (*) \
-`cat /etc/ssh/sshd_config | grep -v "#"` вывести значения, не подходящие под критерии поиска (-v) \
-`cat /etc/zabbix/zabbix_agentd.conf | grep -v "^#"` отсеить только в начале строки (^) \
-`cat /etc/zabbix/zabbix_agentd.conf | grep "=$"` найти строки, которые кончаются `$` на символ "=" (получить все параметры) \
-`cat /etc/zabbix/zabbix_agentd.conf | grep -Pv "^$|^#"` удалить пустые строки `^$` и комментарии (^#) \
-`cat /etc/zabbix/zabbix_agentd.conf | grep -E "#+{5}"` регулярное выражение (-E), где последний символ "#" повторяется 5 или более раз \
+`cat /etc/passwd | grep -w sys` поиск целого слова, окруженное пробелами (`-w`) \
+`cat /etc/ssh/sshd_config | grep -win port` не учитывать регистр (`-i`) и отобразить номера строк (`-n`) \
+`ss -n | grep -P ":22|:80|:443|:8080"` искать по нескольким шаблонам, использовать Regex (`-E`) \
+`ss -n | grep -Pc ":22|:80"` вывести кол-во (`--count`) совпадений \
+`ss -n | grep "192.168.3...:"` поиск любых двух символов (`.`) \
+`ss -n | grep "192.168.3.*:"` поиск любого кол-ва (`*`) \
+`cat /etc/ssh/sshd_config | grep -v "#"` вывести значения, не подходящие под критерии поиска (`-v`) \
+`cat /etc/zabbix/zabbix_agentd.conf | grep -v "^#"` отсеить только в начале строки (`^`) \
+`cat /etc/zabbix/zabbix_agentd.conf | grep "=$"` найти строки, которые кончаются `$` на символ `=` (получить все параметры) \
+`cat /etc/zabbix/zabbix_agentd.conf | grep -Pv "^$|^#"` удалить пустые строки `^$` и комментарии (`^#`) \
+`cat /etc/zabbix/zabbix_agentd.conf | grep -E "#+{5}"` регулярное выражение (`-E`), где последний символ `#` повторяется 5 или более раз \
 `echo -e "Test\ntest\n123-45" | grep -E "[a-zA-Z\-]"` искать только текст (где есть буквы и тире) \
-`echo 'test<version>1.2.3</version>test' | grep -P -o "(?<=<version>).*(?=</version>)"` найти неизвестное значение (.*) между известными и вывести только найденное (-o) \
+`echo 'test<version>1.2.3</version>test' | grep -P -o "(?<=<version>).*(?=</version>)"` найти неизвестное значение (`.*`) между известными и вывести только найденное (`-o`) \
 `echo "test<version>3.6.4</version>test" | grep -Eo '[0-9.]+'` найти любую цифру и точку на конце, которые повторяются любое кол-во раз подряд \
-`echo $(lshw -class bus) | grep -P -o "(?<=Motherboard product: ).*(?=serial)"` с применение группировки (-P) \
+`echo $(lshw -class bus) | grep -P -o "(?<=Motherboard product: ).*(?=serial)"` с применение группировки (`-P`) \
 `zabbix_path=$(systemctl status zabbix-agent | grep -Po "(?<=-c ).*(?=.conf)" | sed "s/$/.conf/")` забрать путь до конфигурационного файла Zabbix агента \
 `cat $zabbix_path | grep -E "^Server=|^ServerActive="` найти имя сервера \
 `cat $zabbix_path | grep -Po "(?<=^Server=).+"` вывести только имя сервера \
-`resolvectl | grep "DNS Servers" -m 1` напечатать только первое совпадение (-m int) \
-`networkctl status | grep -A 3 "DNS:"` найти строку и напечатать три строки после нее (-A) \
-`networkctl status | grep -B 3 "DNS:"` найти строку и напечатать три строки до нее (-B) \
-`networkctl status | grep -C 1 "DNS:"` найти строку и напечатать одну строки до нее и одну после (-C) \
-`resolvectl | grep -Ex ".+DNS Servers:.+"` вывести строки с точным совпадение (-x/like), сопоставлять только целые строки \
-`if echo "GET" | grep -Eq "^GET"; then echo da; else echo net; fi` подавлять вывод (-q) для проверки условия \
+`resolvectl | grep "DNS Servers" -m 1` напечатать только первое совпадение (`-m int`) \
+`networkctl status | grep -A 3 "DNS:"` найти строку и напечатать три строки после нее (`-A`) \
+`networkctl status | grep -B 3 "DNS:"` найти строку и напечатать три строки до нее (`-B`) \
+`networkctl status | grep -C 1 "DNS:"` найти строку и напечатать одну строки до нее и одну после (`-C`) \
+`resolvectl | grep -Ex ".+DNS Servers:.+"` вывести строки с точным совпадение (`-x/like`), сопоставлять только целые строки \
+`if echo "GET" | grep -Eq "^GET"; then echo da; else echo net; fi` подавлять вывод (`-q`) для проверки условия \
 `curl https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -Eom 1 "https://.+.deb"` забрать только первый подходящий под поиск
+
+### ripgrep
+
+`apt-get install ripgrep` установить ripgrep (https://github.com/BurntSushi/ripgrep), аналог grep на Rust \
+`cat /var/log/auth.log | rg sshd` вывести журнал логов аудентификации фильтрацией по названию \
+`cat /var/log/auth.log | rg "Accepted password for \w+ from \d+\.\d+\.\d+\.\d+"` вывести строки, где указано `Accepted password for`, далее любое слово (имя пользователя) и IP-адрес в формате x.x.x.x \
+`cat /var/log/auth.log | rg "user \w+\(uid=\d+\)"` вывести строки с текстом user, затем имя пользователя (любое слово), и далее `uid` с числовым значением в скобках \
+`cat /var/log/auth.log | rg "192\.168\.\d+\.\d+"` вывести строки, где первые два октета соответствуют `192.168` \
+`cat /var/log/auth.log | rg "sshd\[\d+\]: .* port \d+"` вывести строки, содержащие sshd с идентификатором процесса (например, `sshd[4188420]`), а затем текст `port` и номер порта \
+`cat /var/log/auth.log | rg "\b12:\d{2}:\d{2}\b"` фильтрация по времени за последние 12 часов (время начинается с `12:`, затем две цифры для минут и две для секунд)
 
 ### sig
 
@@ -545,25 +772,25 @@ EOF
 
 ## sed
 
-`cat /etc/passwd | sed -n "1,5p"` отобразить с первой по пятую строку (p) \
-`cat /etc/passwd | sed "$ d"` удалить (d) последнюю строку \
-`cat /etc/passwd | sed "1,3d"` удалить c первой по третью строку (2,3d) \
+`cat /etc/passwd | sed -n "1,5p"` отобразить с первой по пятую строку (`p`) \
+`cat /etc/passwd | sed "$ d"` удалить (`d`) последнюю строку \
+`cat /etc/passwd | sed "1,3d"` удалить c первой по третью строку (`2,3d`) \
 `echo "One 1" | sed "s/One/Two/; s/1/2/"` заменить One на Two и 1 на 2 \
-`cat /etc/zabbix/zabbix_agentd.conf | sed "s/127.0.0.1/192.168.3.102/" #  > /etc/zabbix/zabbix_agentd.conf` заменить (s) ip-адрес \
+`cat /etc/zabbix/zabbix_agentd.conf | sed "s/127.0.0.1/192.168.3.102/" #  > /etc/zabbix/zabbix_agentd.conf` заменить (`s`) ip-адрес \
 `cat /etc/zabbix/zabbix_agentd.conf | sed "/^#\|^$/d"` удалить пустые строки `^$` и комментарии `^#` \
-`timedatectl | grep zone | sed -E "s/.+zone: //"` удалить любое кол-во лимволов до слова "zone: " включительно, используя Regex (-E/-r) \
-`echo -e "test\ntest" | sed "2s/test/test2/"` заменить во второй строке (2s) \
-`echo -e "test\ntest\ntest\ntest" | sed "2,3s/test/test2/"` заменить во второй и третей строке (2,3s) \
-`echo -e "test\ntest\ntest\ntest" | sed "2ctest2"` заменить вторую строку (2c) \
-`echo "The test and test" | sed "s/test/test2/g"` заменить для каждого совпадения (/global) \
-`echo "The test and test" | sed "s/test/test2/2"` заменить для второго совпадения (/2) \
-`echo "line2" | sed "i\line1"` добавить строку в начало (i) \
-`echo "line1" | sed "a\line2"` добавить строку в конец (a) или в после указанной строки (2a) \
-`echo "11 22 33 34" | sed "y/123/234/"` заменить 1 на 2, 2 на 3, 3 на 4 (y) \
-`ls -R | grep ':' | sed "s/:$//; s/[^\/]*\// - /g"` удалить ":" в конце и заменить вначале строки "/любое кол-во символов между/" на " - " для всех (/g global) \
-`echo "test<version>3.6.4</version>test" | sed -r 's/[^<]*<(.*)>.*/\1/;s/<.*//;s/.*>//'` использовать regex (-r) \
-`ps aux | grep -E "^zabbix .+ -c" | sed -E "s/^zabbix.+-c //"` найти процесс zabbix с ключем -c и оставить путь conf \
-`echo "MPEG-H HEVC, 88.5 Мбит/с, 3840x2160, 23.976 кадр/с, 10 бит" | sed -nr 's/.* ([0-9]+x[0-9]+).*/\1/p'` выводить только найденные строки (-n) с заменой (s/), ищем только цифры [0-9] где одно или более вхождений (+) и между ними "x", вывести только первую группу поиска (то, что в скобках) на печать (/p)
+`timedatectl | grep zone | sed -E "s/.+zone: //"` удалить любое кол-во лимволов до слова "zone: " включительно, используя Regex (`-E/-r`) \
+`echo -e "test\ntest" | sed "2s/test/test2/"` заменить во второй строке (`2s`) \
+`echo -e "test\ntest\ntest\ntest" | sed "2,3s/test/test2/"` заменить во второй и третей строке (`2,3s`) \
+`echo -e "test\ntest\ntest\ntest" | sed "2ctest2"` заменить вторую строку (`2c`) \
+`echo "The test and test" | sed "s/test/test2/g"` заменить для каждого совпадения (`/global`) \
+`echo "The test and test" | sed "s/test/test2/2"` заменить для второго совпадения (`/2`) \
+`echo "line2" | sed "i\line1"` добавить строку в начало (`i`) \
+`echo "line1" | sed "a\line2"` добавить строку в конец (`a`) или в после указанной строки (`2a`) \
+`echo "11 22 33 34" | sed "y/123/234/"` заменить 1 на 2, 2 на 3, 3 на 4 (`y`) \
+`ls -R | grep ':' | sed "s/:$//; s/[^\/]*\// - /g"` удалить `:` в конце и заменить вначале строки `"/любое кол-во символов между/"` на `" - "` для всех (`/g` global) \
+`echo "test<version>3.6.4</version>test" | sed -r 's/[^<]*<(.*)>.*/\1/;s/<.*//;s/.*>//'` использовать regex (`-r`) \
+`ps aux | grep -E "^zabbix .+ -c" | sed -E "s/^zabbix.+-c //"` найти процесс zabbix с ключем `-c` и оставить путь `conf` \
+`echo "MPEG-H HEVC, 88.5 Мбит/с, 3840x2160, 23.976 кадр/с, 10 бит" | sed -nr 's/.* ([0-9]+x[0-9]+).*/\1/p'` выводить только найденные строки (`-n`) с заменой (`s/`), ищем только цифры `[0-9]` где одно или более вхождений (`+`) и между ними `x`, вывести только первую группу поиска (то, что в скобках) на печать (`/p`)
 
 ## awk
 
@@ -571,8 +798,8 @@ EOF
 `echo 'one two three four' | awk '{print $(NF-1)}'` вывести содержимое преподследнего элемента \
 `echo 'one two three four five' | awk '{print $((NF/2)+1)}'` вывести содержимое из середины \
 `echo "One Two Three" | awk '{$3="Four"; print $0}'` заменить третье значение/переменную в строке \
-`cat /etc/passwd | awk 'BEGIN{FS=":"; OFS=" - "} {print $1,$7}'` указать разделитель послей (элементов) на вход (FS) и заменить его на выходе (OFS) \
-`uptime | awk 'BEGIN{RS=" "; ORS="\n"} {print $0}'` указать разделитель записей (строк) на входе (RS) и заменить его на выходе (ORS) \
+`cat /etc/passwd | awk 'BEGIN{FS=":"; OFS=" - "} {print $1,$7}'` указать разделитель послей (элементов) на вход (`FS`) и заменить его на выходе (`OFS`) \
+`uptime | awk 'BEGIN{RS=" "; ORS="\n"} {print $0}'` указать разделитель записей (строк) на входе (`RS`) и заменить его на выходе (`ORS`) \
 `echo -e "12345\n54321" | awk 'BEGIN{FIELDWIDTHS="2 3"}{print $1,$2}'` указать фиксированное кол-во символов для разделения \
 `lsof | awk '{if($7=="REG")print $0}'` условие для выборки по столбцу \
 `cat /etc/ssh/sshd_config | awk '/Port / {print $2}'` условие поиска для вывода \
@@ -580,7 +807,7 @@ EOF
 `cat /var/log/syslog | grep "$date" | awk '{print length($6)}'` вывести длинну значения \
 `awk 'BEGIN{x = "low"; print toupper(x)}'` использовать функцию для перевода в вверхний регистр \
 `awk 'BEGIN{x = "LOW"; print tolower(x)}'` использовать функцию для перевода в нижний регистр \
-`echo "1 2 3 4:5:6" | awk '{item=$4; split(item,array,":"); print array[2]}'` разбить 4 значение на массив (используя функцию split) и забрать значение по 2-му индексу \
+`echo "1 2 3 4:5:6" | awk '{item=$4; split(item,array,":"); print array[2]}'` разбить 4 значение на массив (используя функцию `split`) и забрать значение по 2-му индексу \
 `free | awk '{if (NR == 2) print $0}'` вывести только вторую строку \
 `free | awk '{if (NR >= 2) print $0}'` вывести втроую и последующие строки \
 `free | awk '{if (NF >= 5) print $0}'` вывести строки, где 5 или больше значений \
@@ -598,12 +825,12 @@ EOF
 
 ## cut
 
-`echo "1 2 3" | cut -c 1,5` вывести первый и пятый симов (--bytes/--characters) \
+`echo "1 2 3" | cut -c 1,5` вывести первый и пятый симов (`--bytes`/`--characters`) \
 `echo "1 2 3" | cut -c 1-3` вывести с первой по третий символ \
 `echo "1 2 3" | cut -c3-` удалить первые 2 символа \
-`echo -e "test1,test2,test3\ntest1,test2,test3" | cut -d , -f 2-100` указать разделитель полей/столбцов (--delimiter) и какие столбцы вывести (--fields) с 2 по 100 \
+`echo -e "test1,test2,test3\ntest1,test2,test3" | cut -d , -f 2-100` указать разделитель полей/столбцов (`--delimiter`) и какие столбцы вывести (`--fields`) с 2 по 100 \
 `echo -e "test1,test2,test3\ntest1,test2,test3" | cut -d , -f 1,3 | sed "s/,/ /"` вывести 1 и 3 \
-`echo -e "test1,test2,test3\ntest1 test2 test3" | cut -d , -f 1,3 -s` печатать строки, где есть разделитель (-s)
+`echo -e "test1,test2,test3\ntest1 test2 test3" | cut -d , -f 1,3 -s` печатать строки, где есть разделитель (`-s`)
 
 ### rev
 
@@ -654,26 +881,39 @@ EOF
 `tl /var/log/auth.log` интерактивный просмотр логов в консоли с фильтрацией \
 `tl access.log* --merge` просмотр нескольких файлов
 
+`apt install bat` аналог cat (https://github.com/sharkdp/bat) с подсветкой синтаксиса
+`bat /etc/netplan/*.yaml`
+
 `tree /var/log/` древовидный просмотр директорий и дочерних файлов
 
+`cargo install --locked broot` установить broot (https://github.com/Canop/broot), аналог tree \
+`broot kinozal-bot/`
+
 `echo 'deb http://cz.archive.ubuntu.com/ubuntu jammy main universe' >> /etc/apt/sources.list && apt update` \
-`apt install exa` \
-`exa $(pwd) -l --icons` аналог ls
+`apt install exa` установить аналог ls (https://github.com/ogham/exa) \
+`exa $(pwd) -l --icons` отобразить иконки с подсветкой прав доступа 
+
+`cargo install eza` аналог ls (https://github.com/eza-community/eza) на базе exa \
+`eza -l --icons` \
+`eza --tree kinozal-bot/`
+
+`cargo install lsd` аналог ls (https://github.com/lsd-rs/lsd) \
+`lsd -l kinozal-bot/`
 
 `column /etc/passwd -t -s ":"` \
 `netcheck -t ping yandex.ru us1.node.check-host.net | sed -r 's/"//g; s/,$//; s/\{|\}|\[|\]//' | column -t -s ":"` распарсить JSON и добавить отступ (табуляцию) для колонок
 
-`ls /home | wc -l` word count выводит количество строк (--line) \
-`ls /home | wc -w` количество слов (--words) \
-`ls /home | wc -m` количество символом (--chars) \
-`ls /home | wc -c` количество символов/байт (--bytes)
+`ls /home | wc -l` word count выводит количество строк (`--line`) \
+`ls /home | wc -w` количество слов (`--words`) \
+`ls /home | wc -m` количество символом (`--chars`) \
+`ls /home | wc -c` количество символов/байт (`--bytes`)
 
 `echo "(5.5-2.2)" | bc` математические вычисления \
 `echo "(5.5-2.2)" | bc | sed -E "s/\..+//"` удалить дробную часть \
 `echo "1 < 2" | bc` возвращает булевое значение (1 - да или 0 - нет) \
 `echo "1 > 2" | bc` false (0) \
 `icmp_ignore=$(cat /proc/sys/net/ipv4/icmp_echo_ignore_all)` забрать значение \
-`if (( $(echo "$icmp_ignore == 1" | bc) )); then echo "true"; else echo "false"; fi` проверить в условии арефметическое значение на равенство (возвращает 0 - false или 1 - true)
+`if (( $(echo "$icmp_ignore == 1" | bc) )); then echo "true"; else echo "false"; fi` проверить в условии арефметическое значение на равенство (возвращает 0 - `false` или 1 - `true`)
 
 `a=1` \
 `b=0.55` \
@@ -739,6 +979,27 @@ EOF
 `split -l 100 input_file.txt output_prefix` разделить файл на части по 100 строк в каждой \
 `split -b 10M input_file.txt output_prefix` разделить файл на части по указанному размеру (например, 10MB)
 
+`yes` предназначена для автоматического вывода строки или символа, повторяющегося бесконечно (для нагрузки системы), либо для автоматического подтверждения запросов в других командах
+
+## dust
+
+`snap install dust` аналог du на Rust (https://github.com/bootandy/dust) \
+`dust /home/lifailon` выводит график используемого пространства по директориям и файлам для анализа занятого пространства \
+`dust -s` показывает размер файла, а не объем используемого им дискового пространства \
+`dust -n 30` выводит 30 каталогов (по умолчанию — высота терминала) \
+`dust -d 3` показывает 3 уровня подкаталогов \
+`dust -D` отобразить только директории \
+`dust -F` отобразить только файлы \
+`dust -f` считайте файлы вместо дискового пространства \
+`dust -i` не показывать скрытые файлы \
+`dust -z 10M` минимальный размер, включать только файлы размером более 10 МБ \
+`dust -z 40000/30MB/20kib` исключить выходные файлы/каталоги размером менее 40 000 байт/30 МБ/20 КБ \
+`dust -o si/b/kb/kib/mb/mib/gb/gib` формат вывода \
+`dust -e "\.png$"` включать только те файлы, которые соответствуют регулярному выражению (например, только файлы `png`) \
+`dust -v "\.png$"` регулярное выражение для игнорирования файлов с разрешением `png` \
+`dust -j  | jq` вывод в формате `JSON` \
+`dust -P` отключить индикатор прогресса
+
 ## find
 
 `find / -name "*.sql"` найти файлы, начать поиск с корня (/) \
@@ -793,15 +1054,14 @@ sudo chmod +x /usr/bin/locate
 
 `nano ~/.bashrc`
 ```bash
+# Псевдонимы команд с ключами для сокращения ввода 
 alias ll='ls -lFh'
 alias la='ls -alFh'
 
-# Очистка экрана на Ctrl+C
+# Забиндить очистку ввода на Ctrl+C
 bind '"\C-l": "^\C-u\C-mclear\C-m"'
-# Вывод логов на Ctrl+B
-bind '"\C-b": "bash kinozal-bot/kinozal-bot-0.4.5.sh log bot\C-m"'
 
-# Добавляет фильтрация по введеному тексту при испоьзовании стрелочек
+# Добавляет фильтрация по введеному тексту при испоьзовании стрелочек вверх и вниз
 if [[ $- == *i* ]]; then
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
@@ -817,7 +1077,7 @@ fi
 `ls *.json | fzf | xargs cat | jq .` вывести содержимое выбранного json файла через fzf \
 `find / -name "*.yaml" | fzf | xargs cat` найти в системе все файлы yaml и запустить по ним поиск
 ```bash
-# Поиск по истории с помощью fzf и вызов выбранной команды
+# Поиск по истории с помощью команды h и комбинации Ctrl+F
 if command -v fzf > /dev/null; then
     #alias h='eval $(cat ~/.bash_history | fzf)'
     alias h='eval $(history | fzf | sed -r "s/^\s+[0-9]+\s+[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]{2}:[0-9]{2}:[0-9]{2}\s//")'
@@ -833,6 +1093,18 @@ fi
 if command -v hstr > /dev/null; then
     bind -x '"\C-r": hstr'
 fi
+```
+### mcfly
+
+Заменяет поиск истории через Ctrl-R на интеллектуальную поисковую систему, которая учитывает рабочий каталог и контекст недавно выполненных команд (https://github.com/cantino/mcfly)
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+source ~/.bashrc
+brew install mcfly
+echo 'eval "$(mcfly init bash)"' >> ~/.bashrc
+source ~/.bashrc
 ```
 ## compgen
 
@@ -938,6 +1210,11 @@ fi
 `ls /run/systemd/system` юниты созданные динамически в runtime \
 `ls /etc/systemd/system` юниты системного администратора
 
+### systemctl-tui
+
+`cargo install systemctl-tui --locked` быстрый и простой TUI-интерфейс для взаимодействия с службами и журналами systemd на Rust (https://github.com/rgwood/systemctl-tui), от создателя NuShell \
+`systemctl-tui`
+
 ### unit
 ```bash
 #!/bin/bash
@@ -956,7 +1233,7 @@ while true; do
 done
 ```
 `nano /etc/systemd/system/icmp-test-log.service`
-```
+```conf
 [Unit]
 Description=icmp test output to log
 After=network.target
@@ -979,25 +1256,89 @@ WantedBy=multi-user.target
 
 ## journalctl
 
-`journalctl -eu ssh` отобразить сообщения с конца (-e) от выбранного сервиса (-u) \
+`journalctl --system` отобразить системный журнал \
+`journalctl --user` отобразить пользовательский журнал текущего пользователя \
+`journalctl -m` отобразить записи из всех доступных журналов (--merge) \
+`journalctl -ek` отобразить только сообщения ядра (kernel, --dmesg) из текущей загрузки \
+`journalctl -t systemd` показать записи с указанным идентификатором системного журнала \
 `journalctl _PID=3972315` отобразить сообщения по PID процесса \
+`journalctl -eu ssh` отобразить сообщения с конца (--pager-end) для выбранного сервиса (--unit)
+
+`g` перейти в начало листинга \
+`G` перейти в конец
+
+`journalctl -fu ssh` выводить новые сообщения в реальном времени (-f/--follow) \
+`journalctl -fu ssh` выводить новые сообщения в реальном времени (-f/--follow) \
+`journalctl -ru ssh` вывести сообщения с конца (сверху новые записи, --reverse) \
+`journalctl -n 100 -u ssh --no-pager` вывести 100 строк (--lines) из журнала и не передавать вывод на автоматический скроллинг \
+`journalctl -p 3` вывести записи с указанным приоритетом, например, только ошибки и выше по важности: неработоспособность(0), alerts(1), critical(2), errors(3), warning(4), notice(5), info(6), debug(7) \
+`journalctl -S "2023-09-01 12:00:00" -U "2023-09-01 15:00:00"` отобразить сообщения от (--since) 1 сентября c 12:00:00 по (--until) 15:00:00 \
 `journalctl --since today` отобразить сообщения за сегодня \
-`journalctl -fu ssh` выводить новые сообщения в реальном времени (-f) \
-`ournalctl -p 3` вывести только ошибки и выше по важности: неработоспособность(0)/alerts(1)/critical(2)/errors(3)/warning(4)/notice(5)/info(6)/debug(7) \
-`journalctl -ek` отобразить только сообщения ядра (kernel) \
-`journalctl -S "2023-09-01 12:00:00" -U "2023-09-01 15:00:00"` отобразить сообщения от (-S) 1 сентября 12:00 по (-U) 15:00 \
 `journalctl -b` отобразить сообщения с момента последней загрузки системы (boot) \
 `journalctl --list-boots` показать список сохраненных загрузок системы \
-`journalctl -b ba6b2292a0e84d83a81cedfaa221926f` показать сообщения с момента конкретной загрузки системы \
-`journalctl --disk-usage` вывести общий размер лог файлов на диске \
-`journalctl --vacuum-time=1month` очистить логи, давностью больше 1-го месяца \
-`journalctl --vacuum-size=100M` очистить логи, чтобы размер хранилища соответствовал указанному \
-`g` перейти в начало листинга \
-`G` перейти в конец \
-`nano /etc/systemd/journald.conf` \
-`SystemMaxUse=400M` настроить лимит записи
+`journalctl -b ba6b2292a0e84d83a81cedfaa221926f` показать сообщения с момента конкретной загрузки системы (--boot) \
+`journalctl --quiet` не показывать информационные сообщения и предупреждения о привилегиях \
+`journalctl --no-hostname` подавить вывод поля имени хоста \
+`journalctl -n 1 --no-pager --output=json-pretty` вывод в формате JSON (json-sse, json-seq) \
+`journalctl -n 1 --no-pager --output=json-pretty --output-fields=PRIORITY,MESSAGE` отфильтровать вывод
 
-### dmesg
+`journalctl --fields` вывести список всех используемых полей (UNIT, USER_UNIT, _SYSTEMD_UNIT, _SYSTEMD_USER_UNIT и т.д.)
+
+`journalctl --field=UNIT > system_units.log` вывести список всех юнитов в системе \
+`journalctl --field=USER_UNIT > user_units.log` вывести список всех пользовательских юнитов в системе \
+`comm -12 <(sort system_units.log) <(sort user_units.log)` построчное сравнение двух отсортированных файлов со списком журналов без вывода общих строк в 1 и 2 файлах (-12)
+
+`journalctl --disk-usage` вывести общее использование диска всеми файлами журнала (Archived and active journals take up 2.3G in the file system) \
+`journalctl --flush` очистить все данные журнала из директорий /run в /var \
+`journalctl --vacuum-time=1month` удалить файлы журнала, старше указанного времени (1-го месяца) \
+`journalctl --vacuum-size=100M` очистить логи, чтобы размер хранилища соответствовал указанному размеру \
+`journalctl --vacuum-files=100` оставить только указанное количество файлов журнала \
+`journalctl --rotate` запустить немедленную ротацию файлов журнала \
+`journalctl --sync` синхронизировать незаписанные сообщения журнала на диск \
+`journalctl --relinquish-var` прекратить запись на диск, войти во временную файловую систему \
+`journalctl --verify` проверить целостность файла журнала
+
+`journalctl --header` вывести список журналов \
+**File path** - путь к файлу журнала на диске \
+**Incompatible flags** - несовместимые флаги с этим журналом \
+**Rotate suggested** - применяется ли ротация к журналу \
+**Tail sequential number** - последовательный номер для конца журнала (указывает на последнее событие в журнале) \
+**Head realtime timestamp** - время первого события в журнале \
+**Tail realtime timestamp** - время последнего события в журнале \
+**Objects** - количество объектов, находящихся в журнале (таких как записи, и не только) \
+**Entry objects** - количество объектов, представляющих записи в журнале \
+**Data objects** - количество объектов данных, хранящихся в журнале \
+**Field objects** - Количество объектов полей (список полей можно получить через --fields) \
+**Disk usage** - используемое пространство на диске для этого журнала
+
+`nano /etc/systemd/journald.conf`
+```conf
+Storage=auto # журналы сохраняются в /var/log/journal на диске (если доступно достаточно места), или в памяти (/run/log/journal) при недостатке места на диске
+Storage=persistent # журналы всегда сохраняются на диске
+Storage=volatile # журналы хранятся только в памяти (не сохраняются на диск)
+Storage=none # журналы не сохраняются
+Seal=yes # включает подписание журналов для обеспечения их целостности. Это добавляет цифровую подпись в журналы, чтобы защитить их от изменений
+SyncIntervalSec=5m # интервал между синхронизациями журнала с диском (5 минут)
+RateLimitIntervalSec=30s # временной интервал, в течение которого будет ограничено количество записей журнала, если они приходят слишком часто
+RateLimitBurst=10000 # максимальное количество записей, которое можно сделать в журнал за интервал RateLimitIntervalSec
+SystemMaxUse=500M # ограничивает максимальное количество дискового пространства, которое могут занимать системные журналы, если пространство превышает этот лимит, старые журналы будут удаляться
+SystemKeepFree=1G # минимальное количество свободного места на диске, которое должно оставаться для других системных задач, если места на диске становится меньше, система начнет удалять старые журналы
+SystemMaxFileSize= # ограничивает размер одного файла журнала на диске. Если файл превышает этот размер, он будет разделен
+SystemMaxFiles=100 # максимальное количество файлов журнала, которые могут быть созданы, старые файлы будут удаляться, чтобы освободить место для новых
+MaxRetentionSec=1month # максимальный срок хранения журналов (например, журналы будут храниться не более месяца)
+ForwardToSyslog=yes # должны ли записи журнала перенаправляться в системный журнал (syslog), это позволяет перенаправлять журнал в другие системы, например, rsyslog
+orwardToKMsg=no # должны ли записи журнала перенаправляться в буфер ядра (KMsg)
+ForwardToConsole=no # должны ли записи журнала отображаться на консоли работающего в системе через TTY (не в терминал других пользователей)
+ForwardToWall=yes # должны ли записи журнала отображаться всем пользователям, работающим в системе (уведомления будут выводиться всем пользователям через команду wall)
+MaxLevelStore=debug # максимальный уровень журналируемых записей, которые будут сохраняться (emerg, alert, crit, error, warning, notice, info, debug)
+MaxLevelSyslog=debug # максимальный уровень журналируемых записей, которые будут отправляться в syslog
+MaxLevelWall=emerg # максимальный уровень журналируемых записей, которые будут выводиться всем пользователям через команду wall
+LineMax=48K # максимальный размер строки, которая может быть записана в журнал (по умолчанию 48 КБ)
+Audit=no # журналировать события аудита (связанных с безопасностью, например, вход в систему, попытки доступа к файлам и изменения файловых прав, Запуск и завершение процессов и т.п.)
+```
+`sudo systemctl restart systemd-journald`
+
+## dmesg
 
 `dmesg -Tx` прочитать логи буфера сообщений ядра (/var/log/dmesg), используется для записи во время загрузки системы пока сервис Syslog ещё не запущен \
 `dmesg -Tx -l crit,err` отфильтровать вывод \
@@ -1279,6 +1620,16 @@ dd: error writing '/tmp/test.file': Disk quota exceeded
 ```
 -rw-rw-r-- 1 lifailon lifailon 113M Sep 26 14:37 /tmp/test.file
 ```
+## fetch
+
+Набор скриптов, для быстрого получения информации о системе без установки:
+
+`curl -s https://raw.githubusercontent.com/dylanaraps/neofetch/refs/heads/master/neofetch | bash` \
+`curl -s https://raw.githubusercontent.com/dylanaraps/pfetch/refs/heads/master/pfetch | bash` \
+`curl -s https://raw.githubusercontent.com/KittyKatt/screenFetch/refs/heads/master/screenfetch-dev | bash` \
+`curl -s https://raw.githubusercontent.com/ThatOneCalculator/NerdFetch/refs/heads/main/nerdfetch | bash` \
+`curl -s https://raw.githubusercontent.com/Lifailon/hwstat/refs/heads/rsa/hwstat.sh | bash`
+
 ## networkmanager
 
 `apt install network-manager` \
@@ -1530,6 +1881,17 @@ nameserver 1.1.1.1
 `mtr -s 1000 google.com` указать размер пакета \
 `mtr -r -c 1 google.com --json` указать кол-во ping пакетов (-c 1 и -i 2 изменить интервал) и вывести в виде отчета (--report) в формате json/xml/csv/raw
 
+### doggo
+
+`curl -sS https://raw.githubusercontent.com/mr-karan/doggo/main/install.sh | sh` DNS cli client (https://github.com/mr-karan/doggo) \
+`doggo yandex.ru` запросить домен, используя настройки по умолчанию \
+`doggo yandex.ru MX` запросить MX записи домена \
+`doggo yandex.ru MX @8.8.8.8` использует указанный сервер для преобразования имен DNS \
+`doggo -q yandex.ru -t MX --nameserver 1.1.1.1` \
+`doggo yandex.ru --aa --ad` запрос с установленными флагами авторитетного ответа и аутентифицированных данных \
+`doggo yandex.ru --cd --do` запрос с отключенной проверкой и установленными флагами `DNSSEC OK` \
+`doggo yandex.ru --gp-from Germany` Запрос с использованием API Globalping из указанной локации
+
 ## vnstat
 
 `apt install vnstat` журнал часового, ежедневного и ежемесячного сетевого трафика \
@@ -1552,7 +1914,7 @@ nameserver 1.1.1.1
 `lsblk | nc -Uv server.sock` подключиться к локальному сокету с второго терминала и отправить вывод команды в файл сокета приема \
 `while true; do echo -e "HTTP/1.1 200 OK\n\n$(systemd-analyze plot)" | nc -l -w 1 -p 8085; done` HTTP-сервер с выводом анализа загрузки системы
 
-### api
+### socket api
 ```bash
 port=8085
 while true
@@ -1576,10 +1938,25 @@ done
 curl -s http://192.168.3.101:8085/api/date \
 curl -s http://192.168.3.101:8085/api/disk | jq .blockdevices[]
 
-### proxy
+### socket proxy
 
 `ncat -l 8080 -k --sh-exec "ncat 192.168.3.101 80"` \
 `socat TCP-LISTEN:8080,fork,reuseaddr TCP:192.168.3.101:80`
+
+## proxy
+```bash
+sudo apt-get install -y dotnet-runtime-8.0
+arch="x64" # или "arm64"
+sudo curl -s -L "https://github.com/Lifailon/froxy/releases/download/0.4.0/froxy-0.4.0-linux-$arch" -o /usr/local/bin/froxy
+sudo chmod +x /usr/local/bin/froxy
+```
+`froxy --socks 1080` запустить SOCKS прокси на порту 1080 \
+`froxy --forward 8080` запустить HTTP/HTTPS прокси на порту 1080 \
+`froxy --forward 8080 >> froxy.log &` запустить фоновый процесс и передать вывод логов в файл \
+`froxy --local 5514 --remote 192.168.3.100:514` запустить обратный прокси сервер на порту 5514, который перенаправляет на хост 192.168.3.100 и порт 514 (syslog) \
+`froxy --local 192.168.3.100:2121 --remote 192.168.3.101:21` TCP туннелирование для RDP \
+`froxy --local 127.0.0.1:8443 --remote https://example.com` принимать HTTPS трафик на порту 8443 и переадресовать на указанный URL (поддерживаются GET и POST запросы с передачей заголовков и тела запроса от клиента, для использования API запросы и прохождения авторизации на сайтах) \
+`froxy --local *:8443 --remote https://example.com --user admin --pass admin` слушать на всех интерфейсах и использовать авторизацию
 
 ## nmap
 
@@ -1596,6 +1973,16 @@ curl -s http://192.168.3.101:8085/api/disk | jq .blockdevices[]
 `nmap -sS 192.168.3.100` выполнить полуоткрытое сканирование (TCP SYN) без установки подключения \
 `nmap -sU 192.168.3.100` проверка только UDP-портов
 
+### masscan
+
+`apt install masscan` асинхронный (отправляет пакеты SYN) сканер TCP портов (https://github.com/robertdavidgraham/masscan) \
+`masscan 192.168.3.100 -p80` \
+`masscan 192.168.3.100 -p0-65535 --rate 100` \
+`masscan 192.168.3.100 -p0-65535 --rate 100 --ping-timeout 1000` \
+`masscan 192.168.3.1-100 -p80` \
+`masscan 192.168.3.0/24 -p80,443` \
+`masscan 192.168.3.100 -p80 --output-format json --output-file result.json`
+
 ### rustscan
 
 `wget https://github.com/RustScan/RustScan/releases/download/2.0.1/rustscan_2.0.1_amd64.deb \
@@ -1604,6 +1991,29 @@ curl -s http://192.168.3.101:8085/api/disk | jq .blockdevices[]
 `dpkg --install rustscan_2.0.1_amd64.deb` \
 `rustscan -a 127.0.0.1` \
 `rustscan -a 192.168.3.100` 32400/tcp open plex
+
+### tcp
+```bash
+function tcp-scan () {
+  if [ "$1" == "" ]; then
+      exit 1
+  fi
+  START_PORT=$2; [ -z "$START_PORT" ] && START_PORT=1
+  END_PORT=$3; [ -z "$END_PORT" ] && END_PORT=65535
+  PORT_PROTOCOL="tcp"
+  scan_port(){
+      PORT_NUMBER=$1
+      PORT_SCAN_RESULT=`2>&1 echo "" > /dev/$PORT_PROTOCOL/$TARGET_NAME_OR_IP/$PORT_NUMBER | grep connect`
+      [ "$PORT_SCAN_RESULT" == "" ] && echo -e $PORT_NUMBER\/$PORT_PROTOCOL' \t 'open' \t\t '`grep $PORT_NUMBER/$PROTOCOL /etc/services | head -n1 | awk '{print $1}'`
+  }
+  TARGET_NAME_OR_IP=$1
+  echo -e 'PORT \t\t STATE \t\t SERVICE'
+  for PORT_NUMBER in `seq $START_PORT $END_PORT`; do
+      scan_port $PORT_NUMBER
+  done
+}
+```
+`tcp-scan 192.168.3.100 1024 5000`
 
 ## tcpdump
 
@@ -1808,7 +2218,8 @@ done
 `chmod 644 /etc/sudoers.d/lifailon` \
 `lifailon ALL=NOPASSWD: /usr/bin/service memcahched restart, /usr/bin/apt-get update, /usr/bin/apt-get upgrade` разрешить перезапуск определенного сервиса, обновление списка пакетов и установку обновлений системы \
 `%powerusers ALL=NOPASSWD: /usr/bin/service memcahched restart` доступ на группу \
-`visudo --check` проверка синтаксиса и всех прав доступа (0440)
+`visudo --check` проверка синтаксиса и всех прав доступа (0440) \
+`sudo -l` проверка прав доступа (выводит список команд, которые текущий пользователь может выполнять с использованием sudo)
 
 ## strace
 
@@ -1998,6 +2409,23 @@ done
 `iotop -P` показывать только процессы, без потоков \
 `iotop -p PID`
 
+### top other
+
+`pip install --user glances` кроссплатформенный инструмент мониторинга системы на Python (https://github.com/nicolargo/glances) \
+`glances`
+
+`snap install bashtop` монитор ресурсов на Bash (https://github.com/aristocratos/bashtop) \
+`bashtop`
+
+`npm install gtop -g` панель мониторинга системы для терминала на JavaScript (https://github.com/aksakalli/gtop) \
+`gtop`
+
+`snap install bottom` кроссплатформенный графический монитор системы и процессов на Rust (https://github.com/ClementTsang/bottom) \
+`bottom`
+
+`curl -sL https://raw.githubusercontent.com/wimpysworld/deb-get/main/deb-get | sudo -E bash -s install deb-get && deb-get install zenith` как top, но с масштабируемыми графиками, а также использованием CPU, GPU, сети и дисков на Rust (https://github.com/bvaisvil/zenith) \
+`zenith`
+
 ## ps
 
 `apt-get install -y procps` установить пакет procps \
@@ -2040,6 +2468,11 @@ done
 `kill -STOP (-19) PID` остановить процесс, bash пошлёт сигнал SIGSTOP процессу (аналогично CTRL+Z) \
 `kill -CONT (-18) PID` продолжить остановленный процесс
 
+### procs
+
+`snap install procs` современная замена ps, написанная на Rust (https://github.com/dalance/procs) \
+`procs`
+
 ## jobs
 
 `(ping google.com) &` запустить задачу в фоне (отображается [job] - номер задачи и PID процесса) \
@@ -2049,6 +2482,12 @@ done
 `disown` завершить все фоновые задачи (удалить/очистить всю очередь заданий) \
 `disown %1` завершить последнию (если она первая) запущенную задачу \
 `kill %1` завершить последнию запущенную задачу
+
+### nohub
+
+`nohup ping ya.ru > ping.log &` используется для запуска процесса, который продолжает работать, даже если пользователь выйдет из сеанса (например, при закрытии терминала) \
+`ps -ef | grep "ping ya.ru"` найти процесс \
+`kill $(pgrep ping)` завершить процесс
 
 ## mem
 
@@ -2807,7 +3246,7 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 ### client
 
 `nano /etc/rsyslog.d/all.conf`
-```
+```conf
 # UDP:
 *.* @192.168.3.105:514
 # TCP:
@@ -2825,7 +3264,7 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 ### zabbix-agent
 
 `nano /etc/zabbix/zabbix_agentd.conf`
-```
+```conf
 # LogType=file
 LogType=system
 DebugLevel=1
@@ -2835,7 +3274,7 @@ DebugLevel=1
 ### ommail
 
 `nano /etc/rsyslog.conf`
-```
+```conf
 # Включить модуль:
 module(load="ommail")
 $ActionMailSMTPServer m.domain.ru
@@ -2855,7 +3294,7 @@ $ActionExecOnlyOnceEveryInterval 300
 `systemctl status logrotate.timer`
 
 `nano /etc/logrotate.conf`
-```
+```conf
 # Ротация файлов журнала еженедельно
 weekly
 # По умолчанию используется группа adm, которая является владельцем группы ls -ld /var/log/syslog
@@ -2872,7 +3311,7 @@ compress
 include /etc/logrotate.d
 ```
 `nano /etc/logrotate.d/logrotate_remote.conf`
-```
+```conf
 /var/log/remote/*/*.log {
 su root root
 daily
@@ -2916,6 +3355,24 @@ dateext
 `crontab -e` \
 `00 3 * * * /usr/sbin/logrotate -f /etc/logrotate.d/logrotate_remote.conf` настроить собственное ручное расписание с ежедневным запусков в 3:00
 
+## log
+
+- Терминальный пользовательский интерфейс для journalctl, журналов файловой системы, а также контейнеров Docker и Podman для быстрого просмотра и фильтрации с поддержкой нечеткого поиска и регулярных выражений:
+
+`curl https://raw.githubusercontent.com/Lifailon/lazyjournal/main/install.sh | bash` \
+`lazyjournal`
+
+- Терминальный пользовательский интерфейс для логов файловой системы с таймстампами, возможностью поиска и подсветкой:
+
+`apt install lnav` \
+`journalctl -f -a -xe -o json | lnav` \
+`ssh playground@demo.lnav.org`
+
+- Вывод с подсветкой, которая будет работать одинаково стабильно для разных лог-файлов:
+
+`apt install tailspin` \
+`cat /var/log/syslog | tailspin`
+
 ## smb
 
 ### cifs
@@ -2956,7 +3413,7 @@ password=password
 `chmod 777 /public/share` выдать права
 
 `nano /etc/samba/smb.conf`
-```
+```conf
 [global]
 workgroup = WORKGROUP # рабочая группа (должна одинакова на всех машинах)
 
@@ -3092,7 +3549,7 @@ Options:
 `cp /etc/vsftpd.conf /etc/vsftpd.conf.bak` резервная копия настроек
 
 `nano /etc/vsftpd.conf`
-```
+```conf
 listen=YES
 listen_ipv6=NO
 anonymous_enable=NO` отключить ананимный вход
@@ -3128,7 +3585,7 @@ xferlog_enable = YES` записывать в лог файл все транз�
 `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/certs/vsftpd.crt` сгенерировать самозаверяющий SSL-сертификат и закрытый ключ
 
 `nano /etc/vsftpd.conf`
-```
+```conf
 ssl_enable=YES
 rsa_cert_file=/etc/ssl/certs/vsftpd.crt
 rsa_private_key_file=/etc/ssl/private/vsftpd.key
@@ -3176,7 +3633,7 @@ ssl_ciphers=HIGH
 `rsync -zvh /home/lifailon /backup` копирование и синхронизация только файлов (skipping directory) указанной директории (в пределах одной локальной машины, например на внешний носитель). При редактировании файлов в исходной папке и повторном копирование заменит все содержимое (без синхронизации).
 
 `nano /etc/rsyncd.conf`
-```
+```conf
 pid file = /var/run/rsyncd.pid
 lock file = /var/run/rsync.lock
 log file = /var/log/rsync.log
@@ -3216,7 +3673,7 @@ read only = false
 `ss -lpn | grep apache` \
 `echo "<H1>$(hostname)</H1>" > /var/www/html/index.html`
 
-### api
+### api server
 
 `mkdir /var/www/api && touch /var/www/api/api.sh && chmod +x /var/www/api/api.sh` \
 `curl -s "https://raw.githubusercontent.com/Lifailon/bash-api-server/rsa/www/api/api.sh" > /var/www/api/api.sh` установить пример с шаблоном сервера api
@@ -3239,7 +3696,7 @@ fi
 `htpasswd -b -c /etc/apache2/.htpasswd rest api` настроить htpasswd для хранения пользовательских данных (создать пользователя rest с паролем api)
 
 `nano /etc/apache2/sites-available/api.conf` создать VirtualHost для обработки запросов
-```
+```conf
 <VirtualHost *:8443>
     DocumentRoot /var/www/html
     # Связать endpoint (включая все дочернии в пути) с исполняемым файлом
@@ -3317,7 +3774,7 @@ Listen 2024
 `mkdir /var/www/webdav && chown www-data:www-data /var/www/webdav` создать каталог к которому будет доступ через WebDAV и предоставить доступ к нему для www-data
 
 `nano /etc/apache2/sites-available/webdav.conf`
-``` 
+```conf
 <VirtualHost *:2024>
     ServerAdmin webmaster@localhost
     DocumentRoot /var/www/webdav
@@ -3457,8 +3914,8 @@ stats refresh 5s
 Master сервер с заданным интервалом отправляет VRRP пакеты на зарезервированный адрес multicast (многоадресной) рассылки или unicast на указанные ip-адреса, а все backup/slave сервера слушают этот адрес. Если Slave сервер не получает пакеты, он начинает процедуру выбора Master в соответствии с приоритетом, и если он переходит в состояние Master, то у него активирует VIP (поднимается виртуальный интерфейс) и отравляет gratuitous ARP. \
 **Gratuitous ARP** - это вид ARP ответа, который обновляет MAC таблицу на подключенных коммутаторах, чтобы проинформировать о смене владельца виртуального IP-адреса и MAC-адреса для перенаправления трафика. При настройке VRRP, в качестве адреса для виртуального IP не используется реальный адрес сервера, так как, в случае сбоя, его адрес переместится на соседний, и при восстановлении, он окажется изолированным от сети, и чтобы вернуть свой адрес, нужно отправить в сеть VRRP пакет, но не будет IP адреса, с которого это возможно сделать.
 
-`/etc/keepalived/keepalived.conf`
-```
+`nano /etc/keepalived/keepalived.conf`
+```conf
 global_defs {
     enable_script_security
 }
