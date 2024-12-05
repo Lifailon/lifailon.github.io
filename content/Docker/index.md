@@ -1,44 +1,12 @@
----
-author: "Lifailon"
-date: "2024-05-20T03:00:00+03:00"
----
++++
+[extra]
+toc = true
+toc_sidebar = true
++++
 
 <p align="center">
     <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/posh.md/#docker"><img title="Dpcler Commands Logo"src="Docker-Commands-Logo.png"></a>
 </p>
-
----
-
-- [WSL](#wsl)
-- [Install](#install)
-- [Mirror](#mirror)
-- [Proxy](#proxy)
-- [Run](#run)
-- [Update](#update)
-- [Stats](#stats)
-- [Logs](#logs)
-- [Volume](#volume)
-- [Network](#network)
-- [Inspect](#inspect)
-- [Exec](#exec)
-- [Prune](#prune)
-- [Remove](#remove)
-- [Docker Socket API](#docker-socket-api)
-- [Docker TCP API](#docker-tcp-api)
-- [Context](#context)
-- [ctop](#ctop)
-- [LazyDocker](#lazydocker)
-- [Dockerfile](#dockerfile)
-- [Push](#push)
-- [Docker-Compose](#docker-compose)
-- [Uptime-Kuma](#uptime-kuma)
-- [Uptime-Kuma-Api](#uptime-kuma-api)
-- [Swarm](#swarm)
-- [Dozzle](#dozzle)
-- [Dozzle-Auth](#dozzle-auth)
-- [Portainer](#portainer)
-- [Docker DotNet](#docker-dotnet)
-
 
 ---
 

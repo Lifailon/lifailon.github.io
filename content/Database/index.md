@@ -1,7 +1,8 @@
----
-author: "Lifailon"
-date: "2024-03-14T03:00:00+03:00"
----
++++
+[extra]
+toc = true
+toc_sidebar = true
++++
 
 {% crt() %}
 ```
@@ -15,71 +16,6 @@ date: "2024-03-14T03:00:00+03:00"
 
 ```
 {% end %}
-
----
-
-- [SQLite](#sqlite)
-    - [Database password](#database-password)
-- [MySQL](#mysql)
-    - [DATA TYPE](#data-type)
-    - [DATABASE](#database)
-    - [USER](#user)
-    - [TABLE](#table)
-    - [COLUMN](#column)
-    - [INSERT](#insert)
-    - [SELECT](#select)
-    - [WHERE](#where)
-    - [DELETE](#delete)
-    - [UPDATE](#update)
-    - [CHECK](#check)
-    - [DUMP](#dump)
-    - [innodb force recovery](#innodb-force-recovery)
-    - [MySQL Connector NET](#mysql-connector-net)
-    - [Add-ADUser](#add-aduser)
-    - [Get-ADUser](#get-aduser)
-- [MSSQL](#mssql)
-    - [System Data SqlClient](#system-data-sqlclient)
-    - [SqlClient INSERT](#sqlclient-insert)
-    - [SSMS INSERT](#ssms-insert)
-    - [T-SQL](#t-sql)
-    - [Backup type](#backup-type)
-    - [Recovery Models](#recovery-models)
-    - [System databases](#system-databases)
-    - [Regulatory operations](#regulatory-operations)
-- [InfluxDB](#influxdb)
-    - [Install Windows](#install-windows)
-    - [Install Ubuntu](#install-ubuntu)
-    - [API](#api)
-    - [Chronograf](#chronograf)
-    - [Grafana](#grafana)
-    - [CLI Client](#cli-client)
-    - [USERS](#users)
-    - [DATABASE](#database-1)
-    - [MEASUREMENT](#measurement)
-    - [SELECT and WHERE](#select-and-where)
-    - [REGEX](#regex)
-    - [GROUP BY tag key](#group-by-tag-key)
-    - [Functions](#functions)
-    - [POLICY](#policy)
-- [InfluxDB-api](#influxdb-api)
-    - [API POST](#api-post)
-    - [API GET](#api-get)
-    - [Endpoints](#endpoints)
-    - [PingTo-InfluxDB](#pingto-influxdb)
-    - [PerformanceTo-InfluxDB](#performanceto-influxdb)
-    - [Service](#service)
-    - [PSInfluxDB](#psinfluxdb)
-- [Telegraf](#telegraf)
-- [Elasticsearch](#elasticsearch)
-- [CData](#cdata)
-    - [ADO NET Assembly](#ado-net-assembly)
-    - [UPDATE](#update-1)
-    - [INSERT](#insert-1)
-    - [DELETE](#delete-1)
-- [ODBC](#odbc)
-- [PostgreSQL](#postgresql)
-    - [ODBC Driver](#odbc-driver)
-    - [npgsql](#npgsql)
 
 ---
 

@@ -1,7 +1,8 @@
----
-author: "Lifailon"
-date: "2024-03-14T03:00:00+03:00"
----
++++
+[extra]
+toc = true
+toc_sidebar = true
++++
 
 <!--
 {% crt() %}
@@ -40,78 +41,6 @@ date: "2024-03-14T03:00:00+03:00"
                                                            
 ```
 {% end %}
-
----
-- [Active Directory](#active-directory)
-  - [RSAT (Remote Server Administration Tools)](#rsat-remote-server-administration-tools)
-  - [Import-Module ActiveDirectory](#import-module-activedirectory)
-  - [ADSI (Active Directory Service Interface)](#adsi-active-directory-service-interface)
-  - [LDAP (Lightweight Directory Access Protocol)](#ldap-lightweight-directory-access-protocol)
-  - [LAPS (Local Admin Password Management)](#laps-local-admin-password-management)
-  - [Recycle Bin](#recycle-bin)
-  - [thumbnailPhoto](#thumbnailphoto)
-  - [ADDomainController](#addomaincontroller)
-  - [ADComputer](#adcomputer)
-  - [ADUser](#aduser)
-  - [ADGroupMember](#adgroupmember)
-  - [ADReplication](#adreplication)
-- [repadmin](#repadmin)
-- [dcdiag](#dcdiag)
-- [ntdsutil](#ntdsutil)
-- [GPO](#gpo)
-- [MS Exchange](#ms-exchange)
-  - [Roles](#roles)
-  - [MessageTrackingLog](#messagetrackinglog)
-  - [Mailbox](#mailbox)
-  - [MoveRequest](#moverequest)
-  - [Archive](#archive)
-  - [Quota](#quota)
-  - [Database](#database)
-  - [MailboxRepairRequest](#mailboxrepairrequest)
-  - [eseutil](#eseutil)
-  - [Dial Tone Recovery](#dial-tone-recovery)
-  - [Recovery database (RDB)](#recovery-database-rdb)
-  - [Transport](#transport)
-  - [Connector](#connector)
-  - [PST](#pst)
-  - [DistributionGroup](#distributiongroup)
-  - [Search](#search)
-  - [AuditLog](#auditlog)
-  - [Test](#test)
-  - [Queue](#queue)
-  - [Defrag](#defrag)
-  - [DAG (Database Availability Group)](#dag-database-availability-group)
-  - [Index](#index)
-- [ServerManager](#servermanager)
-  - [PSWA](#pswa)
-  - [WSB (Windows Server Backup)](#wsb-windows-server-backup)
-  - [RDS](#rds)
-- [DNSServer](#dnsserver)
-- [DHCPServer](#dhcpserver)
-- [DFS](#dfs)
-- [StorageReplica](#storagereplica)
-- [SMB](#smb)
-  - [Get-Acl](#get-acl)
-  - [NTFSSecurity](#ntfssecurity)
-  - [Storage](#storage)
-  - [iSCSI](#iscsi)
-- [WSUS](#wsus)
-  - [WindowsUpdate](#windowsupdate)
-  - [PSWindowsUpdate](#pswindowsupdate)
-  - [UpdateServices](#updateservices)
-  - [PoshWSUS](#poshwsus)
-- [VMWare](#vmware)
-- [Hyper-V](#hyper-v)
-  - [VMConnect via RDCMan](#vmconnect-via-rdcman)
-- [Azure](#azure)
-  - [Manage-VM](#manage-vm)
-  - [Manage-Disk](#manage-disk)
-- [NAS](#nas)
-  - [TrueNAS](#truenas)
-  - [Synology](#synology)
-- [Veeam](#veeam)
-  - [Get-VBRCommand](#get-vbrcommand)
-  - [Veeam-REStat](#veeam-restat)
 
 ---
 

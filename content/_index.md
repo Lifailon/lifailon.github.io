@@ -82,11 +82,12 @@ title = "Home"
 <p align="center" style="display: flex; justify-content: center; gap: 10px;">
     <a href="/linux/"><img title="Linux Commands" src="https://img.shields.io/badge/Linux_Commands-FCC624?style=for-the-badge&logo=linux&logoColor=black"></a>
     <a href="/docker/"><img title="Docker Commands" src="https://img.shields.io/badge/Docker_Commands-2094f3?style=for-the-badge&logo=docker&logoColor=white"></a>
-    <a href="/node-js/"><img title="Node.js syntax" src="https://img.shields.io/badge/Node.js_Docs-7ab65f?style=for-the-badge&logo=node.js&logoColor=white"></a>
+    <a href="/node-js/"><img title="Node.js syntax" src="https://img.shields.io/badge/Node.js-7ab65f?style=for-the-badge&logo=node.js&logoColor=white"></a>
+    <a href="/golang/"><img title="GoLang syntax" src="https://img.shields.io/badge/Go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white"></a>
 </p>
 
 <p align="center">
-    Большая база заметок <b>PowerShell</b>, а также по системными командами и консольными утилитами 🐧 <b><a href="/linux/">Linux</a></b> на русском языке.
+    Большая база заметок <b>PowerShell</b>, а также системным командам и консольным утилитам <br>🐧 <b><a href="/linux/">Linux</a></b> на русском языке.
 </p>
 
 Структура языка, синтаксис командлетов и модулей, работа с объектами, данными, файловой системой, сетевыми утилитами, базами данных, `API`, классами и методами платформы `.NET`, системами мониторинга и системного администрирования (Active Directory, MS Exchange, Hyper-V, VMWare). Заметки основаны на принципе примеров и краткого описания в комментариях.

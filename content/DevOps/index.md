@@ -1,7 +1,8 @@
----
-author: "Lifailon"
-date: "2024-03-14T03:00:00+03:00"
----
++++
+[extra]
+toc = true
+toc_sidebar = true
++++
 
 <!--
 {% crt() %}
@@ -44,34 +45,6 @@ date: "2024-03-14T03:00:00+03:00"
                          /_/             
 ```
 {% end %}
-
----
-
-- [Git](#git)
-- [GitHub api](#github-api)
-- [GitHub Actions](#github-actions)
-  - [Runner (Agent)](#runner-agent)
-  - [Build (Pipeline)](#build-pipeline)
-  - [CI](#ci)
-  - [Logs](#logs)
-- [Vercel](#vercel)
-  - [CD](#cd)
-- [GitLab](#gitlab)
-- [Jenkins](#jenkins)
-  - [SSH Steps](#ssh-steps)
-  - [HttpURLConnection](#httpurlconnection)
-  - [Active Choices Parameter](#active-choices-parameter)
-- [Ansible](#ansible)
-  - [Hosts](#hosts)
-  - [Windows Modules](#windows-modules)
-- [Zabbix](#zabbix)
-  - [Zabbix Agent](#zabbix-agent)
-  - [Zabbix Sender](#zabbix-sender)
-  - [Zabbix Get](#zabbix-get)
-  - [UserParameter](#userparameter)
-  - [Include Plugins](#include-plugins)
-  - [Zabbix API](#zabbix-api)
-- [Graylog](#graylog)
 
 ---
 

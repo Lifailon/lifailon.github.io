@@ -80,7 +80,8 @@ links = [
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/DevOps/index.md", name = "DevOps" },
-  { url = "@/Node-js/index.md", name = "Node.js" }
+  { url = "@/Node-js/index.md", name = "Node.js" },
+  { url = "@/GoLang/index.md", name = "Go" }
 ]
 
 [extra.footer]
@@ -91,7 +92,8 @@ links = [
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/DevOps/index.md", name = "DevOps" },
-  { url = "@/Node-js/index.md", name = "Node.js" }
+  { url = "@/Node-js/index.md", name = "Node.js" },
+  { url = "@/GoLang/index.md", name = "Go" }
 ]
 
 copyright = "© **2023-2024** `Lifailon`"
