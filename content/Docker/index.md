@@ -1,4 +1,5 @@
 +++
+title = "Docker"
 [extra]
 toc = true
 toc_sidebar = true
@@ -6,6 +7,10 @@ toc_sidebar = true
 
 <p align="center">
     <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/posh.md/#docker"><img title="Dpcler Commands Logo"src="Docker-Commands-Logo.png"></a>
+</p>
+
+<p align="center">
+    Заметки по работе с системой контейнеризации 🐳 <b>Docker</b>.
 </p>
 
 ---
@@ -105,6 +110,18 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `docker system df` отобразить сводную информацию занятого пространства образами и контейнерами \
 `du -h --max-depth=1 /var/lib/docker` \
 `du -h --max-depth=2 /var/lib/docker/containers`
+
+```shell
+docker run \
+  --log-driver json-file \
+  --log-opt max-size=10m \
+  --log-opt max-file=3 \
+  container_name
+```
+
+`--log-driver json-file` стандартный драйвер логов Docker \
+`--log-opt max-size=10m` устанавливаем максимальный размер каждого лог-файла в 10МБайт
+`--log-opt max-file=3` сохраняем только 3 файла с логами (текущий и два предыдущих). Когда лимит будет превышен, Docker автоматически удалит старые логи.
 
 ## Volume
 
@@ -215,6 +232,12 @@ chmod +x /usr/local/bin/ctop
 `r` - restart \
 `e` - exec shell
 
+## Dockly
+
+`npm install -g dockly` TUI интерфейс на базе Node.js и Blessed.js \
+`docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly` запуск в Docker \
+`dockly`
+
 ## LazyDocker
 
 `scoop install lazydocker || choco install lazydocker` установка в Windows (https://github.com/jesseduffield/lazydocker)
@@ -227,6 +250,14 @@ chmod +x /usr/local/bin/lazydocker
 ```
 lazydocker
 
+## Lazyjournal
+
+`curl -sS https://raw.githubusercontent.com/Lifailon/lazyjournal/main/install.sh | bash` установка в Unix \
+`Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/lazyjournal/main/install.ps1 | Invoke-Expression` установка в Windows \
+`lazyjournal` \
+`lazyjournal --help` \
+`lazyjournal --version`
+
 ## Dockerfile
 
 `FROM` указывает базовый образ, на основе которого будет создаваться новый образ \
@@ -234,7 +265,7 @@ lazydocker
 `ENV` устанавливает переменные окружения, которые будут доступны внутри контейнера \
 `RUN` выполняет команды в контейнере во время сборки образа \
 `COPY` копирует файлы и каталоги из указанного источника на локальной машине в файловую систему контейнера \
-`ADD` копирует файлы и каталоги в контейнер, поддерживает URL и автоматическое извлечение архивов \
+`ADD` копирует файлы и каталоги в контейнер, поддерживает загрузку файлов из URL и автоматическое извлечение архивов \
 `CMD` определяет команду, которая будет выполняться при запуске контейнера, может быть переопределена при запуске \
 `ENTRYPOINT` задает основную команду, которая будет выполняться при запуске контейнера \
 `WORKDIR` устанавливает рабочий каталог внутри контейнера для последующих команд \
@@ -281,6 +312,18 @@ CMD ["npm", "start"]
 
 `docker pull lifailon/torapi:latest` загрузить образ из Docker Hub \
 `docker run -d --name TorAPI -p 8443:8443 lifailon/torapi:latest` загрузить образ и создать контейнер
+
+## ADD
+
+```shell
+FROM alpine:latest
+# Загрузка и распаковка архива напрямую из GitHub
+ADD https://github.com/<username>/<repository>/archive/refs/heads/main.zip /app/
+# Установка инструмента для работы с архивами
+RUN apk add --no-cache unzip && \
+    unzip /app/main.zip -d /app/ && \
+    rm /app/main.zip
+```
 
 ## Docker-Compose
 ```bash

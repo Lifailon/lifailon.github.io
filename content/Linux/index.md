@@ -1,4 +1,5 @@
 +++
+title = "Linux"
 [extra]
 toc = true
 toc_sidebar = true
@@ -374,6 +375,14 @@ sudo chmod +x /usr/bin/netcheck
 `netcheck -t dns yandex.ru` \
 `netcheck -t http yandex.ru:443 5` \
 `netcheck -t tcp yandex.ru:443`
+
+### jc
+
+`apt install jc` установить jc (https://github.com/kellyjonbrazil/jc) для преобразования вывода популярных инструментов командной строки, типов файлов и общих строк в JSON, YAML или словари Python, что позволяет передавать вывод в инструменты, такие как jq \
+`dig google.com | jc --dig` \
+`dig example.com | jc --dig | jq -r '.[].answer[].data'` \
+`jc --pretty /proc/meminfo` \
+`systemctl list-units --all --plain --no-legend --no-pager | jc --systemctl -p`
 
 ### brew
 

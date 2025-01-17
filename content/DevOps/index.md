@@ -1,50 +1,11 @@
 +++
+title = "DevOps"
 [extra]
 toc = true
 toc_sidebar = true
 +++
 
-<!--
-{% crt() %}
-```
-  ____                 ___              
- |  _ \   ___ __   __ / _ \  _ __   ___ 
- | | | | / _ \\ \ / /| | | || '_ \ / __|
- | |_| ||  __/ \ V / | |_| || |_) |\__ \
- |____/  \___|  \_/   \___/ | .__/ |___/
-                            |_|         
-
- ____                     _____                      
-/\  _`\                  /\  __`\                    
-\ \ \/\ \     __   __  __\ \ \/\ \   _____     ____  
- \ \ \ \ \  /'__`\/\ \/\ \\ \ \ \ \ /\ '__`\  /',__\ 
-  \ \ \_\ \/\  __/\ \ \_/ |\ \ \_\ \\ \ \L\ \/\__, `\
-   \ \____/\ \____\\ \___/  \ \_____\\ \ ,__/\/\____/
-    \/___/  \/____/ \/__/    \/_____/ \ \ \/  \/___/ 
-                                       \ \_\         
-                                        \/_/         
-
- _______    _______  ____    ____   ______    .______       _______.
-|       \  |   ____| \   \  /   /  /  __  \   |   _  \     /       |
-|  .--.  | |  |__     \   \/   /  |  |  |  |  |  |_)  |   |   (----`
-|  |  |  | |   __|     \      /   |  |  |  |  |   ___/     \   \    
-|  '--'  | |  |____     \    /    |  `--'  |  |  |    .-----)   |   
-|_______/  |_______|     \__/      \______/   |__|    |________/    
-
-```
-{% end %}
--->
-
-{% crt() %}
-```
-    ____               ____              
-   / __ \ ___  _   __ / __ \ ____   _____
-  / / / // _ \| | / // / / // __ \ / ___/
- / /_/ //  __/| |/ // /_/ // /_/ /(__  ) 
-/_____/ \___/ |___/ \____// .___//____/  
-                         /_/             
-```
-{% end %}
+Заметки по направлению `DevOps`.
 
 ---
 
@@ -1334,3 +1295,74 @@ output.logstash:
 Get-Service winlogbeat | Start-Service
 ```
 - Настроить Inputs для приема Beats на порту 5044
+
+# Secret Management
+
+## Bitwarden
+
+`choco install bitwarden-cli || npm install -g @bitwarden/cli || sudo snap install bw` установить bitwarden cli \
+`bw login <email> --apikey` авторизвация в хранилище, используя client_id и client_secret \
+`$session = bw unlock --raw` получить токен сессии \
+`$items = bw list items --session $session | ConvertFrom-Json` получение всех элементов в хранилище с использованием мастер-пароля \
+`echo "master_password" | bw get item GitHub bw get password $items[0].name` получить пароль по названию секрета \
+`bw lock` завершить сессию
+```PowerShell
+# Авторизация в организации
+$client_id = "organization.ClientId"
+$client_secret = "client_secret"
+$deviceIdentifier = [guid]::NewGuid().ToString()
+$deviceName = "PowerShell-Client"
+$response = Invoke-RestMethod -Uri "https://identity.bitwarden.com/connect/token" -Method POST `
+    -Headers @{ "Content-Type" = "application/x-www-form-urlencoded" } `
+    -Body @{
+        grant_type = "client_credentials"
+        scope = "api.organization"
+        client_id = $client_id
+        client_secret = $client_secret
+        deviceIdentifier = $deviceIdentifier
+        deviceName = $deviceName
+    }
+# Получение токена доступа
+$accessToken = $response.access_token
+# Название элемента в хранилище
+$itemName = "GitHub"
+# Поиск элемента в хранилище
+$itemResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects?search=$itemName" -Method GET `
+    -Headers @{ "Authorization" = "Bearer $accessToken" }
+$item = $itemResponse.data[0]
+# Получение информации об элементе
+$detailsResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects/$($item.id)" -Method GET `
+    -Headers @{ "Authorization" = "Bearer $accessToken" }
+# Получение логина и пароля
+$login = $detailsResponse.login.username
+$password = $detailsResponse.login.password
+```
+## Infisical
+
+`npm install -g @infisical/cli` \
+`infisical login` авторизоваться в хранилище (cloud или Self-Hosting) \
+`infisical init` инициализировать - выбрать организацию и проект \
+`infisical secrets` получить список секретов и их SECRET VALUE из добавленных групп Environments (Development, Staging, Production)
+```PowerShell
+$clientId = "<client_id>" # создать организацию и клиент в Organization Access Control - Identities и предоставить права на Projects (Secret Management)
+$clientSecret = "<client_secret>" # на той же вкладке вкладке в Authentication сгенерировать секрет (Create Client Secret)
+$body = @{
+    clientId     = $clientId
+    clientSecret = $clientSecret
+}
+$response = Invoke-RestMethod -Uri "https://app.infisical.com/api/v1/auth/universal-auth/login" `
+    -Method POST `
+    -ContentType "application/x-www-form-urlencoded" `
+    -Body $body
+$TOKEN = $response.accessToken # получить токен доступа
+# Получить содержимое секрета
+$secretName = "FOO" # название секрета
+$workspaceId = "82488c0a-6d3a-4220-9d69-19889f09c8c8" # можно взять из url проекта Secret Management
+$environment = "dev" # группа
+$headers = @{
+    Authorization = "Bearer $TOKEN"
+}
+$secrets = Invoke-RestMethod -Uri "https://app.infisical.com/api/v3/secrets/raw/${secretName}?workspaceId=${workspaceId}&environment=${environment}" -Method GET -Headers $headers
+$secrets.secret.secretKey
+$secrets.secret.secretValue
+```
