@@ -1,6 +1,4 @@
-<h3 align="center">
-    Web version of the <a href="https://github.com/Lifailon/PS-Commands">PowerShell Commands</a>
-</h3>
+## Web version for [PowerShell Commands](https://github.com/Lifailon/PS-Commands)
 
 | **Branch**                                                                                      | **Description**                                                                                                                                     |
 | -                                                                                               | -                                                                                                                                                   |
@@ -15,10 +13,10 @@
 
 Используемы расширения **VSCode**:
 
-- [Markdown Preview Enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) - предпросмотр, а также конвертация в формат `PDF` и `HTML`.
-- [Markdown All in One](https://github.com/yzhang-gh/vscode-markdown) - быстрое создание меню, а также ряд других функций.
+- [Markdown Preview Enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) - предпросмотр, а также конвертация в формат `PDF` и `HTML` через `Puppeteer`.
+- [Markdown All in One](https://github.com/yzhang-gh/vscode-markdown) - автоматическое создание меню, а также ряд других функций.
 
-## Build for Zola
+### Build for Zola
 
 ```shell
 ### Clone this repository and duckquill theme
@@ -26,11 +24,12 @@ git clone https://github.com/Lifailon/lifailon.github.io
 cd lifailon.github.io
 git clone https://codeberg.org/daudix/duckquill.git themes/duckquill
 
-### Install zola
+### Download zola
 Invoke-RestMethod "https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-pc-windows-msvc.zip" -OutFile zola.zip
 Expand-Archive -Path zola.zip
 Remove-Item zola.zip
 
+### Start server and build site
 .\zola.exe serve
 .\zola.exe build
 ```
