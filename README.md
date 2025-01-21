@@ -1,9 +1,5 @@
 <h3 align="center">
-    Web version of the
-    <a href="https://github.com/Lifailon/PS-Commands">PowerShell Commands</a>
-    and
-    <a href="https://github.com/Lifailon/rudocs">RuDocs</a>
-    <br></br>
+    Web version of the <a href="https://github.com/Lifailon/PS-Commands">PowerShell Commands</a>
 </h3>
 
 | **Branch**                                                                                      | **Description**                                                                                                                                     |
@@ -22,13 +18,11 @@
 - [Markdown Preview Enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) - предпросмотр, а также конвертация в формат `PDF` и `HTML`.
 - [Markdown All in One](https://github.com/yzhang-gh/vscode-markdown) - быстрое создание меню, а также ряд других функций.
 
----
-
-## Build Zola
+## Build for Zola
 
 ```shell
-### Clone repository and theme
-git clone lifailon.github.io
+### Clone this repository and duckquill theme
+git clone https://github.com/Lifailon/lifailon.github.io
 cd lifailon.github.io
 git clone https://codeberg.org/daudix/duckquill.git themes/duckquill
 
