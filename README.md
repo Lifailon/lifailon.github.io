@@ -35,7 +35,6 @@ zola build
 ### Copy files for public
 Copy-Item public $env:TEMP -Recurse -Force
 git switch zola-duckquill
-Remove-Item $env:TEMP\public\* -Force -Recurse -Exclude .git
-Copy-Item $env:TEMP\public\* .\ -Recurse -Force
-Remove-Item $env:TEMP\public\* -Force -Recurse
+Remove-Item * -Force -Recurse -Exclude .git
+Move-Item $env:TEMP\public\* .\
 ```
