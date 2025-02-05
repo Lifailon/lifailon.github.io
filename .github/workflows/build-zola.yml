@@ -1,9 +1,17 @@
-name: Build and Deploy Zola
+name: Build and Deploy public files
 
 on:
-  push:
-    branches:
-      - main
+#   push:
+#     branches:
+#       - main
+#   schedule:
+#     - cron: "00 * * * *"
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "Commit message"
+        required: true
+        default: "update public files from main branch"
 
 jobs:
   build:
@@ -36,6 +44,7 @@ jobs:
       - name: Remove old public files from zola-duckquill branch and copy new public files
         run: |
           find . -mindepth 1 ! -name '.git' -exec rm -rf {} +
+          ls -lha
           mv ../public_output/* ./
           ls -lha
 
@@ -44,4 +53,5 @@ jobs:
     #       git config --global user.name 'GitHub Actions'
     #       git config --global user.email 'actions@github.com'
     #       git add .
-    #       git diff --staged --quiet || (git commit -m "update public files from main branch" && git push origin zola-duckquill)
+    #       message="${{ github.event.inputs.message }}"
+    #       git diff --staged --quiet || (git commit -m $message && git push origin zola-duckquill)
