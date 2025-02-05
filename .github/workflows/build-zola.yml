@@ -32,7 +32,7 @@ jobs:
           echo "Version: $(zola --version)"
 
       - name: Install jq
-        if: ${{ github.event.inputs.message != '' }}
+        if: ${{ github.event.inputs.message == '' }}
         run: |
           sudo apt-get install -y jq
           echo "Version: $(jq --version)"
