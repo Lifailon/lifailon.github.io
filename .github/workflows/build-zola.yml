@@ -29,7 +29,7 @@ jobs:
           wget https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-unknown-linux-gnu.tar.gz
           tar -xvf zola-v0.19.2-x86_64-unknown-linux-gnu.tar.gz
           chmod +x zola
-          echo "Version: $(zola --version)"
+          echo "Version: $(./zola --version)"
 
       - name: Install jq
         if: ${{ github.event.inputs.message == '' }}
@@ -46,11 +46,11 @@ jobs:
       - name: Switch in zola-duckquill branch
         run: |
           git fetch origin zola-duckquill
-          git switch zola-duckquill
+          git checkout zola-duckquill || git switch zola-duckquill
 
       - name: Remove old public files from zola-duckquill branch and copy new public files
         run: |
-          find . -mindepth 1 ! -name '.git' -exec rm -rf {} +
+          find . -mindepth 1 ! -path './.git*' -exec rm -rf {} +
           ls -lha
           mv ../public_output/* ./
           ls -lha
