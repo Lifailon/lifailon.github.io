@@ -18,21 +18,21 @@
 
 ### Build
 
-```shell
-### Clone this repository and duckquill theme
+```PowerShell
+# Clone this repository and duckquill theme
 git clone https://github.com/Lifailon/lifailon.github.io
-cd lifailon.github.io
+Set-Location lifailon.github.io
 git clone https://codeberg.org/daudix/duckquill.git themes/duckquill
 
-### Download Zola
+# Download Zola
 Invoke-RestMethod "https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-pc-windows-msvc.zip" -OutFile zola.zip
 Expand-Archive -Path zola.zip && Remove-Item zola.zip
 
-### Start server and build site
-zola serve
-zola build
+# Start server and build site
+.\zola serve
+.\zola build
 
-### Copy files for public
+# Copy files for public
 Copy-Item public $env:TEMP -Recurse -Force
 git switch zola-duckquill
 Remove-Item * -Force -Recurse -Exclude .git
