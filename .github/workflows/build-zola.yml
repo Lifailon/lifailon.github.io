@@ -10,8 +10,8 @@ on:
     inputs:
       message:
         description: "Commit message"
-        required: true
-        default: "update public files from main branch"
+        required: false
+        default: ""
 
 jobs:
   build:
@@ -29,6 +29,13 @@ jobs:
           wget https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-unknown-linux-gnu.tar.gz
           tar -xvf zola-v0.19.2-x86_64-unknown-linux-gnu.tar.gz
           chmod +x zola
+          echo "Version: $(zola --version)"
+
+      - name: Install jq
+        if: ${{ github.event.inputs.message != '' }}
+        run: |
+          sudo apt-get install -y jq
+          echo "Version: $(jq --version)"
 
       - name: Build site
         run: ./zola build
@@ -48,10 +55,13 @@ jobs:
           mv ../public_output/* ./
           ls -lha
 
-    #   - name: Commit and push
-    #     run: |
-    #       git config --global user.name 'GitHub Actions'
-    #       git config --global user.email 'actions@github.com'
-    #       git add .
-    #       message="${{ github.event.inputs.message }}"
-    #       git diff --staged --quiet || (git commit -m $message && git push origin zola-duckquill)
+      - name: Commit and push
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .
+          message="${{ github.event.inputs.message }}"
+          if [ -z "$message" ]; then
+            message=$(curl -s https://api.github.com/repos/Lifailon/lifailon.github.io/commits?sha=main | jq -r '.[0].commit.message')
+          fi
+          git diff --staged --quiet || (git commit -m $message && git push origin zola-duckquill)
