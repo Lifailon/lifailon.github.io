@@ -1,0 +1,47 @@
+name: Build and Deploy Zola
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Copy repository from main branch
+        uses: actions/checkout@v4
+
+      - name: Clone Duckquill Zola Theme
+        run: git clone https://codeberg.org/daudix/duckquill.git themes/duckquill
+
+      - name: Download and extract Zola binary
+        run: |
+          wget https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-unknown-linux-gnu.tar.gz
+          tar -xvf zola-v0.19.2-x86_64-unknown-linux-gnu.tar.gz
+          chmod +x zola
+
+      - name: Build site
+        run: ./zola build
+
+      - name: Copy new public files from main branch
+        run: mv public ../public_output
+
+      - name: Switch in zola-duckquill branch
+        run: |
+          git fetch origin zola-duckquill
+          git switch zola-duckquill
+
+      - name: Remove old public files from zola-duckquill branch and copy new public files
+        run: |
+          find . -mindepth 1 ! -name '.git' -exec rm -rf {} +
+          mv ../public_output/* ./
+          ls -lha
+
+    #   - name: Commit and push
+    #     run: |
+    #       git config --global user.name 'GitHub Actions'
+    #       git config --global user.email 'actions@github.com'
+    #       git add .
+    #       git diff --staged --quiet || (git commit -m "update public files from main branch" && git push origin zola-duckquill)
