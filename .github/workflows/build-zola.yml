@@ -64,4 +64,4 @@ jobs:
           if [ -z "$message" ]; then
             message=$(curl -s https://api.github.com/repos/Lifailon/lifailon.github.io/commits?sha=main | jq -r '.[0].commit.message')
           fi
-          git diff --staged --quiet || (git commit -m $message && git push origin zola-duckquill)
+          git diff --staged --quiet || (git commit -m "$message" && git push origin zola-duckquill)
