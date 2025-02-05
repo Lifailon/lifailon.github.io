@@ -344,119 +344,138 @@ test:
         "
 ```
 
-# Jenkins
+# Secret Manager
 
-`docker run -d --name=jenkins -p 8080:8080 --restart=always -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest` \
-`ls /var/lib/docker/volumes/jenkins_home/_data/jobs` директория хранящая историю сборок в хостовой системе \
-`docker exec -it jenkins /bin/bash` подключиться к контейнеру \
-`cat /var/jenkins_home/secrets/initialAdminPassword` получить токен инициализации
+## Bitwarden
 
-Cli: http://127.0.0.1:8080/manage/cli \
-`apt install openjdk-17-jre-headless` \
-`wget http://127.0.0.1:8080/jnlpJars/jenkins-cli.jar -P /usr/local/bin/` скачать jenkins-cli \
-`java -jar /usr/local/bin/jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 -webSocket help` получить список команд
-
-## SSH Steps
-
-Manage > Credentials > Global > New credentials > Kind: Username with password
-
-```groovy
-pipeline {
-    agent any
-    parameters {
-        string(name: 'Count', defaultValue: '100', description: 'Number of lines from log')
-        choice(name: "Mode", choices: ["Log","Stats"], description: "Select mode")
-        // booleanParam(name: "State", defaultValue: false)
+`choco install bitwarden-cli || npm install -g @bitwarden/cli || sudo snap install bw` установить bitwarden cli \
+`bw login <email> --apikey` авторизвация в хранилище, используя client_id и client_secret \
+`$session = bw unlock --raw` получить токен сессии \
+`$items = bw list items --session $session | ConvertFrom-Json` получение всех элементов в хранилище с использованием мастер-пароля \
+`echo "master_password" | bw get item GitHub bw get password $items[0].name` получить пароль по названию секрета \
+`bw lock` завершить сессию
+```PowerShell
+# Авторизация в организации
+$client_id = "organization.ClientId"
+$client_secret = "client_secret"
+$deviceIdentifier = [guid]::NewGuid().ToString()
+$deviceName = "PowerShell-Client"
+$response = Invoke-RestMethod -Uri "https://identity.bitwarden.com/connect/token" -Method POST `
+    -Headers @{ "Content-Type" = "application/x-www-form-urlencoded" } `
+    -Body @{
+        grant_type = "client_credentials"
+        scope = "api.organization"
+        client_id = $client_id
+        client_secret = $client_secret
+        deviceIdentifier = $deviceIdentifier
+        deviceName = $deviceName
     }
-    stages {
-        stage('Remote SSH') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: '91a9b0bb-bde9-4e06-ba19-9eb5bfd61612', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
-                        sshCommand remote: [
-                            name: '192.168.3.101',
-                            host: '192.168.3.101',
-                            port: 2121,
-                            user: env.SSH_USER,
-                            password: env.SSH_PASS,
-                            allowAnyHosts: true
-                        ], command: """
-                            if [[ "${params.Mode}" == "Log" ]]; then
-                                bash kinozal-bot/kinozal-bot-0.4.5.sh log bot ${params.Count}
-                            elif [[ "${params.Mode}" == "Stats" ]]; then
-                                curl -s https://raw.githubusercontent.com/Lifailon/hwstat/rsa/hwstat.sh | bash
-                            fi
-                        """
-                    }
-                }
-            }
-        }
-    }
+# Получение токена доступа
+$accessToken = $response.access_token
+# Название элемента в хранилище
+$itemName = "GitHub"
+# Поиск элемента в хранилище
+$itemResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects?search=$itemName" -Method GET `
+    -Headers @{ "Authorization" = "Bearer $accessToken" }
+$item = $itemResponse.data[0]
+# Получение информации об элементе
+$detailsResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects/$($item.id)" -Method GET `
+    -Headers @{ "Authorization" = "Bearer $accessToken" }
+# Получение логина и пароля
+$login = $detailsResponse.login.username
+$password = $detailsResponse.login.password
+```
+## Infisical
+
+`npm install -g @infisical/cli` \
+`infisical login` авторизоваться в хранилище (cloud или Self-Hosting) \
+`infisical init` инициализировать - выбрать организацию и проект \
+`infisical secrets` получить список секретов и их SECRET VALUE из добавленных групп Environments (Development, Staging, Production)
+```PowerShell
+$clientId = "<client_id>" # создать организацию и клиент в Organization Access Control - Identities и предоставить права на Projects (Secret Management)
+$clientSecret = "<client_secret>" # на той же вкладке вкладке в Authentication сгенерировать секрет (Create Client Secret)
+$body = @{
+    clientId     = $clientId
+    clientSecret = $clientSecret
 }
+$response = Invoke-RestMethod -Uri "https://app.infisical.com/api/v1/auth/universal-auth/login" `
+    -Method POST `
+    -ContentType "application/x-www-form-urlencoded" `
+    -Body $body
+$TOKEN = $response.accessToken # получить токен доступа
+# Получить содержимое секрета
+$secretName = "FOO" # название секрета
+$workspaceId = "82488c0a-6d3a-4220-9d69-19889f09c8c8" # можно взять из url проекта Secret Management
+$environment = "dev" # группа
+$headers = @{
+    Authorization = "Bearer $TOKEN"
+}
+$secrets = Invoke-RestMethod -Uri "https://app.infisical.com/api/v3/secrets/raw/${secretName}?workspaceId=${workspaceId}&environment=${environment}" -Method GET -Headers $headers
+$secrets.secret.secretKey
+$secrets.secret.secretValue
 ```
 
-## HttpURLConnection
+## HashiCorp
 
-Script Console: http://127.0.0.1:8080/manage/script
+```bash
+docker run --cap-add=IPC_LOCK -d --name=dev-vault -p 8200:8200 hashicorp/vault
 
-```groovy
-pipeline {
-    agent any
-    stages {
-        stage('Call REST API') {
-            steps {
-                script {
-                    def url = new URL("https://jsonplaceholder.typicode.com/posts")
-                    def connection = url.openConnection()
-                    connection.setRequestMethod("GET")
-                    connection.setRequestProperty("Accept", "application/json")
-                    def responseCode = connection.getResponseCode()
-                    if (responseCode == 200) {
-                        def response = connection.getInputStream().getText()
-                        println("Response: " + response)
-                    } else {
-                        error("Failed to call API, response code: ${responseCode}")
-                    }
-                    connection.disconnect()
-                }
-            }
-        }
-    }
-}
+2025-01-26 20:06:14 Api Address: http://0.0.0.0:8200
+2025-01-26 20:06:14 Unseal Key: XOD8uWWSL7LAAUwPqBTvryr3U6l9J3Q7CDVc+YmTET8=
+2025-01-26 20:06:14 Root Token: hvs.aYaGulrLe2pySPTDbZhOQCar
 ```
 
-## Active Choices Parameter
+Secrets Engines -> Enable new engine + KV \
+API Swagger: http://192.168.3.100:8200/ui/vault/tools/api-explorer
 
-[Plugin](https://plugins.jenkins.io/uno-choice)
-
-Name: `selectedVersion`
-
-Groovy Script:
-
-```groovy
-import groovy.json.JsonSlurper
-def apiUrl = "https://api.github.com/repos/PowerShell/PowerShell/tags"
-def conn = new URL(apiUrl).openConnection()
-conn.setRequestProperty("User-Agent", "Jenkins")
-def response = conn.getInputStream().getText()
-def json = new JsonSlurper().parseText(response)
-def versions = json.collect { it.name }
-return versions
-```
-Pipeline script:
-```groovy
-pipeline {
-    agent any
-    stages {
-        stage('Display Selected Version') {
-            steps {
-                script {
-                    echo "Selected PowerShell version: ${params.selectedVersion}"
-                }
-            }
-        }
-    }
+```PowerShell
+$TOKEN = "hvs.aYaGulrLe2pySPTDbZhOQCar"
+$Headers = @{
+    "X-Vault-Token" = $TOKEN
 }
+# Указать путь до секретов (создается в корне kv)
+$path = "main-path"
+$url = "http://192.168.3.100:8200/v1/kv/data/$path"
+$data = Invoke-RestMethod -Uri $url -Method GET -Headers $Headers
+# Получить содержимое ключа по его названию
+$data.data.data.key_name # secret_value
+
+# Перезаписать все секреты
+$Headers = @{
+    "X-Vault-Token" = $TOKEN
+}
+$Body = @{
+    data = @{
+        key_name_1 = "key_value_1"
+        key_name_2 = "key_value_2"
+    }
+    options = @{}
+    version = 0
+} | ConvertTo-Json
+$urlUpdate = "http://192.168.3.100:8200/v1/kv/data/main-path"
+Invoke-RestMethod -Uri $urlUpdate -Method POST -Headers $Headers -Body $Body
+
+# Удалить все секреты
+Invoke-RestMethod -Uri "http://192.168.3.100:8200/v1/kv/data/main-path" -Method DELETE -Headers $Headers
+```
+
+Vault client:
+
+```bash
+# Установить клиент в Linux (debian):
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install vault
+# Включить механизм секретов KV
+vault secrets enable -version=1 kv 
+# Создать секрет
+vault kv put kv/main-path key_name=secret_value
+# Список секретов
+vault kv list kv/
+# Получить содержимое секрета
+vault kv get -mount="kv" "main-path"
+# Удалить секреты
+vault kv delete kv/my-secret
 ```
 
 # Ansible
@@ -938,6 +957,297 @@ ansible_shell_type=powershell
     source: https://community.chocolatey.org/api/v2/ChocolateyInstall.ps1
 ```
 
+# DSC
+
+`Import-Module PSDesiredStateConfiguration` \
+`Get-Command -Module PSDesiredStateConfiguration` \
+`(Get-Module PSDesiredStateConfiguration).ExportedCommands` \
+`Get-DscLocalConfigurationManager`
+
+`Get-DscResource` \
+`Get-DscResource -Name File -Syntax` [синтаксис](https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1)
+
+`Ensure = Present` настройка должна быть включена (каталог должен присутствовать, процесс должен быть запущен, если нет – создать, запустить) \
+`Ensure = Absent` настройка должна быть выключена (каталога быть не должно, процесс не должен быть запущен, если нет – удалить, остановить)
+```PowerShell
+Configuration TestConfiguraion
+{
+    Ctrl+Space
+}
+
+Configuration DSConfigurationProxy 
+{
+    Node vproxy-01 
+    {
+        File CreateDir
+        {
+            Ensure = "Present"
+            Type = "Directory"
+            DestinationPath = "C:\Temp"
+        }
+        Service StopW32time
+        {
+            Name = "w32time"
+            State = "Stopped"` Running
+        }
+    WindowsProcess RunCalc
+        {
+            Ensure = "Present"
+            Path = "C:\WINDOWS\system32\calc.exe"
+            Arguments = ""
+        }
+        Registry RegSettings
+        {
+            Ensure = "Present"
+            Key = "HKEY_LOCAL_MACHINE\SOFTWARE\MySoft"
+            ValueName = "TestName"
+            ValueData = "TestValue"
+            ValueType = "String"
+        }
+#		WindowsFeature IIS
+#       {
+#            Ensure = "Present"
+#            Name = "Web-Server"
+#       }
+    }
+}
+```
+`$Path = (DSConfigurationProxy).DirectoryName` \
+`Test-DscConfiguration -Path $Path | select *` ResourcesInDesiredState - уже настроено, ResourcesNotInDesiredState - не настроено (не соответствует) \
+`Start-DscConfiguration -Path $Path` \
+`Get-Job` \
+`$srv = "vproxy-01"` \
+`Get-Service -ComputerName $srv | ? name -match w32time # Start-Service` \
+`icm $srv {Get-Process | ? ProcessName -match calc} | ft # Stop-Process -Force` \
+`icm $srv {ls C:\ | ? name -match Temp} | ft` rm`
+```PowerShell
+Configuration InstallPowerShellCore {
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Node localhost {
+        Script InstallPowerShellCore {
+            GetScript = {
+                return @{
+                    GetScript = $GetScript
+                }
+            }
+            SetScript = {
+        [string]$url = $(Invoke-RestMethod https://api.github.com/repos/PowerShell/PowerShell/releases/latest).assets.browser_download_url -match "win-x64.zip"
+                $downloadPath = "$home\Downloads\PowerShell.zip"
+                $installPath = "$env:ProgramFiles\PowerShell\7"
+                Invoke-WebRequest -Uri $url -OutFile $downloadPath
+                Expand-Archive -Path $downloadPath -DestinationPath $installPath -Force
+            }
+            TestScript = {
+                return Test-Path "$env:ProgramFiles\PowerShell\7\pwsh.exe"
+            }
+        }
+    }
+}
+```
+`$Path = (InstallPowerShellCore).DirectoryName` \
+`Test-DscConfiguration -Path $Path` \
+`Start-DscConfiguration -Path $path -Wait -Verbose` \
+`Get-Job`
+
+# PSAppDeployToolkit
+
+### Install-DeployToolkit
+```PowerShell
+$githubRepository = "psappdeploytoolkit/psappdeploytoolkit"
+$filenamePatternMatch = "PSAppDeployToolkit*.zip"
+$psadtReleaseUri = "https://api.github.com/repos/$githubRepository/releases/latest"
+$psadtDownloadUri = ((Invoke-RestMethod -Method GET -Uri $psadtReleaseUri).assets | Where-Object name -like $filenamePatternMatch ).browser_download_url
+$zipExtractionPath = Join-Path $env:USERPROFILE "Downloads" "PSAppDeployToolkit"
+$zipTempDownloadPath = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath $(Split-Path -Path $psadtDownloadUri -Leaf)
+## Download to a temporary folder
+Invoke-WebRequest -Uri $psadtDownloadUri -Out $zipTempDownloadPath
+## Remove any Zone.Identifier alternate data streams to unblock the file (if required)
+Unblock-File -Path $zipTempDownloadPath
+New-Item -Type Directory $zipExtractionPath
+Expand-Archive -Path $zipTempDownloadPath -OutputPath $zipExtractionPath -Force
+Write-Host ("File: {0} extracted to Path: {1}" -f $psadtDownloadUri, $zipExtractionPath) -ForegroundColor Yellow
+Remove-Item $zipTempDownloadPath
+```
+### Deploy-Notepad-Plus-Plus
+
+`$url_notepad = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.6.6/npp.8.6.6.Installer.x64.exe"` \
+`Invoke-RestMethod $url_notepad -OutFile "$home\Downloads\PSAppDeployToolkit\Toolkit\Files\npp.8.6.6.Installer.x64.exe"`
+```PowerShell
+'# Подключаем модуль PSAppDeployToolkit
+Import-Module "$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1"
+# Название приложения
+$AppName = "Notepad++"
+# Версия приложения
+$AppVersion = "8.6.6"
+# Путь к установщику Notepad++
+$InstallerPath = "$PSScriptRoot\Files\npp.$AppVersion.Installer.x64.exe"
+# Проверка существования установщика
+If (-not (Test-Path $InstallerPath)) {
+    Write-Host "Установщик Notepad++ не найден: $InstallerPath"
+    Exit-Script -ExitCode 1
+}
+# Настройки установки Notepad++
+$InstallerArguments = "/S /D=$ProgramFiles\Notepad++"
+Function Install-Application {
+    # Выводим сообщение о начале установки
+    Show-InstallationWelcome -CloseApps "iexplore" -CheckDiskSpace -PersistPrompt
+    # Запускаем установку
+    Execute-Process -Path $InstallerPath -Parameters $InstallerArguments -WindowStyle Hidden -IgnoreExitCodes "3010"
+    # Выводим сообщение об успешной установке
+    Show-InstallationPrompt -Message "Установка $AppName завершена." -ButtonRightText "Закрыть" -Icon Information -NoWait
+    # Завершаем процесс установки
+    Exit-Script -ExitCode $AppDependentExitCode
+}
+Install-Application' | Out-File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" -Encoding unicode
+```
+`powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"`
+
+### Uninstall-Notepad-Plus-Plus
+```PowerShell
+'Import-Module "$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1"
+$AppName = "Notepad++"
+$UninstallerPath = "C:\Program Files\Notepad++\uninstall.exe"
+If (-not (Test-Path $UninstallerPath)) {
+    Write-Host "Деинсталлятор Notepad++ не найден: $UninstallerPath"
+    Exit-Script -ExitCode 1
+}
+Function Uninstall-Application {
+    Show-InstallationWelcome -CloseApps "iexplore" -CheckDiskSpace -PersistPrompt
+    Execute-Process -Path $UninstallerPath -Parameters "/S" -WindowStyle Hidden -IgnoreExitCodes "3010"
+    Show-InstallationPrompt -Message "Программа $AppName удалена." -ButtonRightText "Закрыть" -Icon Information -NoWait
+    Exit-Script -ExitCode $AppDependentExitCode
+}
+Uninstall-Application' | Out-File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" -Encoding unicode
+```
+`powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"`
+
+### Deploy-WinSCP
+```PowerShell
+$PSAppDeployToolkit = "$home\Downloads\PSAppDeployToolkit\"
+$version = "6.3.3"
+$url_winscp = "https://cdn.winscp.net/files/WinSCP-$version.msi?secure=P2HLWGKaMDigpDQw-H9BgA==,1716466173"
+$WinSCP_Template = Get-Content "$PSAppDeployToolkit\Examples\WinSCP\Deploy-Application.ps1" # читаем пример конфигурации для WinSCP
+$WinSCP_Template_Latest = $WinSCP_Template -replace "6.3.2","$version" # обновляем версию на актуальную
+$WinSCP_Template_Latest > "$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" # заменяем скрипт развертывания 
+Invoke-RestMethod $url_winscp -OutFile "$PSAppDeployToolkit\Toolkit\Files\WinSCP-$version.msi" # загружаем msi-пакет
+powershell -File "$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" # запускаем установку
+```
+
+# Atlassian
+
+### Bitbucket
+```PowerShell
+$url = "https://github.com/AtlassianPS/BitbucketPS/archive/refs/heads/master.zip"
+Invoke-RestMethod $url -OutFile $home\Downloads\BitbucketPS.zip
+Expand-Archive -Path "$home\Downloads\BitbucketPS.zip" -OutputPath "$home\Downloads"
+Copy-Item -Path "$home\Downloads\BitbucketPS-master\*" -Destination "$($env:PSModulePath.Split(";")[0])\PSBitBucket" -Recurse
+Remove-Item "$home\Downloads\Bitbucket*" -Recurse -Force
+```
+`Import-Module PSBitBucket` \
+`Get-Command -Module PSBitBucket` \
+`Set-BitBucketConfigServer -Url $url -User username -Password password` установить конфигурацию сервера BitBucket \
+`Get-BitBucketConfigServer` получить текущую конфигурацию сервера BitBucket \
+`Get-Repositories` получить список всех репозиториев для текущей конфигурации сервера BitBucket \
+`Get-ProjectKey` получить ключ проекта BitBucket \
+`Get-BranchList -Repository pSyslog` список всех веток в репозитории \
+`Get-Branch -Repository pSyslog -Branch main` получить информацию о конкретной ветке репозитория \
+`Get-CommitMessage -Repository pSyslog -CommitHash $hash` получить сообщение коммита по его хэшу \
+`Get-Commits -Repository pSyslog -Limit 10` список последних 10 коммитов в репозитории \
+`Get-CommitsForBranch -Repository pSyslog -Branch main` список коммитов для конкретной ветки в репозитории
+
+### Jira
+
+`Install-Module JiraPS -Scope CurrentUser -Repository PSGallery -AllowClobber -Force` \
+`Get-Command -Module JiraPS` \
+`Get-JiraServerInfo` информация о сервере \
+`Add-JiraFilterPermission` добавить разрешения для фильтра \
+`Add-JiraGroupMember` добавить участника в группу \
+`Add-JiraIssueAttachment` добавить вложения к задаче \
+`Add-JiraIssueComment` добавить комментария к задаче \
+`Add-JiraIssueLink` добавить ссылки на задачу \
+`Add-JiraIssueWatcher` добавить наблюдателя к задаче \
+`Add-JiraIssueWorklog` добавить рабочего журнала к задаче \
+`Find-JiraFilter` поиск фильтра \
+`Format-Jira` форматирование данных Jira \
+`Get-JiraComponent` получение компонента проекта \
+`Get-JiraConfigServer` получение конфигурации сервера Jira \
+`Get-JiraField` получение поля Jira \
+`Get-JiraFilter` получение фильтра \
+`Get-JiraFilterPermission` получение разрешения фильтра \
+`Get-JiraGroup` получение группы \
+`Get-JiraGroupMember` получение участников группы \
+`Get-JiraIssue` получение задачи \
+`Get-JiraIssueAttachment` получение вложения задачи \
+`Get-JiraIssueAttachmentFile` получение файла вложения задачи \
+`Get-JiraIssueComment` получение комментария задачи \
+`Get-JiraIssueCreateMetadata` получение метаданных создания задачи \
+`Get-JiraIssueEditMetadata` получение метаданных редактирования задачи \
+`Get-JiraIssueLink` получение ссылки задачи \
+`Get-JiraIssueLinkType` получение типа ссылки задачи \
+`Get-JiraIssueType` получение типа задачи \
+`Get-JiraIssueWatcher` получение наблюдателя задачи \
+`Get-JiraIssueWorklog` получение рабочего журнала задачи \
+`Get-JiraPriority` получение приоритета задачи \
+`Get-JiraProject` получение проекта \
+`Get-JiraRemoteLink` получение удаленной ссылки \
+`Get-JiraServerInformation` получение информации о сервере Jira \
+`Get-JiraSession` получение сессии \
+`Get-JiraUser` получение пользователя \
+`Get-JiraVersion` получение версии проекта \
+`Invoke-JiraIssueTransition` выполнение перехода задачи \
+`Invoke-JiraMethod` выполнение метода Jira \
+`Move-JiraVersion` перемещение версии проекта \
+`New-JiraFilter` создание нового фильтра \
+`New-JiraGroup` создание новой группы \
+`New-JiraIssue` создание новой задачи \
+`New-JiraSession` создание новой сессии \
+`New-JiraUser` создание нового пользователя \
+`New-JiraVersion` создание новой версии проекта \
+`Remove-JiraFilter` удаление фильтра \
+`Remove-JiraFilterPermission` удаление разрешения фильтра \
+`Remove-JiraGroup` удаление группы \
+`Remove-JiraGroupMember` удаление участника группы \
+`Remove-JiraIssue` удаление задачи \
+`Remove-JiraIssueAttachment` удаление вложения задачи \
+`Remove-JiraIssueLink` удаление ссылки задачи \
+`Remove-JiraIssueWatcher` удаление наблюдателя задачи \
+`Remove-JiraRemoteLink` удаление удаленной ссылки \
+`Remove-JiraSession` удаление сессии \
+`Remove-JiraUser` удаление пользователя \
+`Remove-JiraVersion` удаление версии проекта \
+`Set-JiraConfigServer` установка конфигурации сервера Jira \
+`Set-JiraFilter` установка фильтра \
+`Set-JiraIssue` установка задачи \
+`Set-JiraIssueLabel` установка метки задачи \
+`Set-JiraUser` установка пользователя \
+`Set-JiraVersion` установка версии проекта
+
+### Confluence
+
+`Install-Module ConfluencePS -Scope CurrentUser -Repository PSGallery -AllowClobber -Force` \
+`Get-Command -Module ConfluencePS` \
+`Add-ConfluenceAttachment` добавить вложения к странице \
+`Add-ConfluenceLabel` добавить метки к странице \
+`ConvertTo-ConfluenceStorageFormat` конвертация содержимого в формат хранения Confluence \
+`ConvertTo-ConfluenceTable` конвертация данных в таблицу Confluence \
+`Get-ConfluenceAttachment` получение вложения страницы \
+`Get-ConfluenceAttachmentFile` получение файла вложения страницы \
+`Get-ConfluenceChildPage` получение дочерних страниц \
+`Get-ConfluenceLabel` получение меток страницы \
+`Get-ConfluencePage` получение информации о странице \
+`Get-ConfluenceSpace` получение информации о пространстве \
+`Invoke-ConfluenceMethod` выполнение метода Confluence \
+`New-ConfluencePage` создание новой страницы \
+`New-ConfluenceSpace` создание нового пространства \
+`Remove-ConfluenceAttachment` удаление вложения страницы \
+`Remove-ConfluenceLabel` удаление метки со страницы \
+`Remove-ConfluencePage` удаление страницы \
+`Remove-ConfluenceSpace` удаление пространства \
+`Set-ConfluenceAttachment` установка вложения страницы \
+`Set-ConfluenceInfo` установка информации о странице \
+`Set-ConfluenceLabel` установка метки страницы \
+`Set-ConfluencePage` установка страницы
+
 # Zabbix
 
 ## Zabbix Agent
@@ -1295,74 +1605,3 @@ output.logstash:
 Get-Service winlogbeat | Start-Service
 ```
 - Настроить Inputs для приема Beats на порту 5044
-
-# Secret Management
-
-## Bitwarden
-
-`choco install bitwarden-cli || npm install -g @bitwarden/cli || sudo snap install bw` установить bitwarden cli \
-`bw login <email> --apikey` авторизвация в хранилище, используя client_id и client_secret \
-`$session = bw unlock --raw` получить токен сессии \
-`$items = bw list items --session $session | ConvertFrom-Json` получение всех элементов в хранилище с использованием мастер-пароля \
-`echo "master_password" | bw get item GitHub bw get password $items[0].name` получить пароль по названию секрета \
-`bw lock` завершить сессию
-```PowerShell
-# Авторизация в организации
-$client_id = "organization.ClientId"
-$client_secret = "client_secret"
-$deviceIdentifier = [guid]::NewGuid().ToString()
-$deviceName = "PowerShell-Client"
-$response = Invoke-RestMethod -Uri "https://identity.bitwarden.com/connect/token" -Method POST `
-    -Headers @{ "Content-Type" = "application/x-www-form-urlencoded" } `
-    -Body @{
-        grant_type = "client_credentials"
-        scope = "api.organization"
-        client_id = $client_id
-        client_secret = $client_secret
-        deviceIdentifier = $deviceIdentifier
-        deviceName = $deviceName
-    }
-# Получение токена доступа
-$accessToken = $response.access_token
-# Название элемента в хранилище
-$itemName = "GitHub"
-# Поиск элемента в хранилище
-$itemResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects?search=$itemName" -Method GET `
-    -Headers @{ "Authorization" = "Bearer $accessToken" }
-$item = $itemResponse.data[0]
-# Получение информации об элементе
-$detailsResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects/$($item.id)" -Method GET `
-    -Headers @{ "Authorization" = "Bearer $accessToken" }
-# Получение логина и пароля
-$login = $detailsResponse.login.username
-$password = $detailsResponse.login.password
-```
-## Infisical
-
-`npm install -g @infisical/cli` \
-`infisical login` авторизоваться в хранилище (cloud или Self-Hosting) \
-`infisical init` инициализировать - выбрать организацию и проект \
-`infisical secrets` получить список секретов и их SECRET VALUE из добавленных групп Environments (Development, Staging, Production)
-```PowerShell
-$clientId = "<client_id>" # создать организацию и клиент в Organization Access Control - Identities и предоставить права на Projects (Secret Management)
-$clientSecret = "<client_secret>" # на той же вкладке вкладке в Authentication сгенерировать секрет (Create Client Secret)
-$body = @{
-    clientId     = $clientId
-    clientSecret = $clientSecret
-}
-$response = Invoke-RestMethod -Uri "https://app.infisical.com/api/v1/auth/universal-auth/login" `
-    -Method POST `
-    -ContentType "application/x-www-form-urlencoded" `
-    -Body $body
-$TOKEN = $response.accessToken # получить токен доступа
-# Получить содержимое секрета
-$secretName = "FOO" # название секрета
-$workspaceId = "82488c0a-6d3a-4220-9d69-19889f09c8c8" # можно взять из url проекта Secret Management
-$environment = "dev" # группа
-$headers = @{
-    Authorization = "Bearer $TOKEN"
-}
-$secrets = Invoke-RestMethod -Uri "https://app.infisical.com/api/v3/secrets/raw/${secretName}?workspaceId=${workspaceId}&environment=${environment}" -Method GET -Headers $headers
-$secrets.secret.secretKey
-$secrets.secret.secretValue
-```

@@ -79,8 +79,10 @@ links = [
   { url = "@/Docker/index.md", name = "Docker" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
+  { url = "@/Network/index.md", name = "Network" },
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
+  { url = "@/api/index.md", name = "API" },
   { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 
@@ -91,8 +93,10 @@ links = [
   { url = "@/Docker/index.md", name = "Docker" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
+  { url = "@/Network/index.md", name = "Network" },
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
+  { url = "@/api/index.md", name = "API" },
   { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 

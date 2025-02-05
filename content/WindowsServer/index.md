@@ -5,7 +5,7 @@ toc = true
 toc_sidebar = true
 +++
 
-Заметки системного администрирования через `PowerShell`.
+Заметки системного администрирования `Windows Server` через `PowerShell`.
 
 ---
 
