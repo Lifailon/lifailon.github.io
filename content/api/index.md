@@ -349,6 +349,32 @@ $response.choices.message.content
 
 `$(Invoke-RestMethod -Uri "http://localhost:3001/v1/chat/completions").choices.message.content`
 
+## OpenRouter
+
+Регестрируем аккаунт на [OpenRouter](https://openrouter.ai) через Google, выпускаем [api ключ](https://openrouter.ai/settings/keys) и выбираем [бесплатную модель](https://openrouter.ai/models?max_price=0).
+```PowerShell
+$OPENROUTER_API_KEY = "sk-or-v1-KEY"
+$OPENROUTER_MODEL = "deepseek/deepseek-r1:free"
+$headers = @{
+    "Content-Type"  = "application/json"
+    "Authorization" = "Bearer $OPENROUTER_API_KEY"
+}
+$body = @{
+    "model" = $OPENROUTER_MODEL
+    "messages" = @(
+        @{
+            "role"    = "system"
+            "content" = "Your role is a translator. You only translate the text into Russian and do not analyze the answer."
+        },
+        @{
+            "role"    = "user"
+            "content" = "Hello! I translate the text into English!"
+        }
+    )
+} | ConvertTo-Json -Depth 10 -Compress
+$response = Invoke-RestMethod -Uri "https://openrouter.ai/api/v1/chat/completions" -Method Post -Headers $headers -Body $body
+$response.choices.message.content
+```
 ## LM Studio
 
 `API` в [LM Studio](https://lmstudio.ai) совместим с OpenAI

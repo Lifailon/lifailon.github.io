@@ -86,6 +86,7 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `docker kill $(docker ps -q)` остановить все контейнеры \
 `docker rm speedtest-2` удалить контейнер \
 `docker rmi adolfintel/speedtest` удалить образ \
+`docker run -p 8443:8443 -it --entrypoint /bin/sh container_name` запустить контейнер и подключиться к нему (даже если контейнер уходит в ошибку при запуске) \
 `docker run -d --restart=unless-stopped --name openspeedtest -p 3000:3000 -p 3001:3001 openspeedtest/latest` загрузить образ OpenSpeedTest (https://hub.docker.com/r/openspeedtest/latest), создать контейнер и запустить в одну команду в фоновом режиме (-d/--detach, терминал возвращает контроль сразу после запуска контейнера, если не используется, можно видеть логи, но придется остановить контейнер для выхода) \
 `docker rm openspeedtest && docker rmi openspeedtest/latest` удаляем контейнер и образ в одну команду \
 `docker run --name pg1 -p 5433:5432 -e POSTGRES_PASSWORD=PassWord -d postgres` создать контейнер postgres (https://hub.docker.com/_/postgres) с параметрами (-e) \
@@ -325,89 +326,178 @@ RUN apk add --no-cache unzip && \
     rm /app/main.zip
 ```
 
-## Docker-Compose
+# Compose
 ```bash
-curl -L "https://github.com/docker/compose/releases/download/1.27.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
+curl -L "https://github.com/docker/compose/releases/download/$version/docker-compose-$(uname -s)-$(uname -m)" -o $HOME/.local/bin/docker-compose
+chmod +x $HOME/.local/bin/docker-compose
 docker-compose --version
 ```
-`nano docker-compose.yml`
-```yaml
-version: "3.8"
-services:
-  torapi:
-    image: lifailon/torapi:latest
-    container_name: TorAPI
-    volumes:
-      - torapi:/rotapi
-    ports:
-      - "8443:8443"
-    restart: unless-stopped
-volumes:
-  torapi:
-```
-`docker-compose up -d` при повторном запуске пересоздаст контейнер с изменениями
-
 ## Uptime-Kuma
 
+[Uptime-Kuma](https://github.com/louislam/uptime-kuma) - веб-интерфейс для мониторинга доступности хостов (ICMP), портов (TCP), веб-контент (HTTP/HTTPS запросы), gRPC, DNS, контейнеры Docker, базы данных и т.д с поддержкой уведомлений в Telegram.
+
 `nano docker-compose.yml`
 ```yaml
-version: "3.8"
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:1
+    image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
     volumes:
       - uptime-kuma:/app/data
     ports:
-      - "8080:3001"
+      - "8081:3001"
     restart: unless-stopped
 volumes:
   uptime-kuma:
 ```
 `docker-compose up -d`
 
-## Uptime-Kuma-Api
+`kuma_db=$(docker inspect uptime-kuma-frontend | jq -r .[].Mounts.[].Source)` место хранения конфигураций в базе SQLite \
+`cp $kuma_db/kuma.db $HOME/uptime-kuma-backup.db`
 
-`nano docker-compose.yml`
+Сгенерировать API ключ: `http://192.168.3.101:8081/settings/api-keys` \
+`curl -u":uk1_fl3JxkSDwGLzQuHk2FVb8z89SCRYq0_3JbXsy73t" http://192.168.3.101:8081/metrics`
+
+Пример конфигурации для Prometheus:
 ```yaml
-version: "3.9"
+- job_name: 'uptime'
+  scrape_interval: 30s
+  scheme: http
+  static_configs:
+    - targets: ['uptime.url']
+  basic_auth: 
+    password: uk1_fl3JxkSDwGLzQuHk2FVb8z89SCRYq0_3JbXsy73t
+```
+[Uptime-Kuma-Web-API](https://github.com/MedAziz11/Uptime-Kuma-Web-API) - оболочка API и Swagger документация написанная на Python с использованием FastAPI и [Uptime-Kuma-API](https://github.com/lucasheld/uptime-kuma-api).
+
+nano docker-compose.yml
+```yaml
 services:
-  kuma:
+  uptime-kuma-web:
     container_name: uptime-kuma-frontend
     image: louislam/uptime-kuma:latest
     ports:
-      - "8080:3001"
+      - "8081:3001"
     restart: unless-stopped
     volumes:
       - uptime-kuma:/app/data
-  api:
-    container_name: uptime-kuma-backend-api
+  uptime-kuma-api:
+    container_name: uptime-kuma-backend
     image: medaziz11/uptimekuma_restapi
     volumes:
-      - api:/db
+      - uptime-api:/db
     restart: unless-stopped
     environment:
-      - KUMA_SERVER=http://kuma:3001
+      - KUMA_SERVER=http://uptime-kuma-web:3001
       - KUMA_USERNAME=admin
       - KUMA_PASSWORD=KumaAdmin
       - ADMIN_PASSWORD=KumaApiAdmin
     depends_on:
-      - kuma
+      - uptime-kuma-web
     ports:
-      - "8081:8000"
+      - "8082:8000"
 volumes:
   uptime-kuma:
-  api:
+  uptime-api:
 ```
 `docker-compose up -d`
 
-OpenAPI doc: http://192.168.3.102:8081/docs \
-`TOKEN=$(curl -s -X POST http://192.168.3.102:8081/login/access-token --data "username=admin" --data "password=KumaApiAdmin" | jq -r .access_token)` \
-`curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://127.0.0.1:8081/monitors | jq .` \
-`curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://127.0.0.1:8081/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'`
+OpenAPI Docs (Swagger): http://192.168.3.101:8082/docs
+```bash
+TOKEN=$(curl -sS -X POST http://192.168.3.101:8082/login/access-token --data "username=admin" --data "password=KumaApiAdmin" | jq -r .access_token)
+curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors | jq .
+curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'
+```
+## MeTube
 
-## Swarm
+[MeTube](https://github.com/alexta69/metube) - веб-интерфейс yt-dlp для загрузки YouTube
+
+`mkdir /home/lifailon/metube-downloads` директория для хранения загружаемого видео контента в хостовой системе 
+
+`nano docker-compose.yml`
+```yaml
+services:
+  metube:
+    image: ghcr.io/alexta69/metube
+    container_name: metube
+    restart: unless-stopped
+    ports:
+      - "8090:8081"
+    volumes:
+      - /home/lifailon/metube-downloads:/downloads
+```
+`docker-compose up -d`
+
+## Dozzle
+
+`echo -n DozzleAdmin | shasum -a 256` получить пароль в формате sha-256 \
+`mkdir dozzle && nano ./dozzle/users.yml` создать файл с авторизационными данными
+```yaml
+users:
+  admin:
+    name: "admin"
+    password: "a800c3ee4dac5102ed13ba673589077cf0a87a7ddaff59882bb3c08f275a516e"
+```
+`nano docker-compose.yml`
+```yaml
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dozzle:/data
+    ports:
+      - 9090:8080
+    environment:
+      DOZZLE_AUTH_PROVIDER: simple
+      # Доступ к удаленному хосту через Docker API (tcp socket)
+      # DOZZLE_REMOTE_HOST: tcp://192.168.3.102:2375|mon-01
+```
+`docker-compose up -d`
+
+## Portainer
+
+`curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml` скачать yaml файл \
+`version_update=$(cat portainer-agent-stack.yml | sed "s/2.11.1/latest/g")` \
+`printf "%s\n" "$version_update" > portainer-agent-stack.yml` обновить версию в yaml файле на последнюю доступную в Docker Hub (2.19.5) \
+`docker stack deploy -c portainer-agent-stack.yml portainer` развернуть в кластере swarm (на каждом node будет установлен агент, который будет собирать данные, а на manager будет установлен сервер с web панелью) \
+https://192.168.3.101:9443
+
+`docker run -d --name portainer_agent -p 9001:9001 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent:2.19.5` установить агент на удаленный хост \
+https://192.168.3.101:9443/#!/endpoints добавить удаленный хост по URL 192.168.3.102:9001
+
+`docker volume create portainer_data` создать volume для установки локального контейнера (не в кластер swarm) \
+`docker create -it --name=portainer -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer` создать локальный контейнер \
+`docker start portainer` \
+http://192.168.3.101:9000
+
+# Docker.DotNet
+```PowerShell
+# Импорт библиотеки Docker.DotNet (https://nuget.info/packages/Docker.DotNet/3.125.15)
+Add-Type -Path "$home\Documents\Docker.DotNet-3.125.15\lib\netstandard2.1\Docker.DotNet.dll"
+# Указываем адрес удаленного сервера Docker, на котором слушает сокет Docker API
+$config = [Docker.DotNet.DockerClientConfiguration]::new("http://192.168.3.102:2375")
+# Подключаемся клиентом
+$client = $config.CreateClient()
+# Получить список методов класса клиента
+$client | Get-Member
+# Выводим список контейнеров
+$containers = $client.Containers.ListContainersAsync([Docker.DotNet.Models.ContainersListParameters]::new()).GetAwaiter().GetResult()
+# Забираем id по имени
+$kuma_id = $($containers | Where-Object names -match "uptime-kuma-front").id
+# Получить список дочерних методов
+$client.Containers | Get-Member
+# Остановить контейнер по его id
+$StopParameters = [Docker.DotNet.Models.ContainerStopParameters]::new()
+$client.Containers.StopContainerAsync($kuma_id, $StopParameters)
+# Запустить контейнер
+$StartParameters = [Docker.DotNet.Models.ContainerStartParameters]::new()
+$client.Containers.StartContainerAsync($kuma_id, $StartParameters)
+```
+# Swarm
 
 `docker swarm init` инициализировать manager node и получить токен для подключения worker node (сервер) \
 `docker swarm join-token manager` узнать токен подключения \
@@ -416,7 +506,8 @@ OpenAPI doc: http://192.168.3.102:8081/docs \
 `docker node inspect u4u897mxb1oo39pbj5oezd3um` подробная информация (конфигурация) о node по id \
 `docker swarm leave --force` выйти из кластера на worker node (на manager node изменится статус с Ready на Down) \
 `docker node rm u4u897mxb1oo39pbj5oezd3um` удалить node (со статусом Down) на manager node \
-`docker pull lifailon/torapi:latest` \
+`docker pull lifailon/torapi:latest`
+
 `nano docker-compose-stack.yml`
 ```yaml
 version: "3.8"
@@ -443,93 +534,357 @@ services:
 volumes:
   torapi:
 ```
-`docker stack deploy -c docker-compose-stack.yml TorAPI` собрать стэк сервисов, определенных в docker-compose (на worker node появится контейнер TorAPI_torapi.1.ug5ngdlqkl76dt) \
-`docker stack ls` отобразить список стэков \
-`docker service ls` список сервисов всех стэков \
+`docker stack deploy -c docker-compose-stack.yml TorAPI` собрать стек сервисов, определенных в docker-compose (на worker node появится контейнер TorAPI_torapi.1.ug5ngdlqkl76dt)
+
+`docker stack ls` отобразить список стеков \
+`docker service ls` список сервисов всех стеков \
 `docker stack ps TorAPI` список задач в стеке \
-`docker stack services TorAPI` список сервисов внутри стэка указанного стэка по имени \
-`docker service ps TorAPI_torapi` подробная информация о сервисе по его имени (TorAPI имя стэка и _torapi имя сервиса) \
+`docker stack services TorAPI` список сервисов внутри стека указанного стека по имени \
+`docker service ps TorAPI_torapi` подробная информация о сервисе по его имени (TorAPI имя стека и _torapi имя сервиса) \
 `docker service inspect --pretty TorAPI_torapi` конфигурация сервиса \
 `docker service inspect TorAPI_torapi` конфигурация сервиса в формате JSON \
 `docker service logs TorAPI_torapi` журнала конкретного сервиса по всем серверам кластера \
 `docker service scale TorAPI_torapi=3` масштабирует сервис до указанного числа реплик \
-`docker stack rm TorAPI` удалить стэк (не требует остановки контейнеров)
+`docker stack rm TorAPI` удалить стек (не требует остановки контейнеров)
 
-## Dozzle
+# Kubernetes
 
-`docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest` \
-`docker run -d --name dozzle -v /var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest --remote-host tcp://192.168.3.102:2375|mon-01` доступ к удаленному хосту через Docker-tcp-api \
-http://192.168.3.102:9999
+## Micro8s
 
-## Dozzle-Auth
+[Micro8s](https://github.com/canonical/microk8s) - это полностью совместимый и легкий Kubernetes в одном пакете, работающий на 42 разновидностях Linux.
 
-`echo -n DozzleAdmin | shasum -a 256` получить пароль в формате sha-256 \
-`mkdir dozzle && nano ./dozzle/users.yml` создать авторизационный файл
+`snap install microk8s --classic` установка \
+`microk8s status --wait-ready` отобразить статус работы (дождаться инициализации служб Kubernetes) и список дополнений \
+`microk8s start` запустить или остановить (stop) MicroK8s и его службы \
+`microk8s enable dashboard` запустить dashboard \
+`microk8s enable dns` установка обновлений \
+`sudo usermod -a -G microk8s $USER && mkdir -p ~/.kube && chmod 0700 ~/.kube` добавить текущего пользователя в группу управления microk8s (создается при установке) \
+`alias kubectl='microk8s kubectl'` добавить псевдоним, для использования команды kubectl через microk8s \
+`kubectl get nodes` отобразить список нод \
+`kubectl config view --raw > $HOME/.kube/config` передать конфигурацию в MicroK8s, для использования с существующим kubectl
 
+## k3s
+
+[K3s](https://github.com/k3s-io/k3s) — это полностью совместимый дистрибутив Kubernetes в формате единого двоичного файле, который удаляет хранение драйверов и поставщика облачных услуг, а также добавляет поддержку sqlite3 для backend хранилища.
+
+`curl -sfL https://get.k3s.io | sh -` установка службы в systemd и утилит `kubectl`, `crictl`, `k3s-killall.sh` и `k3s-uninstall.sh` \
+`/etc/rancher/k3s/k3s.yaml` конфигурация \
+`/var/lib/rancher/k3s/server/node-token` токен авторизации \
+`curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=XXX sh -` передать переменные окружения K3S_URL и K3S_TOKEN токен для установки на рабочие ноды \
+`sudo k3s server &` запустить сервер кластера \
+`sudo k3s agent --server https://myserver:6443 --token ${NODE_TOKEN}` подключиться к кластеру \
+`sudo k3s kubectl get nodes` отобразить список нод в кластере
+
+## Minikube
+
+[Minikube](https://github.com/kubernetes/minikube) - это локальный кластер Kubernetes от создателя оригинального k8s
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-windows-amd64.exe
+mv minikube-windows-amd64.exe minikube.exe
+```
+`minikube start --vm-driver=hyperv --memory=4g --cpus=2` запустить кластер и/или создать виртуальную машину \
+`minikube status` статус работы кластера \
+`minikube stop` остановить кластер \
+`minikube delete` удалить виртуальную машину \
+`minikube profile list` узнать информацию о драйвере, ip, версии и количество Nodes \
+`minikube dashboard --port 8085` запустить api сервер и интерфейс состояния
+
+`minikube addons list`  список доступных дополнений и их статус работы \
+`minikube addons enable metrics-server` активировать дополнение, которое предоставляет метрики для HPA, такие как загрузка процессора и использование памяти \
+`kubectl get deployment metrics-server -n kube-system` текущее состояние развертывания metrics-server в кластере \
+`kubectl get pod,svc -n kube-system` отобразить список системных подов и сервисов в кластере (pod/metrics-server-7fbb699795-wvfxb) \
+`kubectl logs -n kube-system deployment/metrics-server` отобразить логи metrics-server \
+`kubectl top pods` отобразить метрики на подах (CPU/MEM) \
+`minikube addons disable metrics-server` отключить дополнение
+
+`minikube addons enable ingress` включить Nginx Ingress Controller \
+`kubectl get pods -n kube-system` отобразить список системных подов (должен появиться ingress-nginx-controller) \
+`minikube tunnel --alsologtostderr` создает виртуальный LoadBalancer в Minikube, для перенаправления трафика на нужный сервис, вместо использования NodePort
+
+## kubectl
+
+`Node` - физическая или виртуальная машина, на которой работает Kubernetes-кластер, каждый узел выполняет контейнеры и поды \
+`Pod` - содержит один или несколько контейнеров работающих вместе, которые всегда разворачиваются в кластере \
+`Deployment` - управляет состоянием подов и отвечает за масштабируемость (автоматический перезапуск контейнеров и замена подов при сбоях), чтобы их количество соответствовало желаемому числу реплик (ReplicaSet) \
+`Service` - абстракция, которая отвечает за балансировку нагрузки (обрабатывает входящий трафик и распределяет его между подами), а также обеспечивая стабильный IP-адрес и DNS-имя для общения с ними
+
+`kubectl config view` отобразить конфигурацию кластера (настройка подключения kubectl к Kubernetes, которое взаимодействует с приложением через конечные точки REST API) \
+`sudo cp ~/.minikube/ca.crt /usr/local/share/ca-certificates/minikube.crt && update-ca-certificates && openssl verify /usr/local/share/ca-certificates/minikube.crt` установка сертификатов в Linux \
+`Import-Certificate -FilePath "$HOME\.minikube\ca.crt" -CertStoreLocation Cert:\LocalMachine\Root && Import-Certificate -FilePath "$HOME\.minikube\profiles\minikube\client.crt" -CertStoreLocation Cert:\CurrentUser\My && ls Cert:\LocalMachine\Root | Where-Object Subject -Match "minikube"` установка сертификатов в Windows \
+`curl -k https://192.168.27.252:8443/version` удаленный доступ к API Kubernetes (адрес и порт можно взять из config view) \
+`kubectl get namespaces` вывести все namespace \
+`kubectl get nodes` отобразить список node и их статус работы, роль (master/node), время запуска и версию \
+`kubectl get events` отобразить логи кластера
+
+`kubectl create deployment test-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080` создать под из указанного Docker образа (запускает контейнер и внутри него команду для запуска веб-сервера на порту 8080) \
+`kubectl get deployments` статус всех Deployments (контроллеров), которые в свою очередь управляют Pod-ами (RADY - количество экземпляров-реплик, UP-TO-DATE — количество реплик, которые были обновлены) \
+`kubectl get pods` статус всех подов \
+`kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'` получить список имен всех под через шаблон фильтра
+
+`kubectl proxy` запустить прокси сервер для локального взаимодействия с частной сетью кластера через API (без авторизации), где автоматически создаются конечные точки для каждого пода в соответствии с его именем \
+`curl http://localhost:8001` отобразить список всех конечных точек (endpoints) \
+`curl http://localhost:8001/api/v1/namespaces/default/pods/test-node-69f66d85f8-2d2tv:8080/proxy/` конечная точка, которая проксирует запрос внутрь пода по его имени (напрямую к приложению в контейнере) \
+`kubectl port-forward pod/test-node-69f66d85f8-2d2tv 8080:8080` запустить сервер для проброса порта из пода \
+`curl http://localhost:8080`
+
+`kubectl expose deployment test-node --type=LoadBalancer --port=8080` предоставить pod как service (пробросить порт из частной сети Kubernetes) в режиме балансировки нагрузки \
+`--type=ClusterIP` - открывает доступ к сервису по внутреннему IP-адресу в кластере (по умолчанию), этот тип делает сервис доступным только внутри кластера \
+`--type=NodePort` - открывает сервис на том же порту каждого выбранного узла в кластере с помощью NAT, и делает сервис доступным вне кластера через `<NodeIP>:<NodePort>` (надмножество ClusterIP) \
+`--type=LoadBalancer` - создает внешний балансировщик нагрузки и назначает фиксированный внешний IP-адрес для сервиса (надмножество NodePort) \
+`--type=ExternalName` - открывает доступ к сервису по содержимому поля externalName (например, foo.bar.example.com), возвращая запись CNAME с его значением
+
+`kubectl get services` отобразить список сервисов (CLUSTER-IP, EXTERNAL-IP и PORT 8080:32467/TCP), которые принимают внешний трафик \
+`kubectl describe services test-node` отобразить настройки сервиса для внешнего доступа (ip, тип сервиса и конечные точки) \
+`curl http://192.168.27.252:32467` проверить доступность приложения
+
+`kubectl describe pods test-node` отобразить какие контейнеры находятся внутри пода, а также какие образы и команды (/agnhost netexec --http-port=8080) использовались при сборке этих контейнеров \
+`kubectl logs test-node-69f66d85f8-2d2tv` отобразить логи контейнера в поде (сообщения, которые приложение отправляет в standard output) \
+`kubectl exec test-node-69f66d85f8-2d2tv -c agnhost -- ls -lha` выполнить команду в контейнере указанного пода \
+`kubectl exec test-node-69f66d85f8-2d2tv -c agnhost -- env` отобразить список глобальных переменных в контейнере \
+`kubectl exec -it test-node-69f66d85f8-2d2tv -c agnhost -- curl http://localhost:8080` проверить доступность приложения внутри контейнера \
+`kubectl exec -it test-node-69f66d85f8-2d2tv -c agnhost -- bash` запустить bash сессию в контейнере пода
+
+`kubectl get rs` состояние реплик (ReplicaSet) для всех deployment \
+`kubectl scale deployments/test-node --replicas=4` масштабируем deployment до 4 реплик \
+`kubectl scale deployments/test-node --replicas=2` уменьшить deployment до 2 реплик подов \
+`kubectl describe deployments/test-node` изменения фиксируется в конфигурации deployment -> Events (Scaled down replica set test-node-69f66d85f8 from 4 to 2) \
+`kubectl get rs` проверить текущее количество под в deployment и их состояние (DESIRED - желаемое количество экземпляров-реплик и CURRENT - текущее количество реплик) \
+`kubectl get endpoints test-node` отобразить на какие адреса (ip и порт) подов перенаправляется трафик сервиса test-node \
+`kubectl get pods -o wide` отобразить количество всех подов (у каждого пода разное время работы в AGE и свой ip-адрес)
+
+`kubectl logs -l app=test-node --follow` выводить лог в реальном времени для всех запущенных репликах подов указанного deployment \
+`PODS_NAME=$(kubectl get pods -l app=test-node -o jsonpath="{.items[*].metadata.name}")` получаем названия всех подов указанного deployment \
+`for POD_NAME in $PODS_NAME; do kubectl logs $POD_NAME --follow | awk -v pod=$POD_NAME '{print "[" pod "] " $0}' & done` отобразить лог приложения конкретного пода по имени \
+`NODE_PORT="$(kubectl get services test-node -o go-template='{{(index .spec.ports 0).nodePort}}')"` получить порт указанного сервиса \
+`for i in {1..5}; do curl -s "http://$(minikube ip):$NODE_PORT"; echo ""; done` каждый запрос будет попадать на разный под
+
+`kubectl delete service test-node` удалить службу \
+`kubectl delete deployment test-node` удалить под
+
+`kubectl run busybox --rm -it --image=busybox:latest -- /bin/sh` создание временного пода для отладки (контейнер busybox, который можно использовать для отладки сети и команд curl, ping и т.д.)
+
+`kubectl create deployment kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1 \
+`kubectl expose deployment/kubernetes-bootcamp --type="NodePort" --port 8080 \
+`kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=docker.io/jocatalin/kubernetes-bootcamp:v2` выполнение плавающего обновления версии образа работающего контейнера \
+`kubectl rollout status deployments/kubernetes-bootcamp` проверить статус обновления \
+`kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=gcr.io/google-samples/kubernetes-bootcamp:v10` выполнить обновление на несуществующую версию \
+`kubectl rollout undo deployments/kubernetes-bootcamp` откатить deployment к последней работающей версии (к предыдущему известному состоянию в образе v2)
+
+`kubectl get configmap` Получить все ConfigMap \
+`kubectl describe configmap kube-root-ca.crt` отобразить содержимое корневого сертифика
+
+## Deployment
 ```yaml
-users:
-  admin:
-    name: "admin"
-    password: "a800c3ee4dac5102ed13ba673589077cf0a87a7ddaff59882bb3c08f275a516e"
+echo '
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: torapi # ммя Deployment, который управляет созданием подов (Pods)
+spec:
+  replicas: 2 # количество реплик (2 пода с одинаковыми настройками)
+  selector:
+    matchLabels:
+      app: torapi # определяет, какие поды будут управляться этим Deployment
+  template:
+    metadata:
+      labels:
+        app: torapi  # метка, которая связывает этот шаблон с селектором выше
+    spec:
+      containers:
+      - name: torapi                    # имя контейнера внутри пода
+        image: lifailon/torapi:latest   # используемый образ контейнера
+        ports:
+        - containerPort: 8443           # порт, который будет открыт внутри контейнера
+        resources:                      # ограничения и минимальные требования по ресурсам
+          requests:
+            cpu: "100m"                 # Минимальный запрашиваемый процессор (100 милли-ядра)
+            memory: "64Mi"              # Минимальный запрашиваемый объем оперативной памяти (64 МБайт)
+          limits:
+            cpu: "200m"                 # Максимально доступное процессорное время 
+            memory: "256Mi"             # Максимальный объем памяти
+        livenessProbe:                  # Проверка работоспособности контейнера
+          httpGet:
+            path: /api/provider/list    # endpoint контейнера, по которому проверяется работоспособность
+            port: 8443                  # порт, на котором доступен этот endpoint внутри контейнера
+          initialDelaySeconds: 5        # ждет 5 секунд после запуска контейнера перед первой проверкой
+          periodSeconds: 10             # интервал проверки (повторяет проверку каждые 10 секунд)
+          timeoutSeconds: 3             # максимальное время ожидания ответа
+          failureThreshold: 3           # количество неудачных попыток перед рестартом
+' > torapi-deployment.yaml
 ```
-
-`nano docker-compose.yml`
-
+`kubectl apply -f torapi-deployment.yaml`
 ```yaml
-version: "3.8"
-services:
-  dozzle:
-    image: amir20/dozzle:latest
-    container_name: dozzle
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./dozzle:/data
-    ports:
-      - 9999:8080
-    environment:
-      DOZZLE_AUTH_PROVIDER: simple
-      DOZZLE_HOSTNAME: dozzle
-      DOZZLE_REMOTE_HOST: tcp://192.168.3.102:2375|mon-01
+echo '
+apiVersion: v1
+kind: Service
+metadata:
+  name: torapi-service
+  namespace: default
+spec:
+  selector:
+    app: torapi
+  ports:
+    - protocol: TCP
+      port: 8444        # Внутренний порт сервиса
+      targetPort: 8443  # Порт контейнера
+      nodePort: 30000   # Фиксированный внешний порт (valid range 30000-32767)
+  type: LoadBalancer
+' > torapi-service.yaml
 ```
-`docker-compose up -d`
+`kubectl apply -f torapi-service.yaml`
 
-## Portainer
+`kubectl get pods` будет создано два пода \
+`kubectl logs torapi-54775d94b8-vp26b` отобразить логи пода, будут идти запросы от 10.244.0.1 (kube-probe/1.32) для проверки доступности \
+`kubectl exec -it torapi-54775d94b8-vp26b -- npm --version` вывести версию npm внутри контейнера \
+`kubectl get services torapi-service` \
+`kubectl describe service torapi-service` узнать Server Port, TargetPort (container) и NodePort \
+`kubectl port-forward --address 0.0.0.0 service/torapi-service 8444:8444` \
+`curl http://192.168.3.100:8444/api/provider/list`
 
-`curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml` скачать yaml файл \
-`version_update=$(cat portainer-agent-stack.yml | sed "s/2.11.1/latest/g")` \
-`printf "%s\n" "$version_update" > portainer-agent-stack.yml` обновить версию в yaml файле на последнюю доступную в Docker Hub (2.19.5) \
-`docker stack deploy -c portainer-agent-stack.yml portainer` развернуть в кластере swarm (на каждом node будет установлен агент, который будет собирать данные, а на manager будет установлен сервер с web панелью) \
-https://192.168.3.101:9443
+## HPA
 
-`docker run -d --name portainer_agent -p 9001:9001 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent:2.19.5` установить агент на удаленный хост \
-https://192.168.3.101:9443/#!/endpoints добавить удаленный хост по URL 192.168.3.102:9001
-
-`docker volume create portainer_data` создать volume для установки локального контейнера (не в кластер swarm) \
-`docker create -it --name=portainer -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer` создать локальный контейнер \
-`docker start portainer` \
-http://192.168.3.101:9000
-
-## Docker DotNet
-
-```PowerShell
-# Импорт библиотеки Docker.DotNet (https://nuget.info/packages/Docker.DotNet/3.125.15)
-Add-Type -Path "$home\Documents\Docker.DotNet-3.125.15\lib\netstandard2.1\Docker.DotNet.dll"
-# Указываем адрес удаленного сервера Docker, на котором слушает сокет Docker API
-$config = [Docker.DotNet.DockerClientConfiguration]::new("http://192.168.3.102:2375")
-# Подключаемся клиентом
-$client = $config.CreateClient()
-# Получить список методов класса клиента
-$client | Get-Member
-# Выводим список контейнеров
-$containers = $client.Containers.ListContainersAsync([Docker.DotNet.Models.ContainersListParameters]::new()).GetAwaiter().GetResult()
-# Забираем id по имени
-$kuma_id = $($containers | Where-Object names -match "uptime-kuma-front").id
-# Получить список дочерних методов
-$client.Containers | Get-Member
-# Остановить контейнер по его id
-$StopParameters = [Docker.DotNet.Models.ContainerStopParameters]::new()
-$client.Containers.StopContainerAsync($kuma_id, $StopParameters)
-# Запустить контейнер
-$StartParameters = [Docker.DotNet.Models.ContainerStartParameters]::new()
-$client.Containers.StartContainerAsync($kuma_id, $StartParameters)
+`HPA` (Horizontal Pod Autoscaling) - горизонтальное масштабирование позволяет автоматически увеличивать или уменьшать количество реплик (подов) в зависимости от текущей нагрузки по показателям метрик.
+```yaml
+echo '
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: torapi-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: torapi
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50 # когда среднее использование CPU превышает 50%, будет увеличено количество реплик, чтобы уменьшить нагрузку на поды
+' > torapi-hpa.yaml
 ```
+`kubectl apply -f torapi-hpa.yaml`
+
+`kubectl get hpa` отобразить статус работы всех HPA и текущие таргеты (cpu: 1%/50%) \
+`kubectl get pods` будет активен 1 под из 5 подов (вместо двух, изначально определенных в Deployment)
+
+## Ingress
+
+`Ingress` - это балансировщик нагрузки, который также управляет HTTP/HTTPS трафиком в кластер и направляет его к нужным логическим сервисам (маршрутизация запросов к разным конечным точкам в path).
+```yaml
+echo '
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: torapi-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: torapi.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: torapi-service
+            port:
+              number: 8444
+' > torapi-ingress.yaml
+```
+`kubectl apply -f torapi-ingress.yaml` \
+`kubectl get ingress` отобразить статус работы ingress
+
+Настраиваем `HPA` на основе 100 и выше HTTP-запросов в секунду через метрику `nginx_ingress_controller_requests`:
+```yaml
+echo '
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: torapi-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: torapi
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: External
+    external:
+      metric:
+        name: nginx_ingress_controller_requests
+      target:
+        type: Value
+        value: "100"
+' > torapi-hpa.yaml
+```
+`kubectl apply -f torapi-hpa.yaml` \
+`kubectl get hpa` отобразить статус работы HPA
+
+## Secrets
+
+`kubectl create secret generic admin-password --from-literal=username=admin --from-literal=password=Secret2025` создать секрет в формате ключ-значение \
+`kubectl create secret generic api-key --from-file=api-key.txt` создать секрет из содержимого файла \
+`kubectl get secret` получить список всех секретов \
+`kubectl describe secret admin-password` получить информацию о секрете (размер в байтах) \
+`kubectl get secret admin-password -o yaml` получить содержимое секретов в кодировке base64 \
+`kubectl get secret admin-password -o jsonpath="{.data.password}" | base64 --decode` декодировать содержимое секрета \
+`kubectl delete secret admin-password` удалить секрет
+```yaml
+echo '
+apiVersion: v1
+kind: Secret
+metadata:
+  name: admin-password
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: U2VjcmV0MjAyNQ==
+' > admin-secret.yaml
+```
+`kubectl apply -f admin-secret.yaml`
+
+Передать secret в контейнер через переменные окружения:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-secret-test
+spec:
+  containers:
+  - name: nginx-secret-test
+    image: nginx
+    env:
+    - name: USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: admin-password  # Имя секрета
+          key: username         # Ключ в секрете
+    - name: PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: admin-password
+          key: password
+```
+## Kompose
+
+[Kompose](https://github.com/kubernetes/kompose) - это инструмент, который конвертируемт спецификацию docker-compose в файлы Kubernetes.
+
+`curl -L https://github.com/kubernetes/kompose/releases/download/v1.35.0/kompose-linux-amd64 -o kompose` установка \
+`kompose --file docker-compose.yaml convert` конвертация
+
+## k9s
+
+[K9s](https://github.com/derailed/k9s) - это TUI интерфейс для взаимодействия с кластерами Kubernetes (управление и чтение логов).
+
+`snap install k9s --devmode || wget https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_linux_amd64.deb && apt install ./k9s_linux_amd64.deb && rm k9s_linux_amd64.deb` \
+`winget install k9s || scoop install k9s || choco install k9s || curl.exe -A MS https://webinstall.dev/k9s | powershell`

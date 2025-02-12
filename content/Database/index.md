@@ -44,6 +44,69 @@ $Connection.ChangePassword("password")
 $Connection.Close()
 Invoke-SqliteQuery -Query "SELECT * FROM Service" -DataSource "$path;Password=password"
 ```
+# KeePass
+```PowerShell
+# Определяем переменные до исполняемого файла, базы и пароль
+$KeePassExecPath = "C:\Program Files\KeePass Password Safe 2\KeePass.exe"
+$basePath = "$home\Documents\KeePass\base.kdbx"
+$basePass = "12345"
+
+# Загружаем сборку
+[System.Reflection.Assembly]::LoadFrom($KeePassExecPath) | Out-Null
+[KeePass.Program]::CommonInitialize()
+
+# Открываем базу
+$IOConnectionInfo = [KeePassLib.Serialization.IOConnectionInfo]::FromPath($basePath)
+$CompositeKey = New-Object KeePassLib.Keys.CompositeKey
+$KcpPassword = New-Object KeePassLib.Keys.KcpPassword @($basePass)
+$CompositeKey.AddUserKey($KcpPassword)
+$PwDatabase = New-Object KeePassLib.PwDatabase
+$PwDatabase.Open($IOConnectionInfo, $CompositeKey, $null)
+
+# Поиск в базе по частичному совпадению (фильтрация)
+$SearchParameters = New-Object KeePassLib.SearchParameters
+$SearchParameters.SearchString = 'test'
+$PwObjectList = New-Object KeePassLib.Collections.PwObjectList[KeePassLib.PwEntry]
+$PwDatabase.RootGroup.SearchEntries($SearchParameters, $PwObjectList)
+$ucount = $PwObjectList.UCount - 1
+if ($ucount -ne 0) {
+    foreach ($index in $(0..$ucount)) {
+        $PwObjectList.GetAt($index).Strings.ReadSafe([KeePassLib.PwDefs]::UserNameField)
+    }
+}
+
+# Получаем список групп
+$Groups = $PwDatabase.RootGroup.Groups
+$groupCollections = New-Object System.Collections.Generic.List[System.Object]
+# Проходим по группам
+foreach ($Group in $Groups) {
+    $entryCollections = New-Object System.Collections.Generic.List[System.Object]
+    # Проходим по записям группы и добавляем во временную коллекцию
+	foreach ($entry in $Group.Entries) {
+        $entryCollections.Add([PSCustomObject]@{
+            Title    = $entry.Strings.Get("Title").ReadString()
+            Login    = $entry.Strings.Get("UserName").ReadString()
+            Password = $entry.Strings.Get("Password").ReadString()
+            Url = $entry.Strings.Get("URL").ReadString()
+            Description = $entry.Strings.Get("Notes").ReadString()
+        })
+    }
+    # Добавляем запись в основную коллекцию групп (название группы используется как ключ)
+    $groupCollections += [PSCustomObject]@{
+        # ($Group.Name) = $entryCollections
+		Group = $Group.Name
+		Modification = $Group.LastAccessTime.ToString()
+        Entries = $entryCollections
+    }
+}
+
+# Преобразуем структуру в JSON
+$jsonData = $groupCollections | ConvertTo-Json -Depth 3
+$jsonData
+
+# Закрываем базу
+$PwDatabase.Close()
+```
 # MySQL
 
 `apt -y install mysql-server mysql-client` \

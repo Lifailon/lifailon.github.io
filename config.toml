@@ -76,13 +76,14 @@ show_repo = true
 links = [
   { url = "@/PowerShell/index.md", name = "PowerShell" },
   { url = "@/Linux/index.md", name = "Linux" },
-  { url = "@/Docker/index.md", name = "Docker" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
+  { url = "@/Docker/index.md", name = "Docker" },
   { url = "@/Network/index.md", name = "Network" },
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/api/index.md", name = "API" },
+  { url = "@/Jenkins/index.md", name = "Jenkins" },
   { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 
@@ -90,13 +91,14 @@ links = [
 links = [
   { url = "@/PowerShell/index.md", name = "PowerShell" },
   { url = "@/Linux/index.md", name = "Linux" },
-  { url = "@/Docker/index.md", name = "Docker" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
+  { url = "@/Docker/index.md", name = "Docker" },
   { url = "@/Network/index.md", name = "Network" },
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/api/index.md", name = "API" },
+  { url = "@/Jenkins/index.md", name = "Jenkins" },
   { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 

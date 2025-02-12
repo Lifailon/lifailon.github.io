@@ -506,6 +506,8 @@ function Get-WebCertificate ($srv) {
 `Get-WebCertificate https://google.com`
 
 # SMTP
+
+### Net.Mail
 ```PowerShell
 function Send-SMTP {
 param (
@@ -517,7 +519,7 @@ param (
     $to = "login2@yandex.ru" 
     $user = "login1"
     $pass = "password"
-    $subject = "Service status on Host: $hostname"
+    $subject = "PowerShell"
     $Message = New-Object System.Net.Mail.MailMessage
     $Message.From = $from
     $Message.To.Add($to) 
@@ -530,7 +532,46 @@ param (
     $smtp.Send($Message) 
 }
 ```
-`Send-SMTP $(Get-Service)`
+`Send-SMTP "This is a test email from PowerShell"`
+
+### SMTP over OpenSSL
+```Bash
+# Получить логин и пароль в формате Base64
+echo -n "fromUserName@yandex.ru" | base64 # ZnJvbVVzZXJOYW1lQHlhbmRleC5ydQ==
+echo -n "app-password" | base64 # YXBwLXBhc3N3b3Jk
+# Подключаемся к серверу через OpenSSL и авторизуемся
+openssl s_client -connect smtp.yandex.ru:465 -crlf -quiet
+# 220 Ok
+EHLO hv-dev-101
+AUTH LOGIN
+ZnJvbVVzZXJOYW1lQHlhbmRleC5ydQ==
+YXBwLXBhc3N3b3Jk
+# 235 Authentication successful
+# Отправляем письмо
+MAIL FROM:<fromUserName@yandex.ru>
+RCPT TO:<toUserName@yandex.ru>
+DATA
+Subject: OpenSSL
+# Отделить тему от тела письма пустой строкой
+This is a test email from OpenSSL
+.
+# 250 Ok
+```
+### Swaks
+
+[Swaks](https://github.com/jetmore/swaks) - SMTP клиент на Perl
+```bash
+swaks --from fromUserName@yandex.ru \
+    --to toUserName@yandex.ru \
+    --server smtp.yandex.ru \
+    --port 587 \
+    --auth LOGIN \
+    --auth-user fromUserName@yandex.ru \
+    --auth-password "app-password" \
+    --tls \
+    --header "Subject: Test Subject" \
+    --body "This is the body test from swaks"
+```
 
 # Route
 
@@ -910,7 +951,7 @@ Subsystem powershell c:/progra~1/powershell/7/pwsh.exe -sshs -NoLogo # запу�
 `Remove-PSSession $session` удалить сессию \
 `Import-Module -Name ActiveDirectory -PSSession $srv` импортировать модуль с удаленного компьютера в локальную сессию
 
-### Windows Remote Management Configuration
+### WinRM Configuration
 
 `winrm quickconfig -quiet` изменит запуск службы WinRM на автоматический, задаст стандартные настройки WinRM и добавить исключения для портов в fw \
 `Enable-PSRemoting –Force` включить PowerShell Remoting, работает только для доменного и частного сетевых профилей Windows \
