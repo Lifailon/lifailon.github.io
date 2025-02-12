@@ -112,7 +112,7 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `du -h --max-depth=1 /var/lib/docker` \
 `du -h --max-depth=2 /var/lib/docker/containers`
 
-```shell
+```bash
 docker run \
   --log-driver json-file \
   --log-opt max-size=10m \
@@ -316,7 +316,7 @@ CMD ["npm", "start"]
 
 ## ADD
 
-```shell
+```bash
 FROM alpine:latest
 # Загрузка и распаковка архива напрямую из GitHub
 ADD https://github.com/<username>/<repository>/archive/refs/heads/main.zip /app/

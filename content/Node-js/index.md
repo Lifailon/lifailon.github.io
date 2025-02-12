@@ -725,7 +725,7 @@ Math.clz32(1)          // Количество ведущих нулей в 32-�
 
 Создаем директорию, инициализируем проект и устанавливаем зависимости
 
-```shell
+```bash
 mkdir api && cd api
 npm init -y
 npm install express
@@ -776,7 +776,7 @@ web.listen(PORT, () => {
 
 Запуск сервера
 
-```shell
+```bash
 node server.js
 ```
 
@@ -784,7 +784,7 @@ node server.js
 
 Клиентская часть для работы с `API`
 
-```shell
+```bash
 npm install axios
 ```
 
@@ -874,7 +874,7 @@ JSON.stringify(result) // '{"userId":1,"id":1,"title":"delectus aut autem","comp
 
 Cheerio - это библиотека для работы с `HTML` и `XML` в `Node.js`
 
-```shell
+```bash
 npm install axios cheerio https-proxy-agent iconv-lite
 ```
 
@@ -997,7 +997,7 @@ console.log(JSON.stringify(torrents, null, 2))
 
 Puppeteer — это библиотека, которая предоставляет `API` для автоматизации любых действий в браузерах **Google Chrome** и **Mozilla Firefox** через протокол `Chrome DevTools` и `WebDriver BiDi`.
 
-```shell
+```bash
 mkdir api && cd api && npm init -y && npm install puppeteer
 ```
 
