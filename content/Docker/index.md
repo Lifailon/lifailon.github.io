@@ -263,46 +263,70 @@ lazydocker
 
 `FROM` указывает базовый образ, на основе которого будет создаваться новый образ \
 `LABEL` добавляет метаданные к образу в формате ключ-значение \
-`ENV` устанавливает переменные окружения, которые будут доступны внутри контейнера \
+`ENV` устанавливает переменные окружения, которые будут доступны внутри контейнера со значениями по умолчанию (можно переопределить через `-e`, который имеет повышенный приоритет) \
+`ARG` определяет переменные, которые могут быть переданы и доступны только на этапе сборки образа (выполнения инструкций в dockerfile через `docker build --build-arg`) и недоступны в контейнере \
+`USER` устанавливает пользователя, от имени которого будут выполняться следующие команды \
+`WORKDIR` устанавливает рабочий каталог внутри контейнера для последующих команд \
+`SHELL` задает командную оболочку, которая будет использоваться для выполнения команд RUN, CMD и ENTRYPOINT (по умолчанию `/bin/sh -c`, например на `SHELL ["/bin/bash", "-c"]`) \
 `RUN` выполняет команды в контейнере во время сборки образа \
 `COPY` копирует файлы и каталоги из указанного источника на локальной машине в файловую систему контейнера \
 `ADD` копирует файлы и каталоги в контейнер, поддерживает загрузку файлов из URL и автоматическое извлечение архивов \
 `CMD` определяет команду, которая будет выполняться при запуске контейнера, может быть переопределена при запуске \
-`ENTRYPOINT` задает основную команду, которая будет выполняться при запуске контейнера \
-`WORKDIR` устанавливает рабочий каталог внутри контейнера для последующих команд \
-`ARG` определяет переменные, которые могут быть переданы на этапе сборки образа \
-`VOLUME` создает точку монтирования для хранения данных, сохраняемых вне контейнера \
+`ENTRYPOINT` задает основную команду, которая будет выполняться при запуске контейнера без возможности ее переопредиления, но с возможностью передачи аргументов \
+`VOLUME` создает точку монтирования для хранения данных в хостовой системе \
 `EXPOSE` указывает, какие порты контейнера будут доступны извне \
-`USER` устанавливает пользователя, от имени которого будут выполняться следующие команды \
 `HEALTHCHECK` определяет команду для проверки состояния работающего контейнера \
 `ONBUILD` задает команды, которые будут автоматически выполнены при сборке дочерних образов \
-`STOPSIGNAL` определяет сигнал, который будет отправлен контейнеру для его остановки \
-`SHELL` задает командную оболочку, которая будет использоваться для исполнения команд RUN, CMD, ENTRYPOINT и т.д.
+`STOPSIGNAL` определяет сигнал, который будет отправлен контейнеру для его остановки
 
 `git clone https://github.com/Lifailon/TorAPI` \
 `cd TorAPI` \
 `nano Dockerfile`
 ```Dockerfile
-# Указать базовый образ, который содержит последнюю версию Node.js и npm для создания контейнера
-FROM node:latest
+# Указать базовый образ для сборки, который содержит последнюю версию Node.js и npm
+FROM node:alpine AS build
 # Установить рабочую директорию для контейнера (все последующие команды будут выполняться относительно этой директории)
 WORKDIR /torapi
-# Копирует файл package.json из текущей директории на хосте в рабочую директорию контейнера
+# Копирует файл package.json из текущей директории на хосте в рабочую директорию
 COPY package.json ./
 # Запускает команду (используя оболочку по умолчанию) для установки зависимостей, указанных в package.json
-RUN npm install
+RUN npm install && npm update && npm cache clean --force
 # Копирует все файлы из текущей директории на хосте в рабочую директорию контейнера
 COPY . .
-# Определяем переменные окружения по умолчанию
+# Создает новый рабочий образ для создания контейнера
+FROM node:alpine
+WORKDIR /torapi
+# Копирует только те файлы, которые необходимые для работы приложения
+COPY --from=build /torapi/node_modules ./node_modules
+COPY --from=build /torapi/package.json ./package.json
+COPY --from=build /torapi/main.js ./main.js
+COPY --from=build /torapi/swagger/swagger.js ./swagger/swagger.js
+COPY --from=build /torapi/category.json ./category.json
+# Определить переменные окружения по умолчанию, которые могут быть переопределены при запуске контейнера
 ENV PORT=8443
+ENV PROXY_ADDRESS=""
+ENV PROXY_PORT=""
+ENV USERNAME=""
+ENV PASSWORD=""
 # Открывает порт 8443 для доступа к приложению из контейнера
 EXPOSE $PORT
-# Устанавливает команду по умолчанию для запуска при старте контейнера, которая запускает приложение с помощью npm start
-CMD ["npm", "start"]
+# Определить команду для проверки работоспособности контейнера (для примера)
+# Проверка будет запускаться каждые 120 секунд, если команда не завершится за 30 секунд, она будет считаться неуспешной, если команда не проходит 3 раза подряд, контейнер будет помечен как нездоровый
+# Docker будет ждать 5 секунд после старта контейнера перед тем, как начать проверки здоровья
+HEALTHCHECK --interval=120s --timeout=30s --retries=3 --start-period=10s \
+    CMD ["sh", "-c", "npm start -- --test"]
+# Устанавливает команду по умолчанию для запуска приложения при запуске контейнера
+ENTRYPOINT ["sh", "-c", "npm start -- --port $PORT --proxyAddress $PROXY_ADDRESS --proxyPort $PROXY_PORT --username $USERNAME --password $PASSWORD"]
 ```
-`docker build -t torapi .` собрать образ из dockerfile \
-`docker run -d --name TorAPI -p 8443:8443 torapi`
-
+`docker build -t torapi .` собрать образ из dockerfile
+```bash
+docker run -d --name TorAPI -p 8443:8443 --restart=unless-stopped \
+  -e PROXY_ADDRESS="192.168.3.100" \
+  -e PROXY_PORT="9090" \
+  -e USERNAME="TorAPI" \
+  -e PASSWORD="TorAPI" \
+  torapi
+```
 ## Push
 
 `docker login` \
@@ -353,7 +377,7 @@ volumes:
 ```
 `docker-compose up -d`
 
-`kuma_db=$(docker inspect uptime-kuma-frontend | jq -r .[].Mounts.[].Source)` место хранения конфигураций в базе SQLite \
+`kuma_db=$(docker inspect uptime-kuma | jq -r .[].Mounts.[].Source)` место хранения конфигураций в базе SQLite \
 `cp $kuma_db/kuma.db $HOME/uptime-kuma-backup.db`
 
 Сгенерировать API ключ: `http://192.168.3.101:8081/settings/api-keys` \
@@ -361,14 +385,18 @@ volumes:
 
 Пример конфигурации для Prometheus:
 ```yaml
-- job_name: 'uptime'
-  scrape_interval: 30s
-  scheme: http
-  static_configs:
-    - targets: ['uptime.url']
-  basic_auth: 
-    password: uk1_fl3JxkSDwGLzQuHk2FVb8z89SCRYq0_3JbXsy73t
+scrape_configs:
+  - job_name: uptime-kuma
+    scrape_interval: 30s
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - '192.168.3.101:8081'
+    basic_auth:
+      password: uk1_fl3JxkSDwGLzQuHk2FVb8z89SCRYq0_3JbXsy73t
 ```
+Dashboard для Grafana - [Uptime Kuma - SLA/Latency/Certs](https://grafana.com/grafana/dashboards/18667-uptime-kuma-metrics) (id 18667)
+
 [Uptime-Kuma-Web-API](https://github.com/MedAziz11/Uptime-Kuma-Web-API) - оболочка API и Swagger документация написанная на Python с использованием FastAPI и [Uptime-Kuma-API](https://github.com/lucasheld/uptime-kuma-api).
 
 nano docker-compose.yml
@@ -382,6 +410,7 @@ services:
     restart: unless-stopped
     volumes:
       - uptime-kuma:/app/data
+
   uptime-kuma-api:
     container_name: uptime-kuma-backend
     image: medaziz11/uptimekuma_restapi
@@ -397,6 +426,7 @@ services:
       - uptime-kuma-web
     ports:
       - "8082:8000"
+
 volumes:
   uptime-kuma:
   uptime-api:
@@ -409,38 +439,24 @@ TOKEN=$(curl -sS -X POST http://192.168.3.101:8082/login/access-token --data "us
 curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors | jq .
 curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'
 ```
-## MeTube
-
-[MeTube](https://github.com/alexta69/metube) - веб-интерфейс yt-dlp для загрузки YouTube
-
-`mkdir /home/lifailon/metube-downloads` директория для хранения загружаемого видео контента в хостовой системе 
-
-`nano docker-compose.yml`
-```yaml
-services:
-  metube:
-    image: ghcr.io/alexta69/metube
-    container_name: metube
-    restart: unless-stopped
-    ports:
-      - "8090:8081"
-    volumes:
-      - /home/lifailon/metube-downloads:/downloads
-```
-`docker-compose up -d`
-
 ## Dozzle
 
-`echo -n DozzleAdmin | shasum -a 256` получить пароль в формате sha-256 \
-`mkdir dozzle && nano ./dozzle/users.yml` создать файл с авторизационными данными
+Dozzle (https://github.com/amir20/dozzle) - легковесное приложение с веб-интерфейсом для мониторинга журналов Docker (без хранения).
+
+`mkdir dozzle && cd dozzle && mkdir dozzle_data`
+
+`echo -n DozzleAdmin | shasum -a 256` получить пароль в формате sha-256 и передать в конфигурацию
 ```yaml
+echo '
 users:
   admin:
     name: "admin"
     password: "a800c3ee4dac5102ed13ba673589077cf0a87a7ddaff59882bb3c08f275a516e"
+' > ./dozzle_data/users.yml
 ```
-`nano docker-compose.yml`
+Запускаем контейнер:
 ```yaml
+echo '
 services:
   dozzle:
     image: amir20/dozzle:latest
@@ -448,16 +464,67 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./dozzle:/data
+      - ./dozzle_data:/data
     ports:
       - 9090:8080
     environment:
       DOZZLE_AUTH_PROVIDER: simple
       # Доступ к удаленному хосту через Docker API (tcp socket)
       # DOZZLE_REMOTE_HOST: tcp://192.168.3.102:2375|mon-01
+' > docker-compose.yml
 ```
 `docker-compose up -d`
 
+## Watchtower
+
+[Watchtower](https://github.com/containrrr/watchtower) - следить за тегом `latest` в реестре Docker Hub и обновлять контейнер, если он станет устаревшим.
+```yaml
+echo "
+services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      - WATCHTOWER_LIFECYCLE_HOOKS=1
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=telegram://<BOT_API_KEY>@telegram/?channels=<CHAT/CHANNEL_ID>
+      # - WATCHTOWER_HTTP_API_TOKEN=demotoken
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 600 --http-api-metrics --http-api-token demotoken # --http-api-update # --http-api-periodic-polls
+    ports:
+      - 8070:8080
+    restart: unless-stopped
+" > docker-compose.yml
+```
+`docker-compose up -d`
+
+Проброс потра используется для получения метрик через Prometheus. Если нужно запускать обновления только через API, нужно добавить команду `--http-api-update`, или указать команду `--http-api-periodic-polls`, что бы использовать ручное и автоматическое обновление.
+
+`curl -H "Authorization: Bearer demotoken" http://192.168.3.101:8070/v1/metrics` получить метрики \
+`curl -H "Authorization: Bearer demotoken" http://192.168.3.101:8070/v1/update` проверить и запустить обновления
+
+Добавить `scrape_configs` в `prometheus.yml` для сбора метрик:
+```yaml
+scrape_configs:
+  - job_name: watchtower
+    scrape_interval: 5s
+    metrics_path: /v1/metrics
+    bearer_token: demotoken
+    static_configs:
+      - targets:
+        - '192.168.3.101:8070'
+```
+`docker-compose restart prometheus`
+
+Чтобы исключить обновления, нужно добавить "lable" при запуске контейнера:
+```bash
+docker run -d --name kinozal-bot \
+  -v /home/lifailon/kinozal-bot/torrents:/home/lifailon/kinozal-bot/torrents \
+  --restart=unless-stopped \
+  --label com.centurylinklabs.watchtower.enable=false \
+  kinozal-bot
+```
 ## Portainer
 
 `curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml` скачать yaml файл \
@@ -743,7 +810,21 @@ spec:
 
 ## HPA
 
-`HPA` (Horizontal Pod Autoscaling) - горизонтальное масштабирование позволяет автоматически увеличивать или уменьшать количество реплик (подов) в зависимости от текущей нагрузки по показателям метрик.
+`HPA` (Horizontal Pod Autoscaling) - горизонтальное масштабирование позволяет автоматически увеличивать или уменьшать количество реплик (подов) в зависимости от текущей нагрузки по показателям метрик, получаемых из `metrics-server`.
+
+`kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml` активировать metrics-server в Docker-Desktop (загрузить и применить конфигурацию) \
+`kubectl logs -n kube-system deployment/metrics-server` проверить логи metrics-server \
+`kubectl get deployment metrics-server -n kube-system` отобразить статус работы metrics-server \
+`kubectl top nodes` отобразить метрики ресурсов для всех узлов в кластере
+
+`kubectl edit deployment metrics-server -n kube-system` отключить проверку TLS
+```yaml
+spec:
+  containers:
+  - args:
+    - --kubelet-insecure-tls
+```
+`kubectl rollout restart deployment metrics-server -n kube-system` перезапустить metrics-server
 ```yaml
 echo '
 apiVersion: autoscaling/v2
@@ -775,6 +856,10 @@ spec:
 ## Ingress
 
 `Ingress` - это балансировщик нагрузки, который также управляет HTTP/HTTPS трафиком в кластер и направляет его к нужным логическим сервисам (маршрутизация запросов к разным конечным точкам в path).
+
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml` установить Ingress Controller \
+`kubectl get pods -n ingress-nginx` \
+`kubectl get svc -n ingress-nginx`
 ```yaml
 echo '
 apiVersion: networking.k8s.io/v1

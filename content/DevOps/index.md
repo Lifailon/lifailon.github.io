@@ -29,16 +29,19 @@ toc_sidebar = true
 `git grep "ping ya.ru"` поиск текста в файлах \
 `git fetch` загрузить изменения из удаленного хранилища для обновления всех веток локального репозитория, не затрагивая текущую рабочую ветку (загружает все коммиты, ветки и т.д. которые не присутствуют в локальном репозитории) \
 `git fetch --all` загрузить все ветки с удаленного репозитория (обновляет информацию о состоянии удаленного репозитория и загружает все изменения ваших веток без автоматического объединения) \
-`git pull` загрузить изменения из удаленного хранилища для обновления локального репозитория (выполняет git fetch, чтобы получить последние изменения из удаленного репозитория, а затеим объеденяем изменения с локальной копией с помощью git merge для обновления текущей рабочей ветки) \
+`git pull` загрузить изменения из удаленного хранилища для обновления локального репозитория (выполняет `git fetch`, чтобы получить последние изменения из удаленного репозитория, а затеим объеденяем изменения с локальной копией с помощью `git merge` для обновления текущей рабочей ветки) \
+`git stash` сохраняет текущие незакоммиченные изменения в временное хранилище (например, на время выполнения `git pull`), в т.ч. неотслеживаемые файлы и очищает рабочую директорию (вернет в состояние, соответствующее последнему коммиту) \
+`git stash pop` применяет последние изменения из стэша к текущей ветке (вернутся только измененные строки в файлах, при этом будут сохранены новые добавленные строки в файле без конфликтов) и удаляет их из стэша \
+`git stash apply` применяет изменения, но не удаляет их из стэша \
 `git status` отобразить статус изменений по файлам \
 `git diff` отобразить историю изменений построчно \
-`git diff pandoc` сравнивает изменения в текущей рабочей директории с последним коммитом в указанной ветке \
+`git diff pandoc` сравнивает изменения в текущей рабочей директории с последним коммитом в указанной ветке `pandoc` \
 `git add .` добавить (проиндексировать) изменения во всех файлах текущего каталога \
 `git commit -m "update powershell commands"` сохранить изменения с комментарием \
 `git push` синхронизировать локальные изменения с репозиторием на сервере \
 `git push origin mkdocs-material` отправить в конкретную ветку \
 `git push origin --delete mkdocs` удалить ветку на удаленном сервере \
-`git commit --amend` изменить комментарий в последнем коммите (до push) \
+`git commit --amend` изменить комментарий в последнем коммите (до `push`) \
 `git commit --amend --no-edit --date="Sun Oct 27 23:20:00 2024 +0300"` изменить дату последнего коммита \
 `git branch -a` отобразить все ветки (в том числе удаленные remotes/origin) \
 `git branch hugo` создать новую ветку \
@@ -46,25 +49,24 @@ toc_sidebar = true
 `git branch -d hugo-public` удалить ветку \
 `git switch hugo` переключиться на другую ветку \
 `git push origin hugo` отправить изменения в указанную ветку \
-`git push --set-upstream origin hugo` отслеживать изменения в ветке (позволяет делать push без указания ветки) \
-`git merge hugo` слияние текущей ветки (pandoc) с указанной (hugo) \
-`git log --oneline --all` лог коммитов \
+`git branch --set-upstream-to=origin/hugo hugo` локальная ветка `hugo` будет отслеживать удаленную ветку `hugo` на удаленном сервере-репозитории `origin` (позволяет не указывать название удаленной ветки при каждом использовании команд `git push` или `git pull`) \
+`git switch pandoc` переключиться на другую ветку \
+`git merge hugo` слияние указанной ветки (`hugo`) в текущую ветку (`pandoc`)  \
+`git log --oneline --all` отобразить список всех коммитов и их сообщений \
 `git log --graph` коммиты и следование веток \
 `git log --author="Lifailon"` показывает историю коммитов указанного пользователя \
-`git blame index.html` показывает, кто и когда внес изменения в каждую строку указанного файла \
+`git blame .\posh.md` показывает, кто и когда внес изменения в каждую строку указанного файла (`НОМЕР_КОММИТА (ИМЯ_ПОЛЬЗОВАТЕЛЯ ДАТА НОМЕР_СТРОКИ) ТЕКСТ.`) \
 `git show d01f09dead3a6a8d75dda848162831c58ca0ee13` отобразить подробный лог по номеру коммита \
-`git restore filename` отменить все локальные изменения в рабочей копии независимо от того, были они проиндексированы или нет (если была индексация через add), возвращая его к состоянию на момент последнего коммита \
+`git checkout filename` устаревшая команда, откатить не проиндексированные изменения для коммита, возвращая его к состоянию, каким оно было на момент последнего коммита (если не было индексации через `add`) \
+`git restore filename` отменить все локальные изменения в рабочей копии независимо от того, были они проиндексированы или нет (через `add`), возвращая его к состоянию на момент последнего коммита \
 `git restore --source d01f09dead3a6a8d75dda848162831c58ca0ee13 filename` восстановить файл на указанную версию по хэшу индентификатора коммита \
-`git checkout filename` откатить изменения не проиндексированные для коммита, возвращая его к состоянию, каким оно было на момент последнего коммита (если не было индексации через add) \
-`git checkout d01f09dead3a6a8d75dda848162831c58ca0ee13` переключить локальные файлы рабочей копии на указанный коммит (переключает HEAD на указанный коммит) \
-`git reset HEAD filename` удалить указанный файл из индекса без удаления самих изменений в файле для последующей повторной индексации (если был add но не было commit, потом выполнить checkout) \
-`git reset --soft HEAD^` отменяет последний (^) коммит, сохраняя изменения из этого коммита в рабочем каталоге и индексе (подготовленной области), можно внести изменения в файлы и повторно их зафиксировать \
-`git reset --hard HEAD^` полностью отменяет последний коммит, удаляя все его изменения из рабочего каталога и индекса до состояния последнего коммита \
-`git reset --hard d01f09dead3a6a8d75dda848162831c58ca0ee13` откатывает HEAD к указанному коммиту и удаляет все коммиты, которые были сделаны после него (будут потеряны все незакоммиченные изменения и историю коммитов после указанного) \
-`git revert HEAD --no-edit` создает новый коммит, который отменяет последний коммит (HEAD) и новый коммит будет добавлен поверх него (события записываются в git log) \
-`git revert d01f09dead3a6a8d75dda848162831c58ca0ee13` создает новый коммит, который отменяет изменения, внесенные в указанный коммит с хешем (не изменяет историю коммитов, а создает новый коммит с изменениями отмены) \
-`git stash` сохраняет текущие изменения в стэш (временное хранилище) и очищает рабочую директорию \
-`git stash pop` применяет последние изменения из стэша к текущей ветке
+`git reset HEAD filename` удалить указанный файл из индекса без удаления самих изменений в файле для последующей повторной индексации (если был `add` но не было `commit`, потом выполнить `checkout`) \
+`git reset --soft HEAD^` отменяет последний (^) коммит, сохраняя изменения из этого коммита в рабочем каталоге и индексе (подготовленной области), можно внести изменения в файлы и повторно их зафиксировать через `commit` \
+`git reset --hard HEAD^` полностью отменяет последний коммит, удаляя все его изменения из рабочего каталога и индекса до состояния предыдущего перед последним коммитом (аналогично `HEAD~1`) \
+`git push origin main --force` удалить последний коммит на удаленном сервере репозитория после `reset --hard HEAD^`  \
+`git reset --hard d01f09dead3a6a8d75dda848162831c58ca0ee13` откатывает изменения к указанному коммиту и удаляет все коммиты, которые были сделаны после него (будут потеряны все незакоммиченные изменения и историю коммитов после указанного) \
+`git revert HEAD --no-edit` создает новый коммит, который отменяет последний коммит (`HEAD^`) и новый коммит будет добавлен поверх него (события записываются в `git log`) \
+`git revert d01f09dead3a6a8d75dda848162831c58ca0ee13` создает новый коммит, который отменяет изменения, внесенные в указанный коммит с хешем (не изменяет историю коммитов, а создает новый коммит с изменениями отмены)
 
 # GitHub api
 
@@ -416,32 +418,71 @@ $secrets.secret.secretKey
 $secrets.secret.secretValue
 ```
 
-## HashiCorp
+## HashiCorp/Vault
 
+`mkdir vault && cd vault && mkdir vault_config`
+
+Создать конфигурацию:
 ```bash
-docker run --cap-add=IPC_LOCK -d --name=hashicorp-vault -p 8200:8200 \
-  -v hashicorp-vault-file:/vault/file \
-  -v hashicorp-vault-logs:/vault/logs \
-  hashicorp/vaul
-
-2025-01-26 20:06:14 Api Address: http://0.0.0.0:8200
-2025-01-26 20:06:14 Unseal Key: XOD8uWWSL7LAAUwPqBTvryr3U6l9J3Q7CDVc+YmTET8=
-2025-01-26 20:06:14 Root Token: hvs.aYaGulrLe2pySPTDbZhOQCar
+echo '
+# Использовать локальное файловое хранилище
+storage "file" {
+  path = "/vault/file"
+}
+# Отключение режим dev (не будет выгружать данные в память)
+disable_mlock = false
+# Настройка слушателя для REST API
+listener "tcp" {
+  address = "0.0.0.0:8200"
+  tls_disable = 1  # Отключить TLS
+}
+# Включение интерфейс
+ui = true
+# Включение аутентификации в API по токену
+api_addr = "http://localhost:8200"
+auth "token" {}
+' > vault_config/vault.hcl
 ```
-
+Запускаем в контейнере:
+```bash
+docker run -d --name=vault \
+  --restart=unless-stopped \
+  -e VAULT_ADDR=http://0.0.0.0:8200 \
+  -e VAULT_API_ADDR=http://localhost:8200 \
+  -p 8200:8200 \
+  -v ./vault_config:/vault/config \
+  -v ./vault_data:/vault/file \
+  --cap-add=IPC_LOCK \
+  hashicorp/vault:latest \
+  vault server -config=/vault/config/vault.hcl
+```
+Получить ключи разблокировки и root ключ для первичной инициализации:
+```bash
+docker exec -it vault vault operator init
+```
+Ввести любые 3 из 5 ключей для разблокировки после перезапуска контейнера:
+```bash
+docker exec -it vault vault operator unseal BPJSmuLvKAEr6wtE/8TOMRMM+x0fW3UhOxGFLn9Gmi5N
+docker exec -it vault vault operator unseal 44ntLYvSMN5FNLyddLo2IylRsLk7lqYXZOShvhV/2gbG
+docker exec -it vault vault operator unseal xP9+YTyW13W6xGz52mMut2MdOnzxtbhDW8dK9zdF4aLY
+```
+Проверить статус (должно быть `Sealed: false`) и авторизацию по root ключу в хранилище:
+```bash
+docker exec -it vault vault status
+docker exec -it vault vault login hvs.rxlYkJujkX6Fdxq2XAP3cd3a
+```
 `Secrets Engines` -> `Enable new engine` + `KV` \
 API Swagger: http://192.168.3.100:8200/ui/vault/tools/api-explorer
-
 ```PowerShell
-$TOKEN = "hvs.aYaGulrLe2pySPTDbZhOQCar"
+$TOKEN = "hvs.rxlYkJujkX6Fdxq2XAP3cd3a"
 $Headers = @{
     "X-Vault-Token" = $TOKEN
 }
 # Указать путь до секретов (создается в корне kv)
 $path = "main-path"
-$url = "http://192.168.3.100:8200/v1/kv/data/$path"
+$url = "http://192.168.3.101:8200/v1/kv/data/$path"
 $data = Invoke-RestMethod -Uri $url -Method GET -Headers $Headers
-# Получить содержимое ключа по его названию
+# Получить содержимое ключа по его названию (key_name)
 $data.data.data.key_name # secret_value
 
 # Перезаписать все секреты
@@ -462,9 +503,7 @@ Invoke-RestMethod -Uri $urlUpdate -Method POST -Headers $Headers -Body $Body
 # Удалить все секреты
 Invoke-RestMethod -Uri "http://192.168.3.100:8200/v1/kv/data/main-path" -Method DELETE -Headers $Headers
 ```
-
 Vault client:
-
 ```bash
 # Установить клиент в Linux (debian):
 wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -481,6 +520,48 @@ vault kv get -mount="kv" "main-path"
 # Удалить секреты
 vault kv delete kv/my-secret
 ```
+## HashiCorp/Consul
+
+[Consul](https://github.com/hashicorp/consul) используется для кластеризации и централизованного хранения данных `Vault`, а также как самостоятельное `Key-Value` хранилище.
+
+Создать конфигурацию:
+```bash
+echo '
+ui = true
+log_level = "INFO"
+acl {
+  enabled = true
+  default_policy = "deny"
+  enable_token_persistence = true
+}
+' > consul.hcl
+```
+Запускаем в контейнере:
+```bash
+docker run -d \
+  --name=consul \
+  --restart=unless-stopped \
+  -p 8500:8500 \
+  -v ./consul_data:/consul/data \
+  -v ./consul.hcl:/consul/config/consul.hcl \
+  hashicorp/consul:latest \
+  agent -server -bootstrap-expect=1 -client=0.0.0.0
+```
+Создать `root token`, который будет использоваться для управления системой `ACL` и для создания политик доступа и других токенов доступа:
+```bash
+docker exec -it consul consul acl bootstrap
+```
+Создать новую политику доступа:
+```bash
+docker exec -it consul consul acl policy create -name "default" -rules 'node_prefix "" { policy = "write" } service_prefix "" { policy = "write" } key_prefix "" { policy = "write" }' -token "382834da-28b6-c72c-7ffb-11acf9bf20bc"
+```
+Создать новый токен доступа:
+```bash
+docker exec -it consul consul acl token create -policy-name "default" -token "382834da-28b6-c72c-7ffb-11acf9bf20bc"
+```
+`curl http://localhost:8500/v1/health/service/consul?pretty` \
+`curl --request PUT --data "ssh-rsa AAAA" http://localhost:8500/v1/kv/ssh/key` записать секрет KV Store Consul \
+`curl -s http://localhost:8500/v1/kv/ssh/key | jq -r .[].Value | base64 --decode` извлечь содержимое секрета
 
 # Ansible
 
@@ -1251,6 +1332,96 @@ Remove-Item "$home\Downloads\Bitbucket*" -Recurse -Force
 `Set-ConfluenceInfo` установка информации о странице \
 `Set-ConfluenceLabel` установка метки страницы \
 `Set-ConfluencePage` установка страницы
+
+# Prometheus
+
+Пример создания экспортера для получения метрик температуры всех дисков из CrystalDiskInfo и отправки в [Prometheus](https://github.com/prometheus/prometheus) через [PushGateway](https://github.com/prometheus/pushgateway).
+
+1. Запускаем `pushgateway` в контейнере:
+
+`docker run -d --name pushgateway --restart unless-stopped -p 19091:9091 prom/pushgateway`
+
+2. Запускаем скрипт в консоли:
+```PowerShell
+$instance = [System.Net.Dns]::GetHostName()
+$pushgatewayUrl = "http://192.168.3.100:19091/metrics/job/disk_temperature"
+# Изменить адрес шлюза на имя контейнера при запуске через compose
+# $pushgatewayUrl = "http://pushgateway:9091/metrics/job/disk_temperature"
+$path = "C:/Program Files/CrystalDiskInfo/Smart"
+# Изменить путь при запуске в контейнере Docker через WSL
+# $path = "/mnt/c/Program Files/CrystalDiskInfo/Smart"
+# Необходимо строго использовать синтаксис PowerShell (избегая псевдонимы ls)
+$diskArray = $(Get-ChildItem $path).Name
+while ($true) {
+    $metrics = "# TYPE disk_temperature gauge`n"
+    foreach ($diskName in $diskArray) {
+        $lastTemp = $(@("Date,Value")+$(Get-Content "$path/$diskName/Temperature.csv") | ConvertFrom-Csv)[-1].Value
+        $diskLabel = $diskName -replace "[^a-zA-Z0-9]", "_"
+        $metrics += "disk_temperature{disk=`"$diskLabel`",instance=`"$instance`"} $lastTemp`n"
+    }
+    $metrics
+    Invoke-RestMethod -Uri $pushgatewayUrl -Method POST -Body $metrics
+    Start-Sleep 10
+}
+```
+3. Проверяем наличие метрик на конечной точке шлюза:
+```PowerShell
+$(Invoke-RestMethod http://192.168.3.100:9091/metrics).Split("`n") | Select-String "disk_temperature"
+```
+4. Добавляем конфигурацию в `prometheus.yml`:
+```yaml
+scrape_configs:
+  - job_name: cdi-exporter
+    scrape_interval: 10s
+    scrape_timeout: 2s
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - '192.168.3.100:19091'
+```
+`docker-compose kill -s SIGHUP prometheus` применяем изменения
+
+5. Собираем контейнер в среде `WSL` с монтированием системного диска Windows:
+```dockerfile
+Write-Output '
+FROM mcr.microsoft.com/powershell:latest
+WORKDIR /cdi-exporter
+COPY cdi-exporter.ps1 ./cdi-exporter.ps1
+CMD ["pwsh", "-File", "cdi-exporter.ps1"]
+' | Out-File -FilePath dockerfile
+```
+`docker build -t cdi-exporter .` \
+`docker run -d -v /mnt/c:/mnt/c --name cdi-exporter cdi-exporter`
+
+6. Собираем стек из шлюза и скрипта в `compose`:
+```yaml
+Write-Output '
+services:
+  cdi-exporter:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: cdi-exporter
+    volumes:
+      - /mnt/c:/mnt/c
+    restart: unless-stopped
+
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    ports:
+      - "19091:9091"
+    restart: unless-stopped
+' | Out-File -FilePath docker-compose.yml
+```
+`docker-compose up -d`
+
+7. Настраиваем `Dashboard` в `Grafana`:
+
+Переменные для фильтрации запроса: \
+hostName: `label_values(exported_instance)` \
+diskName: `label_values(disk)` \
+Метрика температуры: `disk_temperature{exported_instance="$hostName", disk=~"$diskName"}`
 
 # Zabbix
 

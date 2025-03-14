@@ -9,11 +9,26 @@ toc_sidebar = true
 
 ---
 
-`docker run -d --name=jenkins -p 8080:8080 --restart=always -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest` \
+`docker run -d --name=jenkins -p 8080:8080 -p 50000:50000 --restart=unless-stopped -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest` \
 `ls /var/lib/docker/volumes/jenkins_home/_data/jobs` директория хранящая историю сборок в хостовой системе \
-`docker exec -u root -it jenkins /bin/bash` подключиться к контейнеру под root \
-`cat /var/jenkins_home/secrets/initialAdminPassword` получить токен инициализации \
-`apt-get update && apt-get install -y iputils-ping netcat-openbsd` установить ping и nc на машину сборщика (master slave)
+`docker exec -it jenkins /bin/bash` подключиться к контейнеру \
+`cat /var/jenkins_home/secrets/initialAdminPassword` получить токен инициализации
+```
+docker run -d \
+  --name jenkins-remote-agent-01 \
+  --restart unless-stopped \
+  -e JENKINS_URL=http://192.168.3.101:8080 \
+  -e JENKINS_AGENT_NAME=remote-agent-01 \
+  -e JENKINS_SECRET=3ad54fc9f914957da8205f8b4e88ff8df20d54751545f34f22f0e28c64b1fb29 \
+  -v jenkins_agent:/home/jenkins \
+  jenkins/inbound-agent:latest
+
+# Или ссылаться на локальный контейнер сервера по имени
+# --link jenkins:jenkins
+# -e JENKINS_URL=http://jenkins:8080
+```
+`docker exec -u root -it jenkins-remote-agent-01 /bin/bash` подключиться к slave агенту под root \
+`apt-get update && apt-get install -y iputils-ping netcat-openbsd` установить ping и nc на машину сборщика (slave)
 
 `jenkinsVolumePath=$(docker inspect jenkins | jq -r .[].Mounts.[].Source)` получить путь к директории Jenkins в хостовой системе \
 `sudo tar -czf $HOME/jenkins-backup.tar.gz -C $jenkinsVolumePath .` резервная копия всех файлов \
@@ -26,7 +41,7 @@ toc_sidebar = true
 `java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 groovysh` запустить консоль Groovy \
 `java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 install-plugin ssh-steps -deploy` устанавливаем плагин SSH Pipeline Steps
 
-## API
+### API
 ```PowerShell
 $username = "Lifailon"
 $password = "password"
@@ -34,6 +49,7 @@ $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0
 $headers = @{Authorization=("Basic {0}" -f $base64AuthInfo)}
 Invoke-RestMethod "http://192.168.3.101:8080/rssAll" -Headers $headers # RSS лента всех сборок и их статус в title
 Invoke-RestMethod "http://192.168.3.101:8080/rssFailed" -Headers $headers # RSS лента всех неудачных сборок
+$(Invoke-RestMethod "http://192.168.3.101:8080/computer/local-agent/api/json" -Headers $headers).offline # проверить статус работы slave агента
 
 $jobs = Invoke-RestMethod "http://192.168.3.101:8080/api/json/job" -Headers $headers
 $jobs.jobs.name # список всех проектов
@@ -49,9 +65,18 @@ $headers["Jenkins-Crumb"] = $crumb # добавляем crumb в заголов�
 $body = @{".crumb" = $crumb} # добавляем crumb в тело запроса
 Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild}/rebuild" -Headers $headers -Method POST -Body $body # перезапустить сборку
 ```
-## SSH Steps and Artifacts
+### Plugins
 
-Устанавливаем плагин [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)
+| Плагин                | Ссылка                                        | Описание                                                                                              |
+| -                     | -                                             | -                                                                                                     |
+| Prometheus Metrics    | https://plugins.jenkins.io/prometheus         | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных.        |
+| Web Monitoring        | https://plugins.jenkins.io/monitoring         | Конечная точка `/monitoring` для отображения графиков мониторинга в веб-интерфейсе.                   |
+| SSH Pipeline Steps    | https://plugins.jenkins.io/ssh-steps          | Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.                    |
+| Active Choices        | https://plugins.jenkins.io/uno-choice         | Активные параметры, которые позволяют динамически обновлять содержимое параметров.                    |
+| File parameters       | https://plugins.jenkins.io/file-parameters    | Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).  |
+| Email Extension       | https://plugins.jenkins.io/email-ext          | Плагин для отправки на почту из pipeline.                                                             |
+
+### SSH Steps and Artifacts
 
 Добавляем логин и `Private Key` для авторизации по ssh: `Manage (Settings)` => `Credentials` => `Global` => `Add credentials` => Kind: `SSH Username with private key`
 
@@ -61,7 +86,7 @@ Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild
 def remote = [:]
 
 pipeline {
-    agent any
+    agent any // { label 'remote-agent-01' }
     parameters {
         string(name: 'address', defaultValue: '192.168.3.101', description: 'Адрес удаленного сервера')
         // choice(name: "addresses", choices: ["192.168.3.101","192.168.3.102"], description: "Выберите сервер из выпадающего списка")
@@ -169,7 +194,7 @@ pipeline {
     }
 }
 ```
-## Update SSH authorized_keys
+### Update SSH authorized_keys
 
 Добавляем логин и пароль для авторизации по ssh: `Manage (Settings)` => `Credentials` => `Global` => `Add credentials` => Kind: `Username with password`
 
@@ -266,9 +291,7 @@ pipeline {
     }
 }
 ```
-## Upload File Parameter
-
-Установить плагин [File Parameter](https://plugins.jenkins.io/file-parameters) и перезагрузить Jenkins для использования нового параметра.
+### Upload File Parameter
 
 Передача файла через параметр и чтение его содержимого:
 ```Groovy
@@ -294,7 +317,7 @@ pipeline {
     }
 }
 ```
-## Input Text and File
+### Input Text and File
 
 Останавливает выполнение `Pipeline` и заставляет пользователя передать текстовый параметр и файл:
 ```Groovy
@@ -324,7 +347,7 @@ pipeline {
     }
 }
 ```
-## HttpURLConnection
+### HttpURLConnection
 
 Любой код Groovy возможно запустить и проверить через `Script Console` (http://127.0.0.1:8080/manage/script)
 
@@ -361,9 +384,7 @@ if (responseCode == 200) {
 }
 connection.disconnect()
 ```
-## Active Choices Parameter
-
-Плагин [Active Choices](https://plugins.jenkins.io/uno-choice) позволяет динамически обновлять содержимое параметров.
+### Active Choices Parameter
 
 Пример выбора репозитория, получения списка доступных версий и содержимого файлов выбранного релиза.
 
@@ -443,7 +464,7 @@ pipeline {
     }
 }
 ```
-## Vault
+### Vault
 
 Интеграция [HashiCorp Vault](https://github.com/hashicorp/vault) в Jenkins Pipeline через `REST API` для получения содержимого секретов и использовая в последующих стадиях/этапах сборки:
 ```Groovy
@@ -503,9 +524,9 @@ pipeline {
     }
 }
 ```
-## Email Extension
+### Email Extension
 
-Установить расширение [Email Extension](https://plugins.jenkins.io/email-ext) для отправки на почту и настроить SMTP сервер в настройках Jenkins (`System` => `Extended E-mail Notification`)
+Для отправки на почту и настроить SMTP сервер в настройках Jenkins (`System` => `Extended E-mail Notification`)
 
 SMTP server: `smtp.yandex.ru`
 SMTP port: `587`
@@ -563,7 +584,7 @@ pipeline {
     }
 }
 ```
-## Parallel
+### Parallel
 ```Groovy
 pipeline {
     agent any
@@ -616,7 +637,7 @@ pipeline {
     }
 }
 ```
-## Groovy
+### Groovy
 
 Базовый синтаксис языка `Groovy`
 ```Groovy

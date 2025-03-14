@@ -628,6 +628,33 @@ EOF
 `last | sed -n 1p | awk '$2=" ",$4=" "{print $0}'` вывести все, кроме 2 и 4 значения (заменить) \
 `ps -A | awk '{sum=""; for(i=1;i<=NF;i++) { if (i != 2) {sum=sum" "$i} } print sum}'` вывести все, кроме 2-го значения
 
+`cut -d',' -f2,4 file.csv` взять второй и четвертый столбцы \
+`awk -F',' '{if (NF >= 4) print $2, $4}' file.csv`
+
+`grep "Error" logs.txt` \
+`awk '/Error/' logs.txt` \
+`awk '/^Error [0-9]{3}:/' logs.txt`
+
+`grep -c "Success" logs.txt` посчитать количество совпадений \
+`awk '/Success/ {count++} END {print count}' logs.txt`
+
+`sed 's/Error/Success/g' file.txt` замена слов \
+`awk '{gsub(/Error/, "Success"); print}' file.txt`
+
+`sort file.txt | uniq` \
+`awk '!seen[$0]++' file.txt` заполняем уникальный массив строк
+
+`wc -w file.txt` посчитать количество слов в файле \
+`awk '{count += NF} END {print count}' file.txt`
+
+`sed -n '10,20p' file.txt` вывести с 10 по 20 строку \
+`awk 'NR>=10 && NR<=20' file.txt`
+
+`awk '{sum += $1} END {print sum/NR}' numbers.txt` получить среднее значение чисел в первом столбце \
+`awk '{ if ($2 > 50000) print $1, "> 50K"; else print $1, "< 50K" }' data.txt` вывести значение первого столбца, если значение второго столбца выше или ниже 50 тысяч \
+`awk '{ sum = 0; for (i = 1; i <= NF; i++) sum += $i; print "сумма:", sum }' data.txt` посчитать сумму числе в каждой строке \
+`awk '{ for (i = 1; i <= NF; i++) sum[i] += $i } END { for (i in sum) print "Столбец", i, "сумма:", sum[i] }' data.txt` посчитать сумму числе в каждом столбце
+
 ## printf
 
 `top=$(top -bn1)` \
@@ -865,16 +892,27 @@ sudo chmod +x /usr/bin/locate
 
 ## bashrc
 
+Установить `oh-my-bash` (обновляет профиль, делая рядом резервную копию старого файла в `.bashrc.omb-TIMESTAMP`):
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+```
+
 `nano ~/.bashrc`
 ```bash
-# Псевдонимы команд с ключами для сокращения ввода 
+# Псевдонимы для команды или набора команд с ключами для сокращения ввода 
 alias ll='ls -lFh'
 alias la='ls -alFh'
+alias tspin=tailspin
+alias ts=tailspin
 
 # Забиндить очистку ввода на Ctrl+C
 bind '"\C-l": "^\C-u\C-mclear\C-m"'
 
-# Добавляет фильтрация по введеному тексту при испоьзовании стрелочек вверх и вниз
+# Определить переменную окружения, доступную для дочерних процессов, запущенных в текущей сессии
+# Игнорировать запись в историю команд, которые начинаются с пробела
+export HISTCONTROL=ignorespace
+
+# Добавить фильтрацию по введеному тексту в истории команд при испоьзовании стрелочек вверх и вниз
 if [[ $- == *i* ]]; then
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
@@ -884,18 +922,34 @@ fi
 
 ### fzf
 
-`apt install fzf` установить fzf (https://github.com/junegunn/fzf) \
+`apt install fzf` установить [fzf](https://github.com/junegunn/fzf) \
 `history | fzf` интерактивный поиск с фильтрацией \
 `eval $(history | fzf | awk '{print $2}')` выполнить (eval) выбранную команду из списка (добавить в макрос) \
 `ls *.json | fzf | xargs cat | jq .` вывести содержимое выбранного json файла через fzf \
 `find / -name "*.yaml" | fzf | xargs cat` найти в системе все файлы yaml и запустить по ним поиск
 ```bash
-# Поиск по истории с помощью команды h и комбинации Ctrl+F
+tee -a "$HOME/.bashrc" << 'EOF'
+# Поиск по истории с помощью команды h и комбинации Ctrl+R через fzf
 if command -v fzf > /dev/null; then
-    #alias h='eval $(cat ~/.bash_history | fzf)'
-    alias h='eval $(history | fzf | sed -r "s/^\s+[0-9]+\s+[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]{2}:[0-9]{2}:[0-9]{2}\s//")'
-    bind -x '"\C-f": h'
+  function hstr {
+    local current_input="$READLINE_LINE"
+    command=$(tac $HOME/.bash_history | fzf --height 20 --reverse --query="$current_input" | sed -r "s/^\s+[0-9]+\s+[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]{2}:[0-9]{2}:[0-9]{2}\s//")
+    if [[ -n "$command" ]]; then
+      READLINE_LINE="$command"
+      READLINE_POINT=${#READLINE_LINE}
+    fi
+  }
+  alias h=hstr
+  bind -x '"\C-r": h'
 fi
+EOF
+```
+### fzf-obc
+
+Установить [fzf over bash complete](https://github.com/rockandska/fzf-obc) (выпадающий список автодополнения команд) и добавить в профиль `bash`:
+```bash
+git clone https://github.com/rockandska/fzf-obc $HOME/.local/opt/fzf-obc
+echo "source $HOME/.local/opt/fzf-obc/bin/fzf-obc.bash" >> $HOME/.bashrc
 ```
 ### hstr
 
@@ -909,11 +963,10 @@ fi
 ```
 ### mcfly
 
-Заменяет поиск истории через Ctrl-R на интеллектуальную поисковую систему, которая учитывает рабочий каталог и контекст недавно выполненных команд (https://github.com/cantino/mcfly)
+Установить [homebrew](https://brew.sh) и [mcfly](https://github.com/cantino/mcfly), который заменяет поиск истории через `Ctrl-R` на интеллектуальную поисковую систему, которая учитывает рабочий каталог и контекст недавно выполненных команд:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source ~/.bashrc
 brew install mcfly
 echo 'eval "$(mcfly init bash)"' >> ~/.bashrc
