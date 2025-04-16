@@ -203,7 +203,7 @@ $headers = @{
 Invoke-RestMethod -Uri $url -Headers $headers # получить логи задания
 ```
 
-### act
+## act
 
 [act](https://github.com/nektos/act) - пользволяет запускать действия GitHub Actions локально.
 ```bash
@@ -1412,7 +1412,7 @@ tasks:
 
 # Puppet
 
-### Bolt
+## Bolt
 
 [Bolt](https://github.com/puppetlabs/bolt) - это инструмент оркестровки, который выполняет заданную команду или группу команд на локальной рабочей станции, а также напрямую подключается к удаленным целям с помощью SSH или WinRM, что не требует установки агентов.
 
@@ -2692,7 +2692,7 @@ function ConvertFrom-UnixTime {
 
 # Load Testing
 
-### Apache Benchmark
+## Apache Benchmark
 ```PowerShell
 $path = "$HOME\Downloads\apache"
 New-Item $path -Type Directory
@@ -2716,7 +2716,7 @@ RPS (Requests Per Second):          190,83 [#/sec] (среднее)
 Время одного запроса:               5.240 [MS] (среднее, во всех одновременных запросах)
 Скорость передачи:                  127,28 [Kbytes/Sec]
 ```
-### Locust
+## Locust
 
 [Locust](https://github.com/locustio/locust) - это инструмент нагрузочного тестирования для `HTTP` и других протоколов на `Python`.
 

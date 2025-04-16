@@ -1,8 +1,11 @@
-# mkdocs build
-/site
-
-# zola build
+# zola
 *.exe
 /public
 /themes
 /static/*.css
+
+# mkdocs
+/site
+
+# hugo
+*.lock
