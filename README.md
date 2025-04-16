@@ -1,22 +1,20 @@
 ## Web version for [PowerShell Commands](https://github.com/Lifailon/PS-Commands)
 
-| **Branch**                                                                                      | **Description**                                                                                                                                     |
-| -                                                                                               | -                                                                                                                                                   |
-| **[main](https://github.com/Lifailon/lifailon.github.io/tree/main)**                            | Markdown sources for building **MkDocs** and **Zola**.                                                                                              |
-| ✔️ **[zola-duckquill](https://github.com/Lifailon/lifailon.github.io/tree/zola-duckquill)**     | Assembled from Markdown using [Zola](https://github.com/getzola/zola) and [Duckquill theme](https://codeberg.org/daudix/duckquill).                 |
-| **[mkdocs-material](https://github.com/Lifailon/lifailon.github.io/tree/mkdocs-material)**      | Assembled from Markdown using [MkDocs](https://github.com/mkdocs/mkdocs) and [Material theme](https://github.com/squidfunk/mkdocs-material).        |
-| **[hugo-dark](https://github.com/Lifailon/lifailon.github.io/tree/hugo-dark)**                  | Assembled from Markdown using [Hugo](https://github.com/gohugoio/hugo) and [Dark Theme Editor](https://github.com/JingWangTW/dark-theme-editor).    |
-| **[jekyll-now](https://github.com/Lifailon/lifailon.github.io/tree/jekyll-now)**                | Assembled from Markdown using [Jekyll](https://github.com/jekyll/jekyll) and [Jekyll Now](https://github.com/barryclark/jekyll-now).                |
-| **[pandoc-solarized](https://github.com/Lifailon/lifailon.github.io/tree/pandoc-solarized)**    | Assembled from Markdown using [Pandoc](https://github.com/jgm/pandoc) and Solarized Dark theme.                                                     |
+👉 Статья на Хабр: [Создание статических сайтов из Markdown без HTML]()
 
-Статья на Хабр: [Создание статических сайтов из Markdown без HTML](https://habr.com/ru/articles/826474)
+| **Branch**                                                                                      | **Engine**                                                                                                                  |
+| -                                                                                               | -                                                                                                                           |
+| **[main](https://github.com/Lifailon/lifailon.github.io/tree/main)**                            | Markdown sources for building in **MkDocs** and **Zola**.                                                                   |
+| **[docsify](https://github.com/Lifailon/lifailon.github.io/tree/docsify)**                      | [Docsify](https://github.com/docsifyjs/docsify) and [Docsify Template](https://github.com/docsifyjs/docsify-template).      |
+| ✔️ **[zola-duckquill](https://github.com/Lifailon/lifailon.github.io/tree/zola-duckquill)**     | [Zola](https://github.com/getzola/zola) and [Duckquill theme](https://codeberg.org/daudix/duckquill).                       |
+| **[mkdocs-material](https://github.com/Lifailon/lifailon.github.io/tree/mkdocs-material)**      | [MkDocs](https://github.com/mkdocs/mkdocs) and [Material theme](https://github.com/squidfunk/mkdocs-material).              |
+| **[hugo-dark](https://github.com/Lifailon/lifailon.github.io/tree/hugo-dark)**                  | [Hugo](https://github.com/gohugoio/hugo) and [Dark Theme Editor](https://github.com/JingWangTW/dark-theme-editor).          |
+| **[jekyll-now](https://github.com/Lifailon/lifailon.github.io/tree/jekyll-now)**                | [Jekyll](https://github.com/jekyll/jekyll) and [Jekyll Now](https://github.com/barryclark/jekyll-now).                      |
+| **[pandoc-solarized](https://github.com/Lifailon/lifailon.github.io/tree/pandoc-solarized)**    | [Pandoc](https://github.com/jgm/pandoc) and Solarized Dark theme.                                                           |
 
-Используемы расширения **VSCode**:
+## Build for Zola
 
-- [Markdown Preview Enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced) - предпросмотр, а также конвертация в формат `PDF` и `HTML` через `Puppeteer`.
-- [Markdown All in One](https://github.com/yzhang-gh/vscode-markdown) - автоматическое создание меню, а также ряд других функций.
-
-### Build
+[![Build](https://github.com/Lifailon/lifailon.github.io/actions/workflows/build-zola.yml/badge.svg)](https://github.com/Lifailon/lifailon.github.io/actions/workflows/build-zola.yml)
 
 ```PowerShell
 # Clone this repository and duckquill theme
