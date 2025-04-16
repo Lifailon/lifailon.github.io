@@ -3,6 +3,7 @@ title = "Windows Server"
 [extra]
 toc = true
 toc_sidebar = true
+go_to_top = true
 +++
 
 Заметки системного администрирования `Windows Server` через `PowerShell`.

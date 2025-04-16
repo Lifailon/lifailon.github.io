@@ -3,6 +3,7 @@ title = "API"
 [extra]
 toc = true
 toc_sidebar = true
+go_to_top = true
 +++
 
 Заметки по работе с `REST API` через **PowerShell** и **curl**.

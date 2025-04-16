@@ -3,6 +3,7 @@ title = "Network"
 [extra]
 toc = true
 toc_sidebar = true
+go_to_top = true
 +++
 
 Заметки по сетевым утилитам.

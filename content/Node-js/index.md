@@ -3,6 +3,7 @@ title = "Node.js"
 [extra]
 toc = true
 toc_sidebar = true
+go_to_top = true
 +++
 
 <p align="center">

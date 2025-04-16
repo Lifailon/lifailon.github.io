@@ -1,6 +1,8 @@
 +++
 insert_anchor_links = "left"
 title = "Home"
+[extra]
+go_to_top = true
 +++
 
 <!--
