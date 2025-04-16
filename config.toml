@@ -83,7 +83,6 @@ links = [
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/api/index.md", name = "API" },
-  { url = "@/Jenkins/index.md", name = "Jenkins" },
   { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 
@@ -98,7 +97,6 @@ links = [
   { url = "@/WindowsServer/index.md", name = "Windows Server" },
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/api/index.md", name = "API" },
-  { url = "@/Jenkins/index.md", name = "Jenkins" },
   { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 

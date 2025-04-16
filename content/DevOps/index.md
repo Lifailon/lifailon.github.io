@@ -5,7 +5,7 @@ toc = true
 toc_sidebar = true
 +++
 
-Заметки по направлению `DevOps`.
+Заметки по инструментам и системам направления `DevOps`.
 
 ---
 
@@ -202,6 +202,44 @@ $headers = @{
 Invoke-RestMethod -Uri $url -Headers $headers # получить логи задания
 ```
 
+### act
+
+[act](https://github.com/nektos/act) - пользволяет запускать действия GitHub Actions локально.
+```bash
+version=$(curl -s https://api.github.com/repos/nektos/act/releases/latest | jq -r .tag_name)
+curl -L "https://github.com/nektos/act/releases/download/$version/act_$(uname -s)_$(uname -m).tar.gz" -o $HOME/.local/bin/act.tar.gz
+tar -xzf $HOME/.local/bin/act.tar.gz -C $HOME/.local/bin
+chmod +x $HOME/.local/bin/act
+rm $HOME/.local/bin/act.tar.gz
+act --version
+```
+`act --list` список доступных действий, указаных в файлах .github/workflows \
+`act -j build` запуск указанного действия по Job ID (имя файла, не путать с названием Workflow) \
+`act -n -j build` пробный запуск (--dry-run), без выполнения команд, для отображения всех выполняемых jobs и steps
+```json
+{
+  "inputs": {
+    "Distro": "ubuntu-24.04",
+    "Update": "false",
+    "Linter": "true",
+    "Test": "false",
+    "Release": "false",
+    "Binary": "true"
+  }
+}
+```
+`act -e event.json -W .github/workflows/build.yml -P ubuntu-24.04=catthehacker/ubuntu:act-latest` запустить указанный файл workflow с переданным файлом переменных (предварительно определенных параметров) и указанным сборщиком \
+`act -e event.json -W .github/workflows/build.yml -P ubuntu-24.04=catthehacker/ubuntu:act-latest --artifact-server-path $PWD/artifacts` примонтировать рабочий каталог в контейнер для сохранения артефактов
+```bash
+echo "DOCKER_HUB_USERNAME=username" >> .secrets
+echo "DOCKER_HUB_PASSWORD=password" >> .secrets
+```
+`act --secret-file .secrets` \
+`act -s DOCKER_HUB_USERNAME=username -s DOCKER_HUB_PASSWORD=password` передать содержимое секретов \
+`act push` симуляция push-ивента (имитация коммита и запуск workflow, который реагирует на push) \
+`act --reuse` не удалять контейнер из успешно завершенных рабочих процессов для сохранения состояния между запусками (кэширование) \
+`act --parallel` запуск всех jobs одновременно или последовательно (--no-parallel, по умолчанию)
+
 # Vercel
 
 `npm i -g vercel` установить глобально в систему Vercel CLI \
@@ -345,6 +383,727 @@ test:
             Get-Content torapi.log
             Stop-Process -Name 'node' -Force -ErrorAction SilentlyContinue
         "
+```
+
+# Jenkins
+
+Примеры `Pipeline` и базовый синтаксис `Groovy`.
+
+`docker run -d --name=jenkins -p 8080:8080 -p 50000:50000 --restart=unless-stopped -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest` \
+`ls /var/lib/docker/volumes/jenkins_home/_data/jobs` директория хранящая историю сборок в хостовой системе \
+`docker exec -it jenkins /bin/bash` подключиться к контейнеру \
+`cat /var/jenkins_home/secrets/initialAdminPassword` получить токен инициализации
+```
+docker run -d \
+  --name jenkins-remote-agent-01 \
+  --restart unless-stopped \
+  -e JENKINS_URL=http://192.168.3.101:8080 \
+  -e JENKINS_AGENT_NAME=remote-agent-01 \
+  -e JENKINS_SECRET=3ad54fc9f914957da8205f8b4e88ff8df20d54751545f34f22f0e28c64b1fb29 \
+  -v jenkins_agent:/home/jenkins \
+  jenkins/inbound-agent:latest
+
+# Или ссылаться на локальный контейнер сервера по имени
+# --link jenkins:jenkins
+# -e JENKINS_URL=http://jenkins:8080
+```
+`docker exec -u root -it jenkins-remote-agent-01 /bin/bash` подключиться к slave агенту под root \
+`apt-get update && apt-get install -y iputils-ping netcat-openbsd` установить ping и nc на машину сборщика (slave)
+
+`jenkinsVolumePath=$(docker inspect jenkins | jq -r .[].Mounts.[].Source)` получить путь к директории Jenkins в хостовой системе \
+`sudo tar -czf $HOME/jenkins-backup.tar.gz -C $jenkinsVolumePath .` резервная копия всех файлов \
+`(crontab -l ; echo "0 23 * * * sudo tar -czf /home/lifailon/jenkins-backup.tar.gz -C /var/lib/docker/volumes/jenkins_home/_data .") | crontab -` \
+`sudo tar -xzf $HOME/jenkins-backup.tar.gz -C /var/lib/docker/volumes/jenkins_home/_data` восстановление
+
+`wget http://127.0.0.1:8080/jnlpJars/jenkins-cli.jar -P $HOME/` скачать jenkins-cli (http://127.0.0.1:8080/manage/cli) \
+`apt install openjdk-17-jre-headless` установить java runtime \
+`java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 -webSocket help` получить список команд \
+`java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 groovysh` запустить консоль Groovy \
+`java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 install-plugin ssh-steps -deploy` устанавливаем плагин SSH Pipeline Steps
+
+## API
+```PowerShell
+$username = "Lifailon"
+$password = "password"
+$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username,$password)))
+$headers = @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+Invoke-RestMethod "http://192.168.3.101:8080/rssAll" -Headers $headers # RSS лента всех сборок и их статус в title
+Invoke-RestMethod "http://192.168.3.101:8080/rssFailed" -Headers $headers # RSS лента всех неудачных сборок
+$(Invoke-RestMethod "http://192.168.3.101:8080/computer/local-agent/api/json" -Headers $headers).offline # проверить статус работы slave агента
+
+$jobs = Invoke-RestMethod "http://192.168.3.101:8080/api/json/job" -Headers $headers
+$jobs.jobs.name # список всех проектов
+$jobName = "Update SSH authorized_keys"
+$job = Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/api/json" -Headers $headers
+$job.builds # список всех сборок
+$buildNumber = $job.lastUnsuccessfulBuild.number # последняя неуспешная сборка
+Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${buildNumber}/consoleText" -Headers $headers # вывести лог указанной сборки
+
+$lastCompletedBuild = $job.lastCompletedBuild.number # последняя успешная сборка
+$crumb = $(Invoke-RestMethod "http://192.168.3.101:8080/crumbIssuer/api/json" -Headers $headers).crumb # получаем временный токен доступа (crumb)
+$headers["Jenkins-Crumb"] = $crumb # добавляем crumb в заголовки
+$body = @{".crumb" = $crumb} # добавляем crumb в тело запроса
+Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild}/rebuild" -Headers $headers -Method POST -Body $body # перезапустить сборку
+```
+## Plugins
+
+| Плагин                                                                        | Описание                                                                                                      |
+| -                                                                             | -                                                                                                             |
+| [Web Monitoring](https://plugins.jenkins.io/monitoring)                       | Конечная точка `/monitoring` для отображения графиков мониторинга в веб-интерфейсе.                           |
+| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                   | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных.                |
+| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status) | Предоставляет настраиваемые значки (like `shields.io`), который возвращает статус сборки.                     |
+| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)      | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) и позволяет производить сверку.    |
+| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                    | Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.                            |
+| [Active Choices](https://plugins.jenkins.io/uno-choice)                       | Активные параметры, которые позволяют динамически обновлять содержимое параметров.                            |
+| [File parameters](https://plugins.jenkins.io/file-parameters)                 | Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).          |
+| [Email Extension](https://plugins.jenkins.io/email-ext)                       | Плагин для отправки на почту из pipeline.                                                                     |
+| [Schedule Build](https://plugins.jenkins.io/schedule-build)                   | Позволяет запланировать сборку на указанный момент времени.                                                   |
+| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)     | Показывает историю результатов сборки junit тестов в табличном древовидном виде.                              |
+
+## SSH Steps and Artifacts
+
+Добавляем логин и `Private Key` для авторизации по ssh: `Manage (Settings)` => `Credentials` => `Global` => `Add credentials` => Kind: `SSH Username with private key`
+
+Сценарий проверяет доступность удаленной машины, подключается к ней по ssh, выполняет скрипт [hwstat](https://github.com/Lifailon/hwstat) для сбора метрик и выгружает json отчет в артефакты:
+```Groovy
+// Глобальный массив для хранения данных подключения по ssh 
+def remote = [:]
+
+pipeline {
+    agent any // { label 'remote-agent-01' }
+    parameters {
+        string(name: 'address', defaultValue: '192.168.3.101', description: 'Адрес удаленного сервера')
+        // choice(name: "addresses", choices: ["192.168.3.101","192.168.3.102"], description: "Выберите сервер из выпадающего списка")
+        string(name: 'port', defaultValue: '22', description: 'Порт ssh')
+        string(name: 'credentials', defaultValue: 'd5da50fc-5a98-44c4-8c55-d009081a861a', description: 'Идентификатор учетных данных из Jenkins')
+        booleanParam(name: "root", defaultValue: false, description: 'Запуск с повышенными привилегиями')
+        booleanParam(name: "report", defaultValue: true, description: 'Выгружать отчет в формате json')
+    }
+    triggers {
+        cron('H */6 * * 1-5') // выполнять запуск каждын 6 часов с понедельника по пятницу
+    }
+    options {
+        timeout(time: 5, unit: 'MINUTES') // период ожидания, после которого нужно прервать Pipeline
+        retry(2) // в случае неудачи повторить весь Pipeline указанное количество раз
+    }
+    environment {
+        // Переменная окружения для хранения пути временного файла с содержимым приватного ключа
+        SSH_KEY_FILE = "/tmp/ssh_key_${UUID.randomUUID().toString()}"
+    }
+    stages {
+        stage('Проверка доступности хоста (icmp и tcp)') {
+            steps {
+                script {
+                    def check = sh(
+                        script: """
+                            ping -c 1 ${params.address} > /dev/null || exit 1
+                            nc -z ${params.address} ${params.port} || exit 2
+                        """,
+                        returnStatus: true // исключить завершение Pipeline с ошибкой
+                    )
+                    if (check == 1) {
+                        error("Сервер ${params.address} недоступен (icmp ping)")
+                    } else if (check == 2) {
+                        error("Порт ${params.address} закрыт (tcp check)")
+                    } else {
+                        echo "Сервер ${params.address} доступен и порт ${params.port} открыт"
+                    }
+                }
+            }
+        }
+        stage('Извлечение данных для авторизации по ключу') {
+            steps {
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: params.credentials, usernameVariable: 'SSH_USER', keyFileVariable: 'SSH_KEY', passphraseVariable: '')]) {
+                        // Записываем содержимое приватного ключа во временный файл
+                        writeFile(file: env.SSH_KEY_FILE, text: readFile(SSH_KEY))
+                        sh "chmod 600 ${env.SSH_KEY_FILE}"
+                        remote.name = params.address
+                        remote.host = params.address
+                        remote.port = params.port.toInteger()
+                        remote.user = SSH_USER
+                        remote.identityFile = env.SSH_KEY_FILE
+                        remote.allowAnyHosts = true
+                    }
+                }
+            }
+        }
+        stage('Запуск скрипта через через ssh') {
+            steps {
+                script {
+                    def runCommand
+                    if (params.root) {
+                        runCommand = """
+                            curl -sS https://raw.githubusercontent.com/Lifailon/hwstat/rsa/hwstat.sh | sudo bash -s -- "json" > "hwstat-report.json"
+                        """
+                    } else {
+                        runCommand = """
+                            curl -sS https://raw.githubusercontent.com/Lifailon/hwstat/rsa/hwstat.sh | bash -s -- "json" > "hwstat-report.json"
+                        """
+                    }
+                    def jsonOutput = sshCommand remote: remote, command: runCommand
+                    if (params.report) {
+                        // Записать содержимое переменной в файл
+                        // writeFile file: 'hwstat-report.json', text: jsonOutput
+                        // Загрузить файл из удаленной машины
+                        sshGet remote: remote, from: "hwstat-report.json", into: "${env.WORKSPACE}/hwstat-report.json", override: true
+                    }
+                    sshCommand remote: remote, command: "rm hwstat-report.json"
+                }
+            }
+        }
+        stage('Загрузка json отчета в Jenkins') {
+            // Проверка условия перед выполнением шага (пропуск если false)
+            when {
+                expression { params.report }
+            }
+            steps {
+                archiveArtifacts artifacts: 'hwstat-report.json', allowEmptyArchive: true
+            }
+        }
+    }
+    post {
+        // Выполнять независимо от успеха или ошибки
+        always {
+            script {
+                sh "rm -f ${env.SSH_KEY_FILE}"
+            }
+        }
+        success   { echo "Сборка завершена успешно" }
+        failure   { echo "Сборка завершилась с ошибкой" }
+        unstable  { echo "Сборка завершилась с предупреждениями" }
+        changed   { echo "Текущий статус завершения изменился по сравнению с предыдущим запуском" }
+        fixed     { echo "Сборка завершена успешно по сравнению с предыдущим запуском" }
+        aborted   { echo "Запуск был прерван" }
+    }
+}
+```
+## Update SSH authorized_keys
+
+Добавляем логин и пароль для авторизации по ssh: `Manage (Settings)` => `Credentials` => `Global` => `Add credentials` => Kind: `Username with password`
+
+Сценарий обновляет параметр со списком текущих пользователей на машине и добавляет или заменяет ssh ключ для выбранного пользователя:
+```Groovy
+def remote = [:]
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'address', defaultValue: '192.168.3.101', description: 'Адрес удаленного сервера')
+        string(name: 'port', defaultValue: '22', description: 'Порт ssh')
+        string(name: 'credentials', defaultValue: '15d05be6-682a-472b-9c1d-cf5080e98170', description: 'Идентификатор учетных данных из Jenkins')
+        booleanParam(name: "getUsers", defaultValue: true, description: 'Получить список текущих пользователей системы')
+        string(name: 'sshKey', defaultValue: '', description: 'Открытый ssh ключ для добавления в authorized_keys')
+        booleanParam(name: "rewriteKey", defaultValue: false, description: 'Перезаписать текущие ключи в файле authorized_keys')
+    }
+    stages {
+        stage('Извлекаем параметры для авторизации по ssh') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: params.credentials, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
+                        remote.name = params.address
+                        remote.host = params.address
+                        remote.port = params.port.toInteger()
+                        remote.user = env.SSH_USER
+                        remote.password = env.SSH_PASS
+                        remote.allowAnyHosts = true
+                    }
+                }
+            }
+        }
+        stage('Обновить список пользователей') {
+            when {
+                expression { params.getUsers }
+            }
+            steps {
+                script {
+                    def mainCommand = "echo \$(ls /home)"
+                    def users = sshCommand remote: remote, command: mainCommand
+                    def usersList = users.trim().split("\\s")
+                    usersList += 'root'
+                    def usersListChoice = usersList.toList()
+                    writeFile file: 'user_list.txt', text: usersList.join("\\s")
+                    properties([
+                        parameters([
+                            string(name: 'address', defaultValue: params.address, description: 'Адрес удаленного сервера'),
+                            string(name: 'port', defaultValue: params.port, description: 'Порт ssh'),
+                            string(name: 'credentials', defaultValue: params.credentials, description: 'Идентификатор учетных данных из Jenkins'),
+                            booleanParam(name: "getUsers", defaultValue: params.getUsers, description: 'Получить список текущих пользователей системы'),
+                            string(name: 'sshKey', defaultValue: '', description: 'Открытый ssh ключ для добавления в authorized_keys'),
+                            booleanParam(name: "rewriteKey", defaultValue: false, description: 'Перезаписать текущие ключи в файле authorized_keys'),
+                            choice(
+                                name: 'userList',
+                                choices: usersListChoice,
+                                description: 'Выбрать пользователя'
+                            )
+                        ])
+                    ])
+                }
+            }
+        }
+        stage('Добавить новый SSH ключ') {
+            when {
+                expression { !params.getUsers && params.sshKey }
+            }
+            steps {
+                script {
+                    def selectedUser = params.userList
+                    def sshKey = params.sshKey
+                    if (selectedUser == "root") {
+                        path = "/root/.ssh/authorized_keys"
+                    } else {
+                        path= "/home/${selectedUser}/.ssh/authorized_keys"
+                    }
+                    if (params.rewriteKey) {
+                        echo "Обновляем все SSH ключи для пользователя: ${selectedUser}"
+                        teeCommand = "tee"
+                    } else {
+                        echo "Добавляем новый SSH ключ для пользователя: ${selectedUser}"
+                        teeCommand = "tee -a"
+                    }
+                    def mainCommand = """
+                        checkFile=\$(ls $path 2> /dev/null || echo false)
+                        if [ \$checkFile == "false" ]; then
+                            mkdir -p \$(dirname $path) && touch $path
+                        fi
+                        echo $sshKey | $teeCommand $path > /dev/null
+                    """
+                    sshCommand remote: remote, command: mainCommand
+                }
+            }
+        }
+    }
+}
+```
+## Upload File Parameter
+
+Передача файла через параметр и чтение его содержимого:
+```Groovy
+pipeline {
+    agent any
+    parameters {
+        base64File 'UPLOAD_FILE'
+    }
+    stages {
+        stage('Читаем содержимое файла') {
+            steps {
+                // Переменная хранит содержимое файла в формате base64
+                // echo UPLOAD_FILE
+                // Декодируем base64
+                withFileParameter('UPLOAD_FILE') {
+                    sh """
+                        echo "$UPLOAD_FILE" # выводим путь к временному файлу с содержимым переданного файла
+                        cat "$UPLOAD_FILE"  # читаем содержимое файла
+                    """
+                }
+            }
+        }
+    }
+}
+```
+## Input Text and File
+
+Останавливает выполнение `Pipeline` и заставляет пользователя передать текстовый параметр и файл:
+```Groovy
+pipeline {
+    agent any
+    stages {
+        stage('Input text') {
+            input {
+                message "Что бы продолжить, передайте текст в поле ввода"
+                ok "Передать"
+                parameters {
+                    string(name: 'TEXT', defaultValue: 'test', description: 'Введите текст')
+                }
+            }
+            steps {
+                echo "Переданный текст в параметре input: ${TEXT}"
+            }
+        }
+        stage('Input file') {
+            steps {
+                script {
+                    def fileBase64 = input message: "Передайте файл", parameters: [base64File('file')]
+                    sh "echo $fileBase64 | base64 -d"
+                }
+            }
+        }
+    }
+}
+```
+## HttpURLConnection
+
+Любой код Groovy возможно запустить и проверить через `Script Console` (http://127.0.0.1:8080/manage/script)
+
+Пример `API` запроса к репозиторию PowerShell на GitHub для получения последней версии и всех доступных версий:
+```Groovy
+import groovy.json.JsonSlurper
+def url = new URL("https://api.github.com/repos/PowerShell/PowerShell/tags")
+def connection = url.openConnection()
+connection.setRequestMethod("GET")
+connection.setRequestProperty("Accept", "application/json")
+def responseCode = connection.getResponseCode()
+if (responseCode == 200) {
+    // Получаем данные ответа
+    def response = connection.getInputStream().getText()
+    // Парсим JSON ответ
+    def jsonSlurper = new JsonSlurper()
+    def tags = jsonSlurper.parseText(response)
+    // Проверяем количество элементов в массиве
+    if (tags.size() > 0) {
+        // Забираем последний тег из списка
+        def latestTag = tags[0].name
+        println("Latest version: " + latestTag)
+        println()
+        // Проходимся по всем тегам
+        println("List of all versions:")
+        for (tag in tags) {
+            println(tag.name)
+        }
+    } else {
+        error("No tags found in the response")
+    }
+} else {
+    error("Failed to call API, response code: ${responseCode}")
+}
+connection.disconnect()
+```
+## Active Choices Parameter
+
+Пример выбора репозитория, получения списка доступных версий и содержимого файлов выбранного релиза.
+
+- 1. Active Choices Parameter
+
+Name: `Repos`
+
+Groovy Script:
+```Groovy
+return [
+    'Lifailon/lazyjournal',
+    'jesseduffield/lazydocker'
+]
+```
+- 2. Active Choices Reactive Parameter
+
+Name: `Versions`
+
+Groovy Script:
+```Groovy
+import groovy.json.JsonSlurper
+def selectedRepo = Repos
+def apiUrl = "https://api.github.com/repos/${selectedRepo}/tags"
+def conn = new URL(apiUrl).openConnection()
+conn.setRequestProperty("User-Agent", "Jenkins")
+def response = conn.getInputStream().getText()
+def json = new JsonSlurper().parseText(response)
+def versionsCount = json.size()
+def data = []
+for (int i = 0; i < versionsCount; i++) {
+    data += json.name[i]
+}
+return data
+```
+Настройки параметров:
+Choice Type: `Single Select`
+Привязать параметр `Repos` из `Active Choices` в `Reactive Parameter` через `Referenced parameters`
+Включить фильтрацию через `Enable filters`
+
+- 3. Active Choices Reactive Parameter
+
+Name: `Files`
+
+Groovy Script:
+```Groovy
+import groovy.json.JsonSlurper
+def selectedRepo = Repos
+def selectedVer = Versions
+def apiUrl = "https://api.github.com/repos/${selectedRepo}/releases/tags/${selectedVer}"
+def conn = new URL(apiUrl).openConnection()
+conn.setRequestProperty("User-Agent", "Jenkins")
+def response = conn.getInputStream().getText()
+def json = new JsonSlurper().parseText(response)
+def data = []
+for (file in json.assets) {
+    data += file.name
+}
+return data
+```
+Referenced parameters: `Repos,Versions`
+
+Pipeline script:
+```Groovy
+pipeline {
+    agent any
+    stages {
+        stage('Selected parameters') {
+            steps {
+                script {
+                    echo "Selected repository: https://github.com/${params.Repos}"
+                    echo "Selected version: ${params.Versions}"
+                    echo "Selected file: ${params.Files}"
+                    echo "Url for download: https://github.com/${params.Repos}/releases/download/${params.Versions}/${params.Files}"
+                }
+            }
+        }
+    }
+}
+```
+## Vault
+
+Интеграция [HashiCorp Vault](https://github.com/hashicorp/vault) в Jenkins Pipeline через `REST API` для получения содержимого секретов и использовая в последующих стадиях/этапах сборки:
+```Groovy
+def getVaultSecrets(
+    String address,
+    String path,
+    String token
+) {
+    def url = new URL("${address}/${path}")
+    
+    def connection = url.openConnection()
+    connection.setRequestMethod("GET")
+    connection.setRequestProperty("X-Vault-Token", token)
+    connection.setRequestProperty("Accept", "application/json")
+    
+    def response = new groovy.json.JsonSlurper().parse(connection.inputStream)
+    def user = response.data.data.user
+    def password = response.data.data.password
+    return [
+        user: user,
+        password: password
+    ]
+}
+
+def USER_NAME
+def USER_PASS
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'url', defaultValue: 'http://192.168.3.101:8200', description: 'Url адресс хранилища секретов')
+        string(name: 'path', defaultValue: 'v1/kv/data/ssh-auth', description: 'Путь для извлечения секретов')
+        password(name: 'token', defaultValue: 'hvs.bySybhyYOxSWEVk4FQDdcyyg', description: 'Токен доступа к API HashiCorp Vault')
+    }
+    stages {
+        stage('Get vault secrets') {
+            steps {
+                script {
+                    def secrets = getVaultSecrets(
+                        "${params.url}",
+                        "${params.path}",
+                        "${params.token}"
+                    )
+                    USER_NAME = secrets.user
+                    USER_PASS = secrets.password
+                }
+            }
+        }
+        stage('Use secrets') {
+            steps {
+                script {
+                    echo "User: ${USER_NAME}"
+                    echo "Password: ${USER_PASS}"
+                }
+            }
+        }
+    }
+}
+```
+## Email Extension
+
+Для отправки на почту и настроить SMTP сервер в настройках Jenkins (`System` => `Extended E-mail Notification`)
+
+SMTP server: `smtp.yandex.ru`
+SMTP port: `587`
+Credentials: `Username with password` (`username@yandex.ru` и `app-password`)
+`Use TLS`
+Default Content Type: `HTML (text/html)`
+
+Настройка логирования в System Log: `emailDebug` + фильтр `hudson.plugins.emailext` и уровень `ALL`
+```Groovy
+pipeline {
+    agent any
+    parameters {
+        string(name: 'emailTo', defaultValue: 'test@yandex.ru', description: 'Почтовый адрес назначения')
+    }
+    stages {
+        stage('Вывод всех переменных окружения') {
+            steps {
+                script {
+                    env.getEnvironment().each { key, value ->
+                        echo "${key} = ${value}"
+                    }
+                }
+            }
+        }
+        stage('Отправка на почту') {
+            options {
+                timeout(time: 1, unit: 'MINUTES')
+            }
+            steps {
+                script {
+                    emailext (
+                        to:	"${params.emailTo}",
+                        subject: "${env.JOB_NAME} - ${BUILD_NUMBER}",
+                        mimeType: "text/html",
+                        body: """
+                            <html>
+                                <body>
+                                    <div style="padding-left: 30px; padding-bottom: 15px;" color="blue">
+                                    <font name="Arial" color="#906090" size="3" font-weight="normal">
+                                        <b> ${env.JOB_NAME} - ${env.BUILD_NUMBER} </b>
+                                    </font>
+                                    <br>
+                                    <div style="padding-left: 30px; padding-bottom: 15px;" color="black">
+                                    <br>
+                                    <font name="Arial" color="black" size="2" font-weight="normal"> 
+                                        <pre> Build url: ${env.BUILD_URL} </pre>
+                                    </font>	
+                                </body>
+                            </html>
+                        """
+                    )
+                }
+            }
+        }
+    }
+}
+```
+## Parallel
+```Groovy
+pipeline {
+    agent any
+    stages {
+        stage('Parallel sleeps') {
+            parallel {
+                stage('Task 1') {
+                    steps {
+                        script {
+                            def currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Начало задачи 1"
+                            sh 'sleep 10'
+                            currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Завершение задачи 1"
+                        }
+                    }
+                }
+                stage('Task 2') {
+                    steps {
+                        script {
+                            def currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Начало задачи 2"
+                            sh 'sleep 5'
+                            currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Завершение задачи 2"
+                        }
+                    }
+                }
+            }
+        }
+        stage('Parallel tasks via loop') {
+            steps {
+                script {
+                    // Массив, где ключи содержит имя задачи, а значение содержит блоки кода для выполнения
+                    def tasks = [:]
+                    def taskNames = ['Task 1', 'Task 2', 'Task 3']
+                    taskNames.each { taskName ->
+                        tasks[taskName] = {
+                            def currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Начало задачи: $taskName"
+                            sh "sleep ${taskName == 'Task 1' ? 10 : taskName == 'Task 2' ? 5 : 3}"
+                            currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Завершение задачи: $taskName"
+                        }
+                    }
+                    parallel tasks
+                }
+            }
+        }
+    }
+}
+```
+## Groovy
+
+Базовый синтаксис языка `Groovy`
+```Groovy
+// Переменные
+javaString = 'java'
+javaString
+println javaString
+javaString.class    // class java.lang.String
+println 100.class   // class java.lang.Integer
+j = '${javaString}' // не принимает переменные в одинарных кавычках
+groovyString = "${javaString}"
+bigGroovyString = """
+    ${javaString}
+    ${j}
+    ${groovyString}
+    ${2 + 2}
+"""
+
+// java
+// ${javaString}
+// java
+// 4
+
+a = "a"   // a
+a + "123" // a123
+a * 5     // aaaaa
+
+// Массивы и списки
+list =[1,2,3]
+list[0]    // 1
+list[0..1] // [1, 2]
+range = "0123456789"
+range[1..5] // 12345
+map = [key1: true, key2: false]
+map["key1"] // true
+server = [:]
+server.ip = "192.168.3.1"
+server.port = 22
+println(server) // [ip:192.168.3.1, port:22]
+
+// Функции
+def sum(a,b) {
+    println a+b
+}
+sum(2,2) // 4
+
+// Условия
+def diff(x) {
+    if (x < 10) {
+        println("${x} < 10")
+    } else if (x == 10) {
+        println("${x} = 10")
+    } else {
+        println("${x} > 10")
+    }
+}
+diff(11) // 11 > 10
+
+// Циклы
+list.each { l ->
+    print l
+}
+// 123
+
+for (i in 0..5) { 
+    print i
+}
+// 012345
+
+for (int i = 0; i < 10; i++) {
+    print i
+}
+// 0123456789
+
+i = 0
+while (i < 3) {
+    println(i)
+    i++
+}
+// 0
+// 1
+// 2
 ```
 
 # Secret Manager
@@ -562,6 +1321,149 @@ docker exec -it consul consul acl token create -policy-name "default" -token "38
 `curl http://localhost:8500/v1/health/service/consul?pretty` \
 `curl --request PUT --data "ssh-rsa AAAA" http://localhost:8500/v1/kv/ssh/key` записать секрет KV Store Consul \
 `curl -s http://localhost:8500/v1/kv/ssh/key | jq -r .[].Value | base64 --decode` извлечь содержимое секрета
+
+# pussh
+
+[Pussh](https://github.com/bearstech/pussh) — инструмент для параллельного выполнения команд через SSH на нескольких хостах одновременно, выводя результаты с указанием имени каждого хоста. Был внутренним инструментом Bearstech (хостинг-провайдер в Париже, Франция) примерно с 2008 года.
+```bash
+sudo curl -s https://raw.githubusercontent.com/bearstech/pussh/refs/heads/master/pussh -o /usr/bin/pussh
+sudo chmod +x /usr/bin/pussh
+
+bash pussh -h root@192.168.3.102,root@192.168.3.103 uname -a
+
+echo -e "root@192.168.3.102\nroot@192.168.3.103" > host.list
+pussh -f host.list uname -a
+```
+
+# Sake
+
+[Sake](https://github.com/alajmo/sake) - это командный раннер для локальных и удаленных хостов. Вы определяете серверы и задачи в файле `sake.yaml`, а затем запускаете задачи на серверах.
+```bash
+curl -sfL https://raw.githubusercontent.com/alajmo/sake/main/install.sh | sh
+sake init # инициализировать sake.yml файл
+sake list servers # вывести список машин
+sake list tags  # список тегов (группы серверов)
+sake list tasks # список задач
+sake run ping --all # запустить задачу на все хосты
+sake exec --all "uname -a && uptime" # запустить команду на всех хостах
+```
+Пример конфигурации:
+```yaml
+servers:
+  localhost:
+    host: 0.0.0.0
+    local: true
+  obsd:
+    host: root@192.168.3.102:22
+    tags: [bsd]
+  fbsd:
+    host: root@192.168.3.103:22
+    tags: [bsd]
+    work_dir: /tmp
+
+env:
+  DATE: $(date -u +"%Y-%m-%dT%H:%M:%S%Z")
+
+specs:
+  info:
+    output: table
+    ignore_errors: true
+    omit_empty_rows: true
+    omit_empty_columns: true
+    any_fatal_errors: false
+    ignore_unreachable: true
+    strategy: free
+
+tasks:
+  ping:
+    desc: Pong
+    spec: info
+    cmd: echo "pong"
+
+  uname:
+    name: OS
+    desc: Print OS
+    spec: info
+    cmd: |
+      os=$(uname -s)
+      release=$(uname -r)
+      echo "$os $release"
+
+  uptime:
+    name: Uptime
+    desc: Print uptime
+    spec: info
+    cmd: uptime
+
+  info:
+    desc: Get system overview
+    spec: info
+    tasks:
+      - task: ping
+      - name: date
+        cmd: echo $DATE
+      - name: pwd
+        cmd: pwd
+      - task: uname
+      - task: uptime
+```
+`sake run info --tags bsd` запустить набор из 5 заданий из группы info
+
+# Puppet
+
+### Bolt
+
+[Bolt](https://github.com/puppetlabs/bolt) - это инструмент оркестровки, который выполняет заданную команду или группу команд на локальной рабочей станции, а также напрямую подключается к удаленным целям с помощью SSH или WinRM, что не требует установки агентов.
+
+Docs: https://www.puppet.com/docs/bolt/latest/getting_started_with_bolt.html
+```bash
+wget https://apt.puppet.com/puppet-tools-release-bullseye.deb
+sudo dpkg -i puppet-tools-release-bullseye.deb
+sudo apt-get update
+sudo apt-get install puppet-bolt
+```
+`nano inventory.yaml`
+```yaml
+groups:
+- name: bsd
+  targets:
+    - uri: 192.168.3.102:22
+      name: openbsd
+    - uri: 192.168.3.103:22
+      name: freebsd
+  config:
+    transport: ssh
+    ssh:
+      user: root
+      # password: root
+      host-key-check: false
+```
+`bolt command run uptime --inventory inventory.yaml --targets bsd` выполнить команду uptime на группе хостов bsd, заданной в файле inventory
+
+`echo name: lazyjournal > bolt-project.yaml` создать файл проекта
+
+`mkdir plans && nano test.yaml` создать директорию и файл с планом работ
+```yaml
+parameters:
+  targets:
+    type: TargetSpec
+
+steps:
+  - name: clone
+    command: rm -rf lazyjournal && git clone https://github.com/Lifailon/lazyjournal
+    targets: $targets
+
+  - name: test
+    command: cd lazyjournal && go test -v -cover --run TestMainInterface
+    targets: $targets
+
+  - name: remove
+    command: rm -rf lazyjournal
+    targets: $targets
+```
+`bolt plan show` вывести список всех планов
+
+`bolt plan run lazyjournal::test --inventory inventory.yaml --targets bsd -v` запустить план
 
 # Ansible
 
@@ -1041,6 +1943,75 @@ ansible_shell_type=powershell
 	# source: URL-адрес внутреннего репозитория
     source: https://community.chocolatey.org/api/v2/ChocolateyInstall.ps1
 ```
+
+# Jinja
+
+Локальное использование:
+
+`pip install jinja2 --break-system-packages`
+
+`inventory.j2` шаблон для генерации
+```
+[dev]
+{% for host in hosts -%}
+{{ host }} ansible_host={{ host }}
+{% endfor %}
+```
+`env.json` файл с переменными
+```json
+{
+  "hosts": ["192.168.3.101", "192.168.3.102", "192.168.3.103"]
+}
+```
+`render.py` скрипт для генерации файла inventory
+```Python
+from jinja2 import Environment, FileSystemLoader
+import json
+# Загружаем переменные из JSON
+with open('env.json') as f:
+    data = json.load(f)
+# Настройка шаблонизатора
+env = Environment(loader=FileSystemLoader('.'))
+template = env.get_template('inventory.j2')
+output = template.render(data)
+# Сохраняем результат в файл
+with open('inventory.generated', 'w') as f:
+    f.write(output)
+```
+`python render.py`
+
+Использование в Ansible для обновления файла `hosts`:
+
+`inventory.ini`
+```
+[dev]
+dev1 ansible_host=192.168.3.101
+dev2 ansible_host=192.168.3.102
+dev3 ansible_host=192.168.3.103
+```
+`templates/hosts.j2`
+```
+127.0.0.1 localhost
+{% for host in groups['all'] -%}
+{{ hostvars[host]['ansible_host'] }} {{ host }}
+{% endfor %}
+```
+`playbook.yml`
+```yaml
+- name: Update hosts file
+  hosts: all
+  become: true
+  tasks:
+    - name: Generate hosts file
+      template:
+        src: hosts.j2
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: '0644'
+```
+`ansible-playbook -i inventory.ini playbook.yml --check --diff` отобразит изменения без их реального применения \
+`ansible-playbook -i inventory.ini playbook.yml -K` позволяет передать пароль для root
 
 # DSC
 
