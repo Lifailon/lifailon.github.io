@@ -1,13 +1,4 @@
-+++
-title = "Go"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
-<p align="center">
-    <a href="https://github.com/Lifailon/golang-cheat-sheet-ru"><img title="PS-Commands Logo"src="GoLang-Cheat-Sheet-Logo.png"></a>
-</p>
+![](GoLang-Cheat-Sheet-Logo.png)
 
 
 <p align="center">

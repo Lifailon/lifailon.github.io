@@ -1,10 +1,3 @@
-+++
-title = "DevOps"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
 Заметки по инструментам и системам направления `DevOps`.
 
 ---

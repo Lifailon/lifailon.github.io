@@ -1,13 +1,4 @@
-+++
-title = "Docker"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
-<p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/posh.md/#docker"><img title="Dpcler Commands Logo"src="Docker-Commands-Logo.png"></a>
-</p>
+![](Docker-Commands-Logo.png)
 
 <p align="center">
     Заметки по работе с системой контейнеризации 🐳 <b>Docker</b>.

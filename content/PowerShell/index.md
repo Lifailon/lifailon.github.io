@@ -1,13 +1,4 @@
-+++
-title = "PowerShell Syntax"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
-<p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands"><img title="PS-Commands Logo"src="PS-Commands-Logo.png"></a>
-</p>
+![](PS-Commands-Logo.png)
 
 <p align="center">
     Синтаксис и работа с модулями в <b>PowerShell</b>.
@@ -15,9 +6,7 @@ toc_sidebar = true
 
 ---
 
-<p align="center">
-<a href="https://github.com/Lifailon/PS-Commands"><img title="PowerShell Cheat Sheet RU"src="PowerShell-Cheat-Sheet-RU.jpg"></a>
-</p>
+![](PowerShell-Cheat-Sheet-RU.jpg)
 
 ---
 

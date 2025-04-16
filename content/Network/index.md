@@ -1,10 +1,3 @@
-+++
-title = "Network"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
 Заметки по сетевым утилитам.
 
 ---

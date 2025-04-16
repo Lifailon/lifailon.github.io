@@ -1,8 +1,0 @@
-# mkdocs build
-/site
-
-# zola build
-*.exe
-/public
-/themes
-/static/*.css

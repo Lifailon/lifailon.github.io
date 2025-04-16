@@ -1,13 +1,4 @@
-+++
-title = "Linux"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
-<p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/linux.md"><img title="Linux Commands Logo"src="Linux-Commands-Logo.png"></a>
-</p>
+![](Linux-Commands-Logo.png)
 
 <p align="center">
     Заметки по работе с системными командами и консольными утилитами 🐧 <b>Linux</b>.

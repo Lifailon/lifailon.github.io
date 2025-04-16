@@ -1,13 +1,4 @@
-+++
-title = "Node.js"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
-<p align="center">
-    <a href="https://github.com/Lifailon/node.js-cheat-sheet-ru"><img title="PS-Commands Logo"src="Node.js-Cheat-Sheet-Logo.png"></a>
-</p>
+![](Node.js-Cheat-Sheet-Logo.png)
 
 <p align="center">
     <span>Памятка по основам синтаксиса <b>JavaScript</b> для <b>Node.js</b> в примерах.</span>

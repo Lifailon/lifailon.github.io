@@ -1,10 +1,3 @@
-+++
-title = "API"
-[extra]
-toc = true
-toc_sidebar = true
-+++
-
 Заметки по работе с `REST API` через **PowerShell** и **curl**.
 
 ---
