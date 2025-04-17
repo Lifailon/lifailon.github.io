@@ -5,10 +5,11 @@
 | **Branch**                                                                                      | **Engine**                                                                                                              |
 | -                                                                                               | -                                                                                                                       |
 | **[main](https://github.com/Lifailon/lifailon.github.io/tree/main)**                            | Markdown sources for building                                                                                           |
-| **[docsify](https://github.com/Lifailon/lifailon.github.io/tree/docsify)**                      | [Docsify](https://github.com/docsifyjs/docsify) and [Docsify Template](https://github.com/docsifyjs/docsify-template)   |
 | ✔️ **[zola-duckquill](https://github.com/Lifailon/lifailon.github.io/tree/zola-duckquill)**     | [Zola](https://github.com/getzola/zola) and [Duckquill](https://codeberg.org/daudix/duckquill) theme                    |
 | **[mkdocs-material](https://github.com/Lifailon/lifailon.github.io/tree/mkdocs-material)**      | [MkDocs](https://github.com/mkdocs/mkdocs) and [Material](https://github.com/squidfunk/mkdocs-material) theme           |
 | **[hugo-dark](https://github.com/Lifailon/lifailon.github.io/tree/hugo-dark)**                  | [Hugo](https://github.com/gohugoio/hugo) and [Dark Theme Editor](https://github.com/JingWangTW/dark-theme-editor)       |
+| **[docsify](https://github.com/Lifailon/lifailon.github.io/tree/docsify)**                      | [Docsify](https://github.com/docsifyjs/docsify) with no build                                                           |
+| **[mdbook](https://github.com/Lifailon/lifailon.github.io/tree/docsify)**                       | [mdBook](https://github.com/rust-lang/mdBook) based on Rust                                                             |
 | **[jekyll-now](https://github.com/Lifailon/lifailon.github.io/tree/jekyll-now)**                | [Jekyll](https://github.com/jekyll/jekyll) and [Jekyll Now](https://github.com/barryclark/jekyll-now)                   |
 | **[pandoc-solarized](https://github.com/Lifailon/lifailon.github.io/tree/pandoc-solarized)**    | [Pandoc](https://github.com/jgm/pandoc) and Solarized Dark theme                                                        |
 
