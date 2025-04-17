@@ -1,0 +1,1420 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>API - PowerShell Commands</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PowerShell Commands</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>+++
+title = "API"
+[extra]
+toc = true
+toc_sidebar = true
+go_to_top = true
++++</p>
+<p>Заметки по работе с <code>REST API</code> через <strong>PowerShell</strong> и <strong>curl</strong>.</p>
+<hr />
+<h1 id="rest-api"><a class="header" href="#rest-api">REST API</a></h1>
+<p><code>$url = "https://habr.com/ru/rss/users/Lifailon/publications/articles/?fl=ru"</code> RSS лента публикаций на Habr <br />
+<code>Invoke-RestMethod $url</code> <br />
+<code>$iwr = Invoke-WebRequest -Uri $url</code> <br />
+<code>$iwr | Get-Member</code> <br />
+<code>$iwr.Content</code> <br />
+<code>$iwr.StatusCode -eq 200</code> <br />
+<code>$iwr.Headers</code> <br />
+<code>$iwr.ParsedHtml | Select lastModified</code> <br />
+<code>$iwr.Links | fl title,innerText,href</code> <br />
+<code>$iwr.Images.src</code></p>
+<h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
+<p><strong>GET</strong> - Read <br />
+<strong>POST</strong> - Create <br />
+<strong>PATCH</strong> - Partial update/modify <br />
+<strong>PUT</strong> - Update/replace <br />
+<strong>DELETE</strong> - Remove</p>
+<h3 id="download-image"><a class="header" href="#download-image">Download Image</a></h3>
+<pre><code class="language-PowerShell">function Download-Image {
+param (
+    [Parameter(Mandatory = $True)]$url
+)
+    $folder = $url -replace "http.+://" -replace "/","-" -replace "-$"
+    $path = "$home\Pictures\$folder"
+    if (Test-Path $path) {
+        Remove-Item $path -Recurse -Force
+        New-Item -ItemType Directory $path &gt; $null
+    } else {
+        New-Item -ItemType Directory $path &gt; $null
+    }
+    $irm = Invoke-WebRequest -Uri $url
+    foreach ($img in $irm.Images.src) {
+        $name = $img -replace ".+/"
+        Start-Job {
+            Invoke-WebRequest $using:img -OutFile "$using:path\$using:name"
+        } &gt; $null
+    }
+    while ($True){
+        $status_job = (Get-Job).State[-1]
+        if ($status_job -like "Completed"){
+        Get-Job | Remove-Job -Force
+        break
+    }}
+    $count_all = $irm.Images.src.Count
+    $count_down = (Get-Item $path\*).count
+    "Downloaded $count_down of $count_all files to $path"
+}
+</code></pre>
+<p><code>Download-Image -url https://losst.pro/</code></p>
+<h3 id="token"><a class="header" href="#token">Token</a></h3>
+<pre><code class="language-PowerShell">https://veeam-11:9419/swagger/ui/index.html
+$Header = @{
+    "x-api-version" = "1.0-rev2"
+}
+$Body = @{
+    "grant_type" = "password"
+    "username" = "$login"
+    "password" = "$password"
+}
+$vpost = iwr "https://veeam-11:9419/api/oauth2/token" -Method POST -Headers $Header -Body $Body -SkipCertificateCheck
+$vtoken = (($vpost.Content) -split '"')[3]
+</code></pre>
+<h3 id="get"><a class="header" href="#get">GET</a></h3>
+<pre><code class="language-PowerShell">$token = $vtoken | ConvertTo-SecureString -AsPlainText –Force
+$vjob = iwr "https://veeam-11:9419/api/v1/jobs" -Method GET -Headers $Header -Authentication Bearer -Token $token -SkipCertificateCheck
+
+$Header = @{
+    "x-api-version" = "1.0-rev1"
+    "Authorization" = "Bearer $vtoken"
+}
+$vjob = iwr "https://veeam-11:9419/api/v1/jobs" -Method GET -Headers $Header -SkipCertificateCheck
+$vjob = $vjob.Content | ConvertFrom-Json
+
+$vjob = Invoke-RestMethod "https://veeam-11:9419/api/v1/jobs" -Method GET -Headers $Header -SkipCertificateCheck
+$vjob.data.virtualMachines.includes.inventoryObject
+</code></pre>
+<h3 id="cookie"><a class="header" href="#cookie">Cookie</a></h3>
+<p>Получить hash торрент файла на сайте Кинозал</p>
+<pre><code class="language-PowerShell">function Get-KinozalTorrentHash {
+    param (
+        [Parameter(Mandatory = $True)][string]$id,
+        [Parameter(Mandatory = $True)][string]$cookies
+    )
+    $url = "https://kinozal.tv/get_srv_details.php?id=$($id)&amp;action=2"
+    $cookies = "uid=...+"
+    $headers = @{
+        "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        "Cookie" = $cookies
+    }
+    $result = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
+    $result -match "Инфо хеш: (.+)&lt;/li&gt;&lt;li&gt;Размер" | Out-Null
+    return $Matches[1]
+}
+</code></pre>
+<p><code>$id = 1656552</code> <br />
+<code>$cookies = "uid=..."</code> получить cookie в браузере на вкладке сеть из загловка запросов после авторизации на сайте <br />
+<code>Get-KinozalTorrentHash $id $cookies</code></p>
+<h1 id="pode"><a class="header" href="#pode">Pode</a></h1>
+<p><a href="https://github.com/Badgerati/Pode">PowerShell Web framework</a> для создания <code>REST API</code>, Веб-сайтов, <code>TCP</code> и <code>SMTP</code> серверов.</p>
+<pre><code class="language-PowerShell">Start-PodeServer {
+    Add-PodeEndpoint -Address localhost -Port "8080" -Protocol "HTTP"
+    ### Get info endpoints
+    Add-PodeRoute -Path "/" -Method "GET" -ScriptBlock {
+        Write-PodeJsonResponse -Value @{
+        "service"="/api/service";
+        "process"="/api/process"
+        }
+    }
+    ### GET
+    Add-PodeRoute -Path "/api/service" -Method "GET" -ScriptBlock {
+        Write-PodeJsonResponse -Value $(
+            Get-Service | Select-Object Name,@{
+                Name="Status"; Expression={[string]$_.Status}
+            },@{
+                Name="StartType"; Expression={[string]$_.StartType}
+            } | ConvertTo-Json
+        )
+    }
+    Add-PodeRoute -Path "/api/process" -Method "GET" -ScriptBlock {
+        Write-PodeJsonResponse -Value $(
+            Get-Process | Sort-Object -Descending CPU | Select-Object -First 15 ProcessName,
+            @{Name="ProcessorTime"; Expression={$_.TotalProcessorTime -replace "\.\d+$"}},
+            @{Name="Memory"; Expression={[string]([int]($_.WS / 1024kb))+"MB"}},
+            @{Label="RunTime"; Expression={((Get-Date) - $_.StartTime) -replace "\.\d+$"}}
+        )
+    }
+    Add-PodeRoute -Path "/api/process-html" -Method "GET" -ScriptBlock {
+        Write-PodeHtmlResponse -Value (
+            Get-Process | Sort-Object -Descending CPU | Select-Object -First 15 ProcessName,
+            @{Name="ProcessorTime"; Expression={$_.TotalProcessorTime -replace "\.\d+$"}},
+            @{Name="Memory"; Expression={[string]([int]($_.WS / 1024kb))+"MB"}},
+            @{Label="RunTime"; Expression={((Get-Date) - $_.StartTime) -replace "\.\d+$"}} # Auto ConvertTo-Html
+        )
+    }
+    ### POST
+    Add-PodeRoute -Path "/api/service" -Method "POST" -ScriptBlock {
+        # https://pode.readthedocs.io/en/latest/Tutorials/WebEvent/
+        # $WebEvent | Out-Default
+        $Value = $WebEvent.Data["ServiceName"]
+        $Status = (Get-Service -Name $Value).Status
+        Write-PodeJsonResponse -Value @{
+            "Name"="$Value";
+            "Status"="$Status";
+        }
+    }
+}
+</code></pre>
+<p><code>irm http://localhost:8080/api/service -Method Get</code> <br />
+<code>irm http://localhost:8080/api/process -Method Get</code> <br />
+<code>http://localhost:8080/api/process-html</code> использовать браузер <br />
+<code>irm http://localhost:8080/api/service -Method Post -Body @{"ServiceName" = "AnyDesk"}</code></p>
+<h1 id="selenium"><a class="header" href="#selenium">Selenium</a></h1>
+<p><code>Invoke-Expression(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/Deploy-Selenium/rsa/Deploy-Selenium-Drivers.ps1")</code> установка всех драйверов и Chromium соответствующий версии для драйвера</p>
+<pre><code class="language-powershell">$path = "$home\Documents\Selenium\"
+$log = "$path\ChromeDriver.log"
+$ChromeDriver = "$path\ChromeDriver.exe"
+$WebDriver = "$path\WebDriver.dll"
+$SupportDriver = "$path\WebDriver.Support.dll"
+$Chromium = (Get-ChildItem $path -Recurse | Where-Object Name -like chrome.exe).FullName
+Add-Type -Path $WebDriver
+Add-Type -Path $SupportDriver
+try {
+    $ChromeOptions = New-Object OpenQA.Selenium.Chrome.ChromeOptions # создаем объект с настройками запуска браузера
+    $ChromeOptions.BinaryLocation = $Chromium # передаем путь до исполняемого файла, который отвечает за запуск браузера
+    $ChromeOptions.AddArgument("start-maximized") # добавляем аргумент, который позволяет запустить браузер на весь экран
+    #$ChromeOptions.AddArgument("start-minimized") # запускаем браузер в окне
+    #$ChromeOptions.AddArgument("window-size=400,800") # запускаем браузер с заданными размерам окна в пикселях
+    $ChromeOptions.AcceptInsecureCertificates = $True # игнорировать предупреждение на сайтах с не валидным сертификатом
+    #$ChromeOptions.AddArgument("headless") # скрывать окно браузера при запуске
+    $ChromeDriverService = [OpenQA.Selenium.Chrome.ChromeDriverService]::CreateDefaultService($ChromeDriver) # создаем объект настроек службы драйвера
+    $ChromeDriverService.HideCommandPromptWindow = $True # отключаем весь вывод логирования драйвера в консоль (этот вывод нельзя перенаправить)
+    $ChromeDriverService.LogPath = $log # указать путь до файла с журналом
+    $ChromeDriverService.EnableAppendLog = $True # не перезаписывать журнал при каждом новом запуске
+    #$ChromeDriverService.EnableVerboseLogging = $True # кроме INFO и ошибок, записывать DEBUG сообщения
+    $Selenium = New-Object OpenQA.Selenium.Chrome.ChromeDriver($ChromeDriverService, $ChromeOptions) # инициализируем запуск с указанными настройками
+
+    $Selenium.Navigate().GoToUrl("https://google.com") # переходим по указанной ссылке в браузере
+    #$Selenium.Manage().Window.Minimize() # свернуть окно браузера после запуска и перехода по нужному url (что бы считать страницу корректно)
+    # Ищем поле для ввода текста:
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::Id('APjFqb'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::XPath('//*[@id="APjFqb"]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::Name('q'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::XPath('//*[@name="q"]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::ClassName('gLFyf'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::CssSelector('[jsname="yZiJbe"]'))
+    $Search = $Selenium.FindElements([OpenQA.Selenium.By]::TagName('textarea')) | Where-Object ComputedAccessibleRole -eq combobox
+    $Search.SendKeys("calculator online") # передаем текст выбранному элементу
+    $Search.SendKeys([OpenQA.Selenium.Keys]::Enter) # нажимаем Enter для вызова функции поиска
+
+    Start-Sleep 1
+    $div = $Selenium.FindElements([OpenQA.Selenium.By]::TagName("div"))
+    $2 = $div | Where-Object {($_.ComputedAccessibleRole -eq "button") -and ($_.ComputedAccessibleLabel -eq "2")}
+    $2.Click()
+    $2.Click()
+    $plus = $div | Where-Object {($_.ComputedAccessibleRole -eq "button") -and ($_.Text -eq "+")}
+    $plus.Click()
+    $3 = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname="KN1kY"]'))
+    $3.Click()
+    $3.Click()
+    $sum = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname="Pt8tGc"]'))
+    $sum.Click()
+    $result = $Selenium.FindElement([OpenQA.Selenium.By]::CssSelector('[jsname="VssY5c"]')).Text
+    Write-Host "Result: $result" -ForegroundColor Green
+}
+finally {
+    $Selenium.Close()
+    $Selenium.Quit()
+}
+</code></pre>
+<h3 id="selenium-modules"><a class="header" href="#selenium-modules">Selenium modules</a></h3>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-GPT/Get-GPT.psm1 | Out-File -FilePath "$(New-Item -Path "$($($Env:PSModulePath -split ";")[0])\Get-GPT" -ItemType Directory -Force)\Get-GPT.psm1" -Force
+</code></pre>
+<p><code>Get-GPT "Исполняй роль калькулятора. Посчитай сумму чисел: 22+33"</code></p>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-Translation/Get-Translation.psm1 | Out-File -FilePath "$(New-Item -Path "$($($Env:PSModulePath -split ";")[0])\Get-Translation" -ItemType Directory -Force)\Get-Translation.psm1" -Force
+</code></pre>
+<p><code>Get-Translation -Provider DeepL -Text "I translating the text"</code> <br />
+<code>Get-Translation -Provider DeepL -Text "Я перевожу текст"</code> <br />
+<code>Get-Translation -Provider Google -Text "I translating the text"</code> <br />
+<code>Get-Translation -Provider Google -Text "Я перевожу текст" -Language en</code></p>
+<pre><code class="language-PowerShell">Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/Selenium-Modules/rsa/Modules/Get-SpeedTest/Get-SpeedTest.psm1 | Out-File -FilePath "$(New-Item -Path "$($($Env:PSModulePath -split ";")[0])\Get-SpeedTest" -ItemType Directory -Force)\Get-SpeedTest.psm1" -Force
+</code></pre>
+<p><code>Get-SpeedTest -Provider Libre</code> <br />
+<code>Get-SpeedTest -Provider Open</code> <br />
+<code>Get-SpeedTest -Provider Ookla</code></p>
+<h1 id="ie"><a class="header" href="#ie">IE</a></h1>
+<p><code>$ie.document.IHTMLDocument3_getElementsByTagName("input")  | select name</code> получить имена всех Input Box <br />
+<code>$ie.document.IHTMLDocument3_getElementsByTagName("button") | select innerText</code> получить имена всех Button <br />
+<code>$ie.Document.documentElement.innerHTML</code> прочитать сырой Web Content (&lt;input name="login" tabindex="100" class="input__control input__input" id="uniq32005644019429136" spellcheck="false" placeholder="Логин") <br />
+<code>$All_Elements = $ie.document.IHTMLDocument3_getElementsByTagName("*")</code> забрать все элементы <br />
+<code>$Go_Button = $All_Elements | ? innerText -like "go"</code> поиск элемента по имени <br />
+<code>$Go_Button | select ie9_tagName</code> получить TagName (SPAN) для быстрого дальнейшего поиска <br />
+<code>$SPAN_Elements = $ie.document.IHTMLDocument3_getElementsByTagName("SPAN")</code></p>
+<pre><code class="language-PowerShell">$ie = New-Object -ComObject InternetExplorer.Application
+$ie.navigate("https://yandex.ru")
+$ie.visible = $true
+$ie.document.IHTMLDocument3_getElementByID("login").value = "Login"
+$ie.document.IHTMLDocument3_getElementByID("passwd").value = "Password"
+$Button_Auth = ($ie.document.IHTMLDocument3_getElementsByTagName("button")) | ? innerText -match "Войти"
+$Button_Auth.Click()
+$Result = $ie.Document.documentElement.innerHTML
+$ie.Quit()
+</code></pre>
+<h1 id="llm"><a class="header" href="#llm">LLM</a></h1>
+<h2 id="openai"><a class="header" href="#openai">OpenAI</a></h2>
+<p>Пример запроса для перевода текста</p>
+<pre><code class="language-PowerShell">$text = "The OpenAI API uses API keys for authentication. You can create API keys at a user or service account level." # https://platform.openai.com/docs/api-reference/authentication
+$toLang = "Russian"
+$presetPrompt = "Translate the following text into $toLang :
+$text
+Respond ONLY with the translated text. Do not include any other explanations, context, or comments.
+"
+$apiKey = "sk-proj-XXXXXXXXXX"
+$apiUrl = "https://api.openai.com/v1/chat/completions"
+
+$body = @{
+    model = "gpt-4o-mini"
+    messages = @(@{
+        role = "user";
+        content = $presetPrompt
+    })
+    temperature = 0.7
+} | ConvertTo-Json -Depth 10 -Compress
+
+$response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers @{
+    "Content-Type" = "application/json"
+    "Authorization" = "Bearer $apiKey"
+} -Body $body
+
+$response.choices.message.content
+</code></pre>
+<h2 id="mock"><a class="header" href="#mock">Mock</a></h2>
+<p>Создаем серверную заглушку для <code>API</code> OpenAI через <a href="https://github.com/typicode/json-server">JSON Server</a></p>
+<p><code>npm install -g json-server@0.17.4</code></p>
+<p>Конфигурация ответов в файле <code>openai.json</code></p>
+<pre><code class="language-json">{
+  "completions": {
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "message": {
+          "role": "assistant",
+          "content": "Response from JSON Server",
+        },
+        "finish_reason": "stop"
+      }
+    ]
+  }
+}
+</code></pre>
+<p>Настройка маршрутизации в файле <code>routes.json</code></p>
+<pre><code class="language-json">{
+    "/v1/chat/completions": "/completions"
+}
+</code></pre>
+<p>Конфигурация сервера в файле <code>json-server.json</code></p>
+<pre><code class="language-json">{
+    "port": 3001
+}
+</code></pre>
+<p>Запускаем сервер:</p>
+<p><code>json-server --watch openai.json --routes routes.json</code></p>
+<p>Делаем запрос:</p>
+<p><code>$(Invoke-RestMethod -Uri "http://localhost:3001/v1/chat/completions").choices.message.content</code></p>
+<h2 id="openrouter"><a class="header" href="#openrouter">OpenRouter</a></h2>
+<p>Регестрируем аккаунт на <a href="https://openrouter.ai">OpenRouter</a> через Google, выпускаем <a href="https://openrouter.ai/settings/keys">api ключ</a> и выбираем <a href="https://openrouter.ai/models?max_price=0">бесплатную модель</a>.</p>
+<pre><code class="language-PowerShell">$OPENROUTER_API_KEY = "sk-or-v1-KEY"
+$OPENROUTER_MODEL = "deepseek/deepseek-r1:free"
+$headers = @{
+    "Content-Type"  = "application/json"
+    "Authorization" = "Bearer $OPENROUTER_API_KEY"
+}
+$body = @{
+    "model" = $OPENROUTER_MODEL
+    "messages" = @(
+        @{
+            "role"    = "system"
+            "content" = "Your role is a translator. You only translate the text into Russian and do not analyze the answer."
+        },
+        @{
+            "role"    = "user"
+            "content" = "Hello! I translate the text into English!"
+        }
+    )
+} | ConvertTo-Json -Depth 10 -Compress
+$response = Invoke-RestMethod -Uri "https://openrouter.ai/api/v1/chat/completions" -Method Post -Headers $headers -Body $body
+$response.choices.message.content
+</code></pre>
+<h2 id="lm-studio"><a class="header" href="#lm-studio">LM Studio</a></h2>
+<p><code>API</code> в <a href="https://lmstudio.ai">LM Studio</a> совместим с OpenAI</p>
+<p>Получить список моделей:</p>
+<pre><code class="language-PowerShell">$(Invoke-RestMethod -Uri "http://127.0.0.1:1234/v1/models/").data.id
+deepseek-r1-distill-llama-8b
+llama-3.2-3b-instruct
+text-embedding-nomic-embed-text-v1.5
+</code></pre>
+<p>Режим чата (когда <code>stream</code> установлен в <code>True</code>, ответ приходит по частям):</p>
+<pre><code class="language-bash">curl http://127.0.0.1:1234/v1/chat/completions `
+    -H "Content-Type: application/json" `
+    -d '{
+    "model": "deepseek-r1-distill-llama-8b",
+    "messages": [ 
+        { "role": "system", "content": "Только переводишь текст на англйский язык, не анализируешь ответ и не пишешь ничего дополнительного." },
+        { "role": "user", "content": "Привет! Я перевожу текст на англйский язык!" }
+    ], 
+    "temperature": 0.7, 
+    "max_tokens": -1,
+    "stream": false
+}'
+</code></pre>
+<h2 id="ollama"><a class="header" href="#ollama">Ollama</a></h2>
+<pre><code class="language-PowerShell">cd $home\Downloads
+$versionLatest = $(Invoke-RestMethod "https://api.github.com/repos/ollama/ollama/releases/latest").tag_name
+irm https://github.com/ollama/ollama/releases/download/${versionLatest}/ollama-windows-amd64.zip -OutFile ollama.zip
+Expand-Archive -Path ollama.zip -OutputPath ".\ollama" # -DestinationPath for Windows PowerShell 5.1
+Remove-Item ollama.zip; cd ollama
+</code></pre>
+<p><code>.\ollama serve</code> запускаем сервер <br />
+<code>.\ollama pull mistral:7b-instruct</code> загружаем модель (https://ollama.com/library/mistral) <br />
+<code>.\ollama run mistral</code> запустить консоль для общения с LLM в режиме чата</p>
+<pre><code class="language-PowerShell"># Отправляем API запрос
+$data = curl -sS -X POST http://localhost:11434/api/generate -d '{
+  "model": "mistral",
+  "prompt":"Return only the word test in the answer"
+}'
+# Собираем ответ из частей response
+[string]$($data | ConvertFrom-Json).response.trim()
+</code></pre>
+<h2 id="gigachat"><a class="header" href="#gigachat">GigaChat</a></h2>
+<h3 id="windows"><a class="header" href="#windows">Windows</a></h3>
+<p><a href="https://developers.sber.ru/gigachat/login">Developers chat</a></p>
+<ul>
+<li>Установка сертификатов:</li>
+</ul>
+<p><code>Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_root_ca.cer"</code> скачать сертификат минцифры <br />
+<code>Invoke-WebRequest "https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt" -OutFile "$home\Downloads\russian_trusted_sub_ca.cer"</code> <br />
+<code>Import-Certificate -FilePath "$home\Downloads\russian_trusted_root_ca.cer" -CertStoreLocation "Cert:\CurrentUser\Root"</code> установить сертификат минцифры <br />
+<code>Import-Certificate -FilePath "$home\Downloads\russian_trusted_sub_ca.cer" -CertStoreLocation "Cert:\CurrentUser\CA"</code></p>
+<ul>
+<li>
+<ol start="2">
+<li>Авторизация по Sber ID и генерация новых авторизационных данных для получения токена: <a href="https://developers.sber.ru/studio">Developers</a> (время жизни 30 минут)</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>Формирование авторизационных данных в формате Base64 из Client ID и Client Secret:</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-PowerShell">$Client_ID     = "7e6d2f9f-825e-49b7-98f4-62fbb7506427" # [System.Guid]::Parse("7e6d2f9f-825e-49b7-98f4-62fbb7506427")
+$Client_Secret = "c35113ee-6757-47ba-9853-ea1d0d9db1ef" # [System.Guid]::Parse("c35113ee-6757-47ba-9853-ea1d0d9db1ef")
+$Client_Join   = $Client_ID+":"+$Client_Secret # объединяем два UUID в одну строку, разделяя их символом ':'
+$Bytes         = [System.Text.Encoding]::UTF8.GetBytes($Client_Join) # преобразуем строку в массив байт
+$Cred_Base64   = [Convert]::ToBase64String($Bytes) # кодируем байты в строку Base64
+</code></pre>
+<ul>
+<li>
+<ol start="4">
+<li>Получение токена:</li>
+</ol>
+</li>
+</ul>
+<p><code>$Cred_Base64   = "N2U2ZDJmOWYtODI1ZS00OWI3LTk4ZjQtNjJmYmI3NTA2NDI3OmIyYzgwZmZmLTEzOGUtNDg1Mi05MjgwLWE2MGI4NTc0YTM2MQ=="</code> <br />
+<code>$UUID = [System.Guid]::NewGuid()</code> генерируем UUID для журналирования входящих вызовов и разбора инцидентов</p>
+<pre><code class="language-PowerShell">$url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
+$headers = @{
+    "Authorization" = "Basic $Cred_Base64"
+    "RqUID" = "$UUID"
+    "Content-Type" = "application/x-www-form-urlencoded"
+}
+$body = @{
+    scope = "GIGACHAT_API_PERS"
+}
+$GIGA_TOKEN = $(Invoke-RestMethod -Uri $url -Method POST -Headers $headers -Body $body).access_token
+</code></pre>
+<ul>
+<li>
+<ol start="5">
+<li>Параметры:</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-PowerShell">[string]$content = "Посчитай сумму чисел: 22+33"
+[string]$role = "user" # роль автора сообщения (user/assistant/system)
+[float]$temperature = 0.7 # температура выборки в диапазоне от 0 до 2. Чем выше значение, тем более случайным будет ответ модели.
+[float]$top_p = 0.1 # используется как альтернатива temperature и изменяется в диапазоне от 0 до 1. Задает вероятностную массу токенов, которые должна учитывать модель. Так, если передать значение 0.1, модель будет учитывать только токены, чья вероятностная масса входит в верхние 10%.
+[int64]$n = 1 # количество вариантов ответов (1..4), которые нужно сгенерировать для каждого входного сообщения
+[int64]$max_tokens = 512 # максимальное количество токенов, которые будут использованы для создания ответов
+[boolean]$stream = $false # передавать сообщения по частям в потоке
+</code></pre>
+<ul>
+<li>
+<ol start="6">
+<li>Составление запросов:</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-PowerShell">$url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
+$headers = @{
+    "Authorization" = "Bearer $GIGA_TOKEN"
+    "Content-Type" = "application/json"
+}
+
+$(Invoke-RestMethod -Uri "https://gigachat.devices.sberbank.ru/api/v1/models" -Headers $headers).data # список доступных моделей
+
+$body = @{
+    model = "GigaChat:latest"
+    messages = @(
+        @{
+            role = $role
+            content = $content
+        }
+    )
+    temperature = $temperature
+	n = $n
+	max_tokens = $max_tokens
+	stream = $stream
+} | ConvertTo-Json
+$Request = Invoke-RestMethod -Method POST -Uri $url -Headers $headers -Body $body
+$Request.choices.message.content
+</code></pre>
+<h3 id="linux"><a class="header" href="#linux">Linux</a></h3>
+<ul>
+<li>Установка сертификатов в Ubuntu:</li>
+</ul>
+<p><code>wget https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt</code> <br />
+<code>wget https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt</code> <br />
+<code>mkdir /usr/local/share/ca-certificates/russian_trusted</code> <br />
+<code>cp russian_trusted_root_ca_pem.crt russian_trusted_sub_ca_pem.crt /usr/local/share/ca-certificates/russian_trusted</code> <br />
+<code>update-ca-certificates -v</code> <br />
+<code>wget -qS --spider --max-redirect=0 https://www.sberbank.ru</code></p>
+<ul>
+<li>Получение токена:</li>
+</ul>
+<pre><code class="language-Bash">Cred_Base64="N2U2ZDJmOWYtODI1ZS00OWI3LTk4ZjQtNjJmYmI3NTA2NDI3OmIyYzgwZmZmLTEzOGUtNDg1Mi05MjgwLWE2MGI4NTc0YTM2MQ=="
+UUID=$(uuidgen)
+GIGA_TOKEN=$(curl -s --location --request POST "https://ngw.devices.sberbank.ru:9443/api/v2/oauth" \
+--header "Authorization: Basic $Cred_Base64" \
+--header "RqUID: $UUID" \
+--header "Content-Type: application/x-www-form-urlencoded" \
+--data-urlencode 'scope=GIGACHAT_API_PERS' | jq -r .access_token)
+</code></pre>
+<p><code>curl -s --location "https://gigachat.devices.sberbank.ru/api/v1/models" --header "Authorization: Bearer $GIGA_TOKEN" | jq .</code> для проверки</p>
+<ul>
+<li>Составление запроса:</li>
+</ul>
+<pre><code class="language-Bash">request=$(curl -s https://gigachat.devices.sberbank.ru/api/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $GIGA_TOKEN" \
+  -d '{
+  "model": "GigaChat:latest",
+  "messages": [
+        {
+            "role": "user",
+            "content": "Когда уже ИИ захватит этот мир?"
+        }
+    ],
+  "temperature": 0.7
+}')
+echo $request | jq -r .choices[].message.content
+</code></pre>
+<h2 id="yandexgpt"><a class="header" href="#yandexgpt">YandexGPT</a></h2>
+<ul>
+<li>Получить OAuth-Token:</li>
+</ul>
+<p><a href="https://cloud.yandex.ru/ru/docs/iam/operations/iam-token/create">Create AIM Token</a> время жизни IAM-токена не больше 12 часов <br />
+<code>yandexPassportOauthToken="y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"</code> для bash <br />
+<code>$yandexPassportOauthToken = "y0_AgAAAAAGaLFLAATuwQAAAAD3xtRLQE4hvlazQ5euKO43XXXXXXXXXXX"</code> для PowerShell</p>
+<ul>
+<li>Обменять OAuth-Token на IAM-Token:</li>
+</ul>
+<p><code>IAM_TOKEN=$(curl -s -d "{\"yandexPassportOauthToken\":\"$yandexPassportOauthToken\"}" "https://iam.api.cloud.yandex.net/iam/v1/tokens" | jq -r .iamToken)</code> <br />
+<code>$IAM_TOKEN = $(Invoke-RestMethod -Method POST -Uri "https://iam.api.cloud.yandex.net/iam/v1/tokens" -Body $(@{yandexPassportOauthToken = "$yandexPassportOauthToken"} | ConvertTo-Json -Compress)).iamToken</code></p>
+<ul>
+<li>Получить FOLDER_ID:</li>
+</ul>
+<pre><code class="language-Bash">CLOUD_ID=$(curl -s -H "Authorization: Bearer $IAM_TOKEN" https://resource-manager.api.cloud.yandex.net/resource-manager/v1/clouds | jq -r .clouds[].id) # получить cloud id
+curl -s --request GET -H "Authorization: Bearer $IAM_TOKEN" https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders -d "{\"cloudId\": \"$CLOUD_ID\"}" # получить список директорий в облаке
+curl -s --request POST -H "Authorization: Bearer $IAM_TOKEN" https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders -d "{\"cloudId\": \"$CLOUD_ID\", \"name\": \"test\"}" # создать директорию в облаке
+FOLDER_ID=$(curl -s --request GET -H "Authorization: Bearer $IAM_TOKEN" https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders -d '{"cloudId": "b1gf9n6heihqj0pt5piu"}' | jq -r '.folders[] | select(.name == "test") | .id') # забрать id директории
+</code></pre>
+<pre><code class="language-PowerShell">$CLOUD_ID = $(Invoke-RestMethod -Method Get -Uri "https://resource-manager.api.cloud.yandex.net/resource-manager/v1/clouds" -Headers @{"Authorization"="Bearer $IAM_TOKEN"; "Content-Type"="application/json"}).clouds.id
+$FOLDER_ID = $(Invoke-RestMethod -Method Get -Uri "https://resource-manager.api.cloud.yandex.net/resource-manager/v1/folders" -Headers @{"Authorization"="Bearer $IAM_TOKEN"; "Content-Type"="application/json"} -Body (@{"cloudId"= $CLOUD_ID} | ConvertTo-Json)).folders | Where-Object name -eq test | Select-Object -ExpandProperty id
+</code></pre>
+<ul>
+<li>Составление запроса:</li>
+</ul>
+<pre><code class="language-Bash">model="gpt://$FOLDER_ID/yandexgpt/latest" # https://cloud.yandex.ru/ru/docs/yandexgpt/concepts/models
+body=$(cat &lt;&lt;EOF
+{
+  "modelUri": "$model",
+  "completionOptions": {
+    "stream": false,
+    "temperature": 0.6,
+    "maxTokens": 2000
+  },
+  "messages": [
+    {
+      "role": "user",
+      "text": "Посчитай сумму 22+33"
+    }
+  ]
+}
+EOF)
+curl --request POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $IAM_TOKEN" \
+  -H "x-folder-id: $FOLDER_ID" \
+  -d "$body" \
+  "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+</code></pre>
+<pre><code class="language-PowerShell">$model = "gpt://$FOLDER_ID/yandexgpt/latest"
+$body = @"
+{
+  "modelUri": "$model",
+  "completionOptions": {
+    "stream": false,
+    "temperature": 0.6,
+    "maxTokens": 2000
+  },
+  "messages": [
+    {
+      "role": "user",
+      "text": "Посчитай сумму 22+33"
+    }
+  ]
+}
+"@
+Invoke-RestMethod -Method POST -Uri "https://llm.api.cloud.yandex.net/foundationModels/v1/completion" -Headers @{"Content-Type"="application/json"; "Authorization"="Bearer $IAM_TOKEN"; "x-folder-id"="$FOLDER_ID"} -Body $body
+</code></pre>
+<h2 id="superagi"><a class="header" href="#superagi">SuperAGI</a></h2>
+<p><a href="https://github.com/TransformerOptimus/SuperAGI">Source</a> <br />
+<a href="https://models.superagi.com/playground/generate">Playground generate</a> <br />
+<a href="https://documenter.getpostman.com/view/30119783/2s9YR3cFJG">API Doc (exaples)</a></p>
+<pre><code class="language-Bash">SUPERAGI_API_KEY="31f72164129XXXXX"
+prompt="посчитай сумму 22+33, дай только ответ без лишнего текста"
+request=$(curl -s -X POST 'https://api.superagi.com/v1/generate/65437cbf227a4018516ad1ce' \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer $SUPERAGI_API_KEY" \
+-d '{
+  "prompt": ["$prompt"],
+  "max_tokens": 500,
+  "temperature": 0.9,
+  "top_p": 0.15,
+  "repetition_penalty": 0,
+  "best_of": 1.05,
+  "top_k": 50,
+  "stream": false
+}')
+echo $request | sed "s/data: //" | jq -r .choices[].text
+</code></pre>
+<pre><code class="language-PowerShell">$SUPERAGI_API_KEY = "31f72164129XXXXX"
+$prompt = "посчитай сумму 22+33, дай только ответ без лишнего текста"
+$request = Invoke-RestMethod -Method Post -Uri 'https://api.superagi.com/v1/generate/65437cbf227a4018516ad1ce' -Headers @{
+    'Content-Type' = 'application/json'
+    'Authorization' = "Bearer $SUPERAGI_API_KEY"
+} -Body (@{
+    prompt = @($prompt)
+    max_tokens = 500
+    temperature = 0.9
+    top_p = 0.15
+    repetition_penalty = 0
+    best_of = 1.05
+    top_k = 50
+    stream = $false
+} | ConvertTo-Json)
+$($request -replace "^data: " | ConvertFrom-Json).choices.text
+</code></pre>
+<h2 id="replicate"><a class="header" href="#replicate">Replicate</a></h2>
+<p><a href="https://replicate.com/stability-ai/stable-diffusion/examples?input=http">API curl examples</a></p>
+<pre><code class="language-Bash">REPLICATE_API_TOKEN="r8_STyeUNXiGonkLfxE1FSKaqll26lXXXXXXXXXX"
+prompt="Жираф в полоску зебры"
+request=$(curl -s -X POST \
+  -H "Authorization: Token $REPLICATE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d $'{
+    "version": "ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4",
+    "input": {
+      "prompt": "$prompt"
+    }
+  }' \
+  https://api.replicate.com/v1/predictions)
+request_url=$(echo $request | jq -r .urls.get)
+response_status=$(curl -s -H "Authorization: Token $REPLICATE_API_TOKEN" $request_url | jq -r .status)
+while [[ $response_status != succeeded ]]; do
+    response_status=$(curl -s -H "Authorization: Token $REPLICATE_API_TOKEN" $request_url | jq -r .status)
+done
+curl -s -H "Authorization: Token $REPLICATE_API_TOKEN" $request_url | jq -r .output[]
+</code></pre>
+<pre><code class="language-PowerShell">$REPLICATE_API_TOKEN = "r8_STyeUNXiGonkLfxE1FSKaqll26lXXXXXXXXXX"
+$prompt = "Жираф в полоску зебры"
+$body = @{
+   version = "ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4"
+   input = @{
+       prompt = $prompt
+   }
+} | ConvertTo-Json
+$headers = @{
+   "Authorization" = "Token $REPLICATE_API_TOKEN"
+   "Content-Type" = "application/json"
+}
+$request = Invoke-RestMethod -Uri "https://api.replicate.com/v1/predictions" -Method POST -Body $body -Headers $headers
+$response = Invoke-RestMethod $($request.urls.get) -Headers @{"Authorization" = "Token $REPLICATE_API_TOKEN"}
+while ($response.status -ne "succeeded") {
+    $response = Invoke-RestMethod $($request.urls.get) -Headers @{"Authorization" = "Token $REPLICATE_API_TOKEN"}
+}
+$response.output
+</code></pre>
+<h1 id="google-api"><a class="header" href="#google-api">Google API</a></h1>
+<h2 id="google-translate"><a class="header" href="#google-translate">Google Translate</a></h2>
+<pre><code class="language-PowerShell">$Key = "&lt;TOKEN_API&gt;" # получить токен: https://console.cloud.google.com/apis/credentials
+$Text = "You can see in the right corner how long each translation request takes (this does not depend on the amount of text being transferred)."
+$LanguageTarget = "RU"
+$LanguageSource = "EN"
+$url = "https://translation.googleapis.com/language/translate/v2?key=$key"
+$Header = @{
+    "Content-Type" = "application/json"
+}
+$Body = @{
+    "q" = "$Text"
+    "target" = "$LanguageTarget"
+    "source" = "$LanguageSource"
+} | ConvertTo-Json
+$WebClient = New-Object System.Net.WebClient
+foreach ($key in $Header.Keys) {
+    $WebClient.Headers.Add($key, $Header[$key])
+}
+$Response = $WebClient.UploadString($url, "POST", $Body) | ConvertFrom-Json
+$Response.data.translations.translatedText
+</code></pre>
+<h2 id="google-search"><a class="header" href="#google-search">Google Search</a></h2>
+<pre><code class="language-PowerShell">$Key = "&lt;TOKEN_API&gt;" # получить токен: https://developers.google.com/custom-search/v1/overview?hl=ru (пользовательский поиск JSON API предоставляет 100 поисковых запросов в день бесплатно)
+$cx = "35c78340f49eb474a" # создать поисковую систему https://programmablesearchengine.google.com/controlpanel/all
+$Query = "как создать бота discord"
+$Lang = "ru"
+$Num = 10
+$Start = 0
+$response = Invoke-RestMethod "https://www.googleapis.com/customsearch/v1?q=$Query&amp;key=$Key&amp;cx=$cx&amp;lr=lang_$Lang&amp;num=$Num&amp;$start=$Start"
+$response.items | Select-Object title,snippet,displayLink,link | Format-List
+</code></pre>
+<h2 id="google-search-via-rapidapi"><a class="header" href="#google-search-via-rapidapi">Google Search via RapidAPI</a></h2>
+<p><a href="https://rapidapi.com/ru/neoscrap-net/api/google-search72">Google-Search72</a></p>
+<pre><code class="language-PowerShell">$Key = "&lt;TOKEN_API&gt;"
+$headers=@{}
+$headers.Add("X-RapidAPI-Key", "$Key")
+$headers.Add("X-RapidAPI-Host", "google-search72.p.rapidapi.com")
+$query = "как создать бота discord"
+$response = Invoke-RestMethod "https://google-search72.p.rapidapi.com/search?q=$query%20gitgub&amp;gl=us&amp;lr=lang_ru&amp;num=20&amp;start=0" -Method GET -Headers $headers
+$response.items | Select-Object title,snippet,displayLink,link | Format-List
+</code></pre>
+<h2 id="google-filter"><a class="header" href="#google-filter">Google Filter</a></h2>
+<p><code>https://www.google.com/search?q=the+rookie+2018+imdb</code> формат url-запроса поиска с пробелами <br />
+<code>https://www.google.com/search?q=the+rookie+2018+site:imdb.com</code> поиск по сайту <br />
+<code>https://www.google.com/search?q=the+rookie+intitle:index.of+"last modified"+(mkv|avi)</code> искать страницы, на которых указано "last modified" (последние изменения), заголовок страницы через расширенный оператор поиска (все перечисленные слова должны встречаться в заголовке) содержит слово "index.of" (указывает на директорию на веб-сервере, которая содержит список файлов) и искать файлы с расширениями .mkv или (|) .avi <br />
+<code>https://www.google.com/search?q=the+rookie+2018+filetype:torrent</code> <br />
+<code>инструкция gopro hero 11 filetype:pdf</code> искать сразу документ (на странице .pdf или загрузка) <br />
+<code>"действия/глаголы, утвержденные для использования в командлетах"</code> искать по фразе целиком, без разбиения на отдельные слова <br />
+<code>"ягуар скорость -животное -xe -xj"</code> узнаем скорость Ягуара, исключаем животное и модели автомобиля <br />
+<code>"intitle:лучшие фильмы 2023"</code> запрос ищет страницы, заголовки (title HTML документа) которых содержат слова "лучшие", "фильмы" и "2023" (все слова должны быть в заголовке) <br />
+<code>"allintitle:лучшие фильмы 2023"</code> запрос ищет страницы, заголовки (title HTML документа) которых содержат слова "лучшие", "фильмы" или "2023" (одно из) <br />
+<code>"intext:telegram бот powershell"</code> поиск страниц, содержащих указанное ключевое слово в тексте страницы (а не только в заголовке) <br />
+<code>"inurl:lifailon"</code> поиск страниц, в URL которых содержится указанное ключевое слово <br />
+<code>intitle:index.of "game of thrones" mkv daterange:2010..2015</code> фильтрация по дате изменения, оператор позволяет задать диапазон дат в формате YYYYMMDD..YYYYMMDD <br />
+<code>intitle:index.of "game of thrones" mkv after:2015</code> ограничить результаты поиска файлов, измененных до (before) или после (after) указанной даты <br />
+<code>intitle:index.of "game of thrones" mkv from:2010 to:2015</code> фильтрация по диапазону дат <br />
+<code>https://www.google.com/search?q=the-rookie-2018+site:imdb.com&amp;btnI</code> редирект на первый url</p>
+<h1 id="media-api"><a class="header" href="#media-api">Media API</a></h1>
+<h2 id="imdb"><a class="header" href="#imdb">IMDb</a></h2>
+<p><a href="https://rapidapi.com/apidojo/api/imdb8">IMDb8</a></p>
+<pre><code class="language-PowerShell">$key = "&lt;TOKEN_API&gt;" # 500 запросов в месяц
+$query="Break"
+$headers=@{}
+$headers.Add("X-RapidAPI-Key", "$key")
+$headers.Add("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
+$response = Invoke-RestMethod "https://imdb8.p.rapidapi.com/title/find?q=$query" -Method GET -Headers $headers
+$response.results | select title,titletype,year,runningTimeInMinutes,id | Format-Table
+"https://www.imdb.com$($response.results.id[0])"
+$response.results.principals # актеры
+$response.results.image
+</code></pre>
+<h2 id="moviesdatabase"><a class="header" href="#moviesdatabase">MoviesDatabase</a></h2>
+<p><a href="https://rapidapi.com/SAdrian/api/moviesdatabase">MoviesDatabase</a></p>
+<pre><code class="language-PowerShell">$key = "&lt;TOKEN_API&gt;"
+$imdb_id = "tt0455275"
+$headers=@{}
+$headers.Add("X-RapidAPI-Key", "$key")
+$headers.Add("X-RapidAPI-Host", "moviesdatabase.p.rapidapi.com")
+$response = Invoke-RestMethod "https://moviesdatabase.p.rapidapi.com/titles/$imdb_id" -Method GET -Headers $headers
+$response.results
+</code></pre>
+<h2 id="tmdb"><a class="header" href="#tmdb">TMDB</a></h2>
+<p><a href="https://developer.themoviedb.org/reference/intro/getting-started">Developer TMDB</a></p>
+<pre><code class="language-PowerShell">$TOKEN = "548e444e7812575caa0a7eXXXXXXXXXX"
+$Endpoint = "search/tv" # поиск сериала (tv) и фильма (movie) по названию
+$Query = "зимородок"
+$url = $("https://api.themoviedb.org/3/$Endpoint"+"?api_key=$TOKEN&amp;query=$Query")
+$(Invoke-RestMethod -Uri $url -Method Get).results
+$id = $(Invoke-RestMethod -Uri $url -Method Get).results.id # забрать id сериала (210865) https://www.themoviedb.org/tv/210865
+
+$Endpoint = "tv/$id" # получение информации о сериале по его ID
+$url = $("https://api.themoviedb.org/3/$Endpoint"+"?api_key=$TOKEN")
+$(Invoke-RestMethod -Uri $url -Method Get) # список сезонов (.seasons), количество эпизодов (.seasons.episode_count)
+
+(Invoke-RestMethod -Uri "https://api.themoviedb.org/3/tv/$id/season/2?api_key=$Token" -Method Get).episodes # вывести 2 сезон
+Invoke-RestMethod -Uri "https://api.themoviedb.org/3/tv/$id/season/2/episode/8?api_key=$Token" -Method Get # вывести 8 эпизод
+</code></pre>
+<h2 id="omdb"><a class="header" href="#omdb">OMDb</a></h2>
+<p>Получение API ключа по <a href="https://www.omdbapi.com">email</a></p>
+<p><code>$API_KEY = "XXXXXXXX"</code> <br />
+<code>$IMDb_ID = "tt7587890"</code> <br />
+<code>curl -s "https://omdbapi.com/?apikey=$($API_KEY)&amp;i=$($IMDb_ID)" | jq .</code> <br />
+<code>curl -s "https://omdbapi.com/?apikey=$($API_KEY)&amp;i=$($IMDb_ID)" | ConvertFrom-Json</code> <br />
+<code>Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;s=The Rookie"</code> <br />
+<code>Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;t=The Rookie"</code> поиск по Title <br />
+<code>Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;t=The Rookie&amp;y=1990"</code> поиск по Title и году выхода <br />
+<code>Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;t=The Rookie&amp;type=movie"</code> поиск только фильма (movie) или сериала (series) <br />
+<code>$(Invoke-RestMethod "https://omdbapi.com/?apikey=$($API_KEY)&amp;s=The Rookie").Search</code> поиск всех совпадений (фильмы и сериалы)</p>
+<h2 id="ivi"><a class="header" href="#ivi">ivi</a></h2>
+<p><a href="https://ask.ivi.ru/knowledge-bases/10/articles/51697-dokumentatsiya-dlya-api-ivi">ivi api doc</a></p>
+<p><code>Invoke-RestMethod https://api.ivi.ru/mobileapi/categories</code> список категорий и жанров (genres/meta_genres) <br />
+<code>Invoke-RestMethod https://api.ivi.ru/mobileapi/collections</code> подборки</p>
+<p><code>(Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.seasons.number</code> кол-во сезонов <br />
+<code>(Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.seasons[1].episode_count</code> кол-во серий во втором сезоне <br />
+<code>(Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.seasons[1].ivi_release_info.date_interval_min</code> дата выхода следующей серии <br />
+<code>(Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.kp_rating</code> рейтинг в Кинопоиск (8.04)</p>
+<p><code>$id = (Invoke-RestMethod "https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok").result.kp_id</code> получить id в Кинопоиск (5106881) <br />
+<code>id=$(curl -s https://api.ivi.ru/mobileapi/search/v7/?query=zimorodok | jq .result[].kp_id)</code> получить id в Кинопоиск</p>
+<h2 id="kinopoisk"><a class="header" href="#kinopoisk">Kinopoisk</a></h2>
+<pre><code class="language-Bash">id=5106881
+get=$(curl -s https://www.kinopoisk.ru/film/$id/episodes/)
+printf "%s\n" "${get[@]}" | grep -A 1 "Сезон 2" | grep "эпизодов" | sed -r "s/^.+\: //" # количество эпиздовод во втором сезоне
+</code></pre>
+<h3 id="kinopoiskdev"><a class="header" href="#kinopoiskdev">kinopoisk.dev</a></h3>
+<p><a href="https://t.me/kinopoiskdev_bot">Получить токен</a> <br />
+<a href="https://kinopoisk.dev/documentation">Документация по API в формате OpenAPI</a></p>
+<p><code>GET /v1.4/movie/{id}</code> поиск по id</p>
+<pre><code class="language-PowerShell">$id = 5106881
+$API_KEY = "ZYMNJJA-0J8MNPN-PB4N7R7-XXXXXXX"
+
+$Header = @{
+    "accept" = "application/json"
+    "X-API-KEY" = "$API_KEY"
+}
+$irm = Invoke-RestMethod "https://api.kinopoisk.dev/v1.4/movie/$id" -Method GET -Headers $Header
+$irm.rating.kp # рейтинг в Кинопоиск (8,079)
+$irm.seasonsInfo # количество сезонов и эпизодов в них
+</code></pre>
+<pre><code class="language-Bash">id=5106881
+API_KEY="ZYMNJJA-0J8MNPN-PB4N7R7-XXXXXXX"
+get=$(curl -s -X GET \
+  "https://api.kinopoisk.dev/v1.4/movie/$id" \
+  -H "accept: application/json" \
+  -H "X-API-KEY: $API_KEY")
+echo $get | jq .rating.kp # рейтинг в Кинопоиск (8,079)
+echo $get | jq .seasonsInfo[1].episodesCount # количество эпизодов во втором [1] сезоне (6)
+</code></pre>
+<p><code>GET /v1.4/movie/search</code></p>
+<pre><code class="language-Bash">query="zimorodok"
+page=1 # кол-во страниц для выборки
+limit=1 # кол-во элементов на странице
+curl -s -X GET \
+  "https://api.kinopoisk.dev/v1.4/movie/search?page=$page&amp;limit=$limit&amp;query=$query" \
+  -H "accept: application/json" \
+  -H "X-API-KEY: $API_KEY" | jq .
+
+limit=5
+request=$(curl -s -X GET \
+  "https://api.kinopoisk.dev/v1.4/movie/search?page=$page&amp;limit=$limit&amp;query=%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA" \
+  -H "accept: application/json" \
+  -H "X-API-KEY: $API_KEY" | jq .)
+echo $request | jq '.docs[] | select(.year == 2022)' # отфильтровать вывод по году выхода
+</code></pre>
+<pre><code class="language-PowerShell">$API_KEY = "ZYMNJJA-0J8MNPN-PB4N7R7-XXXXXXX"
+$page = 1
+$limit = 5
+$query = "%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA"
+$request = Invoke-RestMethod -Uri "https://api.kinopoisk.dev/v1.4/movie/search?page=$page&amp;limit=$limit&amp;query=$query" -Headers @{"accept"="application/json"; "X-API-KEY"="$API_KEY"}
+$request.docs | Where-Object year -eq 2022
+</code></pre>
+<h3 id="urlcode"><a class="header" href="#urlcode">UrlCode</a></h3>
+<pre><code class="language-PowerShell">function Get-PercentEncode ($str) {
+   $bytes = [System.Text.Encoding]::UTF8.GetBytes($str)
+   ($bytes | ForEach-Object { "{0:X2}" -f $_ }) -join '%' -replace "^","%"
+}
+Get-PercentEncode "зимородок"
+</code></pre>
+<pre><code class="language-PowerShell">function Get-UrlEncode($str) {
+   [System.Web.HttpUtility]::UrlEncode($str)
+}
+UrlEncode "зимородок"
+</code></pre>
+<pre><code class="language-Bash">percent-encode() {
+  str=$1
+    echo -n "$1" | iconv -t utf8 | od -An -tx1 | tr ' ' % | tr -d '\n'
+}
+percent-encode "зимородок"
+</code></pre>
+<pre><code class="language-PowerShell">function Get-UrlDecode($encoded) {
+    [System.Uri]::UnescapeDataString($encoded)
+}
+Get-UrlDecode "%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA"
+</code></pre>
+<pre><code class="language-Bash">percent-decode() {
+    encoded=$1
+    local url_encoded="${1//+/ }"
+    printf '%b' "${url_encoded//%/\\x}"
+}
+percent-decode "%D0%B7%D0%B8%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%BE%D0%BA"
+</code></pre>
+<h3 id="kinopoiskapiunofficial"><a class="header" href="#kinopoiskapiunofficial">KinopoiskApiUnofficial</a></h3>
+<p>Бесплатно 500 запросов в сутки. <a href="https://kinopoiskapiunofficial.tech/documentation/api">Swagger documentation</a></p>
+<pre><code class="language-PowerShell">API_KEY="828ec96a-f45d-4e3d-84b1-XXXXXXXXXXXX"
+$headers = @{
+    "accept" = "application/json"
+    "X-API-KEY" = "$API_KEY"
+}
+Invoke-RestMethod -Uri 'https://kinopoiskapiunofficial.tech/api/v2.2/films/1142153' -Headers $headers
+</code></pre>
+<p><code>curl -s "https://kinopoiskapiunofficial.tech/api/v2.2/films/1142153" -H "accept: application/json" -H "X-API-KEY: $API_KEY" | jq .</code></p>
+<h2 id="kinobox"><a class="header" href="#kinobox">Kinobox</a></h2>
+<p><code>$url = "https://www.kinopoisk.ru/film/694051"</code> <br />
+<code>$kp_id = $url -replace ".+/"</code> <br />
+<code>https://kinomix.web.app/#694051</code> <br />
+<code>curl -s -X GET "https://kinobox.tv/api/players/main?kinopoisk=$kp_id" -H "accept: application/json"</code> поиск по id Кинопоиск <br />
+<code>curl -s -X GET "https://kinobox.tv/api/players/main?imdb=tt2293640" -H "accept: application/json"</code> поиск по id IMDb <br />
+<code>curl -s -X GET "https://kinobox.tv/api/players/main?title=minions" -H "accept: application/json"</code> поиск основных плееров по названию <br />
+<code>curl -s -X GET "https://kinobox.tv/api/players/all?title=minions" -H "accept: application/json"</code> поиск всех плееров <br />
+<code>curl -s -X GET "https://kinobox.tv/api/popular/films" -H "accept: application/json"</code> популярные фильмы <br />
+<code>curl -s -X GET "https://kinobox.tv/api/popular/series" -H "accept: application/json"</code> популярные сериалы</p>
+<h2 id="videocdn"><a class="header" href="#videocdn">VideoCDN</a></h2>
+<p><a href="https://github.com/notssh/videocdn-api">API</a> <br />
+<a href="https://github.com/API-Movies/videocdn">Source</a> <br />
+<a href="https://api-movies.github.io/videocdn/index.json">API JSON</a></p>
+<pre><code class="language-PowerShell">$kp_id = 5106881
+$token = "YfTWH2p3Mai7ziqDoGjS3yXXXXXXXXXX"
+$ep = "tv-series"
+$(Invoke-RestMethod $("https://videocdn.tv/api/$ep"+"?api_token=$token&amp;field=kinopoisk_id&amp;query=$kp_id")).data.episodes | Where-Object season_num -eq 2 | Select-Object @{Name="Episode"; Expression={$_.num}}, @{Name="Voice"; Expression={$_.media.translation.title}} # отфильтровать серии по второму сезону и отобразить все озвучки к сериям
+</code></pre>
+<pre><code class="language-Bash">kp_id=5106881
+token="YfTWH2p3Mai7ziqDoGjS3yXXXXXXXXXX"
+ep="tv-series"
+curl -s "https://videocdn.tv/api/$ep?api_token=$token&amp;field=kinopoisk_id&amp;query=$kp_id" | jq ".data[].episodes | length" # количество серий
+curl -s "https://videocdn.tv/api/$ep?api_token=$token&amp;field=kinopoisk_id&amp;query=$kp_id" | jq ".data[].episodes[] | select(.season_num == 2) | {episode: .ru_title, voice: .media[].translation.title}" # отфильтровать параметры вывода
+</code></pre>
+<h1 id="torrent"><a class="header" href="#torrent">Torrent</a></h1>
+<h3 id="jackett"><a class="header" href="#jackett">Jackett</a></h3>
+<p><a href="https://github.com/Jackett/Jackett">Source</a></p>
+<p><code>mkdir /jackett</code> <br />
+<code>docker-compose.yml</code></p>
+<pre><code class="language-yaml">---
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /jackett/data:/config
+      - /jackett/blackhole:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+</code></pre>
+<p><code>docker-compose up -d jackett</code> <br />
+<code>docker exec -it jackett /bin/bash</code> доступ к оболочке во время работы контейнера <br />
+<code>docker logs -f jackett</code> мониторинг журналов контейнера</p>
+<p><code>/jackett/data/Jackett/ServerConfig.json</code> место хранения конфигурации сервера <br />
+<code>/jackett/data/Jackett/Indexers/*.json</code> место хранения конфигурации индексаторов</p>
+<p><code>$API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"</code> <br />
+<code>Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/rutor/results/torznab/api?apikey=$API_KEY"</code> Прочитать RSS ленту RuTor <br />
+<code>$query = "the+rookie"</code> <br />
+<code>Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/rutor/results/torznab/api?apikey=$API_KEY&amp;t=search&amp;cat=&amp;q=$query"</code> поиск в RuTor <br />
+<code>Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/kinozal/results/torznab/api?apikey=$API_KEY&amp;t=search&amp;q=$query"</code> поиск в кинозал <br />
+<code>Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/kinozal/results/torznab/api?apikey=$API_KEY&amp;t=search&amp;q=$query&amp;cat=5000"</code> отфильтровать вывод по сериалам (Capabilities: 5000) <br />
+<code>Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/all/results/torznab/api?apikey=$API_KEY&amp;t=search&amp;q=riverdale"</code> поиск во всех индексаторах <br />
+<code>$(Invoke-RestMethod "http://127.0.0.1:9117/api/v2.0/indexers/all/results/torznab/api?apikey=$API_KEY&amp;t=indexers&amp;configured=true").indexers.indexer</code> cписок всех настроенных индексаторов (трекеров)</p>
+<h3 id="torrent-api-py"><a class="header" href="#torrent-api-py">Torrent-API-py</a></h3>
+<p><a href="https://github.com/Ryuk-me/Torrent-Api-py">Source</a> <br />
+<a href="https://torrent-api-py-nx0x.onrender.com/docs#/default/health_route_health_get">Documentation</a></p>
+<pre><code>git clone https://github.com/Ryuk-me/Torrent-Api-py
+cd Torrent-Api-py
+pip install virtualenv
+py -3 -m venv api-py
+# Активировать виртуальную среду для Windows
+.\api-py\Scripts\activate
+# Активировать виртуальную среду для Linux
+# $ source api-py/bin/activate
+# Установить зависимости и запустить
+pip install -r requirements.txt
+python main.py
+# Proxy: https://github.com/dperson/torproxy
+# export HTTP_PROXY="http://proxy-host:proxy-port"
+</code></pre>
+<p><code>$srv = "http://localhost:8009"</code> local <br />
+<code>$srv = "https://torrent-api-py-nx0x.onrender.com"</code> public <br />
+<code>Invoke-RestMethod $srv/api/v1/sites</code> список доступных трекеров <br />
+<code>Invoke-RestMethod "$srv/api/v1/search/?site=torlock&amp;query=the+rookie&amp;limit=0&amp;page=1"</code> поиск в выбранном трекере <br />
+<code>Invoke-RestMethod "$srv/api/v1/all/search?query=the+rookie&amp;limit=0"</code> поиск по названию во всех трекерах</p>
+<h3 id="plex"><a class="header" href="#plex">Plex</a></h3>
+<p><code>$API_TOKEN = "XXXXXXXXXXXXXXXXXXXX"</code></p>
+<pre><code>$headers = @{
+    "X-Plex-Token" = $API_TOKEN
+    "accept" = "application/json"
+}
+</code></pre>
+<p><code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/servers).MediaContainer.Server</code> версия сервера <br />
+<code>Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/diagnostics/logs -OutFile log.zip</code> выгруить лог с сервера <br />
+<code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections).MediaContainer.Directory</code> список секций добавленных на сервер <br />
+<code>$section_key = $(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections).MediaContainer.Directory.key[0]</code> <br />
+<code>Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections/$section_key/refresh</code> синхронизация указанной секции в Plex по ключу <br />
+<code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections/2/folder).MediaContainer.Metadata</code> получить список директорий и файлов в корне выбранной секции <br />
+<code>$(Invoke-RestMethod -Headers $headers -Uri http://localhost:32400/library/sections/2/folder?parent=204).MediaContainer.Metadata</code> получить список всех файлов в указанной директории через ключ (MediaContainer.Metadata.key) конечной точки</p>
+<h3 id="jellyfin"><a class="header" href="#jellyfin">Jellyfin</a></h3>
+<p><a href="https://github.com/jellyfin/jellyfin">Source</a> <br />
+<a href="https://api.jellyfin.org">API Docs</a></p>
+<p><code>$API_TOKEN "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"</code> <br />
+<code>Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Users</code> список пользователей и их id <br />
+<code>$Users = Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Users</code> <br />
+<code>$UserId = $($Users | Where-Object Name -match "Lifailon").Id</code> забрать id пользователя <br />
+<code>Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/System/Info</code> информация о системе <br />
+<code>$(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Items).Items</code> список добавленных объектов директорий <br />
+<code>$ItemId = $(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Items).Items[-1].Id</code> забрать id директории <br />
+<code>$Data = $(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} "http://localhost:8096/Users/$UserId/Items?ParentId=$ItemId").Items</code> получить содержимое корневой директории по Id из Items <br />
+<code>$TvId = $($data | Where-Object Name -match "Rookie").Id</code> найти сериал или фильм по имени и забрать его Id <br />
+<code>$(Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} "http://localhost:8096/Users/$UserId/Items?ParentId=$TvId").Items</code> получить содержимое дочерней директории по Id ее родительской директории</p>
+<h1 id="telegram"><a class="header" href="#telegram">Telegram</a></h1>
+<p>@BotFather (https://t.me/BotFather) /newbot</p>
+<p>Format: <code>https://api.telegram.org/bot&lt;token&gt;/&lt;endpoint&gt;</code></p>
+<p><a href="https://core.telegram.org/bots/api#getupdates">getupdates</a></p>
+<pre><code class="language-PowerShell">function Get-FromTelegram {
+    param (
+        $Token = "687...:AAF...",
+        [switch]$Date,
+        [switch]$Last,
+        [switch]$ChatID
+    )
+    $endpoint = "getUpdates"
+    $url      = "https://api.telegram.org/bot$Token/$endpoint"
+    $result   = Invoke-RestMethod -Uri $url
+    if ($Date) {
+        $Collections = New-Object System.Collections.Generic.List[System.Object]
+        foreach ($r in $($result.result)) {
+            $EpochTime = [DateTime]"1/1/1970"
+            $TimeZone = Get-TimeZone
+            $UTCTime = $EpochTime.AddSeconds($r.message.date)
+            $d = $UTCTime.AddMinutes($TimeZone.BaseUtcOffset.TotalMinutes)
+            $Collections.Add([PSCustomObject]@{
+                Message = $r.message.text;
+                Date    = $d
+            })
+        }
+        $Collections
+    }
+    else {
+        if ($Last) {
+            $result.result.message.text[-1]
+        }
+        elseif ($ChatID) {
+            $Collections = New-Object System.Collections.Generic.List[System.Object]
+            foreach ($r in $($result.result)) {
+                $Collections.Add([PSCustomObject]@{
+                    Message = $r.message.text;
+                    UserName = $r.message.chat.username;
+                    ChatID = $r.message.chat.id;
+                    ChatType = $r.message.chat.type
+                })
+            }
+            $Collections
+        }
+        else {
+            $result.result.message.text
+        }
+    }
+}
+</code></pre>
+<p><code>Get-FromTelegram</code> <br />
+<code>Get-FromTelegram -Last</code> <br />
+<code>Get-FromTelegram -Date</code> <br />
+<code>Get-FromTelegram -ChatID</code></p>
+<p><a href="https://core.telegram.org/bots/api#sendmessage">sendmessage</a></p>
+<pre><code class="language-PowerShell">function Send-ToTelegram {
+param (
+    [Parameter(Mandatory = $True)]$Text,
+    $Token    = "687...:AAF...",
+    $Chat     = "125468108",
+    $Keyboard
+)
+    $endpoint = "sendMessage"
+    $url      = "https://api.telegram.org/bot$Token/$endpoint"
+    $Body = @{
+        chat_id = $Chat
+        text    = $Text
+    }
+    if ($keyboard -ne $null) {
+        $Body += @{reply_markup = $keyboard}
+    }
+    Invoke-RestMethod -Uri $url -Body $Body
+}
+</code></pre>
+<p><code>Send-ToTelegram -Text "Send test from powershell"</code></p>
+<pre><code class="language-PowerShell">$LastDate = (Get-FromTelegram -date)[-1].Date
+while ($true) {
+    $LastMessage  = (Get-FromTelegram -date)[-1]
+    Start-Sleep 1
+    $LastDateTest = $LastMessage.Date
+    if (($LastMessage.Message -match "/Service") -and ($LastDate -ne $LastDateTest)) {
+        $ServiceName = $($LastMessage.Message -split " ")[-1]
+        $Result = $(Get-Service $ServiceName -ErrorAction Ignore).Status
+        if ($Result) {
+            Send-ToTelegram -Text $Result
+        } else {
+            Send-ToTelegram -Text "Service not found"
+        }
+        $LastDate = $LastDateTest
+    }
+}
+</code></pre>
+<p><code>/Service vpnagent</code> <br />
+<code>/Service WinRM</code> <br />
+<code>/Service test</code></p>
+<h3 id="button"><a class="header" href="#button">Button</a></h3>
+<pre><code class="language-PowerShell">$keyboard = '{
+    "inline_keyboard":[[
+        {"text":"Uptime","callback_data":"/Uptime"},
+        {"text":"Test","callback_data":"/Test"}
+    ]]
+}'
+Send-ToTelegram -Text "Test buttons" -Keyboard $keyboard
+$request = (Invoke-RestMethod -Uri "https://api.telegram.org/bot$Token/getUpdates").result.callback_query
+$request.data # прочитать callback_data нажатой кнопки
+$request.message.date
+</code></pre>
+<h3 id="send-totelegramfile"><a class="header" href="#send-totelegramfile">Send-ToTelegramFile</a></h3>
+<p>https://core.telegram.org/bots/api#senddocument</p>
+<pre><code class="language-PowerShell">function Send-ToTelegramFile {
+    param (
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$Token,
+        [Parameter(Mandatory = $true)][string]$Chat,
+        $Keyboard
+    )
+    $endpoint = "senddocument"
+    $url      = "https://api.telegram.org/bot$Token/$endpoint"
+    $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
+    $fileStream = [System.IO.FileStream]::new($Path, [System.IO.FileMode]::Open)
+    $fileContent = [System.Net.Http.StreamContent]::new($fileStream)
+    $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+    $fileHeader.Name = "document"
+    $fileHeader.FileName = [System.IO.Path]::GetFileName($Path)
+    $fileContent.Headers.ContentDisposition = $fileHeader
+    $multipartContent.Add($fileContent, "document")
+    if ($Keyboard) {
+        $keyboardContent = [System.Net.Http.StringContent]::new($Keyboard)
+        $keyboardContent.Headers.ContentType.MediaType = "application/json"
+        $multipartContent.Add($keyboardContent, "reply_markup")
+    }
+    $chatContent = [System.Net.Http.StringContent]::new($Chat)
+    $multipartContent.Add($chatContent, "chat_id")
+    $response = Invoke-RestMethod -Uri $url -Method Post -Body $multipartContent -ContentType "multipart/form-data"
+    $fileStream.Dispose()
+    return $response
+}
+</code></pre>
+<p><code>Send-ToTelegramFile -Path "C:\Users\Lifailon\Documents\lake.jpg" -Token "7777777777:AAF..." -Chat "7777777777"</code></p>
+<h1 id="discord"><a class="header" href="#discord">Discord</a></h1>
+<p><a href="https://discord.com/developers/applications">Developers</a></p>
+<p>Создаем Applications (General Information). В Bot привязываем к Application и копируем токен авторизации. В OAuth2 - URL Generator выбираем bot и права Administrator и копируем созданный URL для добавления на канал. Переходим по url и добавляем бота на сервер. Получаем ID канала на сервере (текстовые каналы, правой кнопкой мыши копируем ссылку и забираем последний id в url).</p>
+<h3 id="send-to-discord"><a class="header" href="#send-to-discord">Send to Discord</a></h3>
+<pre><code class="language-Bash">DISCORD_TOKEN="MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX"
+DISCORD_CHANNEL_ID="119403124XXXXXXXXXX"
+TEXT="test from bash"
+URL="https://discordapp.com/api/channels/$DISCORD_CHANNEL_ID/messages"
+curl -s -X POST $URL \
+  -H "Authorization: Bot $DISCORD_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"content\": \"$TEXT\"}"
+</code></pre>
+<pre><code class="language-PowerShell">$DISCORD_TOKEN = "MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX"
+$DISCORD_CHANNEL_ID = "119403124XXXXXXXXXX"
+$TEXT = "test from PowerShell"
+$URL = "https://discordapp.com/api/channels/$DISCORD_CHANNEL_ID/messages"
+$Body = @{
+    content = $TEXT
+} | ConvertTo-Json
+curl -s $URL -X POST -H "Authorization: Bot $DISCORD_TOKEN" -H "Content-Type: application/json" -d $Body
+</code></pre>
+<h3 id="read-from-discord"><a class="header" href="#read-from-discord">Read from Discord</a></h3>
+<pre><code class="language-Bash">curl -s -X GET $URL \
+  -H "Authorization: Bot $DISCORD_TOKEN" \
+  -H "Content-Type: application/json" | jq -r .[0].content
+</code></pre>
+<pre><code class="language-PowerShell">$messages = (curl -s -X GET $URL -H "Authorization: Bot $DISCORD_TOKEN" -H "Content-Type: application/json" | ConvertFrom-Json)
+$messages | Select-Object content,timestamp,{$_.author.username}
+</code></pre>
+<h3 id="httpclient"><a class="header" href="#httpclient">HttpClient</a></h3>
+<pre><code class="language-PowerShell">$DISCORD_TOKEN = "MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX"
+$DISCORD_CHANNEL_ID = "119403124XXXXXXXXXX"
+$URL = "https://discordapp.com/api/channels/$DISCORD_CHANNEL_ID/messages"
+$HttpClient = New-Object System.Net.Http.HttpClient
+$HttpClient.DefaultRequestHeaders.Authorization = "Bot $DISCORD_TOKEN"
+$response = $HttpClient.GetAsync($URL).Result
+$messages = $response.Content.ReadAsStringAsync().Result
+($messages | ConvertFrom-Json).content
+</code></pre>
+<h3 id="button-1"><a class="header" href="#button-1">Button</a></h3>
+<pre><code class="language-Bash">curl -X POST $URL \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bot $DISCORD_TOKEN" \
+  -d '
+  {
+    "content": "Test text for button",
+    "components": [
+      {
+        "type": 1,
+        "components": [
+          {
+            "type": 2,
+            "label": "Button",
+            "style": 1,
+            "custom_id": "button_click"
+          }
+        ]
+      }
+    ]
+  }'
+</code></pre>
+<h3 id="discord-net-webhook"><a class="header" href="#discord-net-webhook">Discord Net Webhook</a></h3>
+<pre><code class="language-PowerShell">Add-Type -Path $(ls "$home\Documents\Discord.NET\*.dll").FullName
+# https://discordapp.com/api/webhooks/&lt;webhook_id&gt;/&lt;webhook_token&gt; (Настроить канал - Интеграция)
+$webhookId = 1197577280000000000
+$webhookToken = "rs8AA-XXXXXXXXXXX_Vk5RUI4A6HuSGhpCCTepq25duwCwLXasfv6u23a7XXXXXXXXXX"
+$messageContent = "Test dotNET"
+$client = New-Object Discord.Webhook.DiscordWebhookClient($webhookId, $webhookToken)
+$client.SendMessageAsync($messageContent).Wait()
+</code></pre>
+<h3 id="discord-net-websocket"><a class="header" href="#discord-net-websocket">Discord Net WebSocket</a></h3>
+<pre><code class="language-PowerShell">$DiscordAssemblies = $(ls "$home\Documents\Discord.NET\*.dll").FullName
+foreach ($assembly in $DiscordAssemblies) {
+    Add-Type -Path $assembly
+}
+$DISCORD_TOKEN = "MTE5NzE1NjM0NTM3NjQxMTcyOQ.XXXXXX.EzBF6RA9Kx_MSuhLW5elH1U-XXXXXXXXXXXXXX"
+$Client = New-Object Discord.WebSocket.DiscordSocketClient
+$Client.Add_MessageReceived({
+    param($message)
+    if ($message.Author.Id -ne $Client.CurrentUser.Id) {
+        Write-Host ("Received message from " + $message.Author.Username + ": " + $message.Content)
+        if ($message.Content.Contains("ping")) {
+            $message.Channel.SendMessageAsync("pong").GetAwaiter().GetResult()
+        }
+    }
+})
+$Client.LoginAsync([Discord.TokenType]::Bot, $DISCORD_TOKEN).GetAwaiter().GetResult()
+#$Client.StartAsync().Wait()
+$Client.StartAsync().GetAwaiter().GetResult()
+$Client.ConnectionState
+
+[console]::ReadKey($true)
+$Client.LogoutAsync().GetAwaiter().GetResult()
+$Client.Dispose()
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../Database/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../DevOps/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../Database/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../DevOps/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

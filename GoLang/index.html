@@ -1,0 +1,1715 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>GoLang - PowerShell Commands</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PowerShell Commands</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>+++
+title = "Go"
+[extra]
+toc = true
+toc_sidebar = true
+go_to_top = true
++++</p>
+<p align="center">
+    <a href="https://github.com/Lifailon/golang-cheat-sheet-ru"><img title="PS-Commands Logo"src="GoLang-Cheat-Sheet-Logo.png"></a>
+</p>
+<p align="center">
+    Вольный и расширенный перевод оригинального репозитория <a href="https://github.com/a8m/golang-cheat-sheet">Go Cheat Sheet</a> на русский язык.
+</p>
+<hr />
+<h1 id="Другие-ресурсы"><a class="header" href="#Другие-ресурсы">Другие ресурсы</a></h1>
+<p>Подборка полезных и бесплатных ресурсов для изучения <a href="https://go.dev/learn">Go</a> на русском языке:</p>
+<ul>
+<li><a href="https://github.com/Konstantin8105/Effective_Go_RU">Эффективный Go</a> - перевод официальной документации <a href="https://go.dev/doc/effective_go">Effective Go</a> (не завершен и устарел).</li>
+<li><a href="https://github.com/0x0FACED/effective-go-ru">Эффективный Go</a> - перевод от сентября 2024 года.</li>
+<li><a href="https://github.com/region23/gobyexample.ru">Go в примерах</a> - исходный код для сборки статического сайта <a href="https://gobyexample.ru">Go в примерах</a> (форк <a href="https://github.com/mmcgrana/gobyexample">gobyexample</a>).</li>
+<li><a href="https://github.com/maxpoletaev/golang-book">Введение в программирование на Go</a> (<a href="http://golang-book.ru">веб-версия</a>) - перевод книги <a href="https://www.golang-book.com">An Introduction to Programming in Go</a>.</li>
+<li><a href="https://github.com/sefus/the-little-go-book/blob/master/ru/go.md">Маленькая книга о Go</a> - перевод <a href="https://github.com/karlseguin/the-little-go-book">The Little Go Book</a>.</li>
+<li><a href="https://github.com/Konstantin8105/Go-pipelines">Паттерны параллельного программирования Go</a>.</li>
+<li><a href="https://golangify.com/go/kurs-izucheniya-golang-dlya-nachinayuschih">Курс по изучению Golang для начинающих</a>.</li>
+<li><a href="https://code-basics.com/ru/languages/go">Обучение программированию на языке Go</a> в тренажере (онлайн компилятор).</li>
+<li><a href="https://metanit.com/go/tutorial">Руководство по языку Go</a> от <em>Metanit</em>.</li>
+<li><a href="https://opensource.archium.org/index.php?title=Langauge_RU">Шпаргалка по Go</a> в переводе с Немецкого языка.</li>
+<li><a href="https://github.com/sau00/uber-go-guide-ru">Гайды Uber по написанию кода на Go</a> - русский перевод <a href="https://github.com/uber-go/guide">оригинального репозитория</a>.</li>
+<li><a href="https://github.com/jhekasoft/articles/blob/master/01_golang_gtk3/main.md">GUI на Golang на GTK+ 3</a>.</li>
+</ul>
+<p>Бесплатные курсы от <em>Stepik</em> с получением сертификата:</p>
+<ul>
+<li><a href="https://stepik.org/course/100208/promo">Go - первое знакомство</a> - 42 урока, 110 тестов, 45 задач (20к учащихся, рейтинг: 4.9).</li>
+<li><a href="https://stepik.org/course/158385/promo">PRO Go. Основы программирования</a> - 38 урока, 121 тестов, 191 задач (13к учащихся, рейтинг: 4.8).</li>
+<li><a href="https://stepik.org/course/54403/promo">Программирование на Golang</a> - 35 урока, 64 тестов, 94 задач (65к учащихся, рейтинг: 4.7).</li>
+</ul>
+<p>Другие бесплатные курсы:</p>
+<ul>
+<li><a href="https://github.com/tyz910/golang-webservices?tab=readme-ov-file">Разработка веб-сервисов на Golang</a> - курс по Go от <em>Mail Ru</em> на платформе Coursera.</li>
+<li><a href="https://start.practicum.yandex/go-basics">Основы Go</a> - курс от <em>Яндекс Практикум</em> (2 модуля на 30 часов).</li>
+<li><a href="https://ru.hexlet.io/courses/go-basics">Основы Go</a> - курс от <em>Хек Слет</em> (34 урока, 97 тестов и 37 упражнений в тренажере).</li>
+</ul>
+<hr />
+<h1 id="Участники"><a class="header" href="#Участники">Участники</a></h1>
+<p>Если вы нашли ошибку или хотите расширить список шпаргалок, а также знаете другие источники для изучения, сообщите о них, внеся изменения через <a href="https://github.com/Lifailon/golang-cheat-sheet-ru/pulls">Pull Requests</a>.</p>
+<h1 id="Источники"><a class="header" href="#Источники">Источники</a></h1>
+<p>Большинство примеров кода взяты из <a href="http://tour.golang.org">официального тура по Go</a>, который является прекрасным введением для знакомства с языком.</p>
+<p>Вы также можете использовать <a href="https://go.dev/play">онлайн компилятор</a> на официальном сайте для запуска и проверки блоков кода.</p>
+<hr />
+<h1 id="Описание-языка"><a class="header" href="#Описание-языка">Описание языка</a></h1>
+<ul>
+<li><strong>Императивный язык</strong>, где описывается последовательность шагов (инструкций), которые необходимо выполнить для достижения результата. В отличии от декларативных языков, где описывается результат, который нужно получить, оставляя процесс выполнения скрытым (например, как в <code>SQL</code> или <code>HTML</code>).</li>
+<li><strong>Используется статическая типизация</strong> для проверка типов переменных во время компиляции. Это когда тип переменной не может быть изменен после его присвоения (например, как в <code>TypeScript</code> в отличии от <code>JavaScript</code>).</li>
+<li>Синтаксис похож на <code>C</code> (но меньше скобок и нет точек с запятой в конце каждой строки), а структура — на <code>Oberon-2</code>.</li>
+<li><strong>Компилируется в машинный код без использования промежуточных слоев</strong> (<code>Runtime</code>, например, как <code>JVM</code> в <code>Java</code> или <code>.NET</code> в <code>C#</code>), который должен быть установлен на машине для работы программы.</li>
+<li><strong>Нет классов</strong>, но есть структуры с методами.</li>
+<li><strong>Не предоставляет подклассов, основанного на типах</strong>, но имеет возможность заимствовать части реализации, встраивая типы в структуру или интерфейс (<a href="https://go.dev/doc/effective_go#embedding">embedding</a>).</li>
+<li><strong>Функции могут возвращать несколько значений</strong> и их можно присваивать переменным, так как они рассматриваются как объекты.</li>
+<li>Функции можно передавать в другие функции в качестве аргументов, а также функции могут возвращать другие функции как результат.</li>
+<li><strong>Имеет замыкания</strong> (<code>closures</code>), которые позволяют функциям хранит и использовать переменные из внешней области видимости, даже если она выполняется в другом контексте (например, за пределами этой области).</li>
+<li><strong>Невозможно напрямую изменять значение указателя с помощью арифметических операций</strong> (например, <code>ptr++</code>). Это нужно, что бы исключить возможные ошибки, такие как выход за пределы памяти или доступ к неправильным участкам памяти.</li>
+<li><strong>Встроенные примитивы параллелизма</strong>: горутины и каналы.</li>
+<li><strong>Поддерживаются динамические и статические срезы</strong> (<code>slices</code>, аналог списков или массивов в других языках, где элементы хранятся в порядке их добавления и индексируются числами), а также <strong>карты</strong> (<code>maps</code>, аналог словарей или хэш-таблиц, где содержится уникальный ключ и его значение).</li>
+</ul>
+<hr />
+<h1 id="Базовый-синтаксис"><a class="header" href="#Базовый-синтаксис">Базовый синтаксис</a></h1>
+<h2 id="Привет-мир"><a class="header" href="#Привет-мир">Привет мир</a></h2>
+<p>Файл <code>hello.go</code>:</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello Go")
+}
+</code></pre>
+<p>Запуск:</p>
+<p><code>go run hello.go</code></p>
+<p>Выведет на экран <code>Hello Go</code></p>
+<h2 id="Операторы"><a class="header" href="#Операторы">Операторы</a></h2>
+<h3 id="Арифметика"><a class="header" href="#Арифметика">Арифметика</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Оператор</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>+</code></td><td>сложение</td></tr>
+<tr><td><code>-</code></td><td>вычитание</td></tr>
+<tr><td><code>*</code></td><td>умножение</td></tr>
+<tr><td><code>/</code></td><td>деление *</td></tr>
+<tr><td><code>%</code></td><td>остаток</td></tr>
+<tr><td><code>&amp;</code></td><td>побитовое <code>и</code></td></tr>
+<tr><td><code>|</code></td><td>побитовое <code>или</code></td></tr>
+<tr><td><code>^</code></td><td>побитовое <code>исключающее или</code> * *</td></tr>
+<tr><td><code>&amp;^</code></td><td>очистить бит (<code>и нет</code>) * * *</td></tr>
+<tr><td><code>&lt;&lt;</code></td><td>сдвиг влево * * * *</td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>сдвиг вправо</td></tr>
+</tbody></table>
+</div>
+<p>* Если оба операнда имеют целый тип (<code>int</code>, <code>int8</code>, <code>int32</code>, <code>int64</code>), результат также будет целым числом, при этом остаток отбрасывается. Если хотя бы один из операндов имеет тип с плавающей точкой (<code>float32</code>, <code>float64</code>), результат будет дробным числом.</p>
+<p>* * Возвращает <code>0</code>, если биты двух операндов равны, или <code>1</code>, если биты двух операндов различны.</p>
+<p>* * * Возвращает <code>0</code>, если соответствующий бит второго операнда равен <code>1</code>, или бит первого операнда (<code>0</code> или <code>1</code>), если соответствующий бит второго операнда равен <code>0</code>.</p>
+<p>* * * * Сдвигает все биты числа влево на указанное количество позиций (аналог умножения числа на <code>2</code> в степени количества сдвигов), а новые биты справа заполняются нулями.</p>
+<h3 id="Сравнение"><a class="header" href="#Сравнение">Сравнение</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Оператор</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>==</code></td><td>равно</td></tr>
+<tr><td><code>!=</code></td><td>не равно</td></tr>
+<tr><td><code>&lt;</code></td><td>меньше</td></tr>
+<tr><td><code>&lt;=</code></td><td>меньше или равно</td></tr>
+<tr><td><code>&gt;</code></td><td>больше</td></tr>
+<tr><td><code>&gt;=</code></td><td>больше или равно</td></tr>
+</tbody></table>
+</div>
+<h3 id="Логика"><a class="header" href="#Логика">Логика</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Оператор</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>&amp;&amp;</code></td><td>логическое <code>и</code></td></tr>
+<tr><td><code>||</code></td><td>логическое <code>или</code></td></tr>
+<tr><td><code>!</code></td><td>логическое отрецание</td></tr>
+</tbody></table>
+</div>
+<h3 id="Другие"><a class="header" href="#Другие">Другие</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Оператор</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>&amp;</code></td><td>адрес / создать указатель</td></tr>
+<tr><td><code>*</code></td><td>разыменовать указатель</td></tr>
+<tr><td><code>&lt;-</code></td><td>оператор отправки / получения</td></tr>
+</tbody></table>
+</div>
+<h2 id="Декларации"><a class="header" href="#Декларации">Декларации</a></h2>
+<p>Тип указывается после идентификатора (названия переменной):</p>
+<pre><code class="language-go">var foo int                 // объявление без инициализации значения
+var foo int = 42            // объявление с инициализацией
+var foo, bar int = 42, 1302 // объявить и инициализировать несколько переменных одновременно
+var foo = 42                // тип пропущен, будет выведен
+foo := 42                   // сокращение при объявление переменной (ключевое слово var опущено, тип данных определяется автоматически)
+const constant = "Это константа, которая используется для хранения неизменяемых данных"
+
+// iota можно использовать для увеличения числа, начиная с 0
+const (
+    _ = iota
+    a
+    b
+    c = 1 &lt;&lt; iota
+    d
+)
+    fmt.Println(a, b) // 1 2 (0 - пропускается)
+    fmt.Println(c, d) // 8 16 (2^3, 2^4)
+</code></pre>
+<h2 id="Функции"><a class="header" href="#Функции">Функции</a></h2>
+<pre><code class="language-go">// Простая функция
+func functionName() {}
+
+// Функция с параметрами (тип идет после идентификаторов)
+func functionName(param1 string, param2 int) {}
+
+// Несколько параметров одного типа
+func functionName(param1, param2 int) {}
+
+// Объявление типа для возвращаемого значения (идет после скобок параметров или во вторых скобках, если значений несколько)
+func functionName() int {
+    return 42
+}
+
+// Может возвращать несколько значений одновременно
+func returnMulti() (int, string) {
+    return 42, "foobar"
+}
+var x, str = returnMulti()
+
+// Возвращаем несколько именованных результатов
+func returnMulti2() (n int, s string) {
+    n = 42
+    s = "foobar"
+    // Будут возвращены все значения объявленных переменных "n" и "s"
+    return
+}
+var x, str = returnMulti2()
+
+func main() {
+    // Присвоить функцию переменной
+    add := func(a, b int) int {
+        return a + b
+    }
+    // Используйте имя переменной для вызова функции
+    fmt.Println(add(3, 4))
+}
+</code></pre>
+<h3 id="Замыкания"><a class="header" href="#Замыкания">Замыкания</a></h3>
+<pre><code class="language-go">// Дочерние функции могут получить доступ к переменным, объявленным в родительской функции
+func scope() func() int{
+    outer_var := 2
+    foo := func() int { return outer_var}
+    return foo
+}
+
+func another_scope() func() int{
+    // Не скомпилируется, потому что "outer_var" и "foo" не определены в данной области видимости
+    outer_var = 444
+    return foo
+}
+
+func outer() (func() int, int) {
+    outer_var := 2
+    inner := func() int {
+        outer_var += 99 // переменная изменена из внешней области
+        return outer_var
+    }
+    inner()
+    return inner, outer_var // вернуть результат внутренней функции и переменной с результатом 101
+}
+</code></pre>
+<h3 id="Вариативные-функции"><a class="header" href="#Вариативные-функции">Вариативные функции</a></h3>
+<p>Вариативная функция работает и вызывается как любая другая функция, за исключением того, что в нее возможно передать произвольное количество аргументов, используя <code>...</code> перед типом данных указанного параметра.</p>
+<pre><code class="language-go">func main() {
+    fmt.Println(adder(1, 2, 3)) // 6
+    fmt.Println(adder(9, 9))    // 18
+
+    nums := []int{10, 20, 30}
+    fmt.Println(adder(nums...)) // 60
+}
+
+func adder(args ...int) int {
+    total := 0
+    for _, v := range args { // перебирает все переданные аргументы в цикле
+    	total += v
+    }
+    return total
+}
+</code></pre>
+<h2 id="Типы-данных"><a class="header" href="#Типы-данных">Типы данных</a></h2>
+<pre><code class="language-go">bool // логический тип (принимает true или false)
+
+string // строка (текст)
+
+int  int8  int16  int32  int64 // целое число
+uint uint8 uint16 uint32 uint64 uintptr // беззнаковый целочисленный тип размером
+
+byte // псевдоним для uint8
+
+rune // псевдоним для int32 ~= символ (кодовая точка Unicode)
+
+float32 float64 // число с плавающей точкой одинарной и двойной точности
+
+complex64 complex128 // комплексное число (1 + 2i или 3.14 + 4.2i), имеющие реальную и мнимую часть
+
+interfae{} // универсальный тип, который может позволяет работать с переменными неизвестного или изменяющегося типа
+</code></pre>
+<p>Все предварительно объявленные идентификаторы <code>Go</code> определены в пакете <a href="https://golang.org/pkg/builtin">builtin</a>.</p>
+<h2 id="Преобразование-типов"><a class="header" href="#Преобразование-типов">Преобразование типов</a></h2>
+<pre><code class="language-go">var i int = 42
+var f float64 = float64(i)  // преобразуем тип данных int в float64
+var u uint = uint(f)        // преобразуем тип данных float64 в unit
+
+// Альтернативный синтаксис
+i := 42
+f := float64(i)
+u := uint(f)
+</code></pre>
+<h2 id="Структуры-управления"><a class="header" href="#Структуры-управления">Структуры управления</a></h2>
+<h3 id="Условия-if"><a class="header" href="#Условия-if">Условия if</a></h3>
+<pre><code class="language-go">func main() {
+    // Базовый
+    if x &gt; 10 {
+    	return x
+    } else if x == 10 {
+    	return 10
+    } else {
+    	return -x
+    }
+
+    // Возможно поставить одно утверждение перед условием
+    if a := b + c; a &lt; 42 {
+    	return a
+    } else {
+    	return a - 42
+    }
+
+    // Утверждение (проверка) типа внутри условия
+    var val interface{} = "foo"
+    // Проверяется, содержит ли переменная val значение типа string
+    if str, ok := val.(string); ok {
+        // Если тип не совпадает, значение не вернется.
+        // При этом panic не вызывается, т.к. используется безопасное утверждение типа (ok)
+    	fmt.Println(str)
+    }
+}
+</code></pre>
+<h3 id="Условия-switch"><a class="header" href="#Условия-switch">Условия switch</a></h3>
+<p>После выполнения условия при использование переключателей, прерывания обрабатываются автоматически.</p>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    var operatingSystem string = runtime.GOOS
+    // Используем оператор (ключевое слово) switch
+    switch operatingSystem {
+    case "darwin":
+        fmt.Println("Используется macOS")
+    case "linux":
+        fmt.Println("Используется Linux")
+    // Условие по умолчанию (аналог else в if)
+    default:
+        fmt.Println("Используется Windows, OpenBSD, FreeBSD или другая")
+    }
+}
+
+// Как в случае с "for" и "if", возможно иметь оператор присваивания перед значением switch
+switch os := runtime.GOOS; os {
+    case "darwin": ...
+}
+
+// Возможно использовать сравнения
+number := 42
+switch {
+    case number &lt; 42:
+        fmt.Println("Переданное значение:", number, "меньше 42 в условие")
+    case number == 42:
+        fmt.Println("Переданное значение:", number, "равно 42 в условие")
+    case number &gt; 42:
+        fmt.Println("Переданное значение:", number, "больше 42 в условие")
+}
+
+// Все случаи могут быть представлены в виде списков, разделенных запятыми
+var char byte = '?'
+switch char {
+    case ' ', '?', '&amp;', '=', '#', '+', '%':
+        fmt.Println("Переданное значение присутствует в списке")
+}
+</code></pre>
+<h3 id="Циклы"><a class="header" href="#Циклы">Циклы</a></h3>
+<p>В <code>Go</code> используются только универсальные циклы <code>for</code>, другие операторы (например, <code>while</code> или <code>until</code>) отсутствуют.</p>
+<pre><code class="language-go">// Используется 9 интераций с 1 по 9 (до 10)
+for i := 1; i &lt; 10; i++ {
+}
+// Цикл (loop) - while
+for ; i &lt; 10;  {
+}
+// Если есть только условие, точки с запятой опускаются
+for i &lt; 10  {
+}
+// Если опустить условие, равноценно использованию while (true)
+for {
+}
+    
+// Использование пропуска и прерывания в цикле
+// Метка here (произвольное имя) позволяет указать целевой цикл, на который будут ссылаться операторы continue и break
+here:
+    // Используем 2 интерации в внешнем цикле (от 0 до 1)
+    for i := 0; i &lt; 2; i++ {
+        // Внутренний цикл: переменная j начинается с i+1 и проходит до 3
+        for j := i + 1; j &lt; 3; j++ {
+            if i == 0 {
+                // Пропустить интерацию внешнего цикла по названию его метки
+                continue here
+            }
+            fmt.Println(j)
+            if j == 2 {
+                // Завершить внутренний цикл
+                break
+            }
+        }
+    }
+
+// 1-я интерация: внешний цикл с значением i=0 в внутреннем цикле пропускает интерацию внешнего цикла, т.к. срабатывает условие i==0
+// 2-я интерация: внешний цикл с значением i=1 в внутреннем цикле пропускает условие i==0
+// Переменная j получает значение 2, которое печатается и завершает внутренний (текущий) цикл во втором условие
+// Программа завершается, т.к. интерации внешнего цикла закончились
+
+there:
+    for i := 0; i &lt; 2; i++ {
+        for j := i + 1; j &lt; 3; j++ {
+            if j == 1 {
+                // Пропускаем интерацию внутреннего цикла
+                continue
+            }
+            fmt.Println(j)
+            if j == 2 {
+                // Завершаем выполнение внешнего цикла
+                break there
+            }
+        }
+    }
+</code></pre>
+<h3 id="Примеры-циклов"><a class="header" href="#Примеры-циклов">Примеры циклов</a></h3>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+// Функция, возвращающая название месяца через условную конструкцию switch
+func getMonthName(month int) string {
+    switch month {
+    case 1:
+        return "January"
+    case 2:
+        return "February"
+    case 3:
+        return "March"
+    case 4:
+        return "April"
+    case 5:
+        return "May"
+    case 6:
+        return "June"
+    case 7:
+        return "July"
+    case 8:
+        return "August"
+    case 9:
+        return "September"
+    case 10:
+        return "October"
+    case 11:
+        return "November"
+    case 12:
+        return "December"
+    default:
+        return "Invalid month (range: 1-12)"
+    }
+}
+
+// Второй вариант функции через классическое условие по индеку массива
+func getMonthName2(month int) string {
+    months := []string{"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
+    if month &gt;= 1 &amp;&amp; month &lt;= 12 {
+        return months[month]
+    }
+    return "Invalid month"
+}
+
+func main() {
+    // Классический цикл из 13-ти итераций
+    for i := 1; i &lt;= 13; i++ {
+        fmt.Printf("Month %d: %s\n", i, getMonthName(i))
+    }
+
+    // Увеличение индекса итерации в теле цикла
+    j := 1
+    for j &lt;= 13 {
+        fmt.Printf("Month %d: %s\n", j, getMonthName(j))
+        j++
+    }
+
+    // Бесконечный цикл
+    months := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+    k := 0
+    for {
+        // Пропускаем итерацию, если 6-й месяц (5-й индекс)
+        if k == 5 {
+            k++ // переход к следующей итерации
+            continue
+        }
+        // Выходим из цикла, если индекс больше или равен длине массива
+        if k &gt;= len(months) {
+            break
+        }
+        fmt.Printf("Month %d: %s\n", months[k], getMonthName(months[k]))
+        k++
+    }
+
+    // Конструкция range используется для перебора всех элементов в коллекциях (массивы, слайсы, карты и каналы)
+    for _, month := range months {
+        fmt.Printf("Month %d: %s\n", month, getMonthName(month))
+    }
+
+    // Индекс может использоваться для карты (map) как ключ
+    m := map[string]int{"a": 1, "b": 2, "c": 3}
+    for index, value := range m {
+        fmt.Println("Key:", index, "Value:", value)
+    }
+
+    // Перебор строки по символам
+    s := "string"
+    for index, char := range s {
+        fmt.Println("Index:", index, "Char:", string(char))
+    }
+
+    // Перебор канала
+    ch := make(chan int, 3)
+    ch &lt;- 1
+    ch &lt;- 2
+    ch &lt;- 3
+    close(ch)
+    for val := range ch {
+        fmt.Println(val)
+    }
+}
+</code></pre>
+<h2 id="Типы-последовательностей"><a class="header" href="#Типы-последовательностей">Типы последовательностей</a></h2>
+<p>Массивы, срезы и диапазоны представляют собой структуры данных, хранящие упорядоченные наборы значений.</p>
+<h3 id="Статические-срезы-массивы"><a class="header" href="#Статические-срезы-массивы">Статические срезы (массивы)</a></h3>
+<p>Статические срезы подразумеваются как массивы.</p>
+<pre><code class="language-go">var a [10]int // объявить массив int длиной 10 (длина массива является частью типа)
+a[3] = 42     // присвоить значение элементу, по его порядковому номеру
+i := a[3]     // прочитать элементы
+
+// Возможные варианты объявление с инициализацией значений
+var a = [2]int{1, 2}
+// Массив из двух элементов: [1 2]
+a := [2]int{1, 2}
+// Многоточие используется компилятором для вычисления длины массива
+a := [...]int{1, 2}
+</code></pre>
+<h3 id="Динамические-срезы"><a class="header" href="#Динамические-срезы">Динамические срезы</a></h3>
+<p>Динамический срез объявляется аналогично статическому, но длина не указывается.</p>
+<pre><code class="language-go">var a []int                                 // объявить срез
+var a = []int {1, 2, 3, 4}                  // объявить и инициализировать срез
+a := []int{1, 2, 3, 4}                      // [1 2 3 4]
+chars := []string{0:"a", 2:"c", 1: "b"}     // [a b c]
+
+var b = a[lo:hi]                            // создать срез от индекса lo до hi-1
+var b = a[1:4]                              // срез c индекса 1 по 3 (до 4)
+var b = a[:3]                               // отсутствие первого индекса подразумевает 0
+var b = a[3:]                               // отсутствие последнего индекса подразумевает len(a) (т.е. последний идекс по длинне индекса)
+a =  append(a,17,3)                         // добавление элементов к срезу a с помощью функции append
+c := append(a,b...)                         // объединение срезов a и b
+
+a = make([]byte, 5, 5)                      // первый аргумент длина, второй емкость
+a = make([]byte, 5)                         // емкость необязательна
+
+x := [3]string{"Лайка", "Белка", "Стрелка"} // создаем массив
+s := x[:]                                   // создать срез из массива
+</code></pre>
+<h3 id="Операции-с-срезами"><a class="header" href="#Операции-с-срезами">Операции с срезами</a></h3>
+<p><code>len(a)</code> возвращает длину среза/массива. Это встроенная функция, а не метод массива.</p>
+<pre><code class="language-go">// Цикл по массиву/срезу
+for i, e := range a {
+    // "i" — индекс, "e" — элемент
+}
+
+// Если нужен только элемент "e"
+for _, e := range a {
+    // Используется только элемент "e"
+}
+
+// Если нужен только индекс
+for i := range a {
+}
+</code></pre>
+<h2 id="Карты"><a class="header" href="#Карты">Карты</a></h2>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+type Vertex struct {
+	Lat, Long float64
+}
+
+func main() {
+    m := make(map[string]int) // объявить карту
+    m["key"] = 42             // инициализировать карту
+    fmt.Println(m["key"])     // вывести содержимое значения (value) по его уникальному названию клчюча
+    delete(m, "key")          // удалить элемент из карты
+    elem, ok := m["key"]      // проверка, если ключ присутствует, то получить его значение
+    fmt.Println(ok, elem)
+
+    var m2 = map[string]Vertex{
+        "Bell Labs": {40.68433, -74.39967},
+        "Google":    {37.42202, -122.08408},
+    }
+
+    // Перебрать содержимое карты в цикле
+    for key, value := range m2 {
+        fmt.Println(key)
+        fmt.Println(value)
+    }
+}
+</code></pre>
+<h2 id="Примеры-срезов-и-карт"><a class="header" href="#Примеры-срезов-и-карт">Примеры срезов и карт</a></h2>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    // Массив фиксированного размера с 5-ю элементами, все элементы инициализируются значением 0 (по умолчанию для типа int)
+    var arr [5]int
+    // Присвоить значения указанным элементам массива по индексу
+    arr[0] = 1
+    arr[1] = 2
+    fmt.Println("Array:", arr)
+    
+    // Слайсы (массивы переменной длины)
+    slice := []int{1, 2, 3, 4, 5}
+    // Добавить новое значение в массив с помощью функции append
+    slice = append(slice, 6)
+    // Удалить элемент с индексом 5
+    index := 4
+    // Создается 2 слайса с начала до указанного индекса и срез с следующего элемента после индекса (+1) до конца слайса
+    slice = append(slice[:index], slice[index+1:]...)
+    fmt.Println("Slice:", slice) // [1, 2, 3, 4, 6]
+    // Вывести срез слайсов по индексу с 1 и до 4 (по 3, не включая 4) элемент
+    fmt.Println(slice[1:4]) // [2, 3, 4]
+    // Очистить слайс (удалить все элементы)
+    slice = slice[:0] // []
+    fmt.Println(len(slice) == 0) // true
+    // Объединение двух слайсов
+    slice1 := []int{1, 2}
+    slice2 := []int{3, 4}
+    combined := append(slice1, slice2...)
+    fmt.Println(combined) // [1, 2, 3, 4]
+
+    // Слайс с заданной вместимостью:
+    makeSlice := make([]int, 5, 10)
+    fmt.Println(makeSlice) // [0 0 0 0 0]
+    fmt.Println(cap(makeSlice)) // 10
+
+    // Создаем пустую карту (map) с ключами типа string и значениями типа int
+    m := make(map[string]int)
+    m["Day"] = 30       // добавляем элемент с ключом "Day" и значением 30
+    m["Day"] = 31       // обновляем  значение для ключа
+    m["Month"] = 12
+    fmt.Println(m) // map[Day:31 Month:12]
+    // Создать карту с заданными значениями
+    m2 := map[string]int{
+        "Day": 31,
+        "Month": 12,
+    }
+    // Читаем значение
+    value := m2["Day"]
+    fmt.Println(value) // 31
+    // Если ключа нет в карте, то получаем нулевое значение для типа значения
+    value, exists := m["Year"]
+    fmt.Println(value, exists) // 0 false
+    // Удалить элемент
+    delete(m, "Day")
+    fmt.Println(m) // map[Month:12]
+}
+</code></pre>
+<h2 id="Структуры"><a class="header" href="#Структуры">Структуры</a></h2>
+<p>Вместо классов (<code>class</code>) в <code>Go</code> используются структуры (тип данных <code>struct</code>), которые могут иметь методы. Поля структуры всегда инициализируются нулевыми значениями при её объявлении.</p>
+<pre><code class="language-go">// Объявление структуры с названием Vertex с помощью ключевого слова "type"
+type Vertex struct {
+    X, Y float64
+}
+
+// Создание структуры
+var v = Vertex{1, 2}                // инициализация данных в структуре
+var v = []Vertex{{1,2},{5,2},{5,5}} // инициализация среза в структуре
+var v = Vertex{X: 1, Y: 2}          // создание структуры с опредилением значений с помощью ключей
+v.X = 4                             // доступ к значениям
+
+// Объявление метода (принимающий тип), находится между ключевым словом func и именем метода
+// Структура копируется при каждом вызове метода
+func (v Vertex) Abs() float64 {
+    return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+// Вызов метода
+v.Abs()
+
+// Для мутирующих методов необходимо использовать указатель (см. ниже) на Struct в качестве типа
+// При этом значение структуры не копируется для вызова метода
+func (v *Vertex) add(n float64) {
+    v.X += n
+    v.Y += n
+}
+</code></pre>
+<h3 id="Анонимные-структуры"><a class="header" href="#Анонимные-структуры">Анонимные структуры</a></h3>
+<p>Безопаснее и дешевле, чем использование <code>map[string]interface{}</code>.</p>
+<pre><code class="language-go">point := struct {
+	X, Y int
+} {1, 2}
+</code></pre>
+<h3 id="Указатели"><a class="header" href="#Указатели">Указатели</a></h3>
+<pre><code class="language-go">p := Vertex{1, 2}  // "p" это структура Vertex
+q := &amp;p            // "q" указывает на структуру Vertex
+r := &amp;Vertex{1, 2} // "r" также указывает на структуру Vertex
+
+// Объявление переменной с указателем на структуру *Vertex
+var s *Vertex = new(Vertex) // функция "new" создает указатель на новый экземпляр структуры
+</code></pre>
+<h2 id="Интерфейсы"><a class="header" href="#Интерфейсы">Интерфейсы</a></h2>
+<p><strong>Интерфейс</strong> - это набор методов (требований), которые должен иметь тип, чтобы соответствовать этому интерфейсу.</p>
+<pre><code class="language-go">// Объявление интерфейса с одинм методом Awesomize(), который возвращает строку
+type Awesomizer interface {
+    Awesomize() string
+}
+
+// Обычная структура, которая может реализовывать методы
+type Foo struct {}
+
+// Добавление (реализация) метода Awesomize() в структуре Foo
+// Тип автоматически соответствует интерфейсу, если он реализует все его методы
+func (foo Foo) Awesomize() string {
+    return "Awesome!"
+}
+</code></pre>
+<h2 id="Встраивание"><a class="header" href="#Встраивание">Встраивание</a></h2>
+<p>В <code>Go</code> нет подклассов, вместо этого используется встраивание интерфейса и структуры, которое добавляет методы встроенной структуры к внешней.</p>
+<pre><code class="language-go">// В структуру Server встраиваются все методы, которые есть у метода Logger из структуры log
+type Server struct {
+    Host string
+    Port int
+    *log.Logger
+}
+
+// Структура Server инициализируется с помощью указателя на log.Logger
+server := &amp;Server{"localhost", 80, log.New(...)}
+
+// Когда вызывается server.Log(...), Go автоматически перенаправляет вызов к server.Logger.Log(...).
+server.Log(...)
+
+// Поле встроенного типа доступно через его имя, по этому переменной можно присвоить ссылку на server.Logger
+var logger *log.Logger = server.Logger
+</code></pre>
+<h2 id="Обработка-ошибок"><a class="header" href="#Обработка-ошибок">Обработка ошибок</a></h2>
+<p>Обработка исключений отсутствует. Вместо этого функции, которые могут выдать ошибку, просто объявляют дополнительное возвращаемое значение типа <a href="https://golang.org/pkg/builtin/#error">error</a> (чаще всего вторым возвращаемым параметром).</p>
+<p>Встроенный тип интерфейса <code>error</code> — это общепринятый интерфейс для представления состояния ошибки, при этом нулевое значение не представляет ошибки.</p>
+<pre><code class="language-go">type error interface {
+    Error() string
+}
+</code></pre>
+<p>Пример:</p>
+<pre><code class="language-go">package main
+
+import (
+    "errors"
+    "fmt"
+    "math"
+)
+
+// Определение функции sqrt должно быть вне main
+func sqrt(x float64) (float64, error) {
+    if x &lt; 0 {
+        // Создаем объект типа error с текстовым описанием ошибки
+        return 0, errors.New("ошибка: отрицательное значение")
+    }
+    return math.Sqrt(x), nil
+}
+
+func main() {
+    val, err := sqrt(-1)
+    if err != nil {
+        // Обработка ошибки
+        fmt.Println(err) // отрицательное значение
+        return
+    }
+    // Если все хорошо (переданное значение не отрицательное), вывести содержимое "val"
+    fmt.Println(val)
+}
+</code></pre>
+<h1 id="Параллелизм"><a class="header" href="#Параллелизм">Параллелизм</a></h1>
+<h2 id="Горутины"><a class="header" href="#Горутины">Горутины</a></h2>
+<p><strong>Горутины</strong> — это легковесные потоки (управляемые <code>Go</code>, а не потоками ОС).</p>
+<p><code>go f(a, b)</code> запускает новую горутину, которая запускает <code>f</code> (при условии, что <code>f</code> — это функция).</p>
+<pre><code class="language-go">// Просто функция (которая позже может быть запущена в горутине)
+func doStuff(s string) {
+    fmt.Println(s)
+}
+
+func main() {
+    // Запуск существующий функции в горутине по ее имени
+    go doStuff("foobar")
+
+    // Использование анонимной внутренней функции в горутине
+    go func (x int) {
+        fmt.Println(x)
+    } (42) // Параметр анонимной функции
+}
+</code></pre>
+<h2 id="Синхронизация"><a class="header" href="#Синхронизация">Синхронизация</a></h2>
+<p>Пакет <code>sync</code> используется для ожидания завершения всех запущенных горутин.</p>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+func doStuff(s string, wg *sync.WaitGroup) {
+    fmt.Println(s)
+    defer wg.Done()
+}
+
+func main() {
+    // Объект для отслеживания завершение групп горутин
+    var wg sync.WaitGroup
+
+    // Задаем счетчик для запуска 2-х горутин
+    wg.Add(2)
+
+    // Запуск функции в горутине
+    go doStuff("foobar", &amp;wg)
+
+    // Запуск анонимной функции в горутине
+    go func(x int, wg *sync.WaitGroup) {
+        fmt.Println(x)
+        // Уменьшить счётчик WaitGroup, когда горутина завершится
+        defer wg.Done()
+    }(42, &amp;wg)
+
+    // Ожидание завершения всех горутин
+    wg.Wait()
+}
+</code></pre>
+<h2 id="Таймер"><a class="header" href="#Таймер">Таймер</a></h2>
+<p>Таймеры из пакета <code>time</code> используются для задержки (паузы) на указанное время:</p>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func goRun() {
+    // Симуляция работы
+    time.Sleep(2 * time.Second)
+    fmt.Println("Выполнение горутины завершено")
+}
+
+func main() {
+    // Запуск горутины
+    go goRun()
+     // Основная функция продолжает работать параллельно
+    fmt.Println("Запуск выполнения основной функции и ожидание завершения горутины")
+    // Ждем завершения выполнения горутины
+    time.Sleep(3 * time.Second)
+}
+</code></pre>
+<h2 id="Небуферизованный-канал"><a class="header" href="#Небуферизованный-канал">Небуферизованный канал</a></h2>
+<p><strong>Небуферизованный канал</strong> блокирует операцию записи, пока не будет выполнено чтение, и наоборот.</p>
+<pre><code class="language-go">// Создаем небуферизованный канал типа "int"
+ch := make(chan int)
+// Отправляем значение 42 в канал "ch"
+// Операция блокирует текущую горутину, пока другая горутина не прочитает его значение
+ch &lt;- 42
+// Получаем значение из канала "ch"
+// Это также блокирует выполнение, пока не будет доступно значение для чтения в канале
+v := &lt;-ch
+</code></pre>
+<h2 id="Буферизованный-канал"><a class="header" href="#Буферизованный-канал">Буферизованный канал</a></h2>
+<p><strong>Буферизованный канал</strong> позволяет отправлять и получать данные без блокировки, пока размер буфера не будет превышен, как только буфер заполняется, запись блокируется, пока другие горутины не начнут извлекать значения из канала.</p>
+<p><strong>Закрытие канала</strong> — это сигнал получателю, что больше значений не будет отправляться в канал, при этом отправленные в него данные не удаляются. Это необходимо для того, чтобы получатели знали, что можно завершить чтение. Закрытие канала происходило только в той горутине, которая отправляет данные.</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    // Создаем буферизованный канал с размером буфера 100
+    ch := make(chan int, 100)
+
+    // Отправляем некоторое количество значений в канал
+    for i := 0; i &lt; 10; i++ {
+        ch &lt;- i
+    }
+
+    // Закрываем канал, чтобы цикл мог завершиться
+    close(ch)
+
+    // Читать из канала, пока он не будет закрыт
+    for i := range ch {
+        fmt.Println(i)
+    }
+
+    // Прочитать данные из канала и проверить, закрыт ли он
+    v, ok := &lt;-ch
+    if !ok {
+        fmt.Println("Канал закрыт, данные не доступны")
+    } else {
+        fmt.Println("Прочитано из канала:", v)
+    }
+}
+</code></pre>
+<p>Вывод: <code>0 1 2 3 4 5 6 7 8 9 Канал закрыт, данные не доступны</code></p>
+<h2 id="Селекторы"><a class="header" href="#Селекторы">Селекторы</a></h2>
+<p>Оператор <code>select</code> работает как многоканальный оператор <code>switch</code>. Выбор блоков в операциях с несколькими каналами, если один из них разблокируется, выполняется соответствующие условие. Он блокируется до тех пор, пока одно из выражений <code>case</code> не будет готов к выполнению, при этом остальные игнорируются.</p>
+<pre><code class="language-go">package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func doStuff(channelOut, channelIn chan int) {
+    select {
+    case channelOut &lt;- 42:
+        fmt.Println("Отправить значение 42 в channelOut")
+    case x := &lt;-channelIn:
+        fmt.Println("Прочитать из channelIn:", x)
+    case &lt;-time.After(time.Second * 1):
+        fmt.Println("Задержка в одну секунду")
+    }
+}
+
+func main() {
+    // Создание двух каналов (один для записи, другой для чтения)
+    channelOut := make(chan int)
+    channelIn := make(chan int)
+
+    // Запуск горутины для записи в канал "channelOut"
+    go func() {
+        time.Sleep(500 * time.Millisecond) // Пауза перед отправкой
+        channelOut &lt;- 42                   // Отправить значение 42
+        fmt.Println("Значение 42 отправлено в channelOut")
+    }()
+
+    // Запуск горутины для чтения из канала "channelIn"
+    go func() {
+        time.Sleep(200 * time.Millisecond) // Пауза перед отправкой
+        channelIn &lt;- 99                    // Отправить значение 99
+        fmt.Println("Значение 99 отправлено в channelIn")
+    }()
+
+    // Запуск функции doStuff с двумя каналами
+    doStuff(channelOut, channelIn)
+}
+</code></pre>
+<h2 id="Аксиомы-канала"><a class="header" href="#Аксиомы-канала">Аксиомы канала</a></h2>
+<p>Отправка в пустой канал блокируется навсегда и вызывает фатальную ошибку:</p>
+<pre><code class="language-go">var c chan string
+c &lt;- "Hello, World!"
+</code></pre>
+<p>Чтение из нулевого канала блокируется навсегда:</p>
+<pre><code class="language-go">var c chan string
+fmt.Println(&lt;-c)
+</code></pre>
+<p>Отправка в закрытый канал вызывает панику:</p>
+<pre><code class="language-go">var c = make(chan string, 1)
+c &lt;- "Hello, World!"
+close(c)
+c &lt;- "Hello, Panic!"
+</code></pre>
+<p>Прием из закрытого канала немедленно возвращает нулевое значение:</p>
+<pre><code class="language-go">var c = make(chan int, 2)
+c &lt;- 1
+c &lt;- 2
+close(c)
+for i := 0; i &lt; 3; i++ {
+    fmt.Printf("%d ", &lt;-c)
+}
+// 1 2 0
+</code></pre>
+<h2 id="Примеры-каналов-и-горутин"><a class="header" href="#Примеры-каналов-и-горутин">Примеры каналов и горутин</a></h2>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "time"
+    "sync"
+)
+
+func goRun(ch chan string) {
+    time.Sleep(2 * time.Second)
+    // Возвращяем сообщене о выполнение в канал
+    ch &lt;- "Первая горутина завершена за 2 секунды"
+}
+
+func goRunThree(ch chan string) {
+    time.Sleep(3 * time.Second)
+    ch &lt;- "Вторая горутина завершена за 3 секунды"
+}
+
+func printMessage(msg string, wg *sync.WaitGroup) {
+    // Уменьшает счётчик в WaitGroup, когда горутина завершена
+    defer wg.Done()
+    fmt.Println(msg)
+}
+
+func main() {
+    // Создаем канал
+    ch := make(chan string)
+    // Запускаем горутину
+    go goRun(ch)
+    fmt.Println("Ожидаем завершения горутины в канале")
+    // Блокируем main, пока не получим сообщение от горутины
+    result := &lt;-ch
+    // После получения вывода, программа продолжает выполнение
+    fmt.Println(result)
+
+    // Создаем два канала и запускаем две горутины
+    ch1 := make(chan string)
+    ch2 := make(chan string)
+    go goRun(ch1)
+    go goRunThree(ch2)
+    fmt.Println("Ожидаем завершения первой выполненной горутины")
+    // Используем select для ожидания данных с двух каналов и выбора первого завершенного канала
+    select {
+    case msg1 := &lt;-ch1:
+        fmt.Println("Ответ:", msg1)
+    case msg2 := &lt;-ch2:
+        fmt.Println("Ответ:", msg2)
+    }
+    
+    // Создаем группу ожидания для синхронизации выполнения нескольких горутин
+    var wg sync.WaitGroup
+    fmt.Println("Ожидаем выполнения всех запущенных горутин")
+    // Указать количество горутин, за которыми нужно следить
+    wg.Add(2)
+    go printMessage("Результат первой горутины", &amp;wg)
+    go printMessage("Результат второй горутины", &amp;wg)
+    // Ожидаем завершения всех горутин
+    wg.Wait()
+    fmt.Println("Все горутины завершили свою работу")
+}
+</code></pre>
+<h1 id="Вывод"><a class="header" href="#Вывод">Вывод</a></h1>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, 你好, नमस्ते, Привет, ᎣᏏᏲ") // базовый вывод
+    p := struct{ X, Y int }{17, 2}
+    fmt.Println("My point:", p, "x coord=", p.X)       // вывод структуры, цифр
+    s := fmt.Sprintln("My point:", p, "x coord=", p.X) // вывод в переменную с типом данных string
+    fmt.Println(s)
+
+    fmt.Printf("%d hex:%x bin:%b fp:%f sci:%e", 17, 17, 17, 17.0, 17.0) // C-образный формат
+    s2 := fmt.Sprintf("%d %f", 17, 17.0)                                // форматировать вывод в переменную с типом данных string
+    fmt.Println(s2)
+
+	// Многострочный строковый литерал
+    hellomsg := `
+        "Hello" in Chinese is 你好 ('Ni Hao')
+        "Hello" in Hindi is नमस्ते ('Namaste')
+    `
+    fmt.Println(hellomsg)
+}
+
+</code></pre>
+<h1 id="Переключение-типа"><a class="header" href="#Переключение-типа">Переключение типа</a></h1>
+<p>Переключение типа похоже на обычный оператор <code>switch</code>, но в условиях указывается типы (а не на значения), которые сравниваются с типом значения, содержащегося в данном значении интерфейса.</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func do(i interface{}) {
+    switch v := i.(type) {
+    case int:
+        fmt.Printf("Число %v равно %v по типу данных\n", v, v*2)
+    case string:
+        fmt.Printf("Значение %q равно %v bytes\n", v, len(v))
+    default:
+        fmt.Printf("Тип %T неизвестен\n", v)
+    }
+}
+
+func main() {
+    do(21)
+    do("hello")
+    do(true)
+}
+
+// Число 21 равно 42 по типу данных
+// Значение "hello" равно 5 bytes
+// Тип bool неизвестен
+</code></pre>
+<h1 id="Встроенные-пакеты"><a class="header" href="#Встроенные-пакеты">Встроенные пакеты</a></h1>
+<ul>
+<li>Декларация пакета (объявление через <code>import</code>) производится в начале каждого исходного файла.</li>
+<li>Исполняемые файлы находятся в пакете <code>main</code>.</li>
+<li>Имя пакета соответствует последнему имени в пути импорта (например, <code>math/rand</code> - пакет <code>rand</code>).</li>
+<li>Идентификатор функции в верхнем регистре является экспортируемый (доступны из других пакетов).</li>
+<li>Идентификатор функции в нижнем регистре является частный (недоступны из других пакетов).</li>
+</ul>
+<h2 id="Встраивание-файлов"><a class="header" href="#Встраивание-файлов">Встраивание файлов</a></h2>
+<p>Программы <code>Go</code> могут встраивать статические файлы с помощью пакета <code>embed</code> и директиву <code>go:embed path/filename</code>:</p>
+<pre><code class="language-go">package main
+
+import (
+    "embed"
+    "fmt"
+    "io"
+    "log"
+    "net/http"
+)
+
+//go:embed static/*
+var content embed.FS
+
+func main() {
+    http.Handle("/", http.FileServer(http.FS(content)))
+    go func() {
+        log.Fatal(http.ListenAndServe(":8080", nil))
+    }()
+
+    // Чтение содержимого файлов из файловой системы
+    entries, err := content.ReadDir("static")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    for _, e := range entries {
+        resp, err := http.Get("http://localhost:8080/static/" + e.Name())
+        if err != nil {
+            log.Fatal(err)
+        }
+        body, err := io.ReadAll(resp.Body)
+        if err != nil {
+            log.Fatal(err)
+        }
+        if err := resp.Body.Close(); err != nil {
+            log.Fatal(err)
+        }
+        fmt.Printf("%q: %s", e.Name(), body)
+    }
+
+    // Блокировка программы, чтобы сервер продолжал работать для доступа к статическим файлам через Web-интерфейс
+    select {}
+}
+
+// Имитация реальных файлов с их содержимым для запуска в Playground
+-- static/a.txt --
+hello a
+-- static/b.txt --
+hello b
+</code></pre>
+<h2 id="http-сервер"><a class="header" href="#http-сервер">HTTP сервер</a></h2>
+<p>Реализация простого <code>API</code> сервера на базе встроенной библиотеки <code>net/http</code>:</p>
+<pre><code class="language-go">package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
+
+// Обработчик API
+func apiHandler(w http.ResponseWriter, r *http.Request) {
+	// Устанавливаем заголовок для ответа (Content-Type: application/json)
+	w.Header().Set("Content-Type", "application/json")
+
+	switch r.Method {
+	case "GET":
+		// Получение параметра "name" из URL
+		name := r.URL.Query().Get("name")
+		if name == "" {
+			name = "Guest" // Значение по умолчанию, если параметр отсутствует
+		}
+		// Формируем JSON-ответ
+		json.NewEncoder(w).Encode(map[string]string{
+			"message": fmt.Sprintf("Hi %s", name),
+		})
+
+	case "POST":
+		// Парсим JSON из тела запроса
+		var data map[string]interface{}
+		if err := json.NewDecoder(r.Body).Decode(&amp;data); err != nil {
+			http.Error(w, "invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		// Формируем JSON-ответ
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"received": data,
+			"status":   "OK",
+		})
+
+	default:
+		// Обработка неподдерживаемых методов
+		http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
+	}
+}
+
+func main() {
+	// Регистрируем обработчик для пути /api
+	http.HandleFunc("/api", apiHandler)
+
+	// Запуск сервера
+	fmt.Println("Сервер запущен на http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
+}
+</code></pre>
+<p>Делаем запрос к <code>API</code> через <code>curl</code>:</p>
+<pre><code class="language-bash">curl -s "http://localhost:8080/api" | jq .message # "Hi Guest"
+curl -s "http://localhost:8080/api?name=Alex" | jq .message # "Hi Alex"
+curl -s -X POST -d '{"key":"value"}' -H "Content-Type: application/json" http://localhost:8080/api | jq .received.key # "value"
+curl -s -X POST "http://localhost:8080/api" # invalid JSON
+</code></pre>
+<h2 id="http-клиент"><a class="header" href="#http-клиент">HTTP клиент</a></h2>
+<p>Делаем запрос к <code>API</code> в <code>Go</code>:</p>
+<pre><code class="language-go">package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+)
+
+func main() {
+	// URL для отправки POST-запроса
+	url := "http://localhost:8080/api"
+
+	// Тело запроса в формате JSON
+	requestBody := map[string]string{"key": "value"}
+	jsonData, err := json.Marshal(requestBody)
+	if err != nil {
+		fmt.Println("Ошибка при создании тела запроса в формате JSON:", err)
+		return
+	}
+
+	// Создаем запрос
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		fmt.Println("Ошибка при отправке запроса:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Читаем тело ответа
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Ошибка при чтении ответа:", err)
+		return
+	}
+
+	// Разбираем ответ в формате JSON
+	var response map[string]interface{}
+	if err := json.Unmarshal(body, &amp;response); err != nil {
+		fmt.Println("Ошибка при парсинге JSON:", err)
+		return
+	}
+
+	// Выводим значение "key" из ответа
+	if received, ok := response["received"].(map[string]interface{}); ok {
+		if value, exists := received["key"]; exists {
+			fmt.Println(value) // "value"
+		} else {
+			fmt.Println("Ключ 'key' не найден в ответе")
+		}
+	} else {
+		fmt.Println("Ответ не содержит ожидаемую структуру received")
+	}
+}
+</code></pre>
+<p><code>HTTP</code> запрос к <code>API</code> для получения последней версии релиза указаного <a href="https://github.com/Lifailon/lazyjournal">репозитория</a> в GitHub:</p>
+<pre><code class="language-go">package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+)
+
+// Формируем структуру ответа от API
+type GitHubRelease struct {
+	TagName string `json:"tag_name"`
+}
+
+func main() {
+	// Формируем URL для получения информации
+    repos := "Lifailon/lazyjournal"
+	url := fmt.Sprintf("https://api.github.com/repos/%s/releases/latest", repos)
+	// Выполнение GET-запроса
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Fatal("Ошибка при выполнении запроса:", err)
+	}
+	defer resp.Body.Close()
+	// Проверка на успешный ответ
+	if resp.StatusCode != http.StatusOK {
+		log.Fatalf("Ошибка HTTP: %s", resp.Status)
+	}
+	// Декодирование JSON-ответа в заданную структуру
+	var release GitHubRelease
+	err = json.NewDecoder(resp.Body).Decode(&amp;release)
+	if err != nil {
+		log.Fatal("Ошибка при декодировании JSON:", err)
+	}
+	// Вывод последней версии
+	fmt.Println("Latest version:", release.TagName)
+}
+</code></pre>
+<p><code>go run main.go</code></p>
+<h2 id="Вызов-системных-команд"><a class="header" href="#Вызов-системных-команд">Вызов системных команд</a></h2>
+<p>Проверка доступности всех хостов в указанной подсети (асинхронный <code>ICMP</code> опрос):</p>
+<pre><code class="language-go">package main
+
+import (
+	"fmt"
+	"os"
+	"os/exec"
+	"strings"
+	"sync"
+)
+
+func pingHost(ip string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	// Запускаем команду ping
+	cmd := exec.Command("ping", "-n", "1", ip)
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return
+	}
+	// Обрабатываем вывод команды
+	if strings.Contains(string(output), "TTL=") {
+		fmt.Printf("%s - доступен\n", ip)
+	}
+}
+
+func main() {
+	if len(os.Args) &lt; 2 {
+		fmt.Println("Использование: go run main.go &lt;подсеть&gt;")
+		return
+	}
+	// Извлекаем аргумент
+	subnet := os.Args[1]
+	// Убираем последний октет
+	ipBase := subnet[:len(subnet)-1]
+	var wg sync.WaitGroup
+	for i := 1; i &lt;= 254; i++ {
+		ip := fmt.Sprintf("%s%d", ipBase, i)
+		wg.Add(1)
+		// Запускаем асинхронный пинг
+		go pingHost(ip, &amp;wg)
+	}
+	// Ждем завершения всех горутин
+	wg.Wait()
+}
+</code></pre>
+<p><code>go run main.go 192.168.3.0</code></p>
+<h1 id="Математические-вычисления"><a class="header" href="#Математические-вычисления">Математические вычисления</a></h1>
+<pre><code class="language-go">package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func customCeil(numerator int, denominator int) int {
+    result := numerator / denominator
+    if numerator%denominator != 0 {
+        result++
+    }
+    return result
+}
+
+func main() {
+    fmt.Println("Возвращает наименьшее значение из двух чисел 9 и 10:", math.Min(9, 10)) // 9
+    fmt.Println("Возвращает наибольшее значение из двух чисел 9 и 10:", math.Max(9, 10)) // 10
+    fmt.Println("Округляет число в меньшую сторону 10 / 3:", math.Floor(10/3)) // 3
+    fmt.Println("Округляет число в большую сторону 10 / 3:", math.Ceil(10.0/3))
+    fmt.Println("Округляет число в большую сторону 10 / 3:", customCeil(10, 3)) // 4
+    fmt.Println("Отбрасывает дробную часть числа (не округляет) 4,9:", math.Trunc(4.9)) // 4
+    fmt.Println("Округляет число до ближайшего целого в большую сторону от 4,5:", math.Round(4.5)) // 5
+    fmt.Println("Округляет число до ближайшего целого в меньшую сторону от 4,5:", math.Round(4.45)) // 4
+    fmt.Println("Возвращает абсолютное значение числа -7:", math.Abs(-7)) // 7
+    fmt.Println("Возводит число 2 в степень 3:", math.Pow(2, 3)) // 8
+    fmt.Println("Вычисляет квадратный корень числа 16:", math.Sqrt(16)) // 4
+}
+</code></pre>
+<h1 id="Регулярные-выражения"><a class="header" href="#Регулярные-выражения">Регулярные выражения</a></h1>
+<h2 id="Элементы-синтаксиса"><a class="header" href="#Элементы-синтаксиса">Элементы синтаксиса</a></h2>
+<p>Основные элементы синтаксиса регулярных выражений:</p>
+<div class="table-wrapper"><table><thead><tr><th>Символ</th><th>Описание</th></tr></thead><tbody>
+<tr><td><code>.</code></td><td>любой символ, кроме символа новой строки</td></tr>
+<tr><td><code>*</code></td><td><code>0</code> или более повторений</td></tr>
+<tr><td><code>+</code></td><td><code>1</code> или более повторений</td></tr>
+<tr><td><code>{n}</code></td><td>точно <code>n</code> повторений (например, <code>a{3}</code>, соответствует: <code>"aaa"</code>)</td></tr>
+<tr><td><code>{n,}</code></td><td>минимум <code>n</code> повторений (например, <code>a{2,}</code>, соответствует: <code>"aa"</code>, <code>"aaa"</code> и т.д.)</td></tr>
+<tr><td><code>{n,m}</code></td><td>от <code>n</code> до <code>m</code> повторений (например, <code>a{2,4}</code>, соответствует: <code>"aa"</code>, <code>"aaa"</code>, <code>"aaaa"</code>)</td></tr>
+<tr><td><code>?</code></td><td><code>0</code> или <code>1</code> повторений</td></tr>
+<tr><td><code>^</code></td><td>начало строки</td></tr>
+<tr><td><code>$</code></td><td>конец строки</td></tr>
+<tr><td><code>[]</code></td><td>группа символов (например, <code>[a-z]</code>)</td></tr>
+<tr><td><code>\s</code></td><td>любой пробельный символ (пробел, табуляция, новая строка и другие пробельные символы)</td></tr>
+<tr><td><code>\d</code></td><td>цифра (эквивалентно <code>[0-9]</code>)</td></tr>
+<tr><td><code>\D</code></td><td>любой символ, не являющийся цифрой (эквивалентно <code>[^0-9]</code>)</td></tr>
+<tr><td><code>\w</code></td><td>буквенно-цифровой символ (буквы, цифры и подчеркивание, эквивалентно <code>[a-zA-Z0-9_]</code>)</td></tr>
+<tr><td><code>\W</code></td><td>не буквенно-цифровой символ (эквивалентно <code>[^a-zA-Z0-9_]</code>)</td></tr>
+<tr><td><code>\b</code></td><td>граница слова (например, <code>\bword\b</code> соответствует <code>"word"</code>, и не подхоит <code>"wordy"</code>)</td></tr>
+<tr><td><code>(?i)</code></td><td>делает выражение нечувствительным к регистру</td></tr>
+<tr><td><code>\</code></td><td>экранирование специальных символов</td></tr>
+<tr><td><code>()</code></td><td>группа захвата</td></tr>
+<tr><td><code>|</code></td><td>логическое <code>ИЛИ</code> (например, `a</td></tr>
+</tbody></table>
+</div>
+<h2 id="Функции-regexp"><a class="header" href="#Функции-regexp">Функции regexp</a></h2>
+<p>Основные функции пакета <code>regexp</code>:</p>
+<ul>
+<li><code>regexp.MatchString</code> — проверяет, соответствует ли строка регулярному выражению.</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+	"fmt"
+	"regexp"
+)
+
+func main() {
+    pattern := `^[a-z]+$`
+	str := "string"
+    matched, err := regexp.MatchString(pattern, str)
+	if err != nil {
+		fmt.Println("Ошибка в регулярном выражении:", err)
+		return
+	}
+	fmt.Printf("Строка '%s' соответствует регулярному выражению '%s' (результат: %v)", str, pattern, matched)
+}
+</code></pre>
+<ul>
+<li><code>regexp.Compile</code> — компилирует регулярное выражение и возвращает объект типа <code>*regexp.Regexp</code>, если выражение корректное, или возвращается ошибка.</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "regexp"
+)
+
+func main() {
+    // Компилируем регулярное выражение
+    r, err := regexp.Compile(`\d+`)
+    if err != nil {
+        fmt.Println("Ошибка компиляции регулярного выражения:", err)
+        return
+    }
+    // Применяем регулярное выражение к строке
+    fmt.Println(r.FindString("123 abc 456")) // 123
+}
+</code></pre>
+<ul>
+<li><code>regexp.FindAllString</code> — находит все подстроки в строке, которые соответствуют регулярному выражению, и возвращает их в виде среза строк.</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "regexp"
+)
+
+func main() {
+    r, err := regexp.Compile(`\d+`)
+    if err != nil {
+        fmt.Println("Ошибка компиляции регулярного выражения:", err)
+        return
+    }
+    matches := r.FindAllString("123abc456", -1)
+    fmt.Println(matches) // [123 456]
+}
+</code></pre>
+<ul>
+<li><code>regexp.ReplaceAllString</code> — заменяет все соответствующие части строки.</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "regexp"
+)
+
+func main() {
+    pattern := `\d+`
+    str := "Диапазон от 1 до 10"
+    // Заменяем все цифры на "X"
+    r, err := regexp.Compile(pattern)
+    if err != nil {
+        fmt.Println("Ошибка компиляции регулярного выражения:", err)
+        return
+    }
+    result := r.ReplaceAllString(str, "X")
+    fmt.Println(result)
+}
+</code></pre>
+<ul>
+<li>Группы захвата</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "regexp"
+)
+
+func main() {
+    // Регулярное выражение с группой захвата для даты в формате "dd.mm.yyyy"
+    pattern := `(\d{2}).(\d{2}).(\d{4})`
+    r, err := regexp.Compile(pattern)
+    if err != nil {
+        fmt.Println("Ошибка компиляции регулярного выражения:", err)
+        return
+    }
+    // Поиск и извлечение данных
+    result := r.FindStringSubmatch("01.12.2024")
+    if len(result) &gt; 0 {
+        fmt.Println("День:", result[1])
+        fmt.Println("Месяц:", result[2])
+        fmt.Println("Год:", result[3])
+    }
+}
+</code></pre>
+<ul>
+<li>Извлечение логина и домена из почтовых адресов</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "regexp"
+)
+
+func main() {
+    pattern := `([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})`
+    str := "contact@example.com, support@example.net"
+    r, err := regexp.Compile(pattern)
+    if err != nil {
+        fmt.Println("Ошибка компиляции регулярного выражения:", err)
+        return
+    }
+    matches := r.FindAllStringSubmatch(str, -1)
+    for _, match := range matches {
+        fmt.Printf("Логин: %s, Домен: %s\n", match[1], match[2])
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../Linux/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../Node-js/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../Linux/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../Node-js/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

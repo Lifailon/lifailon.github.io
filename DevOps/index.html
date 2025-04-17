@@ -1,0 +1,2812 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>DevOps - PowerShell Commands</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PowerShell Commands</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>+++
+title = "DevOps"
+[extra]
+toc = true
+toc_sidebar = true
+go_to_top = true
++++</p>
+<p>Заметки по инструментам и системам направления <code>DevOps</code>.</p>
+<hr />
+<h1 id="git"><a class="header" href="#git">Git</a></h1>
+<p><code>git --version</code> <br />
+<code>git config --global user.name "Lifailon"</code> добавить имя для коммитов <br />
+<code>git config --global user.email "lifailon@yandex.ru"</code> <br />
+<code>git config --global --edit</code> <br />
+<code>git config --global core.editor "code --wait"</code> изменить редактор коммитов по умолчанию <br />
+<code>ssh-keygen -t rsa -b 4096</code> <br />
+<code>Get-Service | where name -match "ssh-agent" | Set-Service -StartupType Automatic</code> <br />
+<code>Get-Service | where name -match "ssh-agent" | Start-Service</code> <br />
+<code>Get-Service | where name -match "ssh-agent" | select Name,Status,StartType</code> <br />
+<code>ssh-agent</code> <br />
+<code>ssh-add C:\Users\Lifailon\.ssh\id_rsa</code> <br />
+<code>cat ~\.ssh\id_rsa.pub | Set-Clipboard</code> copy to <a href="https://github.com/settings/keys">settings keys</a> <br />
+<code>cd $home\Documents\Git</code> <br />
+<code>git clone git@github.com:Lifailon/lifailon.github.io</code> <br />
+<code>cd lifailon.github.io</code> <br />
+<code>git grep "ping ya.ru"</code> поиск текста в файлах <br />
+<code>git fetch</code> загрузить изменения из удаленного хранилища для обновления всех веток локального репозитория, не затрагивая текущую рабочую ветку (загружает все коммиты, ветки и т.д. которые не присутствуют в локальном репозитории) <br />
+<code>git fetch --all</code> загрузить все ветки с удаленного репозитория (обновляет информацию о состоянии удаленного репозитория и загружает все изменения ваших веток без автоматического объединения) <br />
+<code>git pull</code> загрузить изменения из удаленного хранилища для обновления локального репозитория (выполняет <code>git fetch</code>, чтобы получить последние изменения из удаленного репозитория, а затеим объеденяем изменения с локальной копией с помощью <code>git merge</code> для обновления текущей рабочей ветки) <br />
+<code>git stash</code> сохраняет текущие незакоммиченные изменения в временное хранилище (например, на время выполнения <code>git pull</code>), в т.ч. неотслеживаемые файлы и очищает рабочую директорию (вернет в состояние, соответствующее последнему коммиту) <br />
+<code>git stash pop</code> применяет последние изменения из стэша к текущей ветке (вернутся только измененные строки в файлах, при этом будут сохранены новые добавленные строки в файле без конфликтов) и удаляет их из стэша <br />
+<code>git stash apply</code> применяет изменения, но не удаляет их из стэша <br />
+<code>git status</code> отобразить статус изменений по файлам <br />
+<code>git diff</code> отобразить историю изменений построчно <br />
+<code>git diff pandoc</code> сравнивает изменения в текущей рабочей директории с последним коммитом в указанной ветке <code>pandoc</code> <br />
+<code>git add .</code> добавить (проиндексировать) изменения во всех файлах текущего каталога <br />
+<code>git commit -m "update powershell commands"</code> сохранить изменения с комментарием <br />
+<code>git push</code> синхронизировать локальные изменения с репозиторием на сервере <br />
+<code>git push origin mkdocs-material</code> отправить в конкретную ветку <br />
+<code>git push origin --delete mkdocs</code> удалить ветку на удаленном сервере <br />
+<code>git commit --amend</code> изменить комментарий в последнем коммите (до <code>push</code>) <br />
+<code>git commit --amend --no-edit --date="Sun Oct 27 23:20:00 2024 +0300"</code> изменить дату последнего коммита <br />
+<code>git branch -a</code> отобразить все ветки (в том числе удаленные remotes/origin) <br />
+<code>git branch hugo</code> создать новую ветку <br />
+<code>git branch -m hugo-public</code> переименовать текущую ветку <br />
+<code>git branch -d hugo-public</code> удалить ветку <br />
+<code>git switch hugo</code> переключиться на другую ветку <br />
+<code>git push origin hugo</code> отправить изменения в указанную ветку <br />
+<code>git branch --set-upstream-to=origin/hugo hugo</code> локальная ветка <code>hugo</code> будет отслеживать удаленную ветку <code>hugo</code> на удаленном сервере-репозитории <code>origin</code> (позволяет не указывать название удаленной ветки при каждом использовании команд <code>git push</code> или <code>git pull</code>) <br />
+<code>git switch pandoc</code> переключиться на другую ветку <br />
+<code>git merge hugo</code> слияние указанной ветки (<code>hugo</code>) в текущую ветку (<code>pandoc</code>)  <br />
+<code>git log --oneline --all</code> отобразить список всех коммитов и их сообщений <br />
+<code>git log --graph</code> коммиты и следование веток <br />
+<code>git log --author="Lifailon"</code> показывает историю коммитов указанного пользователя <br />
+<code>git blame .\posh.md</code> показывает, кто и когда внес изменения в каждую строку указанного файла (<code>НОМЕР_КОММИТА (ИМЯ_ПОЛЬЗОВАТЕЛЯ ДАТА НОМЕР_СТРОКИ) ТЕКСТ.</code>) <br />
+<code>git show d01f09dead3a6a8d75dda848162831c58ca0ee13</code> отобразить подробный лог по номеру коммита <br />
+<code>git checkout filename</code> устаревшая команда, откатить не проиндексированные изменения для коммита, возвращая его к состоянию, каким оно было на момент последнего коммита (если не было индексации через <code>add</code>) <br />
+<code>git restore filename</code> отменить все локальные изменения в рабочей копии независимо от того, были они проиндексированы или нет (через <code>add</code>), возвращая его к состоянию на момент последнего коммита <br />
+<code>git restore --source d01f09dead3a6a8d75dda848162831c58ca0ee13 filename</code> восстановить файл на указанную версию по хэшу индентификатора коммита <br />
+<code>git reset HEAD filename</code> удалить указанный файл из индекса без удаления самих изменений в файле для последующей повторной индексации (если был <code>add</code> но не было <code>commit</code>, потом выполнить <code>checkout</code>) <br />
+<code>git reset --soft HEAD^</code> отменяет последний (^) коммит, сохраняя изменения из этого коммита в рабочем каталоге и индексе (подготовленной области), можно внести изменения в файлы и повторно их зафиксировать через <code>commit</code> <br />
+<code>git reset --hard HEAD^</code> полностью отменяет последний коммит, удаляя все его изменения из рабочего каталога и индекса до состояния предыдущего перед последним коммитом (аналогично <code>HEAD~1</code>) <br />
+<code>git push origin main --force</code> удалить последний коммит на удаленном сервере репозитория после <code>reset --hard HEAD^</code>  <br />
+<code>git reset --hard d01f09dead3a6a8d75dda848162831c58ca0ee13</code> откатывает изменения к указанному коммиту и удаляет все коммиты, которые были сделаны после него (будут потеряны все незакоммиченные изменения и историю коммитов после указанного) <br />
+<code>git revert HEAD --no-edit</code> создает новый коммит, который отменяет последний коммит (<code>HEAD^</code>) и новый коммит будет добавлен поверх него (события записываются в <code>git log</code>) <br />
+<code>git revert d01f09dead3a6a8d75dda848162831c58ca0ee13</code> создает новый коммит, который отменяет изменения, внесенные в указанный коммит с хешем (не изменяет историю коммитов, а создает новый коммит с изменениями отмены)</p>
+<h1 id="github-api"><a class="header" href="#github-api">GitHub api</a></h1>
+<p><code>$user = "Lifailon"</code> <br />
+<code>$repository = "ReverseProxyNET"</code> <br />
+<code>Invoke-RestMethod https://api.github.com/users/$($user)</code> получаем информацию о пользователе <br />
+<code>Invoke-RestMethod https://api.github.com/users/$($user)/repos</code> получаем список последних (актуальные коммиты) 30 репозиториев указанного пользователя <br />
+<code>Invoke-RestMethod https://api.github.com/users/$($user)/repos?per_page=100</code> получаем список последних (актуальные коммиты) 100 репозиториев указанного пользователя <br />
+<code>Invoke-RestMethod https://api.github.com/repos/$($user)/$($repository)/contents</code> получаем содержимое корневой директории репозитория <br />
+<code>Invoke-RestMethod https://api.github.com/repos/$($user)/$($repository)/contents/source/rpnet.cs</code> получаем содержимое файла в формате Base64 <br />
+<code>$commits = Invoke-RestMethod https://api.github.com/repos/$($user)/$($repository)/commits</code> получаем список коммитов <br />
+<code>$commits[0].commit.message</code> читаем комментарий последнего коммита <br />
+<code>$commits[0].commit.committer.date</code> получаем дату последнего коммита <br />
+<code>Invoke-RestMethod https://api.github.com/repos/$($user)/$($repository)/commits/$($commits[0].sha)</code> получаем подробную информацию изменений о последнем коммите в репозитории <br />
+<code>$releases_latest = Invoke-RestMethod "https://api.github.com/repos/$($user)/$($repository)/releases/latest"</code> получаем информацию о последнем релизе в репозитории <br />
+<code>$releases_latest.assets.name</code> список приложенных файлов последнего релиза <br />
+<code>$releases_latest.assets.browser_download_url</code> получаем список url для загрузки файлов <br />
+<code>$($releases_latest.assets | Where-Object name -like "*win*x64*exe*").browser_download_url</code> фильтруем по ОС и разрядности <br />
+<code>$(Invoke-RestMethod -Uri "https://api.github.com/repos/Lifailon/epic-games-radar/commits?path=api/giveaway/index.json")[0].commit.author.date</code> узнать дату последнего обновления файла в репозитории <br />
+<code>$issues = Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/issues?per_page=500</code> получаем список открытых проблем в репозитории (получаем максимум 100 последних, по умолчанию забираем последние 30 issues) <br />
+<code>$issue_number = $($issues | Where-Object title -match "PowerShell").number</code> получаем номер issue, в заголовке которого есть слово "PowerShell" <br />
+<code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/issues/$($issue_number)/comments</code> отобразить список комментарием указанного issues <br />
+<code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/languages</code> получаем список языков программирования, используемых в репозитории <br />
+<code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/pulls</code> получаем список всех pull requests в репозитории <br />
+<code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/forks</code> получаем список форков (forks) <br />
+<code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/stargazers?per_page=4000</code> получаем список пользователей, которые поставили звезды репозиторию <br />
+<code>Invoke-RestMethod https://api.github.com/repos/LibreHardwareMonitor/LibreHardwareMonitor/subscribers</code> получаем список подписчиков (watchers) репозитория</p>
+<h1 id="github-actions"><a class="header" href="#github-actions">GitHub Actions</a></h1>
+<h2 id="runner-agent"><a class="header" href="#runner-agent">Runner (Agent)</a></h2>
+<p><code>mkdir actions-runner; cd actions-runner</code> <br />
+<code>Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-win-x64-2.316.1.zip -OutFile actions-runner-win-x64-2.316.1.zip</code> загрузить пакет с Runner последней версии <br />
+<code>if((Get-FileHash -Path actions-runner-win-x64-2.316.1.zip -Algorithm SHA256).Hash.ToUpper() -ne 'e41debe4f0a83f66b28993eaf84dad944c8c82e2c9da81f56a850bc27fedd76b'.ToUpper()){ throw 'Computed checksum did not match' }</code> проверить валидность пакета с помощью hash-суммы <br />
+<code>Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.316.1.zip", "$PWD")</code> разархивировать <br />
+<code>Remove-Item *.zip</code> удалить архив <br />
+<code>./config.cmd --url https://github.com/Lifailon/egapi --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</code> авторизовать и сконфигурировать сборщика с помощью скрипта (что бы на последнем пункте создать службу для управления сборщиком, нужно запустить консоль с правами администратора) <br />
+<code>./run.cmd</code> запустить процесс (если не используется служба) <br />
+<code>Get-Service *actions* | Start-Service</code> запустить службу <br />
+<code>Get-Process *Runner.Listener*</code> <br />
+<code>./config.cmd remove --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</code> удалить конфигурацию</p>
+<h2 id="build-pipeline"><a class="header" href="#build-pipeline">Build (Pipeline)</a></h2>
+<pre><code class="language-yaml">name: build-game-list
+
+on:
+  # Разрешить ручной запуск workflow через интерфейс GitHub
+  workflow_dispatch:
+  
+  # Запускать workflow по расписанию каждый час в 00 минут
+  schedule:
+  - cron: '00 * * * *'
+
+jobs:
+  Job_01:
+    # Указываем, что job будет выполняться на последней версии Ubuntu
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Шаги, которые будут выполнены в рамках этого job
+    - name: Checkout repository
+      # Клонирования репозиторий
+      uses: actions/checkout@v2
+    
+    - name: Get content and write to file
+      # Выполняем скрипт PowerShell, расположенный в ./scripts/Get-GameList.ps1
+      run: pwsh -File ./scripts/Get-GameList.ps1
+      # Указываем, что команда должна выполняться в оболочке bash
+      shell: bash 
+
+    - name: Commit and push changes
+      run: |
+        # Задаем имя пользователя и email для коммитов
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        # Добавляем все изменения в индекс
+        git add .
+        # Делаем коммит с комментарием
+        git commit -m "update game list"
+        # Отправляем коммит в удаленный репозиторий
+        git push
+</code></pre>
+<h2 id="ci"><a class="header" href="#ci">CI</a></h2>
+<pre><code class="language-yaml">name: Docker Build and Push Image
+
+on:
+  # Запусать при git push в ветку main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Клонируем репозиторий
+      uses: actions/checkout@v2
+
+    - name: Авторизация в Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Сборка образа и отправка в Docker Hub
+      run: |
+        docker build -t lifailon/torapi:latest .
+        docker push lifailon/torapi:latest
+</code></pre>
+<h2 id="logs"><a class="header" href="#logs">Logs</a></h2>
+<p><code>$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).total_count</code> получить количество запусков всех рабочих процессов <br />
+<code>$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows</code> подробная информации о запускаемых рабочих процессах <br />
+<code>$actions_last_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows).workflows[-1].id</code> получить идентификатор последнего события <br />
+<code>$(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs</code> подробная информация о последней сборке <br />
+<code>$run_id = $(Invoke-RestMethod https://api.github.com/repos/Lifailon/TorAPI/actions/workflows/$actions_last_id/runs).workflow_runs.id</code> получить идентификатор запуска рабочего процесса <br />
+<code>$(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs.steps</code> подробная информация для всех шагов выполнения (время работы и статус выполнения) <br />
+<code>$jobs_id = $(Invoke-RestMethod "https://api.github.com/repos/Lifailon/TorAPI/actions/runs/$run_id/jobs").jobs[0].id</code> получить идентификатор последнего задания указанного рабочего процесса</p>
+<pre><code class="language-PowerShell">$url = "https://api.github.com/repos/Lifailon/TorAPI/actions/jobs/$jobs_id/logs"
+$headers = @{
+    Authorization = "token ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+Invoke-RestMethod -Uri $url -Headers $headers # получить логи задания
+</code></pre>
+<h2 id="act"><a class="header" href="#act">act</a></h2>
+<p><a href="https://github.com/nektos/act">act</a> - пользволяет запускать действия GitHub Actions локально.</p>
+<pre><code class="language-bash">version=$(curl -s https://api.github.com/repos/nektos/act/releases/latest | jq -r .tag_name)
+curl -L "https://github.com/nektos/act/releases/download/$version/act_$(uname -s)_$(uname -m).tar.gz" -o $HOME/.local/bin/act.tar.gz
+tar -xzf $HOME/.local/bin/act.tar.gz -C $HOME/.local/bin
+chmod +x $HOME/.local/bin/act
+rm $HOME/.local/bin/act.tar.gz
+act --version
+</code></pre>
+<p><code>act --list</code> список доступных действий, указаных в файлах .github/workflows <br />
+<code>act -j build</code> запуск указанного действия по Job ID (имя файла, не путать с названием Workflow) <br />
+<code>act -n -j build</code> пробный запуск (--dry-run), без выполнения команд, для отображения всех выполняемых jobs и steps</p>
+<pre><code class="language-json">{
+  "inputs": {
+    "Distro": "ubuntu-24.04",
+    "Update": "false",
+    "Linter": "true",
+    "Test": "false",
+    "Release": "false",
+    "Binary": "true"
+  }
+}
+</code></pre>
+<p><code>act -e event.json -W .github/workflows/build.yml -P ubuntu-24.04=catthehacker/ubuntu:act-latest</code> запустить указанный файл workflow с переданным файлом переменных (предварительно определенных параметров) и указанным сборщиком <br />
+<code>act -e event.json -W .github/workflows/build.yml -P ubuntu-24.04=catthehacker/ubuntu:act-latest --artifact-server-path $PWD/artifacts</code> примонтировать рабочий каталог в контейнер для сохранения артефактов</p>
+<pre><code class="language-bash">echo "DOCKER_HUB_USERNAME=username" &gt;&gt; .secrets
+echo "DOCKER_HUB_PASSWORD=password" &gt;&gt; .secrets
+</code></pre>
+<p><code>act --secret-file .secrets</code> <br />
+<code>act -s DOCKER_HUB_USERNAME=username -s DOCKER_HUB_PASSWORD=password</code> передать содержимое секретов <br />
+<code>act push</code> симуляция push-ивента (имитация коммита и запуск workflow, который реагирует на push) <br />
+<code>act --reuse</code> не удалять контейнер из успешно завершенных рабочих процессов для сохранения состояния между запусками (кэширование) <br />
+<code>act --parallel</code> запуск всех jobs одновременно или последовательно (--no-parallel, по умолчанию)</p>
+<h1 id="vercel"><a class="header" href="#vercel">Vercel</a></h1>
+<p><code>npm i -g vercel</code> установить глобально в систему Vercel CLI <br />
+<code>vercel --version</code> выводит текущую версию установленного Vercel CLI <br />
+<code>vercel login</code> выполняет вход в аккаунт Vercel (<code>&gt; Continue with GitHub</code>) <br />
+<code>vercel logout</code> выполняет выход из аккаунта Vercel <br />
+<code>vercel init</code> инициализирует новый проект в текущей директории (создает файл конфигурации vercel.json и другие файлы, необходимые для проекта) <br />
+<code>vercel dev</code> запускает локальный сервер для проверки работоспособности (http://localhost:3000) <br />
+<code>vercel deploy</code> загружает проект на серверы Vercel и развертывает его <br />
+<code>vercel link</code> привязывает текущую директорию к существующему проекту на сервере Vercel (выбрать из списка) <br />
+<code>vercel unlink</code> отменяет привязку текущей директории от проекта Vercel <br />
+<code>vercel env</code> управляет переменными окружения для проекта <br />
+<code>vercel env pull</code> подтягивает переменные окружения с Vercel в локальный .env файл <br />
+<code>vercel env ls</code> показывает список всех переменных окружения для проекта <br />
+<code>vercel env add &lt;key&gt; &lt;environment&gt;</code> добавляет новую переменную окружения для указанного окружения (production, preview, development) <br />
+<code>vercel env rm &lt;key&gt; &lt;environment&gt;</code> удаляет переменную окружения из указанного окружения <br />
+<code>vercel projects</code> управляет проектами Vercel <br />
+<code>vercel projects ls</code> показывает список всех проектов <br />
+<code>vercel projects add</code> добавляет новый проект <br />
+<code>vercel projects rm &lt;project&gt;</code> удаляет указанный проект <br />
+<code>vercel pull</code> подтягивает последние настройки окружения с Vercel <br />
+<code>vercel alias</code> управляет алиасами доменов для проектов <br />
+<code>vercel alias ls</code> показывает список всех алиасов для текущего проекта <br />
+<code>vercel alias set &lt;alias&gt;</code> устанавливает алиас для указанного проекта <br />
+<code>vercel alias rm &lt;alias&gt;</code> удаляет указанный алиас <br />
+<code>vercel domains</code> управляет доменами, привязанными к проекту <br />
+<code>vercel domains ls</code> показывает список всех доменов <br />
+<code>vercel domains add &lt;domain&gt;</code> добавляет новый домен к проекту <br />
+<code>vercel domains rm &lt;domain&gt;</code> удаляет указанный домен <br />
+<code>vercel teams</code> управляет командами и членами команд на Vercel <br />
+<code>vercel teams ls</code> показывает список всех команд <br />
+<code>vercel teams add &lt;team&gt;</code> добавляет новую команду <br />
+<code>vercel teams rm &lt;team&gt;</code> удаляет указанную команду <br />
+<code>vercel logs &lt;deployment&gt;</code> выводит логи для указанного деплоя <br />
+<code>vercel secrets</code> управляет секретами, используемыми в проектах <br />
+<code>vercel secrets add &lt;name&gt; &lt;value&gt;</code> добавляет новый секрет <br />
+<code>vercel secrets rm &lt;name&gt;</code> удаляет указанный секрет <br />
+<code>vercel secrets ls</code> показывает список всех секретов <br />
+<code>vercel switch &lt;team&gt;</code> переключается между командами и аккаунтами Vercel</p>
+<h2 id="cd"><a class="header" href="#cd">CD</a></h2>
+<pre><code class="language-yaml">name: Deploy to Vercel
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v4
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+</code></pre>
+<h1 id="gitlab"><a class="header" href="#gitlab">GitLab</a></h1>
+<pre><code class="language-bash">docker run --detach \
+    --hostname 192.168.3.101 \
+    --publish 443:443 --publish 80:80 --publish 2222:22 \
+    --name gitlab \
+    --restart always \
+    --volume /srv/gitlab/config:/etc/gitlab \
+    --volume /srv/gitlab/logs:/var/log/gitlab \
+    --volume /srv/gitlab/data:/var/opt/gitlab \
+    gitlab/gitlab-ee:latest
+</code></pre>
+<p><code>docker logs -f gitlab</code> логи контейнера <br />
+<code>docker exec -it gitlab cat /etc/gitlab/initial_root_password</code> получить пароль для root <br />
+<code>docker exec -it gitlab cat /etc/gitlab/gitlab.rb</code> конфигурация сервера</p>
+<p>Получить токен регистрации Runner: http://192.168.3.101/root/torapi/-/settings/ci_cd#js-runners-settings</p>
+<p><code>curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64</code> загрузить исполняемый файл Runner
+<code>chmod +x /usr/local/bin/gitlab-runner</code></p>
+<pre><code class="language-bash">docker run -d --name gitlab-runner --restart always \
+    -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+    gitlab/gitlab-runner:latest
+</code></pre>
+<p><code>docker exec -it gitlab-runner bash</code> <br />
+<code>gitlab-runner list</code> список сборщиков <br />
+<code>gitlab-runner verify</code> проверка <br />
+<code>gitlab-runner restart</code> применить настройки <br />
+<code>gitlab-runner status</code> статус <br />
+<code>gitlab-runner unregister --all-runners</code> удалить все регистрации <br />
+<code>gitlab-runner install</code> установить службу <br />
+<code>gitlab-runner run</code> запустить с выводом в консоль</p>
+<p><code>gitlab-runner register</code></p>
+<pre><code>Enter the GitLab instance URL (for example, https://gitlab.com/): http://192.168.3.101/
+Enter the registration token: GR1348941enqAxqQgm8AZJD_g7vme
+Enter an executor: shell
+</code></pre>
+<p><code>cat /etc/gitlab-runner/config.toml</code> конфигурация</p>
+<p>Включить импорт проектов из GitHub: http://192.168.3.101/admin/application_settings/general#js-import-export-settings</p>
+<pre><code class="language-yaml">variables:
+  PORT: 2024
+  TITLE: "The+Rookie"
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - |
+        pwsh -Command "
+            Write-Host PORT - $env:PORT
+            Write-Host TITLE - $env:TITLE
+            npm install
+            Start-Process -NoNewWindow -FilePath 'npm' -ArgumentList 'start -- --port $env:PORT' -RedirectStandardOutput 'torapi.log'
+            Start-Sleep -Seconds 5
+            Invoke-RestMethod -Uri http://localhost:$env:PORT/api/search/title/all?query=$env:TITLE | Format-List
+            Get-Content torapi.log
+            Stop-Process -Name 'node' -Force -ErrorAction SilentlyContinue
+        "
+</code></pre>
+<h1 id="jenkins"><a class="header" href="#jenkins">Jenkins</a></h1>
+<p>Примеры <code>Pipeline</code> и базовый синтаксис <code>Groovy</code>.</p>
+<p><code>docker run -d --name=jenkins -p 8080:8080 -p 50000:50000 --restart=unless-stopped -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</code> <br />
+<code>ls /var/lib/docker/volumes/jenkins_home/_data/jobs</code> директория хранящая историю сборок в хостовой системе <br />
+<code>docker exec -it jenkins /bin/bash</code> подключиться к контейнеру <br />
+<code>cat /var/jenkins_home/secrets/initialAdminPassword</code> получить токен инициализации</p>
+<pre><code>docker run -d \
+  --name jenkins-remote-agent-01 \
+  --restart unless-stopped \
+  -e JENKINS_URL=http://192.168.3.101:8080 \
+  -e JENKINS_AGENT_NAME=remote-agent-01 \
+  -e JENKINS_SECRET=3ad54fc9f914957da8205f8b4e88ff8df20d54751545f34f22f0e28c64b1fb29 \
+  -v jenkins_agent:/home/jenkins \
+  jenkins/inbound-agent:latest
+
+# Или ссылаться на локальный контейнер сервера по имени
+# --link jenkins:jenkins
+# -e JENKINS_URL=http://jenkins:8080
+</code></pre>
+<p><code>docker exec -u root -it jenkins-remote-agent-01 /bin/bash</code> подключиться к slave агенту под root <br />
+<code>apt-get update &amp;&amp; apt-get install -y iputils-ping netcat-openbsd</code> установить ping и nc на машину сборщика (slave)</p>
+<p><code>jenkinsVolumePath=$(docker inspect jenkins | jq -r .[].Mounts.[].Source)</code> получить путь к директории Jenkins в хостовой системе <br />
+<code>sudo tar -czf $HOME/jenkins-backup.tar.gz -C $jenkinsVolumePath .</code> резервная копия всех файлов <br />
+<code>(crontab -l ; echo "0 23 * * * sudo tar -czf /home/lifailon/jenkins-backup.tar.gz -C /var/lib/docker/volumes/jenkins_home/_data .") | crontab -</code> <br />
+<code>sudo tar -xzf $HOME/jenkins-backup.tar.gz -C /var/lib/docker/volumes/jenkins_home/_data</code> восстановление</p>
+<p><code>wget http://127.0.0.1:8080/jnlpJars/jenkins-cli.jar -P $HOME/</code> скачать jenkins-cli (http://127.0.0.1:8080/manage/cli) <br />
+<code>apt install openjdk-17-jre-headless</code> установить java runtime <br />
+<code>java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 -webSocket help</code> получить список команд <br />
+<code>java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 groovysh</code> запустить консоль Groovy <br />
+<code>java -jar jenkins-cli.jar -auth lifailon:password -s http://127.0.0.1:8080 install-plugin ssh-steps -deploy</code> устанавливаем плагин SSH Pipeline Steps</p>
+<h2 id="api"><a class="header" href="#api">API</a></h2>
+<pre><code class="language-PowerShell">$username = "Lifailon"
+$password = "password"
+$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username,$password)))
+$headers = @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+Invoke-RestMethod "http://192.168.3.101:8080/rssAll" -Headers $headers # RSS лента всех сборок и их статус в title
+Invoke-RestMethod "http://192.168.3.101:8080/rssFailed" -Headers $headers # RSS лента всех неудачных сборок
+$(Invoke-RestMethod "http://192.168.3.101:8080/computer/local-agent/api/json" -Headers $headers).offline # проверить статус работы slave агента
+
+$jobs = Invoke-RestMethod "http://192.168.3.101:8080/api/json/job" -Headers $headers
+$jobs.jobs.name # список всех проектов
+$jobName = "Update SSH authorized_keys"
+$job = Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/api/json" -Headers $headers
+$job.builds # список всех сборок
+$buildNumber = $job.lastUnsuccessfulBuild.number # последняя неуспешная сборка
+Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${buildNumber}/consoleText" -Headers $headers # вывести лог указанной сборки
+
+$lastCompletedBuild = $job.lastCompletedBuild.number # последняя успешная сборка
+$crumb = $(Invoke-RestMethod "http://192.168.3.101:8080/crumbIssuer/api/json" -Headers $headers).crumb # получаем временный токен доступа (crumb)
+$headers["Jenkins-Crumb"] = $crumb # добавляем crumb в заголовки
+$body = @{".crumb" = $crumb} # добавляем crumb в тело запроса
+Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild}/rebuild" -Headers $headers -Method POST -Body $body # перезапустить сборку
+</code></pre>
+<h2 id="plugins"><a class="header" href="#plugins">Plugins</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Плагин</th><th>Описание</th></tr></thead><tbody>
+<tr><td><a href="https://plugins.jenkins.io/monitoring">Web Monitoring</a></td><td>Конечная точка <code>/monitoring</code> для отображения графиков мониторинга в веб-интерфейсе.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/prometheus">Prometheus Metrics</a></td><td>Предоставляет конечную точку <code>/prometheus</code> с метриками, которые используются для сбора данных.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/embeddable-build-status">Embeddable Build Status</a></td><td>Предоставляет настраиваемые значки (like <code>shields.io</code>), который возвращает статус сборки.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/jobConfigHistory">Job Configuration History</a></td><td>Сохраняет копию файла сборки в формате <code>xml</code> (который хранится на сервере) и позволяет производить сверку.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/ssh-steps">SSH Pipeline Steps</a></td><td>Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/uno-choice">Active Choices</a></td><td>Активные параметры, которые позволяют динамически обновлять содержимое параметров.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/file-parameters">File parameters</a></td><td>Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/email-ext">Email Extension</a></td><td>Плагин для отправки на почту из pipeline.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/schedule-build">Schedule Build</a></td><td>Позволяет запланировать сборку на указанный момент времени.</td></tr>
+<tr><td><a href="https://plugins.jenkins.io/test-results-analyzer">Test Results Analyzer</a></td><td>Показывает историю результатов сборки junit тестов в табличном древовидном виде.</td></tr>
+</tbody></table>
+</div>
+<h2 id="ssh-steps-and-artifacts"><a class="header" href="#ssh-steps-and-artifacts">SSH Steps and Artifacts</a></h2>
+<p>Добавляем логин и <code>Private Key</code> для авторизации по ssh: <code>Manage (Settings)</code> =&gt; <code>Credentials</code> =&gt; <code>Global</code> =&gt; <code>Add credentials</code> =&gt; Kind: <code>SSH Username with private key</code></p>
+<p>Сценарий проверяет доступность удаленной машины, подключается к ней по ssh, выполняет скрипт <a href="https://github.com/Lifailon/hwstat">hwstat</a> для сбора метрик и выгружает json отчет в артефакты:</p>
+<pre><code class="language-Groovy">// Глобальный массив для хранения данных подключения по ssh 
+def remote = [:]
+
+pipeline {
+    agent any // { label 'remote-agent-01' }
+    parameters {
+        string(name: 'address', defaultValue: '192.168.3.101', description: 'Адрес удаленного сервера')
+        // choice(name: "addresses", choices: ["192.168.3.101","192.168.3.102"], description: "Выберите сервер из выпадающего списка")
+        string(name: 'port', defaultValue: '22', description: 'Порт ssh')
+        string(name: 'credentials', defaultValue: 'd5da50fc-5a98-44c4-8c55-d009081a861a', description: 'Идентификатор учетных данных из Jenkins')
+        booleanParam(name: "root", defaultValue: false, description: 'Запуск с повышенными привилегиями')
+        booleanParam(name: "report", defaultValue: true, description: 'Выгружать отчет в формате json')
+    }
+    triggers {
+        cron('H */6 * * 1-5') // выполнять запуск каждын 6 часов с понедельника по пятницу
+    }
+    options {
+        timeout(time: 5, unit: 'MINUTES') // период ожидания, после которого нужно прервать Pipeline
+        retry(2) // в случае неудачи повторить весь Pipeline указанное количество раз
+    }
+    environment {
+        // Переменная окружения для хранения пути временного файла с содержимым приватного ключа
+        SSH_KEY_FILE = "/tmp/ssh_key_${UUID.randomUUID().toString()}"
+    }
+    stages {
+        stage('Проверка доступности хоста (icmp и tcp)') {
+            steps {
+                script {
+                    def check = sh(
+                        script: """
+                            ping -c 1 ${params.address} &gt; /dev/null || exit 1
+                            nc -z ${params.address} ${params.port} || exit 2
+                        """,
+                        returnStatus: true // исключить завершение Pipeline с ошибкой
+                    )
+                    if (check == 1) {
+                        error("Сервер ${params.address} недоступен (icmp ping)")
+                    } else if (check == 2) {
+                        error("Порт ${params.address} закрыт (tcp check)")
+                    } else {
+                        echo "Сервер ${params.address} доступен и порт ${params.port} открыт"
+                    }
+                }
+            }
+        }
+        stage('Извлечение данных для авторизации по ключу') {
+            steps {
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: params.credentials, usernameVariable: 'SSH_USER', keyFileVariable: 'SSH_KEY', passphraseVariable: '')]) {
+                        // Записываем содержимое приватного ключа во временный файл
+                        writeFile(file: env.SSH_KEY_FILE, text: readFile(SSH_KEY))
+                        sh "chmod 600 ${env.SSH_KEY_FILE}"
+                        remote.name = params.address
+                        remote.host = params.address
+                        remote.port = params.port.toInteger()
+                        remote.user = SSH_USER
+                        remote.identityFile = env.SSH_KEY_FILE
+                        remote.allowAnyHosts = true
+                    }
+                }
+            }
+        }
+        stage('Запуск скрипта через через ssh') {
+            steps {
+                script {
+                    def runCommand
+                    if (params.root) {
+                        runCommand = """
+                            curl -sS https://raw.githubusercontent.com/Lifailon/hwstat/rsa/hwstat.sh | sudo bash -s -- "json" &gt; "hwstat-report.json"
+                        """
+                    } else {
+                        runCommand = """
+                            curl -sS https://raw.githubusercontent.com/Lifailon/hwstat/rsa/hwstat.sh | bash -s -- "json" &gt; "hwstat-report.json"
+                        """
+                    }
+                    def jsonOutput = sshCommand remote: remote, command: runCommand
+                    if (params.report) {
+                        // Записать содержимое переменной в файл
+                        // writeFile file: 'hwstat-report.json', text: jsonOutput
+                        // Загрузить файл из удаленной машины
+                        sshGet remote: remote, from: "hwstat-report.json", into: "${env.WORKSPACE}/hwstat-report.json", override: true
+                    }
+                    sshCommand remote: remote, command: "rm hwstat-report.json"
+                }
+            }
+        }
+        stage('Загрузка json отчета в Jenkins') {
+            // Проверка условия перед выполнением шага (пропуск если false)
+            when {
+                expression { params.report }
+            }
+            steps {
+                archiveArtifacts artifacts: 'hwstat-report.json', allowEmptyArchive: true
+            }
+        }
+    }
+    post {
+        // Выполнять независимо от успеха или ошибки
+        always {
+            script {
+                sh "rm -f ${env.SSH_KEY_FILE}"
+            }
+        }
+        success   { echo "Сборка завершена успешно" }
+        failure   { echo "Сборка завершилась с ошибкой" }
+        unstable  { echo "Сборка завершилась с предупреждениями" }
+        changed   { echo "Текущий статус завершения изменился по сравнению с предыдущим запуском" }
+        fixed     { echo "Сборка завершена успешно по сравнению с предыдущим запуском" }
+        aborted   { echo "Запуск был прерван" }
+    }
+}
+</code></pre>
+<h2 id="update-ssh-authorized_keys"><a class="header" href="#update-ssh-authorized_keys">Update SSH authorized_keys</a></h2>
+<p>Добавляем логин и пароль для авторизации по ssh: <code>Manage (Settings)</code> =&gt; <code>Credentials</code> =&gt; <code>Global</code> =&gt; <code>Add credentials</code> =&gt; Kind: <code>Username with password</code></p>
+<p>Сценарий обновляет параметр со списком текущих пользователей на машине и добавляет или заменяет ssh ключ для выбранного пользователя:</p>
+<pre><code class="language-Groovy">def remote = [:]
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'address', defaultValue: '192.168.3.101', description: 'Адрес удаленного сервера')
+        string(name: 'port', defaultValue: '22', description: 'Порт ssh')
+        string(name: 'credentials', defaultValue: '15d05be6-682a-472b-9c1d-cf5080e98170', description: 'Идентификатор учетных данных из Jenkins')
+        booleanParam(name: "getUsers", defaultValue: true, description: 'Получить список текущих пользователей системы')
+        string(name: 'sshKey', defaultValue: '', description: 'Открытый ssh ключ для добавления в authorized_keys')
+        booleanParam(name: "rewriteKey", defaultValue: false, description: 'Перезаписать текущие ключи в файле authorized_keys')
+    }
+    stages {
+        stage('Извлекаем параметры для авторизации по ssh') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: params.credentials, usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
+                        remote.name = params.address
+                        remote.host = params.address
+                        remote.port = params.port.toInteger()
+                        remote.user = env.SSH_USER
+                        remote.password = env.SSH_PASS
+                        remote.allowAnyHosts = true
+                    }
+                }
+            }
+        }
+        stage('Обновить список пользователей') {
+            when {
+                expression { params.getUsers }
+            }
+            steps {
+                script {
+                    def mainCommand = "echo \$(ls /home)"
+                    def users = sshCommand remote: remote, command: mainCommand
+                    def usersList = users.trim().split("\\s")
+                    usersList += 'root'
+                    def usersListChoice = usersList.toList()
+                    writeFile file: 'user_list.txt', text: usersList.join("\\s")
+                    properties([
+                        parameters([
+                            string(name: 'address', defaultValue: params.address, description: 'Адрес удаленного сервера'),
+                            string(name: 'port', defaultValue: params.port, description: 'Порт ssh'),
+                            string(name: 'credentials', defaultValue: params.credentials, description: 'Идентификатор учетных данных из Jenkins'),
+                            booleanParam(name: "getUsers", defaultValue: params.getUsers, description: 'Получить список текущих пользователей системы'),
+                            string(name: 'sshKey', defaultValue: '', description: 'Открытый ssh ключ для добавления в authorized_keys'),
+                            booleanParam(name: "rewriteKey", defaultValue: false, description: 'Перезаписать текущие ключи в файле authorized_keys'),
+                            choice(
+                                name: 'userList',
+                                choices: usersListChoice,
+                                description: 'Выбрать пользователя'
+                            )
+                        ])
+                    ])
+                }
+            }
+        }
+        stage('Добавить новый SSH ключ') {
+            when {
+                expression { !params.getUsers &amp;&amp; params.sshKey }
+            }
+            steps {
+                script {
+                    def selectedUser = params.userList
+                    def sshKey = params.sshKey
+                    if (selectedUser == "root") {
+                        path = "/root/.ssh/authorized_keys"
+                    } else {
+                        path= "/home/${selectedUser}/.ssh/authorized_keys"
+                    }
+                    if (params.rewriteKey) {
+                        echo "Обновляем все SSH ключи для пользователя: ${selectedUser}"
+                        teeCommand = "tee"
+                    } else {
+                        echo "Добавляем новый SSH ключ для пользователя: ${selectedUser}"
+                        teeCommand = "tee -a"
+                    }
+                    def mainCommand = """
+                        checkFile=\$(ls $path 2&gt; /dev/null || echo false)
+                        if [ \$checkFile == "false" ]; then
+                            mkdir -p \$(dirname $path) &amp;&amp; touch $path
+                        fi
+                        echo $sshKey | $teeCommand $path &gt; /dev/null
+                    """
+                    sshCommand remote: remote, command: mainCommand
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="upload-file-parameter"><a class="header" href="#upload-file-parameter">Upload File Parameter</a></h2>
+<p>Передача файла через параметр и чтение его содержимого:</p>
+<pre><code class="language-Groovy">pipeline {
+    agent any
+    parameters {
+        base64File 'UPLOAD_FILE'
+    }
+    stages {
+        stage('Читаем содержимое файла') {
+            steps {
+                // Переменная хранит содержимое файла в формате base64
+                // echo UPLOAD_FILE
+                // Декодируем base64
+                withFileParameter('UPLOAD_FILE') {
+                    sh """
+                        echo "$UPLOAD_FILE" # выводим путь к временному файлу с содержимым переданного файла
+                        cat "$UPLOAD_FILE"  # читаем содержимое файла
+                    """
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="input-text-and-file"><a class="header" href="#input-text-and-file">Input Text and File</a></h2>
+<p>Останавливает выполнение <code>Pipeline</code> и заставляет пользователя передать текстовый параметр и файл:</p>
+<pre><code class="language-Groovy">pipeline {
+    agent any
+    stages {
+        stage('Input text') {
+            input {
+                message "Что бы продолжить, передайте текст в поле ввода"
+                ok "Передать"
+                parameters {
+                    string(name: 'TEXT', defaultValue: 'test', description: 'Введите текст')
+                }
+            }
+            steps {
+                echo "Переданный текст в параметре input: ${TEXT}"
+            }
+        }
+        stage('Input file') {
+            steps {
+                script {
+                    def fileBase64 = input message: "Передайте файл", parameters: [base64File('file')]
+                    sh "echo $fileBase64 | base64 -d"
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="httpurlconnection"><a class="header" href="#httpurlconnection">HttpURLConnection</a></h2>
+<p>Любой код Groovy возможно запустить и проверить через <code>Script Console</code> (http://127.0.0.1:8080/manage/script)</p>
+<p>Пример <code>API</code> запроса к репозиторию PowerShell на GitHub для получения последней версии и всех доступных версий:</p>
+<pre><code class="language-Groovy">import groovy.json.JsonSlurper
+def url = new URL("https://api.github.com/repos/PowerShell/PowerShell/tags")
+def connection = url.openConnection()
+connection.setRequestMethod("GET")
+connection.setRequestProperty("Accept", "application/json")
+def responseCode = connection.getResponseCode()
+if (responseCode == 200) {
+    // Получаем данные ответа
+    def response = connection.getInputStream().getText()
+    // Парсим JSON ответ
+    def jsonSlurper = new JsonSlurper()
+    def tags = jsonSlurper.parseText(response)
+    // Проверяем количество элементов в массиве
+    if (tags.size() &gt; 0) {
+        // Забираем последний тег из списка
+        def latestTag = tags[0].name
+        println("Latest version: " + latestTag)
+        println()
+        // Проходимся по всем тегам
+        println("List of all versions:")
+        for (tag in tags) {
+            println(tag.name)
+        }
+    } else {
+        error("No tags found in the response")
+    }
+} else {
+    error("Failed to call API, response code: ${responseCode}")
+}
+connection.disconnect()
+</code></pre>
+<h2 id="active-choices-parameter"><a class="header" href="#active-choices-parameter">Active Choices Parameter</a></h2>
+<p>Пример выбора репозитория, получения списка доступных версий и содержимого файлов выбранного релиза.</p>
+<ul>
+<li>
+<ol>
+<li>Active Choices Parameter</li>
+</ol>
+</li>
+</ul>
+<p>Name: <code>Repos</code></p>
+<p>Groovy Script:</p>
+<pre><code class="language-Groovy">return [
+    'Lifailon/lazyjournal',
+    'jesseduffield/lazydocker'
+]
+</code></pre>
+<ul>
+<li>
+<ol start="2">
+<li>Active Choices Reactive Parameter</li>
+</ol>
+</li>
+</ul>
+<p>Name: <code>Versions</code></p>
+<p>Groovy Script:</p>
+<pre><code class="language-Groovy">import groovy.json.JsonSlurper
+def selectedRepo = Repos
+def apiUrl = "https://api.github.com/repos/${selectedRepo}/tags"
+def conn = new URL(apiUrl).openConnection()
+conn.setRequestProperty("User-Agent", "Jenkins")
+def response = conn.getInputStream().getText()
+def json = new JsonSlurper().parseText(response)
+def versionsCount = json.size()
+def data = []
+for (int i = 0; i &lt; versionsCount; i++) {
+    data += json.name[i]
+}
+return data
+</code></pre>
+<p>Настройки параметров:
+Choice Type: <code>Single Select</code>
+Привязать параметр <code>Repos</code> из <code>Active Choices</code> в <code>Reactive Parameter</code> через <code>Referenced parameters</code>
+Включить фильтрацию через <code>Enable filters</code></p>
+<ul>
+<li>
+<ol start="3">
+<li>Active Choices Reactive Parameter</li>
+</ol>
+</li>
+</ul>
+<p>Name: <code>Files</code></p>
+<p>Groovy Script:</p>
+<pre><code class="language-Groovy">import groovy.json.JsonSlurper
+def selectedRepo = Repos
+def selectedVer = Versions
+def apiUrl = "https://api.github.com/repos/${selectedRepo}/releases/tags/${selectedVer}"
+def conn = new URL(apiUrl).openConnection()
+conn.setRequestProperty("User-Agent", "Jenkins")
+def response = conn.getInputStream().getText()
+def json = new JsonSlurper().parseText(response)
+def data = []
+for (file in json.assets) {
+    data += file.name
+}
+return data
+</code></pre>
+<p>Referenced parameters: <code>Repos,Versions</code></p>
+<p>Pipeline script:</p>
+<pre><code class="language-Groovy">pipeline {
+    agent any
+    stages {
+        stage('Selected parameters') {
+            steps {
+                script {
+                    echo "Selected repository: https://github.com/${params.Repos}"
+                    echo "Selected version: ${params.Versions}"
+                    echo "Selected file: ${params.Files}"
+                    echo "Url for download: https://github.com/${params.Repos}/releases/download/${params.Versions}/${params.Files}"
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="vault"><a class="header" href="#vault">Vault</a></h2>
+<p>Интеграция <a href="https://github.com/hashicorp/vault">HashiCorp Vault</a> в Jenkins Pipeline через <code>REST API</code> для получения содержимого секретов и использовая в последующих стадиях/этапах сборки:</p>
+<pre><code class="language-Groovy">def getVaultSecrets(
+    String address,
+    String path,
+    String token
+) {
+    def url = new URL("${address}/${path}")
+    
+    def connection = url.openConnection()
+    connection.setRequestMethod("GET")
+    connection.setRequestProperty("X-Vault-Token", token)
+    connection.setRequestProperty("Accept", "application/json")
+    
+    def response = new groovy.json.JsonSlurper().parse(connection.inputStream)
+    def user = response.data.data.user
+    def password = response.data.data.password
+    return [
+        user: user,
+        password: password
+    ]
+}
+
+def USER_NAME
+def USER_PASS
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'url', defaultValue: 'http://192.168.3.101:8200', description: 'Url адресс хранилища секретов')
+        string(name: 'path', defaultValue: 'v1/kv/data/ssh-auth', description: 'Путь для извлечения секретов')
+        password(name: 'token', defaultValue: 'hvs.bySybhyYOxSWEVk4FQDdcyyg', description: 'Токен доступа к API HashiCorp Vault')
+    }
+    stages {
+        stage('Get vault secrets') {
+            steps {
+                script {
+                    def secrets = getVaultSecrets(
+                        "${params.url}",
+                        "${params.path}",
+                        "${params.token}"
+                    )
+                    USER_NAME = secrets.user
+                    USER_PASS = secrets.password
+                }
+            }
+        }
+        stage('Use secrets') {
+            steps {
+                script {
+                    echo "User: ${USER_NAME}"
+                    echo "Password: ${USER_PASS}"
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="email-extension"><a class="header" href="#email-extension">Email Extension</a></h2>
+<p>Для отправки на почту и настроить SMTP сервер в настройках Jenkins (<code>System</code> =&gt; <code>Extended E-mail Notification</code>)</p>
+<p>SMTP server: <code>smtp.yandex.ru</code>
+SMTP port: <code>587</code>
+Credentials: <code>Username with password</code> (<code>username@yandex.ru</code> и <code>app-password</code>)
+<code>Use TLS</code>
+Default Content Type: <code>HTML (text/html)</code></p>
+<p>Настройка логирования в System Log: <code>emailDebug</code> + фильтр <code>hudson.plugins.emailext</code> и уровень <code>ALL</code></p>
+<pre><code class="language-Groovy">pipeline {
+    agent any
+    parameters {
+        string(name: 'emailTo', defaultValue: 'test@yandex.ru', description: 'Почтовый адрес назначения')
+    }
+    stages {
+        stage('Вывод всех переменных окружения') {
+            steps {
+                script {
+                    env.getEnvironment().each { key, value -&gt;
+                        echo "${key} = ${value}"
+                    }
+                }
+            }
+        }
+        stage('Отправка на почту') {
+            options {
+                timeout(time: 1, unit: 'MINUTES')
+            }
+            steps {
+                script {
+                    emailext (
+                        to:	"${params.emailTo}",
+                        subject: "${env.JOB_NAME} - ${BUILD_NUMBER}",
+                        mimeType: "text/html",
+                        body: """
+                            &lt;html&gt;
+                                &lt;body&gt;
+                                    &lt;div style="padding-left: 30px; padding-bottom: 15px;" color="blue"&gt;
+                                    &lt;font name="Arial" color="#906090" size="3" font-weight="normal"&gt;
+                                        &lt;b&gt; ${env.JOB_NAME} - ${env.BUILD_NUMBER} &lt;/b&gt;
+                                    &lt;/font&gt;
+                                    &lt;br&gt;
+                                    &lt;div style="padding-left: 30px; padding-bottom: 15px;" color="black"&gt;
+                                    &lt;br&gt;
+                                    &lt;font name="Arial" color="black" size="2" font-weight="normal"&gt; 
+                                        &lt;pre&gt; Build url: ${env.BUILD_URL} &lt;/pre&gt;
+                                    &lt;/font&gt;	
+                                &lt;/body&gt;
+                            &lt;/html&gt;
+                        """
+                    )
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="parallel"><a class="header" href="#parallel">Parallel</a></h2>
+<pre><code class="language-Groovy">pipeline {
+    agent any
+    stages {
+        stage('Parallel sleeps') {
+            parallel {
+                stage('Task 1') {
+                    steps {
+                        script {
+                            def currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Начало задачи 1"
+                            sh 'sleep 10'
+                            currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Завершение задачи 1"
+                        }
+                    }
+                }
+                stage('Task 2') {
+                    steps {
+                        script {
+                            def currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Начало задачи 2"
+                            sh 'sleep 5'
+                            currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Завершение задачи 2"
+                        }
+                    }
+                }
+            }
+        }
+        stage('Parallel tasks via loop') {
+            steps {
+                script {
+                    // Массив, где ключи содержит имя задачи, а значение содержит блоки кода для выполнения
+                    def tasks = [:]
+                    def taskNames = ['Task 1', 'Task 2', 'Task 3']
+                    taskNames.each { taskName -&gt;
+                        tasks[taskName] = {
+                            def currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Начало задачи: $taskName"
+                            sh "sleep ${taskName == 'Task 1' ? 10 : taskName == 'Task 2' ? 5 : 3}"
+                            currentTime = new Date().format('yyyy-MM-dd HH:mm:ss')
+                            echo "[${currentTime}] Завершение задачи: $taskName"
+                        }
+                    }
+                    parallel tasks
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="groovy"><a class="header" href="#groovy">Groovy</a></h2>
+<p>Базовый синтаксис языка <code>Groovy</code></p>
+<pre><code class="language-Groovy">// Переменные
+javaString = 'java'
+javaString
+println javaString
+javaString.class    // class java.lang.String
+println 100.class   // class java.lang.Integer
+j = '${javaString}' // не принимает переменные в одинарных кавычках
+groovyString = "${javaString}"
+bigGroovyString = """
+    ${javaString}
+    ${j}
+    ${groovyString}
+    ${2 + 2}
+"""
+
+// java
+// ${javaString}
+// java
+// 4
+
+a = "a"   // a
+a + "123" // a123
+a * 5     // aaaaa
+
+// Массивы и списки
+list =[1,2,3]
+list[0]    // 1
+list[0..1] // [1, 2]
+range = "0123456789"
+range[1..5] // 12345
+map = [key1: true, key2: false]
+map["key1"] // true
+server = [:]
+server.ip = "192.168.3.1"
+server.port = 22
+println(server) // [ip:192.168.3.1, port:22]
+
+// Функции
+def sum(a,b) {
+    println a+b
+}
+sum(2,2) // 4
+
+// Условия
+def diff(x) {
+    if (x &lt; 10) {
+        println("${x} &lt; 10")
+    } else if (x == 10) {
+        println("${x} = 10")
+    } else {
+        println("${x} &gt; 10")
+    }
+}
+diff(11) // 11 &gt; 10
+
+// Циклы
+list.each { l -&gt;
+    print l
+}
+// 123
+
+for (i in 0..5) { 
+    print i
+}
+// 012345
+
+for (int i = 0; i &lt; 10; i++) {
+    print i
+}
+// 0123456789
+
+i = 0
+while (i &lt; 3) {
+    println(i)
+    i++
+}
+// 0
+// 1
+// 2
+</code></pre>
+<h1 id="secret-manager"><a class="header" href="#secret-manager">Secret Manager</a></h1>
+<h2 id="bitwarden"><a class="header" href="#bitwarden">Bitwarden</a></h2>
+<p><code>choco install bitwarden-cli || npm install -g @bitwarden/cli || sudo snap install bw</code> установить bitwarden cli <br />
+<code>bw login &lt;email&gt; --apikey</code> авторизвация в хранилище, используя client_id и client_secret <br />
+<code>$session = bw unlock --raw</code> получить токен сессии <br />
+<code>$items = bw list items --session $session | ConvertFrom-Json</code> получение всех элементов в хранилище с использованием мастер-пароля <br />
+<code>echo "master_password" | bw get item GitHub bw get password $items[0].name</code> получить пароль по названию секрета <br />
+<code>bw lock</code> завершить сессию</p>
+<pre><code class="language-PowerShell"># Авторизация в организации
+$client_id = "organization.ClientId"
+$client_secret = "client_secret"
+$deviceIdentifier = [guid]::NewGuid().ToString()
+$deviceName = "PowerShell-Client"
+$response = Invoke-RestMethod -Uri "https://identity.bitwarden.com/connect/token" -Method POST `
+    -Headers @{ "Content-Type" = "application/x-www-form-urlencoded" } `
+    -Body @{
+        grant_type = "client_credentials"
+        scope = "api.organization"
+        client_id = $client_id
+        client_secret = $client_secret
+        deviceIdentifier = $deviceIdentifier
+        deviceName = $deviceName
+    }
+# Получение токена доступа
+$accessToken = $response.access_token
+# Название элемента в хранилище
+$itemName = "GitHub"
+# Поиск элемента в хранилище
+$itemResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects?search=$itemName" -Method GET `
+    -Headers @{ "Authorization" = "Bearer $accessToken" }
+$item = $itemResponse.data[0]
+# Получение информации об элементе
+$detailsResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects/$($item.id)" -Method GET `
+    -Headers @{ "Authorization" = "Bearer $accessToken" }
+# Получение логина и пароля
+$login = $detailsResponse.login.username
+$password = $detailsResponse.login.password
+</code></pre>
+<h2 id="infisical"><a class="header" href="#infisical">Infisical</a></h2>
+<p><code>npm install -g @infisical/cli</code> <br />
+<code>infisical login</code> авторизоваться в хранилище (cloud или Self-Hosting) <br />
+<code>infisical init</code> инициализировать - выбрать организацию и проект <br />
+<code>infisical secrets</code> получить список секретов и их SECRET VALUE из добавленных групп Environments (Development, Staging, Production)</p>
+<pre><code class="language-PowerShell">$clientId = "&lt;client_id&gt;" # создать организацию и клиент в Organization Access Control - Identities и предоставить права на Projects (Secret Management)
+$clientSecret = "&lt;client_secret&gt;" # на той же вкладке вкладке в Authentication сгенерировать секрет (Create Client Secret)
+$body = @{
+    clientId     = $clientId
+    clientSecret = $clientSecret
+}
+$response = Invoke-RestMethod -Uri "https://app.infisical.com/api/v1/auth/universal-auth/login" `
+    -Method POST `
+    -ContentType "application/x-www-form-urlencoded" `
+    -Body $body
+$TOKEN = $response.accessToken # получить токен доступа
+# Получить содержимое секрета
+$secretName = "FOO" # название секрета
+$workspaceId = "82488c0a-6d3a-4220-9d69-19889f09c8c8" # можно взять из url проекта Secret Management
+$environment = "dev" # группа
+$headers = @{
+    Authorization = "Bearer $TOKEN"
+}
+$secrets = Invoke-RestMethod -Uri "https://app.infisical.com/api/v3/secrets/raw/${secretName}?workspaceId=${workspaceId}&amp;environment=${environment}" -Method GET -Headers $headers
+$secrets.secret.secretKey
+$secrets.secret.secretValue
+</code></pre>
+<h2 id="hashicorpvault"><a class="header" href="#hashicorpvault">HashiCorp/Vault</a></h2>
+<p><code>mkdir vault &amp;&amp; cd vault &amp;&amp; mkdir vault_config</code></p>
+<p>Создать конфигурацию:</p>
+<pre><code class="language-bash">echo '
+# Использовать локальное файловое хранилище
+storage "file" {
+  path = "/vault/file"
+}
+# Отключение режим dev (не будет выгружать данные в память)
+disable_mlock = false
+# Настройка слушателя для REST API
+listener "tcp" {
+  address = "0.0.0.0:8200"
+  tls_disable = 1  # Отключить TLS
+}
+# Включение интерфейс
+ui = true
+# Включение аутентификации в API по токену
+api_addr = "http://localhost:8200"
+auth "token" {}
+' &gt; vault_config/vault.hcl
+</code></pre>
+<p>Запускаем в контейнере:</p>
+<pre><code class="language-bash">docker run -d --name=vault \
+  --restart=unless-stopped \
+  -e VAULT_ADDR=http://0.0.0.0:8200 \
+  -e VAULT_API_ADDR=http://localhost:8200 \
+  -p 8200:8200 \
+  -v ./vault_config:/vault/config \
+  -v ./vault_data:/vault/file \
+  --cap-add=IPC_LOCK \
+  hashicorp/vault:latest \
+  vault server -config=/vault/config/vault.hcl
+</code></pre>
+<p>Получить ключи разблокировки и root ключ для первичной инициализации:</p>
+<pre><code class="language-bash">docker exec -it vault vault operator init
+</code></pre>
+<p>Ввести любые 3 из 5 ключей для разблокировки после перезапуска контейнера:</p>
+<pre><code class="language-bash">docker exec -it vault vault operator unseal BPJSmuLvKAEr6wtE/8TOMRMM+x0fW3UhOxGFLn9Gmi5N
+docker exec -it vault vault operator unseal 44ntLYvSMN5FNLyddLo2IylRsLk7lqYXZOShvhV/2gbG
+docker exec -it vault vault operator unseal xP9+YTyW13W6xGz52mMut2MdOnzxtbhDW8dK9zdF4aLY
+</code></pre>
+<p>Проверить статус (должно быть <code>Sealed: false</code>) и авторизацию по root ключу в хранилище:</p>
+<pre><code class="language-bash">docker exec -it vault vault status
+docker exec -it vault vault login hvs.rxlYkJujkX6Fdxq2XAP3cd3a
+</code></pre>
+<p><code>Secrets Engines</code> -&gt; <code>Enable new engine</code> + <code>KV</code> <br />
+API Swagger: http://192.168.3.100:8200/ui/vault/tools/api-explorer</p>
+<pre><code class="language-PowerShell">$TOKEN = "hvs.rxlYkJujkX6Fdxq2XAP3cd3a"
+$Headers = @{
+    "X-Vault-Token" = $TOKEN
+}
+# Указать путь до секретов (создается в корне kv)
+$path = "main-path"
+$url = "http://192.168.3.101:8200/v1/kv/data/$path"
+$data = Invoke-RestMethod -Uri $url -Method GET -Headers $Headers
+# Получить содержимое ключа по его названию (key_name)
+$data.data.data.key_name # secret_value
+
+# Перезаписать все секреты
+$Headers = @{
+    "X-Vault-Token" = $TOKEN
+}
+$Body = @{
+    data = @{
+        key_name_1 = "key_value_1"
+        key_name_2 = "key_value_2"
+    }
+    options = @{}
+    version = 0
+} | ConvertTo-Json
+$urlUpdate = "http://192.168.3.100:8200/v1/kv/data/main-path"
+Invoke-RestMethod -Uri $urlUpdate -Method POST -Headers $Headers -Body $Body
+
+# Удалить все секреты
+Invoke-RestMethod -Uri "http://192.168.3.100:8200/v1/kv/data/main-path" -Method DELETE -Headers $Headers
+</code></pre>
+<p>Vault client:</p>
+<pre><code class="language-bash"># Установить клиент в Linux (debian):
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update &amp;&amp; sudo apt install vault
+# Включить механизм секретов KV
+vault secrets enable -version=1 kv 
+# Создать секрет
+vault kv put kv/main-path key_name=secret_value
+# Список секретов
+vault kv list kv/
+# Получить содержимое секрета
+vault kv get -mount="kv" "main-path"
+# Удалить секреты
+vault kv delete kv/my-secret
+</code></pre>
+<h2 id="hashicorpconsul"><a class="header" href="#hashicorpconsul">HashiCorp/Consul</a></h2>
+<p><a href="https://github.com/hashicorp/consul">Consul</a> используется для кластеризации и централизованного хранения данных <code>Vault</code>, а также как самостоятельное <code>Key-Value</code> хранилище.</p>
+<p>Создать конфигурацию:</p>
+<pre><code class="language-bash">echo '
+ui = true
+log_level = "INFO"
+acl {
+  enabled = true
+  default_policy = "deny"
+  enable_token_persistence = true
+}
+' &gt; consul.hcl
+</code></pre>
+<p>Запускаем в контейнере:</p>
+<pre><code class="language-bash">docker run -d \
+  --name=consul \
+  --restart=unless-stopped \
+  -p 8500:8500 \
+  -v ./consul_data:/consul/data \
+  -v ./consul.hcl:/consul/config/consul.hcl \
+  hashicorp/consul:latest \
+  agent -server -bootstrap-expect=1 -client=0.0.0.0
+</code></pre>
+<p>Создать <code>root token</code>, который будет использоваться для управления системой <code>ACL</code> и для создания политик доступа и других токенов доступа:</p>
+<pre><code class="language-bash">docker exec -it consul consul acl bootstrap
+</code></pre>
+<p>Создать новую политику доступа:</p>
+<pre><code class="language-bash">docker exec -it consul consul acl policy create -name "default" -rules 'node_prefix "" { policy = "write" } service_prefix "" { policy = "write" } key_prefix "" { policy = "write" }' -token "382834da-28b6-c72c-7ffb-11acf9bf20bc"
+</code></pre>
+<p>Создать новый токен доступа:</p>
+<pre><code class="language-bash">docker exec -it consul consul acl token create -policy-name "default" -token "382834da-28b6-c72c-7ffb-11acf9bf20bc"
+</code></pre>
+<p><code>curl http://localhost:8500/v1/health/service/consul?pretty</code> <br />
+<code>curl --request PUT --data "ssh-rsa AAAA" http://localhost:8500/v1/kv/ssh/key</code> записать секрет KV Store Consul <br />
+<code>curl -s http://localhost:8500/v1/kv/ssh/key | jq -r .[].Value | base64 --decode</code> извлечь содержимое секрета</p>
+<h1 id="pussh"><a class="header" href="#pussh">pussh</a></h1>
+<p><a href="https://github.com/bearstech/pussh">Pussh</a> — инструмент для параллельного выполнения команд через SSH на нескольких хостах одновременно, выводя результаты с указанием имени каждого хоста. Был внутренним инструментом Bearstech (хостинг-провайдер в Париже, Франция) примерно с 2008 года.</p>
+<pre><code class="language-bash">sudo curl -s https://raw.githubusercontent.com/bearstech/pussh/refs/heads/master/pussh -o /usr/bin/pussh
+sudo chmod +x /usr/bin/pussh
+
+bash pussh -h root@192.168.3.102,root@192.168.3.103 uname -a
+
+echo -e "root@192.168.3.102\nroot@192.168.3.103" &gt; host.list
+pussh -f host.list uname -a
+</code></pre>
+<h1 id="sake"><a class="header" href="#sake">Sake</a></h1>
+<p><a href="https://github.com/alajmo/sake">Sake</a> - это командный раннер для локальных и удаленных хостов. Вы определяете серверы и задачи в файле <code>sake.yaml</code>, а затем запускаете задачи на серверах.</p>
+<pre><code class="language-bash">curl -sfL https://raw.githubusercontent.com/alajmo/sake/main/install.sh | sh
+sake init # инициализировать sake.yml файл
+sake list servers # вывести список машин
+sake list tags  # список тегов (группы серверов)
+sake list tasks # список задач
+sake run ping --all # запустить задачу на все хосты
+sake exec --all "uname -a &amp;&amp; uptime" # запустить команду на всех хостах
+</code></pre>
+<p>Пример конфигурации:</p>
+<pre><code class="language-yaml">servers:
+  localhost:
+    host: 0.0.0.0
+    local: true
+  obsd:
+    host: root@192.168.3.102:22
+    tags: [bsd]
+  fbsd:
+    host: root@192.168.3.103:22
+    tags: [bsd]
+    work_dir: /tmp
+
+env:
+  DATE: $(date -u +"%Y-%m-%dT%H:%M:%S%Z")
+
+specs:
+  info:
+    output: table
+    ignore_errors: true
+    omit_empty_rows: true
+    omit_empty_columns: true
+    any_fatal_errors: false
+    ignore_unreachable: true
+    strategy: free
+
+tasks:
+  ping:
+    desc: Pong
+    spec: info
+    cmd: echo "pong"
+
+  uname:
+    name: OS
+    desc: Print OS
+    spec: info
+    cmd: |
+      os=$(uname -s)
+      release=$(uname -r)
+      echo "$os $release"
+
+  uptime:
+    name: Uptime
+    desc: Print uptime
+    spec: info
+    cmd: uptime
+
+  info:
+    desc: Get system overview
+    spec: info
+    tasks:
+      - task: ping
+      - name: date
+        cmd: echo $DATE
+      - name: pwd
+        cmd: pwd
+      - task: uname
+      - task: uptime
+</code></pre>
+<p><code>sake run info --tags bsd</code> запустить набор из 5 заданий из группы info</p>
+<h1 id="puppet"><a class="header" href="#puppet">Puppet</a></h1>
+<h2 id="bolt"><a class="header" href="#bolt">Bolt</a></h2>
+<p><a href="https://github.com/puppetlabs/bolt">Bolt</a> - это инструмент оркестровки, который выполняет заданную команду или группу команд на локальной рабочей станции, а также напрямую подключается к удаленным целям с помощью SSH или WinRM, что не требует установки агентов.</p>
+<p>Docs: https://www.puppet.com/docs/bolt/latest/getting_started_with_bolt.html</p>
+<pre><code class="language-bash">wget https://apt.puppet.com/puppet-tools-release-bullseye.deb
+sudo dpkg -i puppet-tools-release-bullseye.deb
+sudo apt-get update
+sudo apt-get install puppet-bolt
+</code></pre>
+<p><code>nano inventory.yaml</code></p>
+<pre><code class="language-yaml">groups:
+- name: bsd
+  targets:
+    - uri: 192.168.3.102:22
+      name: openbsd
+    - uri: 192.168.3.103:22
+      name: freebsd
+  config:
+    transport: ssh
+    ssh:
+      user: root
+      # password: root
+      host-key-check: false
+</code></pre>
+<p><code>bolt command run uptime --inventory inventory.yaml --targets bsd</code> выполнить команду uptime на группе хостов bsd, заданной в файле inventory</p>
+<p><code>echo name: lazyjournal &gt; bolt-project.yaml</code> создать файл проекта</p>
+<p><code>mkdir plans &amp;&amp; nano test.yaml</code> создать директорию и файл с планом работ</p>
+<pre><code class="language-yaml">parameters:
+  targets:
+    type: TargetSpec
+
+steps:
+  - name: clone
+    command: rm -rf lazyjournal &amp;&amp; git clone https://github.com/Lifailon/lazyjournal
+    targets: $targets
+
+  - name: test
+    command: cd lazyjournal &amp;&amp; go test -v -cover --run TestMainInterface
+    targets: $targets
+
+  - name: remove
+    command: rm -rf lazyjournal
+    targets: $targets
+</code></pre>
+<p><code>bolt plan show</code> вывести список всех планов</p>
+<p><code>bolt plan run lazyjournal::test --inventory inventory.yaml --targets bsd -v</code> запустить план</p>
+<h1 id="ansible"><a class="header" href="#ansible">Ansible</a></h1>
+<p><code>apt -y update &amp;&amp; apt -y upgrade</code> <br />
+<code>apt -y install ansible</code> v2.10.8 <br />
+<code>apt -y install ansible-core</code> v2.12.0 <br />
+<code>apt -y install sshpass</code></p>
+<p><code>ansible-galaxy collection install ansible.windows</code> установить коллекцию модулей <br />
+<code>ansible-galaxy collection install community.windows</code> <br />
+<code>ansible-galaxy collection list | grep windows</code> <br />
+<code>ansible-config dump | grep DEFAULT_MODULE_PATH</code> путь хранения модулей</p>
+<p><code>apt-get -y install python-dev libkrb5-dev krb5-user</code> пакеты для Kerberos аутентификации <br />
+<code>apt install python3-pip</code> <br />
+<code>pip3 install requests-kerberos</code> <br />
+<code>nano /etc/krb5.conf</code> настроить [realms] и [domain_realm] <br />
+<code>kinit -C support4@domail.local</code> <br />
+<code>klist</code></p>
+<p><code>ansible --version</code> <br />
+<code>config file = None</code> <br />
+<code>nano /etc/ansible/ansible.cfg</code> файл конфигурации</p>
+<pre><code class="language-yaml">[defaults]
+inventory = /etc/ansible/hosts
+# uncomment this to disable SSH key host checking
+# Отключить проверку ключа ssh (для подключения используя пароль)
+host_key_checking = False
+</code></pre>
+<h2 id="hosts"><a class="header" href="#hosts">Hosts</a></h2>
+<p><code>nano /etc/ansible/hosts</code></p>
+<pre><code class="language-yaml">[us]
+pi-hole-01 ansible_host=192.168.3.101
+zabbix-01 ansible_host=192.168.3.102
+grafana-01 ansible_host=192.168.3.103
+netbox-01 ansible_host=192.168.3.104
+
+[all:vars]
+ansible_ssh_port=2121
+ansible_user=lifailon
+ansible_password=123098
+path_user=/home/lifailon
+ansible_python_interpreter=/usr/bin/python3
+
+[ws]
+huawei-book-01 ansible_host=192.168.3.99
+plex-01 ansible_host=192.168.3.100
+
+[ws:vars]
+ansible_port=5985
+#ansible_port=5986
+ansible_user=Lifailon
+#ansible_user=support4@DOMAIN.LOCAL
+ansible_password=123098
+ansible_connection=winrm
+ansible_winrm_scheme=http
+ansible_winrm_transport=basic
+#ansible_winrm_transport=kerberos
+ansible_winrm_server_cert_validation=ignore
+validate_certs=false
+
+[win_ssh]
+huawei-book-01 ansible_host=192.168.3.99
+plex-01 ansible_host=192.168.3.100
+
+[win_ssh:vars]
+ansible_python_interpreter=C:\Users\Lifailon\AppData\Local\Programs\Python\Python311\` добавить переменную среды интерпритатора Python в Windows
+ansible_connection=ssh
+#ansible_shell_type=cmd
+ansible_shell_type=powershell
+</code></pre>
+<p><code>ansible-inventory --list</code> проверить конфигурацию (читает в формате JSON) или YAML (-y) с просмотром все применяемых переменных</p>
+<h2 id="windows-modules"><a class="header" href="#windows-modules">Windows Modules</a></h2>
+<p><code>ansible us -m ping</code> <br />
+<code>ansible win_ssh -m ping</code> <br />
+<code>ansible us -m shell -a "uptime &amp;&amp; df -h | grep lv"</code> <br />
+<code>ansible us -m setup | grep -iP "mem|proc"</code> информация о железе <br />
+<code>ansible us -m apt -a "name=mc" -b</code> повысить привилегии sudo (-b) <br />
+<code>ansible us -m service -a "name=ssh state=restarted enabled=yes" -b</code> перезапустить службу <br />
+<code>echo "echo test" &gt; test.sh</code> <br />
+<code>ansible us -m copy -a "src=test.sh dest=/root mode=777" -b</code> <br />
+<code>ansible us -a "ls /root" -b</code> <br />
+<code>ansible us -a "cat /root/test.sh" -b</code></p>
+<p><code>ansible-doc -l | grep win_</code> <a href="https://docs.ansible.com/ansible/latest/collections/ansible/windows/">список всех модулей Windows</a> <br />
+<code>ansible ws -m win_ping</code> windows модуль <br />
+<code>ansible ws -m win_ping -u WinRM-Writer</code> указать логин <br />
+<code>ansible ws -m setup</code> собрать подробную информацию о системе <br />
+<code>ansible ws -m win_whoami</code> информация о правах доступах, группах доступа <br />
+<code>ansible ws -m win_shell -a '$PSVersionTable'</code> <br />
+<code>ansible ws -m win_shell -a 'Get-Service | where name -match "ssh|winrm"'</code> <br />
+<code>ansible ws -m win_service -a "name=sshd state=stopped"</code> <br />
+<code>ansible ws -m win_service -a "name=sshd state=started"</code></p>
+<ul>
+<li>win_shell (vars/debug)</li>
+</ul>
+<p><code>nano /etc/ansible/PowerShell-Vars.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+ ` Указать коллекцию модулей
+  collections:
+  - ansible.windows
+ ` Задать переменные
+  vars:
+    SearchName: PermitRoot
+  tasks:
+  - name: Get port ssh
+    win_shell: |
+      Get-Content "C:\Programdata\ssh\sshd_config" | Select-String "{{SearchName}}"
+   ` Передать вывод в переменную
+    register: command_output
+  - name: Output port ssh
+   ` Вывести переменную на экран
+    debug:
+      var: command_output.stdout_lines
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/PowerShell-Vars.yml</code> <br />
+<code>ansible-playbook /etc/ansible/PowerShell-Vars.yml --extra-vars "SearchName='LogLevel|Syslog'"</code> передать переменную</p>
+<ul>
+<li>win_powershell</li>
+</ul>
+<p><code>nano /etc/ansible/powershell-param.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Run PowerShell script with parameters
+    ansible.windows.win_powershell:
+      parameters:
+        Path: C:\Temp
+        Force: true
+      script: |
+        [CmdletBinding()]
+        param (
+          [String]$Path,
+          [Switch]$Force
+        )
+        New-Item -Path $Path -ItemType Directory -Force:$Force
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/powershell-param.yml</code></p>
+<ul>
+<li>win_chocolatey</li>
+</ul>
+<p><code>nano /etc/ansible/setup-adobe-acrobat.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Install Acrobat Reader
+    win_chocolatey:
+      name: adobereader
+      state: present
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/setup-adobe-acrobat.yml</code></p>
+<p><code>nano /etc/ansible/setup-openssh.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: install the Win32-OpenSSH service
+    win_chocolatey:
+      name: openssh
+      package_params: /SSHServerFeature
+      state: present
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/setup-openssh.yml</code></p>
+<ul>
+<li>win_regedit</li>
+</ul>
+<p><code>nano /etc/ansible/win-set-shell-ssh-ps7.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Set the default shell to PowerShell 7 for Windows OpenSSH
+    win_regedit:
+      path: HKLM:\SOFTWARE\OpenSSH
+      name: DefaultShell
+     ` data: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+      data: 'C:\Program Files\PowerShell\7\pwsh.exe'
+      type: string
+      state: present
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/win-set-shell-ssh-ps7.yml</code></p>
+<ul>
+<li>win_service</li>
+</ul>
+<p><code>nano /etc/ansible/win-service.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Start service
+    win_service:
+      name: sshd
+      state: started
+#     state: stopped
+#     state: restarted
+#     start_mode: auto
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/win-service.yml</code></p>
+<ul>
+<li>win_service_info</li>
+</ul>
+<p><code>nano /etc/ansible/get-service.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Get info for a single service
+    win_service_info:
+      name: sshd
+    register: service_info
+  - name: Print returned information
+    ansible.builtin.debug:
+      var: service_info.services
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/get-service.yml</code></p>
+<ul>
+<li>fetch/slurp</li>
+</ul>
+<p><code>nano /etc/ansible/copy-from-win-to-local.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Retrieve remote file on a Windows host
+#   Скопировать файл из Windows-системы
+    ansible.builtin.fetch:
+#   Прочитать файл (передать в память в формате Base64)
+#   ansible.builtin.slurp:
+      src: C:\Telegraf\telegraf.conf
+      dest: /root/telegraf.conf
+      flat: yes
+    register: telegraf_conf
+  - name: Print returned information
+    ansible.builtin.debug:
+      msg: "{{ telegraf_conf['content'] | b64decode }}"
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/copy-from-win-to-local.yml</code></p>
+<ul>
+<li>win_copy</li>
+</ul>
+<p><code>echo "Get-Service | where name -eq vss | Start-Service" &gt; /home/lifailon/Start-Service-VSS.ps1</code> <br />
+<code>nano /etc/ansible/copy-file-to-win.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Copy file to win hosts
+    win_copy:
+      src: /home/lifailon/Start-Service-VSS.ps1
+      dest: C:\Users\Lifailon\Desktop\Start-Service-VSS.ps1
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/copy-file-to-win.yml</code></p>
+<p><code>curl -OL https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/PowerShell-7.3.6-win-x64.msi</code> <br />
+<code>nano /etc/ansible/copy-file-to-win.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Copy file to win hosts
+    win_copy:
+      src: /home/lifailon/PowerShell-7.3.6-win-x64.msi
+      dest: C:\Install\PowerShell-7.3.6.msi
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/copy-file-to-win.yml</code></p>
+<ul>
+<li>win_command</li>
+</ul>
+<p><code>nano /etc/ansible/run-script-ps1.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Run PowerShell Script
+    win_command: powershell -ExecutionPolicy ByPass -File C:\Users\Lifailon\Desktop\Start-Service-VSS.ps1
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/run-script-ps1.yml</code></p>
+<ul>
+<li>win_package</li>
+</ul>
+<p><code>nano /etc/ansible/setup-msi-package.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Install MSI Package
+    win_package:
+#     path: C:\Install\7z-23.01.msi
+      path: C:\Install\PowerShell-7.3.6.msi
+      arguments:
+        - /quiet
+        - /passive
+        - /norestart
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/setup-msi-package.yml</code></p>
+<ul>
+<li>win_firewall_rule</li>
+</ul>
+<p><code>nano /etc/ansible/win-fw-open.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Open RDP port
+    win_firewall_rule:
+      name: Open RDP port
+      localport: 3389
+      action: allow
+      direction: in
+      protocol: tcp
+      state: present
+      enabled: yes
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/win-fw-open.yml</code></p>
+<ul>
+<li>win_group</li>
+</ul>
+<p><code>nano /etc/ansible/win-creat-group.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Create a new group
+    win_group:
+      name: deploy
+      description: Deploy Group
+      state: present
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/win-creat-group.yml</code></p>
+<ul>
+<li>win_group_membership</li>
+</ul>
+<p><code>nano /etc/ansible/add-user-to-group.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Add a local and domain user to a local group
+    win_group_membership:
+      name: deploy
+      members:
+        - WinRM-Writer
+      state: present
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/add-user-to-group.yml</code></p>
+<ul>
+<li>win_user</li>
+</ul>
+<p><code>nano /etc/ansible/creat-win-user.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Creat user
+    win_user:
+      name: test
+      password: 123098
+      state: present
+      groups:
+        - deploy
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/creat-win-user.yml</code></p>
+<p><code>nano /etc/ansible/delete-win-user.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Delete user
+    ansible.windows.win_user:
+      name: test
+      state: absent
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/delete-win-user.yml</code></p>
+<ul>
+<li>win_feature</li>
+</ul>
+<p><code>nano /etc/ansible/install-feature.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Install Windows Feature
+      win_feature:
+        name: SNMP-Service
+        state: present
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/install-feature.yml</code></p>
+<ul>
+<li>win_reboot</li>
+</ul>
+<p><code>nano /etc/ansible/win-reboot.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Reboot a slow machine that might have lots of updates to apply
+    win_reboot:
+      reboot_timeout: 3600
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/win-reboot.yml</code></p>
+<ul>
+<li>win_find</li>
+</ul>
+<p><code>nano /etc/ansible/win-ls.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Find files in multiple paths
+    ansible.windows.win_find:
+      paths:
+      - D:\Install\OpenSource
+      patterns: ['*.rar','*.zip','*.msi']
+     ` Файл созданный менее 7 дней назад
+      age: -7d
+     ` Размер файла больше 10MB
+      size: 10485760
+     ` Рекурсивный поиск (в дочерних директориях)
+      recurse: true
+    register: command_output
+  - name: Output
+    debug:
+      var: command_output
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/win-ls.yml</code></p>
+<ul>
+<li>win_uri</li>
+</ul>
+<p><code>nano /etc/ansible/rest-get.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: REST GET request to endpoint github
+    ansible.windows.win_uri:
+      url: https://api.github.com/repos/Lifailon/pSyslog/releases/latest
+    register: http_output
+  - name: Output
+    debug:
+      var: http_output
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/rest-get.yml</code></p>
+<ul>
+<li>win_updates</li>
+</ul>
+<p><code>nano /etc/ansible/win-update.yml</code></p>
+<pre><code class="language-yaml">- hosts: ws
+  tasks:
+  - name: Install only particular updates based on the KB numbers
+    ansible.windows.win_updates:
+      category_names:
+      - SecurityUpdates
+      - CriticalUpdates
+      - UpdateRollups
+      - Drivers
+     ` Фильтрация
+     ` accept_list:
+     ` - KB2267602
+     ` Поиск обновлений
+     ` state: searched
+     ` Загрузить обновления
+     ` state: downloaded
+     ` Установить обновления
+      state: installed
+      log_path: C:\Ansible-Windows-Upadte-Log.txt
+      reboot: false
+    register: wu_output
+  - name: Output
+    debug:
+      var: wu_output
+</code></pre>
+<p><code>ansible-playbook /etc/ansible/win-update.yml</code></p>
+<ul>
+<li>win_chocolatey</li>
+</ul>
+<p><a href="https://chocolatey.org/install">Install</a> <br />
+<a href="https://community.chocolatey.org/api/v2/package/chocolatey">API</a> <br />
+<a href="https://docs.chocolatey.org/en-us/guides/organizations/organizational-deployment-guide">Deployment</a></p>
+<pre><code class="language-yaml">- name: Ensure Chocolatey installed from internal repo
+  win_chocolatey:
+    name: chocolatey
+    state: present
+	# source: URL-адрес внутреннего репозитория
+    source: https://community.chocolatey.org/api/v2/ChocolateyInstall.ps1
+</code></pre>
+<h1 id="jinja"><a class="header" href="#jinja">Jinja</a></h1>
+<p>Локальное использование:</p>
+<p><code>pip install jinja2 --break-system-packages</code></p>
+<p><code>inventory.j2</code> шаблон для генерации</p>
+<pre><code>[dev]
+{% for host in hosts -%}
+{{ host }} ansible_host={{ host }}
+{% endfor %}
+</code></pre>
+<p><code>env.json</code> файл с переменными</p>
+<pre><code class="language-json">{
+  "hosts": ["192.168.3.101", "192.168.3.102", "192.168.3.103"]
+}
+</code></pre>
+<p><code>render.py</code> скрипт для генерации файла inventory</p>
+<pre><code class="language-Python">from jinja2 import Environment, FileSystemLoader
+import json
+# Загружаем переменные из JSON
+with open('env.json') as f:
+    data = json.load(f)
+# Настройка шаблонизатора
+env = Environment(loader=FileSystemLoader('.'))
+template = env.get_template('inventory.j2')
+output = template.render(data)
+# Сохраняем результат в файл
+with open('inventory.generated', 'w') as f:
+    f.write(output)
+</code></pre>
+<p><code>python render.py</code></p>
+<p>Использование в Ansible для обновления файла <code>hosts</code>:</p>
+<p><code>inventory.ini</code></p>
+<pre><code>[dev]
+dev1 ansible_host=192.168.3.101
+dev2 ansible_host=192.168.3.102
+dev3 ansible_host=192.168.3.103
+</code></pre>
+<p><code>templates/hosts.j2</code></p>
+<pre><code>127.0.0.1 localhost
+{% for host in groups['all'] -%}
+{{ hostvars[host]['ansible_host'] }} {{ host }}
+{% endfor %}
+</code></pre>
+<p><code>playbook.yml</code></p>
+<pre><code class="language-yaml">- name: Update hosts file
+  hosts: all
+  become: true
+  tasks:
+    - name: Generate hosts file
+      template:
+        src: hosts.j2
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: '0644'
+</code></pre>
+<p><code>ansible-playbook -i inventory.ini playbook.yml --check --diff</code> отобразит изменения без их реального применения <br />
+<code>ansible-playbook -i inventory.ini playbook.yml -K</code> позволяет передать пароль для root</p>
+<h1 id="dsc"><a class="header" href="#dsc">DSC</a></h1>
+<p><code>Import-Module PSDesiredStateConfiguration</code> <br />
+<code>Get-Command -Module PSDesiredStateConfiguration</code> <br />
+<code>(Get-Module PSDesiredStateConfiguration).ExportedCommands</code> <br />
+<code>Get-DscLocalConfigurationManager</code></p>
+<p><code>Get-DscResource</code> <br />
+<code>Get-DscResource -Name File -Syntax</code> <a href="https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1">синтаксис</a></p>
+<p><code>Ensure = Present</code> настройка должна быть включена (каталог должен присутствовать, процесс должен быть запущен, если нет – создать, запустить) <br />
+<code>Ensure = Absent</code> настройка должна быть выключена (каталога быть не должно, процесс не должен быть запущен, если нет – удалить, остановить)</p>
+<pre><code class="language-PowerShell">Configuration TestConfiguraion
+{
+    Ctrl+Space
+}
+
+Configuration DSConfigurationProxy 
+{
+    Node vproxy-01 
+    {
+        File CreateDir
+        {
+            Ensure = "Present"
+            Type = "Directory"
+            DestinationPath = "C:\Temp"
+        }
+        Service StopW32time
+        {
+            Name = "w32time"
+            State = "Stopped"` Running
+        }
+    WindowsProcess RunCalc
+        {
+            Ensure = "Present"
+            Path = "C:\WINDOWS\system32\calc.exe"
+            Arguments = ""
+        }
+        Registry RegSettings
+        {
+            Ensure = "Present"
+            Key = "HKEY_LOCAL_MACHINE\SOFTWARE\MySoft"
+            ValueName = "TestName"
+            ValueData = "TestValue"
+            ValueType = "String"
+        }
+#		WindowsFeature IIS
+#       {
+#            Ensure = "Present"
+#            Name = "Web-Server"
+#       }
+    }
+}
+</code></pre>
+<p><code>$Path = (DSConfigurationProxy).DirectoryName</code> <br />
+<code>Test-DscConfiguration -Path $Path | select *</code> ResourcesInDesiredState - уже настроено, ResourcesNotInDesiredState - не настроено (не соответствует) <br />
+<code>Start-DscConfiguration -Path $Path</code> <br />
+<code>Get-Job</code> <br />
+<code>$srv = "vproxy-01"</code> <br />
+<code>Get-Service -ComputerName $srv | ? name -match w32time # Start-Service</code> <br />
+<code>icm $srv {Get-Process | ? ProcessName -match calc} | ft # Stop-Process -Force</code> <br />
+<code>icm $srv {ls C:\ | ? name -match Temp} | ft</code> rm`</p>
+<pre><code class="language-PowerShell">Configuration InstallPowerShellCore {
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Node localhost {
+        Script InstallPowerShellCore {
+            GetScript = {
+                return @{
+                    GetScript = $GetScript
+                }
+            }
+            SetScript = {
+        [string]$url = $(Invoke-RestMethod https://api.github.com/repos/PowerShell/PowerShell/releases/latest).assets.browser_download_url -match "win-x64.zip"
+                $downloadPath = "$home\Downloads\PowerShell.zip"
+                $installPath = "$env:ProgramFiles\PowerShell\7"
+                Invoke-WebRequest -Uri $url -OutFile $downloadPath
+                Expand-Archive -Path $downloadPath -DestinationPath $installPath -Force
+            }
+            TestScript = {
+                return Test-Path "$env:ProgramFiles\PowerShell\7\pwsh.exe"
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>$Path = (InstallPowerShellCore).DirectoryName</code> <br />
+<code>Test-DscConfiguration -Path $Path</code> <br />
+<code>Start-DscConfiguration -Path $path -Wait -Verbose</code> <br />
+<code>Get-Job</code></p>
+<h1 id="psappdeploytoolkit"><a class="header" href="#psappdeploytoolkit">PSAppDeployToolkit</a></h1>
+<h2 id="install-deploytoolkit"><a class="header" href="#install-deploytoolkit">Install-DeployToolkit</a></h2>
+<pre><code class="language-PowerShell">$githubRepository = "psappdeploytoolkit/psappdeploytoolkit"
+$filenamePatternMatch = "PSAppDeployToolkit*.zip"
+$psadtReleaseUri = "https://api.github.com/repos/$githubRepository/releases/latest"
+$psadtDownloadUri = ((Invoke-RestMethod -Method GET -Uri $psadtReleaseUri).assets | Where-Object name -like $filenamePatternMatch ).browser_download_url
+$zipExtractionPath = Join-Path $env:USERPROFILE "Downloads" "PSAppDeployToolkit"
+$zipTempDownloadPath = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath $(Split-Path -Path $psadtDownloadUri -Leaf)
+## Download to a temporary folder
+Invoke-WebRequest -Uri $psadtDownloadUri -Out $zipTempDownloadPath
+## Remove any Zone.Identifier alternate data streams to unblock the file (if required)
+Unblock-File -Path $zipTempDownloadPath
+New-Item -Type Directory $zipExtractionPath
+Expand-Archive -Path $zipTempDownloadPath -OutputPath $zipExtractionPath -Force
+Write-Host ("File: {0} extracted to Path: {1}" -f $psadtDownloadUri, $zipExtractionPath) -ForegroundColor Yellow
+Remove-Item $zipTempDownloadPath
+</code></pre>
+<h2 id="deploy-notepad-plus-plus"><a class="header" href="#deploy-notepad-plus-plus">Deploy-Notepad-Plus-Plus</a></h2>
+<p><code>$url_notepad = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.6.6/npp.8.6.6.Installer.x64.exe"</code> <br />
+<code>Invoke-RestMethod $url_notepad -OutFile "$home\Downloads\PSAppDeployToolkit\Toolkit\Files\npp.8.6.6.Installer.x64.exe"</code></p>
+<pre><code class="language-PowerShell">'# Подключаем модуль PSAppDeployToolkit
+Import-Module "$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1"
+# Название приложения
+$AppName = "Notepad++"
+# Версия приложения
+$AppVersion = "8.6.6"
+# Путь к установщику Notepad++
+$InstallerPath = "$PSScriptRoot\Files\npp.$AppVersion.Installer.x64.exe"
+# Проверка существования установщика
+If (-not (Test-Path $InstallerPath)) {
+    Write-Host "Установщик Notepad++ не найден: $InstallerPath"
+    Exit-Script -ExitCode 1
+}
+# Настройки установки Notepad++
+$InstallerArguments = "/S /D=$ProgramFiles\Notepad++"
+Function Install-Application {
+    # Выводим сообщение о начале установки
+    Show-InstallationWelcome -CloseApps "iexplore" -CheckDiskSpace -PersistPrompt
+    # Запускаем установку
+    Execute-Process -Path $InstallerPath -Parameters $InstallerArguments -WindowStyle Hidden -IgnoreExitCodes "3010"
+    # Выводим сообщение об успешной установке
+    Show-InstallationPrompt -Message "Установка $AppName завершена." -ButtonRightText "Закрыть" -Icon Information -NoWait
+    # Завершаем процесс установки
+    Exit-Script -ExitCode $AppDependentExitCode
+}
+Install-Application' | Out-File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" -Encoding unicode
+</code></pre>
+<p><code>powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"</code></p>
+<h2 id="uninstall-notepad-plus-plus"><a class="header" href="#uninstall-notepad-plus-plus">Uninstall-Notepad-Plus-Plus</a></h2>
+<pre><code class="language-PowerShell">'Import-Module "$PSScriptRoot\AppDeployToolkit\AppDeployToolkitMain.ps1"
+$AppName = "Notepad++"
+$UninstallerPath = "C:\Program Files\Notepad++\uninstall.exe"
+If (-not (Test-Path $UninstallerPath)) {
+    Write-Host "Деинсталлятор Notepad++ не найден: $UninstallerPath"
+    Exit-Script -ExitCode 1
+}
+Function Uninstall-Application {
+    Show-InstallationWelcome -CloseApps "iexplore" -CheckDiskSpace -PersistPrompt
+    Execute-Process -Path $UninstallerPath -Parameters "/S" -WindowStyle Hidden -IgnoreExitCodes "3010"
+    Show-InstallationPrompt -Message "Программа $AppName удалена." -ButtonRightText "Закрыть" -Icon Information -NoWait
+    Exit-Script -ExitCode $AppDependentExitCode
+}
+Uninstall-Application' | Out-File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" -Encoding unicode
+</code></pre>
+<p><code>powershell -File "$home\Downloads\PSAppDeployToolkit\Toolkit\Deploy-Application.ps1"</code></p>
+<h2 id="deploy-winscp"><a class="header" href="#deploy-winscp">Deploy-WinSCP</a></h2>
+<pre><code class="language-PowerShell">$PSAppDeployToolkit = "$home\Downloads\PSAppDeployToolkit\"
+$version = "6.3.3"
+$url_winscp = "https://cdn.winscp.net/files/WinSCP-$version.msi?secure=P2HLWGKaMDigpDQw-H9BgA==,1716466173"
+$WinSCP_Template = Get-Content "$PSAppDeployToolkit\Examples\WinSCP\Deploy-Application.ps1" # читаем пример конфигурации для WinSCP
+$WinSCP_Template_Latest = $WinSCP_Template -replace "6.3.2","$version" # обновляем версию на актуальную
+$WinSCP_Template_Latest &gt; "$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" # заменяем скрипт развертывания 
+Invoke-RestMethod $url_winscp -OutFile "$PSAppDeployToolkit\Toolkit\Files\WinSCP-$version.msi" # загружаем msi-пакет
+powershell -File "$PSAppDeployToolkit\Toolkit\Deploy-Application.ps1" # запускаем установку
+</code></pre>
+<h1 id="atlassian"><a class="header" href="#atlassian">Atlassian</a></h1>
+<h2 id="bitbucket"><a class="header" href="#bitbucket">Bitbucket</a></h2>
+<pre><code class="language-PowerShell">$url = "https://github.com/AtlassianPS/BitbucketPS/archive/refs/heads/master.zip"
+Invoke-RestMethod $url -OutFile $home\Downloads\BitbucketPS.zip
+Expand-Archive -Path "$home\Downloads\BitbucketPS.zip" -OutputPath "$home\Downloads"
+Copy-Item -Path "$home\Downloads\BitbucketPS-master\*" -Destination "$($env:PSModulePath.Split(";")[0])\PSBitBucket" -Recurse
+Remove-Item "$home\Downloads\Bitbucket*" -Recurse -Force
+</code></pre>
+<p><code>Import-Module PSBitBucket</code> <br />
+<code>Get-Command -Module PSBitBucket</code> <br />
+<code>Set-BitBucketConfigServer -Url $url -User username -Password password</code> установить конфигурацию сервера BitBucket <br />
+<code>Get-BitBucketConfigServer</code> получить текущую конфигурацию сервера BitBucket <br />
+<code>Get-Repositories</code> получить список всех репозиториев для текущей конфигурации сервера BitBucket <br />
+<code>Get-ProjectKey</code> получить ключ проекта BitBucket <br />
+<code>Get-BranchList -Repository pSyslog</code> список всех веток в репозитории <br />
+<code>Get-Branch -Repository pSyslog -Branch main</code> получить информацию о конкретной ветке репозитория <br />
+<code>Get-CommitMessage -Repository pSyslog -CommitHash $hash</code> получить сообщение коммита по его хэшу <br />
+<code>Get-Commits -Repository pSyslog -Limit 10</code> список последних 10 коммитов в репозитории <br />
+<code>Get-CommitsForBranch -Repository pSyslog -Branch main</code> список коммитов для конкретной ветки в репозитории</p>
+<h2 id="jira"><a class="header" href="#jira">Jira</a></h2>
+<p><code>Install-Module JiraPS -Scope CurrentUser -Repository PSGallery -AllowClobber -Force</code> <br />
+<code>Get-Command -Module JiraPS</code> <br />
+<code>Get-JiraServerInfo</code> информация о сервере <br />
+<code>Add-JiraFilterPermission</code> добавить разрешения для фильтра <br />
+<code>Add-JiraGroupMember</code> добавить участника в группу <br />
+<code>Add-JiraIssueAttachment</code> добавить вложения к задаче <br />
+<code>Add-JiraIssueComment</code> добавить комментария к задаче <br />
+<code>Add-JiraIssueLink</code> добавить ссылки на задачу <br />
+<code>Add-JiraIssueWatcher</code> добавить наблюдателя к задаче <br />
+<code>Add-JiraIssueWorklog</code> добавить рабочего журнала к задаче <br />
+<code>Find-JiraFilter</code> поиск фильтра <br />
+<code>Format-Jira</code> форматирование данных Jira <br />
+<code>Get-JiraComponent</code> получение компонента проекта <br />
+<code>Get-JiraConfigServer</code> получение конфигурации сервера Jira <br />
+<code>Get-JiraField</code> получение поля Jira <br />
+<code>Get-JiraFilter</code> получение фильтра <br />
+<code>Get-JiraFilterPermission</code> получение разрешения фильтра <br />
+<code>Get-JiraGroup</code> получение группы <br />
+<code>Get-JiraGroupMember</code> получение участников группы <br />
+<code>Get-JiraIssue</code> получение задачи <br />
+<code>Get-JiraIssueAttachment</code> получение вложения задачи <br />
+<code>Get-JiraIssueAttachmentFile</code> получение файла вложения задачи <br />
+<code>Get-JiraIssueComment</code> получение комментария задачи <br />
+<code>Get-JiraIssueCreateMetadata</code> получение метаданных создания задачи <br />
+<code>Get-JiraIssueEditMetadata</code> получение метаданных редактирования задачи <br />
+<code>Get-JiraIssueLink</code> получение ссылки задачи <br />
+<code>Get-JiraIssueLinkType</code> получение типа ссылки задачи <br />
+<code>Get-JiraIssueType</code> получение типа задачи <br />
+<code>Get-JiraIssueWatcher</code> получение наблюдателя задачи <br />
+<code>Get-JiraIssueWorklog</code> получение рабочего журнала задачи <br />
+<code>Get-JiraPriority</code> получение приоритета задачи <br />
+<code>Get-JiraProject</code> получение проекта <br />
+<code>Get-JiraRemoteLink</code> получение удаленной ссылки <br />
+<code>Get-JiraServerInformation</code> получение информации о сервере Jira <br />
+<code>Get-JiraSession</code> получение сессии <br />
+<code>Get-JiraUser</code> получение пользователя <br />
+<code>Get-JiraVersion</code> получение версии проекта <br />
+<code>Invoke-JiraIssueTransition</code> выполнение перехода задачи <br />
+<code>Invoke-JiraMethod</code> выполнение метода Jira <br />
+<code>Move-JiraVersion</code> перемещение версии проекта <br />
+<code>New-JiraFilter</code> создание нового фильтра <br />
+<code>New-JiraGroup</code> создание новой группы <br />
+<code>New-JiraIssue</code> создание новой задачи <br />
+<code>New-JiraSession</code> создание новой сессии <br />
+<code>New-JiraUser</code> создание нового пользователя <br />
+<code>New-JiraVersion</code> создание новой версии проекта <br />
+<code>Remove-JiraFilter</code> удаление фильтра <br />
+<code>Remove-JiraFilterPermission</code> удаление разрешения фильтра <br />
+<code>Remove-JiraGroup</code> удаление группы <br />
+<code>Remove-JiraGroupMember</code> удаление участника группы <br />
+<code>Remove-JiraIssue</code> удаление задачи <br />
+<code>Remove-JiraIssueAttachment</code> удаление вложения задачи <br />
+<code>Remove-JiraIssueLink</code> удаление ссылки задачи <br />
+<code>Remove-JiraIssueWatcher</code> удаление наблюдателя задачи <br />
+<code>Remove-JiraRemoteLink</code> удаление удаленной ссылки <br />
+<code>Remove-JiraSession</code> удаление сессии <br />
+<code>Remove-JiraUser</code> удаление пользователя <br />
+<code>Remove-JiraVersion</code> удаление версии проекта <br />
+<code>Set-JiraConfigServer</code> установка конфигурации сервера Jira <br />
+<code>Set-JiraFilter</code> установка фильтра <br />
+<code>Set-JiraIssue</code> установка задачи <br />
+<code>Set-JiraIssueLabel</code> установка метки задачи <br />
+<code>Set-JiraUser</code> установка пользователя <br />
+<code>Set-JiraVersion</code> установка версии проекта</p>
+<h2 id="confluence"><a class="header" href="#confluence">Confluence</a></h2>
+<p><code>Install-Module ConfluencePS -Scope CurrentUser -Repository PSGallery -AllowClobber -Force</code> <br />
+<code>Get-Command -Module ConfluencePS</code> <br />
+<code>Add-ConfluenceAttachment</code> добавить вложения к странице <br />
+<code>Add-ConfluenceLabel</code> добавить метки к странице <br />
+<code>ConvertTo-ConfluenceStorageFormat</code> конвертация содержимого в формат хранения Confluence <br />
+<code>ConvertTo-ConfluenceTable</code> конвертация данных в таблицу Confluence <br />
+<code>Get-ConfluenceAttachment</code> получение вложения страницы <br />
+<code>Get-ConfluenceAttachmentFile</code> получение файла вложения страницы <br />
+<code>Get-ConfluenceChildPage</code> получение дочерних страниц <br />
+<code>Get-ConfluenceLabel</code> получение меток страницы <br />
+<code>Get-ConfluencePage</code> получение информации о странице <br />
+<code>Get-ConfluenceSpace</code> получение информации о пространстве <br />
+<code>Invoke-ConfluenceMethod</code> выполнение метода Confluence <br />
+<code>New-ConfluencePage</code> создание новой страницы <br />
+<code>New-ConfluenceSpace</code> создание нового пространства <br />
+<code>Remove-ConfluenceAttachment</code> удаление вложения страницы <br />
+<code>Remove-ConfluenceLabel</code> удаление метки со страницы <br />
+<code>Remove-ConfluencePage</code> удаление страницы <br />
+<code>Remove-ConfluenceSpace</code> удаление пространства <br />
+<code>Set-ConfluenceAttachment</code> установка вложения страницы <br />
+<code>Set-ConfluenceInfo</code> установка информации о странице <br />
+<code>Set-ConfluenceLabel</code> установка метки страницы <br />
+<code>Set-ConfluencePage</code> установка страницы</p>
+<h1 id="prometheus"><a class="header" href="#prometheus">Prometheus</a></h1>
+<p>Пример создания экспортера для получения метрик температуры всех дисков из CrystalDiskInfo и отправки в <a href="https://github.com/prometheus/prometheus">Prometheus</a> через <a href="https://github.com/prometheus/pushgateway">PushGateway</a>.</p>
+<ol>
+<li>Запускаем <code>pushgateway</code> в контейнере:</li>
+</ol>
+<p><code>docker run -d --name pushgateway --restart unless-stopped -p 19091:9091 prom/pushgateway</code></p>
+<ol start="2">
+<li>Запускаем скрипт в консоли:</li>
+</ol>
+<pre><code class="language-PowerShell">$instance = [System.Net.Dns]::GetHostName()
+$pushgatewayUrl = "http://192.168.3.100:19091/metrics/job/disk_temperature"
+# Изменить адрес шлюза на имя контейнера при запуске через compose
+# $pushgatewayUrl = "http://pushgateway:9091/metrics/job/disk_temperature"
+$path = "C:/Program Files/CrystalDiskInfo/Smart"
+# Изменить путь при запуске в контейнере Docker через WSL
+# $path = "/mnt/c/Program Files/CrystalDiskInfo/Smart"
+# Необходимо строго использовать синтаксис PowerShell (избегая псевдонимы ls)
+$diskArray = $(Get-ChildItem $path).Name
+while ($true) {
+    $metrics = "# TYPE disk_temperature gauge`n"
+    foreach ($diskName in $diskArray) {
+        $lastTemp = $(@("Date,Value")+$(Get-Content "$path/$diskName/Temperature.csv") | ConvertFrom-Csv)[-1].Value
+        $diskLabel = $diskName -replace "[^a-zA-Z0-9]", "_"
+        $metrics += "disk_temperature{disk=`"$diskLabel`",instance=`"$instance`"} $lastTemp`n"
+    }
+    $metrics
+    Invoke-RestMethod -Uri $pushgatewayUrl -Method POST -Body $metrics
+    Start-Sleep 10
+}
+</code></pre>
+<ol start="3">
+<li>Проверяем наличие метрик на конечной точке шлюза:</li>
+</ol>
+<pre><code class="language-PowerShell">$(Invoke-RestMethod http://192.168.3.100:9091/metrics).Split("`n") | Select-String "disk_temperature"
+</code></pre>
+<ol start="4">
+<li>Добавляем конфигурацию в <code>prometheus.yml</code>:</li>
+</ol>
+<pre><code class="language-yaml">scrape_configs:
+  - job_name: cdi-exporter
+    scrape_interval: 10s
+    scrape_timeout: 2s
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - '192.168.3.100:19091'
+</code></pre>
+<p><code>docker-compose kill -s SIGHUP prometheus</code> применяем изменения</p>
+<ol start="5">
+<li>Собираем контейнер в среде <code>WSL</code> с монтированием системного диска Windows:</li>
+</ol>
+<pre><code class="language-dockerfile">Write-Output '
+FROM mcr.microsoft.com/powershell:latest
+WORKDIR /cdi-exporter
+COPY cdi-exporter.ps1 ./cdi-exporter.ps1
+CMD ["pwsh", "-File", "cdi-exporter.ps1"]
+' | Out-File -FilePath dockerfile
+</code></pre>
+<p><code>docker build -t cdi-exporter .</code> <br />
+<code>docker run -d -v /mnt/c:/mnt/c --name cdi-exporter cdi-exporter</code></p>
+<ol start="6">
+<li>Собираем стек из шлюза и скрипта в <code>compose</code>:</li>
+</ol>
+<pre><code class="language-yaml">Write-Output '
+services:
+  cdi-exporter:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: cdi-exporter
+    volumes:
+      - /mnt/c:/mnt/c
+    restart: unless-stopped
+
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    ports:
+      - "19091:9091"
+    restart: unless-stopped
+' | Out-File -FilePath docker-compose.yml
+</code></pre>
+<p><code>docker-compose up -d</code></p>
+<ol start="7">
+<li>Настраиваем <code>Dashboard</code> в <code>Grafana</code>:</li>
+</ol>
+<p>Переменные для фильтрации запроса: <br />
+hostName: <code>label_values(exported_instance)</code> <br />
+diskName: <code>label_values(disk)</code> <br />
+Метрика температуры: <code>disk_temperature{exported_instance="$hostName", disk=~"$diskName"}</code></p>
+<h1 id="zabbix"><a class="header" href="#zabbix">Zabbix</a></h1>
+<h2 id="zabbix-agent"><a class="header" href="#zabbix-agent">Zabbix Agent</a></h2>
+<p><strong>Zabbix Agent Deploy:</strong></p>
+<pre><code class="language-PowerShell">$url = "https://cdn.zabbix.com/zabbix/binaries/stable/6.4/6.4.5/zabbix_agent2-6.4.5-windows-amd64-static.zip"
+$path = "$home\Downloads\zabbix-agent2-6.4.5.zip"
+$WebClient = New-Object System.Net.WebClient
+$WebClient.DownloadFile($url, $path) # скачать файл
+Expand-Archive $path -DestinationPath "C:\zabbix-agent2-6.4.5\" # разархивировать
+Remove-Item $path # удалить архив
+New-NetFirewallRule -DisplayName "Zabbix-Agent" -Profile Any -Direction Inbound -Action Allow -Protocol TCP -LocalPort 10050,10051 # открыть порты в FW
+
+$Zabbix_Server = "192.168.3.102"
+$conf = "C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.conf"
+$cat = cat $conf
+$rep = $cat -replace "Server=.+","Server=$Zabbix_Server"
+$rep | Select-String Server=
+$rep &gt; $conf
+
+$exe = "C:\zabbix-agent2-6.4.5\bin\zabbix_agent2.exe"
+.$exe --config $conf --install # установить службу
+Get-Service *Zabbix*Agent* | Start-Service # запустить службу
+#.$exe --config $conf --uninstall # удалить службу
+</code></pre>
+<p><strong>zabbix_agent2.conf</strong></p>
+<pre><code class="language-conf"># Агент может работать в пассивном (сервер забирает сам информацию) и активном режиме (агент сам отправляет):
+Server=192.168.3.102
+ServerActive=192.168.3.102
+# Требуется указать hostname для ServerActive:
+Hostname=huawei-book-01
+# Если не указано, используется для генерации имени хоста (игнорируется, если имя хоста определено):
+# HostnameItem=system.hostname
+# Как часто обновляется список активных проверок, в секундах (Range: 60-3600):
+RefreshActiveChecks=120
+# IP-адрес источника для исходящих соединений:
+# SourceIP=
+# Агент будет слушать на этом порту соединения с сервером (Range: 1024-32767):
+# ListenPort=10050
+# Список IP-адресов, которые агент должен прослушивать через запятую
+# ListenIP=0.0.0.0
+# Агент будет прослушивать этот порт для запросов статуса HTTP (Range: 1024-32767):
+# StatusPort=
+ControlSocket=\\.\pipe\agent.sock
+# Куда вести журнал (file/syslog/console):
+LogType=file
+LogFile=C:\zabbix-agent2-6.4.5\zabbix_agent2.log
+# Размер лога от 0-1024 MB (0 - отключить автоматическую ротацию логов)
+LogFileSize=100
+# Уровень логирования. 4 - для отладки (выдает много информации)
+DebugLevel=4
+</code></pre>
+<h2 id="zabbix-sender"><a class="header" href="#zabbix-sender">Zabbix Sender</a></h2>
+<p>Используется для отправки данных на сервер</p>
+<p>Создать host - задать произвольное имя (powershell-host) и добавить в группу на сервере</p>
+<p>Создать Items вручную:</p>
+<p><code>Name</code>: Service Count <br />
+<code>Type</code>: Zabbix trapper <br />
+<code>Key</code>: service.count <br />
+<code>Type of Information</code>: Numeric</p>
+<pre><code class="language-PowerShell">$path = "C:\zabbix-agent2-6.4.5\bin"
+$scount = (Get-Service).Count
+.$path\zabbix_sender.exe -z 192.168.3.102 -s "powershell-host" -k service.count -o $scount # отправить данные на сервер
+</code></pre>
+<h2 id="zabbix-get"><a class="header" href="#zabbix-get">Zabbix Get</a></h2>
+<p>Используется для получения данных с агента (как их запрашивает сервер)</p>
+<p><code>apt install zabbix-get</code> <br />
+<code>nano /etc/zabbix/zabbix_agentd.conf</code> <br />
+<code>Server=127.0.0.1,192.168.3.102,192.168.3.99</code> добавить сервера для получения данных через zabbix_get с агента (как их запрашивает сервер)</p>
+<p><code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k agent.version</code> проверить версию агента <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k agent.ping</code> 1 - ok <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.discovery</code> список сетевых интерфейсов <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.in["ens33"]</code> <br />
+<code>.$path\zabbix_get -s 192.168.3.101 -p 10050 -k net.if.out["ens33"]</code></p>
+<h2 id="userparameter"><a class="header" href="#userparameter">UserParameter</a></h2>
+<p>Пользовательские параметры</p>
+<p><code>UserParameter=process.count,powershell -Command "(Get-Process).Count"</code> <br />
+<code>UserParameter=process.vm[*],powershell -Command "(Get-Process $1).ws"</code></p>
+<p>Получение данных:</p>
+<p><code>C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.count</code> <br />
+<code>C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.vm[zabbix_agent2] </code><br />
+<code>C:\zabbix-agent2-6.4.5\bin\zabbix_get.exe -s 127.0.0.1 -p 10050 -k process.vm[powershell]</code></p>
+<p>Создать новые Items на сервере:</p>
+<p>key: <code>process.count</code> <br />
+key: <code>process.vm[zabbix_agent2]</code></p>
+<h2 id="include-plugins"><a class="header" href="#include-plugins">Include Plugins</a></h2>
+<ul>
+<li>Добавить параметр Include для включения конфигурационных файлов подключаемых плагинов</li>
+</ul>
+<p><code>'Include=.\zabbix_agent2.d\plugins.d\*.conf' &gt;&gt; C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.conf</code></p>
+<ul>
+<li>Создать конфигурационный файл с пользовательскими параметрами в каталоге, путь к которому указан в zabbix_agentd.conf</li>
+</ul>
+<p><code>'UserParameter=Get-Query-Param[*],powershell.exe -noprofile -executionpolicy bypass -File C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\scripts\User-Sessions\Get-Query-Param.ps1 $1' &gt; C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\plugins.d\User-Sessions.conf</code></p>
+<ul>
+<li>Поместить скрипт Get-Query-Param.ps1 в каталог, путь к которому указан в User-Sessions.conf. Скрипт содержим пользовательские параметры, которые он принимает от Zabbix сервера для передачи их в функции скрипта.</li>
+</ul>
+<pre><code class="language-PowerShell">Param([string]$select)
+if ($select -eq "ACTIVEUSER") {
+    (Get-Query | where status -match "Active").User
+}
+if ($select -eq "INACTIVEUSER") {
+    (Get-Query | where status -match "Disconnect").User
+}
+if ($select -eq "ACTIVECOUNT") {
+    (Get-Query | where status -match "Active").Status.Count
+}
+if ($select -eq "INACTIVECOUNT") {
+    (Get-Query | where status -match "Disconnect").Status.Count
+}
+</code></pre>
+<ul>
+<li>Проверить работу скрипта:</li>
+</ul>
+<p><code>$path = "C:\zabbix-agent2-6.4.5\conf\zabbix_agent2.d\scripts\User-Sessions"</code> <br />
+<code>.$path\Get-Query-Param.ps1 ACTIVEUSER</code> <br />
+<code>.$path\Get-Query-Param.ps1 INACTIVEUSER</code> <br />
+<code>.$path\Get-Query-Param.ps1 ACTIVECOUNT</code> <br />
+<code>.$path\Get-Query-Param.ps1 INACTIVECOUNT</code></p>
+<ul>
+<li>Создать Items с ключами:</li>
+</ul>
+<p><code>Get-Query-Param[ACTIVEUSER]</code> Type: Text <br />
+<code>Get-Query-Param[INACTIVEUSER]</code> Type: Text <br />
+<code>Get-Query-Param[ACTIVECOUNT]</code> Type: Int <br />
+<code>Get-Query-Param[INACTIVECOUNT]</code> Type: Int</p>
+<ul>
+<li>Макросы:</li>
+</ul>
+<p><code>{$ACTIVEMAX} = 16</code> <br />
+<code>{$ACTIVEMIN} = 0</code></p>
+<ul>
+<li>Триггеры:</li>
+</ul>
+<p><code>last(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT])&gt;{$ACTIVEMAX}</code> <br />
+<code>min(/Windows-User-Sessions/Get-Query-Param[ACTIVECOUNT],24h)={$ACTIVEMIN}</code></p>
+<h2 id="zabbix-api"><a class="header" href="#zabbix-api">Zabbix API</a></h2>
+<p><a href="https://www.zabbix.com/documentation/current/en/manual/api/reference">Documentation</a></p>
+<p><code>$ip = "192.168.3.102"</code> <br />
+<code>$url = "http://$ip/zabbix/api_jsonrpc.php"</code></p>
+<p>Получение токена доступа:</p>
+<pre><code class="language-PowerShell">$data = @{
+    "jsonrpc"="2.0";
+    "method"="user.login";
+    "params"=@{
+        "username"="Admin"; # в версии до 6.4 параметр "user"
+        "password"="zabbix";
+    };
+    "id"=1;
+}
+$token = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+</code></pre>
+<p><code>$token = "2eefd25fdf1590ebcdb7978b5bcea1fff755c65b255da8cbd723181b639bb789"</code> сгенерировать токен в UI (http://192.168.3.102/zabbix/zabbix.php?action=token.list)</p>
+<ul>
+<li>user.get method</li>
+</ul>
+<pre><code class="language-PowerShell">$data = @{
+    "jsonrpc"="2.0";
+    "method"="user.get";
+    "params"=@{
+    };
+    "auth"=$token;
+    "id"=1;
+}
+$users = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+</code></pre>
+<ul>
+<li>problem.get method</li>
+</ul>
+<pre><code class="language-PowerShell">$data = @{
+    "jsonrpc"="2.0";
+    "method"="problem.get";
+    "params"=@{
+    };
+    "auth"=$token;
+    "id"=1;
+}
+(Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+</code></pre>
+<ul>
+<li>host.get method</li>
+</ul>
+<p>Получить список всех хостов (имя и id)</p>
+<p><a href="https://www.zabbix.com/documentation/current/en/manual/api/reference/host">Endpoint host documentation</a></p>
+<p><strong>host.create</strong> — создание новых хостов <br />
+<strong>host.delete</strong> — удаление хостов <br />
+<strong>host.get</strong> — получить список хостов <br />
+<strong>host.massadd</strong> - добавление (привязка) объектов на хосты <br />
+<strong>host.massremove</strong> - удаление объектов <br />
+<strong>host.massupdate</strong> - замена или обновление объектов <br />
+<strong>host.update</strong> - обновление хостов</p>
+<pre><code class="language-PowerShell">$data = @{
+    "jsonrpc"="2.0";
+    "method"="host.get";
+    "params"=@{
+        "output"=@( # отфильтровать вывод
+            "hostid";
+            "host";
+        );
+    };
+    "id"=2;
+    "auth"=$token;
+}
+$hosts = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+$host_id = $hosts[3].hostid # забрать id хоста по индексу
+</code></pre>
+<ul>
+<li>item.get</li>
+</ul>
+<p>Получить id элементов данных по наименованию ключа для конкретного хоста</p>
+<pre><code class="language-PowerShell">$data = @{
+    "jsonrpc"="2.0";
+    "method"="item.get";
+    "params"=@{
+        "hostids"=@($host_id); # отфильтровать по хосту
+    };
+    "auth"=$token;
+    "id"=1;
+}
+$items = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result
+$items_id = ($items | where key_ -match system.uptime).itemid # забрать id элемента данных
+</code></pre>
+<ul>
+<li>history.get</li>
+</ul>
+<p>Получить всю историю элемента данных по его id</p>
+<pre><code class="language-PowerShell">$data = @{
+    "jsonrpc"="2.0";
+    "method"="history.get";
+    "params"=@{
+        "hostids"=@($host_id);  # фильтрация по хосту
+        "itemids"=@($items_id); # фильтрация по элементу данных
+    };
+    "auth"=$token;
+    "id"=1;
+}
+$items_data_uptime = (Invoke-RestMethod -Method POST -Uri $url -Body ($data | ConvertTo-Json) -ContentType "application/json").Result # получить все данные по ключу у конкретного хоста
+</code></pre>
+<p>Ковенртация секунд в <code>TimeSpan</code>:</p>
+<p><code>$sec = $items_data_uptime.value</code></p>
+<pre><code class="language-PowerShell">function ConvertSecondsTo-TimeSpan {
+    param (
+        $insec
+    )
+    $TimeSpan = [TimeSpan]::fromseconds($insec)
+    "{0:dd' day 'hh\:mm\:ss}" -f $TimeSpan
+}
+</code></pre>
+<p><code>$UpTime = ConvertSecondsTo-TimeSpan $sec[-1]</code></p>
+<p>Конвертация из времени <code>Unix</code>:</p>
+<p><code>$time = $items_data_uptime.clock</code></p>
+<pre><code class="language-PowerShell">function ConvertFrom-UnixTime {
+    param (
+        $intime
+    )
+    $EpochTime = [DateTime]"1/1/1970"
+    $TimeZone = Get-TimeZone
+    $UTCTime = $EpochTime.AddSeconds($intime)
+    $UTCTime.AddMinutes($TimeZone.BaseUtcOffset.TotalMinutes)
+}
+</code></pre>
+<p><code>$GetDataTime = ConvertFrom-UnixTime $time[-1]</code></p>
+<p><code>($hosts | where hostid -eq $host_id).host</code> получить имя хоста <br />
+<code>$UpTime</code> последнее полученное значение времени работы хоста <br />
+<code>$GetDataTime</code> время последнего полученного значения</p>
+<h1 id="load-testing"><a class="header" href="#load-testing">Load Testing</a></h1>
+<h2 id="apache-benchmark"><a class="header" href="#apache-benchmark">Apache Benchmark</a></h2>
+<pre><code class="language-PowerShell">$path = "$HOME\Downloads\apache"
+New-Item $path -Type Directory
+cd $path
+curl -L -o apache.zip "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.63-250207-win64-VS17.zip"
+Expand-Archive -Path apache.zip
+Copy-Item .\Apache24\bin\ $HOME\Documents\apache\ -Recurse
+cd .. &amp;&amp; Remove-Item "$HOME\Downloads\apache" -Recurse
+</code></pre>
+<p><code>$ab = "$HOME\Documents\apache\ab.exe"</code> <br />
+<code>. $ab -n 10000 -c 100 http://192.168.3.100:8444/api/provider/list</code></p>
+<pre><code>Количество одновременных запросов:  100
+Время проведения тестов:            52,402 секунды
+Выполненные запросы:                10000
+Неудачные запросы:                  0
+Передано всего:                     6830000 байтов
+Передано HTML:                      3290000 байт
+RPS (Requests Per Second):          190,83 [#/sec] (среднее)
+Время одного запроса:               524.017 [MS] (среднее)
+Время одного запроса:               5.240 [MS] (среднее, во всех одновременных запросах)
+Скорость передачи:                  127,28 [Kbytes/Sec]
+</code></pre>
+<h2 id="locust"><a class="header" href="#locust">Locust</a></h2>
+<p><a href="https://github.com/locustio/locust">Locust</a> - это инструмент нагрузочного тестирования для <code>HTTP</code> и других протоколов на <code>Python</code>.</p>
+<p><code>pip3 install locust</code></p>
+<pre><code class="language-Python">echo '
+import os
+from locust import HttpUser, task, between
+class TorApiUser(HttpUser):
+    # Каждый виртуальный пользователь будет ждать от 2 до 5 секунд перед выполнением следующего @task
+    wait_time = between(2, 5)
+    # Определяем заголовки запросов
+    headers = {
+        "User-Agent": "Locust"
+    }
+    # Получаем параметры из переменных окружения или использовать значение по умолчанию
+    QUERY = os.getenv("QUERY", "test")
+    # GET запросы (вес приоритета задачи для частоты ее выполнения, чем выше, тем чаще выполнение)
+    @task(1)
+    def test_status(self):
+        self.client.get("/api/provider/list", headers=self.headers)
+    @task(2)
+    def test_search(self):
+        # Словарь параметров, который автоматически конвертируется в строку запроса (?key=value&amp;key2=value2)
+        searchParams = {
+            "query": {self.QUERY},
+            "category": 0,
+            "page": 0
+        }
+        self.client.get("/api/search/title/rutracker", headers=self.headers, params=searchParams)
+    # POST запрос с телом запроса
+    # @task(3)
+    # def test_post_auth(self):
+    #     self.client.post("/api/auth", json={"username": "admin", "password": "password"})
+' &gt; locustfile.py
+</code></pre>
+<p><code>locust -f locustfile.py --host http://192.168.3.100:8444</code> <br />
+<code>$env:QUERY = "The+Rookie"</code> определяем переменную окружения для параметра запросов <br />
+<code>locust -f locustfile.py --host http://192.168.3.100:8444 -u 10 -r 2 -t 30s</code> количество виртуальных пользователей (VU), частота появления новых пользователей в секунду (10 пользователей будут созданы за 5 секунд) и длительность 30 секунд <br />
+<code>locust -f locustfile.py --host http://192.168.3.100:8444 -u 10 -r 2 -t 30s --headless --csv locustresult</code> запуск без веб-интерфейса с выгрузкой результатов в csv файлы</p>
+<p>Запуск Web-интерфейса в контейнере Docker:</p>
+<p><code>mkdir locust &amp;&amp; cd locust</code></p>
+<pre><code class="language-dockerfile">FROM alpine:latest
+RUN apk add --no-cache python3 py3-pip gcc musl-dev linux-headers python3-dev
+RUN python3 -m venv /venv
+RUN /venv/bin/pip install --no-cache-dir locust
+ENV PATH="/venv/bin:$PATH"
+COPY locustfile.py .
+EXPOSE 8089
+CMD ["locust", "-f", "/locustfile.py"]
+</code></pre>
+<p><code>sudo docker build -t locust-alpine-web . &amp;&amp; sudo docker run -d --name locust -p 8089:8089 --restart=unless-stopped locust-alpine-web</code></p>
+<h1 id="graylog"><a class="header" href="#graylog">Graylog</a></h1>
+<p><a href="https://hub.docker.com/r/itzg/graylog">Graylog Docker Image</a></p>
+<ul>
+<li>Установка MongoDB:</li>
+</ul>
+<pre><code class="language-bash">docker run --name mongo -d mongo:3
+</code></pre>
+<ul>
+<li>Используем прокси для установки Elassticsearch:</li>
+</ul>
+<pre><code class="language-bash">docker run --name elasticsearch \
+    -e "http.host=0.0.0.0" -e "xpack.security.enabled=false" \
+    -d dockerhub.timeweb.cloud/library/elasticsearch:5.5.1
+</code></pre>
+<ul>
+<li>Указать статический IP адрес для подключения к API</li>
+</ul>
+<pre><code class="language-bash">docker run --name Graylog \
+    --link mongo \
+    --link elasticsearch \
+    -p 9000:9000 -p 12201:12201 -p 514:514 -p 5044:5044 \
+    -e GRAYLOG_WEB_ENDPOINT_URI="http://192.168.3.101:9000/api" \
+    -d graylog/graylog:2.3.2-1
+</code></pre>
+<ul>
+<li>Настройка syslog на клиенте Linux:</li>
+</ul>
+<p><code>nano /etc/rsyslog.d/graylog.conf</code></p>
+<pre><code class="language-bash">*.* @@192.168.3.101:514;RSYSLOG_SyslogProtocol23Format
+</code></pre>
+<p><code>systemctl restart rsyslog</code></p>
+<ul>
+<li>Создать входящий поток (inputs) для Syslog на порту 514 по протоколу TCP:</li>
+</ul>
+<p>http://192.168.3.101:9000/system/inputs</p>
+<ul>
+<li>Фильтр для логов Kinozal-Bot:</li>
+</ul>
+<p><code>facility:"system daemon" AND application_name:bash AND message:\[ AND message:\]</code></p>
+<ul>
+<li>Настройка Winlogbeat на клиенте Windows</li>
+</ul>
+<p>Установка агента:</p>
+<pre><code class="language-PowerShell">irm https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-8.15.0-windows-x86_64.zip -OutFile $home\Documents\winlogbeat-8.15.0.zip
+Expand-Archive $home\Documents\winlogbeat-8.15.0.zip
+cd $home\Documents\winlogbeat-8.15.0-windows-x86_64
+</code></pre>
+<p>Добавить отправку в Logstash:</p>
+<p><code>code winlogbeat.yml</code></p>
+<pre><code class="language-bash">output.logstash:
+  hosts: ["192.168.3.101:5044"]
+</code></pre>
+<p>И закомментировать отправку данных в Elasticsearch (output.elasticsearch)</p>
+<p><code>.\winlogbeat.exe -c winlogbeat.yml</code> запустить агент с правами администратора в консоли</p>
+<pre><code class="language-bash">.\install-service-winlogbeat.ps1 # установить службу
+Get-Service winlogbeat | Start-Service
+</code></pre>
+<ul>
+<li>Настроить Inputs для приема Beats на порту 5044</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../api/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../api/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

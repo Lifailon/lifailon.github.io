@@ -1,0 +1,1095 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Network - PowerShell Commands</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PowerShell Commands</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>+++
+title = "Network"
+[extra]
+toc = true
+toc_sidebar = true
+go_to_top = true
++++</p>
+<p>Заметки по сетевым утилитам.</p>
+<hr />
+<h1 id="network"><a class="header" href="#network">Network</a></h1>
+<h3 id="ping"><a class="header" href="#ping">ping</a></h3>
+<p><code>Test-Connection -Count 1 $srv1, $srv2</code> отправить icmp-пакет двум хостам <br />
+<code>Test-Connection $srv -ErrorAction SilentlyContinue</code> не выводить ошибок, если хост не отвечает <br />
+<code>Test-Connection -Source $srv1 -ComputerName $srv2</code> пинг с удаленного компьютера</p>
+<pre><code class="language-PowerShell">function Test-PingNetwork {
+param (
+    [Parameter(Mandatory,ValueFromPipeline)][string[]]$Network,
+    [ValidateRange(100,10000)][int]$Timeout = 100
+)
+$ping = New-Object System.Net.NetworkInformation.Ping
+$Network  = $Network -replace "0$"
+$net = @()
+foreach ($r in @(1..254)) {
+    $net += "$network$r"
+}
+foreach ($n in $net) {
+    $ping.Send($n, $timeout) | select @{Name="Address"; Expression={$n -replace ".+\."}}, Status
+}
+}
+</code></pre>
+<p><code>Test-PingNetwork -Network 192.168.3.0</code> <br />
+<code>Test-PingNetwork -Network 192.168.3.0 -Timeout 1000</code></p>
+<p><code>Get-CimInstance -Class Win32_PingStatus -Filter "Address='127.0.0.1'"</code> <br />
+<code>Get-CimInstance -Class Win32_PingStatus -Filter "Address='127.0.0.1'" | Format-Table -Property Address,ResponseTime,StatusCode -Autosize</code> 0 - успех <br />
+<code>'127.0.0.1','8.8.8.8' | ForEach-Object -Process {Get-CimInstance -Class Win32_PingStatus -Filter ("Address='$_'") | Select-Object -Property Address,ResponseTime,StatusCode}</code> <br />
+<code>$ips = 1..254 | ForEach-Object -Process {'192.168.1.' + $_}</code> сформировать массив из ip-адресов подсети</p>
+<h3 id="dhcp"><a class="header" href="#dhcp">dhcp</a></h3>
+<p><code>Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true"</code> отобразить адаптеры с включенным DHCP <br />
+<code>$wql = 'SELECT * from Win32_NetworkAdapterConfiguration WHERE IPEnabled=True and DHCPEnabled=False'</code> <br />
+<code>Invoke-CimMethod -MethodName ReleaseDHCPLease -Query $wql</code> включение DHCP на всех адаптерах <br />
+<code>Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName ReleaseDHCPLeaseAll</code> отменить аренду адресов DHCP на всех адаптерах <br />
+<code>Invoke-CimMethod -ClassName Win32_NetworkAdapterConfiguration -MethodName RenewDHCPLeaseAll</code> обновить аренду адресов DHCP на всех адаптерах</p>
+<h3 id="port"><a class="header" href="#port">port</a></h3>
+<p><code>tnc $srv -p 5985</code> <br />
+<code>tnc $srv -CommonTCPPort WINRM</code> HTTP,RDP,SMB <br />
+<code>tnc ya.ru –TraceRoute -Hops 2</code> TTL=2 <br />
+<code>tnc ya.ru -DiagnoseRouting</code> маршрутизация до хоста, куда (DestinationPrefix: 0.0.0.0/0) через (NextHop: 192.168.1.254)</p>
+<h3 id="netstat"><a class="header" href="#netstat">netstat</a></h3>
+<p><code>netstat -anop tcp</code> -n/-f/-b <br />
+<code>Get-NetTCPConnection -State Established,Listen | ? LocalPort -Match 3389</code> <br />
+<code>Get-NetTCPConnection -State Established,Listen | ? RemotePort -Match 22</code> <br />
+<code>Get-NetUDPEndpoint | ? LocalPort -Match 514</code> netstat -ap udp`</p>
+<h3 id="nslookup"><a class="header" href="#nslookup">nslookup</a></h3>
+<p><code>nslookup ya.ru 1.1.1.1</code> с указанием DNS сервера <br />
+<code>nslookup -type=any ya.ru</code> указать тип записи <br />
+<code>Resolve-DnsName ya.ru -Type MX</code> ALL,ANY,A,NS,SRV,CNAME,PTR,TXT(spf) <br />
+<code>[System.Net.Dns]::GetHostEntry("ya.ru")</code></p>
+<h3 id="ipconfig"><a class="header" href="#ipconfig">ipconfig</a></h3>
+<p><code>Get-NetIPConfiguration</code> <br />
+<code>Get-NetIPConfiguration -InterfaceIndex 14 -Detailed</code></p>
+<h3 id="adapter"><a class="header" href="#adapter">Adapter</a></h3>
+<p><code>Get-NetAdapter</code> <br />
+<code>Set-NetIPInterface -InterfaceIndex 14 -Dhcp Disabled</code> отключить DHCP <br />
+<code>Get-NetAdapter -InterfaceIndex 14 | New-NetIPAddress –IPAddress 192.168.3.99 -DefaultGateway 192.168.3.1 -PrefixLength 24</code> задать/добавить статический IP-адрес <br />
+<code>Set-NetIPAddress -InterfaceIndex 14 -IPAddress 192.168.3.98</code> изменить IP-адреас на адаптере <br />
+<code>Remove-NetIPAddress -InterfaceIndex 14 -IPAddress 192.168.3.99</code> удалить IP-адрес на адаптере <br />
+<code>Set-NetIPInterface -InterfaceIndex 14 -Dhcp Enabled</code> включить DHCP</p>
+<h3 id="dnsclient"><a class="header" href="#dnsclient">DNSClient</a></h3>
+<p><code>Get-DNSClientServerAddress</code> список интерфейсов и настроенные на них адреса DNS сервера <br />
+<code>Set-DNSClientServerAddress -InterfaceIndex 14 -ServerAddresses 8.8.8.8</code> изменить адрес DNS сервера на указанного интерфейсе</p>
+<h3 id="dnscache"><a class="header" href="#dnscache">DNSCache</a></h3>
+<p><code>Get-DnsClientCache</code> отобразить кэшированные записи клиента DNS <br />
+<code>Clear-DnsClientCache</code> очистить кэш</p>
+<h3 id="binding"><a class="header" href="#binding">Binding</a></h3>
+<p><code>Get-NetAdapterBinding -Name Ethernet -IncludeHidden -AllBindings</code> <br />
+<code>Get-NetAdapterBinding -Name "Беспроводная сеть" -DisplayName "IP версии 6 (TCP/IPv6)" | Set-NetAdapterBinding -Enabled $false</code> отключить IPv6 на адаптере</p>
+<h3 id="tcpsetting"><a class="header" href="#tcpsetting">TCPSetting</a></h3>
+<p><code>Get-NetTCPSetting</code> <br />
+<code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CongestionProvider DCTCP</code> настраивает провайдера управления перегрузкой (Congestion Control Provider) на DCTCP (Data Center TCP) для профилей TCP с именами DatacenterCustom и Datacenter <br />
+<code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -CwndRestart True</code> включает функцию перезапуска окна перегрузки (Congestion Window Restart, CwndRestart) для указанных профилей TCP. Это означает, что после периода идле (когда нет передачи данных) TCP окно перегрузки будет сбрасываться <br />
+<code>Set-NetTCPSetting -SettingName DatacenterCustom,Datacenter -ForceWS Disabled</code> отключает принудительное масштабирование окна (Forced Window Scaling) для указанных профилей TCP. Масштабирование окна — это механизм, который позволяет увеличивать размер окна перегрузки TCP, чтобы улучшить производительность передачи данных по сети с высокой пропускной способностью и большой задержкой</p>
+<h3 id="hostname"><a class="header" href="#hostname">hostname</a></h3>
+<p><code>$env:computername</code> <br />
+<code>hostname.exe</code> <br />
+<code>(Get-CIMInstance CIM_ComputerSystem).Name</code> <br />
+<code>(New-Object -ComObject WScript.Network).ComputerName</code> <br />
+<code>[System.Environment]::MachineName</code> <br />
+<code>[System.Net.Dns]::GetHostName()</code></p>
+<h3 id="arp"><a class="header" href="#arp">arp</a></h3>
+<p><code>ipconfig /all | Select-String "физ"</code> grep <br />
+<code>Get-NetNeighbor -AddressFamily IPv4</code></p>
+<pre><code class="language-PowerShell">function Get-ARP {
+    Param (
+        $proxy,
+        $search
+    )
+    if (!$proxy) {
+        $arp = arp -a
+    }
+    if ($proxy) {
+        $arp = icm $proxy { arp -a }
+    }
+    $mac = $arp[3..260]
+    $mac = $mac -replace "^\s\s"
+    $mac = $mac -replace "\s{1,50}", " "
+    $mac_coll = New-Object System.Collections.Generic.List[System.Object]
+    foreach ($m in $mac) {
+        $smac = $m -split " "
+        $mac_coll.Add([PSCustomObject]@{
+                IP   = $smac[0];
+                MAC  = $smac[1];
+                Type = $smac[2]
+            })
+    }
+    if ($search) {
+        if ($search -NotMatch "\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}") {
+            #$ns = nslookup $search
+            #$ns = $ns[-2]
+            #$global:ns = $ns -replace "Address:\s{1,10}"
+            $rdns = Resolve-DnsName $search -ErrorAction Ignore
+            $ns = $rdns.IPAddress
+            if ($ns -eq $null) {
+                return
+            }
+        }
+        else {
+            $ns = $search
+        }
+        $mac_coll = $mac_coll | ? ip -Match $ns
+    }
+    $mac_coll
+}
+</code></pre>
+<p><code>Get-ARP -search 192.168.3.100</code> <br />
+<code>Get-ARP -search 192.168.3.100 -proxy dc-01</code></p>
+<h3 id="network-adapter-statistics"><a class="header" href="#network-adapter-statistics">Network Adapter Statistics</a></h3>
+<p><code>netstat -se</code> <br />
+<code>Get-NetAdapterStatistics</code></p>
+<h3 id="speedtest"><a class="header" href="#speedtest">SpeedTest</a></h3>
+<pre><code class="language-PowerShell">function Get-SpeedTestOokla {
+    param (
+        $Server = 3682,
+        [switch]$List
+    )
+    $path = "$env:TEMP\speedtest.exe"
+    $testPath = Test-Path "$env:TEMP\speedtest.exe"
+    if ($testPath -eq $false) {
+        Invoke-RestMethod https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win64.zip -OutFile "$env:TEMP\speedtest.zip"
+        Expand-Archive "$env:TEMP\speedtest.zip" -DestinationPath $env:TEMP
+    }
+    if ($List) {
+        $(&amp; $path -L -f json | ConvertFrom-Json).servers
+    } else {
+        $test = &amp; $path -s $Server -f json
+        $Collections = New-Object System.Collections.Generic.List[System.Object]
+        $Collections.Add(
+            [PSCustomObject]@{
+                Date = $($test | ConvertFrom-Json).timestamp
+                Url = $($test | ConvertFrom-Json).result.url
+                Download = [double]::Round($($($test | ConvertFrom-Json).download.bandwidth / 1mb * 8), 2)
+                Upload = [double]::Round($($($test | ConvertFrom-Json).upload.bandwidth / 1mb * 8), 2)
+                Ping = $($test | ConvertFrom-Json).ping.latency
+                Internal_IP = $($test | ConvertFrom-Json).interface.internalIp
+                External_IP = $($test | ConvertFrom-Json).interface.externalIp
+                Server = $($test | ConvertFrom-Json).server
+            }
+        )
+        $Collections
+    }
+}
+</code></pre>
+<h1 id="iperf"><a class="header" href="#iperf">iPerf</a></h1>
+<h3 id="install"><a class="header" href="#install">Install</a></h3>
+<pre><code class="language-PowerShell">$url = $($(Invoke-RestMethod https://api.github.com/repos/ar51an/iperf3-win-builds/releases/latest).assets | Where-Object name -match "win64.zip").browser_download_url
+Invoke-RestMethod $url -OutFile $home\Downloads\iperf.zip
+New-Item "$home\Documents\iperf3" -Type Directory | Out-Null
+Expand-Archive -Path "$home\Downloads\iperf.zip" -OutputPath "$home\Documents\iperf3"
+Remove-Item "$home\Downloads\iperf*" -Force -Recurse
+</code></pre>
+<p><code>&amp; "$home\Documents\iperf3\iperf3.exe" -h</code></p>
+<h3 id="env-update-exec-path"><a class="header" href="#env-update-exec-path">Env-Update-Exec-Path</a></h3>
+<pre><code class="language-PowerShell">$EnvPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+$EnvPath -split ";"
+$iperfPath = "$home\Documents\iperf3\"
+$EnvAddPath = $EnvPath + ";" + $iperfPath
+[Environment]::SetEnvironmentVariable("Path", $EnvAddPath, [EnvironmentVariableTarget]::Machine)
+$([Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)) -split ";"
+</code></pre>
+<p><code>iperf3 -h</code></p>
+<h3 id="iperf-gui"><a class="header" href="#iperf-gui">iPerf-GUI</a></h3>
+<p><code>Invoke-RestMethod "https://github.com/Lifailon/iPerf-GUI/raw/rsa/iPerf-GUI-Install.exe" -OutFile "$home\Downloads\iPerf-GUI-Install.exe"</code> скачать установочную версию собранную с помощью WinRAR <br />
+<code>Start-Process -FilePath "$home\Downloads\iPerf-GUI-Install.exe" -ArgumentList "/S" -NoNewWindow -Wait</code> установить в тихом режиме</p>
+<h3 id="iperf-docker"><a class="header" href="#iperf-docker">iPerf-Docker</a></h3>
+<pre><code class="language-PowerShell">echo '
+FROM alpine:latest
+RUN apk update &amp;&amp; apk add --no-cache iperf3
+ENV PORT=5201
+EXPOSE $PORT
+CMD ["sh", "-c", "iperf3 -s -p $PORT"]
+' &gt; Dockerfile
+</code></pre>
+<p><code>docker build -t iperf3-alpine-server .</code> <br />
+<code>docker run -d -p 5201:5201 --name iperf3-alpine-server iperf3-alpine-server</code></p>
+<h3 id="server"><a class="header" href="#server">Server</a></h3>
+<p><code>iperf3 -s</code> запуск сервера <br />
+<code>iperf3 -s -D</code> запустить сервер в фоновом режиме как службу (--daemon) <br />
+<code>Get-NetTCPConnection -State Established,Listen | ? LocalPort -Match 5201</code> проверить, что порт сервера слушает <br />
+<code>Get-Process -Id $(Get-NetTCPConnection -State Established,Listen | ? LocalPort -Match 5201).OwningProcess</code> получить процесс по порту <br />
+<code>Get-Process iperf3 | Stop-Process</code> остановить процесс <br />
+<code>iperf3 -s -D --logfile "$home\Documents\iperf3\iperf3.log"</code> перенаправить вывод в лог файл <br />
+<code>iperf3 -s -p 5211</code> указать порт, на котором будет слушать сервер или отправлять запросы клиент <br />
+<code>iperf3 -s -p 5211 -f M</code> изменить формат выводимых данных (измерять в байтах а не в битах, доступные значения: K,M,G,T) <br />
+<code>iperf3 -s -p 5211 -f M -J</code> вывод в формате json <br />
+<code>iperf3 -s -p 5211 -f M -V</code> вывод подробной информации</p>
+<h3 id="client"><a class="header" href="#client">Client</a></h3>
+<p><code>iperf3 -c 192.168.3.100 -p 5211</code> подключение к серверу (по умолчанию проверяется отдача на сервер с клиента) <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R</code> обратный тест, проверка скачивания с сервера (--reverse, сервер отправляет данные клиенту) <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R -P 2</code> количество одновременных потоков ([SUM] - суммарная скорость нескольки потоков) <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R -4</code> использовать только IPv4 <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R -u</code> использовать UDP вместо TCP <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R -u -b 2mb</code> установить битрейт в 2.00 Mbits/sec для UDP (по умолчанию 1 Мбит/сек, для TCP не ограничено) <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R -t 30</code> время одного теста в секундах (по умолчанию 10 секунд) <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R -n 1gb</code> указать объем данных для проверки (применяется вместо времени -t) <br />
+<code>iperf3 -c 192.168.3.100 -p 5211 -R --get-server-output</code> вывести вывод сервера на клиенте</p>
+<h3 id="output"><a class="header" href="#output">Output</a></h3>
+<p><code>sender</code> upload (скорость передачи на удаленный сервер) <br />
+<code>receiver</code> download (скорость скачивания с удаленного сервера) <br />
+<code>Interval</code> общее время сканирования <br />
+<code>Transfer</code> кол-во переданных и полученных МБайт <br />
+<code>Bandwidth</code> скорость передачи (измеряется в Мбит/c)</p>
+<h3 id="ps-iperf"><a class="header" href="#ps-iperf">PS-iPerf</a></h3>
+<p><code>Install-Module ps-iperf -Repository NuGet</code> <br />
+<code>Import-Module PS-iPerf</code> <br />
+<code>Start-iPerfServer -Port 5211</code> запустить сервер <br />
+<code>Get-iPerfServer</code> статус работы сервера <br />
+<code>Stop-iPerfServer</code> остановить сервер <br />
+<code>Connect-iPerfServer -Server 192.168.3.100 -Port 5211 -MBytes 500 -Download</code> подключиться к серверу и скачать 500 МБайт <br />
+<code>$SpeedTest = Connect-iPerfServer -Server 192.168.3.100 -Port 5211 -MBytes 500 -LogWrite</code> передать 500 МБайт на сервер (вести запись в лог-файл) <br />
+<code>$SpeedTest.Intervals</code> метрики измерений <br />
+<code>Get-iPerfLog</code> прочитать лог-файл</p>
+<h1 id="rdp"><a class="header" href="#rdp">RDP</a></h1>
+<p><code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber"</code> отобразить номер текущего RDP порта <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "PortNumber" -Value "3390"</code> изменить RDP-порт <br />
+<code>$(Get-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\" -Name "fDenyTSConnections").fDenyTSConnections</code> если 0, то включен <br />
+<code>Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\" -Name "fDenyTSConnections" -Value 0</code> включить RDP <br />
+<code>reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f</code> <br />
+<code>(gcim -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(0)</code> включить RDP (для Windows Server) <br />
+<code>Get-Service TermService | Restart-Service -Force</code> перезапустить rdp-службу <br />
+<code>New-NetFirewallRule -Profile Any -DisplayName "RDP 3390" -Direction Inbound -Protocol TCP -LocalPort 3390</code> открыть RDP-порт</p>
+<h3 id="ipban"><a class="header" href="#ipban">IPBan</a></h3>
+<p><code>auditpol /get /category:*</code> отобразить все политики аудита <br />
+<code>auditpol /get /category:Вход/выход</code> отобразить локальные политики аудита для Входа и Выхода из системы <br />
+<code>auditpol /set /subcategory:"Вход в систему" /success:enable /failure:enable</code> включить локальные политики - Аудит входа в систему <br />
+<code>auditpol /set /subcategory:"Выход из системы" /success:enable /failure:enable</code></p>
+<p><code>$url = $($(Invoke-RestMethod https://api.github.com/repos/DigitalRuby/IPBan/releases/latest).assets | Where-Object name -match ".+win.+x64.+").browser_download_url</code> получить ссылку для загрузки последней версии <br />
+<code>$version = $(Invoke-RestMethod https://api.github.com/repos/DigitalRuby/IPBan/releases/latest).tag_name</code> получить номер последней версии <br />
+<code>$path = "$home\Documents\ipban-$version"</code> путь для установки <br />
+<code>Invoke-RestMethod $url -OutFile "$home\Downloads\IPBan-$version.zip"</code> скачать дистрибутив <br />
+<code>Expand-Archive "$home\Downloads\ipban-$version.zip" -DestinationPath $path</code> разархивировать в путь для установки <br />
+<code>Remove-Item "$home\Downloads\ipban-$version.zip"</code> удалить дистрибутив <br />
+<code>sc create IPBan type=own start=delayed-auto binPath="$path\DigitalRuby.IPBan.exe" DisplayName=IPBan</code> создать службу <br />
+<code>Get-Service IPBan</code> статус службы <br />
+<code>$conf = $(Get-Content "$path\ipban.config")</code> читаем конфигурацию <br />
+<code>$conf = $conf -replace '&lt;add key="Whitelist" value=""/&gt;','&lt;add key="Whitelist" value="192.168.3.0/24"/&gt;'</code> добавить в белый лист домашнюю сеть для исключения <br />
+<code>$conf = $conf -replace '&lt;add key="ProcessInternalIPAddresses" value="false"/&gt;','&lt;add key="ProcessInternalIPAddresses" value="true"/&gt;'</code> включить обработку локальных (внутренних) ip-адресов <br />
+<code>$conf = $conf -replace '&lt;add key="FailedLoginAttemptsBeforeBanUserNameWhitelist" value="20"/&gt;','&lt;add key="FailedLoginAttemptsBeforeBanUserNameWhitelist" value="5"/&gt;'</code> указать количество попыток подключения до блокировки <br />
+<code>$conf = $conf -replace '&lt;add key="ExpireTime" value="01:00:00:00"/&gt;','&lt;add key="ExpireTime" value="00:01:00:00"/&gt;'</code> задать время блокировки 1 час <br />
+<code>$conf &gt; "$path\ipban.config"</code> обновить конфигурацию <br />
+<code>Get-Service IPBan | Start-Service</code> запустить службу</p>
+<pre><code>Get-NetFirewallRule | Where-Object DisplayName -Match "IPBan" | ForEach-Object {
+    $Name = $_.DisplayName
+    Get-NetFirewallAddressFilter -AssociatedNetFirewallRule $_ | Select-Object @{Name="Name"; Expression={$Name}},LocalIP,RemoteIP
+} # отобразить область применения правил Брандмауэра для IPBan
+</code></pre>
+<p><code>Get-Content -Wait "$path\logfile.txt"</code> читать лог <br />
+<code>Get-Service IPBan | Stop-Service</code> остановить службу <br />
+<code>sc delete IPBan</code> удалить службу</p>
+<h1 id="sockets"><a class="header" href="#sockets">Sockets</a></h1>
+<h3 id="udp-socket"><a class="header" href="#udp-socket">UDP-Socket</a></h3>
+<p><a href="https://cloudbrothers.info/en/test-udp-connection-powershell/">Source</a></p>
+<pre><code class="language-PowerShell">function Start-UDPServer {
+    param(
+        $Port = 5201
+    )
+    $RemoteComputer = New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any, 0)
+    do {
+        $UdpObject = New-Object System.Net.Sockets.UdpClient($Port)
+        $ReceiveBytes = $UdpObject.Receive([ref]$RemoteComputer)
+        $UdpObject.Close()
+        $ASCIIEncoding = New-Object System.Text.ASCIIEncoding
+        [string]$ReturnString = $ASCIIEncoding.GetString($ReceiveBytes)
+        [PSCustomObject]@{
+            LocalDateTime = $(Get-Date -UFormat "%Y-%m-%d %T")
+            ClientIP      = $RemoteComputer.address.ToString()
+            ClientPort    = $RemoteComputer.Port.ToString()
+            Message       = $ReturnString
+        }
+    } while (1)
+}
+</code></pre>
+<p><code>Start-UDPServer -Port 5201</code></p>
+<h3 id="test-netudpconnection"><a class="header" href="#test-netudpconnection">Test-NetUDPConnection</a></h3>
+<pre><code class="language-PowerShell">function Test-NetUDPConnection {
+    param(
+        [string]$ComputerName = "127.0.0.1",
+        [int32]$PortServer = 5201,
+        [int32]$PortClient = 5211,
+        $Message
+    )
+    begin {
+        $UdpObject = New-Object system.Net.Sockets.Udpclient($PortClient)
+        $UdpObject.Connect($ComputerName, $PortServer)
+    }
+    process {
+        $ASCIIEncoding = New-Object System.Text.ASCIIEncoding
+        if (!$Message) { $Message = Get-Date -UFormat "%Y-%m-%d %T" }
+        $Bytes = $ASCIIEncoding.GetBytes($Message)
+        [void]$UdpObject.Send($Bytes, $Bytes.length)
+    }
+    end {
+        $UdpObject.Close()
+    }
+}
+</code></pre>
+<p><code>Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 5201</code> <br />
+<code>Test-NetUDPConnection -ComputerName 127.0.0.1 -PortServer 514 -Message "&lt;30&gt;May 31 00:00:00 HostName multipathd[784]: Test message"</code></p>
+<h3 id="tcp-socket"><a class="header" href="#tcp-socket">TCP-Socket</a></h3>
+<pre><code class="language-PowerShell">function Start-TCPServer {
+    param(
+        $Port = 5201
+    )
+    do {
+        $TcpObject = New-Object System.Net.Sockets.TcpListener($port)
+        $ReceiveBytes = $TcpObject.Start()
+        $ReceiveBytes = $TcpObject.AcceptTcpClient()
+        $TcpObject.Stop()
+        $ReceiveBytes.Client.RemoteEndPoint | select Address, Port
+    } while (1)
+}
+</code></pre>
+<p><code>Start-TCPServer -Port 5201</code> <br />
+<code>Test-NetConnection -ComputerName 127.0.0.1 -Port 5201</code></p>
+<h3 id="wakeonlan"><a class="header" href="#wakeonlan">WakeOnLan</a></h3>
+<p>Broadcast package consisting of 6 byte filled "0xFF" and then 96 byte where the mac address is repeated 16 times</p>
+<pre><code class="language-PowerShell">function Send-WOL {
+    param (
+        [Parameter(Mandatory = $True)]$Mac,
+        $IP,
+        [int]$Port = 9
+    )
+    $Mac = $Mac.replace(":", "-")
+    if (!$IP) { $IP = [System.Net.IPAddress]::Broadcast }
+    $SynchronizationChain = [byte[]](, 0xFF * 6)
+    $ByteMac = $Mac.Split("-") | % { [byte]("0x" + $_) }
+    $Package = $SynchronizationChain + ($ByteMac * 16)
+    $UdpClient = New-Object System.Net.Sockets.UdpClient
+    $UdpClient.Connect($IP, $port)
+    $UdpClient.Send($Package, $Package.Length)
+    $UdpClient.Close()
+}
+</code></pre>
+<p><code>Send-WOL -Mac "D8-BB-C1-70-A3-4E"</code> <br />
+<code>Send-WOL -Mac "D8-BB-C1-70-A3-4E" -IP 192.168.3.100</code></p>
+<h3 id="httplistener"><a class="header" href="#httplistener">HTTPListener</a></h3>
+<pre><code class="language-PowerShell">$httpListener = New-Object System.Net.HttpListener
+$httpListener.Prefixes.Add("http://+:8888/")
+$httpListener.Start()
+while (!([console]::KeyAvailable)) {
+    $info = Get-Service | select name, status | ConvertTo-HTML
+    $context = $httpListener.GetContext()
+    $context.Response.StatusCode = 200
+    $context.Response.ContentType = 'text/HTML'
+    $WebContent = $info
+    $EncodingWebContent = [Text.Encoding]::UTF8.GetBytes($WebContent)
+    $context.Response.OutputStream.Write($EncodingWebContent , 0, $EncodingWebContent.Length)
+    $context.Response.Close()
+    Get-NetTcpConnection -LocalPort 8888
+(Get-Date).datetime
+}
+$httpListener.Close()
+</code></pre>
+<h3 id="webclient"><a class="header" href="#webclient">WebClient</a></h3>
+<p><code>[System.Net.WebClient] | Get-Member</code> <br />
+<code>(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell-Commands/rsa/README.md")</code></p>
+<h3 id="httpclient"><a class="header" href="#httpclient">HttpClient</a></h3>
+<pre><code class="language-PowerShell">$url = "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip"
+$path = "$home\Downloads\$(Split-Path -Path $url -Leaf)"
+$httpClient = [System.Net.Http.HttpClient]::new()
+# Выполнение GET-запроса для загрузки файла (считывая заголовки ответа)
+$response = $httpClient.GetAsync($url, [System.Net.Http.HttpCompletionOption]::ResponseHeadersRead).Result
+# Получение потока содержимого из заголовка ответа
+$stream = $response.Content.ReadAsStreamAsync().Result
+# Открытие файла для записи
+$fileStream = [System.IO.File]::OpenWrite($path)
+try {
+    # Создание буфера размером 81920 байт (80 КБ) для чтения данных из потока
+    $buffer = New-Object byte[] 81920
+    # Чтение данных из потока и запись их в файл
+    while (($bytesRead = $stream.Read($buffer, 0, $buffer.Length)) -ne 0) {
+        $fileStream.Write($buffer, 0, $bytesRead)
+    }
+}
+finally {
+    # Освобождение ресурсов, связанных с потоками
+    $stream.Dispose()
+    $fileStream.Dispose()
+}
+</code></pre>
+<h3 id="certificate"><a class="header" href="#certificate">Certificate</a></h3>
+<pre><code class="language-PowerShell">function Get-WebCertificate ($srv) {
+    $iwr = iwr $srv
+    $status_code = $iwr.StatusCode
+    $status = $iwr.BaseResponse.StatusCode
+    $info = $iwr.BaseResponse.Server
+    $spm = [System.Net.ServicePointManager]::FindServicePoint($srv)
+    $date_end = $spm.Certificate.GetExpirationDateString()
+    $cert_name = ($spm.Certificate.Subject) -replace "CN="
+    $cert_owner = ((($spm.Certificate.Issuer) -split ", ") | where { $_ -match "O=" }) -replace "O="
+    $Collections = New-Object System.Collections.Generic.List[System.Object]
+    $Collections.Add([PSCustomObject]@{
+            Host        = $srv;
+            Server      = $info;
+            Status      = $status;
+            StatusCode  = $status_code;
+            Certificate = $cert_name;
+            Issued      = $cert_owner;
+            End         = $date_end
+        })
+    $Collections
+}
+</code></pre>
+<p><code>Get-WebCertificate https://google.com</code></p>
+<h1 id="smtp"><a class="header" href="#smtp">SMTP</a></h1>
+<h3 id="netmail"><a class="header" href="#netmail">Net.Mail</a></h3>
+<pre><code class="language-PowerShell">function Send-SMTP {
+param (
+    [Parameter(Mandatory = $True)]$mess
+)
+    $srv_smtp = "smtp.yandex.ru" 
+    $port = "587"
+    $from = "login1@yandex.ru" 
+    $to = "login2@yandex.ru" 
+    $user = "login1"
+    $pass = "password"
+    $subject = "PowerShell"
+    $Message = New-Object System.Net.Mail.MailMessage
+    $Message.From = $from
+    $Message.To.Add($to) 
+    $Message.Subject = $subject 
+    $Message.IsBodyHTML = $true 
+    $Message.Body = "&lt;h1&gt; $mess &lt;/h1&gt;"
+    $smtp = New-Object Net.Mail.SmtpClient($srv_smtp, $port)
+    $smtp.EnableSSL = $true 
+    $smtp.Credentials = New-Object System.Net.NetworkCredential($user, $pass);
+    $smtp.Send($Message) 
+}
+</code></pre>
+<p><code>Send-SMTP "This is a test email from PowerShell"</code></p>
+<h3 id="smtp-over-openssl"><a class="header" href="#smtp-over-openssl">SMTP over OpenSSL</a></h3>
+<pre><code class="language-Bash"># Получить логин и пароль в формате Base64
+echo -n "fromUserName@yandex.ru" | base64 # ZnJvbVVzZXJOYW1lQHlhbmRleC5ydQ==
+echo -n "app-password" | base64 # YXBwLXBhc3N3b3Jk
+# Подключаемся к серверу через OpenSSL и авторизуемся
+openssl s_client -connect smtp.yandex.ru:465 -crlf -quiet
+# 220 Ok
+EHLO hv-dev-101
+AUTH LOGIN
+ZnJvbVVzZXJOYW1lQHlhbmRleC5ydQ==
+YXBwLXBhc3N3b3Jk
+# 235 Authentication successful
+# Отправляем письмо
+MAIL FROM:&lt;fromUserName@yandex.ru&gt;
+RCPT TO:&lt;toUserName@yandex.ru&gt;
+DATA
+Subject: OpenSSL
+# Отделить тему от тела письма пустой строкой
+This is a test email from OpenSSL
+.
+# 250 Ok
+</code></pre>
+<h3 id="swaks"><a class="header" href="#swaks">Swaks</a></h3>
+<p><a href="https://github.com/jetmore/swaks">Swaks</a> - SMTP клиент на Perl</p>
+<pre><code class="language-bash">swaks --from fromUserName@yandex.ru \
+    --to toUserName@yandex.ru \
+    --server smtp.yandex.ru \
+    --port 587 \
+    --auth LOGIN \
+    --auth-user fromUserName@yandex.ru \
+    --auth-password "app-password" \
+    --tls \
+    --header "Subject: Test Subject" \
+    --body "This is the body test from swaks"
+</code></pre>
+<h1 id="route"><a class="header" href="#route">Route</a></h1>
+<p><code>Get-Service RemoteAccess | Stop-Service</code> <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" -Name "IPEnableRouter" -Value 1</code> включает IP маршрутизацию <br />
+<code>(Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters").IPEnableRouter</code> <br />
+<code>Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | ft</code> отобразить сетевые интерфейсы <br />
+<code>Set-NetIPInterface -ifIndex 13 -Forwarding Enabled</code> включить переадресацию на интерфейсе</p>
+<p><code>sysctl net.ipv4.ip_forward=1</code> <br />
+<code>echo "sysctl net.ipv4.ip_forward = 1" &gt;&gt; /etc/sysctl.conf</code></p>
+<p><code>Get-NetRoute</code> <br />
+<code>New-NetRoute -DestinationPrefix "192.168.3.0/24" -NextHop "192.168.4.1" -InterfaceIndex 8</code> <br />
+<code>route -p add 192.168.3.0 mask 255.255.255.0 192.168.4.1 metric 1</code> <br />
+<code>route -p change 192.168.3.0 mask 255.255.255.0 192.168.4.1 metric 2</code> <br />
+<code>route -p add 192.168.3.0 mask 255.255.255.0 192.168.4.1 metric 1 if 7</code> указать номер сетевого интерфейса на который необходимо посылать пакет (Wintun Userspace Tunnel) <br />
+<code>route print -4</code> <br />
+<code>route delete 192.168.3.0</code></p>
+<p><code>tracert 192.168.3.101</code> с 192.168.4.6</p>
+<pre><code>1    17 ms     *       22 ms  192.168.4.1
+2    12 ms    13 ms    14 ms  192.168.3.101
+</code></pre>
+<p><code>route add -net 192.168.4.0 netmask 255.255.255.0 gw 192.168.3.100</code> <br />
+<code>route -e</code></p>
+<p><code>traceroute 192.168.4.6</code> с 192.168.3.101</p>
+<pre><code>1  192.168.3.100 (192.168.3.100)  0.148 ms  0.110 ms  0.106 ms
+2  192.168.4.6 (192.168.4.6)  14.573 ms * *
+</code></pre>
+<p><code>ping 192.168.3.101 -t</code> с 192.168.4.6 <br />
+<code>tcpdump -n -i ens33 icmp</code> на 192.168.3.101</p>
+<pre><code>14:36:34.533771 IP 192.168.4.6 &gt; 192.168.3.101: ICMP echo request, id 1, seq 2962, length 40 # отправил запрос
+14:36:34.533806 IP 192.168.3.101 &gt; 192.168.4.6: ICMP echo reply, id 1, seq 2962, length 40 # отправил ответ
+</code></pre>
+<h1 id="nat"><a class="header" href="#nat">NAT</a></h1>
+<p><code>Get-Command -Module NetNat</code> <br />
+<code>New-NetNat -Name LocalNat -InternalIPInterfaceAddressPrefix "192.168.3.0/24"</code> <br />
+<code>Add-NetNatStaticMapping -NatName LocalNat -Protocol TCP -ExternalIPAddress 0.0.0.0 -ExternalPort 80 -InternalIPAddress 192.168.3.102 -InternalPort 80</code> <br />
+<code>Remove-NetNatStaticMapping -StaticMappingID 0</code> <br />
+<code>Remove-NetNat -Name LocalNat</code></p>
+<h1 id="wireguard"><a class="header" href="#wireguard">WireGuard</a></h1>
+<p><code>Invoke-WebRequest "https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi" -OutFile "$home\Downloads\WireGuard-Client-0.5.3.msi"</code> <br />
+<code>msiexec.exe /i "$home\Downloads\WireGuard-Client-0.5.3.msi" DO_NOT_LAUNCH=1 /qn</code> <br />
+<code>Invoke-WebRequest "http://www.wiresock.net/downloads/wiresock-vpn-gateway-x64-1.1.4.1.msi" -OutFile "$home\Downloads\WireSock-VPN-Gateway-1.1.4.1.msi"</code> <br />
+<code>msiexec.exe /i "http://www.wiresock.net/downloads/wiresock-vpn-gateway-x64-1.1.4.1.msi" /qn</code> <br />
+<code>$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")</code> <br />
+<code>wg-quick-config -add -start</code> <br />
+<code>26.115.154.67:8181</code> <br />
+<code>192.168.21.4/24</code> <br />
+<code>Successfully saved client configuration: C:\ProgramData\NT KERNEL\WireSock VPN Gateway\wsclient_1.conf</code> <br />
+<code>Successfully saved server configuration: C:\ProgramData\NT KERNEL\WireSock VPN Gateway\wiresock.conf</code> <br />
+<code>get-service *wire*</code> <br />
+<code>wg show</code> <br />
+<code>wg-quick-config -add -restart</code> add client</p>
+<p>wiresock.conf</p>
+<pre><code>[Interface]
+PrivateKey = gCHC0g2JPwr6sXPiaOL4/KTkMyjN9TculrJUA/GORV8=
+Address = 192.168.21.5/24
+ListenPort = 8181
+
+[Peer]
+PublicKey = NoSxjew2RCHiUzI6mlahjd4I+0EcLsoYom/H01z91yU=
+AllowedIPs = 192.168.21.6/32
+</code></pre>
+<p>wsclient_1.conf (добавить маршруты для клиента в AllowedIPs)</p>
+<pre><code>[Interface]
+PrivateKey = yIpRQRmaGrrk9Y+49E8JhEpFmKzSeecvUAdeNgf1hUM=
+Address = 192.168.21.6/24
+DNS = 8.8.8.8, 1.1.1.1
+MTU = 1420
+
+[Peer]
+PublicKey = Fp7674VSYeGj8CYt6RCKR7Qz1y/IKUXCw8ImOFhX3hk=
+AllowedIPs = 192.168.21.0/24, 192.168.3.0/24
+Endpoint = 26.115.154.67:8181
+PersistentKeepalive = 25
+</code></pre>
+<h1 id="vpnclient"><a class="header" href="#vpnclient">VpnClient</a></h1>
+<p><code>Get-Command -Module VpnClient</code> <br />
+<code>Add-VpnConnection -Name "vpn-failon" -ServerAddress "26.115.154.67" -TunnelType L2TP -L2tpPsk "123098" -EncryptionLevel "Required" -AuthenticationMethod MSChapv2 -RememberCredential -AllUserConnection –PassThru -Force</code> <br />
+<code>-TunnelType PPTP/L2TP/SSTP/IKEv2/Automatic</code> <br />
+<code>-L2tpPsk</code> использовать общий ключ для аутентификации (без параметра, для L2TP аутентификации используется сертификат) <br />
+<code>-AuthenticationMethod Pap/Chap/MSChapv2/Eap/MachineCertificate</code> <br />
+<code>-EncryptionLevel NoEncryption/Optional/Required/Maximum/Custom</code> <br />
+<code>-SplitTunneling</code> заворачивать весь трафик через VPN-туннель (включение Use default gateway on remote network в настройках параметра VPN адаптера) <br />
+<code>-UseWinlogonCredential</code> использовать учетные данные текущего пользователя для аутентификации на VPN сервере <br />
+<code>-RememberCredential</code> разрешить сохранять учетные данные для VPN подключения (учетная запись и пароль сохраняются в диспетчер учетных данных Windows после первого успешного подключения) <br />
+<code>-DnsSuffix domain.local</code> <br />
+<code>-AllUserConnection</code> разрешить использовать VPN подключение для всех пользователей компьютера (сохраняется в конфигурационный файл: C:\ProgramData\Microsoft\Network\Connections\Pbk\rasphone.pbk)</p>
+<p><code>Install-Module -Name VPNCredentialsHelper</code> модуль для сохранения логина и пароля в Windows Credential Manager для VPN подключения <br />
+<code>Set-VpnConnectionUsernamePassword -connectionname vpn-failon -username user1 -password password</code></p>
+<p><code>rasdial "vpn-failon"</code> подключиться <br />
+<code>Get-VpnConnection -AllUserConnection | select *</code> список VPN подключения, доступных для всех пользователей, найстройки и текущий статус подключения (ConnectionStatus) <br />
+<code>Add-VpnConnectionRoute -ConnectionName vpn-failon -DestinationPrefix 192.168.3.0/24 –PassThru</code> динамически добавить в таблицу маршрутизации маршрут, который будет активен при подключении к VPN <br />
+<code>Remove-VpnConnection -Name vpn-failon -AllUserConnection -Force</code> удалить</p>
+<p><code>Set-VpnConnection -Name "vpn-failon" -SplitTunneling $True</code> включить раздельное тунеллирование <br />
+<code>Add-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix 172.22.22.0/24</code> настроить маршрутизацию к указанной подсети через VPN-соединение <br />
+<code>(Get-VpnConnection -ConnectionName "vpn-failon").routes</code> отобразить таблицу маршрутизации для указанного соединения <br />
+<code>Remove-VpnConnectionRoute -ConnectionName "vpn-failon" -DestinationPrefix "172.22.23.0/24"</code></p>
+<h1 id="proxyclient"><a class="header" href="#proxyclient">ProxyClient</a></h1>
+<p><code>$user = "lifailon"</code> <br />
+<code>$pass = "Proxy"</code> <br />
+<code>$SecureString = ConvertTo-SecureString $pass -AsPlainText -Force</code> <br />
+<code>$Credential = New-Object System.Management.Automation.PSCredential($user, $SecureString)</code> <br />
+<code>[System.Net.Http.HttpClient]::DefaultProxy = New-Object System.Net.WebProxy("http://192.168.3.100:9090")</code> <br />
+<code>[System.Net.Http.HttpClient]::DefaultProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials</code> <br />
+<code>[System.Net.Http.HttpClient]::DefaultProxy.Credentials = $Credential</code> <br />
+<code>Invoke-RestMethod http://ifconfig.me/ip</code> узнать внешний ip-адрес (по умолчанию в текущей сессии подключения будут происходить через заданный прокси сервер) <br />
+<code>Invoke-RestMethod https://kinozal.tv/rss.xml</code></p>
+<h1 id="netsh"><a class="header" href="#netsh">netsh</a></h1>
+<h3 id="reverse-proxy"><a class="header" href="#reverse-proxy">Reverse Proxy</a></h3>
+<p><code>netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=192.168.3.108</code> настраивает входящее подключение на 8080 порту и переадресует трафик на 80 порт указанного хоста <br />
+<code>netsh interface portproxy show all</code> отобразить список всех настроек <br />
+<code>netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=0.0.0.0</code> удалить переадресацию</p>
+<h3 id="wlan"><a class="header" href="#wlan">Wlan</a></h3>
+<p><code>netsh wlan show profile</code> список сохраненны профилей Wi-Fi и паролей <br />
+<code>netsh wlan show interfaces</code> хар-ки текущей сети (MAC, speed) <br />
+<code>netsh wlan show profile SSID-Name-Network key=clear</code> очистить пароль <br />
+<code>netsh wlan show networks</code> список видемых сетей <br />
+<code>netsh wlan disconnect</code> отключиться от Wi-Fi <br />
+<code>netsh wlan connect name="SSID-Name-Network"</code> подключиться <br />
+<code>netsh wlan show drivers</code> драйвер Wi-Fi <br />
+<code>netsh wlan set hostednetwork mode=allow ssid="WiFi-Test" key="password"</code> создание точки доступа Wi-Fi (SoftAP)</p>
+<h3 id="firewall"><a class="header" href="#firewall">Firewall</a></h3>
+<p><code>netsh advfirewall set allprofiles state off</code> отключить fw <br />
+<code>netsh advfirewall reset</code> сбросить настройки <br />
+<code>netsh advfirewall firewall add rule name="Open Remote Desktop" protocol=TCP dir=in localport=3389 action=allow</code> открыть порт 3389 <br />
+<code>netsh advfirewall firewall add rule name="All ICMP V4" dir=in action=allow protocol=icmpv4</code> открыть icmp</p>
+<h1 id="pki"><a class="header" href="#pki">pki</a></h1>
+<p><code>New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName "$env:computername" -FriendlyName "Test Certificate" -NotAfter (Get-Date).AddYears(5)</code> создать самоподписанный сертификат (в LocalMachine\My - Сертификаты компьютера\Личное) с сроком действия 5 лет</p>
+<p><code>Get-ChildItem -Path Cert:\CurrentUser\Root\</code> список всех установленных сертификатов в хранилище Доверенные корневые ЦС Текущего пользователя <br />
+<code>Get-ChildItem -Path Cert:\CurrentUser\My\</code> список самозаверяющих сертификатов в Личное хранилище Текущего пользователя <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\</code> список самозаверяющих сертификатов в Личное хранилище Локального компьютера <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\ | select NotBefore,NotAfter,Thumbprint,Subject</code> срок действия сертификата <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\ | where Thumbprint -eq D9356FB774EE0E6206B7D5B59B99102CA5B17BDA</code> поиск сертификат по отпечатку</p>
+<p><code>Get-ChildItem -Path $env:APPDATA\Microsoft\SystemCertificates\My\Certificates\</code> сертификаты в файловой системе, каждый файл соответствует сертификату, установленному в личном хранилище текущего пользователя <br />
+<code>Get-ChildItem -Path $env:APPDATA\Microsoft\SystemCertificates\My\Keys\</code> ссылки на объекты закрытых ключей, созданных поставщиком хранилища ключей (KSP) <br />
+<code>Get-ChildItem -Path HKCU:\Software\Microsoft\SystemCertificates\CA\Certificates | ft -AutoSize</code> список сертификатов в реестре вошедшего в систему пользователя</p>
+<p><code>$cert = (Get-ChildItem -Path Cert:\CurrentUser\My\)[1]</code> выбрать сертификат <br />
+<code>$cert | Remove-Item</code> удалить сертификат</p>
+<p><code>Export-Certificate -FilePath $home\Desktop\certificate.cer -Cert $cert</code> экспортировать сертификат <br />
+<code>$cert.HasPrivateKey</code> проверить наличие закрытого ключа <br />
+<code>$pass = "password" | ConvertTo-SecureString -AsPlainText -Force</code> создать пароль для шифрования закрытого ключа <br />
+<code>Export-PfxCertificate -FilePath $home\Desktop\certificate.pfx -Password $pass -Cert $certificate</code> экспортировать сертификат с закрытым ключем</p>
+<p><code>Import-Certificate -FilePath $home\Desktop\certificate.cer -CertStoreLocation Cert:\CurrentUser\My</code> импортировать сертификат <br />
+<code>Import-PfxCertificate -Exportable -Password $pass -CertStoreLocation Cert:\CurrentUser\My -FilePath $home\Desktop\certificate.pfx</code></p>
+<h1 id="openssl"><a class="header" href="#openssl">OpenSSL</a></h1>
+<pre><code class="language-PowerShell">Invoke-WebRequest -Uri https://slproweb.com/download/Win64OpenSSL_Light-3_1_1.msi -OutFile $home\Downloads\OpenSSL-Light-3.1.1.msi
+Start-Process $home\Downloads\OpenSSL-Light-3.1.1.msi -ArgumentList '/quiet' -Wait` установить msi пакет в тихом режиме (запуск от имени Администратора)
+rm $home\Downloads\OpenSSL-Light-3.1.1.msi
+cd "C:\Program Files\OpenSSL-Win64\bin"
+</code></pre>
+<ul>
+<li>
+<p>Изменить пароль для PFX <br />
+<code>openssl pkcs12 -in "C:\Cert\domain.ru.pfx" -out "C:\Cert\domain.ru.pem" -nodes</code> экспортируем имеющийся сертификат и закрытый ключ в .pem-файл без пароля с указанием текущего пароля <br />
+<code>openssl pkcs12 -export -in "C:\Cert\domain.ru.pem" -out "C:\Cert\domain.ru_password.pfx" -nodes</code> конвертируем .pem обратно в .pfx c указанием нового пароля</p>
+</li>
+<li>
+<p>Конвертация из закрытого и открытого ключа PEM в PFX <br />
+<code>openssl pkcs12 -export -in "C:\tmp\vpn\vpn.itproblog.ru-crt.pem" -inkey "C:\tmp\vpn\vpn.itproblog.ru-key.pem" -out "C:\tmp\vpn\vpn.iiproblog.ru.pfx"</code> <br />
+in – путь до файла с открытым ключом <br />
+inkey – путь до файла с закрытым ключом <br />
+out – путь до файла, в который будет конвертирован сертификат (pfx)</p>
+</li>
+<li>
+<p>Конвертация PFX в CRT <br />
+<code>openssl pkcs12 -in "C:\OpenSSL-Win64\bin\_.domain.ru.pfx" -clcerts -out "C:\OpenSSL-Win64\bin\_.domain.ru.crt"</code> указывается текущий и 2 раза новый пароль PEM pass phrase (файл содержит EGIN CERTIFICATE и BEGIN ENCRYPTED PRIVATE KEY) <br />
+<code>openssl pkcs12 -in "C:\OpenSSL-Win64\bin\_.domain.ru.pfx" -clcerts -nokeys -out "C:\OpenSSL-Win64\bin\_.domain.ru.crt"</code> без ключа, получить открытую часть (файл содержит только EGIN CERTIFICATE)</p>
+</li>
+<li>
+<p>Конвертация PFX в KEY <br />
+<code>openssl pkcs12 -in "C:\OpenSSL-Win64\bin\_.domain.ru.pfx" -nocerts -out "C:\OpenSSL-Win64\bin\_.domain.ru.key"</code> файл содержит только BEGIN ENCRYPTED PRIVATE KEY</p>
+</li>
+<li>
+<p>Снять пароль к закрытого ключа .key <br />
+<code>openssl rsa -in "C:\OpenSSL-Win64\bin\_.domain.ru.key" -out "C:\OpenSSL-Win64\bin\_.domain.ru-decrypted.key"</code></p>
+</li>
+<li>
+<p>CRT и KEY в PFX: <br />
+<code>openssl pkcs12 -inkey certificate.key -in certificate.crt -export -out certificate.pfx</code></p>
+</li>
+</ul>
+<h1 id="openvpn"><a class="header" href="#openvpn">OpenVPN</a></h1>
+<p><code>Invoke-WebRequest -Uri https://swupdate.openvpn.org/community/releases/OpenVPN-2.6.5-I001-amd64.msi -OutFile $home\Downloads\OpenVPN-2.6.5.msi</code> <br />
+<code>Start-Process $home\Downloads\OpenVPN-2.6.5.msi -ArgumentList '/quiet /SELECT_OPENSSL_UTILITIES=1' -Wait</code> <br />
+<code>msiexec /i $home\Downloads\OpenVPN-2.6.5.msi ADDLOCAL=EasyRSA /passive /quiet # установить отдельный компонент EasyRSA Certificate Management Scripts</code> <br />
+<code># msiexec /i $home\Downloads\OpenVPN-2.6.5.msi ADDLOCAL=OpenVPN.Service,Drivers,Drivers.Wintun,OpenVPN,OpenVPN.GUI,OpenVPN.GUI.OnLogon,EasyRSA /passive</code> выборочная установка <br />
+<code># Invoke-WebRequest -Uri https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.5/EasyRSA-3.1.5-win64.zip -OutFile $home\Downloads\EasyRSA-3.1.5.zip</code> скачать отдельный пакет EasyRSA <br />
+<code>rm $home\Downloads\OpenVPN-2.6.5.msi</code></p>
+<p><code>cd "C:\Program Files\OpenVPN\easy-rsa"</code> <br />
+<code>Copy-Item vars.example vars</code> файл конфигурации для EasyRSA</p>
+<pre><code>set_var EASYRSA_TEMP_DIR "$EASYRSA_PKI"
+set_var EASYRSA_REQ_COUNTRY "RU"
+set_var EASYRSA_REQ_PROVINCE "MSK"
+set_var EASYRSA_REQ_CITY "MSK"
+set_var EASYRSA_REQ_ORG "FAILON.NET"
+set_var EASYRSA_REQ_EMAIL "lifailon@domain.ru"
+set_var EASYRSA_REQ_OU "IT"
+#set_var EASYRSA_KEY_SIZE 2048
+#set_var EASYRSA_CA_EXPIRE 3650
+#set_var EASYRSA_CERT_EXPIRE 825
+</code></pre>
+<p><code>.\EasyRSA-Start.bat</code> среда EasyRSA Shell <br />
+<code>easyrsa init-pki</code> инициализация PKI, создает директорию: C:\Program Files\OpenVPN\easy-rsa\pki и читает переменные файла \easy-rsa\vars <br />
+<code>easyrsa build-ca</code> генерация корневого CA с указанием пароля и произвольное имя сервера (\pki\ca.crt и \pki\private\ca.key) <br />
+<code>easyrsa gen-req server nopass</code> генерация запроса сертификата и ключ для сервера OpenVPN - yes (\pki\reqs\server.req и \pki\private\server.key) <br />
+<code>easyrsa sign-req server server</code> подписать запрос на выпуск сертификата сервера с помощью CA - yes (\pki\issued\server.crt) <br />
+<code>easyrsa gen-dh</code> создать ключ Диффи-Хеллмана (\pki\dh.pem) <br />
+<code>easyrsa gen-req client1</code> nopass<code> генерация запроса сертификата и ключ для клиента OpenVPN (\pki\reqs\client1.req и \pki\private\client1.key)</code> <br />
+<code>easyrsa sign-req client client1</code> подписать запрос на выпуск сертификата клиента с помощью CA - yes (\pki\issued\client1.crt) <br />
+<code>easyrsa revoke client1</code> отозвать сертификат пользователя <br />
+<code>openssl rsa -in "C:\Program Files\OpenVPN\easy-rsa\pki\private\client1.key" -out "C:\Program Files\OpenVPN\easy-rsa\pki\private\client1_nopass.key"</code> снять защиту паролем для ключа (BEGIN ENCRYPTED PRIVATE KEY -&gt; BEGIN PRIVATE KEY) <br />
+<code>exit</code> <br />
+<code>cd "C:\Program Files\OpenVPN\bin"</code> <br />
+<code>.\openvpn --genkey secret ta.key</code> генерация ключа tls-auth (\bin\ta.key) <br />
+<code>Move-Item "C:\Program Files\OpenVPN\bin\ta.key" "C:\Program Files\OpenVPN\easy-rsa\pki\"</code></p>
+<h3 id="server-ovpn"><a class="header" href="#server-ovpn">server ovpn</a></h3>
+<p><code># Copy-Item "C:\Program Files\OpenVPN\sample-config\server.ovpn" "C:\Program Files\OpenVPN\config-auto\server.ovpn"</code> <br />
+<code>New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\server.ovpn"</code></p>
+<pre><code>port 1194
+proto udp
+# Что именно инкапсулировать в туннеле (ethernet фреймы - tap или ip пакеты - tun)
+dev tun
+ca "C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\ca.crt"
+cert "C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\issued\\server.crt"
+key "C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\private\\server.key"
+dh "C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\dh.pem"
+server 192.168.4.0 255.255.255.0
+# Хранит список сопоставления ip для клиентов, что бы назначить тот же адрес при перезапуске сервера
+# ifconfig-pool-persist "C:\\Program Files\\OpenVPN\\dhcp-client-list.txt"
+# Разрешить клиентам подключаться под одним ключом
+# duplicate-cn
+# max-clients 30
+# Разрешить обмен трафиком между клиентами
+client-to-client
+# compress
+tls-auth "C:\\Program Files\\OpenVPN\\easy-rsa\\pki\\ta.key" 0
+cipher AES-256-GCM
+keepalive 20 60
+# Не перечитавать файлы ключей при перезапуске туннеля
+persist-key
+# Оставляет без изменения устройства tun/tap при перезапуске OpenVPN
+persist-tun
+status "C:\\Program Files\\OpenVPN\\log\\status.log"
+log "C:\\Program Files\\OpenVPN\\log\\openvpn.log"
+verb 3
+mute 20
+windows-driver wintun
+# Открыть доступ к подсети за сервером
+push "route 192.168.3.0 255.255.255.0"
+push "route 192.168.4.0 255.255.255.0"
+# Завернуть все запросы клиента (в том числе Интернет трафик) на OpenVPN сервер
+# push "redirect-gateway def1"
+# push "dhcp-option DNS 192.168.3.101"
+# push "dhcp-option DOMAIN failon.net"
+</code></pre>
+<p><code>New-NetFirewallRule -DisplayName "AllowOpenVPN-In" -Direction Inbound -Protocol UDP –LocalPort 1194 -Action Allow</code> на сервере <br />
+<code>New-NetFirewallRule -DisplayName "AllowOpenVPN-Out" -Direction Outbound -Protocol UDP –LocalPort 1194 -Action Allow</code> на клиенте <br />
+<code>Get-Service *openvpn* | Restart-Service</code></p>
+<h3 id="client-ovpn"><a class="header" href="#client-ovpn">client ovpn</a></h3>
+<p><code># Copy-Item "C:\Program Files\OpenVPN\sample-config\client.ovpn" "C:\Program Files\OpenVPN\config-auto\client.ovpn"</code> <br />
+<code>New-Item -ItemType File -Path "C:\Program Files\OpenVPN\config-auto\client.ovpn"</code></p>
+<pre><code>client
+dev tun
+proto udp
+remote 26.115.154.67 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ca ca.crt
+cert client1.crt
+key client1.key
+remote-cert-tls server
+tls-auth ta.key 1
+cipher AES-256-GCM
+connect-retry-max 25
+# Использовать драйвер wintun и полный путь до сертификатов при использовании openvpn gui
+windows-driver wintun
+verb 3
+</code></pre>
+<h3 id="client-1"><a class="header" href="#client-1">Client</a></h3>
+<p><code>iwr -Uri https://openvpn.net/downloads/openvpn-connect-v3-windows.msi -OutFile "$home\downloads\OpenVPN-Connect-3.msi"</code> <br />
+Передать конфигурацию и ключи: <br />
+<code>client.ovpn</code> <br />
+<code>ca.crt</code> <br />
+<code>dh.pem</code> <br />
+<code>ta.key</code> <br />
+<code>client1.crt</code> <br />
+<code>client1.key</code></p>
+<h1 id="openssh"><a class="header" href="#openssh">OpenSSH</a></h1>
+<p><code>Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Client*'</code> <br />
+<code>Add-WindowsCapability -Online -Name OpenSSH.Client*</code> <br />
+<code>dism /Online /Add-Capability /CapabilityName:OpenSSH.Client~~~~0.0.1.0</code> <br />
+<code>iwr https://github.com/PowerShell/Win32-OpenSSH/releases/download/v9.2.2.0p1-Beta/OpenSSH-Win64-v9.2.2.0.msi -OutFile $home\Downloads\OpenSSH-Win64-v9.2.2.0.msi</code> скачать <br />
+<code>msiexec /i $home\Downloads\OpenSSH-Win64-v9.2.2.0.msi</code> установить msi пакет <br />
+<code>Set-Service sshd -StartupType Automatic</code> <br />
+<code>Get-NetTCPConnection | where LocalPort -eq 22</code> <br />
+<code>New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22</code> <br />
+<code>Get-NetFirewallRule -Name *ssh*</code> <br />
+<code>Start-Process notepad++ C:\Programdata\ssh\sshd_config</code> конфигурационный файл <br />
+<code>GSSAPIAuthentication yes</code> включить Kerberos аутентификацию (через AD) <br />
+<code>SyslogFacility LOCAL0</code> включить локальное ведение журнала в файл (C:\ProgramData\ssh\logs\sshd.log) <br />
+<code>LogLevel INFO</code> <br />
+<code>Restart-Service sshd</code> <br />
+<code>ssh -K $srv</code> выполнить Kerberos аутентификацию <br />
+<code>ssh Lifailon@192.168.3.99 -p 22</code> <br />
+<code>pwsh -command Get-Service</code> <br />
+<code>ssh -L 3101:192.168.3.101:22 -R 3101:192.168.3.101:22 lifailon@192.168.3.101 -p 22</code> SSH Tunnel lifailon@localhost:3101 -&gt; 192.168.3.101:3101</p>
+<h3 id="psremoting-over-ssh"><a class="header" href="#psremoting-over-ssh">PSRemoting over SSH</a></h3>
+<p><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0</code> установка OpenSSH Server <br />
+<code>Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Ser*'</code> <br />
+<code>iex "&amp; { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI"</code> установка PowerShell Core последней версии (требуется на клиентской стороне) <br />
+<code>Set-Service -Name sshd -StartupType "Automatic"</code> <br />
+<code>Start-Service sshd</code> <br />
+<code>Get-NetTCPConnection -State Listen|where {$_.localport -eq '22'}</code> <br />
+<code>Enable-NetFirewallRule -Name *OpenSSH-Server*</code> <br />
+<code>New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Program Files\PowerShell\7\pwsh.exe" -PropertyType String –Force</code> изменить интерпритатор по умолчанию на pwsh <br />
+<code>notepad $Env:ProgramData\ssh\sshd_config</code></p>
+<p>PasswordAuthentication yes <br />
+Subsystem powershell c:/progra~1/powershell/7/pwsh.exe -sshs -NoLogo # запуск интерпретатора pwsh для удаленных SSH подключений</p>
+<p><code>Restart-Service sshd</code></p>
+<p><code>$session = New-PSSession -HostName 192.168.3.100 -Port 2121 -UserName lifailon -SSHTransport</code> <br />
+<code>Invoke-Command -Session $session -ScriptBlock {Get-Service}</code></p>
+<h1 id="winrm"><a class="header" href="#winrm">WinRM</a></h1>
+<p><code>Enter-PSSession -ComputerName $srv</code> подключиться к PowerShell сессии через PSRemoting. Подключение возможно только по FQDN-имени <br />
+<code>Invoke-Command $srv -ScriptBlock {Get-ComputerInfo}</code> выполнение команды через PSRemoting <br />
+<code>$session = New-PSSession $srv</code> открыть сессию <br />
+<code>Get-PSSession</code> отобразить активные сессии <br />
+<code>icm -Session $session {$srv = $using:srv}</code> передать переменную текущей сессии ($using) в удаленную <br />
+<code>Disconnect-PSSession $session</code> закрыть сессию <br />
+<code>Remove-PSSession $session</code> удалить сессию <br />
+<code>Import-Module -Name ActiveDirectory -PSSession $srv</code> импортировать модуль с удаленного компьютера в локальную сессию</p>
+<h3 id="winrm-configuration"><a class="header" href="#winrm-configuration">WinRM Configuration</a></h3>
+<p><code>winrm quickconfig -quiet</code> изменит запуск службы WinRM на автоматический, задаст стандартные настройки WinRM и добавить исключения для портов в fw <br />
+<code>Enable-PSRemoting –Force</code> включить PowerShell Remoting, работает только для доменного и частного сетевых профилей Windows <br />
+<code>Enable-PSRemoting -SkipNetworkProfileCheck -Force</code> для настройки компьютера в общей (public) сети (работает с версии powershell 6)</p>
+<p><code>$NetProfiles = Get-NetConnectionProfile</code> отобразить профили сетевых подключений <br />
+<code>Set-NetConnectionProfile -InterfaceIndex $NetProfiles[1].InterfaceIndex -NetworkCategory Private</code> изменить тип сети для профиля (DomainAuthenticated/Public) <br />
+<code>(Get-CimInstance -ClassName Win32_ComputerSystem).PartOfDomain</code> проверить, что компьютер добавлен в домен AD <br />
+<code>Get-Service WinRM | Set-Service -StartupType AutomaticDelayedStart</code> отложенный запуск <br />
+<code>Get-Service -Name winrm -RequiredServices</code> статус зависимых служб <br />
+<code>New-NetFirewallRule -Profile Any -DisplayName "WinRM HTTP" -Direction Inbound -Protocol TCP -LocalPort 5985,5986</code> <br />
+<code>Test-NetConnection $srv -port 5895</code> проверить порт <br />
+<code>Test-WSMan $srv -ErrorAction Ignore</code> проверить работу WinRM на удаленном компьютере (игнорировать вывод ошибок для скрипта) или локально (localhost)</p>
+<p><code>$Cert = New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName "$env:computername" -FriendlyName "WinRM HTTPS Certificate" -NotAfter (Get-Date).AddYears(5)</code> создать самоподписанный сертификат <br />
+<code>$Thumbprint = $Cert.Thumbprint</code> забрать отпечаток <br />
+<code>New-Item -Path WSMan:\Localhost\Listener -Transport HTTPS -Address * -CertificateThumbprint $Thumbprint -Name WinRM_HTTPS_Listener -Force</code> создать прослушиватель <br />
+<code>New-NetFirewallRule -DisplayName 'WinRM HTTPS' -Profile Domain,Private -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5986</code> открыть порт в fw</p>
+<pre><code>$selector_set = @{
+    Address = "*"
+    Transport = "HTTPS"
+}
+$value_set = @{
+    CertificateThumbprint = "66ABFDA044D8C85135048186E2FDC0DBE6125163"
+}
+New-WSManInstance -ResourceURI "winrm/config/Listener" -SelectorSet $selector_set -ValueSet $value_set
+</code></pre>
+<p><code>winrm get winrm/config</code> отобразить всю конфигурацию (Client/Service) <br />
+<code>winrm get winrm/config/service/auth</code> конфигурация авторизации на сервере <br />
+<code>winrm enumerate winrm/config/listener</code> текущая конфигурация прослушивателей WinRM (отображает отпечаток сертификата для HTTPS 5986) <br />
+<code>Get-ChildItem -Path Cert:\LocalMachine\My\ | where Thumbprint -eq D9356FB774EE0E6206B7D5B59B99102CA5B17BDA | select *</code> информация о сертификате</p>
+<p><code>ls WSMan:\localhost\Client</code> конфигурацию клиента <br />
+<code>ls WSMan:\localhost\Service</code> конфигурация сервера <br />
+<code>ls WSMan:\localhost\Service\auth</code> список всех конфигураций аутентификации WinRM сервера <br />
+<code>Set-Item -path WSMan:\localhost\Service\auth\basic -value $true</code> разрешить локальную аутентификацию к текущему серверу <br />
+<code>ls HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WSMAN</code> настройки в реестре (например, для включения аудентификации в \Service\auth_basic = 1) <br />
+<code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.* -Force</code> добавить доверенные хосты в конфигурацию на клиенте, чтобы работала Negotiate аутентификация через NTLM <br />
+<code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.3.100 -Concatenate -Force</code> добавить второй компьютер <br />
+<code>ls WSMan:\localhost\Client\TrustedHosts</code> <br />
+<code>Set-Item WSMan:\localhost\Client\AllowUnencrypted $true</code> включить передача незашифрованных данных конфигурации клиента <br />
+<code>Set-Item WSMan:\localhost\Service\AllowUnencrypted $true</code> включить передача незашифрованных данных конфигурации сервера (необходимо быть в private сети)</p>
+<p><code>Get-PSSessionConfiguration</code> проверить, включен ли PSremoting и вывести список пользователей и групп, которым разрешено подключаться через WinRM <br />
+<code>Set-PSSessionConfiguration -Name Microsoft.PowerShell -ShowSecurityDescriptorUI</code> назначить права доступа через дескриптор безопасности текущей сессии (до перезагруки) <br />
+<code>(Get-PSSessionConfiguration -Name "Microsoft.PowerShell").SecurityDescriptorSDDL</code> получить настройки дескриптора в формате SDDL <br />
+<code>Set-PSSessionConfiguration -Name Microsoft.PowerShell -SecurityDescriptorSDDL $SDDL</code> применить настройки дескриптора на другом компьютере без использования GUI \</p>
+<p><code>New-LocalUser "WinRM-Writer" -Password (ConvertTo-SecureString -AsPlainText "123098")</code> создать пользователя <br />
+<code>Add-LocalGroupMember -Group "Remote Management Users" -Member "WinRM-Writer"</code> добавить пользователя WinRM-Writer в локальную группу доступа "Пользователи удаленного управления" <br />
+<code>cmdkey /add:192.168.3.99 /user:WinRM-Writer /pass:123098</code> сохранить пароль в CredentialManager
+<code>cmdkey /list</code> <br />
+<code>Import-Module CredentialManager</code> <br />
+<code>Add-Type -AssemblyName System.Web</code> <br />
+<code>New-StoredCredential -Target 192.168.3.99 -UserName WinRM-Writer -Password 123098 -Comment WinRM</code> сохранить пароль в CredentialManager (из PS5) <br />
+<code>Get-StoredCredential -AsCredentialObject</code> <br />
+<code>$cred = Get-StoredCredential -Target 192.168.3.99</code> <br />
+<code>Enter-PSSession -ComputerName 192.168.3.99 -Credential $cred -Authentication Negotiate</code> <br />
+<code>Enter-PSSession -ComputerName 192.168.3.99 -Credential $cred -Authentication Basic -Port 5985</code> работает при отключении allowunencrypted на стороне сервера и клиента <br />
+<code>winrs -r:http://192.168.3.100:5985/wsman -u:WinRM-Writer -p:123098 ipconfig</code> передать команду через winrs (-?) <br />
+<code>winrs -r:https://192.168.3.100:5985/wsman -u:WinRM-Writer -p:123098 -ssl ipconfig</code> через https <br />
+<code>pwsh -Command "Install-Module -Name PSWSMan"</code> установить модуль для использования в Linux системе</p>
+<h3 id="kerberos"><a class="header" href="#kerberos">Kerberos</a></h3>
+<p><code>.\CheckMaxTokenSize.ps1 -Principals login -OSEmulation $true -Details $true</code> узнать размер токена пользователя в домене <br />
+<code>Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Parameters | select maxtokensize</code> максимальный размер токена на сервере <br />
+<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\HTTP\Parameters</code> изменить размера, если заголовок пакета аутентификации превышает 16 Кб (из за большого кол-ва групп) <br />
+<code>MaxFieldLength увеличить до 0000ffff (65535)</code> <br />
+<code>MaxRequestBytes увеличить до 0000ffff (65535)</code></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../Docker/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../WindowsServer/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../Docker/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../WindowsServer/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

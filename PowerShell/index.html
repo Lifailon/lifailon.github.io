@@ -1,0 +1,3199 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>PowerShell - PowerShell Commands</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PowerShell Commands</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>+++
+title = "PowerShell Syntax"
+[extra]
+toc = true
+toc_sidebar = true
+go_to_top = true
++++</p>
+<p align="center">
+    <a href="https://github.com/Lifailon/PS-Commands"><img title="PS-Commands Logo"src="PS-Commands-Logo.png"></a>
+</p>
+<p align="center">
+    Синтаксис и работа с модулями в <b>PowerShell</b>.
+</p>
+<hr />
+<p align="center">
+<a href="https://github.com/Lifailon/PS-Commands"><img title="PowerShell Cheat Sheet RU"src="PowerShell-Cheat-Sheet-RU.jpg"></a>
+</p>
+<hr />
+<h1 id="help"><a class="header" href="#help">Help</a></h1>
+<p><code>Get-Verb</code> действия/глаголы, утвержденные для использования в командлетах <br />
+<code>Get-Command *Language*</code> поиск команды по имени <br />
+<code>(Get-Command Get-Language).Module</code> узнать к какому модулю принадлежит команда <br />
+<code>Get-Command Get-Content | fl Module,DLL</code> узнать принадлежность команды к модулю и dll <br />
+<code>Get-Command -Module LanguagePackManagement</code> отобразить список команд указанного модуля <br />
+<code>(Get-Module LanguagePackManagement).ExportedCommands.Values</code> отобразить список команд указанного модуля <br />
+<code>Get-Language | Get-Member</code> отобразить список методов команды (действия), объекты вывода и Event (события объектов: Click) <br />
+<code>(Get-Help Get-Service).Aliases</code> узнать псевдонимом команды <br />
+<code>Get-Alias gsv</code> узнать имя команды по псевдониму <br />
+<code>Get-Help Get-Service</code> синтаксис <br />
+<code>Get-Help Get-Service -Parameter *</code> описание всех параметров <br />
+<code>Get-Help Get-Service -Online</code> <br />
+<code>Get-Help Get-Service -ShowWindow</code> описание параметров в GUI с фильтрацией <br />
+<code>Show-Command</code> вывести список команд в GUI <br />
+<code>Show-Command Get-Service</code> список параметров команды в GUI <br />
+<code>Invoke-Expression</code> iex принимает текст для выполнения в консоли как команды <br />
+<code>$PSVersionTable</code> текущая версия PowerShell <br />
+<code>Set-ExecutionPolicy Unrestricted</code> <br />
+<code>Get-ExecutionPolicy</code> <br />
+<code>$Metadata = New-Object System.Management.Automation.CommandMetaData (Get-Command Get-Service)</code> получить информацию о командлете <br />
+<code>[System.Management.Automation.ProxyCommand]::Create($Metadata)</code> исходный код функции</p>
+<h1 id="object"><a class="header" href="#object">Object</a></h1>
+<h3 id="variable"><a class="header" href="#variable">Variable</a></h3>
+<p><code>$var = Read-Host "Enter"</code> ручной ввод <br />
+<code>$pass = Read-Host "Enter Password" -AsSecureString</code> скрывать набор <br />
+<code>$global:path = "\\path"</code> задать глобальную переменную, например в функции <br />
+<code>$using:srv</code> использовать переменную текущей сесси в Invoke-сессии <br />
+<code>Get-Variable</code> отобразить все переменные <br />
+<code>ls variable:/</code> отобразить все переменные <br />
+<code>Get-Variable *srv*</code> найти переменную по имени <br />
+<code>Get-Variable -Scope Global</code> отобразить все глобальные переменные <br />
+<code>Get-Variable Error</code> последняя команда с ошибкой <br />
+<code>Remove-Variable -Name *</code> очистить все переменные <br />
+<code>$LASTEXITCODE</code> содержит код вывода последней запущенной программы, например ping. Если код возврата положительный (True), то $LastExitCode = 0</p>
+<h3 id="env"><a class="header" href="#env">ENV</a></h3>
+<p><code>Get-ChildItem Env:</code> отобразить все переменные окружения <br />
+<code>$env:PSModulePath</code> директории импорта модулей <br />
+<code>$env:userprofile</code> <br />
+<code>$env:computername</code> <br />
+<code>$env:username</code> <br />
+<code>$env:userdnsdomain</code> <br />
+<code>$env:logonserver</code> <br />
+<code>([DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest()).Name</code> <br />
+<code>[Environment]::GetFolderPath('ApplicationData')</code></p>
+<h3 id="history"><a class="header" href="#history">History</a></h3>
+<p><code>Get-History</code> история команд текущей сессии <br />
+<code>(Get-History)[-1].Duration.TotalSeconds</code> время выполнения последней команды <br />
+<code>(Get-PSReadLineOption).HistorySavePath</code> путь к сохраненному файлу с 4096 последних команд (из модуля PSReadLine) <br />
+<code>Get-Content (Get-PSReadlineOption).HistorySavePath | Select-String Get</code> поиск по содержимому файла (GREP) <br />
+<code>Set-PSReadlineOption -MaximumHistoryCount 10000</code> изменить количество сохраняемых команд в файл <br />
+<code>Get-PSReadLineOption | select MaximumHistoryCount</code> <br />
+<code>Set-PSReadlineOption -HistorySaveStyle SaveNothing</code> отключить ведение журнала <br />
+<code>F2</code> переключиться с InlineView на ListView</p>
+<h3 id="clipboard"><a class="header" href="#clipboard">Clipboard</a></h3>
+<p><code>Set-Clipboard $srv</code> скопировать в буфер обмена <br />
+<code>Get-Clipboard</code> вставить</p>
+<h3 id="write-host"><a class="header" href="#write-host">Write-Host</a></h3>
+<pre><code class="language-PowerShell">Write-Host -BackgroundColor Green "Test:" -NoNewline # изменить цвет фона и запретить перенос строки
+Write-Host " True" -ForegroundColor Green # данная строка будет печататься продолжая предыдущую с новыми параметрами цвета (фон по умолчанию, изменяем цвет текста)
+</code></pre>
+<p><code>Write-Error "False"</code> <br />
+<code>Write-Warning "False"</code></p>
+<h3 id="write-progress"><a class="header" href="#write-progress">Write-Progress</a></h3>
+<pre><code class="language-PowerShell">foreach ($n in 1..100) {
+    Write-Progress -Activity "Test Progress" -PercentComplete $n
+    Start-Sleep -Milliseconds 100
+}
+</code></pre>
+<h3 id="for"><a class="header" href="#for">for</a></h3>
+<pre><code class="language-PowerShell">for ($i = 0; $i -le 100; $i+=10) {
+    Write-Progress -Activity "Test Progress" -PercentComplete $i
+    Start-Sleep -Seconds 1
+}
+</code></pre>
+<h3 id="array"><a class="header" href="#array">Array</a></h3>
+<p><code>$srv = @("server-01", "server-02")</code>  создать массив <br />
+<code>$srv += @("server-03")</code> добавить в массив новый элемент <br />
+<code>$srv.Count</code> отобразить кол-во элементов в массиве <br />
+<code>Out-String</code> построчный вывод</p>
+<h3 id="index"><a class="header" href="#index">Index</a></h3>
+<p><code>$srv[0]</code> вывести первое значение элемента массива <br />
+<code>$srv[0] = Name</code> замена элемента в массиве <br />
+<code>$srv[0].Length</code> узнать кол-во символов первого значения в массиве <br />
+<code>$srv[10..100]</code> срез</p>
+<pre><code class="language-PowerShell">$array = "a","b","c","d"
+$num = 0
+foreach ($a in $array) {
+    $num += 1
+    $index = [array]::IndexOf($array, $a) # узнать номер индекса по зачению
+    $array[$index] = $num # пересобрать исходный массив
+}
+</code></pre>
+<h3 id="hashtable"><a class="header" href="#hashtable">HashTable</a></h3>
+<pre><code class="language-PowerShell">$hashtable = @{ # Создать (инициализировать)
+    "User" = $env:USERNAME; 
+    "Server" = $env:COMPUTERNAME
+}
+
+$hashtable += @{ # Добавить ключи
+    "Profile" = $PROFILE;
+    "PowerShell_Home_Dir" = $PSHOME
+}
+</code></pre>
+<p><code>$hashtable.Keys</code> список всех ключей <br />
+<code>$hashtable["User"]</code> получить значение (Values) по ключу <br />
+<code>$hashtable["User"] = "Test"</code> изменить <br />
+<code>$hashtable.Remove("User")</code> удалить ключ</p>
+<h3 id="collections"><a class="header" href="#collections">Collections</a></h3>
+<pre><code class="language-PowerShell">$Collections = New-Object System.Collections.Generic.List[System.Object]
+$Collections.Add([PSCustomObject]@{
+    User = $env:username;
+    Server = $env:computername
+})
+</code></pre>
+<h3 id="pscustomobject"><a class="header" href="#pscustomobject">PSCustomObject</a></h3>
+<pre><code class="language-PowerShell">$CustomObject = [PSCustomObject][ordered]@{
+    User = $env:username;
+    Server = $env:computername
+}
+</code></pre>
+<h3 id="add-and-remove-property"><a class="header" href="#add-and-remove-property">Add and Remove Property</a></h3>
+<p><code>$CustomObject | Add-Member –MemberType NoteProperty –Name Arr –Value @(1,2,3)</code> добавить свойство/стобец <br />
+<code>$CustomObject.Arr = @(1,3,5)</code> изменить содержимое <br />
+<code>$CustomObject.PsObject.Properties.Remove('User')</code> удалить Property</p>
+<h3 id="add-method"><a class="header" href="#add-method">Add Method</a></h3>
+<pre><code class="language-PowerShell">$ScriptBlock = {Get-Service}
+$CustomObject | Add-Member -Name "TestMethod" -MemberType ScriptMethod -Value $ScriptBlock
+$CustomObject | Get-Member
+$CustomObject.TestMethod()
+</code></pre>
+<h3 id="class"><a class="header" href="#class">Class</a></h3>
+<pre><code class="language-PowerShell">Class CustomClass {
+    [string]$User
+    [string]$Server
+    Start([bool]$Param1) {
+        If ($Param1) {
+        Write-Host "Start Function"
+        }
+    }
+}
+</code></pre>
+<p><code>$Class = New-Object -TypeName CustomClass</code> <br />
+<code>$Class.User = $env:username</code> <br />
+<code>$Class.Server = $env:computername</code> <br />
+<code>$Class.Start(1)</code></p>
+<h3 id="pipeline"><a class="header" href="#pipeline">Pipeline</a></h3>
+<p><code>$CustomObject | Add-Member -MemberType NoteProperty -Name "Type" -Value "user" -Force</code> добавление объкта вывода NoteProperty <br />
+<code>$CustomObject | Add-Member -MemberType NoteProperty -Name "User" -Value "admin" -Force</code> изменеие содержимого для сущности объекта User <br />
+<code>ping $srv | Out-Null</code> перенаправить результат вывода в Out-Null</p>
+<h3 id="select-object"><a class="header" href="#select-object">Select-Object</a></h3>
+<p><code>Get-Process | Select-Object -Property *</code> отобразить все доступные объекты вывода <br />
+<code>Get-Process | select -Unique "Name"</code> удалить повторяющиеся значения в массиве <br />
+<code>Get-Process | select -ExpandProperty ProcessName</code> преобразовать из объекта-коллекции в массив (вывести содержимое без наименовая столбца) <br />
+<code>(Get-Process | ? Name -match iperf).Modules</code> список используемых модулей процессом</p>
+<h3 id="expression"><a class="header" href="#expression">Expression</a></h3>
+<pre><code class="language-PowerShell">Get-Process | Sort-Object -Descending CPU | select -first 10 ProcessName, # сортировка по CPU, вывести первых 10 значений (-first)
+@{Name="ProcessorTime";
+    Expression={$_.TotalProcessorTime -replace "\.\d+$"} # затрачено процессорного времени в минутах
+},
+@{Name="Memory"; 
+    Expression={[string]([int]($_.WS / 1024kb))+"MB"} # делим байты на КБ (1mb)
+},
+@{Label="RunTime"; 
+    Expression={((Get-Date) - $_.StartTime) -replace "\.\d+$"} # вычесть из текущего времени - время запуска, и удалить milisec
+}
+</code></pre>
+<h3 id="select-string"><a class="header" href="#select-string">Select-String</a></h3>
+<p><code>$(ipconfig | Select-String IPv4) -replace ".+: " | Where-Object {$_ -match "^172."}</code> узнать только IP <br />
+<code>$Current_IP = Get-Content $RDCMan_RDG_PATH | Select-String $RDCMan_Display_Name -Context 0,1</code> получить две строки <br />
+<code>$Current_IP = $Current_IP.Context.DisplayPostContext[0] -replace ".+&lt;name&gt;|&lt;\/name&gt;"</code> забрать только вторую строку и удалить тэги</p>
+<h3 id="format"><a class="header" href="#format">Format</a></h3>
+<p><code>Get-Process | fl ProcessName, StartTime</code> <br />
+<code>Get-Process | ft ProcessName, StartTime -Autosize</code> автоматическая группировка размера столбцов</p>
+<h3 id="measure-object"><a class="header" href="#measure-object">Measure-Object</a></h3>
+<p><code>Get-Process | Measure | select Count</code> кол-во объектов <br />
+<code>Get-Process | Measure -Line -Word -Character</code> кол-во строк, слов и Char объектов <br />
+<code>Get-Process | Measure-Object PM -sum | Select-Object Count,@{Name="MEM_MB"; Expression={[int]($_.Sum/1mb)}}</code> кол-во процессов и общий объем занятой памяти в МБайт</p>
+<h3 id="compare-object"><a class="header" href="#compare-object">Compare-Object</a></h3>
+<p><code>Compare-Object -ReferenceObject (Get-Content -Path .\file1.txt) -DifferenceObject (Get-Content -Path .\file2.txt)</code> сравнение двух файлов <br />
+<code>$group1 = Get-ADGroupMember -Identity "Domain Admins"</code> <br />
+<code>$group2 = Get-ADGroupMember -Identity "Enterprise Admins"</code> <br />
+<code>Compare-Object -ReferenceObject $group1 -DifferenceObject $group2 -IncludeEqual</code> сравнение друх объектов
+<code>==</code> нет изменений <br />
+<code>&lt;=</code> есть изменения в $group1 <br />
+<code>=&gt;</code> есть изменения в $group2</p>
+<h3 id="where-object"><a class="header" href="#where-object">Where-Object</a></h3>
+<p><code>Get-Process | Where-Object {$_.ProcessName -match "zabbix"}</code> фильтрация/поиск процессов по имени свойства объекта <br />
+<code>Get-Process | where CPU -gt 10 | Sort-Object -Descending CPU</code> вывести объекты, где значения CPU больше 10 <br />
+<code>Get-Process | where WS -gt 200MB</code> отобразить процессы где WS выше 200МБ <br />
+<code>Get-Service | where Name -match "zabbix"</code> поиск службы <br />
+<code>Get-Service -ComputerName $srv | Where {$_.Name -match "WinRM"} | Restart-Service</code> перезапустить службу на удаленном компьютере <br />
+<code>(Get-Service).DisplayName</code> вывести значения свойства массива <br />
+<code>netstat -an | where {$_ -match 443}</code> <br />
+<code>netstat -an | ?{$_ -match 443}</code> <br />
+<code>(netstat -an) -match 443</code></p>
+<h3 id="sort-object"><a class="header" href="#sort-object">Sort-Object</a></h3>
+<p><code>Get-Process | Sort-Object -Descending CPU | ft</code> обратная (-Descending) сортировка по CPU <br />
+<code>Get-Process | Sort-Object -Descending cpu,ws</code> сортировка по двум свойствам <br />
+<code>$path[-1..-10]</code> обратная сборка массива без сортировки <br />
+<code>$arr = @(1..20); $arr[$($arr.Count - 1)..0]</code> пересобрать массив с конца</p>
+<h3 id="last-and-first"><a class="header" href="#last-and-first">Last and First</a></h3>
+<p><code>Get-Process | Sort-Object -Descending CPU | select -First 10</code> вывести первых 10 объектов <br />
+<code>Get-Process | Sort-Object -Descending CPU | select -Last 10</code> вывести последних 10 объектов</p>
+<h3 id="group-object"><a class="header" href="#group-object">Group-Object</a></h3>
+<pre><code class="language-PowerShell">$Groups = Get-CimInstance -Class Win32_PnPSignedDriver |
+Select-Object DriverProviderName, FriendlyName, Description, DriverVersion, DriverDate |
+Group-Object DriverProviderName, FriendlyName, Description, DriverVersion, DriverDate
+$(foreach ($Group in $Groups) {
+    $Group.Group[0]
+}) | Format-Table
+</code></pre>
+<h3 id="property"><a class="header" href="#property">Property</a></h3>
+<p><code>$srv.Count</code> кол-во элементов в массиве <br />
+<code>$srv.Length</code> содержит количество символом строки переменной [string] или количество значений (строк) объекта <br />
+<code>$srv.Chars(2)</code> отобразить 3-й символ в строке <br />
+<code>$srv[2]</code> отобразить 3-ю строку в массиве</p>
+<h3 id="method"><a class="header" href="#method">Method</a></h3>
+<p><code>$srv = "127.0.0.1"</code> <br />
+<code>$srv.Insert(0,"https://")</code> добавить значение перед первым символом <br />
+<code>$srv.Substring(4)</code> удалить (из всего массива) первые 4 символа <br />
+<code>$srv.Remove(3)</code> удалить из всего массива все после 3 символа <br />
+<code>$string = "123"</code> создать строку <br />
+<code>$int = [convert]::ToInt32($string)</code> преобразовать строку в тип данных число <br />
+<code>[string]::Concat($text,$num)</code> объеденить переменные в одну строку <br />
+<code>[string]::Join(":",$text,$num)</code> объеденить используя разделитель <br />
+<code>[string]::Compare($text,$num,$true)</code> выдает 0 при совпадении или 1/-1 при несовпадении, $true (без учета регистра) или $false (с учетом регистра) <br />
+<code>[string]::Equals($text,$num)</code> производит сравнение двух строк и выдает $true при их совпадении или $false при несовпадении <br />
+<code>[string]::IsNullOrEmpty($text)</code> проверяет наличие строки, если строка пуста $true, если нет $false <br />
+<code>[string]::IsNullOrWhiteSpace($text2)</code> проверяет на наличие только символов пробел, табуляция или символ новой строки</p>
+<h1 id="error"><a class="header" href="#error">Error</a></h1>
+<p><code>$Error</code> выводит все ошибки текущего сеанса <br />
+<code>$Error[0].InvocationInfo</code> развернутый отчет об ошибке <br />
+<code>$Error.clear()</code> <br />
+<code>$LASTEXITCODE</code> результат выполнения последней команды (0 - успех) <br />
+<code>exit 1</code> код завершения, который возвращается $LASTEXITCODE</p>
+<h3 id="executionstatus"><a class="header" href="#executionstatus">ExecutionStatus</a></h3>
+<pre><code class="language-PowerShell">$(Get-History)[-1] | Select-Object @{
+    Name="RunTime"; Expression={$_.EndExecutionTime - $_.StartExecutionTime}
+},ExecutionStatus,CommandLine # посчитать время работы последней [-1] (или Select-Object -Last 1) выполненной команды и ее узнать статус
+</code></pre>
+<h3 id="measure-command"><a class="header" href="#measure-command">Measure-Command</a></h3>
+<p><code>$(Measure-Command {ping ya.ru}).TotalSeconds</code> получить время выполнения в секундах</p>
+<h1 id="datetime"><a class="header" href="#datetime">DateTime</a></h1>
+<p><code>[DateTime]::UtcNow</code> время в формате UTC 0 <br />
+<code>$(Get-Date).AddHours(-3)</code> вычесть три часа из текущего времени <br />
+<code>$Date = $(Get-Date -Format "dd/MM/yyyy HH:mm:ss")</code> изменить формат отображения времени <br />
+<code>$Date = Get-Date -f "dd/MM/yyyy"</code> получаем тип данных [string] $($Date.GetType().Name) <br />
+<code>$Date = "19.05.2024"</code> <br />
+<code>[DateTime]$Date = Get-Date "$Date"</code> преобразовать строку подходящую под формат даты в тип данных [DateTime] <br />
+<code>$BeforeDate = Get-Date "12.05.2024"</code> <br />
+<code>[int32]$days=$($Date - $BeforeDate).Days</code> посчитать разницу в днях <br />
+<code>"5/7/07" -as [DateTime]</code> преобразовать входные данные в тип данных [DateTime]</p>
+<h1 id="timespan"><a class="header" href="#timespan">TimeSpan</a></h1>
+<p><code>New-TimeSpan -Start $(Get-Date) -End $($(Get-Date).AddMinutes(+1))</code> получить разницу во времени <br />
+<code>$TimeZone = (Get-TimeZone).BaseUtcOffset.TotalMinutes</code> получить разницу в минутах от текущего часового пояса относительно UTC 0 <br />
+<code>$UnixTime  = (New-TimeSpan -Start (Get-Date "01/01/1970") -End ((Get-Date).AddMinutes(-$tz))).TotalSeconds</code> вычесть минуты для получения UTC 0 <br />
+<code>$TimeStamp = ([string]$UnixTime -replace "\..+") + "000000000"</code> получить текущий TimeStamp</p>
+<h3 id="format-1"><a class="header" href="#format-1">Format</a></h3>
+<pre><code>HH   # Часы в 24-часовом формате (00 до 23)
+hh   # Часы в 12-часовом формате (01 до 12)
+mm   # Минуты (00 до 59)
+ss   # Секунды (00 до 59)
+tt   # Десигнатор (AM/PM)
+fff  # Миллисекунды (000 до 999)
+d    # День месяца без ведущего нуля (1-31)
+dd   # День месяца с ведущим нулём (01-31)
+ddd  # Сокращённое название дня недели (например, "Пн")
+dddd # Полное название дня недели (например, "Понедельник")
+M    # Номер месяца без ведущего нуля (1-12)
+MM   # Номер месяца с ведущим нулём (01-12)
+MMM  # Сокращённое название месяца (например, "Янв")
+MMMM # Полное название месяца (например, "Январь")
+y    # Год без века (0-99)
+yy   # Год без века с ведущим нулём (00-99)
+yyyy # Год с веком (например, 2024)
+g    # Период или эра (например, "н.э.")
+</code></pre>
+<h3 id="timer"><a class="header" href="#timer">Timer</a></h3>
+<p><code>$start_time = Get-Date</code> зафиксировать время до выполнения команды <br />
+<code>$end_time = Get-Date</code> зафиксировать время по завершению <br />
+<code>$time = $end_time - $start_time</code> высчитать время работы скрипта <br />
+<code>$min = $time.minutes</code> <br />
+<code>$sec = $time.seconds</code> <br />
+<code>Write-Host "$min минут $sec секунд"</code></p>
+<p><code>$timer = [System.Diagnostics.Stopwatch]::StartNew()</code> запустить таймер <br />
+<code>$timer.IsRunning</code> статус работы таймера <br />
+<code>$timer.Elapsed.TotalSeconds</code> отобразить время с момента запуска (в секундах) <br />
+<code>$timer.Stop()</code> остановить таймер</p>
+<h1 id="regex"><a class="header" href="#regex">Regex</a></h1>
+<pre><code>.       # Обозначает любой символ, кроме новой строки
+\       # Экранирует любой специальный символ (метасимвол). Используется, если нужно указать конкретный символ, вместо специального ({ } [ ] / \ + * . $ ^ | ?)
+\A (^)  # Начало строки
+\Z ($)  # Конец строки
+\n      # Новая строка
+\s      # Пробел (эквивалент " "), табуляция, перенос строки
+\S      # Не пробел
+\d      # Число от 0 до 9 (20-07-2022 эквивалент: "\d\d-\d\d-\d\d\d\d")
+\D      # Обозначает любой символ, кроме числа (цифры). Удаления всех символов, кроме цифр: [int]$("123 test" -replace "\D")
+\w      # Любая буква латиницы, цифра, или знак подчёркивания (от "a" до "z" и от "A" до "Z" или число от 0 до 9)
+\W      # Не латиница, не цифра, не подчёркивание
+\b      # Граница слова. Применяется когда нужно выделить, что искомые символы являются словом, а не частью другого слова
+\B      # Не граница слова
+\A      # Начало текста
+\Z      # Конец текста
++       # Повторяется 1 и более раз (\s+)
+|       # Или. Соединяет несколько вариантов
+()      # В круглые скобки заключаются все комбинации с "или" и поиск начала и конца строк
+[]      # поиск совпадения любой буквы, например, [A-z0-9] от A до z и цифры от 0 до 9 ("192.168.1.1" -match "192.1[6-7][0-9]")
+[^ ]    # Исключает из поиска символы указанные в квадратных скобках
+{ }     # Квантификатор в фигурных скобках, указывает количество повторений символа слева на право (от 1 до 25 раз)
+\d{2}   # Найти две цифры
+\d{2,4} # Найти две или четыре
+{4,}    # Найти четыре и более
+</code></pre>
+<ul>
+<li>Якори</li>
+</ul>
+<p><code>^</code> или <code>\A</code> определяет начало строки. $url -replace '^','https:'<code>добавить в начало; \ </code>$<code>или</code>\Z<code>обозначают конец строки. $ip -replace "\d{1,3}$","0" \ </code>(?=text)<code>поиск слова слева. Пишем слева на право от искомого (ищет только целые словосочетания) "Server:\s(.{1,30})\s(?=$username)" \ </code>(?&lt;=text)<code> поиск слова справа. $in_time -replace ".+(?&lt;=Last)"</code> удалить все до слова Last <br />
+<code>(?!text)</code> не совпадает со словом слева <br />
+<code>(?&lt;!text)</code> не совпадает со словом справа</p>
+<p><code>$test = "string"</code> <br />
+<code>$test -replace ".{1}$"</code> удалить любое кол-во символов в конце строки <br />
+<code>$test -replace "^.{1}"</code> удалить любое кол-во символов в начале строки \</p>
+<ul>
+<li>Группы захвата</li>
+</ul>
+<p><code>$date = '12.31.2021'</code> <br />
+<code>$date -replace '^(\d{2}).(\d{2})','$2.$1'</code> поменять местами <br />
+<code>$1</code> содержимое первой группы в скобках <br />
+<code>$2</code> содержимое второй группы</p>
+<p><code>-replace "1","2"</code> замена элементов в индексах массива (везде где присутствует 1, заменить на 2), для удаления используется только первое значение <br />
+<code>-split " "</code> преобразовать строку в массив, разделителем указан пробел, которой удаляется ($url.Split("/")[-1]) <br />
+<code>-join " "</code> преобразовать массив (коллекцию) в единую строку (string), добавить разделителем пробел</p>
+<p><code>@(1,2,3) -contains 3</code> проверить, что элемент справа содержится в массиве слева <br />
+<code>@(1,2) -notcontains 3</code> проверить, что элемент справа не содержится в массиве слева</p>
+<p><code>-like *txt*</code> поиск по маскам wildcard, выводит значение на экран <br />
+<code>-match txt</code> поиска по шаблонам, проверка на соответствие содержимого текста <br />
+<code>-match "zabbix|rpc"</code> условия, для поиска по нескольким словам <br />
+<code>-NotMatch</code> проверка на отсутствие вхождения \</p>
+<ul>
+<li>Matches</li>
+</ul>
+<p><code>"num: 777" -match "num: ([0-9]+)" | Out-Null</code> <br />
+<code>$Matches[1]</code> выводим только номер</p>
+<p><code>$ip = "192.168.10.1"</code> <br />
+<code>$ip -match "(\.\d{1,3})\.\d{1,2}"</code> True <br />
+<code>$Matches</code> отобразить все подходящие переменные последнего поиска, которые входят и не входят в группы ()</p>
+<p><code>$String = "09/14/2017 12:00:27 - mtbill_post_201709141058.txt 7577_Delivered: OK"</code> <br />
+<code>$String -Match ".*(?=\.txt)" | Out-Null</code> <br />
+<code>$Matches[0][-4..-1] -Join ""</code></p>
+<p><code>$string.Substring($string.IndexOf(".txt")-4, 4)</code> 2-й вариант (IndexOf)</p>
+<ul>
+<li>Форматирование (.NET method format)</li>
+</ul>
+<p><code>[string]::Format("{1} {0}","Index0","Index1")</code> <br />
+<code>"{1} {0}" -f "Index0","Index1"</code> <br />
+<code>"{0:###-##-##}" -f 1234567</code> записать число в другом формате (#) <br />
+<code>"{0:0000}" -f 123</code> вывести число в формате не меньше 4 знаков (0123) <br />
+<code>"{0:P0}" -f (220/1000)</code> посчитать в процентах (P) <br />
+<code>"{0:P}" -f (512MB/1GB)</code> сколько % составляет 512Мб от 1Гб <br />
+<code>"{0:0.0%}" -f 0.123</code> умножить на 100%</p>
+<pre><code class="language-PowerShell">$gp = Get-Process | sort cpu -Descending | select -First 10
+foreach ($p in $gp) {
+    "{0} - {1:N2}" -f $p.processname, $p.cpu # округлить
+}
+</code></pre>
+<ul>
+<li>Условный оператор</li>
+</ul>
+<pre><code class="language-PowerShell">$rh = Read-Host
+if ($rh -eq 1) {
+    ipconfig
+} elseif (
+    $rh -eq 2
+) {
+    getmac
+} else {
+    hostname
+}
+</code></pre>
+<p>Если условие if () является истенным ($True), выполнить действие в {} <br />
+Если условие if () является ложным ($False), выполнить действие не обязательного оператора else <br />
+Условие Elseif идёт после условия if для проверки дополнительных условий перед выполнение оператора else. Оператор, который первый вернет $True, отменит выполнение следующих дополнительных условий <br />
+Если передать переменную в условие без оператора, то будет проверяться наличие значения у переменной на $True/$False \</p>
+<pre><code class="language-PowerShell">if ($(Test-NetConnection $srv -Port 80).TcpTestSucceeded) {
+    "Opened port"
+} else {
+    "Closed port"
+}
+</code></pre>
+<ul>
+<li>Логические операторы сравнения</li>
+</ul>
+<p><code>-eq</code> равно (equal) <br />
+<code>-ceq</code> учитывать регистр <br />
+<code>-ne</code> не равно (not equal) <br />
+<code>-cne</code> не равно учитывая регистр <br />
+<code>-gt</code> больше (greater) <br />
+<code>-ge</code> больше или равно <br />
+<code>-lt</code> меньше (less) <br />
+<code>-le</code> меньше или равно <br />
+<code>-in</code> проверить на наличие (5 -in @(1,2,3,4,5)) <br />
+<code>-NOT</code> логическое НЕТ !(Test-Path $path) <br />
+<code>-and</code> логическое И <br />
+<code>-or</code> логическое ИЛИ \</p>
+<pre><code class="language-PowerShell">if ((($1 -eq 1) -and ($2 -eq 2)) -or ($1 -ne 3)) {
+    $true
+} else {
+    $false
+} # два условия: (если $1 = 1 И $2 = 2) ИЛИ $1 не равно 3 вернуть $true
+</code></pre>
+<ul>
+<li>Pipeline Operators</li>
+</ul>
+<p><code>Write-Output "First" &amp;&amp; Write-Output "Second"</code> две успешные команды выполняются <br />
+<code>Write-Error "Bad" &amp;&amp; Write-Output "Second"</code> первая команда завершается ошибкой, из-за чего вторая команда не выполняется <br />
+<code>Write-Error "Bad" || Write-Output "Second"</code> первая команда завершается ошибкой, поэтому выполняется вторая команда <br />
+<code>Write-Output "First" || Write-Output "Second"</code> первая команда выполнена успешно, поэтому вторая команда не выполняется</p>
+<ul>
+<li>Invocation Operator</li>
+</ul>
+<p><code>$addr = "8.8.8.8"</code> <br />
+<code>$ping = "ping"</code> <br />
+<code>&amp; $ping $addr</code> запускает текст как команду</p>
+<p><code>&amp; $ping $addr &amp;</code> запустить команду в фоне <br />
+<code>(Get-Job)[-1] | Receive-Job -Keep</code></p>
+<h1 id="datatype"><a class="header" href="#datatype">DataType</a></h1>
+<p><code>$srv.GetType()</code> узнать тип данных <br />
+<code>$srv -is [string]</code> проверка на соответствие типа данных <br />
+<code>$srv -isnot [System.Object]</code> проверка на несоответствие <br />
+<code>[Object]</code> массив (BaseType:System.Array) <br />
+<code>[DateTime]</code> формат времени (BaseType:System.ValueType) <br />
+<code>[Bool]/[Boolean]</code> логическое значение ($True/$False) или 1/0 (1 бит) наличие/отсуствие напряжения <br />
+<code>[Byte]</code> 8-битное (1 байт) целое число без знака (0..255) <br />
+<code>[Int16]</code> 16-битное знаковое целое число от -32767 до 32767 (тип данных WORD 0..65535) <br />
+<code>[Int]</code> 32-битное (4 байта) знаковое целое число от –2147483648 до 2147483647 (DWORD) <br />
+<code>[Int64]</code> 64-битное от -9223372036854775808 до 9223372036854775808 (LWORD) <br />
+<code>[Decimal]</code> 128-битное десятичное значение от –79228162514264337593543950335 до 79228162514264337593543950335 <br />
+<code>[Single]</code> число с плавающей запятой (32-разрядное) <br />
+<code>[Double]</code> число с плавающей запятой с двойной точностью (64-разрядное) <br />
+<code>[String]</code> неизменяемая строка символов Юникода фиксированной длины (BaseType:System.Object)</p>
+<h3 id="math"><a class="header" href="#math">Math</a></h3>
+<p><code>[math] | Get-Member -Static</code> <br />
+<code>[math]::Pow(2,4)</code> 2 в 4 степени <br />
+<code>[math]::Truncate(1.8)</code> грубое округление, удаляет дробную часть <br />
+<code>[math]::Ceiling(1.8)</code> округляет число в большую сторону до ближайшего целого значения <br />
+<code>[math]::Floor(-1.8)</code> округляет число в меньшую сторону <br />
+<code>[math]::Min(33,22)</code> возвращает наименьшее значение двух значений <br />
+<code>[math]::Max(33,22)</code> возвращает наибольшее значение двух значений</p>
+<h3 id="round"><a class="header" href="#round">Round</a></h3>
+<p><code>[double]::Round(87.5, 0)</code> 88 (нечетное), в .NET по умолчанию используется округление в средней точке ToEven, где *.5 значения округляются до ближайшего четного целого числа <br />
+<code>[double]::Round(88.5, 0)</code> 88 (четное) <br />
+<code>[double]::Round(88.5, 0, 1)</code> 89 (округлять в большую сторону) <br />
+<code>[double]::Round(1234.56789, 2)</code> округлить до 2 символов после запятой</p>
+<h3 id="tostring"><a class="header" href="#tostring">ToString</a></h3>
+<p><code>(4164539/1MB).ToString("0.00")</code> разделить на дважды на 1024/1024 и округлить до 3,97</p>
+<h3 id="char"><a class="header" href="#char">Char</a></h3>
+<p><code>[Char]</code> cимвол Юникода (16-разрядный) <br />
+<code>$char = $srv.ToCharArray()</code> разбить строку [string] на массив [System.Array] из букв</p>
+<h1 id="function"><a class="header" href="#function">Function</a></h1>
+<h3 id="switch-function"><a class="header" href="#switch-function">Switch function</a></h3>
+<pre><code class="language-PowerShell">$MMM = Get-Date -UFormat "%m"
+switch($MMM) {
+    "01" {$Month = 'Jan'}
+    "02" {$Month = 'Feb'}
+    "03" {$Month = 'Mar'}
+    "04" {$Month = 'Apr'}
+    "05" {$Month = 'May'}
+    "06" {$Month = 'Jun'}
+    "07" {$Month = 'Jul'}
+    "08" {$Month = 'Aug'}
+    "09" {$Month = 'Sep'}
+    "10" {$Month = 'Oct'}
+    "11" {$Month = 'Nov'}
+    "12" {$Month = 'Dec'}
+}
+</code></pre>
+<h3 id="switch-param"><a class="header" href="#switch-param">Switch param</a></h3>
+<pre><code class="language-PowerShell">Function fun-switch (
+    [switch]$param
+) {
+    If ($param) {"yes"} else {"no"}
+}
+</code></pre>
+<p><code>fun-switch -param</code></p>
+<h3 id="psm1-module-file-and-parameters"><a class="header" href="#psm1-module-file-and-parameters">psm1 (module file and parameters)</a></h3>
+<pre><code class="language-PowerShell">function Get-Function {
+    &lt;#
+    .SYNOPSIS
+    Описание
+    .DESCRIPTION
+    Описание
+    .LINK
+    https://github.com/Lifailon/PS-Commands
+    #&gt;
+    param (
+        [Parameter(Mandatory,ValueFromPipeline)][string]$Text,
+        [ValidateSet("Test1","Test2")][string]$Provider = "Test1",
+        [ValidateRange(1,3)][int]$Number = 2
+    )
+    Write-Host Param Text: $Text
+    Write-Host Param Provider: $Provider
+    Write-Host Param Number: $Number
+}
+</code></pre>
+<p><code>Get-Function -Text Text1</code> <br />
+<code>Get-Function -Text Text2 -Provider Test2 -Number 3</code></p>
+<h3 id="psd1-module-description-file"><a class="header" href="#psd1-module-description-file">psd1 (module description file)</a></h3>
+<pre><code class="language-PowerShell">@{
+    RootModule        = "Get-Function.psm1"
+    ModuleVersion     = "0.1"
+    Author            = "Lifailon"
+    CompanyName       = "Open Source Community"
+    Copyright         = "Apache-2.0"
+    Description       = "Function example"
+    PowerShellVersion = "7.2"
+    PrivateData       = @{
+        PSData = @{
+            Tags         = @("Function","Example")
+            ProjectUri   = "https://github.com/Lifailon/PS-Commands"
+            LicenseUri   = "https://github.com/Lifailon/Console-Translate/blob/rsa/LICENSE"
+            ReleaseNotes = "Second release"
+        }
+    }
+}
+</code></pre>
+<h1 id="bit"><a class="header" href="#bit">Bit</a></h1>
+<pre><code>Двоичное    Десятичное
+1           1
+10          2
+11          3
+100         4
+101         5
+110         6
+111         7
+1000        8
+1001        9
+1010        10
+1011        11
+1100        12
+1101        13
+1110        14
+1111        15
+1 0000      16
+
+Двоичное    Десятичное  Номер разряда
+1           1           0
+10          2           1
+100         4           2
+1000        8           3
+1 0000      16          4
+10 0000     32          5
+100 0000    64          6
+1000 0000   128         7
+1 0000 0000 256         8
+
+Из двоичного =&gt; десятичное (1-й вариант по таблице)
+1001 0011 = 1000 0000 + 1 0000 + 10 + 1 = 128 + 16 + 2 + 1 = 147
+
+2-й вариант
+7654 3210 (разряды двоичного выражения) = (1*2^7)+(0*2^6)+(0*2^5)+(1*2^4)+(0*2^3)+(0*2^2)+(1*2^1)+(1*2^0) = 147
+[math]::Pow(2,7) + [math]::Pow(2,4) + [math]::Pow(2,1) + [math]::Pow(2,0) = 147` исключить 0 и сложить степень
+
+Из десятичного =&gt; двоичное (1-й вариант по таблице)
+347 вычесть ближайшие 256 = 91 (+ 1 0000 0000 забрать двоичный остаток)
+91  - 64  = 27 ближайшее 16 (+ 100 0000)
+27  - 16  = 11 ближайшее 8 (+ 1 0000)
+11  - 8   = 3  ближайшее 2 (+ 1000)
+3   - 2   = 1 (+ 10)
+1   - 1   = 0 (+ 1)
+1 0101 1011
+
+2-й вариант
+Последовательное деления числа на 2, предворительно забирая остаток для получения четного числа в меньшую сторону
+347 - 346 = остаток 1, (347-1)/2 = 173
+173 - 172 = остаток 1, (172-1)/2 = 86
+86  - 86  = остаток 0, 86/2 = 43
+43  - 42  = остаток 1, (43-1)/2 = 21
+21  - 20  = остаток 1, (21-1)/2 = 10
+10  - 10  = остаток 0, 10/2 = 5
+5   - 4   = остаток 1, (5-1)/2 = 2
+2   - 2   = остаток 0, 2/2 = 1
+1   - 2   = остаток 1, (1-1)/2 = 0
+Результат деления записывается снизу вверх
+</code></pre>
+<h3 id="bit-convertor"><a class="header" href="#bit-convertor">Bit Convertor</a></h3>
+<pre><code class="language-PowerShell">function ConvertTo-Bit {
+    param (
+        [Int]$int
+    )
+    [array]$bits = @()
+    $test = $true
+    while ($test -eq $true) {
+        if (($int/2).GetType() -match [double]) {
+            $int = ($int-1)/2
+            [array]$bits += 1
+        }
+        elseif (($int/2).GetType() -match [int]) {
+            $int = $int/2
+            [array]$bits += 0
+        }
+        if ($int -eq 0) {
+            $test = $false
+        }
+    }
+    $bits =  $bits[-1..-999]
+    ([string]($bits)) -replace "\s"
+}
+</code></pre>
+<p><code>ConvertTo-Bit 347</code></p>
+<pre><code class="language-PowerShell">function ConvertFrom-Bit {
+    param (
+        $bit
+    )
+    [int]$int = 0
+    $bits = $bit.ToString().ToCharArray()
+    $index = ($bits.Count)-1
+    foreach ($b in $bits) {
+        if ($b -notlike 0) {
+            $int += [math]::Pow(2,$index)
+        }
+    $index -= 1
+    }
+    $int
+}
+</code></pre>
+<p><code>ConvertFrom-Bit 10010011</code></p>
+<p><code>Get-Process pwsh | fl ProcessorAffinity</code> привязка процесса к ядрам, представляет из себя битовую маску (bitmask), где каждому биту соответствует ядро процессора. Если для ядра отмечено сходство (affinity), то бит выставляется в 1, если нет — то в 0. Например, если выбраны все 16 ядер, то это 1111 1111 1111 1111 или 65535. <br />
+<code>$(Get-Process pwsh).ProcessorAffinity = 15</code> 0000000000001111 присвоить 4 первых ядра <br />
+<code>$(Get-Process pwsh).ProcessorAffinity = 61440</code> 1111000000000000 присвоить 4 последних ядра <br />
+<code>$(Get-Process pwsh).ProcessorAffinity = (ConvertFrom-Bit 1111000000000000)</code></p>
+<h1 id="cycle"><a class="header" href="#cycle">Cycle</a></h1>
+<h3 id="foreach"><a class="header" href="#foreach">Foreach</a></h3>
+<p><code>$list = 100..110</code> создать массив из цифр от 100 до 110 <br />
+<code>foreach ($srv in $list) {ping 192.168.3.$srv -n 1 -w 50}</code> $srv хранит текущий элемент из $list и повторяет команду до последнего элемента в массиве <br />
+<code>$foreach.Current</code> текущий элемент в цикле <br />
+<code>$foreach.Reset()</code> обнуляет итерацию, перебор начнется заново, что приводит к бесконечному циклу <br />
+<code>$foreach.MoveNext()</code> переход к следующему элементу в цикле</p>
+<h3 id="foreach-object"><a class="header" href="#foreach-object">ForEach-Object</a></h3>
+<pre><code class="language-PowerShell">100..110 | %{
+    ping -n 1 -w 50 192.168.3.$_ &gt; $null
+    if ($LastExitCode -eq 0) {
+        Write-Host "192.168.3.$_" -ForegroundColor green
+    } else {
+    Write-Host "192.168.3.$_"-ForegroundColor Red
+    }
+}
+</code></pre>
+<p><code>% </code> передать цикл через конвеер (ForEach-Object) <br />
+<code>$_</code> переменная цикла и конвеера ($PSItem) <br />
+<code>gwmi Win32_QuickFixEngineering | where {$_.InstalledOn.ToString() -match "2022"} | %{($_.HotFixID.Substring(2))}</code> gwmi создает массив, вывод команды передается where для поиска подходящих под критерии объектов. По конвееру передается в цикл для удаления первых (2) символов методом Substring из всех объектов HotFixID.</p>
+<h3 id="while"><a class="header" href="#while">While</a></h3>
+<pre><code class="language-PowerShell">$srv = "yandex.ru"
+$out2 = "Есть пинг"
+$out3 = "Нет пинга"
+$out = $false # предварительно сбросить переменную, While проверяет условие до запуска цикла
+While ($out -eq $false) { # пока условие является $true, цикл будет повторяться
+    $out = ping -n 1 -w 50 $srv
+    if ($out -match "ttl") {$out = $true; $out2} else {$out = $false; $out3; sleep 1}
+}
+
+while ($True) { # запустить бесконечный цикл
+    $result = ping yandex.ru -n 1 -w 50
+    if ($result -match "TTL") { # условие, при котором будет выполнен break
+        Write-Host "Сайт доступен"
+        break # остановит цикл
+    } else {
+        Write-Host "Сайт недоступен"; sleep 1
+    }
+}
+</code></pre>
+<h3 id="try-catch-finally"><a class="header" href="#try-catch-finally">Try-Catch-Finally</a></h3>
+<pre><code class="language-PowerShell">Try {$out = pping 192.168.3.1}
+Catch {Write-Warning "$($error[0])"} # выводит в случае ошибки (вместо ошибки)
+finally {$out = "End"} # выполняется в конце в любом случае
+</code></pre>
+<h1 id="files"><a class="header" href="#files">Files</a></h1>
+<p><code>Get-Content $home/desktop\test.txt -Wait</code> аналог tail <br />
+<code>Test-Path $path</code> проверить доступность пути <br />
+<code>Get-FileHash -Algorithm SHA256 "$path"</code> узнать хэш файла по алгоритму sha256 <br />
+<code>Get-ChildItem $path -Filter *.txt -Recurse</code> отобразить содержимое каталога (Alias: ls/gci/dir) и дочерних каталогов (-Recurse) и отфильтровать вывод <br />
+<code>Get-Location</code> отобразить текущие месторасположение (Alias: pwd/gl) <br />
+<code>Set-Location $path</code> перемещение по каталогам (Alias: cd/sl) <br />
+<code>Invoke-Item $path</code> открыть файл (Alias: ii/start) <br />
+<code>Get-ItemProperty $env:userprofile\Documents\dns-list.txt | select FullName,Directory,Name,BaseName,Extension</code> свойтсва файла <br />
+<code>Get-ItemProperty -Path $path\* | select FullName,CreationTime,LastWriteTime</code> свойства файлов содержимого директории, дата их создания и последнего изменения <br />
+<code>New-Item -Path "C:\test\" -ItemType "Directory"</code> создать директорию (Alias: mkdir/md) <br />
+<code>New-Item -Path "C:\test\file.txt" -ItemType "File" -Value "Добавить текст в файл"</code> создать файл <br />
+<code>"test" &gt; "C:\test\file.txt"</code> заменить содержимое <br />
+<code>"test" &gt;&gt; "C:\test\file.txt"</code> добавить строку в файл <br />
+<code>New-Item -Path "C:\test\test\file.txt" -Force</code> ключ используется для создания отсутствующих в пути директорий или перезаписи файла если он уже существует <br />
+<code>Move-Item</code> перемещение объектов (Alias: mv/move) <br />
+<code>Remove-Item "$path\" -Recurse</code> удаление всех файлов внутри каталога, без запроса подверждения (Alias: rm/del) <br />
+<code>Remove-Item $path -Recurse -Include "*.txt","*.temp" -Exclude "log.txt"</code> удалить все файлы с расширением txt и temp ([Array]), кроме log.txt <br />
+<code>Rename-Item "C:\test\*.*" "*.jpg"</code> переименовать файлы по маске (Alias: ren) <br />
+<code>Copy-Item</code> копирование файлов и каталогов (Alias: cp/copy) <br />
+<code>Copy-Item -Path "\\server-01\test" -Destination "C:\" -Recurse</code> копировать директорию с ее содержимым (-Recurse) <br />
+<code>Copy-Item -Path "C:\*.txt" -Destination "C:\test\"</code> знак '' в конце Destination используется для переноса папки внутрь указанной, отсутствие, что это новое имя директории <br />
+<code>Copy-Item -Path "C:\*" -Destination "C:\test\" -Include '*.txt','*.jpg'</code> копировать объекты с указанным расширением (Include) <br />
+<code>Copy-Item -Path "C:\*" -Destination "C:\test\" -Exclude '*.jpeg'</code> копировать объекты, за исключением файлов с расширением (Exclude) <br />
+<code>$log = Copy-Item "C:\*.txt" "C:\test\" -PassThru</code> вывести результат копирования (логирование) в переменную, можно забирать строки с помощью индексов $log[0].FullName <br />
+<code>Unblock-File "script.ps1"</code> разблокирует файлы скриптов PowerShell скачанных из Интернета, чтобы их можно было запустить, даже если политика выполнения PowerShell в режиме RemoteSigned</p>
+<h3 id="clear-env-temp-14-days"><a class="header" href="#clear-env-temp-14-days">Clear-env-Temp-14-days</a></h3>
+<pre><code class="language-PowerShell">$ls = Get-Item $env:TEMP\*.tmp # считать все файлы с указанным расширением
+$date = (Get-Date).AddDays(-14)
+foreach ($l in $ls) {
+    if ($l.LastWriteTime -le $date) {
+        $l.FullName
+        Remove-Item $l.FullName -Recurse
+    }
+}
+</code></pre>
+<h3 id="system-io-file"><a class="header" href="#system-io-file">System IO File</a></h3>
+<p><code>$file = [System.IO.File]::Create("$home\desktop\test.txt")</code> создать файл <br />
+<code>$file.Close()</code> закрыть файл <br />
+<code>[System.IO.File]::ReadAllLines("$home\desktop\test.txt")</code> прочитать файл <br />
+<code>$file = New-Object System.IO.StreamReader("$home\desktop\test.txt")</code> файл будет занят процессом PowerShell <br />
+<code>$file | Get-Member</code> <br />
+<code>$file.ReadLine()</code> построчный вывод <br />
+<code>$file.ReadToEnd()</code> прочитать файл целиком</p>
+<h3 id="read-and-write-bytes"><a class="header" href="#read-and-write-bytes">Read and Write Bytes</a></h3>
+<p><code>$file = [io.file]::ReadAllBytes("$home\desktop\powershell.jpg")</code> метод открывает двоичный файл, считывает его в массив байт и закрывает файл <br />
+<code>[io.file]::WriteAllBytes("$home\desktop\tloztotk-2.jpg",$file)</code> сохранить байты в файл (можно использовать для выгрузки двоичных файлов из БД)</p>
+<h1 id="archive"><a class="header" href="#archive">Archive</a></h1>
+<h3 id="microsoft-powershell-archive"><a class="header" href="#microsoft-powershell-archive">Microsoft PowerShell Archive</a></h3>
+<p><code>Compress-Archive -Path $srcPath -DestinationPath "$($srcPath).zip" -CompressionLevel Optimal</code> архивировать (по исходному пути и названию с добавлением расширения) <br />
+<code>Expand-Archive -Path $zip</code> разархивировать <br />
+<code>Expand-Archive -Path $zip -DestinationPath $dstPath</code> указать путь извлечения <br />
+<code>Expand-Archive -Path $zip -OutputPath $dstPath</code></p>
+<h3 id="system-io-compression-filesystem"><a class="header" href="#system-io-compression-filesystem">System IO Compression FileSystem</a></h3>
+<pre><code class="language-PowerShell">function Expand-ArchiveFile {
+    param (
+        # Путь к архиву
+        $Path,
+        # Путь, куда извлечь файл
+        $DestinationPath,
+        # Имя файла, который нужно извлечь
+        $FileName
+    )
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    try {
+        # Открыть архив для чтения
+        $zipArchive = [System.IO.Compression.ZipFile]::OpenRead($Path)
+        # Найти файл в архиве
+        $fileEntry = $zipArchive.Entries | Where-Object { $_.FullName -eq $fileName }
+        if ($fileEntry) {
+            # Создание потока для чтения содержимого файла
+            $stream = $fileEntry.Open()
+            # Создание файла и запись в него данных из потока
+            $DestinationPathFileName = "$DestinationPath\$FileName"
+            $fileStream = [System.IO.File]::Create($DestinationPathFileName)
+            $stream.CopyTo($fileStream)
+            # Закрытие потоков
+            $stream.Close()
+            $fileStream.Close()
+        } else {
+            Write-Output "Файл $fileName не найден в архиве"
+        }
+    } catch {
+        Write-Error "Ошибка при извлечении файла из архива"
+    } finally {
+        # Закрыть архив
+        $zipArchive.Dispose()
+    }
+}
+</code></pre>
+<h3 id="winrar"><a class="header" href="#winrar">WinRAR</a></h3>
+<pre><code class="language-PowerShell">function Expand-ArchivePassword {
+    param (
+        $Path,
+        $Password
+    )
+    $winrar =  "C:\Program Files\WinRAR\WinRAR.exe"
+    &amp; $winrar x -p"$Password" $Path
+}
+</code></pre>
+<p><code>cd "$home\Downloads"</code> <br />
+<code>Expand-ArchivePassword archive.rar qwe123</code></p>
+<h1 id="handles"><a class="header" href="#handles">Handles</a></h1>
+<p><code>$url = "https://download.sysinternals.com/files/Handle.zip"</code> <br />
+<code>Invoke-RestMethod $url -OutFile "$env:TEMP\handle.zip"</code> <br />
+<code>Expand-ArchiveFile -Path "$env:TEMP\handle.zip" -DestinationPath "$home\Documents" -FileName "handle.exe"</code> извлекаем выбранный файл из архива <br />
+<code>Remove-Item "$env:TEMP\handle.zip"</code> <br />
+<code>$handle = "$home\Documents\handle.exe"</code> <br />
+<code>$test = New-Object System.IO.StreamReader("$home\desktop\test.txt")</code> занять файл текущим процессом pwsh ($pid) <br />
+<code>$SearchProcess = &amp; $handle "C:\Users\Lifailon\Desktop\test.txt" -nobanner -u -v | ConvertFrom-Csv</code> вывести список дескрипторов по пути к файлу (имя процесса, его PID и пользователь который запустил) <br />
+<code>Stop-Process $SearchProcess.PID</code> завершить процесс, который удерживал файл</p>
+<h1 id="console-menu"><a class="header" href="#console-menu">Console-Menu</a></h1>
+<pre><code class="language-PowerShell"># Импортируем модуль PS-Menu в текущую сессию из репозитория GitHub
+$module = "https://raw.githubusercontent.com/chrisseroka/ps-menu/master/ps-menu.psm1"
+Invoke-Expression $(Invoke-RestMethod $module)
+</code></pre>
+<p>Пример навигации по директориям в системе используя меню:</p>
+<pre><code class="language-PowerShell">function ls-menu {
+  param (
+    $startDir = "C:\"
+  )
+  clear
+  # Проверяем, что мы не находимся в root директории (исключить возврат назад)
+  if ([System.IO.Path]::GetPathRoot($startDir) -eq $startDir) {
+    $select = menu @(
+      @($(Get-ChildItem $startDir).name)
+    )
+  }
+  else {
+    $select = menu @(
+      @("..")+@($(Get-ChildItem $startDir).name)
+    )
+  }
+  # Если выбрали возврат назад, то забираем только путь у стартовой директории
+  if ($select -eq "..") {
+    $backPath = [System.IO.Path]::GetDirectoryName($startDir)
+    ls-menu $backPath
+  }
+  else {
+    # Проверяем, что выбрали директорию
+    if ($(Test-Path "$startDir\$select" -PathType Container)) {
+      # Если выбрали директорию, к стартовому пути добавляем выбранное имя директории
+      ls-menu "$startDir\$select"
+    }
+    else {
+      ls-menu $startDir
+    }
+  }
+}
+</code></pre>
+<p><code>ls-menu</code> <br />
+<code>ls-menu $home</code> <br />
+<code>ls-menu "D:\"</code></p>
+<h1 id="credential"><a class="header" href="#credential">Credential</a></h1>
+<p><code>$Cred = Get-Credential</code> сохраняет креды в переменные <code>$Cred.Username</code> и <code>$Cred.Password</code> <br />
+<code>$Cred.GetNetworkCredential().password</code> извлечь пароль <br />
+<code>cmdkey /generic:"TERMSRV/$srv" /user:"$username" /pass:"$password"</code> добавить указанные креды аудентификации на на терминальный сервер для подключения без пароля <br />
+<code>mstsc /admin /v:$srv</code> авторизоваться <br />
+<code>cmdkey /delete:"TERMSRV/$srv"</code> удалить добавленные креды аудентификации из системы <br />
+<code>rundll32.exe keymgr.dll,KRShowKeyMgr</code> хранилище Stored User Names and Password <br />
+<code>Get-Service VaultSvc</code> служба для работы Credential Manager <br />
+<code>Install-Module CredentialManager</code> установить модуль управления Credential Manager к хранилищу PasswordVault из PowerShell <br />
+<code>[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls11,Tls12'</code> для устаноки модуля <br />
+<code>Get-StoredCredential</code> получить учетные данные из хранилища Windows Vault <br />
+<code>Get-StrongPassword</code> генератор пароля <br />
+<code>New-StoredCredential -UserName test -Password "123456"</code> добавить учетную запись <br />
+<code>Remove-StoredCredential</code> удалить учетную запись <br />
+<code>$Cred = Get-StoredCredential | where {$_.username -match "admin"}</code> <br />
+<code>$pass = $cred.password</code> <br />
+<code>$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass)</code> <br />
+<code>[System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)</code></p>
+<h3 id="out-gridview"><a class="header" href="#out-gridview">Out-Gridview</a></h3>
+<p><code>Get-Service -cn $srv | Out-GridView -Title "Service $srv" -OutputMode Single –PassThru | Restart-Service</code> перезапустить выбранную службу</p>
+<h3 id="out-file"><a class="header" href="#out-file">Out-File</a></h3>
+<p><code>Read-Host –AsSecureString | ConvertFrom-SecureString | Out-File "$env:userprofile\desktop\password.txt"</code> писать в файл. Преобразовать пароль в формат SecureString с использованием шифрования Windows Data Protection API (DPAPI)</p>
+<h3 id="get-content"><a class="header" href="#get-content">Get-Content</a></h3>
+<p><code>$password = gc "$env:userprofile\desktop\password.txt" | ConvertTo-SecureString</code> читать хэш пароля из файла с помощью ключей, хранящихся в профиле текущего пользователя, который невозможно прочитать на другом копьютере</p>
+<h3 id="aes-key"><a class="header" href="#aes-key">AES Key</a></h3>
+<p><code>$AESKey = New-Object Byte[] 32</code> <br />
+<code>[Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($AESKey)</code> <br />
+<code>$AESKey | Out-File "C:\password.key"</code> <br />
+<code>$Cred.Password | ConvertFrom-SecureString -Key (Get-Content "C:\password.key") | Set-Content "C:\password.txt"</code> сохранить пароль в файл используя внешний ключ <br />
+<code>$pass = Get-Content "C:\password.txt" | ConvertTo-SecureString -Key (Get-Content "\\Server\Share\password.key")</code> расшифровать пароль на втором компьютере</p>
+<h1 id="winevent"><a class="header" href="#winevent">WinEvent</a></h1>
+<p><code>Get-WinEvent -ListLog *</code> отобразить все доступные журналы логов <br />
+<code>Get-WinEvent -ListLog * | where RecordCount -ne 0 | where RecordCount -ne $null | sort -Descending RecordCount</code> отобразить не пустые журналы с сортировкой по кол-ву записей <br />
+<code>Get-WinEvent -ListProvider * | ft</code> отобразить всех провайдеров приложений <br />
+<code>Get-WinEvent -ListProvider GroupPolicy</code> найти в какой журнал LogLinks {Application} пишутся логи приложения <br />
+<code>Get-WinEvent -ListProvider *smb*</code> <br />
+<code>Get-WinEvent -ListLog * | where logname -match SMB | sort -Descending RecordCount</code> найти все журналы по имени <br />
+<code>Get-WinEvent -LogName "Microsoft-Windows-SmbClient/Connectivity"</code> <br />
+<code>Get-WinEvent -ListProvider *firewall*</code></p>
+<h3 id="xpath"><a class="header" href="#xpath">XPath</a></h3>
+<p><code>Get-WinEvent -FilterHashtable @{LogName="Security";ID=4624}</code> найти логи по ID в журнале Security <br />
+<code>Get-WinEvent -FilterHashtable @{LogName="System";Level=2}</code> найти все записи ошибки (1 - критический, 3 - предупреждение, 4 - сведения) <br />
+<code>Get-WinEvent -FilterHashtable @{LogName="System";Level=2;ProviderName="Service Control Manager"}</code> отфильтровать по имени провайдера</p>
+<p><code>([xml](Get-WinEvent -FilterHashtable @{LogName="Security";ID=4688} -MaxEvents 1).ToXml()).Event.EventData.Data</code> отобразить все свойства, хранимые в EventData (Message) <br />
+<code>Get-WinEvent -FilterHashtable @{logname="security";ID=4688} -MaxEvents 1 | select timecreated,{$_.Properties[5].value}</code> отфильтровать время события и имя запущенного процесса</p>
+<pre><code>$query = '
+&lt;QueryList&gt;
+    &lt;Query Id="0" Path="Security"&gt;
+        &lt;Select Path="Security"&gt;
+        *[System[EventID=4688]] and 
+            *[EventData[Data[@Name="NewProcessName"]="C:\Windows\System32\autochk.exe" or Data[@Name="NewProcessName"]="C:\Windows\System32\services.exe"]]
+        &lt;/Select&gt;
+    &lt;/Query&gt;
+&lt;/QueryList&gt;
+'
+
+Get-WinEvent -LogName Security -FilterXPath $query
+</code></pre>
+<h3 id="reboot"><a class="header" href="#reboot">Reboot</a></h3>
+<pre><code>$query = '
+&lt;QueryList&gt;
+    &lt;Query Id="0" Path="System"&gt;
+        &lt;Select Path="System"&gt;
+        *[
+      System[
+      EventID=41 or
+      EventID=1074 or
+      EventID=1076 or
+      EventID=6005 or
+      EventID=6006 or
+      EventID=6008 or
+      EventID=6009 or
+      EventID=6013
+      ]
+      ]
+        &lt;/Select&gt;
+    &lt;/Query&gt;
+&lt;/QueryList&gt;
+'
+Get-WinEvent -LogName System -FilterXPath $query
+
+41  ` Система была перезагружена без корректного завершения работы.
+1074` Система была корректного выключена пользователем или процессом.
+1076` Следует за Event ID 6008 и означает, что первый пользователь (с правом выключения системы) подключившийся к серверу после неожиданной перезагрузки или выключения, указал причину этого события.
+6005` Запуск "Журнала событий Windows" (Event Log). Указывает на включение системы.
+6006` Остановка «Журнала событий Windows». Указывает на выключение системы.
+6008` Предыдущее выключение системы было неожиданным.
+6009` Версия операционной системы, зафиксированная при загрузке системы.
+6013` Время работы системы (system uptime) в секундах.
+</code></pre>
+<h3 id="logon"><a class="header" href="#logon">Logon</a></h3>
+<pre><code class="language-PowerShell">$srv = "localhost"
+$FilterXPath = '&lt;QueryList&gt;&lt;Query Id="0"&gt;&lt;Select&gt;*[System[EventID=21]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;'
+$RDPAuths = Get-WinEvent -ComputerName $srv -LogName "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational" -FilterXPath $FilterXPath
+[xml[]]$xml = $RDPAuths | Foreach {$_.ToXml()}
+$EventData = Foreach ($event in $xml.Event) {
+    New-Object PSObject -Property @{
+        "Connection Time" = (Get-Date ($event.System.TimeCreated.SystemTime) -Format 'yyyy-MM-dd hh:mm K')
+        "User Name" = $event.UserData.EventXML.User
+        "User ID" = $event.UserData.EventXML.SessionID
+        "User Address" = $event.UserData.EventXML.Address
+        "Event ID" = $event.System.EventID
+    }
+}
+$EventData | ft
+</code></pre>
+<h3 id="eventlog"><a class="header" href="#eventlog">EventLog</a></h3>
+<p><code>Get-EventLog -List</code> отобразить все корневые журналы логов и их размер <br />
+<code>Clear-EventLog Application</code> очистить логи указанного журнала <br />
+<code>Get-EventLog -LogName Security -InstanceId 4624</code> найти логи по ID в журнале Security</p>
+<h1 id="firewall"><a class="header" href="#firewall">Firewall</a></h1>
+<pre><code class="language-PowerShell">$days = 5
+$obj = @()
+$fw = Get-WinEvent "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall"
+foreach ($temp_fw in $fw) {
+if ($temp_fw.id -eq 2097) { # 2004
+    $type = "Added Rule"
+}
+elseif ($temp_fw.id -eq 2006) {
+    $type = "Deleted Rule"
+}
+$port = $temp_fw.Properties[7] | select -ExpandProperty value
+$name = $temp_fw.Properties[1] | select -ExpandProperty value
+$obj += [PSCustomObject]@{
+    Time = $temp_fw.TimeCreated;
+    Type = $type;
+    Port = $port;
+    Name = $name}
+}
+$obj | Where-Object time -gt (Get-Date).AddDays(-$days)
+</code></pre>
+<p><code>New-NetFirewallRule -Profile Any -DisplayName "Open Port 135 RPC" -Direction Inbound -Protocol TCP -LocalPort 135</code> открыть in-порт <br />
+<code>Get-NetFirewallRule | where DisplayName -match kms | select *</code> найти правило по имени <br />
+<code>Get-NetFirewallPortFilter | where LocalPort -like 80</code> найти действующие правило по номеру порта</p>
+<pre><code class="language-PowerShell">Get-NetFirewallRule -Enabled True -Direction Inbound | select -Property DisplayName,
+@{Name='Protocol';Expression={($_ | Get-NetFirewallPortFilter).Protocol}},
+@{Name='LocalPort';Expression={($_ | Get-NetFirewallPortFilter).LocalPort}},
+@{Name='RemotePort';Expression={($_ | Get-NetFirewallPortFilter).RemotePort}},
+@{Name='RemoteAddress';Expression={($_ | Get-NetFirewallAddressFilter).RemoteAddress}},
+Enabled,Profile
+</code></pre>
+<h3 id="firewall-manager"><a class="header" href="#firewall-manager">Firewall-Manager</a></h3>
+<p><code>Install-Module Firewall-Manager</code> <br />
+<code>Export-FirewallRules -Name * -CSVFile $home\documents\fw.csv</code> -Inbound -Outbound -Enabled -Disabled -Allow -Block (фильтр правил для экспорта) <br />
+<code>Import-FirewallRules -CSVFile $home\documents\fw.csv</code></p>
+<h1 id="defender"><a class="header" href="#defender">Defender</a></h1>
+<p><code>Import-Module Defender</code> <br />
+<code>Get-Command -Module Defender</code> <br />
+<code>Get-MpComputerStatus</code> <br />
+<code>(Get-MpComputerStatus).AntivirusEnabled</code> статус работы антивируса</p>
+<p><code>$session = NewCimSession -ComputerName hostname</code> подключиться к удаленному компьютеру, используется WinRM <br />
+<code>Get-MpComputerStatus -CimSession $session | fl fullscan*</code> узнать дату последнего сканирования на удаленном компьютере</p>
+<p><code>Get-MpPreference</code> настройки <br />
+<code>(Get-MpPreference).ScanPurgeItemsAfterDelay</code> время хранения записей журнала защитника в днях <br />
+<code>Set-MpPreference -ScanPurgeItemsAfterDelay 30</code> изменить время хранения <br />
+<code>ls "C:\ProgramData\Microsoft\Windows Defender\Scans\History"</code> <br />
+<code>Get-MpPreference | select disable*</code> отобразить статус всех видов проверок/сканирований <br />
+<code>Set-MpPreference -DisableRealtimeMonitoring $true</code> отключить защиту Defender в реальном времени (использовать только ручное сканирование) <br />
+<code>Set-MpPreference -DisableRemovableDriveScanning $false</code> включить сканирование USB накопителей <br />
+<code>Get-MpPreference | select excl*</code> отобразить список всех исключений <br />
+<code>(Get-MpPreference).ExclusionPath</code> <br />
+<code>Add-MpPreference -ExclusionPath C:\install</code> добавить директорию в исключение <br />
+<code>Remove-MpPreference -ExclusionPath C:\install</code> удалить из исключения <br />
+<code>New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1 -PropertyType DWORD -Force</code> полностью отключить Windows Defender</p>
+<p><code>Set-MpPreference -SignatureDefinitionUpdateFileSharesSources \\FileShare1\Updates</code> для обновления из сетевой папки нужно предварительно скачать файлы с сигнатурами баз с сайта https://www.microsoft.com/security/portal/definitions/adl.aspx и поместить в сетевой каталог
+<code>Update-MpSignature -UpdateSource FileShares</code> изменить источник обновлений (MicrosoftUpdateServer – сервера обновлений MS в интернете, InternalDefinitionUpdateServer — внутренний WSUS сервер) <br />
+<code>Update-MpSignature</code> обновить сигнатуры</p>
+<p><code>Start-MpScan -ScanType QuickScan</code> быстрая проверка или FullScan <br />
+<code>Start-MpScan -ScanType FullScan -AsJob</code> <br />
+<code>Set-MpPreference -RemediationScheduleDay 1-7</code> выбрать дни, начиная с воскресенья или 0 каждый день, 8 - сбросить <br />
+<code>Set-MpPreference -ScanScheduleQuickScanTime 14:00:00</code> <br />
+<code>Start-MpScan -ScanType CustomScan -ScanPath "C:\Program Files"</code> сканировать выбранную директорию</p>
+<p><code>Get-MpThreat</code> история угроз и тип угрозы (ThreatName: HackTool/Trojan) <br />
+<code>Get-MpThreatCatalog</code> список известных видов угроз <br />
+<code>Get-MpThreatDetection</code> история защиты (активных и прошлые) и ID угрозы <br />
+<code>Get-MpThreat -ThreatID 2147760253</code></p>
+<p><code>ls "C:\ProgramData\Microsoft\Windows Defender\Quarantine\"</code> директория хранения файлов в карантине <br />
+<code>cd "C:\Program Files\Windows Defender\"</code> <br />
+<code>.\MpCmdRun.exe -restore -name $ThreatName</code> восстановить файл из карантина <br />
+<code>.\MpCmdRun.exe -restore -filepath $path_file</code></p>
+<h1 id="dism"><a class="header" href="#dism">DISM</a></h1>
+<p><code>Get-Command -Module Dism -Name *Driver*</code> <br />
+<code>Export-WindowsDriver -Online -Destination C:\Users\Lifailon\Documents\Drivers\</code> извлечение драйверов из текущей системы (C:\Windows\System32\DriverStore\FileRepository), выгружает список файлов, которые необходимы для установки драйвера (dll,sys,exe) в соответствии со списком файлов, указанных в секции [CopyFiles] inf-файла драйвера. <br />
+<code>Export-WindowsDriver -Path C:\win_image -Destination C:\drivers</code> извлечь драйвера из офлайн образа Windows, смонтированного в каталог c:\win_image <br />
+<code>$BackupDrivers = Export-WindowsDriver -Online -Destination C:\Drivers</code> <br />
+<code>$BackupDrivers | ft Driver,ClassName,ProviderName,Date,Version,ClassDescription</code> список драйверов в объектном представлении <br />
+<code>$BackupDrivers | where classname -match printer</code> <br />
+<code>pnputil.exe /add-driver C:\drivers\*.inf /subdirs /install</code> установить все (параметр subdirs) драйвера из указанной папки (включая вложенные)</p>
+<p><code>sfc /scannow</code> проверить целостность системных файлов с помощью утилиты SFC (System File Checker), в случае поиска ошибок, попробует восстановить их оригинальные копии из хранилища системных компонентов Windows (каталог C:\Windows\WinSxS). Вывод работы логируется в C:\Windows\Logs\CBS с тегом SR <br />
+<code>Get-ComputerInfo | select *</code> подробная информация о системе (WindowsVersion,WindowsEditionId,<em>Bios</em>) <br />
+<code>Get-WindowsImage -ImagePath E:\sources\install.wim</code> список доступных версий в образе <br />
+<code>Repair-WindowsImage -Online –ScanHealth</code> <br />
+<code>Repair-WindowsImage -Online -RestoreHealth</code> восстановление хранилища системных компонентов <br />
+<code>Repair-WindowsImage -Online -RestoreHealth -Source E:\sources\install.wim:3 –LimitAccess</code> восстановление в оффлайн режиме из образа по номеру индекса</p>
+<h1 id="scheduled"><a class="header" href="#scheduled">Scheduled</a></h1>
+<p><code>$Trigger = New-ScheduledTaskTrigger -At 01:00am -Daily</code> 1:00 ночи <br />
+<code>$Trigger = New-ScheduledTaskTrigger –AtLogon</code> запуск при входе пользователя в систему <br />
+<code>$Trigger = New-ScheduledTaskTrigger -AtStartup</code> при запуске системы <br />
+<code>$User = "NT AUTHORITY\SYSTEM"</code> <br />
+<code>$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "$home\Documents\DNS-Change-Tray-1.3.ps1"</code> <br />
+<code>$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-NoProfile -NoLogo -NonInteractive -ExecutionPolicy Unrestricted -WindowStyle Hidden -File $home\Documents\DNS-Change-Tray-1.3.ps1"</code> <br />
+<code>Register-ScheduledTask -TaskName "DNS-Change-Tray-Startup" -Trigger $Trigger -User $User -Action $Action -RunLevel Highest –Force</code></p>
+<p><code>Get-ScheduledTask | ? state -ne Disabled</code> список всех активных заданий <br />
+<code>Start-ScheduledTask DNS-Change-Tray-Startup</code> запустить задание немедленно <br />
+<code>Get-ScheduledTask DNS-Change-Tray-Startup | Disable-ScheduledTask</code> отключить задание <br />
+<code>Get-ScheduledTask DNS-Change-Tray-Startup | Enable-ScheduledTask</code> включить задание <br />
+<code>Unregister-ScheduledTask DNS-Change-Tray-Startup</code> удалить задание <br />
+<code>Export-ScheduledTask DNS-Change-Tray-Startup | Out-File $home\Desktop\Task-Export-Startup.xml</code> экспортировать задание в xml <br />
+<code>Register-ScheduledTask -Xml (Get-Content $home\Desktop\Task-Export-Startup.xml | Out-String) -TaskName "DNS-Change-Tray-Startup"</code></p>
+<h1 id="shutdown"><a class="header" href="#shutdown">shutdown</a></h1>
+<p><code>shutdown /r /o</code> перезагрузка в безопасный режим <br />
+<code>shutdown /s /t 600 /c "Power off after 10 minutes"</code> выключение <br />
+<code>shutdown /s /f</code> принудительное закрытие приложений <br />
+<code>shutdown /a</code> отмена <br />
+<code>shutdown /r /t 0 /m \\192.168.3.100</code> <br />
+<code>Restart-Computer -ComputerName 192.168.3.100 -Protocol WSMan</code> через WinRM <br />
+<code>Restart-Computer –ComputerName 192.168.3.100 –Force</code> через WMI <br />
+<code>Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Start\HideShutDown" -Name "value" -Value 1</code> скрыть кнопку выключения <br />
+<code>Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Start\HideRestart" -Name "value" -Value 1</code> скрыть кнопку перезагрузки</p>
+<pre><code class="language-PowerShell">function Start-Shutdown {
+    &lt;#
+    .SYNOPSIS
+    Module for shutdown and restart the computer at a specified time
+    .DESCRIPTION
+    Example:
+    # Start-Shutdown -Time "18:00"
+    # Start-Shutdown -Restart -Time "18:00"
+    # Start-Shutdown -Cancel
+    .LINK
+    https://github.com/Lifailon/PS-Commands
+    #&gt;
+    param(
+        [string]$Time,
+        [switch]$Restart,
+        [switch]$Cancel
+    )
+    if ($Time) {
+        $currentDateTime = Get-Date
+        $shutdownTime = Get-Date $Time
+        if ($shutdownTime -lt $currentDateTime) {
+            $shutdownTime = $shutdownTime.AddDays(1)
+        }
+        $timeUntilShutdown = $shutdownTime - $currentDateTime
+        $secondsUntilShutdown = [math]::Round($timeUntilShutdown.TotalSeconds)
+    }
+    if ($Cancel) {
+        Start-Process -FilePath "shutdown.exe" -ArgumentList "/a"
+    } elseif ($Restart) {
+        Write-Host "The computer will restart after $($timeUntilShutdown.Hours) hours and $($timeUntilShutdown.Minutes) minutes."
+        Start-Process -FilePath "shutdown.exe" -ArgumentList "/r", "/f", "/t", "$secondsUntilShutdown"
+    } else {
+        Write-Host "The computer will shutdown after $($timeUntilShutdown.Hours) hours and $($timeUntilShutdown.Minutes) minutes."
+        Start-Process -FilePath "shutdown.exe" -ArgumentList "/s", "/f", "/t", "$secondsUntilShutdown"
+    }
+}
+</code></pre>
+<h1 id="localaccounts"><a class="header" href="#localaccounts">LocalAccounts</a></h1>
+<p><code>Get-Command -Module Microsoft.PowerShell.LocalAccounts</code> <br />
+<code>Get-LocalUser</code> список пользователей <br />
+<code>Get-LocalGroup</code> список групп <br />
+<code>New-LocalUser "1C" -Password $Password -FullName "1C Domain"</code> создать пользователя <br />
+<code>Set-LocalUser -Password $Password 1C</code> изменить пароль <br />
+<code>Add-LocalGroupMember -Group "Administrators" -Member "1C"</code> добавить в группу Администраторов <br />
+<code>Get-LocalGroupMember "Administrators"</code> члены группы</p>
+<pre><code class="language-PowerShell">@("vproxy-01","vproxy-02","vproxy-03") | %{
+    icm $_ {Add-LocalGroupMember -Group "Administrators" -Member "support4"}
+    icm $_ {Get-LocalGroupMember "Administrators"}
+}
+</code></pre>
+<h1 id="ps2exe"><a class="header" href="#ps2exe">PS2EXE</a></h1>
+<p><code>Install-Module ps2exe -Repository PSGallery</code> <br />
+<code>Get-Module -ListAvailable</code> список всех модулей <br />
+<code>-noConsole</code> использовать GUI, без окна консоли powershell <br />
+<code>-noOutput</code> выполнение в фоне <br />
+<code>-noError</code> без вывода ошибок <br />
+<code>-requireAdmin</code> при запуске запросить права администратора <br />
+<code>-credentialGUI</code> вывод диалогового окна для ввода учетных данных <br />
+<code>Invoke-ps2exe -inputFile "$home\Desktop\WinEvent-Viewer-1.1.ps1" -outputFile "$home\Desktop\WEV-1.1.exe" -iconFile "$home\Desktop\log_48px.ico" -title "WinEvent-Viewer" -noConsole -noOutput -noError</code></p>
+<h1 id="nssm"><a class="header" href="#nssm">NSSM</a></h1>
+<p><code>$powershell_Path = (Get-Command powershell).Source</code> <br />
+<code>$NSSM_Path = (Get-Command "C:\WinPerf-Agent\NSSM-2.24.exe").Source</code> <br />
+<code>$Script_Path = "C:\WinPerf-Agent\WinPerf-Agent-1.1.ps1"</code> <br />
+<code>$Service_Name = "WinPerf-Agent"</code> <br />
+<code>&amp; $NSSM_Path install $Service_Name $powershell_Path -ExecutionPolicy Bypass -NoProfile -f $Script_Path</code> создать Service <br />
+<code>&amp; $NSSM_Path start $Service_Name</code> запустить <br />
+<code>&amp; $NSSM_Path status $Service_Name</code> статус <br />
+<code>$Service_Name | Restart-Service</code> перезапустить <br />
+<code>$Service_Name | Get-Service</code> статус <br />
+<code>$Service_Name | Stop-Service</code> остановить <br />
+<code>&amp; $NSSM_Path set $Service_Name description "Check performance CPU and report email"</code> изменить описание <br />
+<code>&amp; $NSSM_Path remove $Service_Name</code> удалить</p>
+<h1 id="jobs"><a class="header" href="#jobs">Jobs</a></h1>
+<p><code>Get-Job</code> получение списка задач <br />
+<code>Start-Job</code> запуск процесса <br />
+<code>Stop-Job</code> остановка процесса <br />
+<code>Suspend-Job</code> приостановка работы процесса <br />
+<code>Resume-Job</code> восстановление работы процесса <br />
+<code>Wait-Job</code> ожидание вывода команды <br />
+<code>Receive-Job</code> получение результатов выполненного процесса <br />
+<code>Remove-Job</code> удалить задачу</p>
+<pre><code class="language-PowerShell">function Start-PingJob ($Network) {
+    $RNetwork = $Network -replace "\.\d{1,3}$","."
+    foreach ($4 in 1..254) {
+        $ip = $RNetwork+$4
+        # Создаем задания, забираем 3-ю строку вывода и добавляем к выводу ip-адрес
+        (Start-Job {"$using:ip : "+(ping -n 1 -w 50 $using:ip)[2]}) | Out-Null
+    }
+    while ($True) {
+        $status_job = $(Get-Job).State[-1] # забираем статус последнего задания (задания выполняются по очереди сверху вниз)
+        if ($status_job -like "Completed") { # проверяем задание на выполнение
+            $ping_out = Get-Job | Receive-Job # если выполнено, забираем вывод всех заданий
+            Get-Job | Remove-Job -Force # удаляем задания
+            break # завершаем цикл
+        }
+    }
+    $ping_out
+}
+</code></pre>
+<p><code>Start-PingJob -Network 192.168.3.0</code> <br />
+<code>$(Measure-Command {Start-PingJob -Network 192.168.3.0}).TotalSeconds</code> 60 Seconds</p>
+<h3 id="threadjob"><a class="header" href="#threadjob">ThreadJob</a></h3>
+<p><code>Install-Module -Name ThreadJob</code> <br />
+<code>Get-Module ThreadJob -list</code> <br />
+<code>Start-ThreadJob {ping ya.ru} | Out-Null</code> создать фоновую задачу <br />
+<code>Get-Job | Receive-Job -Keep</code> отобразить и не удалять вывод <br />
+<code>(Get-Job).HasMoreData</code> если False, то вывод команы удален <br />
+<code>(Get-Job)[-1].Output</code> отобразить вывод последней задачи</p>
+<pre><code class="language-PowerShell">function Start-PingThreadJob ($Network) {
+    $RNetwork = $Network -replace "\.\d{1,3}$","."
+    foreach ($4 in 1..254) {
+        $ip = $RNetwork+$4
+        $(Start-ThreadJob {
+            "$using:ip : " + $(ping -n 1 -w 50 $using:ip)[2]
+        }) | Out-Null
+    }
+    while ($True) {
+        $status_job = $(Get-Job).State[-1]
+        if ($status_job -like "Completed") {
+            $ping_out = Get-Job | Receive-Job
+            Get-Job | Remove-Job -Force
+            break
+        }
+    }
+    $ping_out
+}
+</code></pre>
+<p><code>Start-PingThreadJob -Network 192.168.3.0</code> <br />
+<code>$(Measure-Command {Start-PingThread -Network 192.168.3.0}).TotalSeconds</code> 24 Seconds</p>
+<h3 id="poshrsjob"><a class="header" href="#poshrsjob">PoshRSJob</a></h3>
+<p>Install-Module -Name PoshRSJob</p>
+<pre><code class="language-PowerShell">function Start-PingRSJob ($Network) {
+    $RNetwork = $Network -replace "\.\d{1,3}$","."
+    foreach ($4 in 1..254) {
+        $ip = $RNetwork+$4
+        $(Start-RSJob {
+            "$using:ip : " + $(ping -n 1 -w 50 $using:ip)[2]
+        }) | Out-Null
+    }
+    while ($True) {
+        $status_job = $(Get-RSJob).State -notcontains "Running" # проверяем, что массив не содержит активных заданий
+        if ($status_job) {
+            $ping_out = Get-RSJob | Receive-RSJob
+            Get-RSJob | Remove-RSJob
+            break
+        }
+    }
+    $ping_out
+}
+</code></pre>
+<p><code>Start-PingRSJob -Network 192.168.3.0</code> <br />
+<code>$(Measure-Command {Start-PingRSJob -Network 192.168.3.0}).TotalSeconds</code> 10 Seconds</p>
+<h3 id="invoke-parallel"><a class="header" href="#invoke-parallel">Invoke-Parallel</a></h3>
+<pre><code class="language-PowerShell"># Import function from GitHub to current session
+$module = "https://raw.githubusercontent.com/RamblingCookieMonster/Invoke-Parallel/master/Invoke-Parallel/Invoke-Parallel.ps1"
+Invoke-Expression $(Invoke-RestMethod $module)
+</code></pre>
+<p>Get-Help Invoke-Parallel -Full</p>
+<pre><code class="language-PowerShell">function Start-PingInvokeParallel ($Network) {
+    $RNetwork = $Network -replace "\.\d{1,3}$","."
+    1..254 | ForEach-Object {$srvList += @($RNetwork+$_)}
+    Invoke-Parallel -InputObject $srvList -ScriptBlock {
+        "$_ : " + $(ping -n 1 -w 50 $_)[2]
+    }
+}
+</code></pre>
+<p><code>Start-PingInvokeParallel -Network 192.168.3.0</code> <br />
+<code>$(Get-History)[-1].Duration.TotalSeconds</code> 7 seconds</p>
+<pre><code class="language-PowerShell">$array_main  = 1..10 | ForEach-Object {"192.168.3.$_"}
+Invoke-Parallel -InputObject $(0..$($array_main.Count-1)) -ScriptBlock {
+    Foreach ($n in 1..100) {
+        Start-Sleep -Milliseconds 100
+        Write-Progress -Activity $($array_main[$_]) -PercentComplete $n -id $_
+    }
+} -ImportVariables
+</code></pre>
+<h3 id="foreach-object-parallel"><a class="header" href="#foreach-object-parallel">ForEach-Object-Parallel</a></h3>
+<pre><code class="language-PowerShell">function Start-PingParallel ($Network) {
+    $RNetwork = $Network -replace "\.\d{1,3}$","."
+    1..254 | ForEach-Object -Parallel {
+        "$using:RNetwork.$_ : " + $(ping -n 1 -w 50 "$using:RNetwork$_")[2]
+    } -ThrottleLimit 254
+}
+</code></pre>
+<p><code>Start-PingParallel -Network 192.168.3.0</code> <br />
+<code>$(Get-History)[-1].Duration.TotalSeconds</code> 2 seconds</p>
+<pre><code class="language-PowerShell">function Start-TestConnectParallel (
+        $Network,
+        [switch]$Csv
+    ) {
+    $RNetwork = $Network -replace "\.\d{1,3}$","."
+    if ($csv) {
+        "Address,Status,Latency"
+    }
+    1..254 | ForEach-Object -Parallel {
+        $test = Test-Connection "$using:RNetwork$_" -Count 1 -TimeoutSeconds 1
+        if ($using:csv) {
+            "$($using:RNetwork)$_,$($test.Status),$($test.Latency)"
+        } else {
+            $test
+        }
+    } -ThrottleLimit 254
+}
+</code></pre>
+<p><code>Start-TestConnectParallel -Network 192.168.3.0 -Csv | ConvertFrom-Csv</code> <br />
+<code>$(Get-History)[-1].Duration.TotalSeconds</code> 3 seconds</p>
+<pre><code class="language-PowerShell">$array_main  = 1..10 | ForEach-Object {"192.168.3.$_"}
+$(0..$($array_main.Count-1)) | ForEach-Object -Parallel {
+    Foreach ($n in 1..100) {
+        Start-Sleep -Milliseconds 100
+        $array_temp = $using:array_main
+        Write-Progress -Activity $($array_temp[$_]) -PercentComplete $n -id $_
+    }
+} -ThrottleLimit $($array_main.Count)
+</code></pre>
+<h1 id="com"><a class="header" href="#com">COM</a></h1>
+<p><code>$wshell = New-Object -ComObject Wscript.Shell</code> <br />
+<code>$wshell | Get-Member</code> <br />
+<code>$link = $wshell.CreateShortcut("$Home\Desktop\Yandex.lnk")</code> создать ярлык <br />
+<code>$link | Get-Member</code> <br />
+<code>$link.TargetPath = "https://yandex.ru"</code> куда ссылается (метод TargetPath объекта $link где хранится объект CreateShortcut) <br />
+<code>$link.Save()</code> сохранить</p>
+<p><code>Set-WinUserLanguageList -LanguageList en-us,ru -Force</code> изменить языковую раскладку клавиатуры</p>
+<h3 id="wscript-shell-sendkeys"><a class="header" href="#wscript-shell-sendkeys">Wscript Shell SendKeys</a></h3>
+<p><code>(New-Object -ComObject Wscript.shell).SendKeys([char]173)</code> включить/выключить звук <br />
+<code>$wshell.Exec("notepad.exe")</code> запустить приложение <br />
+<code>$wshell.AppActivate("Блокнот")</code> развернуть запущенное приложение</p>
+<p><code>$wshell.SendKeys("Login")</code> текст <br />
+<code>$wshell.SendKeys("{A 5}")</code> напечатать букву 5 раз подряд <br />
+<code>$wshell.SendKeys("%{TAB}")</code> ALT+TAB <br />
+<code>$wshell.SendKeys("^")</code> CTRL <br />
+<code>$wshell.SendKeys("%")</code> ALT <br />
+<code>$wshell.SendKeys("+")</code> SHIFT <br />
+<code>$wshell.SendKeys("{DOWN}")</code> вниз <br />
+<code>$wshell.SendKeys("{UP}")</code> вверх <br />
+<code>$wshell.SendKeys("{LEFT}")</code> влево <br />
+<code>$wshell.SendKeys("{RIGHT}")</code> вправо <br />
+<code>$wshell.SendKeys("{PGUP}")</code> PAGE UP <br />
+<code>$wshell.SendKeys("{PGDN}")</code> PAGE DOWN <br />
+<code>$wshell.SendKeys("{BACKSPACE}")</code> BACKSPACE/BKSP/BS <br />
+<code>$wshell.SendKeys("{DEL}")</code> DEL/DELETE <br />
+<code>$wshell.SendKeys("{INS}")</code> INS/INSERT <br />
+<code>$wshell.SendKeys("{PRTSC}")</code> PRINT SCREEN <br />
+<code>$wshell.SendKeys("{ENTER}")</code> <br />
+<code>$wshell.SendKeys("{ESC}")</code> <br />
+<code>$wshell.SendKeys("{TAB}")</code> <br />
+<code>$wshell.SendKeys("{END}")</code> <br />
+<code>$wshell.SendKeys("{HOME}")</code> <br />
+<code>$wshell.SendKeys("{BREAK}")</code> <br />
+<code>$wshell.SendKeys("{SCROLLLOCK}")</code> <br />
+<code>$wshell.SendKeys("{CAPSLOCK}")</code> <br />
+<code>$wshell.SendKeys("{NUMLOCK}")</code> <br />
+<code>$wshell.SendKeys("{F1}")</code> <br />
+<code>$wshell.SendKeys("{F12}")</code> <br />
+<code>$wshell.SendKeys("{+}{^}{%}{~}{(}{)}{[}{]}{{}{}}")</code></p>
+<pre><code class="language-PowerShell">function Get-AltTab {
+    (New-Object -ComObject wscript.shell).SendKeys("%{Tab}")
+    Start-Sleep $(Get-Random -Minimum 30 -Maximum 180)
+    Get-AltTab
+}
+</code></pre>
+<p><code>Get-AltTab</code></p>
+<h3 id="wscript-shell-popup"><a class="header" href="#wscript-shell-popup">Wscript Shell Popup</a></h3>
+<p><code>$wshell = New-Object -ComObject Wscript.Shell</code> <br />
+<code>$output = $wshell.Popup("Выберите действие?",0,"Заголовок",4)</code> <br />
+<code>if ($output -eq 6) {"yes"} elseif ($output -eq 7) {"no"} else {"no good"}</code></p>
+<pre><code>Type:
+0 ОК
+1 ОК и Отмена
+2 Стоп, Повтор, Пропустить
+3 Да, Нет, Отмена
+4 Да и Нет
+5 Повтор и Отмена
+16 Stop
+32 Question
+48 Exclamation
+64 Information
+
+Output:
+-1 Timeout
+1 ОК
+2 Отмена
+3 Стоп
+4 Повтор
+5 Пропустить
+6 Да
+7 Нет
+</code></pre>
+<h3 id="wscript-network"><a class="header" href="#wscript-network">WScript Network</a></h3>
+<p><code>$wshell = New-Object -ComObject WScript.Network</code> <br />
+<code>$wshell | Get-Member</code> <br />
+<code>$wshell.UserName</code> <br />
+<code>$wshell.ComputerName</code> <br />
+<code>$wshell.UserDomain</code></p>
+<h3 id="shell-application"><a class="header" href="#shell-application">Shell Application</a></h3>
+<p><code>$wshell = New-Object -ComObject Shell.Application</code> <br />
+<code>$wshell | Get-Member</code> <br />
+<code>$wshell.Explore("C:\")</code> <br />
+<code>$wshell.Windows() | Get-Member</code> получить доступ к открытым в проводнике или браузере Internet Explorer окон</p>
+<p><code>$shell = New-Object -Com Shell.Application</code> <br />
+<code>$RecycleBin = $shell.Namespace(10)</code> <br />
+<code>$RecycleBin.Items()</code></p>
+<h3 id="outlook"><a class="header" href="#outlook">Outlook</a></h3>
+<p><code>$Outlook = New-Object -ComObject Outlook.Application</code> <br />
+<code>$Outlook | Get-Member</code> <br />
+<code>$Outlook.Version</code></p>
+<pre><code class="language-PowerShell">$Outlook = New-Object -ComObject Outlook.Application
+$Namespace = $Outlook.GetNamespace("MAPI")
+$Folder = $namespace.GetDefaultFolder(4)` исходящие
+$Folder = $namespace.GetDefaultFolder(6)` входящие
+$Explorer = $Folder.GetExplorer()
+$Explorer.Display()	
+$Outlook.Quit()
+</code></pre>
+<h3 id="microsoft-update"><a class="header" href="#microsoft-update">Microsoft Update</a></h3>
+<p><code>(New-Object -com 'Microsoft.Update.AutoUpdate').Settings</code> <br />
+<code>(New-Object -com 'Microsoft.Update.AutoUpdate').Results</code> <br />
+<code>(New-Timespan -Start ((New-Object -com 'Microsoft.Update.AutoUpdate').Results|Select -ExpandProperty LastInstallationSuccessDate) -End (Get-Date)).hours</code> кол-во часов, прошедших с последней даты установки обновления безопасности в Windows.</p>
+<h1 id="dotnet"><a class="header" href="#dotnet">dotNET</a></h1>
+<p><code>[System.Diagnostics.EventLog] | select Assembly,Module</code> <br />
+<code>$EventLog = [System.Diagnostics.EventLog]::new("Application")</code> <br />
+<code>$EventLog = New-Object -TypeName System.Diagnostics.EventLog -ArgumentList Application,192.168.3.100</code> <br />
+<code>$EventLog | Get-Member -MemberType Method</code> <br />
+<code>$EventLog.MaximumKilobytes</code> максимальный размер журнала <br />
+<code>$EventLog.Entries</code> просмотреть журнал <br />
+<code>$EventLog.Clear()</code> очистить журнал</p>
+<p><code>Join-Path C: Install Test</code> <br />
+<code>[System.IO.Path]::Combine("C:", "Install", "Test")</code></p>
+<h3 id="match"><a class="header" href="#match">Match</a></h3>
+<p><code>[System.Math] | Get-Member -Static -MemberType Methods</code> <br />
+<code>[System.Math]::Max(2,7)</code> <br />
+<code>[System.Math]::Min(2,7)</code> <br />
+<code>[System.Math]::Floor(3.9)</code> <br />
+<code>[System.Math]::Truncate(3.9)</code></p>
+<h3 id="generate-password"><a class="header" href="#generate-password">Generate Password</a></h3>
+<p><code>Add-Type -AssemblyName System.Web</code> <br />
+<code>[System.Web.Security.Membership]::GeneratePassword(10,2)</code></p>
+<h3 id="sound-player"><a class="header" href="#sound-player">Sound Player</a></h3>
+<pre><code class="language-PowerShell">$CriticalSound = New-Object System.Media.SoundPlayer
+$CriticalSound.SoundLocation = "C:\WINDOWS\Media\Windows Critical Stop.wav"
+$CriticalSound.Play()
+
+$GoodSound = New-Object System.Media.SoundPlayer
+$GoodSound.SoundLocation = "C:\WINDOWS\Media\tada.wav"
+$GoodSound.Play()
+</code></pre>
+<h3 id="static-class"><a class="header" href="#static-class">Static Class</a></h3>
+<p><code>[System.Environment] | Get-Member -Static</code> <br />
+<code>[System.Environment]::OSVersion</code> <br />
+<code>[System.Environment]::Version</code> <br />
+<code>[System.Environment]::MachineName</code> <br />
+<code>[System.Environment]::UserName</code></p>
+<p><code>[System.Diagnostics.Process] | Get-Member -Static</code> <br />
+<code>[System.Diagnostics.Process]::Start('notepad.exe')</code></p>
+<h3 id="clicker"><a class="header" href="#clicker">Clicker</a></h3>
+<pre><code class="language-PowerShell">$cSource = @'
+using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+public class Clicker
+{
+//https://msdn.microsoft.com/en-us/library/windows/desktop/ms646270(v=vs.85).aspx
+[StructLayout(LayoutKind.Sequential)]
+struct INPUT
+{ 
+    public int        type; // 0 = INPUT_MOUSE,
+                            // 1 = INPUT_KEYBOARD
+                            // 2 = INPUT_HARDWARE
+    public MOUSEINPUT mi;
+}
+//https://msdn.microsoft.com/en-us/library/windows/desktop/ms646273(v=vs.85).aspx
+[StructLayout(LayoutKind.Sequential)]
+struct MOUSEINPUT
+{
+    public int    dx ;
+    public int    dy ;
+    public int    mouseData ;
+    public int    dwFlags;
+    public int    time;
+    public IntPtr dwExtraInfo;
+}
+//This covers most use cases although complex mice may have additional buttons
+//There are additional constants you can use for those cases, see the msdn page
+const int MOUSEEVENTF_MOVED      = 0x0001 ;
+const int MOUSEEVENTF_LEFTDOWN   = 0x0002 ;
+const int MOUSEEVENTF_LEFTUP     = 0x0004 ;
+const int MOUSEEVENTF_RIGHTDOWN  = 0x0008 ;
+const int MOUSEEVENTF_RIGHTUP    = 0x0010 ;
+const int MOUSEEVENTF_MIDDLEDOWN = 0x0020 ;
+const int MOUSEEVENTF_MIDDLEUP   = 0x0040 ;
+const int MOUSEEVENTF_WHEEL      = 0x0080 ;
+const int MOUSEEVENTF_XDOWN      = 0x0100 ;
+const int MOUSEEVENTF_XUP        = 0x0200 ;
+const int MOUSEEVENTF_ABSOLUTE   = 0x8000 ;
+const int screen_length          = 0x10000 ;
+//https://msdn.microsoft.com/en-us/library/windows/desktop/ms646310(v=vs.85).aspx
+[System.Runtime.InteropServices.DllImport("user32.dll")]
+extern static uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
+public static void LeftClickAtPoint(int x, int y)
+{
+    //Move the mouse
+    INPUT[] input = new INPUT[3];
+    input[0].mi.dx = x*(65535/System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width);
+    input[0].mi.dy = y*(65535/System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height);
+    input[0].mi.dwFlags = MOUSEEVENTF_MOVED | MOUSEEVENTF_ABSOLUTE;
+    //Left mouse button down
+    input[1].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+    //Left mouse button up
+    input[2].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+    SendInput(3, input, Marshal.SizeOf(input[0]));
+}
+}
+'@
+</code></pre>
+<p><code>Add-Type -TypeDefinition $cSource -ReferencedAssemblies System.Windows.Forms,System.Drawing</code> <br />
+<code>[Clicker]::LeftClickAtPoint(1900,1070)</code></p>
+<h3 id="audio"><a class="header" href="#audio">Audio</a></h3>
+<pre><code class="language-PowerShell">Add-Type -Language CsharpVersion3 -TypeDefinition @"
+using System.Runtime.InteropServices;
+[Guid("5CDF2C82-841E-4546-9722-0CF74078229A"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface IAudioEndpointVolume {
+// f(), g(), ... are unused COM method slots. Define these if you care
+int f(); int g(); int h(); int i();
+int SetMasterVolumeLevelScalar(float fLevel, System.Guid pguidEventContext);
+int j();
+int GetMasterVolumeLevelScalar(out float pfLevel);
+int k(); int l(); int m(); int n();
+int SetMute([MarshalAs(UnmanagedType.Bool)] bool bMute, System.Guid pguidEventContext);
+int GetMute(out bool pbMute);
+}
+[Guid("D666063F-1587-4E43-81F1-B948E807363F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface IMMDevice {
+int Activate(ref System.Guid id, int clsCtx, int activationParams, out IAudioEndpointVolume aev);
+}
+[Guid("A95664D2-9614-4F35-A746-DE8DB63617E6"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface IMMDeviceEnumerator {
+int f(); // Unused
+int GetDefaultAudioEndpoint(int dataFlow, int role, out IMMDevice endpoint);
+}
+[ComImport, Guid("BCDE0395-E52F-467C-8E3D-C4579291692E")] class MMDeviceEnumeratorComObject { }
+public class Audio {
+static IAudioEndpointVolume Vol() {
+var enumerator = new MMDeviceEnumeratorComObject() as IMMDeviceEnumerator;
+IMMDevice dev = null;
+Marshal.ThrowExceptionForHR(enumerator.GetDefaultAudioEndpoint(/*eRender*/ 0, /*eMultimedia*/ 1, out dev));
+IAudioEndpointVolume epv = null;
+var epvid = typeof(IAudioEndpointVolume).GUID;
+Marshal.ThrowExceptionForHR(dev.Activate(ref epvid, /*CLSCTX_ALL*/ 23, 0, out epv));
+return epv;
+}
+public static float Volume {
+get {float v = -1; Marshal.ThrowExceptionForHR(Vol().GetMasterVolumeLevelScalar(out v)); return v;}
+set {Marshal.ThrowExceptionForHR(Vol().SetMasterVolumeLevelScalar(value, System.Guid.Empty));}
+}
+public static bool Mute {
+get { bool mute; Marshal.ThrowExceptionForHR(Vol().GetMute(out mute)); return mute; }
+set { Marshal.ThrowExceptionForHR(Vol().SetMute(value, System.Guid.Empty)); }
+}
+}
+"@
+</code></pre>
+<p><code>[Audio]::Volume = 0.50</code> <br />
+<code>[Audio]::Mute = $true</code></p>
+<h3 id="netsessionenum"><a class="header" href="#netsessionenum">NetSessionEnum</a></h3>
+<p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN">Function</a> <br />
+<a href="https://fuzzysecurity.com/tutorials/24.html">Source</a></p>
+<pre><code class="language-PowerShell">function Invoke-NetSessionEnum {
+param (
+[Parameter(Mandatory = $True)][string]$HostName
+)
+Add-Type -TypeDefinition @"
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+[StructLayout(LayoutKind.Sequential)]
+public struct SESSION_INFO_10
+{
+    [MarshalAs(UnmanagedType.LPWStr)]public string OriginatingHost;
+    [MarshalAs(UnmanagedType.LPWStr)]public string DomainUser;
+    public uint SessionTime;
+    public uint IdleTime;
+}
+public static class Netapi32
+{
+[DllImport("Netapi32.dll", SetLastError=true)]
+    public static extern int NetSessionEnum(
+        [In,MarshalAs(UnmanagedType.LPWStr)] string ServerName,
+        [In,MarshalAs(UnmanagedType.LPWStr)] string UncClientName,
+        [In,MarshalAs(UnmanagedType.LPWStr)] string UserName,
+        Int32 Level,
+        out IntPtr bufptr,
+        int prefmaxlen,
+        ref Int32 entriesread,
+        ref Int32 totalentries,
+        ref Int32 resume_handle);
+         
+[DllImport("Netapi32.dll", SetLastError=true)]
+    public static extern int NetApiBufferFree(
+        IntPtr Buffer);
+}
+"@
+# Create SessionInfo10 Struct
+$SessionInfo10 = New-Object SESSION_INFO_10
+$SessionInfo10StructSize = [System.Runtime.InteropServices.Marshal]::SizeOf($SessionInfo10)` Grab size to loop bufptr
+$SessionInfo10 = $SessionInfo10.GetType()` Hacky, but we need this ;))
+# NetSessionEnum params
+$OutBuffPtr = [IntPtr]::Zero` Struct output buffer
+$EntriesRead = $TotalEntries = $ResumeHandle = 0` Counters &amp; ResumeHandle
+$CallResult = [Netapi32]::NetSessionEnum($HostName, "", "", 10, [ref]$OutBuffPtr, -1, [ref]$EntriesRead, [ref]$TotalEntries, [ref]$ResumeHandle)
+if ($CallResult -ne 0){
+echo "Mmm something went wrong!`nError Code: $CallResult"
+}
+else {
+if ([System.IntPtr]::Size -eq 4) {
+echo "`nNetapi32::NetSessionEnum Buffer Offset  --&gt; 0x$("{0:X8}" -f $OutBuffPtr.ToInt32())"
+}
+else {
+echo "`nNetapi32::NetSessionEnum Buffer Offset  --&gt; 0x$("{0:X16}" -f $OutBuffPtr.ToInt64())"
+}
+echo "Result-set contains $EntriesRead session(s)!"
+# Change buffer offset to int
+$BufferOffset = $OutBuffPtr.ToInt64()
+# Loop buffer entries and cast pointers as SessionInfo10
+for ($Count = 0; ($Count -lt $EntriesRead); $Count++){
+$NewIntPtr = New-Object System.Intptr -ArgumentList $BufferOffset
+$Info = [system.runtime.interopservices.marshal]::PtrToStructure($NewIntPtr,[type]$SessionInfo10)
+$Info
+$BufferOffset = $BufferOffset + $SessionInfo10StructSize
+}
+echo "`nCalling NetApiBufferFree, no memleaks here!"
+[Netapi32]::NetApiBufferFree($OutBuffPtr) |Out-Null
+}
+}
+</code></pre>
+<p><code>Invoke-NetSessionEnum localhost</code></p>
+<h3 id="copyfile"><a class="header" href="#copyfile">CopyFile</a></h3>
+<p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile">Function</a> <br />
+<a href="https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1/">Source</a></p>
+<pre><code class="language-PowerShell">$MethodDefinition = @"
+[DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+public static extern bool CopyFile(string lpExistingFileName, string lpNewFileName, bool bFailIfExists);
+"@
+$Kernel32 = Add-Type -MemberDefinition $MethodDefinition -Name "Kernel32" -Namespace "Win32" -PassThru
+$Kernel32::CopyFile("$($Env:SystemRoot)\System32\calc.exe", "$($Env:USERPROFILE)\Desktop\calc.exe", $False) 
+</code></pre>
+<h3 id="showwindowasync"><a class="header" href="#showwindowasync">ShowWindowAsync</a></h3>
+<p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync">Function</a></p>
+<pre><code class="language-PowerShell">$Signature = @"
+[DllImport("user32.dll")]public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+"@
+$ShowWindowAsync = Add-Type -MemberDefinition $Signature -Name "Win32ShowWindowAsync" -Namespace Win32Functions -PassThru
+$ShowWindowAsync | Get-Member -Static
+$ShowWindowAsync::ShowWindowAsync((Get-Process -Id $pid).MainWindowHandle, 2)
+$ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 3)
+$ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 4)
+</code></pre>
+<h3 id="getasynckeystate"><a class="header" href="#getasynckeystate">GetAsyncKeyState</a></h3>
+<p><a href="https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-getasynckeystate">Function</a></p>
+<p><code>Add-Type -AssemblyName System.Windows.Forms</code> <br />
+<code>[int][System.Windows.Forms.Keys]::F1</code> определить номер [Int] клавиши по ее названию <br />
+<code>65..90 | % {"{0} = {1}" -f $_, [System.Windows.Forms.Keys]$_}</code> порядковый номер букв (A..Z)</p>
+<pre><code class="language-PowerShell">function Get-ControlKey {
+$key = 112
+$Signature = @'
+[DllImport("user32.dll", CharSet=CharSet.Auto, ExactSpelling=true)] 
+public static extern short GetAsyncKeyState(int virtualKeyCode); 
+'@
+Add-Type -MemberDefinition $Signature -Name Keyboard -Namespace PsOneApi
+[bool]([PsOneApi.Keyboard]::GetAsyncKeyState($key) -eq -32767)
+}
+
+Write-Warning 'Press F1 to exit'
+while ($true) {
+Write-Host '.' -NoNewline
+if (Get-ControlKey) {
+break
+}
+Start-Sleep -Seconds 0.5
+}
+</code></pre>
+<h1 id="console-api"><a class="header" href="#console-api">Console API</a></h1>
+<p><a href="https://powershell.one/tricks/input-devices/detect-key-press">Source</a></p>
+<p><code>[Console] | Get-Member -Static</code> <br />
+<code>[Console]::BackgroundColor = "Blue"</code> <br />
+<code>[Console]::OutputEncoding</code> используемая кодировка в текущей сессии <br />
+<code>[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")</code> изменить кодировку для отображения кириллицы <br />
+<code>[Console]::outputEncoding = [System.Text.Encoding]::GetEncoding("cp866")</code> для ISE <br />
+<code>[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("windows-1251")</code> для ps2exe <br />
+<code>Get-Service | Out-File $home\Desktop\Service.txt -Encoding oem</code> &gt; <br />
+<code>Get-Service | Out-File $home\Desktop\Service.txt -Append</code> &gt;&gt;</p>
+<pre><code class="language-PowerShell">do {
+    if ([Console]::KeyAvailable) {
+        $keyInfo = [Console]::ReadKey($true)
+        break
+    }
+    Write-Host "." -NoNewline
+    Start-Sleep 1
+} while ($true)
+Write-Host
+$keyInfo
+
+function Get-KeyPress {
+    param (
+        [Parameter(Mandatory)][ConsoleKey]$Key,
+        [System.ConsoleModifiers]$ModifierKey = 0
+    )
+    if ([Console]::KeyAvailable) {
+        $pressedKey = [Console]::ReadKey($true)
+        $isPressedKey = $key -eq $pressedKey.Key
+        if ($isPressedKey) {
+            $pressedKey.Modifiers -eq $ModifierKey
+        }
+        else {
+            [Console]::Beep(1800, 200)
+            $false
+        }
+    }
+}
+
+Write-Warning 'Press Ctrl+Shift+Q to exit'
+do {
+    Write-Host "." -NoNewline
+    $pressed = Get-KeyPress -Key Q -ModifierKey 'Control,Shift'
+    if ($pressed) { break }
+    Start-Sleep 1
+} while ($true)
+</code></pre>
+<h1 id="drawing"><a class="header" href="#drawing">Drawing</a></h1>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-7.0&amp;redirectedfrom=MSDN">API</a></p>
+<pre><code class="language-PowerShell">Add-Type -AssemblyName System.Drawing
+$Width = 800
+$Height = 400
+$image = New-Object System.Drawing.Bitmap($Width,$Height)
+$graphic = [System.Drawing.Graphics]::FromImage($image)
+$background_color = [System.Drawing.Brushes]::Blue # задать цвет фона (синий)
+$graphic.FillRectangle($background_color, 0, 0, $image.Width, $image.Height)
+$text_color = [System.Drawing.Brushes]::White # задать цвет текста (белый)
+$font = New-Object System.Drawing.Font("Arial", 20, [System.Drawing.FontStyle]::Bold) # задать шрифт
+$text = "PowerShell" # указать текст
+$text_position = New-Object System.Drawing.RectangleF(320, 180, 300, 100)  # задать положение текста (x, y, width, height)
+$graphic.DrawString($text, $font, $text_color, $text_position) # нанести текст на изображение
+$image.Save("$home\desktop\powershell_image.bmp", [System.Drawing.Imaging.ImageFormat]::Bmp) # сохранить изображение
+$image.Dispose() # освобождение ресурсов
+</code></pre>
+<p><code>$path = "$home\desktop\powershell_image.bmp"</code> <br />
+<code>Invoke-Item $path</code></p>
+<pre><code class="language-PowerShell">$src_image = [System.Drawing.Image]::FromFile($path)
+$Width = 400
+$Height = 200
+$dst_image = New-Object System.Drawing.Bitmap -ArgumentList $src_image, $Width, $Height # изменить размер изображения
+$dst_image.Save("$home\desktop\powershell_image_resize.bmp", [System.Drawing.Imaging.ImageFormat]::Bmp)
+
+$rotated_image = $src_image.Clone() # создать копию исходного изображения
+$rotated_image.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) # перевернуть изображение на 180 градусов
+$rotated_image.Save("$home\desktop\powershell_image_rotated.bmp", [System.Drawing.Imaging.ImageFormat]::Bmp)
+$src_image.Dispose() # закрыть (отпустить) исходный файл
+</code></pre>
+<h1 id="objectevent"><a class="header" href="#objectevent">ObjectEvent</a></h1>
+<pre><code class="language-PowerShell">$Timer = New-Object System.Timers.Timer
+$Timer.Interval = 1000
+Register-ObjectEvent -InputObject $Timer -EventName Elapsed -SourceIdentifier Timer.Output -Action {
+$Random = Get-Random -Min 0 -Max 100
+Write-Host $Random 
+}
+$Timer.Enabled = $True
+</code></pre>
+<p><code>$Timer.Enabled = $False</code> остановить <br />
+<code>$Timer | Get-Member -MemberType Event</code> отобразить список всех событий объекта <br />
+<code>Get-EventSubscriber</code> список зарегистрированных подписок на события в текущей сессии <br />
+<code>Unregister-Event -SourceIdentifier Timer.Output</code> удаляет регистрацию подписки на событие по имени события (EventName) или все * <br />
+<code>-Forward</code> перенаправляет события из удаленного сеанса (New-PSSession) в локальный сеанс <br />
+<code>-SupportEvent</code> не выводит результат регистрации события на экран (и Get-EventSubscriber и Get-Job)</p>
+<pre><code>Register-EngineEvent -SourceIdentifier PowerShell.Exiting -Action {
+$date = Get-Date -f hh:mm:ss
+(New-Object -ComObject Wscript.Shell).Popup("PowerShell Exit: $date",0,"Action",64)
+}
+</code></pre>
+<h1 id="base64"><a class="header" href="#base64">Base64</a></h1>
+<h3 id="utf8"><a class="header" href="#utf8">UTF8</a></h3>
+<p><code>$loginPassword = "login:password"</code> <br />
+<code>$Base64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($loginPassword))</code> закодировать логин и пароль в строку Base64 <br />
+<code>[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Base64))</code> преобразовать в байты и обратно декодировать в исходную строку с помощью UTF-8 кодировки</p>
+<h3 id="unicode"><a class="header" href="#unicode">Unicode</a></h3>
+<pre><code class="language-PowerShell">$text = "password"
+$byte = [System.Text.Encoding]::Unicode.GetBytes($text) # преобразует строку $text в последовательность байтов, используя кодировку Unicode
+$base64 = [System.Convert]::ToBase64String($byte) # байты конвертируются в строку Base64 с помощью метода ToBase64String
+$decode_base64 = [System.Convert]::FromBase64String($base64) # декодировать строку Base64 обратно в последовательность байтов с помощью метода FromBase64String
+$decode_string = [System.Text.Encoding]::Unicode.GetString($decode_base64) # закодированные байты преобразуются обратно в строку с использованием кодировки Unicode с помощью метода GetString
+</code></pre>
+<h3 id="image"><a class="header" href="#image">Image</a></h3>
+<pre><code class="language-PowerShell">$path_image = "$home\Documents\1200x800.jpg"
+$BBase64 = [System.Convert]::ToBase64String((Get-Content $path_image -Encoding Byte))
+Add-Type -assembly System.Drawing
+$Image = [System.Drawing.Bitmap]::FromStream([IO.MemoryStream][Convert]::FromBase64String($BBase64))
+$Image.Save("$home\Desktop\1200x800.jpg")
+</code></pre>
+<h1 id="excel"><a class="header" href="#excel">Excel</a></h1>
+<pre><code class="language-PowerShell">$path = "$home\Desktop\Services-to-Excel.xlsx"
+$Excel = New-Object -ComObject Excel.Application
+$Excel.Visible = $false` отключить открытие GUI
+$ExcelWorkBook = $Excel.Workbooks.Add()` Создать книгу
+$ExcelWorkSheet = $ExcelWorkBook.Worksheets.Item(1)` Создать лист
+$ExcelWorkSheet.Name = "Services"` задать имя листа
+$ExcelWorkSheet.Cells.Item(1,1) = "Name service"
+# Задать имена столбцов:
+$ExcelWorkSheet.Cells.Item(1,2) = "Description"
+$ExcelWorkSheet.Cells.Item(1,3) = "Status"
+$ExcelWorkSheet.Cells.Item(1,4) = "Startup type"
+$ExcelWorkSheet.Rows.Item(1).Font.Bold = $true` выделить жирным шрифтом
+$ExcelWorkSheet.Rows.Item(1).Font.size=14
+# Задать ширину колонок:
+$ExcelWorkSheet.Columns.Item(1).ColumnWidth=30
+$ExcelWorkSheet.Columns.Item(2).ColumnWidth=80
+$ExcelWorkSheet.Columns.Item(3).ColumnWidth=15
+$ExcelWorkSheet.Columns.Item(4).ColumnWidth=25
+$services =  Get-Service
+$counter = 2` задать начальный номер строки для записи
+foreach ($service in $services) {
+    $status = $service.Status
+    if ($status -eq 1) {
+        $status_type = "Stopped"
+    } elseif ($status -eq 4) {
+        $status_type = "Running"
+    }
+    $Start = $service.StartType
+    if ($Start -eq 1) {
+        $start_type = "Delayed start"
+    } elseif ($Start -eq 2) {
+        $start_type = "Automatic"
+    } elseif ($Start -eq 3) {
+        $start_type = "Manually"
+    } elseif ($Start -eq 4) {
+        $start_type = "Disabled"
+    }
+    $ExcelWorkSheet.Columns.Item(1).Rows.Item($counter) = $service.Name
+    $ExcelWorkSheet.Columns.Item(2).Rows.Item($counter) = $service.DisplayName
+    $ExcelWorkSheet.Columns.Item(3).Rows.Item($counter) = $status_type
+    $ExcelWorkSheet.Columns.Item(4).Rows.Item($counter) = $start_type
+    if ($status_type -eq "Running") {
+        $ExcelWorkSheet.Columns.Item(3).Rows.Item($counter).Font.Bold = $true
+    }
+    # +1 увеличить для счетчика строки Rows
+    $counter++
+}
+$ExcelWorkBook.SaveAs($path)
+$ExcelWorkBook.close($true)
+$Excel.Quit()
+</code></pre>
+<h3 id="excel-application-open"><a class="header" href="#excel-application-open">Excel Application Open</a></h3>
+<pre><code class="language-PowerShell">$path = "$home\Desktop\Services-to-Excel.xlsx"
+$Excel = New-Object -ComObject Excel.Application
+$Excel.Visible = $false
+$ExcelWorkBook = $excel.Workbooks.Open($path)` открыть xlsx-файл
+$ExcelWorkBook.Sheets | select Name,Index` отобразить листы
+$ExcelWorkSheet = $ExcelWorkBook.Sheets.Item(1)` открыть лист по номеру Index
+1..100 | %{$ExcelWorkSheet.Range("A$_").Text}` прочитать значение из столбца А строки c 1 по 100
+$Excel.Quit()
+</code></pre>
+<h3 id="importexcel"><a class="header" href="#importexcel">ImportExcel</a></h3>
+<p><code>Install-Module -Name ImportExcel</code> <br />
+<code>$data | Export-Excel .\Data.xlsx</code> <br />
+<code>$data = Import-Excel .\Data.xlsx</code></p>
+<p><code>$data = ps</code> <br />
+<code>$Chart = New-ExcelChartDefinition -XRange CPU -YRange WS -Title "Process" -NoLegend</code> <br />
+<code>$data | Export-Excel .\ps.xlsx -AutoNameRange -ExcelChartDefinition $Chart -Show</code></p>
+<h1 id="csv"><a class="header" href="#csv">CSV</a></h1>
+<p><code>Get-Service | Select Name,DisplayName,Status,StartType | Export-Csv -path "$home\Desktop\Get-Service.csv" -Append -Encoding Default</code> экспортировать в csv (-Encoding UTF8) <br />
+<code>Import-Csv "$home\Desktop\Get-Service.csv" -Delimiter ","</code> импортировать массив</p>
+<pre><code class="language-PowerShell">$data = ConvertFrom-Csv @"
+Region,State,Units,Price
+West,Texas,927,923.71
+$null,Tennessee,466,770.67
+"@
+</code></pre>
+<p><code>$systeminfo = systeminfo /FO csv | ConvertFrom-Csv</code> вывод работы программы в CSV и конвертация в объект <br />
+<code>$systeminfo."Полный объем физической памяти"</code> <br />
+<code>$systeminfo."Доступная физическая память"</code></p>
+<h3 id="convertfrom-string"><a class="header" href="#convertfrom-string">ConvertFrom-String</a></h3>
+<pre><code class="language-PowerShell">'
+log = 
+{
+   level = 4;
+};
+' | ConvertFrom-String` создает PSCustomObject (разбивает по пробелам, удаляет все пробелы и пустые строки)
+</code></pre>
+<h3 id="convertfrom-stringdata"><a class="header" href="#convertfrom-stringdata">ConvertFrom-StringData</a></h3>
+<pre><code class="language-PowerShell">"
+key1 = value1
+key2 = value2
+" | ConvertFrom-StringData # создает Hashtable
+</code></pre>
+<h1 id="xml"><a class="header" href="#xml">XML</a></h1>
+<pre><code class="language-PowerShell">$xml = [xml](Get-Content $home\desktop\test.rdg)` прочитать содержимое XML-файла
+$xml.load("$home\desktop\test.rdg")` открыть файл
+$xml.RDCMan.file.group.properties.name` имена групп
+$xml.RDCMan.file.group.server.properties` имена всех серверов
+$xml.RDCMan.file.group[3].server.properties` список серверов в 4-й группе
+($xml.RDCMan.file.group[3].server.properties | ? name -like ADIRK).Name = "New-Name"` изменить значение
+$xml.RDCMan.file.group[3].server[0].properties.displayName = "New-displayName" 
+$xml.RDCMan.file.group[3].server[1].RemoveAll()` удалить объект (2-й сервер в списке)
+$xml.Save($file)` сохранить содержимое объекта в файла
+</code></pre>
+<p><code>Get-Service | Export-Clixml -path $home\desktop\test.xml</code> экспортировать объект PowerShell в XML <br />
+<code>Import-Clixml -Path $home\desktop\test.xml</code> импортировать объект XML в PowerShell <br />
+<code>ConvertTo-Xml (Get-Service)</code></p>
+<h3 id="get-credtoxml"><a class="header" href="#get-credtoxml">Get-CredToXML</a></h3>
+<pre><code class="language-PowerShell">function Get-CredToXML {
+    param (
+        $CredFile = "$home\Documents\cred.xml"
+    )
+    if (Test-Path $CredFile) {
+        Import-Clixml -path $CredFile
+    }
+    elseif (!(Test-Path $CredFile)) {
+        $Cred = Get-Credential -Message "Enter credential"
+        if ($Cred -ne $null) {
+        $Cred | Export-CliXml -Path $CredFile
+        $Cred
+    }
+    else {
+        return
+    }
+    }
+}
+</code></pre>
+<p><code>$Cred = Get-CredToXML</code> <br />
+<code>$Login = $Cred.UserName</code> <br />
+<code>$PasswordText = $Cred.GetNetworkCredential().password</code> получить пароль в текстовом виде</p>
+<h3 id="xmlwriter-extensible-markup-language"><a class="header" href="#xmlwriter-extensible-markup-language">XmlWriter (Extensible Markup Language)</a></h3>
+<pre><code class="language-PowerShell">$XmlWriterSettings = New-Object System.Xml.XmlWriterSettings
+$XmlWriterSettings.Indent = $true` включить отступы
+$XmlWriterSettings.IndentChars = "    "` задать отступ
+
+$XmlFilePath = "$home\desktop\test.xml"
+$XmlObjectWriter = [System.XML.XmlWriter]::Create($XmlFilePath, $XmlWriterSettings)` создать документ
+$XmlObjectWriter.WriteStartDocument()` начать запись в документ
+
+$XmlObjectWriter.WriteComment("Comment")
+$XmlObjectWriter.WriteStartElement("Root")` создать стартовый элемент, который содержит дочерние объекты
+    $XmlObjectWriter.WriteStartElement("Configuration")` создать первый дочерний элемент для BaseSettings
+        $XmlObjectWriter.WriteElementString("Language","RU")
+        $XmlObjectWriter.WriteStartElement("Fonts")   		# &lt;Fonts&gt;
+            $XmlObjectWriter.WriteElementString("Name","Arial")
+            $XmlObjectWriter.WriteElementString("Size","12")
+        $XmlObjectWriter.WriteEndElement()               	# &lt;/Fonts&gt;
+    $XmlObjectWriter.WriteEndElement()` конечный элемент &lt;/Configuration&gt;
+$XmlObjectWriter.WriteEndElement()` конечный элемент &lt;/Root&gt;
+
+$XmlObjectWriter.WriteEndDocument()` завершить запись в документ
+$XmlObjectWriter.Flush()
+$XmlObjectWriter.Close()
+</code></pre>
+<h3 id="createelement"><a class="header" href="#createelement">CreateElement</a></h3>
+<pre><code class="language-PowerShell">$xml = [xml](gc $home\desktop\test.xml)
+$xml.Root.Configuration.Fonts
+$NewElement = $xml.CreateElement("Fonts")` выбрать элемент куда добавить
+$NewElement.set_InnerXML("&lt;Name&gt;Times New Roman&lt;/Name&gt;&lt;Size&gt;14&lt;/Size&gt;")` Заполнить значениями дочерние элементы Fonts
+$xml.Root.Configuration.AppendChild($NewElement)` добавить элемент новой строкой в Configuration (родитель Fonts)
+$xml.Save("$home\desktop\test.xml")
+</code></pre>
+<h1 id="json"><a class="header" href="#json">JSON</a></h1>
+<pre><code class="language-PowerShell">$log = '
+{
+  "log": {
+    "level": 7
+  }
+}
+' | ConvertFrom-Json
+
+Get-Service | ConvertTo-Json
+
+$OOKLA  = '
+{
+"result" : 
+{"date":1683534970,"id":"14708271987","connection_icon":"wireless","download":33418,"upload":35442,"latency":15,"distance":50,"country_code":"RU","server_id":2707,"server_name":"Bryansk","sponsor_name":"DOM.RU","sponsor_url":null,"connection_mode":"multi","isp_name":"Resource Link","isp_rating":"4.0","test_rank":63,"test_grade":"B-","test_rating":4,"idle_latency":"17","download_latency":"116","upload_latency":"75","additional_servers":
+[{"server_id":8191,"server_name":"Bryansk","sponsor_name":"SectorTelecom.ru"},{"server_id":46278,"server_name":"Fokino","sponsor_name":"Fokks - Promyshlennaya avtomatika Ltd."},{"server_id":18218,"server_name":"Bryansk","sponsor_name":"RIA-link Ltd."}],
+"path":"result\u002F14708271987","hasSecondary":true
+}
+}
+' | ConvertFrom-Json
+$ookla.result
+</code></pre>
+<h1 id="yaml"><a class="header" href="#yaml">YAML</a></h1>
+<pre><code class="language-PowerShell">Import-Module PSYaml` используется в Docker/Ansible
+$netplan = "
+network:` словарь по типу - ключ : значение с вложенными словарями
+  ethernets:
+    ens160:
+      dhcp4: yes
+      dhcp6: no
+      nameservers:
+        addresses:` [8.8.8.8, 1.1.1.1]` список данных (строк)
+      - 8.8.8.8
+      - 1.1.1.1
+  version: 2
+"
+$network = ConvertFrom-Yaml $netplan
+$network.Values.ethernets.ens160.nameservers
+
+$DataType = "
+int: !!int 10.1
+flo: !!float 10.1
+str: !!str string
+bool: !!bool` boolean
+"
+</code></pre>
+<h1 id="toml"><a class="header" href="#toml">TOML</a></h1>
+<p><code>Install-Module -Name PSToml -Scope CurrentUser</code> Устанавливаем модуль для чтения toml (PSToml) <br />
+<code>$toml = Get-Content "$home\Documents\Git\lifailon.github.io\hugo.toml"</code> Читаем содержимое конфигурации Hugo в формате toml <br />
+<code>$json = ConvertFrom-Toml $toml | ConvertTo-Json -Depth 3</code> Конвертируем TOML в JSON <br />
+<code>$json | Out-File "$home\Documents\Git\lifailon.github.io\hugo.json"</code> Сохраняем конфигурационный файл в формате JSON</p>
+<h1 id="markdown"><a class="header" href="#markdown">Markdown</a></h1>
+<h3 id="convert-markdown-to-html"><a class="header" href="#convert-markdown-to-html">Convert Markdown to HTML</a></h3>
+<pre><code class="language-PowerShell">function ConvertFrom-MarkdownToHtml {
+    param (
+        [Parameter(Mandatory = $true,ValueFromPipeline = $true)]$Markdown
+    )
+    $html = $(Get-Content index.md -Raw | ConvertFrom-Markdown).html
+    @"
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  $html
+  &lt;/body&gt;
+  &lt;/html&gt;
+  "@
+}
+</code></pre>
+<p><code>Get-Content index.md -Raw | ConvertFrom-MarkdownToHtml | Out-File index.html</code></p>
+<h3 id="psmarkdown"><a class="header" href="#psmarkdown">PSMarkdown</a></h3>
+<p>Install-Module PSMarkdown</p>
+<h3 id="convertfrom-markdownv2"><a class="header" href="#convertfrom-markdownv2">ConvertFrom-MarkdownV2</a></h3>
+<pre><code class="language-PowerShell">Function ConvertFrom-MarkdownV2 {
+    [CmdletBinding()]
+    [OutputType([PSObject])]
+    Param (
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            ValueFromPipeline = $true
+        )]
+        $InputObject
+    )
+    Begin {
+        $items = @()
+    }
+    Process {
+        $mddata = $InputObject
+        $data = $mddata | Where-Object {$_ -notmatch "--" }
+        $items += $data
+    }
+    End {
+       $object = $items -replace ' +', '' | ConvertFrom-Csv -Delimiter '|'
+       $object 
+    }
+}
+</code></pre>
+<h1 id="convertto-markdown"><a class="header" href="#convertto-markdown">ConvertTo-Markdown</a></h1>
+<pre><code class="language-PowerShell">Function ConvertTo-Markdown {
+    [CmdletBinding()]
+    [OutputType([string])]
+    Param (
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            ValueFromPipeline = $true
+        )]
+        [PSObject[]]$InputObject
+    )
+    Begin {
+        $items = @()
+        $columns = @{}
+    }
+    Process {
+        ForEach($item in $InputObject) {
+            $items += $item
+            $item.PSObject.Properties | ForEach-Object {
+                if($null -ne $_.Value) {
+                    if(-not $columns.ContainsKey($_.Name) -or $columns[$_.Name] -lt $_.Value.ToString().Length) {
+                        $columns[$_.Name] = $_.Value.ToString().Length
+                    }
+                }
+            }
+        }
+    }
+    End {
+        ForEach($key in $($columns.Keys)) {
+            $columns[$key] = [Math]::Max($columns[$key], $key.Length)
+        }
+        $header = @()
+        ForEach($key in $columns.Keys) {
+            $header += ('{0,-' + $columns[$key] + '}') -f $key
+        }
+        $header -join ' | '
+        $separator = @()
+        ForEach($key in $columns.Keys) {
+            $separator += '-' * $columns[$key]
+        }
+        $separator -join ' | '
+        ForEach($item in $items) {
+            $values = @()
+            ForEach($key in $columns.Keys) {
+                $values += ('{0,-' + $columns[$key] + '}') -f $item.($key)
+            }
+            $values -join ' | '
+        }
+    }
+}
+</code></pre>
+<h1 id="html"><a class="header" href="#html">HTML</a></h1>
+<h3 id="convertfrom-html"><a class="header" href="#convertfrom-html">ConvertFrom-Html</a></h3>
+<pre><code class="language-PowerShell">function ConvertFrom-Html {
+    param (
+        [Parameter(ValueFromPipeline)]$url
+    )
+    $irm = Invoke-RestMethod $url
+    $HTMLFile = New-Object -ComObject HTMLFile
+    $Bytes = [System.Text.Encoding]::Unicode.GetBytes($irm)
+    $HTMLFile.write($Bytes)
+    ($HTMLFile.all | where {$_.tagname -eq "body"}).innerText
+}
+
+$apache_status = "http://192.168.3.102/server-status"
+$apache_status | ConvertFrom-Html
+</code></pre>
+<h3 id="convertto-html"><a class="header" href="#convertto-html">ConvertTo-Html</a></h3>
+<p><code>Get-Process | select Name, CPU | ConvertTo-Html -As Table &gt; "$home\desktop\proc-table.html"</code> вывод в формате List (Format-List) или Table (Format-Table)</p>
+<pre><code class="language-PowerShell">$servers = "ya.ru","ya.com","google.com"
+$path = "$home\Desktop\Ping.html" 
+$header = @"
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"&gt;
+&lt;head&gt;
+&lt;title&gt;Отчет о статусе серверов&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+body {
+background-color: #E0E0E0;
+font-family: sans-serif
+}
+table, th, td {
+background-color: white;
+border-collapse:collapse;
+border: 1px solid black;
+padding: 5px
+}
+--&gt;
+&lt;/style&gt;
+"@
+$body = @"
+&lt;h1&gt;Ping status&lt;/h1&gt;
+&lt;p&gt;$(get-date -Format "dd.MM.yyyy hh:mm").&lt;/p&gt;
+"@
+$results = foreach ($server in $servers) { 
+    if (Test-Connection $server -Count 1 -ea 0 -Quiet) { 
+        $status = "Up" 
+    }
+    else { 
+        $status = "Down"
+    }
+    [PSCustomObject]@{
+        Name = $server
+        Status = $status
+    }
+}
+$results | ConvertTo-Html -head $header -body $body | foreach {
+    $_ -replace "&lt;td&gt;Down&lt;/td&gt;","&lt;td style='background-color:#FF8080'&gt;Down&lt;/td&gt;" -replace "&lt;td&gt;Up&lt;/td&gt;","&lt;td style='background-color:#5BCCF3'&gt;Up&lt;/td&gt;"
+} | Out-File $path
+Invoke-Item $path
+</code></pre>
+<h3 id="pswritehtml"><a class="header" href="#pswritehtml">PSWriteHTML</a></h3>
+<pre><code class="language-PowerShell">Import-Module PSWriteHTML
+(Get-Module PSWriteHTML).ExportedCommands
+Get-Service | Out-GridHtml -FilePath ~\Desktop\Get-Service-Out-GridHtml.html
+</code></pre>
+<h3 id="htmlreport"><a class="header" href="#htmlreport">HtmlReport</a></h3>
+<pre><code class="language-PowerShell">Import-Module HtmlReport
+$topVM = ps | Sort PrivateMemorySize -Descending | Select -First 10 | %{,@(($_.ProcessName + " " + $_.Id), $_.PrivateMemorySize)}
+$topCPU = ps | Sort CPU -Descending | Select -First 10 | %{,@(($_.ProcessName + " " + $_.Id), $_.CPU)}
+New-Report -Title "Piggy Processes" -Input {
+New-Chart Bar "Top VM Users" -input $topVm
+New-Chart Column "Top CPU Overall" -input $topCPU
+ps | Select ProcessName, Id, CPU, WorkingSet, *MemorySize | New-Table "All Processes"
+} &gt; ~\Desktop\Get-Process-HtmlReport.html
+</code></pre>
+<h1 id="htmlagilitypack"><a class="header" href="#htmlagilitypack">HtmlAgilityPack</a></h1>
+<p><a href="https://www.nuget.org/packages/HtmlAgilityPack">Source</a></p>
+<pre><code class="language-PowerShell"># Загрузка библиотеки C#, которая позволяет парсить HTML-документы, выбирать элементы DOM и извлекать из них данные
+Add-Type -Path "C:\Users\Lifailon\Downloads\HtmlAgilityPack\Net40\HtmlAgilityPack.dll"
+$title = "новобранец"
+$url = "http://fasts-torrent.net"
+$ep = "engine/ajax/search_torrent.php?title=$title"
+$html = Invoke-RestMethod "$url/$ep"
+# Создание нового объекта HtmlDocument из HtmlAgilityPack, который будет использоваться для загрузки и обработки HTML-кода
+$HtmlDocument = New-Object HtmlAgilityPack.HtmlDocument
+# Загрузка HTML в созданный объект HtmlDocument
+$HtmlDocument.LoadHtml($html)
+$torrents = @()
+# Использование XPath для выбора всех элементов &lt;tr&gt; (строк таблицы) в документе
+$HtmlDocument.DocumentNode.SelectNodes("//tr") | ForEach-Object {
+    # Для каждой строки таблицы выбираем классы, соответствующие названию раздачи, размеру и ссылке для скачивания.
+    $titleNode = $_.SelectSingleNode(".//td[@class='torrent-title']")
+    $sizeNode = $_.SelectSingleNode(".//td[@class='torrent-sp']")
+    $downloadLinkNode = $_.SelectSingleNode(".//td[@class='torrent-d-btn']/a")
+    # Проверяем, что все классы найдены
+    if ($titleNode -ne $null -and $sizeNode -ne $null -and $downloadLinkNode -ne $null) {
+        # Извлечение текста из классов
+        $title = $titleNode.InnerText.Trim()
+        $size = $sizeNode.InnerText.Trim()
+        $downloadLink = $downloadLinkNode.Attributes["href"].Value
+        $torrent = New-Object PSObject -Property @{
+            Title = $title
+            Size = $size
+            DownloadLink = "$($url)$($downloadLink)"
+        }
+        $torrents += $torrent
+    }
+}
+</code></pre>
+<p><code>$torrents</code></p>
+<pre><code class="language-PowerShell">Title                                                                    Size     DownloadLink
+-----                                                                    ----     ------------
+Новобранец (6 сезон: 1-3 серии из 13) (2024) WEBRip | RuDub              1,55 ГБ  http://fasts-torrent.net/download/449613/torrent/-6-1-3-13-2024-webrip-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 1080p | RuDub       54,15 ГБ http://fasts-torrent.net/download/433749/torrent/-5-1-22-22-2023-webrip-1080p-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip 720p | RuDub        30,14 ГБ http://fasts-torrent.net/download/433750/torrent/-5-1-22-22-2023-webrip-720p-rudub/
+Новобранец (5 сезон: 1-22 серии из 22) (2023) WEBRip | RuDub             11,55 ГБ http://fasts-torrent.net/download/433751/torrent/-5-1-22-22-2023-webrip-rudub/
+Новобранец (4 сезон: 1-22 серии из 22) (2021) WEB-DL 720p | RG.Paravozik 21.33 Gb http://fasts-torrent.net/download/418618/torrent/-4-1-22-22-2021-web-dl-720p-rgparavozik/
+Полицейский с половиной: Новобранец (2017) WEB-DLRip 720p| Чистый звук   3.41 Gb  http://fasts-torrent.net/download/254846/torrent/-2017-web-dlrip-720p-/
+Полицейский с половиной: Новобранец (2017) WEB-DLRip | Чистый звук       1.37 Gb  http://fasts-torrent.net/download/254845/torrent/-2017-web-dlrip-/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip | BaibaKo           11.28 Gb http://fasts-torrent.net/download/364669/torrent/-2-1-20-20-2019-webrip-baibako/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEBRip 1080p | Octopus     45.97 Gb http://fasts-torrent.net/download/364161/torrent/-2-1-20-20-2019-webrip-1080p-octopus/
+Новобранец (2 сезон: 1-20 серии из 20) (2019) WEB-DLRip | LostFilm       11.95 Gb http://fasts-torrent.net/download/364668/torrent/-2-1-20-20-2019-web-dlrip-lostfilm/
+</code></pre>
+<h1 id="wmi"><a class="header" href="#wmi">WMI</a></h1>
+<h3 id="windows-management-instrumentation"><a class="header" href="#windows-management-instrumentation">Windows Management Instrumentation</a></h3>
+<p><code>Get-WmiObjec -ComputerName localhost -Namespace root -class "__NAMESPACE" | select name,__namespace</code> отобразить дочернии Namespace (логические иерархические группы) <br />
+<code>Get-WmiObject -List</code> отобразить все классы пространства имен "root\cimv2" (по умолчанию), свойства (описывают конфигурацию и текущее состояние управляемого ресурса) и их методы (какие действия позволяет выполнить над этим ресурсом) <br />
+<code>Get-WmiObject -List | Where-Object {$_.name -match "video"}</code> поиск класса по имени, его свойств и методов <br />
+<code>Get-WmiObject -ComputerName localhost -Class Win32_VideoController</code> отобразить содержимое свойств класса</p>
+<p><code>gwmi -List | where name -match "service" | ft -auto</code> если в таблице присутствуют Methods, то можно взаимодействовать {StartService, StopService} <br />
+<code>gwmi -Class win32_service | select *</code> отобразить список всех служб и всех их свойств <br />
+<code>Get-CimInstance Win32_service</code> обращается на прямую к "root\cimv2" <br />
+<code>gwmi win32_service -Filter "name='Zabbix Agent'"</code> отфильтровать вывод по имени <br />
+<code>(gwmi win32_service -Filter "name='Zabbix Agent'").State</code> отобразить конкретное свойство <br />
+<code>gwmi win32_service -Filter "State = 'Running'"</code> отфильтровать запущенные службы <br />
+<code>gwmi win32_service -Filter "StartMode = 'Auto'"</code> отфильтровать службы по методу запуска <br />
+<code>gwmi -Query 'select * from win32_service where startmode="Auto"'</code> WQL-запрос (WMI Query Language) <br />
+<code>gwmi win32_service | Get-Member -MemberType Method</code> отобразить все методы взаимодействия с описание применения (Delete, StartService) <br />
+<code>(gwmi win32_service -Filter 'name="Zabbix Agent"').Delete()</code> удалить службу <br />
+<code>(gwmi win32_service -Filter 'name="MSSQL$MSSQLE"').StartService()</code> запустить службу</p>
+<p><code>Get-CimInstance -ComputerName $srv Win32_OperatingSystem | select LastBootUpTime</code> время последнего включения <br />
+<code>gwmi -ComputerName $srv -Class Win32_OperatingSystem | select LocalDateTime,LastBootUpTime</code> текущее время и время последнего включения <br />
+<code>gwmi Win32_OperatingSystem | Get-Member -MemberType Method</code> методы reboot и shutdown <br />
+<code>(gwmi Win32_OperatingSystem -EnableAllPrivileges).Reboot()</code> используется с ключем повышения привелегий <br />
+<code>(gwmi Win32_OperatingSystem -EnableAllPrivileges).Win32Shutdown(0)</code> завершение сеанса пользователя</p>
+<pre><code class="language-PowerShell">$system = Get-WmiObject -Class Win32_OperatingSystem
+$InstallDate = [Management.ManagementDateTimeconverter]::ToDateTime($system.installdate)` Получаем дату установки ОС
+$AfterInstallDays = ((Get-Date) — $Installdate).Days` Вычисляем время, прошедшее с момента установки
+$ShortInstallDate = "{0:yyyy-MM-dd HH:MM}" -f ($InstallDate)
+"Система установлена: $ShortInstallDate (Прошло $AfterInstalldays дней)"
+</code></pre>
+<p><code>(Get-WmiObject win32_battery).estimatedChargeRemaining</code> заряд батареи в процентах <br />
+<code>gwmi Win32_UserAccount</code> доменные пользователи <br />
+<code>(gwmi Win32_SystemUsers).PartComponent</code> <br />
+<code>Get-CimInstance -ClassName Win32_LogonSession</code> <br />
+<code>Get-CimInstance -ClassName Win32_BIOS</code></p>
+<p><code>gwmi -list -Namespace root\CIMV2\Terminalservices</code> <br />
+<code>(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).AllowTSConnections</code> <br />
+<code>(gwmi -Class Win32_TerminalServiceSetting -Namespace root\CIMV2\TerminalServices).SetAllowTSConnections(1)</code> включить RDP</p>
+<pre><code>$srv = "localhost"
+gwmi Win32_logicalDisk -ComputerName $srv | where {$_.Size -ne $null} | select @{
+Label="Value"; Expression={$_.DeviceID}}, @{Label="AllSize"; Expression={
+[string]([int]($_.Size/1Gb))+" GB"}},@{Label="FreeSize"; Expression={
+[string]([int]($_.FreeSpace/1Gb))+" GB"}}, @{Label="Free%"; Expression={
+[string]([int]($_.FreeSpace/$_.Size*100))+" %"}}
+</code></pre>
+<h3 id="network-level-authentication"><a class="header" href="#network-level-authentication">Network Level Authentication</a></h3>
+<p><code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").UserAuthenticationRequired</code> <br />
+<code>(gwmi -class "Win32_TSGeneralSetting" -Namespace root\cimv2\Terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(1)</code> включить NLA <br />
+<code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer</code> отобразить значение (2) <br />
+<code>Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication</code> отобразить значение (1) <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name SecurityLayer -Value 0</code> изменить значение <br />
+<code>Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -Value 0</code> <br />
+<code>REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters /v AllowEncryptionOracle /t REG_DWORD /d 2</code> отключить на клиентском компьютере проверку версии CredSSP, если на целевом комьютере-сервере не установлены обновления KB4512509 от мая 2018 года</p>
+<h1 id="regedit"><a class="header" href="#regedit">Regedit</a></h1>
+<p><code>Get-PSDrive</code> список всех доступных дисков/разделов, их размер и веток реестра <br />
+<code>cd HKLM:\</code> HKEY_LOCAL_MACHINE <br />
+<code>cd HKCU:\</code> HKEY_CURRENT_USER <br />
+<code>Get-Item</code> получить информацию о ветке реестра <br />
+<code>New-Item</code> создать новый раздел реестра <br />
+<code>Remove-Item</code> удалить ветку реестра <br />
+<code>Get-ItemProperty</code> получить значение ключей/параметров реестра (это свойства ветки реестра, аналогично свойствам файла) <br />
+<code>Set-ItemProperty</code> изменить название или значение параметра реестра <br />
+<code>New-ItemProperty</code> создать параметр реестра <br />
+<code>Remove-ItemProperty</code> удалить параметр</p>
+<p><code>Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select DisplayName</code> список установленных программ <br />
+<code>Get-Item HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\00000002</code> посмотреть содержимое Items <br />
+<code>(Get-ItemProperty HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\00000002)."New Signature"</code> отобразить значение (Value) свойства (Property) Items <br />
+<code>$reg_path = "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\00000002"</code> <br />
+<code>$sig_name = "auto"</code> <br />
+<code>Set-ItemProperty -Path $reg_path -Name "New Signature" -Value $sig_name</code> изменить или добавить в корне ветки (Path) свойство (Name) со значением (Value) <br />
+<code>Set-ItemProperty -Path $reg_path -Name "Reply-Forward Signature" -Value $sig_name</code></p>
+<pre><code>Windows Registry Editor Version 5.00
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe]
+"Debugger"="\"C:\\Windows\\System32\\Taskmgr.exe\""
+</code></pre>
+<h1 id="performance"><a class="header" href="#performance">Performance</a></h1>
+<p><code>lodctr /R</code> пересоздать счетчиков производительности из системного хранилища архивов (так же исправляет счетчики для CIM, например, для cpu Win32_PerfFormattedData_PerfOS_Processor и iops Win32_PerfFormattedData_PerfDisk_PhysicalDisk) <br />
+<code>(Get-Counter -ListSet *).CounterSetName</code> вывести список всех доступных счетчиков производительности в системе <br />
+<code>(Get-Counter -ListSet *memory*).Counter</code> поиск по wildcard-имени во всех счетчиках (включая дочернии) <br />
+<code>Get-Counter "\Memory\Available MBytes"</code> объем свободной оперативной памяти <br />
+<code>Get-Counter -cn $srv "\LogicalDisk(*)\% Free Space"</code> % свободного места на всех разделах дисков <br />
+<code>(Get-Counter "\Process(*)\ID Process").CounterSamples</code> <br />
+<code>Get-Counter "\Processor(_Total)\% Processor Time" –ComputerName $srv -MaxSamples 5 -SampleInterval 2</code> 5 проверок каждые 2 секунды <br />
+<code>Get-Counter "\Процессор(_Total)\% загруженности процессора" -Continuous</code> непрерывно <br />
+<code>(Get-Counter "\Процессор(*)\% загруженности процессора").CounterSamples</code></p>
+<p><code>(Get-Counter -ListSet *интерфейс*).Counter</code> найти все счетчики <br />
+<code>Get-Counter "\Сетевой интерфейс(*)\Всего байт/с"</code> отобразить все адаптеры (выбрать действующий по трафику)</p>
+<pre><code class="language-PowerShell">$WARNING = 25
+$CRITICAL = 50
+$TransferRate = ((Get-Counter "\\huawei-mb-x-pro\сетевой интерфейс(intel[r] wi-fi 6e ax211 160mhz)\всего байт/с"
+).countersamples | select -ExpandProperty CookedValue)*8
+$NetworkUtilisation = [math]::round($TransferRate/1000000000*100,2)
+if ($NetworkUtilisation -gt $CRITICAL){
+Write-Output "CRITICAL: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"   
+#exit 2		
+}
+if ($NetworkUtilisation -gt $WARNING){
+Write-Output "WARNING: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"
+#exit 1
+}
+Write-Output "OK: $($NetworkUtilisation) % Network utilisation, $($TransferRate.ToString('N0')) b/s"   
+#exit 0
+</code></pre>
+<h1 id="snmp"><a class="header" href="#snmp">SNMP</a></h1>
+<h3 id="setup-snmp-service"><a class="header" href="#setup-snmp-service">Setup SNMP Service</a></h3>
+<p><code>Install-WindowsFeature SNMP-Service,SNMP-WMI-Provider -IncludeManagementTools</code> установить роль SNMP и WMI провайдер через Server Manager <br />
+<code>Get-WindowsFeature SNMP*</code> <br />
+<code>Add-WindowsCapability -Online -Name SNMP.Client~~~~0.0.1.0</code> установить компонент Feature On Demand для Windows 10/11<code>\ </code>Get-Service SNMP*<code>\ </code>Get-NetFirewallrule -DisplayName <em>snmp</em> | ft<code>\ </code>Get-NetFirewallrule -DisplayName <em>snmp</em> | Enable-NetFirewallRule`</p>
+<h3 id="setting-snmp-service-via-regedit"><a class="header" href="#setting-snmp-service-via-regedit">Setting SNMP Service via Regedit</a></h3>
+<p>Agent: <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SNMP\Parameters\RFC1156Agent" -Name "sysContact" -Value "lifailon-user"</code> создать (New) или изменить (Set) <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\SNMP\Parameters\RFC1156Agent" -Name "sysLocation" -Value "plex-server"</code></p>
+<p>Security: <br />
+<code>New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\services\SNMP\Parameters\TrapConfiguration\public"</code> создать новый community string <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\ValidCommunities" -Name "public" -Value 16</code> назначить права на public <br />
+<code>1 — NONE</code> <br />
+<code>2 — NOTIFY</code> позволяет получать SNMP ловушки <br />
+<code>4 — READ ONLY</code> позволяет получать данные с устройства <br />
+<code>8 — READ WRITE</code> позволяет получать данные и изменять конфигурацию устройства <br />
+<code>16 — READ CREATE</code> позволяет читать данные, изменять и создавать объекты <br />
+<code>New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\PermittedManagers" -Name "1" -Value "192.168.3.99"</code> от кого разрешено принимать запросы <br />
+<code>Get-Service SNMP | Restart-Service</code></p>
+<h3 id="snmpwalk"><a class="header" href="#snmpwalk">snmpwalk</a></h3>
+<p><code>snmpwalk -v 2c -c public 192.168.3.100</code> <br />
+<code>snmpwalk -v 2c -c public -O e 192.168.3.100</code></p>
+<h3 id="snmp-modules"><a class="header" href="#snmp-modules">SNMP Modules</a></h3>
+<p><code>Install-Module -Name SNMP</code> <br />
+<code>Get-SnmpData -IP 192.168.3.100 -OID 1.3.6.1.2.1.1.4.0 -UDPport 161 -Community public</code> <br />
+<code>(Get-SnmpData -IP 192.168.3.100 -OID 1.3.6.1.2.1.1.4.0).Data</code> <br />
+<code>Invoke-SnmpWalk -IP 192.168.3.100 -OID 1.3.6.1.2.1.1</code> пройтись по дереву OID <br />
+<code>Invoke-SnmpWalk -IP 192.168.3.100 -OID 1.3.6.1.2.1.25.6.3.1.2</code> список установленного ПО <br />
+<code>Invoke-SnmpWalk -IP 192.168.3.100 -OID 1.3.6.1.2.1.25.2.3.1</code> список разделов и памяти (C: D: Virtual Memory и Physical Memory) <br />
+<code>Set-SnmpData</code> изменение данных на удаленном устройстве</p>
+<p><code>Install-Module -Name SNMPv3</code> <br />
+<code>Invoke-SNMPv3Get</code> получение данных по одному OID <br />
+<code>Invoke-SNMPv3Set</code> изменение данных <br />
+<code>Invoke-SNMPv3Walk</code> обход по дереву OID <br />
+<code>Invoke-SNMPv3Walk -UserName lifailon -Target 192.168.3.100 -AuthSecret password -PrivSecret password -OID 1.3.6.1.2.1.1 -AuthType MD5 -PrivType AES128</code></p>
+<h3 id="lextm-sharpsnmplib"><a class="header" href="#lextm-sharpsnmplib">Lextm SharpSnmpLib</a></h3>
+<p><a href="https://learn.microsoft.com/ru-ru/powershell/dsc/reference/resources/windows/fileresource?view=dsc-1.1">Синтаксис</a> <br />
+<a href="https://api.nuget.org/v3-flatcontainer/lextm.sharpsnmplib/12.5.2/lextm.sharpsnmplib.12.5.2.nupkg">Download lib</a></p>
+<p><code>Add-Type -LiteralPath "$home\Desktop\lextm.sharpsnmplib-12.5.2\net471\SharpSnmpLib.dll"</code></p>
+<pre><code class="language-PowerShell">$port = 161
+$OID = "1.3.6.1.2.1.1.4.0"
+$variableList = New-Object Collections.Generic.List[Lextm.SharpSnmpLib.Variable]
+$variableList.Add([Lextm.SharpSnmpLib.Variable]::new([Lextm.SharpSnmpLib.ObjectIdentifier]::new($OID)))
+$timeout = 3000
+[Net.IPAddress]$ip = "192.168.3.100"
+$endpoint = New-Object Net.IpEndPoint $ip, $port
+$Community = "public"
+[Lextm.SharpSnmpLib.VersionCode]$Version = "V2"
+
+$message = [Lextm.SharpSnmpLib.Messaging.Messenger]::Get(
+$Version,
+$endpoint,
+$Community,
+$variableList,
+$TimeOut
+)
+$message.Data.ToString()
+</code></pre>
+<h3 id="walk"><a class="header" href="#walk">Walk</a></h3>
+<pre><code class="language-PowerShell">[Lextm.SharpSnmpLib.ObjectIdentifier]$OID = "1.3.6.1.2.1.1" # дерево или конечный OID
+$WalkMode = [Lextm.SharpSnmpLib.Messaging.WalkMode]::WithinSubtree # режим обхода по дереву
+$results = New-Object Collections.Generic.List[Lextm.SharpSnmpLib.Variable]
+$message = [Lextm.SharpSnmpLib.Messaging.Messenger]::Walk(
+  $Version,
+  $endpoint,
+  $Community,
+  $OID,
+  $results,
+  $TimeOut,
+  $WalkMode
+)
+$results
+
+$results2 = @()
+foreach ($d in $results) {
+$results2 +=[PSCustomObject]@{'ID'=$d.id.ToString();'Data'=$d.Data.ToString()} # перекодировать вывод построчно в строку
+}
+$results2
+</code></pre>
+<h1 id="packagemanagement"><a class="header" href="#packagemanagement">PackageManagement</a></h1>
+<p><code>Import-Module PackageManagement</code> импортировать модуль <br />
+<code>Get-Module PackageManagement</code> информация о модуле <br />
+<code>Get-Command -Module PackageManagement</code> отобразить все командлеты модуля <br />
+<code>Get-Package</code> отобразить все установленные пакеты PowerShellGallery <br />
+<code>Get-Package -ProviderName msi,Programs</code> список установленных программ
+<code>[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12</code> включить использование протокол TLS 1.2 (если не отключены протоколы TLS 1.0 и 1.1) <br />
+<code>Get-PackageSource</code> источники установки пакетов <br />
+<code>Get-PackageProvider</code> отобразить список провайдеров менеджеров пакетов <br />
+<code>Get-PackageProvider | Where-Object Name -Match nuget</code> <br />
+<code>Find-PackageProvider</code> отображение всех доступных менеджеров пакетов <br />
+<code>Find-PackageProvider nuget</code> <br />
+<code>Install-PackageProvider NuGet -Force</code> установить менеджер пакетов nuget <br />
+<code>Install-PackageProvider PSGallery -Force</code> установить источник <br />
+<code>Install-PackageProvider Chocolatey -Force</code> <br />
+<code>Set-PackageSource nuget -Trusted</code> разрешить установку пакетов из указанного источника <br />
+<code>Register-PSRepository -Name "NuGet" -SourceLocation "https://www.nuget.org/api/v2" -InstallationPolicy Trusted</code> зарегестрировать менеджер пакетов используя url (работает для Power Shell Core) <br />
+<code>Set-PackageSource -Name NuGet -Trusted</code> изменить источник по умолчанию <br />
+<code>Find-Package PSEverything</code> поиск пакетов по имени во всех менеджерах <br />
+<code>Find-Package PSEverything -Provider NuGet</code> поиск пакета у выбранного провайдера <br />
+<code>Install-Module PSEverything -Scope CurrentUser</code> установить модуль для текущего пользователя <br />
+<code>Install-Package -Name VeeamLogParser -ProviderName PSGallery -scope CurrentUser</code> <br />
+<code>Get-Command *Veeam*</code> <br />
+<code>Import-Module -Name VeeamLogParser</code> загрузить модуль <br />
+<code>Get-Module VeeamLogParser | select -ExpandProperty ExportedCommands</code> отобразить список функций</p>
+<h3 id="winget"><a class="header" href="#winget">winget</a></h3>
+<p><a href="https://github.com/microsoft/winget-cli">Source</a>
+<a href="https://winget.run">Web</a></p>
+<p><code>winget list</code> список установленных пакетов <br />
+<code>winget search VLC</code> найти пакет <br />
+<code>winget show VideoLAN.VLC</code> информация о пакете <br />
+<code>winget show VideoLAN.VLC --versions</code> список доступных версий в репозитории <br />
+<code>winget install VideoLAN.VLC</code> установить пакет <br />
+<code>winget uninstall VideoLAN.VLC</code> удалить пакет <br />
+<code>winget download jqlang.jq</code> загрузкить пакет (https://github.com/jqlang/jq/releases/download/jq-1.7/jq-windows-amd64.exe) <br />
+<code>winget install jqlang.jq</code> добавляет в переменную среду и псевдоним командной строки jq <br />
+<code>winget uninstall jqlang.jq</code></p>
+<h3 id="jqlang"><a class="header" href="#jqlang">jqlang</a></h3>
+<pre><code class="language-PowerShell">[uri]$url = $($(irm https://api.github.com/repos/jqlang/jq/releases/latest).assets.browser_download_url -match "windows-amd64").ToString() # получить версию latest на GitHub
+irm $url -OutFile "C:\Windows\System32\jq.exe" # загрузить jq.exe
+</code></pre>
+<h3 id="scoop"><a class="header" href="#scoop">Scoop</a></h3>
+<p><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> <br />
+<code>irm get.scoop.sh | iex</code> установка <br />
+<code>scoop help</code> <br />
+<code>scoop search jq</code> <br />
+<code>scoop info jq</code> <br />
+<code>(scoop info jq).version</code> <br />
+<code>scoop cat jq</code> <br />
+<code>scoop download jq</code> C:\Users\lifailon\scoop\cache <br />
+<code>scoop install jq</code> C:\Users\lifailon\scoop\apps\jq\1.7 <br />
+<code>scoop list</code> <br />
+<code>(scoop list).version</code> <br />
+<code>scoop uninstall jq</code></p>
+<h3 id="chocolatey"><a class="header" href="#chocolatey">Chocolatey</a></h3>
+<pre><code class="language-PowerShell">Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+</code></pre>
+<p><code>choco -v</code> <br />
+<code>choco -help</code> <br />
+<code>choco list</code> <br />
+<code>choco install adobereader</code></p>
+<h1 id="nuget"><a class="header" href="#nuget">NuGet</a></h1>
+<p><code>Invoke-RestMethod https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile "$home\Documents\nuget.exe"</code> <br />
+<code>Invoke-Expression "$home\Documents\nuget.exe search Selenium.WebDriver"</code> <br />
+<code>Invoke-Expression "$home\Documents\nuget.exe install Selenium.WebDriver"</code> <br />
+<code>Get-Item $home\Documents\*Selenium*</code></p>
+<p><code>&amp; "$home\Documents\nuget.exe" list console-translate</code> <br />
+<code>$nuget_api_key = "&lt;API-KEY&gt;"</code> <br />
+<code>$source = "https://api.nuget.org/v3/index.json"</code> <br />
+<code>$Name = "Console-Translate"</code> <br />
+<code>$path = "$home\Documents\$Name"</code> <br />
+<code>New-Item -Type Directory $path</code> <br />
+<code>Copy-Item "$home\Documents\Git\$Name\$Name\0.2\*" "$path\"</code> <br />
+<code>Copy-Item "$home\Documents\Git\$Name\LICENSE" "$path\"</code> <br />
+<code>Copy-Item "$home\Documents\Git\$Name\README.md" "$path\"</code></p>
+<pre><code class="language-xml">'&lt;?xml version="1.0"?&gt;
+&lt;package &gt;
+  &lt;metadata&gt;
+    &lt;id&gt;Console-Translate&lt;/id&gt;
+    &lt;version&gt;0.2.2&lt;/version&gt;
+    &lt;authors&gt;Lifailon&lt;/authors&gt;
+    &lt;owners&gt;Lifailon&lt;/owners&gt;
+    &lt;description&gt;Cross-platform client for translating text in the console, uses API Google (edded public free token), MyMemory and DeepLX (no token required)&lt;/description&gt;
+    &lt;tags&gt;PowerShell, Module, Translate, api&lt;/tags&gt;
+    &lt;repository type="git" url="https://github.com/Lifailon/Console-Translate" /&gt;
+    &lt;projectUrl&gt;https://github.com/Lifailon/Console-Translate&lt;/projectUrl&gt;
+    &lt;licenseUrl&gt;https://github.com/Lifailon/Console-Translate/blob/rsa/LICENSE&lt;/licenseUrl&gt;
+    &lt;contentFiles&gt;
+      &lt;files include="Console-Translate.psm1" buildAction="Content" /&gt;
+      &lt;files include="Console-Translate.psd1" buildAction="Content" /&gt;
+      &lt;files include="lang-iso-639-1.csv" buildAction="Content" /&gt;
+      &lt;files include="README.md" buildAction="Content" /&gt;
+      &lt;files include="LICENSE" buildAction="Content" /&gt;
+    &lt;/contentFiles&gt;
+  &lt;/metadata&gt;
+&lt;/package&gt;' &gt; "$path\$Name.nuspec"
+</code></pre>
+<p><code>Set-Location $path</code> <br />
+<code>&amp; "$home\Documents\nuget.exe" pack "$path\$Name.nuspec"</code> <br />
+<code>&amp; "$home\Documents\nuget.exe" push "$path\$Name.0.2.2.nupkg" -ApiKey $nuget_api_key -Source $source</code> <br />
+<code>&amp; "$home\Documents\nuget.exe" push "$path\$Name.0.2.2.nupkg" -ApiKey $nuget_api_key -Source $source -SkipDuplicate</code></p>
+<p><code>Install-Package Console-Translate -Source nuget.org</code> <br />
+<code>Get-Package Console-Translate | select *</code></p>
+<p><code>Register-PSRepository -Name "NuGet" -SourceLocation "https://www.nuget.org/api/v2" -InstallationPolicy Trusted</code> <br />
+<code>Get-PSRepository</code> <br />
+<code>Find-Module -Name Console-Translate</code> <br />
+<code>Install-Module Console-Translate -Repository NuGet</code></p>
+<p><code>&amp; "$home\Documents\nuget.exe" delete Console-Translate 0.2.0 -Source https://api.nuget.org/v3/index.json -ApiKey $nuget_api_key -NoPrompt</code></p>
+<h1 id="modules"><a class="header" href="#modules">Modules</a></h1>
+<h3 id="get-query"><a class="header" href="#get-query">Get-Query</a></h3>
+<p><code>Install-Module Get-Query -Repository NuGet</code> установить модуль <br />
+<code>Get-Help Get-Query</code> <br />
+<code>Get-Query localhost</code> отобразить всех авторизованных пользователей, их статус и время работы (по умолчанию localhost) <br />
+<code>Get-Query 192.168.1.1.1 -proc</code> список всех пользовательских процессов (по умолчанию -user *) <br />
+<code>Get-Query 192.168.1.1.1 -proc -user username</code> список процессов указанного пользователя</p>
+<h3 id="console-translate"><a class="header" href="#console-translate">Console-Translate</a></h3>
+<p><code>Install-Module Console-Translate -Repository NuGet</code> <br />
+<code>Get-Translate "Module for text translation"</code> <br />
+<code>Get-Translate "Модуль для перевода текста"</code> <br />
+<code>Get-Translate "Привет world" -LanguageSelected</code> т.к. больше латинских символов (на 1), то перевод будет произведен на английский язык <br />
+<code>Get-Translate "Hello друг" -LanguageSelected</code> перевод на русский язык <br />
+<code>Get-Translate -Text "Модуль для перевода текста" -LanguageSource ru -LanguageTarget tr</code> <br />
+<code>Get-Translate -Provider MyMemory -Text "Hello World" -Alternatives</code> выбрать провайдер перевода и добавить альтернативные варианты вывода <br />
+<code>Get-DeepLX "Get select" ru</code> <br />
+<code>Start-DeepLX -Job</code> запустить сервер в режиме процесса <br />
+<code>Start-DeepLX -Status</code> <br />
+<code>Get-DeepLX -Server 192.168.3.99 -Text "Module for text translation" ru</code> <br />
+<code>Stop-DeepLX</code> <br />
+<code>Get-LanguageCode</code> получение кодов языков по стандарту ISO-639-1</p>
+<h3 id="console-download"><a class="header" href="#console-download">Console-Download</a></h3>
+<p><code>Install-Module Console-Download -Repository NuGet</code> устаовить модуль из менеджера пакетов NuGet <br />
+<code>Invoke-Expression $(Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Console-Download/rsa/module/Console-Download/Console-Download.psm1")</code> или импортировать модуль из GitHub репозитория в текущую сессию PowerShell <br />
+<code>Invoke-Download -Url "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip"</code> загрузить файл в один поток с отображением скорости загрузки в реальном времен (путь загрузки файла по умолчанию: $home\downloads) <br />
+<code>Invoke-Download -Url "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip" -Thread 3</code> загрузить один и тотже файл в 3 потока (создается 3 файла, доступно от 1 до 20 потоков)</p>
+<pre><code class="language-PowerShell">$urls = @(
+    "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip",
+    "https://github.com/Lifailon/helperd/releases/download/0.0.1/Helper-Desktop-Setup-0.0.1.exe"
+)
+Invoke-Download $urls # загрузить параллельно 2 файла
+</code></pre>
+<p><code>$urls = Get-Content "$home\Desktop\links.txt"</code> <br />
+<code>Invoke-Download $urls</code> передайте список URL-адресов из файла для загрузки файлов, эквивалентному числу url</p>
+<p><code>$urls = Get-LookingGlassList</code> отобразить актуальный список конечных точек Looking Glass через Looking.House (выдает 3 ссылки на загрузку файлов по 10, 100 и 1000 мбайт для каждого региона) <br />
+<code>$usaNy = $urls | Where-Object region -like *USA*New*York*</code> отфильтровать список по региону и городу <br />
+<code>$url = $usaNy[0].url100mb</code> забрать первую ссылку с файлов на 100 МБайт <br />
+<code>Invoke-Download $url</code> начать загрузку файла <br />
+<code>Invoke-Download $url -Thread 3</code> начать загрузку 3-х одинаковых файлов</p>
+<h3 id="pseverything"><a class="header" href="#pseverything">PSEverything</a></h3>
+<p><code>Install-Module PSEverything -Repository NuGet</code> <br />
+<code>Find-Everything pingui</code> найти все файлы в системе (на всех локальных дисках) с именем <em>pingui</em> через dll csharp версии Everything (по умолчанию) <br />
+<code>Find-Everything pingui-0.1.py | Format-List</code> <br />
+<code>Find-Everything pingui -es</code> использовать cli версию Everything для поиска (при первом использовании версии, необходимо дождаться автоматической установки файлов зависимостей) <br />
+<code>Find-Everything pingui-0.1 -ComputerName localhost</code> поиск на удаленном компьютере через REST API, если запущен HTTP-сервер Everything</p>
+<h3 id="hardwaremonitor"><a class="header" href="#hardwaremonitor">HardwareMonitor</a></h3>
+<p><code>Install-Module HardwareMonitor -Repository NuGet -Scope AllUsers</code> <br />
+<code>Install-LibreHardwareMonitor</code> установить и запустить LibreHardwareMonitor в систему (https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) <br />
+<code>Install-OpenHardwareMonitor</code> установить OpenHardwareMonitor (https://github.com/openhardwaremonitor/openhardwaremonitor) <br />
+<code>Get-Sensor | Where-Object {($_.SensorName -match "Temperature") -or ($_.SensorType -match "Temperature")} | Format-Table</code> использовать LibreHardwareMonitor и WMI/CIM (по умолчанию) и отфильтровать вывод по наименованию датчикам или типу сенсора для вывода датчиков температуры <br />
+<code>Get-Sensor -Open</code> использовать OpenHardwareMonitor <br />
+<code>Get-Sensor -ComputerName 192.168.3.99 -Port 8086 | Format-Table</code> вывести датчики системы через REST API <br />
+<code>Get-Sensor -ComputerName 192.168.3.99 -Port 8085 -User hardware -Password monitor | Where-Object Value -notmatch "^0,0" | Format-Table</code> использовать авторизацию и отфильтровать вывод не пустых датчиков <br />
+<code>Get-Sensor -Library | Where-Object Value -ne 0 | Format-Table</code> использовать динамическую библиотеку (dll) через .NET</p>
+<h3 id="crystaldisk-cli"><a class="header" href="#crystaldisk-cli">CrystalDisk-Cli</a></h3>
+<p><code>Install-Module CrystalDisk-Cli -Repository NuGet</code> <br />
+<code>Get-DiskInfoSettings</code> отобразить настройки программы Crystal-DiskInfo (https://github.com/hiyohiyo/CrystalDiskInfo) <br />
+<code>Get-DiskInfoSettings -AutoRefresh 5</code> изминить время сканирования на 5 минут <br />
+<code>Get-DiskInfo -List</code> отобразить список дисков <br />
+<code>Get-DiskInfo</code> получить результаты последнего сканирования (статус, температура и т.п.) <br />
+<code>Get-DiskInfo -Report | Select-Object Name,Date,HealthStatus,Temperature</code> получить актуальный отчет (запустить сканирование и дождаться результатов)</p>
+<h3 id="ps-pi-hole"><a class="header" href="#ps-pi-hole">PS-Pi-Hole</a></h3>
+<pre><code class="language-PowerShell">$path_psm = ($env:PSModulePath.Split(";")[0])+"\Invoke-Pi-Hole\Invoke-Pi-Hole.psm1"
+if (!(Test-Path $path_psm)) {
+    New-Item $path_psm -ItemType File -Force
+}
+irm https://raw.githubusercontent.com/Lifailon/PS-Pi-Hole/rsa/Invoke-Pi-Hole/Invoke-Pi-Hole.psm1 | Out-File $path_psm -Force
+</code></pre>
+<p><code>sudo cat /etc/pihole/setupVars.conf | grep WEBPASSWORD</code> получить токен доступа <br />
+<code>$Server = "192.168.1.253"</code> <br />
+<code>$Token = "5af9bd44aebce0af6206fc8ad4c3750b6bf2dd38fa59bba84ea9570e16a05d0f"</code> <br />
+<code>Invoke-Pi-Hole -Versions -Server $Server -Token $Token</code> получить текущую версию ядра (backend) и веб (frontend) на сервере а также последнюю доступную версию для обновления <br />
+<code>Invoke-Pi-Hole -Releases -Server $Server -Token $Token</code> узнать последнюю доступную версию в репозитории на GitHub <br />
+<code>Invoke-Pi-Hole -QueryLog -Server $Server -Token $Token</code> отобразить полный журнал запросов (клиент, домен назначения, тип записи, статус время запроса и адрес пересылки forward dns - куда ушел запрос) <br />
+<code>Invoke-Pi-Hole -AdList -Server $Server -Token $Token</code> получить списки блокировак используемых на сервере (дата обновления, количество доменов и url-источника) <br />
+<code>Invoke-Pi-Hole -Status -Server $Server -Token $Token</code> статус работы режима блокировки <br />
+<code>Invoke-Pi-Hole -Enable -Server $Server -Token $Token</code> включить блокировку <br />
+<code>Invoke-Pi-Hole -Disable -Server $Server -Token $Token</code> отключить блокировку <br />
+<code>Invoke-Pi-Hole -Stats -Server $Server -Token $Token</code> подключиться к серверу Pi-Hole для получения статистики (метрики: количество доменов для блокировки, количество запросов и блокировок за сегодня и т.д.) <br />
+<code>Invoke-Pi-Hole -QueryTypes -Server $Server -Token $Token</code> статистика запросов по типу записей относительно 100% <br />
+<code>Invoke-Pi-Hole -TopClient -Server $Server -Token $Token</code> список самых активных клиентов (ip/name и количество запросов проходящих через сервер) <br />
+<code>Invoke-Pi-Hole -TopPermittedDomains -Count 100 -Server $Server -Token $Token</code> список самых посещяемых доменов и количество запросов <br />
+<code>Invoke-Pi-Hole -LastBlockedDomain -Server $Server -Token $Token</code> адрес последнего заблокированного домена <br />
+<code>Invoke-Pi-Hole -ForwardServer -Server $Server -Token $Token</code> список серверов для пересылки, которым обычно выступает DNS-сервер стоящий за Pi-Hole в локальной сети, например AD <br />
+<code>Invoke-Pi-Hole -Data -Server $Server -Token $Token</code> количество запросов за каждые 10 минут в течение последних 24 часов</p>
+<h3 id="check-host"><a class="header" href="#check-host">Check-Host</a></h3>
+<pre><code class="language-PowerShell">$path = $(($env:PSModulePath -split ";")[0]) + "\Get-CheckHost"
+if (Test-Path $path) {
+    Remove-Item $path -Force -Recurse
+    New-Item -ItemType Directory -Path $path
+} else {
+    New-Item -ItemType Directory -Path $path
+}
+Invoke-RestMethod "https://raw.githubusercontent.com/Lifailon/Check-Host/rsa/Get-CheckHost/Get-CheckHost.psm1" -OutFile "$path\Get-CheckHost.psm1"
+</code></pre>
+<p><code>Install-Module CheckHost</code> установить модуль работы с Check-Host (https://check-host.net) через api <br />
+<code>Get-CheckHost -List</code> список хостов (node) разных регионов (40) <br />
+<code>Get-CheckHost -Server google.com -Type ping -Count 5</code> использовать 5 любых хостов для 4 пингов с каждого до указанного url (google) <br />
+<code>Get-CheckHost -Server google.com -Type dns -Count 5</code> проверить DNS (возвращает А-запись или диапазон с ip-адресом) <br />
+<code>Get-CheckHost -Server google.com:443 -Type http -Count 5</code> проверить доступность порта <br />
+<code>Get-CheckHost -Server google.com:443 -Type tcp -Count 5</code> проверить доступность TCP или UDP порта</p>
+<h3 id="psdomaintest"><a class="header" href="#psdomaintest">PSDomainTest</a></h3>
+<p><code>Install-Module PSDomainTest -Repository NuGet -Scope CurrentUser</code> <br />
+<code>Get-DomainTest -Domain github.com -Warning</code> протестировать домен и DNS записи на ошибки (вывести только ошибки) через ZoneMaster (https://github.com/zonemaster/zonemaster) <br />
+<code>Get-DomainTest -Domain github.com -Warning -json</code> вывод в формате json <br />
+<code>Get-DomainTest -Domain github.com -html | Out-File .\result.html</code> получить отчет в формате HTML-таблицы с фильтрацией по столбцам</p>
+<h3 id="winapi"><a class="header" href="#winapi">WinAPI</a></h3>
+<p><code>Install-Module ps.win.api -Repository NuGet -AllowClobber</code> <br />
+<code>Import-Module ps.win.api</code> <br />
+<code>Get-Command -Module ps.win.api</code> <br />
+<code>Start-WinAPI</code> запустить сервер <br />
+<code>Test-WinAPI</code> статус сервера <br />
+<code>Stop-WinAPI</code> остановить сервер <br />
+<code>Read-WinAPI</code> отобразить лог в реальном времени <br />
+<code>Get-Hardware</code> вывести сводную информацию о системе с использованием потоков (фоновых заданий) <br />
+<code>Get-DiskPhysical</code> отобразить список физических дисков, их размер, интерфейс и статус <br />
+<code>Get-DiskPhysical -ComputerName 192.168.3.100 -Port 8443 -User rest -Pass api</code> получить информацию с удаленного сервер, на котором запущен сервер WinAPI (доступно для всех функций модуля) <br />
+<code>Get-DiskLogical</code> список логических дисков (включая виртуальные диски), их файловая система, общий и используемый размер в гб и процентах <br />
+<code>Get-DiskPartition</code> список разделов физических дисков (отобразит скрытые разделы, загрузочный и порядок назначения байт) <br />
+<code>Get-Smart</code> статус работы всех дисков и текущая температура <br />
+<code>Get-IOps</code> количество операций ввода/вывода дисковой подсистемы <br />
+<code>Get-Files</code> подробная информация о файлах (добавляет дату создания, изменения, доступа, количество дочерних файлов и директорий) <br />
+<code>Find-Process</code> поиск пути к исполняемому файлу по имени остановленного (не запущенного) процесса в директориях <br />
+<code>Get-ProcessPerformance</code> информация о процессах (Get-Process) в человеко-читаемом формате <br />
+<code>Get-CPU</code> список все ядер и нагрузка на каждое ядро и на все сразу (суммарное процессорное время, привилегированное и пользовательское время процессора) <br />
+<code>Get-MemorySize</code> размер оперативной, виртуальной памяти, суммарное потребление памяти процессов и путь к файлу подкачки <br />
+<code>Get-MemorySlots</code> список всех слотов оперативной памяти <br />
+<code>Get-NetInterfaceStat</code> статистика активного сетевого интерфейса за время с момента загрузки системы (количество пакетов и ГБ) <br />
+<code>Get-NetInterfaceStat -Current</code> текущая статистика активного сетевого интерфейса (количество пакетов и МБ/c) <br />
+<code>Get-NetIpConfig</code> конфигурация всех сетевых интерфейсов (ip и mac-адрес, статус DHCP сервера, дата аренды) <br />
+<code>Get-NetStat</code> развернутая статистика сетевых интерфейсов (из Get-NetTCPConnection), добавляет имя процесса, имя удаленного хоста (через nslookup), время работы процесса (не процессорное время) и путь к исполняемому файлу <br />
+<code>Get-Performance</code> информация из счетчиков (Get-Counter) человеко-читаемом формате <br />
+<code>Get-VideoCard</code> информация о всех видео-картах (наименование, частота и объем видео-памяти) <br />
+<code>Get-Software</code> список установленного програмного обеспечения <br />
+<code>Get-WinUpdate</code> список обновлений Windows (дата установки и источник) <br />
+<code>Get-Driver</code> список установленных драйверов (имя, провайдер, версия и дата установки)</p>
+<h3 id="psyslog"><a class="header" href="#psyslog">pSyslog</a></h3>
+<p><code>Install-Module pSyslog -Repository NuGet</code> <br />
+<code>Start-pSyslog -Port 514</code> запустить сервер на порту 514 (по умолчанию) <br />
+<code>Start-pSyslog -RotationSize 500</code> указать размер файла локального журнала для его ротации (обрезания) в КБ <br />
+<code>Get-pSyslog -Status | Format-List</code> отобразить статус работы <br />
+<code>Get-pSyslog</code> вывести журнал сообщений в реальном времени <br />
+<code>Stop-pSyslog</code> остановить сервер <br />
+<code>Send-pSyslog -Content "Test" -Server 192.168.3.99</code> отправить сообщение на Syslog-сервер <br />
+<code>Send-pSyslog -Content "Test" -Server 192.168.3.99 -Type Informational -PortServer 514 -PortClient 55514</code> <br />
+<code>(Get-Service -Name WinRM).Status | Send-pSyslog -Server 192.168.3.102 -Tag Service[WinRM]</code> <br />
+<code>Send-pSyslog -Content "test" -Server 192.168.3.99 -PortServer 514 -Base64</code> использовать шифрование при отправки сообщения (расшифровка работает только для сервера pSyslog) <br />
+<code>Start-UDPRelay -inPort 515 -outIP 192.168.3.102 -outPort 514</code> запустить сервер в режиме UDP-Relay, который слушает на порту 515 и переадресует сообщения на Syslog сервер 192.168.3.102 с портом 514 <br />
+<code>Send-pSyslog -Server 192.168.3.99 -PortServer 515 -Content $(Get-Date)</code> отправить сообщение на сервере UDP-Relay <br />
+<code>Show-pSyslog -Type Warning -Count</code> отобразить метрики (количество ошибок) <br />
+<code>Show-pSyslog -Type Alert -Count</code> <br />
+<code>Show-pSyslog -Type Critical -Count</code> <br />
+<code>Show-pSyslog -Type Error -Count</code> <br />
+<code>Show-pSyslog -Type Emergency -Count</code> <br />
+<code>Show-pSyslog -Type Informational -Count</code> <br />
+<code>Show-pSyslog -LogFile 05-06 | Out-GridView</code> прочитать локальный журнал логирования и вывести в GridView для фильтрации сообщений <br />
+<code>Show-pSyslog -Count</code> отобразить количество сообщений локального журнала <br />
+<code>Show-pSyslog -Count -LogFile 10-06</code> выбрать журнал по дате</p>
+<h3 id="syslog-source-message"><a class="header" href="#syslog-source-message">Syslog source message</a></h3>
+<pre><code class="language-PowerShell">Add-Type -TypeDefinition @"
+public enum Syslog_Facility {
+    kern,     // 0  kernel (core) messages
+    user,     // 1  user level messages
+    mail,     // 2  mail system
+    daemon,   // 3  system daemons
+    auth,     // 4  security/authorization messages (login/su)
+    syslog,   // 5  syslog daemon
+    lpr,      // 6  line printer subsystem (creating jobs and send to spool for print by using lpd)
+    news,     // 7  network news subsystem (USENET)
+    uucp,     // 8  Unix-to-Unix Copy subsystem
+    cron,     // 9  scheduling daemon
+    authpriv, // 10 security/authorization private messages
+    ftp,      // 11 FTP daemon
+    ntp,      // 12 NTP daemon
+    security, // 13 security log audit
+    console,  // 14 console log alert
+    clock,    // 15 clock subsystem
+    local0,   // 16 local use
+    local1,   // 17
+    local2,   // 18
+    local3,   // 19
+    local4,   // 20
+    local5,   // 21
+    local6,   // 22
+    local7    // 23
+}
+"@
+</code></pre>
+<h3 id="syslog-type-message"><a class="header" href="#syslog-type-message">Syslog type message</a></h3>
+<pre><code class="language-PowerShell">Add-Type -TypeDefinition @"
+public enum Syslog_Severity {
+    Emergency,     // 0 emerg
+    Alert,         // 1 alert
+    Critical,      // 2 crit
+    Error,         // 3 err
+    Warning,       // 4 warning
+    Notice,        // 5 notice
+    Informational, // 6 info
+    Debug          // 7 debug
+}
+"@
+</code></pre>
+<h1 id="pester"><a class="header" href="#pester">Pester</a></h1>
+<p><a href="https://github.com/pester/Pester">Source</a></p>
+<p><code>Install-Module -Name Pester -Repository PSGallery -Force -AllowClobber</code> <br />
+<code>Import-Module Pester</code> <br />
+<code>$(Get-Module Pester -ListAvailable).Version</code></p>
+<p><code>.Tests.ps1</code></p>
+<pre><code class="language-PowerShell">function Add-Numbers {
+    param (
+        [int]$a,
+        [int]$b
+    )
+    $a + $b
+}
+Describe "Add-Numbers" {
+    Context "При сложении двух чисел" {
+        It "Должна вернуться правильная сумма" {
+            $result = Add-Numbers -a 3 -b 4
+            $result | Should -Be 7
+        }
+    }
+    Context "При сложении двух чисел" {
+        It "Должна вернуться ошибка (5+0 -ne 4)" {
+            $result = Add-Numbers -a 5 -b 0
+            $result | Should -Be 4
+        }
+    }
+}
+
+function Get-RunningProcess {
+    return Get-Process | Select-Object -ExpandProperty Name
+}
+Describe "Get-RunningProcess" {
+    Context "При наличии запущенных процессов" {
+        It "Должен возвращать список имен процессов" {
+            $result = Get-RunningProcess
+            $result | Should -Contain "svchost"
+            $result | Should -Contain "explorer"
+        }
+    }
+    Context "Когда нет запущенных процессов" {
+        It "Должен возвращать пустой список" {
+            # Замокать функцию Get-Process, чтобы она всегда возвращала пустой список процессов
+            Mock Get-Process { return @() }
+            $result = Get-RunningProcess
+            $result | Should -BeEmpty
+        }
+    }
+}
+</code></pre>
+<h1 id="oh-my-posh"><a class="header" href="#oh-my-posh">oh-my-posh</a></h1>
+<p><a href="https://ohmyposh.dev/docs/installation/windows">Install</a></p>
+<p><code>winget install JanDeDobbeleer.OhMyPosh -s winget</code> <br />
+<code>choco install oh-my-posh -y</code> <br />
+<code>scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json</code> <br />
+<code>Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))</code></p>
+<p><a href="https://ohmyposh.dev/docs/themes">Themes</a></p>
+<p><code>Get-PoshThemes</code> отобразить список всех тем <br />
+<code>oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/di4am0nd.omp.json" | Invoke-Expression</code> применить (использовать) тему в текущей сессии <br />
+<code>oh-my-posh init pwsh --config "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cert.omp.json" | Invoke-Expression</code> считать тему из репозитория <br />
+<code>New-Item -Path $PROFILE -Type File -Force</code> создайт файл профилья PowerShell <br />
+<code>'oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/di4am0nd.omp.json" | Invoke-Expression' &gt; $PROFILE</code> сохранить тему профиля (загружать тему при запуске PowerShell)</p>
+<h3 id="themes-performance"><a class="header" href="#themes-performance">themes-performance</a></h3>
+<p><code>Install-Module themes-performance -Repository NuGet</code> установить модуль с темами <br />
+<code>Set-PoshTheme -Theme System-Sensors</code> использовать тему с датчиками из LibreHardwareMonitor <br />
+<code>Set-PoshTheme -Theme System-Sensors -Save</code> загрузить тему из репозитория на локальный компьютер и сохранить тему в профиле <br />
+<code>Set-PoshTheme -Theme System-Performance</code> использовать тему с датчиками системы, получаемыми из системы WMI/CIM (заряд батареи ноутбука | загрузка CPU в % | использование оперативной памяти | скорость активного сетевого интерфейса) <br />
+<code>Set-PoshTheme -Theme System-Performance -Save</code> <br />
+<code>Set-PoshTheme -Theme Pwsh-Process-Performance</code> время работы текущего процесса pwsh (процессорное время), количество работающих/общее (статус успех/ошибка) фоновых заданий, Working Set текущего процесса и всех процессов PowerShell в системе <br />
+<code>Set-PoshTheme -Theme Pwsh-Process-Performance -Save</code></p>
+<h1 id="windows-terminal"><a class="header" href="#windows-terminal">Windows-Terminal</a></h1>
+<h3 id="terminal-icons"><a class="header" href="#terminal-icons">Terminal-Icons</a></h3>
+<p><code>Install-Module -Name Terminal-Icons -Repository PSGallery</code> <br />
+<code>scoop bucket add extras</code> <br />
+<code>scoop install terminal-icons</code></p>
+<p><code>notepad $PROFILE</code> <br />
+<code>Import-Module -Name Terminal-Icons</code></p>
+<p>Использует шрифты, которые необходимо установить и настроить в параметрах профиля PowerShell: <a href="https://github.com/ryanoasis/nerd-fonts">Nerd Fonts</a> <br />
+<a href="https://www.nerdfonts.com/font-downloads">Список шрифтов</a> <br />
+Скачать и установить шрифт похожий на Cascadia Code - <a href="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/CascadiaCode.zip">CaskaydiaCove</a></p>
+<p>Установить шрифт в конфигурацию Windows Terminal для PowerShell Core:</p>
+<pre><code class="language-json">"profiles": 
+{
+    "defaults": 
+    {
+        "colorScheme": "One Half Dark",
+        "experimental.retroTerminalEffect": true,
+        "font": 
+        {
+            "size": 10.0
+        },
+        "useAtlasEngine": true
+    },
+    "list": 
+    [
+        // PowerShell Core
+        {
+            "font": 
+            {
+                "face": "CaskaydiaMono Nerd Font" // устанавливаем шрифт для работы Terminal-Icons
+            },
+            "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+            "hidden": false,
+            "name": "PowerShell Core",
+            "source": "Windows.Terminal.PowershellCore"
+        },
+        // WSL (Ubuntu)
+        {
+            "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "hidden": false,
+            "name": "WSL",
+            "source": "Windows.Terminal.Wsl"
+        },
+        // ssh
+        {
+            "commandline": "ssh lifailon@192.168.1.100 -p 22",
+            "guid": "{a3ec86f6-2bc1-59dd-814d-2a0d935af5f8}",
+            "icon": "🐧",
+            "name": "devops-01"
+        }
+    ]
+}
+</code></pre>
+<h3 id="custom-actions"><a class="header" href="#custom-actions">Custom Actions</a></h3>
+<p>Custom actions: https://learn.microsoft.com/ru-ru/windows/terminal/customize-settings/actions <br />
+Escape-последовательности: https://learn.microsoft.com/ru-ru/cpp/c-language/escape-sequences?view=msvc-170</p>
+<pre><code class="language-json">"actions": 
+[
+    {
+        "command": 
+        {
+            "action": "copy",
+            "singleLine": false
+        },
+        "keys": "ctrl+c"
+    },
+    {
+        "command": "paste",
+        // Сохраняем классическую вставку интерпритатора, не заставляя выполнять код построчно
+        "keys": "ctrl+shift+v" // default: ctrl+v
+    },
+    {
+        "command": "find",
+        "keys": "ctrl+f" // default: ctrl+shift+f
+    },
+    {
+        "command": 
+        {
+            "action": "splitPane",
+            "split": "left", // default: auto
+            "splitMode": "duplicate"
+        },
+        "keys": "ctrl+shift+d" // default: alt+shift+d
+    },
+    // Очистить строку
+    {
+        "command": {
+            "action": "sendInput",
+            "input": "\u0001\u001b[3~"
+        },
+        "keys": "ctrl+k"
+    },
+    // Очистить терминал
+    {
+        "command": {
+            "action": "sendInput",
+            "input": "\u0001\u001b[3~clear\r"
+        },
+        "keys": "ctrl+l"
+    },
+    // Вставить шаблон модуля для перевода текста через Google Translate
+    {
+        "command": {
+            "action": "sendInput",
+            "input": "\u0001\u001b[3~Get-Translate -Alternatives -Provider Google ''\u001b[D"
+        },
+        "keys": "ctrl+g"
+    },
+    // Вставить шаблон модуля для перевода текста через MyMemory
+    {
+        "command": {
+            "action": "sendInput",
+            "input": "\u0001\u001b[3~Get-Translate -Alternatives -Provider MyMemory ''\u001b[D"
+        },
+        "keys": "ctrl+q"
+    },
+    // Быстрый перевод текста из буфера обмена
+    {
+        "command": {
+            "action": "sendInput",
+            "input": "\u0001\u001b[3~Get-Translate -Alternatives -Provider MyMemory -Text $(Get-Clipboard)\u001b[D\r"
+        },
+        "keys": "ctrl+shift+q"
+    },
+    // Быстрый пинг dns google
+    {
+        "command": {
+            "action": "sendInput",
+            "input": "\u0001\u001b[3~ping 8.8.8.8 -t\r"
+        },
+        "keys": "ctrl+p"
+    }
+]
+</code></pre>
+<h1 id="pandoc"><a class="header" href="#pandoc">Pandoc</a></h1>
+<pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod "https://api.github.com/repos/jgm/pandoc/releases/latest"
+$url = $($release_latest.assets | Where-Object name -match "windows-x86_64.zip").browser_download_url
+Invoke-RestMethod $url -OutFile $home\Downloads\pandoc.zip
+Expand-Archive -Path "$home\Downloads\pandoc.zip" -DestinationPath "$home\Downloads\"
+$path = $(Get-ChildItem "$home\Downloads\pandoc-*\*.exe").FullName
+Copy-Item -Path $path -Destination "C:\Windows\System32\pandoc.exe"
+Remove-Item "$home\Downloads\pandoc*" -Force -Recurse
+</code></pre>
+<p><code>pandoc -s README.md -o index.html</code> конвертация из Markdown в HTML <br />
+<code>pandoc README.md -o index.html --css=styles.css</code> применить стили из css <br />
+<code>pandoc -s index.html -o README.md</code> конвертация из HTML в Markdown <br />
+<code>pandoc -s README.md -o README.docx</code> конвертация в Word <br />
+<code>pandoc -s README.md -o README.epub</code> конвертация в открытый формат электронных версий книг <br />
+<code>pandoc -s README.md -o README.pdf</code> конвертация в PDF (требуется rsvg-convert) <br />
+<code>pandoc input.md -f markdown+hard_line_breaks -o output.md</code> конвертация из markdown документа, который не содержит обратный слэш в конце каждой строки для переноса (), который их добавит</p>
+<h3 id="convert-excel-to-markdown"><a class="header" href="#convert-excel-to-markdown">Convert Excel to Markdown</a></h3>
+<pre><code class="language-PowerShell">Import-Module ImportExcel
+Import-Excel -Path srv.xlsx | Export-Csv -Path $csvFilePath -NoTypeInformation -Encoding UTF8 # конвертация Excel в csv
+pandoc -s -f csv -t markdown input.csv -o output.md # конвертация таблицу csv в markdown
+</code></pre>
+<h1 id="ffmpeg"><a class="header" href="#ffmpeg">FFmpeg</a></h1>
+<pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod "https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest"
+$url = $($release_latest.assets | Where-Object name -match "ffmpeg-master-latest-win64-gpl.zip").browser_download_url
+Invoke-RestMethod $url -OutFile $home\Downloads\ffmpeg-master-latest-win64-gpl.zip
+Expand-Archive -Path "$home\Downloads\ffmpeg-master-latest-win64-gpl.zip" -DestinationPath "$home\Downloads\"
+Copy-Item -Path "$home\Downloads\ffmpeg-master-latest-win64-gpl\bin\ffmpeg.exe" -Destination "C:\Windows\System32\ffmpeg.exe"
+Remove-Item "$home\Downloads\ffmpeg-*" -Force -Recurse
+</code></pre>
+<p><code>ffmpeg -i input.mp4 output.gif</code> конвертировать mp4 в gif <br />
+<code>ffmpeg -i input.mp4 -filter_complex "scale=1440:-1:flags=lanczos" output.gif</code> изменить разрешение на выходе <br />
+<code>ffmpeg -i input.mp4 -filter_complex "scale=1440:-1:flags=lanczos" -r 10 output.gif</code> изменить количество кадров в секунду на выходе <br />
+<code>ffmpeg -i input.mp4 -filter_complex "fps=5,scale=960:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse=dither=bayer" output.gif</code> сжатие за счет цветовой политры <br />
+<code>ffmpeg -i input.mp4 -ss 00:00:10 -frames:v 1 -q:v 1 output.jpg</code> вытащить скриншот из видео на 10 секунде <br />
+<code>ffmpeg -i input.mp4 -ss 00:00:05 -to 00:00:10 -c copy output.mp4</code> вытащить кусок видео <br />
+<code>ffmpeg -i "%d.jpeg" -framerate 2 -c:v libx264 -r 30 -pix_fmt yuv420p output.mp4</code> создать видео из фото (1.jpeg, 2.jpeg и т.д.) с framerate (частотой кадров) в создаваемом видео 2 кадра в секунду <br />
+<code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -c:v copy -c:a aac -strict experimental output.mp4</code> запись без перекодирования (copy) RTSP-потока с камеры видеонаблюдения (+ аудио в кодеке AAC) в файл <br />
+<code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -c:v copy -c:a aac -strict experimental -movflags +faststart+frag_keyframe+empty_moov output.mp4</code> переместить метаданные в начало файла, что позволяет начать воспроизведение файла в видеоплеере до его полной загрузки <br />
+<code>ffmpeg -i "rtsp://admin:password@192.168.3.201:554" -rtsp_transport tcp -frames:v 1 -c:v mjpeg output.jpg</code> сделать скриншот <br />
+<code>ffmpeg -i input.mp4 -vf "pad=width=iw:height=ih+100:x=0:y=100:color=black" -c:a copy output.mp4</code> width=iw: (ширина видео остается как у исходного файла), height=ih+100 (высота видео увеличивается на 100 пикселей), x=0 (горизонтальное смещение установлено в 0), y=100 (вертикальное смещение установлено в 100 пикселей вниз, чтобы добавить черное пространство сверху), color=black (цвет добавленного пространства — черный)</p>
+<h1 id="handbrake"><a class="header" href="#handbrake">HandBrake</a></h1>
+<pre><code class="language-PowerShell">$url = "https://github.com/HandBrake/HandBrake/releases/download/1.8.0/HandBrakeCLI-1.8.0-win-x86_64.zip"
+Invoke-RestMethod $url -OutFile $home\Downloads\HandBrakeCLI.zip
+Expand-Archive -Path $home\Downloads\HandBrakeCLI.zip -OutputPath "$home\Downloads\"
+Copy-Item -Path "$home\Downloads\HandBrakeCLI.exe" -Destination "C:\Windows\System32\HandBrakeCLI.exe"
+Remove-Item "$home\Downloads\doc" -Force -Recurse
+Remove-Item "$home\Downloads\HandBrakeCLI*"
+</code></pre>
+<p><code>HandBrakeCLI -i input.mp4 -o output.mkv</code> конвертирует видео в формате mp4 в формат mkv с использованием стандартных настроек HandBrake <br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -q 20</code> установить качество видео 20, значения варьируются от 0 (максимальное качество) до 51 (минимальное качество), где 20 считается хорошим качеством для большинства видео <br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -r 30</code> установить частоту кадров на 30 fps <br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv --maxWidth 1280 --maxHeight 720</code> изменить размер на 1280х720 <br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -b 1500</code> установить битрейт видео 1500 кбит/с <br />
+<code>HandBrakeCLI -i input.mp4 -o output.mkv -e x264</code> преобразовать видео с использованием кодека x264 <br />
+<code>HandBrakeCLI -i input.mp4 -o output.mp4 --crop 0:200:0:0</code> обрезать видео снизу на 200px (верх:низ:лево:право) <br />
+<code>HandBrakeCLI -i input.mp4 -o output.mp4 --start-at duration:5 --stop-at duration:15</code> обрезать видео (на выходе будет 15-секундное видео с 5 по 20 секунду)</p>
+<h1 id="imagemagick"><a class="header" href="#imagemagick">ImageMagick</a></h1>
+<p>Source: <a href="https://sourceforge.net/projects/imagemagick">ImageMagick</a></p>
+<p><code>magick identify -verbose PowerShell-Commands.png</code> извлечь метаданные изображения <br />
+<code>magick PowerShell-Commands.png output.jpg</code> конвертация формата изображения <br />
+<code>magick PowerShell-Commands.png -resize 800x600 output.jpg</code> изменить размер (увеличить или уменьшить) <br />
+<code>magick PowerShell-Commands.png -crop 400x300+100+50 output.jpg</code> обрезать <br />
+<code>magick PowerShell-Commands.png -rotate 90 output.jpg</code> повернуть изображение <br />
+<code>magick PowerShell-Commands.png -fill white -pointsize 24 -gravity center -annotate +0+0 "PowerShell" output.jpg</code> наложить текст на изображение <br />
+<code>magick PowerShell-Commands.png -brightness-contrast +20x+10 output.jpg</code> изменить яркость и контрастность <br />
+<code>magick convert -delay 100 1.png 2.png 3.png output.gif</code> создать gif из изображений <br />
+<code>magick convert image1.jpg image2.jpg -append output.jpg</code> вертикально объединенить изображения</p>
+<h1 id="youtube"><a class="header" href="#youtube">YouTube</a></h1>
+<pre><code class="language-PowerShell">$release_latest = Invoke-RestMethod "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest"
+$url = $($release_latest.assets | Where-Object name -match "yt-dlp.exe").browser_download_url
+Invoke-RestMethod $url -OutFile "C:\Windows\System32\yt-dlp.exe"
+</code></pre>
+<p><code>yt-dlp -F https://www.youtube.com/watch?v=gxplizjhqiw</code> отобразить список всех доступных форматов <br />
+<code>yt-dlp -J https://www.youtube.com/watch?v=gxplizjhqiw</code> вывести данные в формате JSON <br />
+<code>yt-dlp -J https://www.youtube.com/watch?v=gxplizjhqiw | jq -r .formats.[].format</code> id - resolution (format_note) <br />
+<code>yt-dlp -f 137 https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить только видео в указанном формате по id <br />
+<code>yt-dlp -f bestaudio https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить только аудио <br />
+<code>yt-dlp -f best https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить видео с аудио в лучшем качестве <br />
+<code>yt-dlp -f 'bestvideo[height&lt;=1080]+bestaudio/best[height&lt;=1080]' https://www.youtube.com/watch?v=gxplizjhqiw</code> загрузить в указанном качестве <br />
+<code>yt-dlp -r 2m https://www.youtube.com/watch?v=gxplizjhqiw</code> ограничить скорость загрузки до 2 МБит/с</p>
+<pre><code class="language-PowerShell">function Get-YouTube {
+    param (
+        $url
+    )
+    $result = yt-dlp -J $url
+    $($result | ConvertFrom-Json).formats | 
+    Where-Object filesize -ne $null | 
+    Select-Object format_id,
+    @{Name="FileSize"; 
+        Expression={[string]([int]($_.filesize / 1024kb)).ToString("0.0")+" Mb"}
+    },
+    resolution,format_note,quality,fps,ext,language
+}
+
+$formats = Get-YouTube "https://www.youtube.com/watch?v=gxplizjhqiw"
+$video = $($formats | Where-Object format_note -match 1080 | Where-Object ext -match mp4)[-1].format_id
+$audio = $($formats | Where-Object resolution -match "audio" | Where-Object ext -match m4a)[-1].format_id
+cd "$home\Downloads"
+yt-dlp -f $video+$audio https://www.youtube.com/watch?v=gxplizjhqiw -o '%(title)s.%(ext)s'
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="../Linux/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="../Linux/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

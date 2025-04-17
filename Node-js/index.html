@@ -1,0 +1,1163 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Node.js - PowerShell Commands</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PowerShell Commands</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>+++
+title = "Node.js"
+[extra]
+toc = true
+toc_sidebar = true
+go_to_top = true
++++</p>
+<p align="center">
+    <a href="https://github.com/Lifailon/node.js-cheat-sheet-ru"><img title="PS-Commands Logo"src="Node.js-Cheat-Sheet-Logo.png"></a>
+</p>
+<p align="center">
+    <span>Памятка по основам синтаксиса <b>JavaScript</b> для <b>Node.js</b> в примерах.</span>
+</p>
+<hr />
+<h3 id="Переменные"><a class="header" href="#Переменные">Переменные</a></h3>
+<p>Переменная <code>var</code> поддерживает любую область видимости и ее возможно объявить повторно (считается устаревшим методом и рекомендуется не использовать).</p>
+<pre><code class="language-js">console.log(varVariable) // Uncaught ReferenceError: varVariable is not defined (не определена)
+if (true) {
+    var varVariable = true
+}
+console.log(varVariable) // true
+var varVariable = 123
+console.log(varVariable) // 123
+</code></pre>
+<p>Переменная <code>let</code> позволяет изменять содержимое с другим типом данных (в отличии от <code>const</code>), но ограничина областью видимости (в отличии от <code>var</code>).</p>
+<pre><code class="language-js">console.log(letVariable) // Uncaught ReferenceError: letVariable is not defined
+if (true) {
+    let letVariable = 'letVariable is defined'
+}
+console.log(letVariable) // Uncaught ReferenceError: letVariable is not defined
+let letVariable = 'string'
+console.log(letVariable)
+let letVariable = 'string' // Uncaught SyntaxError: Identifier 'letVariable' has already been declared (идентификатор уже объявлен)
+letVariable = 123
+console.log(letVariable)
+</code></pre>
+<p>Переменная константа <code>const</code> требует обязательной инициализации во время объявления, и не позволяет изменять значение переменной после ее объявления.</p>
+<pre><code class="language-js">const constVariable = 'string'
+constVariable = '123' // Uncaught TypeError: Assignment to constant variable (ошибка присвоения значения к постоянной переменной)
+</code></pre>
+<h3 id="Типы-данных"><a class="header" href="#Типы-данных">Типы данных</a></h3>
+<pre><code class="language-js">typeof 32 // number
+typeof 3.2 // number
+typeof 123n // bigint
+typeof 'text' // string
+typeof true // boolean
+typeof false // boolean
+typeof null // object
+typeof { key: 'value' } // object
+typeof [1, 2, 3] // object
+typeof function() {} // function
+typeof Symbol('id') // symbol
+</code></pre>
+<p>Преобразовать аргумент в число. Возвращает <code>NaN</code>, если преобразование невозможно.</p>
+<pre><code class="language-js">Number("123")      // 123
+Number("123.45")   // 123.45
+Number("abc")      // NaN
+Number(undefined)  // NaN
+Number(true)       // 1
+Number(false)      // 0
+Number(null)       // 0
+</code></pre>
+<p>Преобразовать строку в целое число. Прекращает чтение, как только встречает нецифровой символ.</p>
+<pre><code class="language-js">parseInt("123abc")  // 123
+parseInt("12.34")   // 12
+parseInt("abc123")  // NaN
+</code></pre>
+<p>Преобразовать строку в число с плавающей точкой.</p>
+<pre><code class="language-js">parseFloat("123.45abc")  // 123.45
+parseFloat("abc123.45")  // NaN
+</code></pre>
+<p>Преобразовать значение в строку.</p>
+<pre><code class="language-js">(123).toString()   // "123"
+(true).toString()  // "true"
+String(123)        // "123"
+String(true)       // "true"
+String(false)      // "false"
+String(null)       // "null"
+String(undefined)  // "undefined"
+</code></pre>
+<p>Преобразовать значение в булевое (логическое) значение. Все значения, кроме <code>0</code>, <code>null</code>, <code>NaN</code>, <code>undefined</code> и пустой строки, преобразуются в <code>true</code>.</p>
+<pre><code class="language-js">Boolean(123)        // true
+Boolean("Hello")    // true
+Boolean(0)          // false
+!0                  // true
+!!0                 // false
+Boolean(null)       // false
+Boolean(NaN)        // false
+Boolean(undefined)  // false
+Boolean("")         // false
+</code></pre>
+<h3 id="Функции"><a class="header" href="#Функции">Функции</a></h3>
+<pre><code class="language-js">function sum (param1, param2) {
+    console.log(param1*param2)
+}
+
+sum(2,2) // 4
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+getRandomInt(1,100) // Например, 44
+</code></pre>
+<h3 id="Условия"><a class="header" href="#Условия">Условия</a></h3>
+<pre><code class="language-js">function functionName (paramName) {
+    if (paramName === 0) {
+        console.log(`${paramName} равно 0`)
+    }
+    else if (paramName &lt; 10) {
+        console.log(`${paramName} меньше 10`)
+    }
+    else if (paramName &gt;= 10) {
+        console.log(`${paramName} больше или равно 10`)
+    }
+    else {
+        console.log(`Переданное значение - ${paramName} - не подходит под заданные условия`)
+    }
+}
+
+functionName(0)       // 0 равно 0
+functionName(5)       // 5 меньше 10
+functionName(15)      // 15 больше или равно 10
+functionName('test')  // Переданное значение - test - не подходит под заданные условия
+</code></pre>
+<p>Однострочный формат условия <code>?:</code>, который подходит для использования в теле переменной</p>
+<pre><code class="language-js">let input = 1
+input === 1 ? true : false // true
+input = 2
+input === 1 ? true : false // false
+</code></pre>
+<p>Проверить одно значение сразу на большое количество условий с помощью конструкции <code>switch</code></p>
+<pre><code class="language-js">function getDayOfWeek(day) {
+    switch (day) {
+        case 1:
+            return 'Понедельник'
+        case 2:
+            return 'Вторник'
+        case 3:
+            return 'Среда'
+        case 4:
+            return 'Четверг'
+        case 5:
+            return 'Пятница'
+        case 6:
+            return 'Суббота'
+        case 7:
+            return 'Воскресенье'
+        default:
+            return 'Неправильно задан параметр'
+    }
+}
+
+console.log(getDayOfWeek(1)) // Понедельник
+console.log(getDayOfWeek(5)) // Пятница
+console.log(getDayOfWeek(7)) // Воскресенье
+console.log(getDayOfWeek(8)) // Неправильно задан параметр
+
+</code></pre>
+<h3 id="Обработка-ошибок"><a class="header" href="#Обработка-ошибок">Обработка ошибок</a></h3>
+<pre><code class="language-js">function errorTest(a, b) {
+    // Блок кода, который будет выполняется до тех пор, пока не возникнет ошибка
+    try {
+        if (b === 0) {
+            throw new Error("на ноль делить нельзя")
+        }
+        console.log(a / b) // выполняется, если ошибок нет
+    }
+    // Блок кода, который будет выполнен, если в блоке try возникнет ошибка
+    catch (error) {
+        console.log(`Ошибка: ${error.message}`) // Обработка ошибки
+    }
+    // Блок кода, который выполняется в любом случае
+    finally {
+        console.log("Блок finally выполняется всегда") // Всегда выполняется
+    }
+}
+
+errorTest(10, 2) 
+// 5
+// Блок finally выполняется всегда
+
+errorTest(10, 0)
+// Ошибка: на ноль делить нельзя
+// Блок finally выполняется всегда
+</code></pre>
+<h3 id="Массивы"><a class="header" href="#Массивы">Массивы</a></h3>
+<p>Классический массив и его методы.</p>
+<pre><code class="language-js">const array = [3, 2, 'string']
+Array.isArray(array) // Проверка, является ли переменная массивом (true)
+array[2] = 1 // Изменить содержимое элемента в массиве по индексу
+array.sort() // сортировка по умолчанию: [ 1, 2, 3 ]
+array.reverse() // Поменять порядок следования: [ 3, 2, 1 ]
+array[0] + array[1] + array[2] // 6
+array[3] // undefined (не определено)
+array[3] = 4 // Добавить новый элемент в массив по индексу
+array.push(5) // Добавить новый элемент с конца
+array[4] // 5
+array.slice(3,5) // Вывести содержимое массива с 4-го по 5-й индекс: [ 4, 5 ]
+array.unshift(0) // Добавить элемент(ы) (через запятую) в начало массива
+array.shift() // Удалить первый элемент из массива
+array.pop() // Удалить последний элемент из массива
+array[array.length-1] // Вывести содержимое последнего элемента в массиве
+array.indexOf(1) // Выводит индекс первого вхождения элемента в массив, или -1, если элемент не найден
+</code></pre>
+<p>Вложенный массив, а также методы фильтрации и объединения:</p>
+<pre><code class="language-js">const data = [
+    { id: 1, name: 'red' },
+    { id: 2, name: 'blue' },
+]
+
+data.push({id: 3, name: 'green'}) // Добавить новый элемент в массив
+
+const nameArray = data.map(item =&gt; item.name) // Пересобрать новый массив
+
+const filterArray = nameArray.filter(item =&gt; item.length &gt;= 4) // отфильтровать содержимое массива по длинне содержимого
+// [ 'blue', 'green' ]
+
+[...nameArray, ...filterArray] // объеденить два массива
+// [ 'red', 'blue', 'green', 'blue', 'green' ]
+
+const idArray = data.map(item =&gt; item.id)
+// Метод reduce выполняет функцию для каждого элемента массива, чтобы получить одно итоговое значение (сумму)
+idArray.reduce((accumulator, current) =&gt; accumulator + current, 0) // 3
+</code></pre>
+<h3 id="Объекты"><a class="header" href="#Объекты">Объекты</a></h3>
+<p>Преобразовать объект в массив и наоборот:</p>
+<pre><code class="language-js">const obj = { a: 1, b: 2, c: 3 }
+obj.b // 2
+let keys = Object.keys(obj)      // [ 'a', 'b', 'c' ]
+let values = Object.values(obj)  // [ 1, 2, 3 ]
+const arr = Object.entries(obj)  // [["a", 1], ["b", 2], ["c", 3]]
+arr[1][1] // 2
+Object.fromEntries(arr)          // { a: 1, b: 2, c: 3 }
+</code></pre>
+<p>Объект представляет из себя список пар (ключ-значение), разделенного запятыми. Используя переменную <code>const</code> при объявлении объектов, возможно изменять содержимое дочерних элементов.</p>
+<pre><code class="language-js">const box = {
+    height: 8,
+    width: 40,
+    scrollable: true,
+    style: {
+        fg: 'white',
+        bg: 'black'
+    }
+}
+
+box.height // 8
+box.style // { fg: 'white', bg: 'black' }
+box.style.fg // white
+
+box.style.fg = 'blue'
+box.style.fg // blue
+</code></pre>
+<p>Объекты и вложенные массивы <code>JavaScript</code> могут содержать дочерние массивы внутри <code>[]</code> и вложенные объекты внутри <code>{}</code>.</p>
+<pre><code class="language-js">const obj = [
+    'JavaScript',
+    2024,
+    [
+        'Express',
+        'Axios',
+    ],
+    {
+        name: 'Alex',
+        age: 29,
+        num: [1, 'string', {}],
+        test: {}
+    }
+]
+</code></pre>
+<p>Конвертация в <code>JSON</code>:</p>
+<pre><code class="language-js">const jsonString = JSON.stringify(obj)  // Конвертация из объекта JavaScript в JSON
+const obj = JSON.parse(jsonString)      // Конвертация из JSON в JavaScript
+</code></pre>
+<p>Методы объекта назначаются через функции</p>
+<pre><code class="language-js">const obj = {
+    default: 10,
+    get() {
+        return this.default
+    },
+    plus(num) {
+        if (isNaN(num)) {return}
+        this.default += num
+    },
+    minus(num) {
+        if (isNaN(num)) {return}
+        this.default -= num
+    }
+}
+
+obj.minus(1)
+obj.get() // 9
+obj.plus(2)
+obj.get() // 11
+</code></pre>
+<p>Оператор <code>return</code> используется для выхода из функции (т.е. последующий код не читается), который возвращает значение указанное после ключевого слова.</p>
+<h3 id="Циклы"><a class="header" href="#Циклы">Циклы</a></h3>
+<p>Примеры циклов взяты из проекта <a href="https://github.com/Lifailon/multranslate">multranslate</a>, для проверки всех строк в массиве и увеличения количества видимых строк с учетом <code>autowrap</code>. Имеется две реальных строки, необходимо узнать количество виртуальных строк с учетом длинны символов в строке. Например, если максимальная длинна одной строки составляет, <code>36</code>, то на одну реальную строку в <code>92</code> символа приходится дополнительно еще <code>2</code> виртуальных. Количество найденных виртуальных строк прибавляется к изначально зафиксированному значению количества всех реальных строк.</p>
+<pre><code class="language-js">// На входе 2 строки, разделенные символом \r
+const text = "Первая строка\rВторая очень длинная строка, которое будет превышать максимальное значение символов в строке"
+
+// Фиксируем текущее максимальное количество строк и длинну символов в строке с учетом размеров окна
+const maxLines = box.height - 2 // 6
+const maxChars = box.width - 4  // 36
+
+// Разбиваем текст на массив из строк
+const bufferLine = text.split('\r')
+// Забираем реальное количество строк (2)
+let viewLines = bufferLine.length
+
+// Вывести количество строк в каждой строке массива
+bufferLine.map(item =&gt; item.length) // [ 13, 92 ]
+</code></pre>
+<p>Классический цикл <code>for</code> итерирует числами с типом данных <code>number</code> (<code>int</code> / <code>integer</code>). С каждой интерацией объявленное значение (<code>let i = 0</code>) увеличивается на заданное количество (<code>i++</code> - на единицу), цикл завершается в случае успешного соблюдения условия (<code>i &lt; bufferLine.length</code>).</p>
+<pre><code class="language-js">for (let i = 0; i &lt; bufferLine.length; i++) {
+    if (bufferLine[i].length &gt; maxChars) {
+        // Добавляем одну виртуальную строку без учета остатка символов
+        viewLines++
+    }
+}
+console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 3
+// Уменьшаем значение на 1, для проверки в других циклах
+viewLines--
+
+for (let i = 0; i &lt; bufferLine.length; i++) {
+    if (bufferLine[i].length &gt; maxChars) {
+        // Добавляем все виртуальные строки, с округлением в меньшую сторону
+        viewLines += Math.floor(bufferLine[1].length / maxChars)
+    }
+}
+console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 4
+viewLines -= 2
+</code></pre>
+<p>Цикл <code>for..in</code> итерирует по индексам массива, с типом данных <code>string</code>. Сколько элементов в массиве (<code>bufferLine.length</code>), столько и будет индексов (отсчет начинается с нуля).</p>
+<pre><code class="language-js">for (let index in bufferLine) {
+    if (bufferLine[Number(index)].length &gt; maxChars) {
+        viewLines += Math.floor(bufferLine[1].length / maxChars)
+    }
+}
+console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 4
+viewLines -= 2
+</code></pre>
+<p>Цикл <code>for..of</code> итерирует по элементам массива, с уникальным типом данных каждого элемента в массиве.</p>
+<pre><code class="language-js">const array = [1, 'string', {}]
+for (let arr of array) {
+    console.log(typeof arr)
+}
+// number
+// string
+// object
+
+for (let line of bufferLine) {
+    console.log(typeof line)
+    if (line.length &gt; maxChars) {
+        viewLines += Math.floor(bufferLine[1].length / maxChars)
+    }
+}
+console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 4
+viewLines -= 2
+</code></pre>
+<p>Метод массива <code>forEach</code> выполняет указанную функцию для каждого элемента в массиве.</p>
+<pre><code class="language-js">bufferLine.forEach(line =&gt; {
+    if (line.length &gt; maxChars) {
+        viewLines += Math.floor(bufferLine[1].length / maxChars)
+    }
+})
+console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 4
+viewLines -= 2
+</code></pre>
+<p>Цикл <code>while</code> Выполняет тело цикла <code>{}</code> до тех пор, пока условие истинно</p>
+<pre><code class="language-js">let i = 0
+while (i &lt; bufferLine.length) {
+    if (bufferLine[i].length &gt; maxChars) {
+        viewLines += Math.floor(bufferLine[1].length / maxChars)
+    }
+    i++
+}
+console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 4
+viewLines -= 2
+</code></pre>
+<p>Цикл <code>do..while</code> сначала выполняет тело цикла, а затем проверяет условие, это гарантирует, что интерация будет выполнена как минимум один раз.</p>
+<pre><code class="language-js">i = 0
+do {
+    if (bufferLine[i].length &gt; maxChars) {
+        viewLines += Math.floor(bufferLine[1].length / maxChars)
+    }
+    i++
+} while (i &lt; bufferLine.length)
+console.log(`${maxLines} ${maxChars} ${viewLines}`) // 6 36 4
+</code></pre>
+<p>Операторы:</p>
+<ul>
+<li><code>continue</code> - прерывает текущую интерацию, для продолжения цикла с следующим значением</li>
+<li><code>break</code> - прерывает и завершает цикл</li>
+</ul>
+<pre><code class="language-js">let arr = [0, 1, 2, 4]
+for (const value of arr) {
+    console.log(`Начало ${value}-й итерации`)
+    if (value === 1) {
+        console.log('Пропустить оставшуюся часть кода и перейти к следующей итерации')
+        continue
+    } else if (value === 2) {
+        console.log('Полностью выйти из цикла')
+        break
+    }
+    console.log(`Конец ${value}-й итерации`)
+}
+
+// Начало 0-й итерации
+// Конец 0-й итерации
+// Начало 1-й итерации
+// Пропустить оставшуюся часть кода и перейти к следующей итерации
+// Начало 2-й итерации
+// Полностью выйти из цикла
+</code></pre>
+<h3 id="Асинхронные-операции"><a class="header" href="#Асинхронные-операции">Асинхронные операции</a></h3>
+<p><code>Promise</code> (промис) — это объект, который используется для обработки асинхронных операций, позволяя работать с результатами, когда они станут доступны, не блокируя основной поток выполнения. Он может находиться в одном из трех состояний:</p>
+<ul>
+<li><code>Pending</code> (Ожидание): Операция только отправлена на выполнение или еще выполняется.</li>
+<li><code>Fulfilled</code> (Выполнен): Операция завершилась успешно.</li>
+<li><code>Rejected</code> (Отклонен): Операция завершилась с ошибкой.</li>
+</ul>
+<p>С помощью ключевых слов <code>resolve</code> (разрешить/успех) и <code>reject</code> (отклонить/ошибка) производится управление возвращаемым результатом выполнения.</p>
+<pre><code class="language-js">let testPromise = new Promise((resolve, reject) =&gt; {
+    if (true) {
+        resolve("Операция выполнена успешно")
+    } else {
+        reject("Ошибка выполнения операции")
+    }
+})
+
+testPromise.then(result =&gt; console.log(result)).catch(error =&gt; console.error(error))
+</code></pre>
+<p>Метод <code>then</code> используется для обработки успешного выполнения промиса (в состоянии <code>fulfilled</code>).</p>
+<p>Метод <code>catch</code> используется для обработки ошибок или отказов промиса (в состоянии <code>rejected</code>).</p>
+<p><code>async</code> — это ключевое слово, которое делает функцию асинхронной и позволяет использовать <code>await</code>, чтобы приостановить выполнение до тех пор, пока все промисы не будут выполнены.</p>
+<p><code>await</code> — это ключевое слово, которое используется внутри асинхронной функции (async). Оно заставляет ждать выполнения промиса и возвращает его результат.</p>
+<pre><code class="language-js">// Импортируем функцию exec из модуля child_process, которая позволяет запускать команды операционной системы
+const { exec } = require('child_process')
+
+// Основная функция выполнения команды ping в промис
+function pingHost(host) {
+    return new Promise((resolve) =&gt; {
+        // Выполняем команду ping для указанного хоста с timeout 50 мс
+        exec(`ping -n 1 -w 50 ${host}`, (error) =&gt; {
+            // Если нет ошибки, значит хост отвечает (alive: true)
+            if (!error) {
+                resolve({ host, alive: true })
+            }
+            // Если есть ошибка, хост не отвечает (alive: false)
+            else {
+                resolve({ host, alive: false })
+            }
+        })
+    })
+}
+
+// Асинхронная функция создания промисов и получения результатов
+async function pingSubnet(subnet) {
+    // Массив для хранения промисов
+    const promises = []
+    // Генерация и пинг каждого IP-адреса в диапазоне от 1 до 254
+    for (let i = 1; i &lt;= 254; i++) {
+        // Формируем IP-адрес, заменяя последний октет подсети
+        const host = `${subnet.split('.').slice(0,3).join('.')}.${i}`
+        // Добавляем промис в массив для выполнения пинга в фоне и продолжения интерации
+        promises.push(pingHost(host)) // Promise { &lt;pending&gt; }
+    }
+    // Ждем завершения выполнения всех промисов
+    const results = await Promise.all(promises)
+    results.forEach(result =&gt; {
+        if (result.alive) {
+            console.log(`+++ ${result.host}`)
+        } else {
+            console.log(`- ${result.host}`)
+        }
+    })
+}
+
+pingSubnet('192.168.3.0')
+</code></pre>
+<p>Использовать внешнюю библиотеку <a href="https://www.npmjs.com/package/ping">ping</a>: <code>npm install ping</code></p>
+<pre><code class="language-js">const ping = require('ping')
+
+// Асинхронная функция отправки команды ping через библиотеку
+async function pingHost(host) {
+    try {
+        const res = await ping.promise.probe(host, { timeout: 1 })
+        return { host, alive: res.alive }
+    } catch (error) {
+        return { host, alive: false }
+    }
+}
+
+// Функция возврата промисов вручную без async
+function pingHost(host) {
+    return ping.promise.probe(host, { timeout: 1 })
+        .then(res =&gt; {
+            return { host, alive: res.alive }
+        })
+        .catch(error =&gt; {
+            return { host, alive: false }
+        })
+}
+
+async function pingSubnet(subnet) {
+    const promises = []
+    for (let i = 1; i &lt;= 254; i++) {
+        const host = `${subnet.split('.').slice(0,3).join('.')}.${i}`
+        promises.push(pingHost(host))
+    }
+    const results = await Promise.all(promises)
+    results.forEach(result =&gt; {
+        if (result.alive) {
+            console.log(`+++ ${result.host}`)
+        } else {
+            console.log(`- ${result.host}`)
+        }
+    })
+}
+
+pingSubnet('192.168.3.0')
+</code></pre>
+<p><code>await Promise.all()</code> - дожидается успешного выполнения всех запросов.
+<code>await Promise.allSettled()</code> - дожидается выполнения всех запросов не зависимо от успеха (возвращает статус и результат).
+<code>await Promise.race()</code> - дожидается первого успешного выполнения, что бы получить результат от него не зависимо от его успеха.</p>
+<h3 id="Регулярные-выражения"><a class="header" href="#Регулярные-выражения">Регулярные выражения</a></h3>
+<p>Преобразовать строку в массив из букв (<code>char</code>).</p>
+<pre><code class="language-js">let line = "javascript"
+let arr = Array.from(str) // ['j', 'a', 'v', 'a',  's', 'c', 'r', 'i', 'p', 't']
+</code></pre>
+<p>Метод <code>split()</code> используется для преобразования строки в массив.</p>
+<pre><code class="language-js">line = "1,2,3,4,5"              // '1,2,3,4,5'
+arr = line.split(",")           // [ '1', '2', '3', '4', '5' ]
+</code></pre>
+<p>Метод <code>join()</code> используется для объединение массива в строку.</p>
+<pre><code class="language-js">let arrSlice = arr.slice(1, 3)  // Срез, выводит содержимое массива с 1 по 3 индекс (два элемента)
+arrSlice.join()                 // Собирает массив в строку: '2,3'
+arrSlice.join(" - ")            // '2 - 3'
+</code></pre>
+<p>Метод <code>match()</code> используется для поиска совпадений с регулярным выражением в строке. Он возвращает массив с найденными совпадениями или <code>null</code>, если совпадений не найдено.</p>
+<pre><code class="language-js">let stringForRegex = "Текст для проверки текста"
+stringForRegex.match(/текст/)[0]     // Получить содержимое первого совпадения
+stringForRegex.match(/текст/).index  // Возвращает порядковый индекс первого совпадения в тексте (19)
+stringForRegex.match(/текст/i)[0]    // Возвращает только первое совпадение без учета регистра
+stringForRegex.match(/текст/gi)      // Получить массив всех совпадений: [ 'Текст', 'текст' ]
+
+stringForRegex = "2024-10-25"
+stringForRegex.match(/(\d{4})-(\d{2})-(\d{2})/) // Группа захвата, которая возвращает полное совпадение, а также значения отдельных групп
+// [ '2024-10-25', '2024', '10', '25', index: 0, input: '25-10-2024', groups: undefined ]
+</code></pre>
+<p>Метод <code>search()</code> возвращает только индекс первого совпадения.</p>
+<pre><code class="language-js">"Текст для проверки текста".search('про') // 10
+</code></pre>
+<p>Метод <code>replace()</code> заменяет найденные совпадения в строке на другие значения.</p>
+<pre><code class="language-js">stringForRegex = "Текст для замены"
+stringForRegex.replace(/для/, "после")              // 'Текст после замены'
+stringForRegex.replace(/^т/i, "Этот т")             // 'Этот текст для замены'
+stringForRegex.replace(/$/, "!")                    // 'Текст для замены!'
+stringForRegex.replace(/(Текст)/, "$1 только")      // 'Текст только для замены'
+stringForRegex.replace(/\s[а-яА-Я]{3}/, "")         // 'Текст замены'
+stringForRegex.replace(/\s\p{L}+$/u, " кириллицы")  // 'Текст для кириллицы'
+
+stringForRegex = "Text for regex"
+stringForRegex.replace(/\s\w{3}/, "")         // Используется для замены любых латинских букв: 'Text regex'
+stringForRegex.replace(/\s[a-zA-Z_]{3}/, "")  // эквивалент \w
+
+stringForRegex = "2024-10-25"
+stringForRegex = stringForRegex.replace(/(\d{4})-(\d{2})-(\d{2})/,"$3.$2.$1") // Поменять порядок через группы захвата: '25.10.2024'
+stringForRegex.replace(/\d{2}\./g, "11.")   // Заменяет найденные две идущие цифры подряд: '11.11.2024'
+stringForRegex.replace(/\d{4}/, "2025")     // Заменяет четыре идущие цифры подряд: '25.10.2025'
+stringForRegex.replace(/20\d+/, "2025")     // Заменяет 20 и любые идущие за ним цифры: '25.10.2025'
+stringForRegex.replace(/10.+/g, "11.2025")  // Заменяет 10 и любое количетво символов идущее за ним: '25.11.2025'
+stringForRegex.replace(/\d{2,4}/g, "11")    // Заменяет найденные цифры следующие в порядке от 2 до 4: ('11.11.11')
+stringForRegex.replace(/[45]/g, "1")        // Заменить 4 или 5 на 1: '21.10.2021'
+</code></pre>
+<h3 id="Математические-вычисления"><a class="header" href="#Математические-вычисления">Математические вычисления</a></h3>
+<pre><code class="language-js">Math.min(9, 10)        // Получить наименьшее значение двух чисел: 9
+Math.max(9, 10)        // Получить максимальное значение двух чисел: 10
+Math.floor(10 / 3)     // Округлить в меньшую сторону: 3
+Math.ceil(10/3)        // Откруглить в большую сторону: 4
+Math.trunc(4.9)        // Отбрасывание дробной части: 4
+Math.round(4.5)        // Округление до ближайшего целого: 5
+Math.round(4.45)       // Округление до ближайшего целого: 4
+Math.fround(5.05)      // Ближайшее число с плавающей точкой одинарной точности: 5.050000190734863
+Math.random()          // Псевдослучайное число между 0 и 1, например, 0.2309471255442206
+Math.abs(-7)           // Получить абсолютное значение: 7
+Math.sign(-3)          // Определение знака числа (-1, 0, 1): -1
+Math.pow(2, 3)         // Возведение в степень: 8
+Math.sqrt(16)          // Квадратный корень: 4
+Math.cbrt(27)          // Кубический корень: 3
+Math.imul(2, 4)        // Целочисленное 32-битное умножение: 8
+Math.clz32(1)          // Количество ведущих нулей в 32-битном представлении: 31
+</code></pre>
+<h3 id="express"><a class="header" href="#express">Express</a></h3>
+<p>Создаем директорию, инициализируем проект и устанавливаем зависимости</p>
+<pre><code class="language-bash">mkdir api &amp;&amp; cd api
+npm init -y
+npm install express
+</code></pre>
+<p>Серверная часть <code>API</code> сервера в файле <code>server.js</code></p>
+<pre><code class="language-js">const express = require('express')
+
+const web = express()
+
+// Middleware для парсинга JSON данных в теле запроса
+web.use(express.json())
+
+// Обработка GET запроса с параметрами в пути и заголовками
+web.get('/user/:id', (req, res) =&gt; {
+    const userId = req.params.id // Получаем параметр id из пути
+    const customHeader = req.headers['custom-header'] // Чтение заголовка custom-header
+    res.json({
+        message: `GET запрос для пользователя с ID ${userId}`,
+        customHeader: customHeader || 'Заголовок отсутствует'
+    })
+})
+
+// Обработка POST запроса с данными в теле запроса и заголовками
+web.post('/user', (req, res) =&gt; {
+    const { name, age } = req.body // Получаем данные из тела POST запроса
+    const authHeader = req.headers['authorization'] // Чтение содержимого из заголовка `authorization`
+    if (authHeader !== 'Bearer TOKEN') {
+        res.json({
+            message: `Авторизация не пройдена, переданный токен: ${authHeader}`
+        })
+    } else {
+        res.json({
+            name: name || 'Не указано',
+            age: age || 'Не указано',
+        })
+    }
+})
+
+// Запуск сервера на порту 3000
+const PORT = 3000
+web.listen(PORT, () =&gt; {
+    console.log(`Сервер запущен на http://localhost:${PORT}`)
+})
+</code></pre>
+<p>Запуск сервера</p>
+<pre><code class="language-bash">node server.js
+</code></pre>
+<h3 id="axios"><a class="header" href="#axios">Axios</a></h3>
+<p>Клиентская часть для работы с <code>API</code></p>
+<pre><code class="language-bash">npm install axios
+</code></pre>
+<p>Пример <code>GET</code> запроса</p>
+<pre><code class="language-js">const axios = require('axios')
+
+// URL сервера
+const url = 'http://localhost:3000'
+
+// Пример GET запроса с параметром id в пути и кастомным заголовком
+async function getUser(userId, Header) {
+    try {
+        const response = await axios.get(`${url}/user/${userId}`, {
+            headers: {
+                'custom-header': Header
+            }
+        })
+        console.log('GET Ответ:', response.data)
+    } catch (error) {
+        console.error('Ошибка GET запроса:', error.message)
+    }
+}
+
+await getUser(1, 'Value')
+// GET Ответ: {
+//   message: 'GET запрос для пользователя с ID 1',
+//   customHeader: 'Value'
+// }
+</code></pre>
+<p>Пример <code>POST</code> запроса</p>
+<pre><code class="language-js">// Пример POST запроса с телом и заголовком авторизации
+async function createUser(key, name, age) {
+    try {
+        const response = await axios.post(`${url}/user`, {
+            name: name,
+            age: age
+        }, {
+            headers: {
+                'Authorization': `Bearer ${key}`
+            }
+        })
+        console.log('POST Ответ:', response.data)
+    } catch (error) {
+        console.error('Ошибка POST запроса:', error.message)
+    }
+}
+
+await createUser('KEY', 'Alex', 29)
+// POST Ответ: { message: 'Авторизация не пройдена, переданный токен: Bearer KEY' }
+
+await createUser('TOKEN', 'Alex', 29)
+// POST Ответ: { name: 'Alex', age: 29 }
+</code></pre>
+<h3 id="fetch"><a class="header" href="#fetch">Fetch</a></h3>
+<pre><code class="language-js">async function fetchData(url) {
+    try {
+        // Отправляем GET-запрос на указанный URL
+        const response = await fetch(url)
+        // Проверяем, что ответ успешен
+        if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`)
+        }
+        // Получаем и выводим данные в формате JSON
+        const data = await response.json()
+        return data
+    }
+    // Обрабатываем ошибки
+    catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+const result = await fetchData('https://jsonplaceholder.typicode.com/todos/1')
+result // { userId: 1, id: 1, title: 'delectus aut autem', completed: false }
+JSON.stringify(result) // '{"userId":1,"id":1,"title":"delectus aut autem","completed":false}'
+</code></pre>
+<h3 id="cheerio"><a class="header" href="#cheerio">Cheerio</a></h3>
+<p>Cheerio - это библиотека для работы с <code>HTML</code> и <code>XML</code> в <code>Node.js</code></p>
+<pre><code class="language-bash">npm install axios cheerio https-proxy-agent iconv-lite
+</code></pre>
+<p>Подключаем библиотеки и получаем содержимое страницы с помощью <code>Axios</code> через <code>Proxy</code></p>
+<pre><code class="language-js">const axios    = require('axios')
+const cheerio  = require('cheerio')
+const proxy    = require('https-proxy-agent')
+const iconv    = require('iconv-lite')
+
+// Имя агента в заголовке запросов (вместо axios)
+const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+}
+
+const proxyAddress = '192.168.3.100'
+const proxyPort = 9090
+const username = 'test'
+const password = 'test'
+
+// Создание экземпляра Axios с использованием конфигурации Proxy
+const createAxiosProxy = () =&gt; {
+    const config = {}
+    config.httpsAgent = new proxy.HttpsProxyAgent(`http://${username}:${password}@${proxyAddress}:${proxyPort}`)
+    return axios.create(config)
+}
+const axiosProxy = createAxiosProxy()
+
+const url = "https://rutor.info"
+
+// Отправляем запрос
+const response = await axiosProxy.get(url, {
+    responseType: 'arraybuffer',
+    headers: headers
+})
+
+// Декодируем ответ
+html = iconv.decode(response.data, 'utf8')
+</code></pre>
+<p>Вытаскиваем данные с помощью <code>Cheerio</code></p>
+<pre><code class="language-js">const data = cheerio.load(html)
+
+// Обращаемся к элементу div (не обязательно указывать название элемента) с id="ws" &gt; div с id="index" &gt; элемент "tbody" (таблица) &gt; элемент "tr" (строки)
+data('div#ws #index tbody tr').length // 171
+// Исключить из вывода строку с class="backgr" (загловки столбцов)
+data('#ws #index tbody tr').not('.backgr').length // 170
+
+// Получить содержимое первого элемента "tr" в формате HTML, строки или текста без тегов
+data('#ws #index tbody tr').not('.backgr').eq(0).html()
+data('#ws #index tbody tr').not('.backgr').eq(0).toString()
+data('#ws #index tbody tr').not('.backgr').eq(0).text()
+
+// Получить содержимое элемента по частичному совпадению
+data('#ws #index tbody tr').not('.backgr').find('td:contains("слово")').text().replace('\n','').trim()
+// 'Мужское слово (2024) WEB-DLRip'
+
+// Получить содержимое второго элемента по индексу в строке (столбцe)
+data('#ws #index tbody tr').not('.backgr').eq(0).find('td').eq(1).text().replace('\n','').trim()
+// 'Launcher for Zapret [v 1.3] (2024) PC | Portable'
+
+// Получить содержимое атрибута "href" из элемента с классом "downgif"
+data('#ws #index tbody tr').not('.backgr').eq(0).find('td a.downgif').attr('href')
+// '//d.rutor.info/download/1008549'
+
+// Получить содержимое атрибута "href" из второго элемента "a" в элементе "td"
+data('#ws #index tbody tr').not('.backgr').eq(0).find('td a:nth-child(2)').attr('href')
+// 'magnet:?xt=urn:btih:f1ca88b9421b243b6cb3d4da90e8fe133f381817&amp;dn=rutor.info&amp;tr=udp://opentor.net:6969&amp;tr=http://retracker.local/announce'
+
+// Фильтруем все элементы по частичному совпадению
+data('#ws #index tbody tr').not('.backgr').filter((index, element) =&gt; {
+    // Проверяем, содержит ли текущая строка "tr" слово "Крит" в одном из столбцов "td"
+    return data(element).find('td:contains("Крит")').length &gt; 0
+}).map((index, element) =&gt; {
+    // Если слово найдено, извлекаем текст всех "td" в этой строке с помощью map()
+    return data(element).find('td').map((index, element) =&gt; data(element).text()).get().join(' | ').replace('\n','')
+}).get()
+
+// [
+//   '29 Окт 24 | Критик / The Critic (2023) WEB-DLRip 1080p от ExKinoRay | P  | 6.10 GB |  1  4',
+//   '28 Окт 24 | Критик / The Critic (2023) WEB-DLRip | P  | 1.46 GB |  58  22',
+//   '28 Окт 24 | Критик / The Critic (2023) WEB-DLRip-AVC от DoMiNo &amp; селезень | P  | 1.46 GB |  64  19',
+//   '28 Окт 24 | Критик / The Critic (2023) WEB-DL 1080p | P | RGB  | 1 | 5.63 GB |  115  54'
+// ]
+
+const torrents = []
+
+// Собираем объект из всех элементов
+data('#ws #index tbody tr').not('.backgr').each((index, element) =&gt; {
+    const row = data(element)
+    const torrent = {
+        'Date': row.find('td').eq(0).text().trim(),
+        'Name': row.find('td').eq(1).find('a').last().text().trim(),
+        'Link': 'https://rutor.info' + row.find('td').eq(1).find('a[href^="/torrent"]').attr('href'),
+        'DownloadLink': 'https://' + row.find('td').eq(1).find('a.downgif').attr('href'),
+        'Magnet': row.find('td').eq(1).find('a[href^="magnet:"]').attr('href')
+    }
+    torrents.push(torrent)
+})
+
+// Конвертируем объект в формат JSON
+console.log(JSON.stringify(torrents, null, 2))
+
+// [
+//   {
+//     "Date": "29 Окт 24",
+//     "Name": "Launcher for Zapret [v 1.3] (2024) PC | Portable",
+//     "Link": "https://rutor.info/torrent/1008549/launcher-for-zapret-v-1.3-2024-pc-portable",
+//     "DownloadLink": "https:////d.rutor.info/download/1008549",
+//     "Magnet": "magnet:?xt=urn:btih:f1ca88b9421b243b6cb3d4da90e8fe133f381817&amp;dn=rutor.info&amp;tr=udp://opentor.net:6969&amp;tr=http://retracker.local/announce"
+//   },
+//   ...
+// ]
+</code></pre>
+<h3 id="puppeteer"><a class="header" href="#puppeteer">Puppeteer</a></h3>
+<p>Puppeteer — это библиотека, которая предоставляет <code>API</code> для автоматизации любых действий в браузерах <strong>Google Chrome</strong> и <strong>Mozilla Firefox</strong> через протокол <code>Chrome DevTools</code> и <code>WebDriver BiDi</code>.</p>
+<pre><code class="language-bash">mkdir api &amp;&amp; cd api &amp;&amp; npm init -y &amp;&amp; npm install puppeteer
+</code></pre>
+<p>Пример получения списка файлов раздачи с сайта <a href="https://rutor.info">RuTor</a>.</p>
+<pre><code class="language-js">const puppeteer = require('puppeteer')
+// Запускаем браузер и открываем новую пустую страницу 
+const browser = await puppeteer.launch({
+    headless: true // Отключить отображение браузера (параметр по умолчанию)
+})
+const page = await browser.newPage()
+// Открываем страницу с ожиданием загрузки 60 сек
+const query = 721221
+await page.goto(`https://rutor.info/torrent/${query}`, {
+    timeout: 60000,
+    waitUntil: 'domcontentloaded' // ожидать только полной загрузки DOM (не ждать загрузки внешних ресурсов, таких как изображения, стили и скрипты)
+})
+await page.evaluate(() =&gt; {
+    // Находим кнопку по JavaScript пути и нажимаем на нее
+    // document.querySelector("#details &gt; tbody &gt; tr:nth-child(11) &gt; td.header &gt; span").click()
+    // document.querySelector("#details &gt; tbody &gt; tr:nth-child(12) &gt; td.header &gt; span").click()
+    // Находим все кпноки которые содержат class="button"
+    const buttons = document.querySelectorAll('span.button')
+    // Проходимся по найденным кнопкам
+    buttons.forEach(button =&gt; {
+        // Проверяем, содержит ли кнопка текст "Файлы" и нажимаем на нее
+        if (button.textContent.includes('Файлы')) {
+            button.click()
+        }
+    })
+})
+// Дождаться загрузки результатов
+// const elementHandle = await page.waitForSelector('#files')
+// Ищем элемент с идентификатором #files и проверяем, что элемент существует его содержимое не содержит текст загрузки
+await page.waitForFunction(() =&gt; {
+    const element = document.querySelector('#files')
+    return element &amp;&amp; !element.textContent.includes("Происходит загрузка списка файлов...")
+}, {
+    timeout: 30000, // Ожидать результат 30 секунд
+    polling: 50   // Проверка каждые 50мс (по умолчанию 100мс)
+})
+// Забираем результат после успешной проверки
+const elementContent = await page.evaluate(() =&gt; {
+    const element = document.querySelector('#files')
+    return element ? element.textContent : null
+})
+// Закрываем браузер
+await browser.close()
+// Разбиваем полученные результаты на массив из строк (split) исключая первую строку (slince)
+const lines = elementContent.trim().split('\n').slice(1)
+// Регулярное выражение для разбиения строки на название и размер
+const regex = /^(.+?)([\d.]+\s*\S+)\s+\((\d+)\)$/
+const torrents = []
+for (const line of lines) {
+    const match = line.match(regex)
+    const torrent = {
+        'Name': match[1],
+        'Size': match[2]
+    }
+    torrents.push(torrent)
+}
+console.log(JSON.stringify(torrents, null, 2))
+</code></pre>
+<p>Пример создания <code>API</code> для получения результатов проверки скорости интернета в формате <code>JSON</code> через <a href="https://www.speedtest.net">Ookla SpeedTest</a>.</p>
+<pre><code class="language-js">const puppeteer = require('puppeteer')
+const browser = await puppeteer.launch({
+    headless: false
+})
+const page = await browser.newPage()
+await page.goto(`https://www.speedtest.net`, {
+    waitUntil: 'domcontentloaded'
+})
+// Дождаться, когда кнопка "Go" станет доступной
+await page.waitForSelector('span[data-testid="start-button"]')
+// Возвращаем массив всех элементов span на странице с их текстом
+await page.evaluate(() =&gt; {
+    return Array.from(document.querySelectorAll('span')).map(elemet =&gt; ({
+        Text: elemet.innerText, // Текст, отображаемый внутри элемента
+        Content: elemet.textContent, // Весь текст внутри элемента, включая скрытые части
+        // HTML: elemet.innerHTML, // HTML-код, который находится внутри элемента
+        // AllHTML: elemet.outerHTML , // Весь HTML-код, который находится внутри элемента
+        id: elemet.id, // Уникальный идентификатор элемента (#)
+        className: elemet.className,
+        tagName: elemet.tagName // Имя тега элемента (например, SPAN)
+    }))
+})
+// Находим и нажимаем на кнопку
+await page.evaluate(() =&gt; {
+    const buttons = document.querySelectorAll('span')
+    buttons.forEach(button =&gt; {
+        if (button.textContent.includes('Go') || button.innerText.includes('GO')) {
+            button.click()
+        }
+    })
+})
+// Функция для получения результата
+async function checkResult () {
+    return await page.evaluate(() =&gt; {
+        const element = document.querySelector('div.result-data a')
+        return element ? element.getAttribute('href') : null
+    })
+}
+// Цикл для проверки получения результата
+let resultUrl = '#'
+// Проверяем, что результат содержит в начале строки 'http'
+while (!resultUrl.startsWith('http')) {
+    resultUrl = await checkResult()
+}
+await browser.close()
+
+// Считываем данные из полученного url с помощью Fetch
+const result = await fetch(resultUrl)
+const resultHTML = await result.text()
+// Вытаскиваем JSON из HTML страницы
+const resultJSON = resultHTML.split('window.OOKLA')[3].replace('.INIT_DATA  = ','').replace(';\n','')
+const resultObj = JSON.parse(resultJSON)
+
+resultObj.result.id // 16947429430
+resultObj.result.download // 7169 (7.17)
+resultObj.result.upload // 4939 (4.94)
+resultObj.result.idle_latency // 171 (ping)
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../GoLang/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../Docker/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../GoLang/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../Docker/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
