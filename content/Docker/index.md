@@ -91,7 +91,8 @@ Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/k
 `docker run -d --restart=unless-stopped --name openspeedtest -p 3000:3000 -p 3001:3001 openspeedtest/latest` загрузить образ OpenSpeedTest (https://hub.docker.com/r/openspeedtest/latest), создать контейнер и запустить в одну команду в фоновом режиме (-d/--detach, терминал возвращает контроль сразу после запуска контейнера, если не используется, можно видеть логи, но придется остановить контейнер для выхода) \
 `docker rm openspeedtest && docker rmi openspeedtest/latest` удаляем контейнер и образ в одну команду \
 `docker run --name pg1 -p 5433:5432 -e POSTGRES_PASSWORD=PassWord -d postgres` создать контейнер postgres (https://hub.docker.com/_/postgres) с параметрами (-e) \
-`docker run -d --restart=always --name uptime-kuma -p 8080:3001 louislam/uptime-kuma:1` создать и запустить контейнер Uptime-Kuma (https://hub.docker.com/r/elestio/uptime-kuma) в режиме always, при котором контейнер должен перезапускаться автоматически, если он остановится или если перезапустится Docker (например, после перезагрузки хоста)
+`docker run -d --restart=always --name uptime-kuma -p 8080:3001 louislam/uptime-kuma:1` создать и запустить контейнер Uptime-Kuma (https://hub.docker.com/r/elestio/uptime-kuma) в режиме always, при котором контейнер должен перезапускаться автоматически, если он остановится или если перезапустится Docker (например, после перезагрузки хоста) \
+`docker history openspeedtest:latest` отображает слои образа, их размер и команды, которые были выполнены при его создании
 
 ## Update
 
@@ -186,6 +187,14 @@ docker run \
 `rm -rf /run/docker` \
 `rm -rf /run/docker.sock`
 
+### Diff
+
+`docker diff <container_id_or_name>` отображает изменения, внесённые в файловую систему контейнера по сравнению с исходным образом
+
+`A` — добавленные файлы \
+`C` — изменённые файлы \
+`D` — удалённые файлы
+
 ## Docker Socket API
 
 `curl --silent -XGET --unix-socket /run/docker.sock http://localhost/version | jq .` использовать локальный сокет (/run/docker.sock) для взаимодействия с Docker daemon через его API \
@@ -208,7 +217,15 @@ printf "%s\n" "$service" > /lib/systemd/system/docker.service
 systemctl daemon-reload
 systemctl restart docker
 ```
-curl --silent -XGET http://192.168.3.102:2375/version | jq .
+`curl --silent -XGET http://192.168.3.102:2375/version | jq .`
+
+Конечная точка `/metrics` для Prometheus:
+```yaml
+{
+  "metrics-addr": "0.0.0.0:9323"
+}
+```
+`curl http://192.168.3.102:9323/metrics`
 
 ## Context
 

@@ -1105,6 +1105,68 @@ while (i < 3) {
 // 0
 // 1
 // 2
+
+// Классы
+def str = "start"
+println str
+class Main {
+    def echo (param) {
+        println param
+    }
+}
+def main = new Main()
+def array = [1, 2, 3]
+for (element in array) {
+    main.echo(element)
+}
+// 1
+// 2
+// 3
+
+// Обработка ошибок
+def newList = [:]
+newList[0] = 1
+newList[1] = 2
+for (index in 0..1) {
+    try {
+        newList[index] += 3
+        main.echo(newList[index])
+    } catch (Exception e) {
+        main.echo("Ошибка: ${e.message}")
+    } finally {
+        if (newList[index] >= 5) {
+            main.echo(newList[index]+1)
+        }
+    }
+}
+// 4
+// 5
+// 6
+
+println str.replace("start", "final")
+
+// Коллекция для синхронизации сохранения данных в потоках
+def sharedList = Collections.synchronizedList([])
+// Анонимная функция для обработки данных в потоке
+def runTask = { name, delay ->
+    Thread.start {
+        println "${name} запущена в потоке ${Thread.currentThread().name}"
+        sleep(delay)
+        println "${name} завершена"
+        synchronized(sharedList) {
+            sharedList << "${name} завершена"
+        }
+    }
+}
+
+def threads = []
+// Ждём завершения всех потоков
+threads << runTask("Задача 1", 3000)
+threads << runTask("Задача 2", 2000)
+threads << runTask("Задача 3", 1000)
+
+threads*.join()
+println "Результат: $sharedList"
 ```
 
 # Secret Manager
@@ -2307,7 +2369,23 @@ Remove-Item "$home\Downloads\Bitbucket*" -Recurse -Force
 
 # Prometheus
 
-Пример создания экспортера для получения метрик температуры всех дисков из CrystalDiskInfo и отправки в [Prometheus](https://github.com/prometheus/prometheus) через [PushGateway](https://github.com/prometheus/pushgateway).
+Пример создания экспортера для получения метрик температуры всех дисков из [CrystalDiskInfo](https://crystalmark.info/en/software/crystaldiskinfo) и отправки в [Prometheus](https://github.com/prometheus/prometheus) через [PushGateway](https://github.com/prometheus/pushgateway).
+
+Формат метрик:
+```
+# HELP название_метрики Описание метрики
+# TYPE название_метрики ТИП-ДАННЫХ
+название_метрики{лейбл="НАЗВАНИЕ ДИСКА 1", instance="HOSTNAME"} ЗНАЧЕНИЕ
+название_метрики{лейбл="НАЗВАНИЕ ДИСКА 2", instance="HOSTNAME"} ЗНАЧЕНИЕ
+```
+Типы данных:
+
+- `counter` - возрастающее значение (например, количество запросов, ошибок, завершенных задач)
+- `gauge` - переменное значение (может увеличиваться или уменьшаться, например, нагрузка CPU, объем свободной памяти, температура)
+- `histogram` - разделенные данные на корзины (buckets, с помощью лэйбла `le`) и подсчет наблюдения в них (автоматически создает три метрики: <name>_bucket, <name>_sum, <name>_count)
+- `summary` - аналогичен гистограмме, но вычисляет квантили
+
+Строки метрик содержат имя, лейблы (в фигурных скобках) и значение.
 
 1. Запускаем `pushgateway` в контейнере:
 
@@ -2353,21 +2431,18 @@ scrape_configs:
 ```
 `docker-compose kill -s SIGHUP prometheus` применяем изменения
 
-5. Собираем контейнер в среде `WSL` с монтированием системного диска Windows:
+5. Собираем контейнер в среде `WSL` с помощью `dockerfile` монтированием системного диска Windows:
 ```dockerfile
-Write-Output '
 FROM mcr.microsoft.com/powershell:latest
 WORKDIR /cdi-exporter
 COPY cdi-exporter.ps1 ./cdi-exporter.ps1
 CMD ["pwsh", "-File", "cdi-exporter.ps1"]
-' | Out-File -FilePath dockerfile
 ```
 `docker build -t cdi-exporter .` \
 `docker run -d -v /mnt/c:/mnt/c --name cdi-exporter cdi-exporter`
 
-6. Собираем стек из шлюза и скрипта в `compose`:
+6. Собираем стек из шлюза и скрипта в `docker-compose.yml`:
 ```yaml
-Write-Output '
 services:
   cdi-exporter:
     build:
@@ -2384,7 +2459,6 @@ services:
     ports:
       - "19091:9091"
     restart: unless-stopped
-' | Out-File -FilePath docker-compose.yml
 ```
 `docker-compose up -d`
 
@@ -2394,6 +2468,30 @@ services:
 hostName: `label_values(exported_instance)` \
 diskName: `label_values(disk)` \
 Метрика температуры: `disk_temperature{exported_instance="$hostName", disk=~"$diskName"}`
+
+## PromQL Functions
+
+| Функция                       | Тип данных        | Описание                                                              | Пример                                                            |
+| -                             | -                 | -                                                                     | -                                                                 |
+| `rate()`                      | `counter`         | Средняя скорость роста метрики за интервал (increase / seconds)       | `rate(http_requests_total[$__rate_interval])`                     |
+| `irate()`                     | `counter`         | Мгновенная скорость роста (использует последние 2 точки)              | `irate(http_requests_total[1m])`                                  |
+| `increase()`                  | `counter`         | Абсолютный прирост метрики за интервал (end time - start time)        | `increase(http_requests_total[5m])`                               |
+| `resets()`                    | `counter`         | Количество сбросов counter-метрики за интервал.                       | `resets(process_cpu_seconds_total[1h])`                           |
+| `delta()`                     | `gauge`           | Разница между первым и последним значением метрики за интервал        | `delta(node_memory_free[[5m]])`                                   |
+| `idelta()`                    | `gauge`           | Разница между последними двумя точками                                | `delta(node_memory_free[1m])`                                     |
+| `avg_over_time()`             | `gauge`           | Среднее значение за интервал	                                        | `avg_over_time(temperature[5m])`                                  |
+| `max_over_time()`             | `gauge`           | Максимальное значение за интервал                                     | `max_over_time(temperature[5m])`                                  |
+| `predict_linear()`            | `gauge`           | Предсказывает значение метрики через N секунд (для прогнозирования)   | `predict_linear(disk_free[1h], 3600)`                             |
+| `count()`                     | `counter`/`gauge` | Количество элементов метрики                                          | `count(http_requests_total) by (status_code)`                     |
+| `sum()`                       | `counter`/`gauge` | Суммирует значения метрик по указанным labels                         | `sum(rate(cpu_usage[5m])) by (pod)`                               |
+| `avg()`                       | `counter`/`gauge` | Среднее значение метрики по указанным labels                          | `avg(node_memory_usage_bytes) by (instance)`                      |
+| `min() / max()`               | `counter`/`gauge` | Возвращает минимальное/максимальное значение                          | `max(container_cpu_usage) by (namespace)`                         |
+| `round()`                     | `counter`/`gauge` | Округляет значения до указанного числа дробных знаков                 | `round(container_memory_usage / 1e9, 2)`                          |
+| `floor() / ceil()`            | `counter`/`gauge` | Округляет вниз/вверх до целого числа                                  | `floor(disk_usage_percent)`                                       |
+| `absent()`                    | `counter`/`gauge` | Возвращает 1, если метрика отсутствует (для алертинга)                | `absent(up{job="node-exporter"})`                                 |
+| `clamp_min() / clamp_max()`   | `counter`/`gauge` | Ограничивает значения минимумом/максимумом (уменьшает если больше)    | `clamp_max(disk_usage_percent, 100)`                              |
+| `label_replace()`             | `counter`/`gauge` | Изменяет или добавляет labels в метрике                               | `label_replace(metric, "new_label", "$1", "old_label", "(.*)")`   |
+| `sort() / sort_desc()`        | `counter`/`gauge` | Сортирует метрики по возрастанию/убыванию                             | `sort(node_filesystem_free_bytes)`                                |
 
 # Zabbix
 
