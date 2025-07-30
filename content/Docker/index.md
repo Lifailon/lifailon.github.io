@@ -35,7 +35,11 @@ go_to_top = true
 `systemctl enable docker` \
 `iptables -t nat -N DOCKER` \
 `docker -v` \
-`docker -h` \
+`docker -h`
+
+`sudo usermod -aG docker lifailon` добавить пльзователя в группу docker \
+`newgrp docker` применить изменения в группах
+
 `curl https://registry-1.docker.io/v2/` проверить доступ к Docker Hub \
 `curl -s -X POST -H "Content-Type: application/json" -d '{"username": "lifailon", "password": "password"}' https://hub.docker.com/v2/users/login | jq -r .token > dockerToken.txt` получить временный токен доступа для авторизации \
 `sudo docker login` вход в реестр репозитория hub.docker.com \
@@ -229,11 +233,69 @@ systemctl restart docker
 
 ## Context
 
-`docker context create devops-01 --docker "host=tcp://192.168.3.101:2375"` подключиться к удаленному сокету \
-`docker context ls` список контекстов \
-`docker context inspect devops-01` конфигурация указанного контекста \
-`docker context use devops-01` использовать выбранный контекст по умолчанию (возможно на прямую взаимосдействовать с удаленным Docker Engine через cli) \
-`docker context rm devops-01` удалить контекст
+`docker context create rpi-106 --docker "host=tcp://192.168.3.106:2375"` добавить подключение к удаленному хосту через протокол `TCP` \
+`docker context create rpi-106 --docker "host=ssh://lifailon@192.168.3.106:2121"` добавить подключение к удаленному хосту через протокол `SSH` \
+`docker context ls` список всех доступных контекстов (`*` отображается текущий) \
+`docker context inspect rpi-106` конфигурация указанного контекста \
+`docker context use rpi-106` переключиться на выбранный контекст (возможно на прямую взаимосдействовать с удаленным Docker Engine через cli, за исключением взаимодействия через Socket) \
+`docker context rm rpi-106` удалить контекст
+
+## dcm
+
+`dcm` (Docker Context Manager) - это простая реализация TUI интерфейса на базе [fzf](https://github.com/junegunn/fzf), для переключения контекста из перечисленного списка хостов. Т.к. для использовать TUI интерфейсов требуется взаимодействие с сокетом, недостаточно изменить только переменную `DOCKER_HOST` или использовать команду `docker context`, по этому используется механиз `ssh forwarding`, который пробрасывает сокета с удаленной машины в локальную систему (используется временный файл, с изменением пути в переменной окружения).
+
+```bash
+DCM_SSH_HOSTS=localhost,192.168.3.105,192.168.3.106
+DCM_SSH_USER=lifailon
+DCM_SSH_PORT=2121
+DCM_SOCKET_PATH=/tmp/remote-docker.sock
+
+# dcm (Docker Context Manager)
+function dcm() {
+    DCM_SSH_HOST=$(printf "%s\n" ${DCM_SSH_HOSTS//,/ } | fzf --exact --no-sort --height 20 --reverse)
+    if [ -n "$DCM_SSH_HOST" ]; then
+        if [ $DCM_SSH_HOST == "localhost" ]; then
+            pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+            ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+            rm -f /tmp/remote-docker.sock
+            ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+            unset DOCKER_HOST
+        else
+            pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+            ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+            rm -f /tmp/remote-docker.sock
+            ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+            ssh -fNL $DCM_SOCKET_PATH:/var/run/docker.sock "$DCM_SSH_USER@$DCM_SSH_HOST" -p $DCM_SSH_PORT
+            export DOCKER_HOST="unix://$DCM_SOCKET_PATH"
+            ps aux | grep "[s]sh -fNL" 1> /dev/null || echo -e "\e[31mError: socket not forwarded\e[0m"
+        fi
+    fi
+}
+
+# lazydocker over dcm
+alias ld=lazydocker
+function dcl() {
+    DCM_SSH_HOST=$(printf "%s\n" ${DCM_SSH_HOSTS//,/ } | fzf --exact --no-sort --height 20 --reverse)
+    if [ -n "$DCM_SSH_HOST" ]; then
+        # Delete socket 
+        pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+        ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+        rm -f /tmp/remote-docker.sock
+        ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+        # Create socket
+        ssh -fNL $DCM_SOCKET_PATH:/var/run/docker.sock "$DCM_SSH_USER@$DCM_SSH_HOST" -p $DCM_SSH_PORT
+        export DOCKER_HOST="unix://$DCM_SOCKET_PATH"
+        ps aux | grep "[s]sh -fNL" 1> /dev/null || echo -e "\e[31mError: socket not forwarded\e[0m"
+        ld
+        # Delete socket 
+        pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+        ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+        rm -f /tmp/remote-docker.sock
+        ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+        unset DOCKER_HOST
+    fi
+}
+```
 
 ## ctop
 
@@ -297,6 +359,18 @@ lazydocker
 `ONBUILD` задает команды, которые будут автоматически выполнены при сборке дочерних образов \
 `STOPSIGNAL` определяет сигнал, который будет отправлен контейнеру для его остановки
 
+Пример использования `ADD` для загрузки из `url`:
+```bash
+FROM alpine:latest
+# Загрузка и распаковка архива напрямую из GitHub
+ADD https://github.com/<username>/<repository>/archive/refs/heads/main.zip /app/
+# Установка инструмента для работы с архивами
+RUN apk add --no-cache unzip && \
+    unzip /app/main.zip -d /app/ && \
+    rm /app/main.zip
+```
+Пример сборки приложения на `node.js`:
+
 `git clone https://github.com/Lifailon/TorAPI` \
 `cd TorAPI` \
 `nano Dockerfile`
@@ -356,16 +430,29 @@ docker run -d --name TorAPI -p 8443:8443 --restart=unless-stopped \
 `docker pull lifailon/torapi:latest` загрузить образ из Docker Hub \
 `docker run -d --name TorAPI -p 8443:8443 lifailon/torapi:latest` загрузить образ и создать контейнер
 
-## ADD
+## Buildx
 
-```bash
-FROM alpine:latest
-# Загрузка и распаковка архива напрямую из GitHub
-ADD https://github.com/<username>/<repository>/archive/refs/heads/main.zip /app/
-# Установка инструмента для работы с архивами
-RUN apk add --no-cache unzip && \
-    unzip /app/main.zip -d /app/ && \
-    rm /app/main.zip
+`sudo apt install docker-buildx -y` установить систему для мультиплатформенной сборки \
+`docker buildx create --use --name multiarch-builder --driver docker-container` оздать и запустить сборщик в контейнере \
+`docker buildx ls` \
+`docker buildx rm multiarch-builder`
+
+`go list -u -m all && go get -u ./...` обновить пакеты приложения на Go
+
+Добавить аргументы в Dockerfile и передать их в переменные для сборки:
+```Dockerfile
+ARG TARGETOS TARGETARCH
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /logporter
+```
+docker buildx build --platform linux/amd64,linux/arm64 .
+docker buildx build --platform linux/amd64,linux/arm64 -t lifailon/logporter --push .
+
+`npm outdated && npm update --save` обновить паеты node.jd приложения
+
+Передаем аргументы в параметры платформы для образа:
+```Dockerfile
+ARG TARGETOS TARGETARCH
+FROM --platform=${TARGETOS}/${TARGETARCH} node:alpine AS build
 ```
 
 # Compose
@@ -584,52 +671,121 @@ $client.Containers.StartContainerAsync($kuma_id, $StartParameters)
 ```
 # Swarm
 
-`docker swarm init` инициализировать manager node и получить токен для подключения worker node (сервер) \
-`docker swarm join-token manager` узнать токен подключения \
-`docker swarm join --token SWMTKN-1-1a078rm7vuenefp6me84t4swqtvdoveu6dh2pw34xjcf2gyw33-81f8r32jt3kkpk4dqnt0oort9 192.168.3.101:2377` подключение на worker node (клиент) \
+`docker swarm init` инициализировать `manager node` и получить токен для подключения `worker node` (на сервере) \
+`docker swarm join-token worker` получить токен для подключения `worker` или `manager` \
+`docker swarm join --token SWMTKN-1-1a078rm7vuenefp6me84t4swqtvdoveu6dh2pw34xjcf2gyw33-81f8r32jt3kkpk4dqnt0oort9 192.168.3.101:2377` подключение на worker node (на клиенте) \
 `docker node ls` отобразить список node на manager node \
 `docker node inspect u4u897mxb1oo39pbj5oezd3um` подробная информация (конфигурация) о node по id \
-`docker swarm leave --force` выйти из кластера на worker node (на manager node изменится статус с Ready на Down) \
-`docker node rm u4u897mxb1oo39pbj5oezd3um` удалить node (со статусом Down) на manager node \
-`docker pull lifailon/torapi:latest`
+`1` выйти из кластера на `worker node` (на `manager node` изменится статус с `Ready` на `Down`) \
+`docker node rm u4u897mxb1oo39pbj5oezd3um` удалить node (со статусом `Down`) на `manager node` \
+`docker swarm init --force-new-cluster` заново инициализировать кластер (если упал, при наличии одного менеджера)
 
-`nano docker-compose-stack.yml`
+`docker pull lifailon/torapi:latest` \
+`nano docker-stack.yml`
 ```yaml
-version: "3.8"
 services:
   torapi:
     image: lifailon/torapi:latest
+    labels:
+          - com.centurylinklabs.watchtower.enable=false
     deploy:
-      replicas: 2
+      # Режим развертывания
+      mode: replicated                  # Фиксированное число реплик (по умолчанию)
+      # mode: global                    # Одна копия на каждой ноде
+      replicas: 2                       # Суммарное количество реплик на всех нодах (только в режиме replicated)
+
+      # Политика перезапуска
       restart_policy:
-        condition: on-failure
+        condition: on-failure           # Перезапускать только при ошибках (ненулевой код выхода)
+        # condition: any                # Всегда перезапускать (аналог always в docker-compose)
+        delay: 5s                       # Задержка перед перезапуском (по умолчанию, 5 секунд)
+        max_attempts: 3                 # Максимум попыток перезапуска (по умолчанию, бесконечно)
+        window: 30s                     # Время для оценки успешности перезапуска (по умолчанию, 0)
+
+      # Политика обновления (старые контейнеры не удаляются сразу, а только останавливаются и создаются новые с обновленными образами)
       update_config:
-        order: start-first
-      # Режим виртуального IP для балансировки нагрузки
-      endpoint_mode: vip
-    volumes:
-      - torapi:/rotapi
+        parallelism: 1                  # Количество реплик для одновременного обновения (по умолчанию, 1)
+        delay: 10s                      # Задержка между обновлениями (по умолчанию, 0 секунд)
+        order: start-first              # Порядок: start-first (сначала новый) или stop-first (сначала старый, по умолчанию)
+        failure_action: rollback        # Действие при ошибке: continue, rollback, pause (по умолчанию, pause)
+        monitor: 60s                    # Время мониторинга после обновления (по умолчанию, 0)
+
+      # Политика отката (конфигурация аналогична update_config) при статусе unhealthy на новых контейнерах после update_config
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+        failure_action: pause
+        monitor: 60s
+
+      # Ограничения размещения
+      #   placement:
+      #     constraints:
+      #       - "node.role==worker"     # Только на worker-нодах
+      #       - "node.labels.env==dev"  # Только на нодах с указаной меткой
+
+      # Ограничения ресурсов
+      resources:
+        limits:
+          cpus: "0.5"                   # Лимит CPU (0.5 = 50%)
+          memory: 256M                  # Лимит RAM
+        reservations:
+          cpus: "0.1"                   # Гарантированные CPU
+          memory: 128M                  # Гарантированная RAM
+
+      # Режим балансировки (конечной точки)
+      endpoint_mode: vip                # Балансировка через виртуальный IP внутри сети swarm
+      # endpoint_mode: dnsrr            # Балансировка через DNS в режиме Round-Robin
+
+    # Проверка здоровья (задается вне deploy)
+    # Необходимо для работы:
+    # 1. endpoint_mode - при статусе unhealthy исключает контейнер из балансировки
+    # 2. restart_policy - пытается перезапустить контейнер
+    # 3. update_config - ждет успешного прохождения healthcheck (статус healthy) перед обновлением следующей реплики или запускает rollback_config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8443/api/provider/list"] # HTTP проверка статуса ответа (0 = успех, 1 = ошибка)
+    # test: ["CMD", "nc", "-z", "127.0.0.1 8443"] # TCP проверка порта
+      interval: 30s                     # Интервал между проверками (по умолчанию, 30  секунд)
+      timeout: 10s                      # Время ожидания ответа (по умолчанию, 30 секунд)
+      retries: 3                        # Количество попыток перед объявлением статуса unhealthy
+      start_period: 15s                 # Время на инициализацию перед проверками (по умолчанию, 0 секунд)
+
     ports:
-      # Порт внутри контейнера
-      - target: 8443
-        published: 8443
-        protocol: tcp
-        # Режим балансировки нагрузки по умолчанию
-        mode: ingress
+      - target: 8443                    # Порт контейнера
+        published: 8443                 # Порт на хосте
+        protocol: tcp                   # Протокол (tcp/udp)
+        # Режим балансировки
+        mode: ingress                   # Балансировка через Swarm (только в режиме vip)
+        # mode: host                    # Балансировка через хостовую систему (прямой проброс, только в режиме dnsrr)
+    volumes:
+    # - type: config                    # Swarm Configs (статические конфиги, права только на чтение)
+    # - type: secret                    # Swarm Secrets (пароли, TLS-ключи. и т.п.)
+    # - type: nfs                       # Удалённый NFS-сервер для общих данных в кластере
+    # - type: tmpfs                     # RAM Временные файлы (/tmp)
+    # - type: bind                      # Файлы на хосте (только если файлы есть на всех нодах)
+    - type: volume                    # Управляется Docker (данные БД, кеш)
+        source: torapi
+        target: /rotapi
+
 volumes:
   torapi:
 ```
-`docker stack deploy -c docker-compose-stack.yml TorAPI` собрать стек сервисов, определенных в docker-compose (на worker node появится контейнер TorAPI_torapi.1.ug5ngdlqkl76dt)
+`docker stack deploy -c docker-stack.yml TorAPI` собрать стек сервисов (на `worker node` появится контейнер `TorAPI_torapi.1.ug5ngdlqkl76dt`)
 
-`docker stack ls` отобразить список стеков \
-`docker service ls` список сервисов всех стеков \
-`docker stack ps TorAPI` список задач в стеке \
-`docker stack services TorAPI` список сервисов внутри стека указанного стека по имени \
-`docker service ps TorAPI_torapi` подробная информация о сервисе по его имени (TorAPI имя стека и _torapi имя сервиса) \
-`docker service inspect --pretty TorAPI_torapi` конфигурация сервиса \
-`docker service inspect TorAPI_torapi` конфигурация сервиса в формате JSON \
-`docker service logs TorAPI_torapi` журнала конкретного сервиса по всем серверам кластера \
-`docker service scale TorAPI_torapi=3` масштабирует сервис до указанного числа реплик \
+`docker stack ls` отобразить список стеков (название стека и количество в нем сервисов, без учета реплик) \
+`docker stack services TorAPI` аналог `docker service ls`, но для отображения списока сервисов указанного стека \
+`docker service ls` отобразить список всех сервисов для всех стеков (имя формате `<stackName_serviceName>`, с количеством и статусом реплик)
+
+`docker stack ps TorAPI` статистика работы всех сервисов внутри стека (аналог `docker ps`) \
+`docker service ps TorAPI_torapi` аналог `docker stack ps`, но для отображения статистики указанного сервиса \
+`docker service logs TorAPI_torapi -fn 0` просмотреть логи сервиса по всех репликам кластера одновременно
+
+`docker node update --label-add dev=true iebj3itgan6xso8px00i3nizc` добавить ноду в группу по метке для линковки при запуске \
+`docker service update --image lifailon/torapi:fake TorAPI_torapi` запустить обновление образа для сервиса \
+`docker service scale TorAPI_torapi=3` масштабировать сервис до указанного числа реплик
+
+`docker service inspect --pretty TorAPI_torapi` отобразить конфигурацию сервиса \
+`docker service inspect TorAPI_torapi` отобразить подробную конфигурацию сервиса в формате `json` \
 `docker stack rm TorAPI` удалить стек (не требует остановки контейнеров)
 
 # Kubernetes
