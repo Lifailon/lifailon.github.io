@@ -981,7 +981,7 @@ pipeline {
     }
 }
 ```
-### Groovy
+# Groovy
 
 Базовый синтаксис языка `Groovy`
 ```Groovy

@@ -84,7 +84,6 @@ links = [
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/api/index.md", name = "API" },
   { url = "@/DevOps/index.md", name = "DevOps" },
-  { url = "@/projects.md", name = "GitHub" },
 ]
 
 [extra.footer]
@@ -99,7 +98,6 @@ links = [
   { url = "@/Database/index.md", name = "Database" },
   { url = "@/api/index.md", name = "API" },
   { url = "@/DevOps/index.md", name = "DevOps" },
-  { url = "@/projects.md", name = "GitHub" },
 ]
 
 copyright = "**2023-2025** © *Lifailon*"
