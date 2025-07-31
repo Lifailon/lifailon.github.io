@@ -983,7 +983,7 @@ pipeline {
 ```
 # Groovy
 
-Базовый синтаксис языка `Groovy`
+Базовый синтаксис языка `Groovy`:
 ```Groovy
 // Переменные
 javaString = 'java'
@@ -1173,30 +1173,30 @@ users.collect { it.name }
 ["a": 1].plus(["b": 2])                         // объединяет мапы => ["a": 1, "b": 2]
 
 // Директории и файлы
-new File("dir").mkdir()                         // создает директорию → boolean
-new File("dir/subdir").mkdirs()                 // создает все недостающие директории d genb → boolean
-new File("dir").list()                          // список имен файлов → String[]
+new File("dir").mkdir()                         // создает директорию => boolean
+new File("dir/subdir").mkdirs()                 // создает все недостающие директории d genb => boolean
+new File("dir").list()                          // список имен файлов => String[]
 new File("dir").listFiles()                     // возвращает список файлов в директории => File[]
-new File("dir").deleteDir()                     // удаляет директорию (рекурсивно) → boolean
-new File("dir").isDirectory()                   // проверяет, что это директория → boolean
-new File("file.txt").createNewFile()            // создает пустой файл → boolean
+new File("dir").deleteDir()                     // удаляет директорию (рекурсивно) => boolean
+new File("dir").isDirectory()                   // проверяет, что это директория => boolean
+new File("file.txt").createNewFile()            // создает пустой файл => boolean
 new File("file.txt").delete()                   // удаляет файл => boolean
 new File("file.txt").exists()                   // проверяет существование файла => boolean
-new File("file.txt").isFile()                   // проверяет, что это файл → boolean
-new File("file.txt").length()                   // возвращает размер файла в байтах → long
-new File("file.txt").lastModified()             // возвращает время последнего изменения → long (timestamp)
-new File("file.txt").getName()                  // возвращает имя файла (без пути) → String
-new File("file.txt").getPath()                  // возвращает относительный путь → String
-new File("file.txt").getAbsolutePath()          // возвращает абсолютный путь → String
+new File("file.txt").isFile()                   // проверяет, что это файл => boolean
+new File("file.txt").length()                   // возвращает размер файла в байтах => long
+new File("file.txt").lastModified()             // возвращает время последнего изменения => long (timestamp)
+new File("file.txt").getName()                  // возвращает имя файла (без пути) => String
+new File("file.txt").getPath()                  // возвращает относительный путь => String
+new File("file.txt").getAbsolutePath()          // возвращает абсолютный путь => String
 new File("file.txt").text                       // читает содержимое файла в строку
 new File("file.txt").getText("UTF-8")           // указать кодировку при чтение
-new File("file.txt").readBytes()                // читает файл как массив байтов → byte[]
+new File("file.txt").readBytes()                // читает файл как массив байтов => byte[]
 new File("file.txt").readLines()                // читает файл построчно (получаем массив из строк) => List<String>
 new File("file.txt").eachLine { it }            // обработать каждую строку
-new File("file.txt").write("text")              // перезаписывает файл (если существует) → void
-new File("file.txt").setText("text")            // аналог write() → void
-new File("file.txt").bytes = [1, 2, 3]          // записывает массив байтов → void
-new File("file.txt") << "text"                  // добавляет текст в конец файла → void
+new File("file.txt").write("text")              // перезаписывает файл (если существует) => void
+new File("file.txt").setText("text")            // аналог write() => void
+new File("file.txt").bytes = [1, 2, 3]          // записывает массив байтов => void
+new File("file.txt") << "text"                  // добавляет текст в конец файла => void
 ```
 
 # Secret Manager
