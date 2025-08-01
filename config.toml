@@ -42,6 +42,10 @@ accent_color_dark = "#ffa348"
 fix_contrast = true
 fix_contrast_dark = true
 
+styles = [
+  "custom.css"
+]
+
 # emoji_favicon = "🦆"
 # favicon = "/docs/Logo/PowerShell-Logo.png"
 # logo = "/docs/Logo/PowerShell-Logo.png"

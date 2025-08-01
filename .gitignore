@@ -2,7 +2,7 @@
 *.exe
 /public
 /themes
-/static/*.css
+/static/syntax-theme-*.css
 
 # mkdocs
 /site
