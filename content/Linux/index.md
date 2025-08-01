@@ -7,7 +7,7 @@ go_to_top = true
 +++
 
 <p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/linux.md"><img title="Linux Commands Logo"src="Linux-Commands-Logo.png"></a>
+    <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/linux.md"><img title="Linux Commands Logo"src="logo.png"></a>
 </p>
 
 <p align="center">

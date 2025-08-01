@@ -76,28 +76,18 @@ show_repo = true
 links = [
   { url = "@/PowerShell/index.md", name = "PowerShell" },
   { url = "@/Linux/index.md", name = "Linux" },
+  { url = "@/DevOps/index.md", name = "DevOps" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
-  { url = "@/Docker/index.md", name = "Docker" },
-  { url = "@/Network/index.md", name = "Network" },
-  { url = "@/WindowsServer/index.md", name = "Windows Server" },
-  { url = "@/Database/index.md", name = "Database" },
-  { url = "@/api/index.md", name = "API" },
-  { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 
 [extra.footer]
 links = [
   { url = "@/PowerShell/index.md", name = "PowerShell" },
   { url = "@/Linux/index.md", name = "Linux" },
+  { url = "@/DevOps/index.md", name = "DevOps" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
-  { url = "@/Docker/index.md", name = "Docker" },
-  { url = "@/Network/index.md", name = "Network" },
-  { url = "@/WindowsServer/index.md", name = "Windows Server" },
-  { url = "@/Database/index.md", name = "Database" },
-  { url = "@/api/index.md", name = "API" },
-  { url = "@/DevOps/index.md", name = "DevOps" },
 ]
 
 copyright = "**2023-2025** © *Lifailon*"
