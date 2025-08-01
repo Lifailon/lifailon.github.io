@@ -1,0 +1,66 @@
+name: Merge with source repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      powershell:
+        description: "Update PowerShell commands"
+        default: false
+        type: boolean
+      linux:
+        description: "Update Linux commands"
+        default: false
+        type: boolean
+      devops:
+        description: "Update DevOps Tools"
+        default: false
+        type: boolean
+      message:
+        description: "Commit message"
+        required: false
+        default: ""
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Copy current repository
+        uses: actions/checkout@v4
+
+      - name: Clone PS-Commands repository
+        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' }}
+        run: git clone https://github.com/Lifailon/PS-Commands
+
+      - name: Update PowerShell commands
+        if: ${{ github.event.inputs.powershell == 'true' }}
+        run: |
+          rm content/PowerShell/index.md
+          cp templates/powershell.md content/PowerShell/index.md
+          cat PS-Commands/posh.md | sed -Ez "s/(.*\n)?---\n//" >> content/PowerShell/index.md
+
+      - name: Update Linux commands
+        if: ${{ github.event.inputs.linux == 'true' }}
+        run: |
+          rm content/Linux/index.md
+          cp templates/linux.md content/Linux/index.md
+          cat PS-Commands/linux.md | sed -Ez "s/(.*\n)?---\n//" >> content/Linux/index.md
+
+      - name: Update DevOps Tools
+        if: ${{ github.event.inputs.devops == 'true' }}
+        run: |
+          rm content/DevOps/index.md
+          cp templates/devops.md content/DevOps/index.md
+          cat PS-Commands/devops.md | sed -Ez "s/(.*\n)?---\n//" >> content/DevOps/index.md
+
+      - name: Commit and push
+        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' }}
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .
+          message="${{ github.event.inputs.message }}"
+          if [ -z "$message" ]; then
+            message=$(curl -s https://api.github.com/repos/Lifailon/lifailon.github.io/commits?sha=main | jq -r '.[0].commit.message')
+          fi
+          git diff --staged --quiet || (git commit -m "$message" && git push origin main)

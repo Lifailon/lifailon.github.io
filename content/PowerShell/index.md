@@ -18,7 +18,7 @@ go_to_top = true
 
 ## Cheat-Sheet
 
-![Image alt](PowerShell-Cheat-Sheet-RU.jpg)
+![Image alt](Cheat-Sheet/PowerShell-Cheat-Sheet-RU.jpg)
 
 ## Help
 
@@ -8345,7 +8345,6 @@ curl -s "https://videocdn.tv/api/$ep?api_token=$token&field=kinopoisk_id&query=$
 `mkdir /jackett` \
 `docker-compose.yml`
 ```yaml
----
 services:
   jackett:
     image: lscr.io/linuxserver/jackett:latest
