@@ -23,14 +23,14 @@ go_to_top = true
 {% end %}
 
 <p align="center" style="display: flex; justify-content: center; gap: 10px;">
-    <a href="/linux/"><img title="Linux Commands" src="https://img.shields.io/badge/Linux_Commands-FCC624?style=for-the-badge&logo=linux&logoColor=black"></a>
-    <a href="/docker/"><img title="Docker Commands" src="https://img.shields.io/badge/Docker_Commands-2094f3?style=for-the-badge&logo=docker&logoColor=white"></a>
-    <a href="/golang/"><img title="GoLang Cheat Sheet"src="https://img.shields.io/badge/golang_cheat_sheet-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white"></a>
-    <a href="/node-js/"><img title="Node.js Cheat Sheet"src="https://img.shields.io/badge/node.js_cheat_sheet-6DA55F?style=for-the-badge&logo=node.js&logoColor=white"></a>
+    <a href="/linux/"><img title="Linux Commands" src="linux.svg"></a>
+    <a href="/devops/"><img title="DevOps Tools" src="devops.svg"></a>
+    <a href="/golang/"><img title="GoLang Cheat Sheet"src="golang.svg"></a>
+    <a href="/node-js/"><img title="Node.js Cheat Sheet"src="node.js.svg"></a>
 </p>
 
 <p align="center">
-    Большая база заметок <b>PowerShell</b>, инструментам <b>DevOps</b> и командам 🐧 <b><a href="/linux/">Linux</a></b> на русском языке.
+    Большая база заметок <a href="/powershell/">PowerShell</a>, командам 🐧 <a href="/linux/">Linux</a> и инструментам <a href="/devops/">DevOps</a> на русском языке.
 </p>
 
 Структура языка, синтаксис командлетов и модулей, работа с объектами, данными, файловой системой, сетевыми утилитами, `REST API`, классами и методами платформы `.NET`, базами данных (`SQLite`, `MSSQL`, `MySQL`, `InfuxDB`), системами мониторинга и системного администрирования (`Active Directory`, `MS Exchange`, `DNS`, `DHCP`, `SMB`, `Hyper-V`, `VMWare`). Заметки основаны на принципе примеров и краткого описания в комментариях.
@@ -40,6 +40,8 @@ go_to_top = true
 ---
 
 На сайт также добавлены шпаргалки для языка [Go](/golang/) из репозитория [golang-cheat-sheet-ru](https://github.com/Lifailon/golang-cheat-sheet-ru) и документация по основам синтаксиса [JavaScript](/node-js/) из репозитория [node.js-cheat-sheet-ru](https://github.com/Lifailon/node.js-cheat-sheet-ru).
+
+---
 
 ### Другие открытые проекты
 
