@@ -13,5 +13,6 @@
 # mdbook
 /book
 
-# CI merge
+# merge from source repository for CI
 /PS-Commands
+/golang-cheat-sheet-ru

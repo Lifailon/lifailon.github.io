@@ -1,5 +1,5 @@
 +++
-title = "PowerShell Syntax"
+title = "PowerShell"
 [extra]
 toc = true
 toc_sidebar = true

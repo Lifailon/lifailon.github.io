@@ -15,6 +15,10 @@ on:
         description: "Update DevOps Tools"
         default: false
         type: boolean
+      golang:
+        description: "Update GoLang Cheat Sheet"
+        default: false
+        type: boolean
       message:
         description: "Commit message"
         required: false
@@ -31,6 +35,10 @@ jobs:
       - name: Clone PS-Commands repository
         if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' }}
         run: git clone https://github.com/Lifailon/PS-Commands
+
+      - name: Clone golang-cheat-sheet-ru repository
+        if: ${{ github.event.inputs.golang == 'true' }}
+        run: git clone https://github.com/Lifailon/golang-cheat-sheet-ru
 
       - name: Update PowerShell commands
         if: ${{ github.event.inputs.powershell == 'true' }}
@@ -53,8 +61,15 @@ jobs:
           cp templates/devops.md content/DevOps/index.md
           cat PS-Commands/devops.md | sed -Ez "s/(.*\n)?---\n//" >> content/DevOps/index.md
 
+      - name: Update GoLang Cheat Sheet
+        if: ${{ github.event.inputs.golang == 'true' }}
+        run: |
+          rm content/GoLang/index.md
+          cp templates/golang.md content/GoLang/index.md
+          cat golang-cheat-sheet-ru/README.md | sed -Ez "s/(.*\n)?---\n//" >> content/GoLang/index.md
+
       - name: Commit and push
-        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' }}
+        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' || github.event.inputs.golang == 'true' }}
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
