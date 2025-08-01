@@ -4,25 +4,13 @@
         <loc>https://lifailon.github.io/</loc>
     </url>
     <url>
-        <loc>https://lifailon.github.io/api/</loc>
-    </url>
-    <url>
-        <loc>https://lifailon.github.io/database/</loc>
-    </url>
-    <url>
         <loc>https://lifailon.github.io/devops/</loc>
-    </url>
-    <url>
-        <loc>https://lifailon.github.io/docker/</loc>
     </url>
     <url>
         <loc>https://lifailon.github.io/golang/</loc>
     </url>
     <url>
         <loc>https://lifailon.github.io/linux/</loc>
-    </url>
-    <url>
-        <loc>https://lifailon.github.io/network/</loc>
     </url>
     <url>
         <loc>https://lifailon.github.io/node-js/</loc>
@@ -32,8 +20,5 @@
     </url>
     <url>
         <loc>https://lifailon.github.io/tags/</loc>
-    </url>
-    <url>
-        <loc>https://lifailon.github.io/windowsserver/</loc>
     </url>
 </urlset>
