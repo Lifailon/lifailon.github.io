@@ -16,6 +16,1121 @@ go_to_top = true
 
 ---
 
+## Git
+
+`git --version` \
+`git config --global user.name "Lifailon"` добавить имя для коммитов \
+`git config --global user.email "lifailon@yandex.ru"` \
+`git config --global --edit` \
+`git config --global core.editor "code --wait"` изменить редактор коммитов по умолчанию \
+`ssh-keygen -t rsa -b 4096` \
+`Get-Service | where name -match "ssh-agent" | Set-Service -StartupType Automatic` \
+`Get-Service | where name -match "ssh-agent" | Start-Service` \
+`Get-Service | where name -match "ssh-agent" | select Name,Status,StartType` \
+`ssh-agent` \
+`ssh-add C:\Users\Lifailon\.ssh\id_rsa` \
+`cat ~\.ssh\id_rsa.pub | Set-Clipboard` copy to [settings keys](https://github.com/settings/keys) \
+`cd $home\Documents\Git` \
+`git clone git@github.com:Lifailon/lifailon.github.io` \
+`cd lifailon.github.io` \
+`git grep "ping ya.ru"` поиск текста в файлах \
+`git fetch` загрузить изменения из удаленного хранилища для обновления всех веток локального репозитория, не затрагивая текущую рабочую ветку (загружает все коммиты, ветки и т.д. которые не присутствуют в локальном репозитории) \
+`git fetch --all` загрузить все ветки с удаленного репозитория (обновляет информацию о состоянии удаленного репозитория и загружает все изменения ваших веток без автоматического объединения) \
+`git pull` загрузить изменения из удаленного хранилища для обновления локального репозитория (выполняет `git fetch`, чтобы получить последние изменения из удаленного репозитория, а затеим объеденяем изменения с локальной копией с помощью `git merge` для обновления текущей рабочей ветки) \
+`git stash` сохраняет текущие незакоммиченные изменения в временное хранилище (например, на время выполнения `git pull`), в т.ч. неотслеживаемые файлы и очищает рабочую директорию (вернет в состояние, соответствующее последнему коммиту) \
+`git stash pop` применяет последние изменения из стэша к текущей ветке (вернутся только измененные строки в файлах, при этом будут сохранены новые добавленные строки в файле без конфликтов) и удаляет их из стэша \
+`git stash apply` применяет изменения, но не удаляет их из стэша \
+`git status` отобразить статус изменений по файлам \
+`git diff` отобразить историю изменений построчно \
+`git diff pandoc` сравнивает изменения в текущей рабочей директории с последним коммитом в указанной ветке `pandoc` \
+`git add .` добавить (проиндексировать) изменения во всех файлах текущего каталога \
+`git commit -m "update powershell commands"` сохранить изменения с комментарием \
+`git push` синхронизировать локальные изменения с репозиторием на сервере \
+`git push origin mkdocs-material` отправить в конкретную ветку \
+`git push origin --delete mkdocs` удалить ветку на удаленном сервере \
+`git commit --amend` изменить комментарий в последнем коммите (до `push`) \
+`git commit --amend --no-edit --date="Sun Oct 27 23:20:00 2024 +0300"` изменить дату последнего коммита \
+`git branch -a` отобразить все ветки (в том числе удаленные remotes/origin) \
+`git branch hugo` создать новую ветку \
+`git branch -m hugo-public` переименовать текущую ветку \
+`git branch -d hugo-public` удалить ветку \
+`git switch hugo` переключиться на другую ветку \
+`git push origin hugo` отправить изменения в указанную ветку \
+`git branch --set-upstream-to=origin/hugo hugo` локальная ветка `hugo` будет отслеживать удаленную ветку `hugo` на удаленном сервере-репозитории `origin` (позволяет не указывать название удаленной ветки при каждом использовании команд `git push` или `git pull`) \
+`git switch pandoc` переключиться на другую ветку \
+`git merge hugo` слияние указанной ветки (`hugo`) в текущую ветку (`pandoc`)  \
+`git log --oneline --all` отобразить список всех коммитов и их сообщений \
+`git log --graph` коммиты и следование веток \
+`git log --author="Lifailon"` показывает историю коммитов указанного пользователя \
+`git blame .\posh.md` показывает, кто и когда внес изменения в каждую строку указанного файла (`НОМЕР_КОММИТА (ИМЯ_ПОЛЬЗОВАТЕЛЯ ДАТА НОМЕР_СТРОКИ) ТЕКСТ.`) \
+`git show d01f09dead3a6a8d75dda848162831c58ca0ee13` отобразить подробный лог по номеру коммита \
+`git checkout filename` устаревшая команда, откатить не проиндексированные изменения для коммита, возвращая его к состоянию, каким оно было на момент последнего коммита (если не было индексации через `add`) \
+`git restore filename` отменить все локальные изменения в рабочей копии независимо от того, были они проиндексированы или нет (через `add`), возвращая его к состоянию на момент последнего коммита \
+`git restore --source d01f09dead3a6a8d75dda848162831c58ca0ee13 filename` восстановить файл на указанную версию по хэшу индентификатора коммита \
+`git reset HEAD filename` удалить указанный файл из индекса без удаления самих изменений в файле для последующей повторной индексации (если был `add` но не было `commit`, потом выполнить `checkout`) \
+`git reset --soft HEAD^` отменяет последний (^) коммит, сохраняя изменения из этого коммита в рабочем каталоге и индексе (подготовленной области), можно внести изменения в файлы и повторно их зафиксировать через `commit` \
+`git reset --hard HEAD^` полностью отменяет последний коммит, удаляя все его изменения из рабочего каталога и индекса до состояния предыдущего перед последним коммитом (аналогично `HEAD~1`) \
+`git push origin main --force` удалить последний коммит на удаленном сервере репозитория после `reset --hard HEAD^`  \
+`git reset --hard d01f09dead3a6a8d75dda848162831c58ca0ee13` откатывает изменения к указанному коммиту и удаляет все коммиты, которые были сделаны после него (будут потеряны все незакоммиченные изменения и историю коммитов после указанного) \
+`git revert HEAD --no-edit` создает новый коммит, который отменяет последний коммит (`HEAD^`) и новый коммит будет добавлен поверх него (события записываются в `git log`) \
+`git revert d01f09dead3a6a8d75dda848162831c58ca0ee13` создает новый коммит, который отменяет изменения, внесенные в указанный коммит с хешем (не изменяет историю коммитов, а создает новый коммит с изменениями отмены)
+
+## Docker
+
+### WSL
+
+`wsl --list` список установленных дистрибутивов Linux \
+`wsl --list --online` список доступных дистрибутивов \
+`wsl --install -d Ubuntu` установить Ubuntu в Windows Subsystem for Linux \
+`wsl --status` \
+`wsl --exec "htop"` выполнить команду в подсистеме Linux по умолчанию \
+`wsl -e bash -c "docker -v"` \
+`wsl -e bash -c "systemctl status docker"`
+
+### Install
+
+`apt update && apt upgrade -y` \
+`apt install docker.io` \
+`systemctl status docker` \
+`systemctl start docker` \
+`systemctl enable docker` \
+`iptables -t nat -N DOCKER` \
+`docker -v` \
+`docker -h`
+
+`sudo usermod -aG docker lifailon` добавить пльзователя в группу docker \
+`newgrp docker` применить изменения в группах
+
+`curl https://registry-1.docker.io/v2/` проверить доступ к Docker Hub \
+`curl -s -X POST -H "Content-Type: application/json" -d '{"username": "lifailon", "password": "password"}' https://hub.docker.com/v2/users/login | jq -r .token > dockerToken.txt` получить временный токен доступа для авторизации \
+`sudo docker login` вход в реестр репозитория hub.docker.com \
+`cat dockerToken.txt | sudo docker login --username lifailon --password-stdin` передать токен авторизации (https://hub.docker.com/settings/security) из файла через stdin \
+`cat /root/.docker/config.json | jq -r .auths[].auth` место хранения токена авторизации в системе \
+`cat /root/.docker/config.json | python3 -m json.tool`
+
+### Proxy
+```bash
+mkdir -p /etc/systemd/system/docker.service.d
+```
+Создаем дополнительную конфигурацию для службы Docker в файле `/etc/systemd/system/docker.service.d/http-proxy.conf`:
+```
+[Service]
+Environment="HTTP_PROXY=http://docker:password@192.168.3.100:9090"
+Environment="HTTPS_PROXY=http://docker:password@192.168.3.100:9090"
+```
+`systemctl daemon-reload` \
+`systemctl restart docker`
+
+### Mirror
+
+`echo '{ "registry-mirrors": ["https://dockerhub.timeweb.cloud"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://huecker.io"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://daocloud.io"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://c.163.com"] }' > "/etc/docker/daemon.json"`
+
+`systemctl restart docker`
+
+### Nexus
+
+Разрешает небезопасные HTTP-соединения с Nexus сервером (если не использует HTTPS):
+```bash
+echo -e '{\n  "insecure-registries": ["http://192.168.3.105:8882"]\n}' | sudo tee "/etc/docker/daemon.json"
+sudo systemctl restart docker
+```
+`docker login 192.168.3.105:8882` авторизируемся в репозитории Docker Registry на сервере Nexus \
+`docker tag lifailon/docker-web-manager:latest 192.168.3.105:8882/docker-web-manager:latest` создаем тег с прявязкой сервера \
+`docker push 192.168.3.105:8882/docker-web-manager:latest` загружаем образ на сервер Nexus
+
+`curl -sX GET http://192.168.3.105:8882/v2/docker-web-manager/tags/list | jq` отобразить список доступных тегов \
+`docker pull 192.168.3.105:8882/docker-web-manager:latest` загрузить образ из Nexus
+
+### Run 
+
+Commands: `search/pull/images/creat/start/ps/restart/pause/unpause/rename/stop/kill/rm/rmi`
+
+`docker search speedtest` поиск образа в реестре \
+`docker pull adolfintel/speedtest` скачать образ LibreSpeed из реестра Docker Hub (https://hub.docker.com/r/adolfintel/speedtest) \
+`docker images (docker image ls)` отобразить все локальные (уже загруженные) образы docker (`image ls`) \
+`docker images --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}"` отфильтровать вывод (json-формат) \
+`docker create -it --name speedtest -p 8080:80 adolfintel/speedtest` создать контейнер из образа adolfintel/speedtest с именем speedtest и проброс 80 порта контейнера на 8080 порт хоста \
+`docker start speedtest` запустить созданный контейнер \
+`ss -ltp | grep 8080` проверить, что порт открыт \
+`docker ps` отобразить все запущенные докер контейнеры \
+`docker ps -a` список всех существующих контейнеров (для их запуска/удаления по NAMES/ID и код выхода Exited 0 - успешная остановка) \
+`docker ps -s` размер контейнеров (--size) \
+`docker restart speedtest` перезапустить контейнер \
+`docker pause speedtest` приостановить контейнер \
+`docker unpause uptime-kuma` возобновить работу контейнера \
+`docker rename speedtest speedtest-2` переименоввать контейнер (`docker rename old_name new_name`) \
+`docker stop speedtest-2` остановить работающий контейнер с отправкой главному процессу контейнера сигнал `SIGTERM`, и через время `SIGKILL` \
+`docker kill uptime-kuma` остановить работающий контейнер с отправкой главному процессу контейнера сигнал `SIGKILL` \
+`docker kill $(docker ps -q)` остановить все контейнеры \
+`docker rm speedtest-2` удалить контейнер \
+`docker rmi adolfintel/speedtest` удалить образ \
+`docker run -p 8443:8443 -it --entrypoint /bin/sh container_name` запустить контейнер и подключиться к нему (даже если контейнер уходит в ошибку при запуске)  \
+`docker run -d --restart=unless-stopped --name openspeedtest -p 3000:3000 -p 3001:3001 openspeedtest/latest` загрузить образ OpenSpeedTest (https://hub.docker.com/r/openspeedtest/latest), создать контейнер и запустить в одну команду в фоновом режиме (-d/--detach, терминал возвращает контроль сразу после запуска контейнера, если не используется, можно видеть логи, но придется остановить контейнер для выхода) \
+`docker rm openspeedtest && docker rmi openspeedtest/latest` удаляем контейнер и образ в одну команду \
+`docker run --name pg1 -p 5433:5432 -e POSTGRES_PASSWORD=PassWord -d postgres` создать контейнер postgres (https://hub.docker.com/_/postgres) с параметрами (-e) \
+`docker run -d --restart=always --name uptime-kuma -p 8080:3001 louislam/uptime-kuma:1` создать и запустить контейнер Uptime-Kuma (https://hub.docker.com/r/elestio/uptime-kuma) в режиме always, при котором контейнер должен перезапускаться автоматически, если он остановится или если перезапустится Docker (например, после перезагрузки хоста) \
+`docker history openspeedtest:latest` отображает слои образа, их размер и команды, которые были выполнены при его создании
+
+### Alias
+```bash
+alias docker-all-start='docker ps -aq --filter "status=exited" | xargs -P 4 -I {} docker start {}' # параллельный запуск всех остановленных контейнеров со статус выхода exited
+alias docker-all-stop='docker ps -aq | xargs -P 4 -I {} docker stop {}' # остановить все работающие контейнеры
+alias docker-all-restart='docker ps -aq | xargs -P 4 -I {} docker restart {}' # перезапустить все контейнеры
+```
+### Update
+
+`docker update --restart unless-stopped uptime-kuma` изменить режим перезапуска контейнера после его остановки на unless-stopped (режим аналогичен always, но контейнер не будет перезапущен, если он был остановлен вручную с помощью docker stop) \
+`docker update --restart on-failure uptime-kuma` контейнер будет перезапущен только в случае его завершения с ошибкой, когда код завершения отличается от 0, через двоеточие можно указать количество попыток перезапуска (например, on-failure:3) \
+`docker update --cpu-shares 512 --memory 500M uptime-kuma` задать ограничения по CPU, контейнер будет иметь доступ к указанной доле процессорного времени в диапазоне от 2 до 262,144 (2^18) или --cpus (количество процессоров), --memory/--memory-swap и --blkio-weight для IOps (относительный вес от 10 до 1000)
+
+### Stats
+
+`docker stats` посмотреть статистику потребляемых ресурсов запущенными контейнерами (top) \
+`docker stats --no-stream --format json` вывести результат один раз в формате json
+
+### Logs
+
+`docker logs uptime-kuma --tail 100` показать логи конкретного запущенного контейнера в терминале (последние 100 строк) \
+`docker system events` предоставляют события от демона dockerd в реальном времени \
+`journalctl -xeu docker.service` \
+`docker system df` отобразить сводную информацию занятого пространства образами и контейнерами \
+`du -h --max-depth=1 /var/lib/docker` \
+`du -h --max-depth=2 /var/lib/docker/containers`
+```bash
+docker run \
+  --log-driver json-file \
+  --log-opt max-size=10m \
+  --log-opt max-file=3 \
+  container_name
+```
+Настройка логирования в docker compose:
+```yml
+logging:
+      driver: "json-file" # Стандартный драйвер логов Docker
+      options:
+        max-size: "10m"   # Максимальный размер каждого лог-файла (10 МБайт)
+        max-file: "3"     # Максимальное количество файлов с логами (текущий и два предыдущих, Docker автоматически удаляет старые логи)
+
+# systemd/journald
+logging:
+  driver: "journald"
+  options:
+    tag: "app_name"
+
+# syslog/rsyslog
+logging:
+  driver: "syslog"
+  options:
+    syslog-address: "udp://127.0.0.1:514"
+    tag: "app_name"
+
+# Отправка логов в Graylog, Logstash или другие GELF-совместимые системы
+logging:
+  driver: "gelf"
+  options:
+    gelf-address: "udp://1.2.3.4:12201"
+    tag: "app_name"
+```
+### Volume
+
+`docker volume ls` показывает список томов и место хранения (механизмы хранения постояннымх данных контейнера на хостовой машине, которые сохраняются между перезапусками или пересозданиями контейнеров) \
+`docker volume inspect uptime-kuma` подробная информация конфигурации тома (отображает локальный путь к данным в системе, Mountpoint: /var/lib/docker/volumes/uptime-kuma/_data) \
+`docker volume create test` создать том \
+`docker volume rm test` удалить том \
+`docker run -d --restart=always --name uptime-kuma -p 8080:3001 -v uptime-kuma:/app/data louislam/uptime-kuma:1` создать и запустить контейнер на указанном томе (том создается автоматически, в дальнейшем его можно указывать при создании контейнера, если необходимо загружать из него сохраненные данные)
+
+Временная файловая система для хранения данных в оперативной памяти (исчезают после остановки контейнера):
+```yml
+volumes:
+  ram_disk:
+    driver_opts:
+      type: "tmpfs"
+      device: "tmpfs"
+      o: "size=512m,uid=1000"
+```
+Монтирование `NFS` (без необходимости предварительного монтирования на хосте) через драйвер `opts`:
+```yml
+volumes:
+  nfs_volume:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.3.106,nolock,soft,nfsvers=4"
+      device: ":/backup" # путь к NFS-шаре на сервере
+```
+Монтирование `SMB` каталога:
+
+`sudo apt install cifs smbclient -y` \
+`smbclient //192.168.3.100/backup -U guest%` првоерить гостевой доступ \
+`sudo mkdir /mnt/smb_backup && sudo chown -R 1000:1000 /mnt/smb_backup` создать директорию для монтирования \
+`echo "//192.168.3.100/backup /mnt/smb_backup cifs username=guest,password=,uid=1000,gid=1000,rw,vers=3.0 0 0" | sudo tee -a /etc/fstab` \
+`mount -a && systemctl daemon-reload && df -h` примонтировать (применить все записи из fstab)
+```yml
+volumes:
+  - /mnt/smb_backup:/data
+```
+### Network
+
+`docker network ls` список сетей \
+`docker network inspect bridge` подробная информация о сети bridge \
+`docker inspect uptime-kuma | jq .[].NetworkSettings.Networks` узнать наименование сетевого адаптера указанного контейнера \
+`docker run -d --name uptime-kuma --network host nginx louislam/uptime-kuma:1` запуск контейнера с использованием host сети, которая позволяет контейнеру использовать сеть хостовой машины \
+`docker network create network_test` создать новую сеть \
+`docker network connect network_test uptime-kuma` подключить работающий контейнер к указанной сети \
+`docker network disconnect network_test uptime-kuma` отключить от сети
+
+### Inspect
+
+`docker inspect uptime-kuma` подробная информация о контейнере (например, конфигурация NetworkSettings) \
+`docker inspect uptime-kuma --format='{{.LogPath}}'` показать, где хранятся логи для конкретного контейнера в локальной системе \
+`docker inspect uptime-kuma | grep LogPath` \
+`docker inspect $(docker ps -q) --format='{{.NetworkSettings.Ports}}'` отобразить TCP порты всех запущенных контейнеров \
+`docker inspect $(docker ps -q) --format='{{.NetworkSettings.Ports}}' | grep -Po "[0-9]+(?=}])"` отобразить порты хоста (внешние) \
+`docker port uptime-kuma` отобразить проброшенные порты контейнера \
+`for ps in $(docker ps -q); do docker port $ps | sed -n 2p | awk -F ":" '{print $NF}'; done` отобразить внешние порты всех запущенных контейнеров \
+`id=$(docker inspect uptime-kuma | jq -r .[].Id)` узнать ID контейнера по его имени в конфигурации \
+`cat /var/lib/docker/containers/$id/config.v2.json | jq .` прочитать конфигурационный файл контейнера
+
+### Exec
+
+`docker exec -it uptime-kuma /bin/bash` подключиться к работающему контейнеру (при выходе из оболочки, контейнер будет работать), используя интерпритатор bash \
+`docker top uptime-kuma` отобразить работающие процессы контейнера \
+`docker exec -it --user root uptime-kuma bash apt-get install -y procps` авторизоваться под пользователем root и установить procps \
+`docker exec -it uptime-kuma ps -aux` отобразить работающие процессы внутри контейнера \
+`docker exec uptime-kuma kill -9 25055` убить процесс внутри контейнера \
+`docker exec -it uptime-kuma ping 8.8.8.8` \
+`docker exec -it uptime-kuma pwd` \
+`docker cp ./Console-Performance.sh uptime-kuma:/app` скопировать из локальной системы в контейнер \
+`docker exec -it uptime-kuma ls` \
+`docker cp uptime-kuma:/app/db/ backup/db` сокпировать из контейнера в локальную систему \
+`ls backup/db`
+
+### Prune
+
+`docker network prune && docker image prune && docker volume prune && docker container prune` удалить все неиспользуемые сети, висящие образа, остановленные контейнеры, все неиспользуемые тома \
+`system prune –volumes` заменяет все четыре команды для очистки и дополнительно очищает кеш сборки
+
+### Remove
+
+`systemctl stop docker.service` \
+`systemctl stop docker.socket` \
+`pkill -f docker` \
+`pkill -f containerd` \
+`apt purge docker.io -y || dpkg --purge docker.io` \
+`dpkg -l | grep docker` \
+`rm -rf /var/lib/docker` \
+`rm -rf /run/docker` \
+`rm -rf /run/docker.sock`
+
+### Diff
+
+`docker diff <container_id_or_name>` отображает изменения, внесённые в файловую систему контейнера по сравнению с исходным образом
+
+`A` — добавленные файлы \
+`C` — изменённые файлы \
+`D` — удалённые файлы
+
+### Docker Socket API
+
+`curl --silent -XGET --unix-socket /run/docker.sock http://localhost/version | jq .` использовать локальный сокет (/run/docker.sock) для взаимодействия с Docker daemon через его API \
+`curl --silent -XGET --unix-socket /run/docker.sock http://localhost/info | jq .` количество образов, запущенных и остановленных контейнеров и остальные метрики ОС \
+`curl --silent -XGET --unix-socket /run/docker.sock http://localhost/events` логи Docker daemon \
+`curl --silent -XGET --unix-socket /run/docker.sock -H "Content-Type: application/json" http://localhost/containers/json | jq .` список работающих контейнеров и их параметры конфигурации \
+`curl --silent -XGET --unix-socket /run/docker.sock http://localhost/containers/uptime-kuma/json | jq .` подробные сведения (конфигурация) контейнера \
+`curl --silent -XPOST --unix-socket /run/docker.sock -d "{"Image":"nginx:latest"}" http://localhost/containers/create?name=nginx` создать контейнер с указанным образом в теле запроса (должен уже присутствовать образ) \
+`curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/start` запустить контейнер по Id \
+`curl --silent -XPOST --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1/stop` остановить контейнер \
+`curl --silent -XDELETE --unix-socket /run/docker.sock http://localhost/containers/17fab06a820debf452fe685d1522a9dd1611daa3a5087ff006c2dabbe25e52a1` удалить контейнер
+
+### Docker TCP API
+```bash
+echo '{
+    "hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
+}' > "/etc/docker/daemon.json"
+service=$(cat /lib/systemd/system/docker.service | sed "s/ -H fd:\/\///")
+printf "%s\n" "$service" > /lib/systemd/system/docker.service
+systemctl daemon-reload
+systemctl restart docker
+```
+`curl --silent -XGET http://192.168.3.102:2375/version | jq .`
+
+Конечная точка `/metrics` для Prometheus:
+```yaml
+{
+  "metrics-addr": "0.0.0.0:9323"
+}
+```
+`curl http://192.168.3.102:9323/metrics`
+
+### Context
+
+`docker context create rpi-106 --docker "host=tcp://192.168.3.106:2375"` добавить подключение к удаленному хосту через протокол `TCP` \
+`docker context create rpi-106 --docker "host=ssh://lifailon@192.168.3.106:2121"` добавить подключение к удаленному хосту через протокол `SSH` \
+`docker context ls` список всех доступных контекстов (`*` отображается текущий) \
+`docker context inspect rpi-106` конфигурация указанного контекста \
+`docker context use rpi-106` переключиться на выбранный контекст (возможно на прямую взаимосдействовать с удаленным Docker Engine через cli, за исключением взаимодействия через Socket) \
+`docker context rm rpi-106` удалить контекст
+
+### dcm
+
+`dcm` (Docker Context Manager) - это простая реализация TUI интерфейса на базе [fzf](https://github.com/junegunn/fzf), для переключения контекста из перечисленного списка хостов. Т.к. для использовать TUI интерфейсов требуется взаимодействие с сокетом, недостаточно изменить только переменную `DOCKER_HOST` или использовать команду `docker context`, по этому используется механиз `ssh forwarding`, который пробрасывает сокета с удаленной машины в локальную систему (используется временный файл, с изменением пути в переменной окружения).
+
+```bash
+DCM_SSH_HOSTS=localhost,192.168.3.105,192.168.3.106
+DCM_SSH_USER=lifailon
+DCM_SSH_PORT=2121
+DCM_SOCKET_PATH=/tmp/remote-docker.sock
+
+# dcm (Docker Context Manager)
+function dcm() {
+    DCM_SSH_HOST=$(printf "%s\n" ${DCM_SSH_HOSTS//,/ } | fzf --exact --no-sort --height 20 --reverse)
+    if [ -n "$DCM_SSH_HOST" ]; then
+        if [ $DCM_SSH_HOST == "localhost" ]; then
+            pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+            ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+            rm -f /tmp/remote-docker.sock
+            ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+            unset DOCKER_HOST
+        else
+            pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+            ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+            rm -f /tmp/remote-docker.sock
+            ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+            ssh -fNL $DCM_SOCKET_PATH:/var/run/docker.sock "$DCM_SSH_USER@$DCM_SSH_HOST" -p $DCM_SSH_PORT
+            export DOCKER_HOST="unix://$DCM_SOCKET_PATH"
+            ps aux | grep "[s]sh -fNL" 1> /dev/null || echo -e "\e[31mError: socket not forwarded\e[0m"
+        fi
+    fi
+}
+
+# lazydocker over dcm
+alias ld=lazydocker
+function dcl() {
+    DCM_SSH_HOST=$(printf "%s\n" ${DCM_SSH_HOSTS//,/ } | fzf --exact --no-sort --height 20 --reverse)
+    if [ -n "$DCM_SSH_HOST" ]; then
+        # Delete socket 
+        pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+        ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+        rm -f /tmp/remote-docker.sock
+        ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+        # Create socket
+        ssh -fNL $DCM_SOCKET_PATH:/var/run/docker.sock "$DCM_SSH_USER@$DCM_SSH_HOST" -p $DCM_SSH_PORT
+        export DOCKER_HOST="unix://$DCM_SOCKET_PATH"
+        ps aux | grep "[s]sh -fNL" 1> /dev/null || echo -e "\e[31mError: socket not forwarded\e[0m"
+        ld
+        # Delete socket 
+        pkill -f "ssh -fNL $DCM_SOCKET_PATH"
+        ps aux | grep "[s]sh -fNL" > /dev/null 2>&1 && echo -e "\e[31mError: socket not stopped\e[0m"
+        rm -f /tmp/remote-docker.sock
+        ls $DCM_SOCKET_PATH > /dev/null 2>&1 && echo -e "\e[31mError: socket not deleted\e[0m"
+        unset DOCKER_HOST
+    fi
+}
+```
+### ctop
+
+`scoop install ctop` установка в Windows (https://github.com/bcicen/ctop)
+```bash
+wget https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 -O /usr/local/bin/ctop
+chmod +x /usr/local/bin/ctop
+```
+`ctop` отображает сводную таблицу (top) CPU, MEM, NET RX/TX, IO R/W \
+`o` - графики \
+`l` - логи контейнера в реальном времени \
+`s` - stop/start \
+`R` - remove после stop \
+`p` - pause/unpause \
+`r` - restart \
+`e` - exec shell
+
+### Dockly
+
+`npm install -g dockly` TUI интерфейс на базе Node.js и Blessed.js \
+`docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly` запуск в Docker \
+`dockly`
+
+### LazyDocker
+
+`scoop install lazydocker || choco install lazydocker` установка в Windows (https://github.com/jesseduffield/lazydocker)
+```bash
+wget https://github.com/jesseduffield/lazydocker/releases/download/v0.23.1/lazydocker_0.23.1_Linux_x86.tar.gz -O ~/lazydocker.tar.gz
+tar -xzf ~/lazydocker.tar.gz lazydocker
+rm ~/lazydocker.tar.gz
+mv lazydocker /usr/local/bin/lazydocker
+chmod +x /usr/local/bin/lazydocker
+```
+lazydocker
+
+### Lazyjournal
+
+`curl -sS https://raw.githubusercontent.com/Lifailon/lazyjournal/main/install.sh | bash` установка в Unix \
+`Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/lazyjournal/main/install.ps1 | Invoke-Expression` установка в Windows \
+`lazyjournal` \
+`lazyjournal --help` \
+`lazyjournal --version`
+
+### Push
+
+`docker login` \
+`git clone https://github.com/Lifailon/TorAPI` \
+`cd TorAPI` \
+`docker build -t lifailon/torapi .` собрать образ для публикации на Docker Hub \
+`docker push lifailon/torapi` загрузить образ на Docker Hub
+
+`docker pull lifailon/torapi:latest` загрузить образ из Docker Hub \
+`docker run -d --name TorAPI -p 8443:8443 lifailon/torapi:latest` загрузить образ и создать контейнер
+
+### Buildx
+
+`sudo apt install docker-buildx -y` установить систему для мультиплатформенной сборки \
+`docker buildx create --use --name multiarch-builder --driver docker-container` оздать и запустить сборщик в контейнере \
+`docker buildx ls` \
+`docker buildx rm multiarch-builder`
+
+`go list -u -m all && go get -u ./...` обновить пакеты приложения на Go
+
+Добавить аргументы в Dockerfile и передать их в переменные для сборки:
+```Dockerfile
+ARG TARGETOS TARGETARCH
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /logporter
+```
+docker buildx build --platform linux/amd64,linux/arm64 .
+docker buildx build --platform linux/amd64,linux/arm64 -t lifailon/logporter --push .
+
+`npm outdated && npm update --save` обновить паеты node.jd приложения
+
+Передаем аргументы в параметры платформы для образа:
+```Dockerfile
+ARG TARGETOS TARGETARCH
+FROM --platform=${TARGETOS}/${TARGETARCH} node:alpine AS build
+```
+## Dockerfile
+
+`FROM` указывает базовый образ, на основе которого будет создаваться новый образ \
+`LABEL` добавляет метаданные к образу в формате ключ-значение \
+`ENV` устанавливает переменные окружения, которые будут доступны внутри контейнера со значениями по умолчанию (можно переопределить через `-e`, который имеет повышенный приоритет) \
+`ARG` определяет переменные, которые могут быть переданы и доступны только на этапе сборки образа (выполнения инструкций в dockerfile через `docker build --build-arg`) и недоступны в контейнере \
+`USER` устанавливает пользователя, от имени которого будут выполняться следующие команды \
+`WORKDIR` устанавливает рабочий каталог внутри контейнера для последующих команд \
+`SHELL` задает командную оболочку, которая будет использоваться для выполнения команд RUN, CMD и ENTRYPOINT (по умолчанию `/bin/sh -c`, например на `SHELL ["/bin/bash", "-c"]`) \
+`RUN` выполняет команды в контейнере во время сборки образа \
+`COPY` копирует файлы и каталоги из указанного источника на локальной машине в файловую систему контейнера \
+`ADD` копирует файлы и каталоги в контейнер, поддерживает загрузку файлов из URL и автоматическое извлечение архивов \
+`CMD` определяет команду, которая будет выполняться при запуске контейнера, может быть переопределена при запуске \
+`ENTRYPOINT` задает основную команду, которая будет выполняться при запуске контейнера без возможности ее переопредиления, но с возможностью передачи аргументов \
+`VOLUME` создает точку монтирования для хранения данных в хостовой системе \
+`EXPOSE` указывает, какие порты контейнера будут доступны извне \
+`HEALTHCHECK` определяет команду для проверки состояния работающего контейнера \
+`ONBUILD` задает команды, которые будут автоматически выполнены при сборке дочерних образов \
+`STOPSIGNAL` определяет сигнал, который будет отправлен контейнеру для его остановки
+
+Пример использования `ADD` для загрузки из `url`:
+```bash
+FROM alpine:latest
+# Загрузка и распаковка архива напрямую из GitHub
+ADD https://github.com/<username>/<repository>/archive/refs/heads/main.zip /app/
+# Установка инструмента для работы с архивами
+RUN apk add --no-cache unzip && \
+    unzip /app/main.zip -d /app/ && \
+    rm /app/main.zip
+```
+Пример сборки приложения на `node.js`:
+
+`git clone https://github.com/Lifailon/TorAPI` \
+`cd TorAPI` \
+`nano Dockerfile`
+```Dockerfile
+# Указать базовый образ для сборки, который содержит последнюю версию Node.js и npm
+FROM node:alpine AS build
+# Установить рабочую директорию для контейнера (все последующие команды будут выполняться относительно этой директории)
+WORKDIR /torapi
+# Копирует файл package.json из текущей директории на хосте в рабочую директорию
+COPY package.json ./
+# Запускает команду (используя оболочку по умолчанию) для установки зависимостей, указанных в package.json
+RUN npm install && npm update && npm cache clean --force
+# Копирует все файлы из текущей директории на хосте в рабочую директорию контейнера
+COPY . .
+# Создает новый рабочий образ для создания контейнера
+FROM node:alpine
+WORKDIR /torapi
+# Копирует только те файлы, которые необходимые для работы приложения
+COPY --from=build /torapi/node_modules ./node_modules
+COPY --from=build /torapi/package.json ./package.json
+COPY --from=build /torapi/main.js ./main.js
+COPY --from=build /torapi/swagger/swagger.js ./swagger/swagger.js
+COPY --from=build /torapi/category.json ./category.json
+# Определить переменные окружения по умолчанию, которые могут быть переопределены при запуске контейнера
+ENV PORT=8443
+ENV PROXY_ADDRESS=""
+ENV PROXY_PORT=""
+ENV USERNAME=""
+ENV PASSWORD=""
+# Открывает порт 8443 для доступа к приложению из контейнера
+EXPOSE $PORT
+# Определить команду для проверки работоспособности контейнера (для примера)
+# Проверка будет запускаться каждые 120 секунд, если команда не завершится за 30 секунд, она будет считаться неуспешной, если команда не проходит 3 раза подряд, контейнер будет помечен как нездоровый
+# Docker будет ждать 5 секунд после старта контейнера перед тем, как начать проверки здоровья
+HEALTHCHECK --interval=120s --timeout=30s --retries=3 --start-period=10s \
+    CMD ["sh", "-c", "npm start -- --test"]
+# Устанавливает команду по умолчанию для запуска приложения при запуске контейнера
+ENTRYPOINT ["sh", "-c", "npm start -- --port $PORT --proxyAddress $PROXY_ADDRESS --proxyPort $PROXY_PORT --username $USERNAME --password $PASSWORD"]
+```
+`docker build -t torapi .` собрать образ из dockerfile
+```bash
+docker run -d --name TorAPI -p 8443:8443 --restart=unless-stopped \
+  -e PROXY_ADDRESS="192.168.3.100" \
+  -e PROXY_PORT="9090" \
+  -e USERNAME="TorAPI" \
+  -e PASSWORD="TorAPI" \
+  torapi
+```
+## Docker Compose
+```bash
+mkdir -p $HOME/.local/bin
+version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
+curl -sSL "https://github.com/docker/compose/releases/download/$version/docker-compose-$(uname -s)-$(uname -m)" -o $HOME/.local/bin/docker-compose
+chmod +x $HOME/.local/bin/docker-compose
+mkdir -p $HOME/.docker/cli-plugins
+cp $HOME/.local/bin/docker-compose $HOME/.docker/cli-plugins/docker-compose
+docker compose version
+```
+### Uptime-Kuma
+
+[Uptime-Kuma](https://github.com/louislam/uptime-kuma) - веб-интерфейс для мониторинга доступности хостов (ICMP), портов (TCP), веб-контент (HTTP/HTTPS запросы), gRPC, DNS, контейнеры Docker, базы данных и т.д с поддержкой уведомлений в Telegram.
+
+`nano docker-compose.yml`
+```yaml
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    volumes:
+      - uptime-kuma:/app/data
+    ports:
+      - "8081:3001"
+    restart: unless-stopped
+volumes:
+  uptime-kuma:
+```
+`docker-compose up -d`
+
+`kuma_db=$(docker inspect uptime-kuma | jq -r .[].Mounts.[].Source)` место хранения конфигураций в базе SQLite \
+`cp $kuma_db/kuma.db $HOME/uptime-kuma-backup.db`
+
+Сгенерировать API ключ: `http://192.168.3.101:8081/settings/api-keys` \
+`curl -u":uk1_fl3JxkSDwGLzQuHk2FVb8z89SCRYq0_3JbXsy73t" http://192.168.3.101:8081/metrics`
+
+Пример конфигурации для Prometheus:
+```yaml
+scrape_configs:
+  - job_name: uptime-kuma
+    scrape_interval: 30s
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - '192.168.3.101:8081'
+    basic_auth:
+      password: uk1_fl3JxkSDwGLzQuHk2FVb8z89SCRYq0_3JbXsy73t
+```
+Dashboard для Grafana - [Uptime Kuma - SLA/Latency/Certs](https://grafana.com/grafana/dashboards/18667-uptime-kuma-metrics) (id 18667)
+
+[Uptime-Kuma-Web-API](https://github.com/MedAziz11/Uptime-Kuma-Web-API) - оболочка API и Swagger документация написанная на Python с использованием FastAPI и [Uptime-Kuma-API](https://github.com/lucasheld/uptime-kuma-api).
+
+`nano docker-compose.yml`
+```yaml
+services:
+  # Web (frontend)
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: louislam/uptime-kuma:latest
+    ports:
+      - "8081:3001"
+    restart: unless-stopped
+    volumes:
+      - ./kuma_data:/app/data
+
+  # API (backend)
+  uptime-kuma-api:
+    container_name: uptime-kuma-api
+    image: medaziz11/uptimekuma_restapi
+    volumes:
+      - ./kuma_api:/db
+    restart: unless-stopped
+    environment:
+      - KUMA_SERVER=http://uptime-kuma:3001
+      - KUMA_USERNAME=admin
+      - KUMA_PASSWORD=KumaAdmin
+      - ADMIN_PASSWORD=KumaApiAdmin
+    depends_on:
+      - uptime-kuma
+    ports:
+      - "8082:8000"
+```
+`docker-compose up -d`
+
+OpenAPI Docs (Swagger): http://192.168.3.101:8082/docs
+```bash
+TOKEN=$(curl -sS -X POST http://192.168.3.101:8082/login/access-token --data "username=admin" --data "password=KumaApiAdmin" | jq -r .access_token)
+curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors | jq .
+curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'
+```
+### Dozzle
+
+Dozzle (https://github.com/amir20/dozzle) - легковесное приложение с веб-интерфейсом для мониторинга журналов Docker (без хранения).
+
+`mkdir dozzle && cd dozzle && mkdir dozzle_data`
+
+`echo -n DozzleAdmin | shasum -a 256` получить пароль в формате sha-256 и передать в конфигурацию
+
+`nano ./dozzle_data/users.yml`
+```yaml
+users:
+  admin:
+    name: "admin"
+    password: "a800c3ee4dac5102ed13ba673589077cf0a87a7ddaff59882bb3c08f275a516e"
+```
+Запускаем контейнер:
+```yaml
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dozzle_data:/data
+    environment:
+      - VIRTUAL_HOST=dozzle.local
+      - DOZZLE_AUTH_PROVIDER=simple
+      # Подключиться к удаленному хосту через Docker API (tcp socket)
+      # - DOZZLE_REMOTE_HOST=tcp://192.168.3.101:2375|us-101
+      # Подключиться к удаленному хосту через Dozzle Agent
+      # - DOZZLE_REMOTE_AGENT=192.168.3.106:7007
+    ports:
+      - 9090:8080
+
+  # Контейнер для мониторинга файла syslog на хостовой системе
+  # dozzle-syslog:
+  #   image: alpine
+  #   container_name: dozzle-syslog
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /var/log/syslog:/var/log/custom.log
+  #   command:
+  #     - tail
+  #     - -f
+  #     - /var/log/custom.log
+
+  # Контейнер для мониторинга файлов из директории /var/log на хостовой системе
+  dozzle-varlog:
+    image: lifailon/dozzle-varlog:latest
+    container_name: dozzle-varlog
+    restart: unless-stopped
+    volumes:
+      - /var/log:/logs
+```
+`docker-compose up -d`
+
+Контейнер на агенте:
+```yaml
+services:
+  dozzle-agent:
+    image: amir20/dozzle:latest
+    container_name: dozzle-agent
+    restart: unless-stopped
+    command: agent
+    # environment:
+    #   - DOZZLE_HOSTNAME=dozzle-agent-01
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    healthcheck:
+      test: ["CMD", "/dozzle", "healthcheck"]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      start_interval: 5s
+    ports:
+      - 7007:7007
+```
+### Watchtower
+
+[Watchtower](https://github.com/containrrr/watchtower) - следит за тегом `latest` в реестре Docker Hub и обновлять контейнер, если он станет устаревшим.
+```yaml
+services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATIONS_HOSTNAME=<HOST_NAME>
+      - WATCHTOWER_NOTIFICATION_URL=telegram://<BOT_API_KEY>@telegram/?channels=<CHAT/CHANNEL_ID>
+      - WATCHTOWER_HTTP_API_TOKEN=demotoken
+    command: --interval 600 # --http-api-metrics # --http-api-token demotoken # --http-api-update
+    # ports:
+    #   - 9095:8080
+```
+`docker-compose up -d`
+
+Проброс потра используется для получения метрик через Prometheus (команда `--http-api-metrics`) с токеном доступа. Если нужно запускать обновления только через API, нужно добавить команду `--http-api-update`, или указать команду `--http-api-periodic-polls`, что бы использовать ручное и автоматическое обновление.
+
+`curl -H "Authorization: Bearer demotoken" http://192.168.3.101:8070/v1/metrics` получить метрики \
+`curl -H "Authorization: Bearer demotoken" http://192.168.3.101:8070/v1/update` проверить и запустить обновления
+
+Добавить `scrape_configs` в `prometheus.yml` для сбора метрик:
+```yaml
+scrape_configs:
+  - job_name: watchtower
+    scrape_interval: 5s
+    metrics_path: /v1/metrics
+    bearer_token: demotoken
+    static_configs:
+      - targets:
+        - '192.168.3.101:8070'
+```
+`docker-compose restart prometheus`
+
+Чтобы исключить обновления, нужно добавить "lable" при запуске контейнера:
+```bash
+docker run -d --name kinozal-bot \
+  -v /home/lifailon/kinozal-bot/torrents:/home/lifailon/kinozal-bot/torrents \
+  --restart=unless-stopped \
+  --label com.centurylinklabs.watchtower.enable=false \
+  kinozal-bot
+```
+### Portainer
+
+`curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml` скачать yaml файл \
+`version_update=$(cat portainer-agent-stack.yml | sed "s/2.11.1/latest/g")` \
+`printf "%s\n" "$version_update" > portainer-agent-stack.yml` обновить версию в yaml файле на последнюю доступную в Docker Hub (2.19.5) \
+`docker stack deploy -c portainer-agent-stack.yml portainer` развернуть в кластере swarm (на каждом node будет установлен агент, который будет собирать данные, а на manager будет установлен сервер с web панелью) \
+https://192.168.3.101:9443
+
+`docker run -d --name portainer_agent -p 9001:9001 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent:2.19.5` установить агент на удаленный хост \
+https://192.168.3.101:9443/#!/endpoints добавить удаленный хост по URL 192.168.3.102:9001
+
+`docker volume create portainer_data` создать volume для установки локального контейнера (не в кластер swarm) \
+`docker create -it --name=portainer -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer` создать локальный контейнер \
+`docker start portainer` \
+http://192.168.3.101:9000
+
+## Docker.DotNet
+```PowerShell
+# Импорт библиотеки Docker.DotNet (https://nuget.info/packages/Docker.DotNet/3.125.15)
+Add-Type -Path "$home\Documents\Docker.DotNet-3.125.15\lib\netstandard2.1\Docker.DotNet.dll"
+# Указываем адрес удаленного сервера Docker, на котором слушает сокет Docker API
+$config = [Docker.DotNet.DockerClientConfiguration]::new("http://192.168.3.102:2375")
+# Подключаемся клиентом
+$client = $config.CreateClient()
+# Получить список методов класса клиента
+$client | Get-Member
+# Выводим список контейнеров
+$containers = $client.Containers.ListContainersAsync([Docker.DotNet.Models.ContainersListParameters]::new()).GetAwaiter().GetResult()
+# Забираем id по имени
+$kuma_id = $($containers | Where-Object names -match "uptime-kuma-front").id
+# Получить список дочерних методов
+$client.Containers | Get-Member
+# Остановить контейнер по его id
+$StopParameters = [Docker.DotNet.Models.ContainerStopParameters]::new()
+$client.Containers.StopContainerAsync($kuma_id, $StopParameters)
+# Запустить контейнер
+$StartParameters = [Docker.DotNet.Models.ContainerStartParameters]::new()
+$client.Containers.StartContainerAsync($kuma_id, $StartParameters)
+```
+## Swarm
+
+`docker swarm init` инициализировать `manager node` и получить токен для подключения `worker node` (на сервере) \
+`docker swarm join-token worker` получить токен для подключения `worker` или `manager` \
+`docker swarm join --token SWMTKN-1-1a078rm7vuenefp6me84t4swqtvdoveu6dh2pw34xjcf2gyw33-81f8r32jt3kkpk4dqnt0oort9 192.168.3.101:2377` подключение на worker node (на клиенте) \
+`docker node ls` отобразить список node на manager node \
+`docker node inspect u4u897mxb1oo39pbj5oezd3um` подробная информация (конфигурация) о node по id \
+`docker swarm leave --force` выйти из кластера на `worker node` (на `manager node` изменится статус с `Ready` на `Down`) \
+`docker node rm u4u897mxb1oo39pbj5oezd3um` удалить node (со статусом `Down`) на `manager node` \
+`docker swarm init --force-new-cluster` заново инициализировать кластер (если упал, при наличии одного менеджера)
+
+`docker pull lifailon/torapi:latest` \
+`nano docker-stack.yml`
+```yaml
+services:
+  torapi:
+    image: lifailon/torapi:latest
+    labels:
+          - com.centurylinklabs.watchtower.enable=false
+    deploy:
+      # Режим развертывания
+      mode: replicated                  # Фиксированное число реплик (по умолчанию)
+      # mode: global                    # Одна копия на каждой ноде
+      replicas: 2                       # Суммарное количество реплик на всех нодах (только в режиме replicated)
+
+      # Политика перезапуска
+      restart_policy:
+        condition: on-failure           # Перезапускать только при ошибках (ненулевой код выхода)
+        # condition: any                # Всегда перезапускать (аналог always в docker-compose)
+        delay: 5s                       # Задержка перед перезапуском (по умолчанию, 5 секунд)
+        max_attempts: 3                 # Максимум попыток перезапуска (по умолчанию, бесконечно)
+        window: 30s                     # Время для оценки успешности перезапуска (по умолчанию, 0)
+
+      # Политика обновления (старые контейнеры не удаляются сразу, а только останавливаются и создаются новые с обновленными образами)
+      update_config:
+        parallelism: 1                  # Количество реплик для одновременного обновения (по умолчанию, 1)
+        delay: 10s                      # Задержка между обновлениями (по умолчанию, 0 секунд)
+        order: start-first              # Порядок: start-first (сначала новый) или stop-first (сначала старый, по умолчанию)
+        failure_action: rollback        # Действие при ошибке: continue, rollback, pause (по умолчанию, pause)
+        monitor: 60s                    # Время мониторинга после обновления (по умолчанию, 0)
+
+      # Политика отката (конфигурация аналогична update_config) при статусе unhealthy на новых контейнерах после update_config
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+        failure_action: pause
+        monitor: 60s
+
+      # Ограничения размещения
+      #   placement:
+      #     constraints:
+      #       - "node.role==worker"     # Только на worker-нодах
+      #       - "node.labels.env==dev"  # Только на нодах с указаной меткой
+
+      # Ограничения ресурсов
+      resources:
+        limits:
+          cpus: "0.5"                   # Лимит CPU (0.5 = 50%)
+          memory: 256M                  # Лимит RAM
+        reservations:
+          cpus: "0.1"                   # Гарантированные CPU
+          memory: 128M                  # Гарантированная RAM
+
+      # Режим балансировки (конечной точки)
+      endpoint_mode: vip                # Балансировка через виртуальный IP внутри сети swarm
+      # endpoint_mode: dnsrr            # Балансировка через DNS в режиме Round-Robin
+
+    # Проверка здоровья (задается вне deploy)
+    # Необходимо для работы:
+    # 1. endpoint_mode - при статусе unhealthy исключает контейнер из балансировки
+    # 2. restart_policy - пытается перезапустить контейнер
+    # 3. update_config - ждет успешного прохождения healthcheck (статус healthy) перед обновлением следующей реплики или запускает rollback_config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8443/api/provider/list"] # HTTP проверка статуса ответа (0 = успех, 1 = ошибка)
+    # test: ["CMD", "nc", "-z", "127.0.0.1 8443"] # TCP проверка порта
+      interval: 30s                     # Интервал между проверками (по умолчанию, 30  секунд)
+      timeout: 10s                      # Время ожидания ответа (по умолчанию, 30 секунд)
+      retries: 3                        # Количество попыток перед объявлением статуса unhealthy
+      start_period: 15s                 # Время на инициализацию перед проверками (по умолчанию, 0 секунд)
+
+    ports:
+      - target: 8443                    # Порт контейнера
+        published: 8443                 # Порт на хосте
+        protocol: tcp                   # Протокол (tcp/udp)
+        # Режим балансировки
+        mode: ingress                   # Балансировка через Swarm (только в режиме vip)
+        # mode: host                    # Балансировка через хостовую систему (прямой проброс, только в режиме dnsrr)
+    volumes:
+    # - type: config                    # Swarm Configs (статические конфиги, права только на чтение)
+    # - type: secret                    # Swarm Secrets (пароли, TLS-ключи. и т.п.)
+    # - type: nfs                       # Удалённый NFS-сервер для общих данных в кластере
+    # - type: tmpfs                     # RAM Временные файлы (/tmp)
+    # - type: bind                      # Файлы на хосте (только если файлы есть на всех нодах)
+    - type: volume                    # Управляется Docker (данные БД, кеш)
+        source: torapi
+        target: /rotapi
+
+volumes:
+  torapi:
+```
+`docker stack deploy -c docker-stack.yml TorAPI` собрать стек сервисов (на `worker node` появится контейнер `TorAPI_torapi.1.ug5ngdlqkl76dt`)
+
+`docker stack ls` отобразить список стеков (название стека и количество в нем сервисов, без учета реплик) \
+`docker stack services TorAPI` аналог `docker service ls`, но для отображения списока сервисов указанного стека \
+`docker service ls` отобразить список всех сервисов для всех стеков (имя формате `<stackName_serviceName>`, с количеством и статусом реплик)
+
+`docker stack ps TorAPI` статистика работы всех сервисов внутри стека (аналог `docker ps`) \
+`docker service ps TorAPI_torapi` аналог `docker stack ps`, но для отображения статистики указанного сервиса \
+`docker service logs TorAPI_torapi -fn 0` просмотреть логи сервиса по всех репликам кластера одновременно
+
+`docker node update --label-add dev=true iebj3itgan6xso8px00i3nizc` добавить ноду в группу по метке для линковки при запуске \
+`docker service update --image lifailon/torapi:fake TorAPI_torapi` запустить обновление образа для сервиса \
+`docker service scale TorAPI_torapi=3` масштабировать сервис до указанного числа реплик
+
+`docker service inspect --pretty TorAPI_torapi` отобразить конфигурацию сервиса \
+`docker service inspect TorAPI_torapi` отобразить подробную конфигурацию сервиса в формате `json` \
+`docker stack rm TorAPI` удалить стек (не требует остановки контейнеров)
+
+<!--
+# Uncloud
+
+[Uncloud](https://github.com/psviderski/uncloud) - легковесный инструмент для кластеризации и оркестровки контейнеров.
+
+`curl -fsS https://get.uncloud.run/install.sh | sh` установка \
+`uncloud machine init lifailon@192.168.3.106:2121 -i ~/.ssh/id_rsa` инициализация кластера (на удаленной ноде будет установлен Caddy в Docker)
+-->
+
+## Kubernetes
+
+`Node` - Физическая или виртуальная машина, входящая в состав кластера. На каждом узле работает kubelet (агент Kubernetes) и контейнерная среда. \
+`Pod` - наименьшая и самая простая единица в Kubernetes. Содержит один или несколько контейнеров, которые разделяют одно сетевое пространство (общий IP и порты) и имеют общие тома (volumes) для хранения данных. \
+`Deployment` - управляет состоянием группы идентичных подов (реплик). Отвечает за их масштабируемость (увеличение или уменьшение числа подов), восстановление (перезапуск подов при сбоях), обновление (rolling updates) и откат (rollback) версий приложения. \
+`Service` - отвечает за балансировку нагрузки (обрабатывает входящий трафик и распределяет его между подами), а также обеспечивая постоянный IP-адрес и DNS-имя, даже в случае их пересоздания. \
+`ConfigMap` и `Secret` – хранит конфигурационные данные (например, настройки приложения) в виде пар "ключ-значение" или содержимого файлов (в открытом или зашифрованном виде).
+
+### Minikube
+
+[Minikube](https://github.com/kubernetes/minikube) - это локальный кластер (одноузловой экземпляр, запускаемый в виртуальной среде) Kubernetes от создателя оригинального k8s.
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-windows-amd64.exe
+mv minikube-windows-amd64.exe minikube.exe
+```
+`sudo cp ~/.minikube/ca.crt /usr/local/share/ca-certificates/minikube.crt && update-ca-certificates && openssl verify /usr/local/share/ca-certificates/minikube.crt` установка сертификатов в Linux \
+`Import-Certificate -FilePath "$HOME\.minikube\ca.crt" -CertStoreLocation Cert:\LocalMachine\Root && Import-Certificate -FilePath "$HOME\.minikube\profiles\minikube\client.crt" -CertStoreLocation Cert:\CurrentUser\My && ls Cert:\LocalMachine\Root | Where-Object Subject -Match "minikube"` установка сертификатов в Windows
+
+`minikube start --vm-driver=hyperv --memory=4g --cpus=2` запустить кластер и создать виртуальную машину \
+`minikube status` статус работы кластера \
+`minikube stop` остановить кластер \
+`minikube delete` удалить виртуальную машину \
+`minikube profile list` узнать информацию о драйвере, ip, версии и количество Nodes \
+`minikube dashboard --port 8085` запустить api сервер и интерфейс состояния
+
+`minikube addons list`  список доступных дополнений и их статус работы \
+`minikube addons enable metrics-server` активировать дополнение, которое предоставляет метрики для HPA, такие как загрузка процессора и использование памяти \
+`kubectl get deployment metrics-server -n kube-system` текущее состояние развертывания metrics-server в кластере \
+`kubectl get pod,svc -n kube-system` отобразить список системных подов и сервисов в кластере (pod/metrics-server-7fbb699795-wvfxb) \
+`kubectl logs -n kube-system deployment/metrics-server` отобразить логи metrics-server \
+`kubectl top pods` отобразить метрики на подах (CPU/MEM) \
+`minikube addons disable metrics-server` отключить дополнение
+
+`minikube addons enable ingress` включить Nginx Ingress Controller \
+`kubectl get pods -n kube-system` отобразить список системных подов (должен появиться ingress-nginx-controller) \
+`minikube tunnel --alsologtostderr` создает виртуальный LoadBalancer в Minikube, для перенаправления трафика на нужный сервис, вместо использования NodePort
+
+### Microk8s
+
+[Microk8s](https://github.com/canonical/microk8s) - это полностью совместимый и легкий Kubernetes в одном пакете, работающий на 42 разновидностях Linux от компании Canonical.
+
+`snap install microk8s --classic` установка \
+`microk8s status --wait-ready` отобразить статус работы (дождаться инициализации служб Kubernetes) и список дополнений \
+`microk8s start` запустить или остановить (`stop`) MicroK8s и его службы \
+`microk8s enable dashboard` запустить dashboard \
+`microk8s enable dns` установка обновлений \
+`sudo usermod -a -G microk8s $USER && mkdir -p ~/.kube && chmod 0700 ~/.kube` добавить текущего пользователя в группу управления microk8s (создается при установке) \
+`alias kubectl='microk8s kubectl'` добавить псевдоним, для использования команды kubectl через microk8s \
+`kubectl get nodes` отобразить список нод \
+`kubectl config view --raw > $HOME/.kube/config` передать конфигурацию в MicroK8s, для использования с существующим kubectl
+
+### K3s
+
+[K3s](https://github.com/k3s-io/k3s) — это полностью совместимый дистрибутив Kubernetes в формате единого двоичного файле, который удаляет хранение драйверов и поставщика облачных услуг, а также добавляет поддержку `sqlite3` для `backend` хранилища от компании Rancher Labs (SUSE).
+
+`curl -sfL https://get.k3s.io | sh -` установка службы в systemd и утилит `kubectl`, `crictl`, `k3s-killall.sh` и `k3s-uninstall.sh` \
+`sudo chmod 644 /etc/rancher/k3s/k3s.yaml && sudo chown $(id -u):$(id -g) /etc/rancher/k3s/k3s.yaml` назначить права на конфигурацию текущему пользователю \
+`sudo cat /var/lib/rancher/k3s/server/node-token` токен авторизации \
+`curl -sfL https://get.k3s.io | K3S_URL=https://192.168.3.101:6443 K3S_TOKEN=<TOKEN> sh -` передать переменные окружения `K3S_URL` и `K3S_TOKEN` токен для установки на рабочие ноды (команда удаления: `sudo /usr/local/bin/k3s-agent-uninstall.sh`) \
+`sudo nano /boot/firmware/cmdline.txt` включить cgroups v1 вместо v2 => `systemd.unified_cgroup_hierarchy=0 cgroup_enable=memory cgroup_memory=1` \
+`k3s kubectl get nodes` отобразить список нод в кластере \
+`sudo k3s crictl ps` отобразить список всех запущенных контейнеров, включая системные для работы класетра \
+`sudo k3s etcd-snapshot save` создать снапшот etcd (распределённого `key-value` хранилища, которое отвечает за состояние всего кластера Kubernetes) \
+`sudo k3s etcd-snapshot restor` восстановление кластера из снапшота
+
+### Dashboard
+
+Пример развертывания Kubernetes Dashboard в кластере k3s:
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml # загружаем deployment
+kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard # создаем сервисный аккаунт
+kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin # выдаем права cluster-admin
+kubectl -n kubernetes-dashboard create token dashboard-admin # получаем JWT-токен сервисного аккаунта для авторизации
+kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard-kong-proxy -p '{"spec":{"type":"NodePort"}}' # меняем тип сервиса на NodePort
+kubectl -n kubernetes-dashboard get svc kubernetes-dashboard-kong-proxy # узнаем назначенный порт (в диапазоне 30000-32767) для внешнего подключения
+```
+### Headlamp
+
+[Headlamp](https://github.com/kubernetes-sigs/headlamp) - это современная альтернатива Dashboard c расширенным функционалом, созданная сообществом Kubernetes Special Interest Groups.
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/headlamp/main/kubernetes-headlamp.yaml # установка в кластер
+kubectl -n kube-system create serviceaccount headlamp-admin # создать сервисный аккаунт
+kubectl create clusterrolebinding headlamp-admin --serviceaccount=kube-system:headlamp-admin --clusterrole=cluster-admin # назначить права администратора кластера для сервисного аккаунта
+kubectl create token headlamp-admin -n kube-system --duration=43800h # выпустить токен для авторизации сроком действия 5 лет
+```
+### k9s
+
+[K9s](https://github.com/derailed/k9s) - это TUI интерфейс для взаимодействия с кластерами Kubernetes (управление и чтение логов).
+
+`wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && rm k9s_linux_amd64.deb` установка в системе с архитектурой `amd64` \
+`wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_arm64.deb && sudo apt install ./k9s_linux_arm64.deb && rm k9s_linux_arm64.deb` установка в системе с архитектурой `arm64` \
+`winget install k9s || scoop install k9s || choco install k9s || curl.exe -A MS https://webinstall.dev/k9s | powershell` установка в Windows
+
+### kubectl
+
+`kubectl get nodes` отобразить список `node` и их статус работы, роль (`master` или `node`), время запуска и версию
+
+`kubectl get namespaces` вывести список все доступных пространств имен (`namespace`)
+`kubectl config view` отобразить текущую конфигурацию (настройка подключения kubectl к Kubernetes, которое взаимодействует с приложением через конечные точки `REST API`) \
+`kubectl config set-context --current --namespace=kubernetes-dashboard` сменить context в конфигурации
+
+`kubectl create deployment torapi --image=torapi --replicas=3 --dry-run=client -o yaml` генерация манифеста `deployment.yaml` \
+`kubectl create service loadbalancer torapi --tcp=8444:8443 --dry-run=client -o yaml` генерация манифеста `service.yaml` (`<port>:<targetPort>`)
+
+`kubectl get deployments` отобразить статус всех Deployments в указанном namespace (`-n kubernetes-dashboard`), которые в свою очередь управляют Pod-ами (`RADY` - текущее количество желаемых реплик в рабочем состояние, например, 2 из 2 и `UP-TO-DATE` — количество реплик, обновленных до последней версии)
+
+`kubectl get pods` статус всех подов \
+`kubectl get pods -o wide` отобразить количество всех подов и на какой ноде он работает (у каждого пода свой ip-адрес) \
+`kubectl get pods -o json` отобразить подробный вывод в формате `json` \
+`kubectl get pods -o jsonpath='{range .items[*]}{.spec.nodeName}{": "}{.metadata.name}{"\n"}{end}'` фильтрация по `json` как в `jq` \
+`kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'` получить список имен всех под через шаблон фильтра
+
+`kubectl get services` отобразить список сервисов (их `TYPE`, `CLUSTER-IP`, `EXTERNAL-IP` и `PORT(S)`), которые принимают внешний трафик \
+`kubectl describe services torapi-service` отобразить настройки сервиса для внешнего доступа (ip, тип сервиса и конечные точки) \
+`kubectl get endpoints torapi-service` отобразить на какие адреса (ip и порт) подов перенаправляется трафик сервиса
+
+`kubectl describe pods torapi-54775d94b8-t2dhm` отобразить какие контейнеры находятся внутри пода и на каких нодах запущены \
+`kubectl logs torapi-54775d94b8-t2dhm` отобразить логи выбранного контейнера в поде (сообщения, которые приложение отправляет в `stdout`) \
+`kubectl logs -l app=torapi --follow` выводить лог для всех запущенных репликах подов в реальном времени
+
+`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- ls -lha` выполнить команду в указанноv контейнере внутри пода \
+`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- env` отобразить список глобальных переменных в контейнере \
+`kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- curl http://localhost:8443/api/provider/list` проверить доступность приложения внутри контейнера \
+`kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- sh` запустить `sh` или `bash` сессию в контейнере пода
+
+`kubectl get rs` состояние реплик (`ReplicaSet`) для всех deployment (`DESIRED` - желаемое количество экземпляров-реплик и `CURRENT` - текущее количество реплик) \
+`kubectl scale deployments/torapi --replicas=3` масштабировать (или уменьшить) deployment до указанного числа реплик подов \
+`kubectl describe deployments/torapi` изменения фиксируется в конфигурации deployment - Events: `Scaled up replica set torapi-54775d94b8 from 2 to 3`
+
+`kubectl delete service torapi-service` удалить service \
+`kubectl delete deployment torapi` удалить deployment
+
+`kubectl create deployment kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1` \
+`kubectl expose deployment/kubernetes-bootcamp --type="NodePort" --port 3088` \
+`kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=docker.io/jocatalin/kubernetes-bootcamp:v2` выполнение плавающего обновления версии образа работающего контейнера \
+`kubectl rollout status deployments/kubernetes-bootcamp` проверить статус обновления \
+`kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=gcr.io/google-samples/kubernetes-bootcamp:v10` выполнить обновление на несуществующую версию \
+`kubectl rollout undo deployments/kubernetes-bootcamp` откатить deployment к последней работающей версии (к предыдущему известному состоянию в образе v2)
+
+`kubectl get configmap` получить все ConfigMap \
+`kubectl describe configmap kube-root-ca.crt` отобразить содержимое ConfigMap (на примере корневого сертифика)
+
+`kubectl create secret generic admin-password --from-literal=username=admin --from-literal=password=pass` создать секрет в формате ключ-значение \
+`kubectl create secret generic api-key --from-file=api-key.txt` создать секрет из содержимого файла \
+`kubectl get secret` получить список всех секретов \
+`kubectl describe secret admin-password` получить информацию о секрете (размер в байтах) \
+`kubectl get secret admin-password -o yaml` получить содержимое секретов в кодировке base64 \
+`kubectl get secret admin-password -o jsonpath="{.data.password}" | base64 --decode` декодировать содержимое секрета \
+`kubectl delete secret admin-password` удалить секрет
+
+`kubectl get jobs -n kube-system` проверить статус выполнения заданий (job)
+
+### Deployment and Service
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rest-api
+```
+`kubectl apply -f namespace.yaml`
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
