@@ -95,8 +95,9 @@ go_to_top = true
 `systemctl start docker` \
 `systemctl enable docker` \
 `iptables -t nat -N DOCKER` \
-`docker -v` \
-`docker -h`
+`docker -v`
+
+`docker events` отобразить все происходящие события в процессе работы
 
 `sudo usermod -aG docker lifailon` добавить пльзователя в группу docker \
 `newgrp docker` применить изменения в группах
@@ -123,17 +124,17 @@ Environment="HTTPS_PROXY=http://docker:password@192.168.3.100:9090"
 
 ### Mirror
 
-`echo '{ "registry-mirrors": ["https://dockerhub.timeweb.cloud"] }' > "/etc/docker/daemon.json"` \
-`echo '{ "registry-mirrors": ["https://huecker.io"] }' > "/etc/docker/daemon.json"` \
-`echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' > "/etc/docker/daemon.json"` \
-`echo '{ "registry-mirrors": ["https://daocloud.io"] }' > "/etc/docker/daemon.json"` \
-`echo '{ "registry-mirrors": ["https://c.163.com"] }' > "/etc/docker/daemon.json"`
+`echo '{ "registry-mirrors": ["https://dockerhub.timeweb.cloud"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://huecker.io"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://daocloud.io"] }' > "/etc/docker/daemon.json"` \
+`echo '{ "registry-mirrors": ["https://c.163.com"] }' > "/etc/docker/daemon.json"`
 
 `systemctl restart docker`
 
 ### Nexus
 
-Разрешает небезопасные HTTP-соединения с Nexus сервером (если не использует HTTPS):
+Небезопасные HTTP-соединения с Nexus сервером (если не использует HTTPS):
 ```bash
 echo -e '{\n  "insecure-registries": ["http://192.168.3.105:8882"]\n}' | sudo tee "/etc/docker/daemon.json"
 sudo systemctl restart docker
@@ -194,7 +195,7 @@ alias docker-all-restart='docker ps -aq | xargs -P 4 -I {} docker restart {}' # 
 
 ### Logs
 
-`docker logs uptime-kuma --tail 100` показать логи конкретного запущенного контейнера в терминале (последние 100 строк) \
+`docker logs uptime-kuma --tail 100` отобразить логи конкретного запущенного контейнера в терминале (последние 100 строк) \
 `docker system events` предоставляют события от демона dockerd в реальном времени \
 `journalctl -xeu docker.service` \
 `docker system df` отобразить сводную информацию занятого пространства образами и контейнерами \
@@ -208,7 +209,7 @@ docker run \
   container_name
 ```
 Настройка логирования в docker compose:
-```yml
+```yaml
 logging:
       driver: "json-file" # Стандартный драйвер логов Docker
       options:
@@ -243,32 +244,53 @@ logging:
 `docker volume rm test` удалить том \
 `docker run -d --restart=always --name uptime-kuma -p 8080:3001 -v uptime-kuma:/app/data louislam/uptime-kuma:1` создать и запустить контейнер на указанном томе (том создается автоматически, в дальнейшем его можно указывать при создании контейнера, если необходимо загружать из него сохраненные данные)
 
+#### tmpfs
+
 Временная файловая система для хранения данных в оперативной памяти (исчезают после остановки контейнера):
-```yml
+```yaml
 volumes:
   ram_disk:
     driver_opts:
-      type: "tmpfs"
-      device: "tmpfs"
+      type: tmpfs
+      device: tmpfs
       o: "size=512m,uid=1000"
 ```
+#### nfs
+
 Монтирование `NFS` (без необходимости предварительного монтирования на хосте) через драйвер `opts`:
-```yml
+```yaml
 volumes:
   nfs_volume:
     driver_opts:
-      type: "nfs"
-      o: "addr=192.168.3.106,nolock,soft,nfsvers=4"
-      device: ":/backup" # путь к NFS-шаре на сервере
+      type: nfs
+      o: "addr=192.168.3.101,nolock,soft,nfsvers=4"
+      device: ":/backup"
 ```
-Монтирование `SMB` каталога:
+#### cifs
+```yaml
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - smb_volume:/data
 
-`sudo apt install cifs smbclient -y` \
-`smbclient //192.168.3.100/backup -U guest%` првоерить гостевой доступ \
+volumes:
+  smb_volume:
+    driver_opts:
+      type: cifs
+      o: username=guest,password=,uid=1000,gid=1000
+      device: //192.168.3.100/docker-data/nginx
+```
+#### mount
+
+`sudo apt install cifs-utils smbclient -y` \
+`smbclient //192.168.3.100/backup -U guest%` проверить гостевой доступ \
 `sudo mkdir /mnt/smb_backup && sudo chown -R 1000:1000 /mnt/smb_backup` создать директорию для монтирования \
+`mount -t cifs //192.168.3.100/backup /mnt/smb_backup -o user=guest` примонтировать (до перезагрузки) \
 `echo "//192.168.3.100/backup /mnt/smb_backup cifs username=guest,password=,uid=1000,gid=1000,rw,vers=3.0 0 0" | sudo tee -a /etc/fstab` \
 `mount -a && systemctl daemon-reload && df -h` примонтировать (применить все записи из fstab)
-```yml
+```yaml
 volumes:
   - /mnt/smb_backup:/data
 ```
@@ -282,10 +304,89 @@ volumes:
 `docker network connect network_test uptime-kuma` подключить работающий контейнер к указанной сети \
 `docker network disconnect network_test uptime-kuma` отключить от сети
 
+#### bridge
+
+Контейнеры взаимодействуют между собой через виртуальный мост (используя `container_name` для связи, в т.ч. с другими контейнерами через проброс сети в помощью `external`), и используют NAT для выхода в Интернет.
+```yaml
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    dns:
+      - 8.8.8.8
+    networks:
+      - nginx_net
+      - dns-stack_default
+
+networks:
+  nginx_net:
+    driver: bridge
+  dns-stack_default:
+    external: true
+```
+#### host
+
+В сетевом режиме `host` используется сеть хоста напрямую (порты через секцию `ports` не пробрасываются).
+```yaml
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    network_mode: host
+```
+#### macvlan
+
+`macvlan` - это сетевой драйвер, который работает на уровне L2, где контейнеры получают свои MAC и IP адреса во внешней сети хоста (линкуется по названию интерфейса).
+
+`sudo ip link set eth0 promisc on` включить режим promisc на интерфейсе хоста, что бы иметь возможность принимать все пакеты, проходящие через хост, независимо от MAC-адреса.
+
+`Set-VMNetworkAdapter -VMName hv-us-101 -MacAddressSpoofing On` включить режим promisc на виртуальной машине Hyper-V
+```yaml
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    networks:
+      macvlan_net:
+        ipv4_address: 192.168.3.110
+
+networks:
+  macvlan_net:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.3.0/24
+          gateway: 192.168.3.1
+```
+#### ipvlan
+
+`ipvlan` не создаёт отдельные MAC-адреса, поэтому может работать на `wlan` (Wi-Fi) интерфейсах хоста.
+```yaml
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    networks:
+      ipvlan_net:
+        ipv4_address: 192.168.3.110
+
+networks:
+  ipvlan_net:
+    driver: ipvlan
+    driver_opts:
+      parent: wlan0
+      mode: l2
+    ipam:
+      config:
+        - subnet: 192.168.3.0/24
+          gateway: 192.168.3.1
+```
 ### Inspect
 
 `docker inspect uptime-kuma` подробная информация о контейнере (например, конфигурация NetworkSettings) \
-`docker inspect uptime-kuma --format='{{.LogPath}}'` показать, где хранятся логи для конкретного контейнера в локальной системе \
+`docker inspect uptime-kuma --format='{{.LogPath}}'` отобразить, где хранятся логи для конкретного контейнера в локальной системе \
 `docker inspect uptime-kuma | grep LogPath` \
 `docker inspect $(docker ps -q) --format='{{.NetworkSettings.Ports}}'` отобразить TCP порты всех запущенных контейнеров \
 `docker inspect $(docker ps -q) --format='{{.NetworkSettings.Ports}}' | grep -Po "[0-9]+(?=}])"` отобразить порты хоста (внешние) \
@@ -365,6 +466,58 @@ systemctl restart docker
 ```
 `curl http://192.168.3.102:9323/metrics`
 
+### Docker Socket Proxy
+
+Проксирование локального сокета Docker на базе HAProxy (не требуется внесение изменений в системные файлы, такие как `daemon.json` и `docker.service`) с контролем доступа к конечным точкам с использованием переменных среды.
+```yaml
+services:
+  docker-socket-proxy:
+    image: lifailon/docker-socket-proxy:amd64
+    container_name: docker-socket-proxy
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 2375:2375 # Docker API
+      - 2376:2376 # HAProxy статистика
+    environment:
+      - SOCKET_PATH=/var/run/docker.sock  # Путь к Docker сокету внутри контейнера
+      - LOG_LEVEL=info      # Уровень логирования HAProxy-прокси (debug|info|warn|error)
+      # Включено по умолчанию
+      - INFO=1              # /info — общая информация о Docker демоне, версия, плагины, лимиты
+      - PING=1              # /_ping — проверку доступности Docker API
+      - VERSION=1           # /version — получение версии API и информации о сервере
+      # Отключено по умолчанию
+      - POST=1              # HTTP POST-запросы (например, для создания контейнеров)
+      - GRPC=1              # /grpc — gRPC интерфейс Docker (экспериментальный)
+      - EXEC=1              # /exec — запуск команд внутри контейнеров
+      - ALLOW_RESTARTS=1    # /containers/.../(restart|kill) — перезапуск или остановку контейнера
+      - ALLOW_START=1       # /containers/.../start — запуск остановленных контейнеров
+      - ALLOW_STOP=1        # /containers/.../stop — остановку запущенных контейнеров
+      - AUTH=1              # /auth — отвечает за логин к registry через Docker API
+      - CONTAINERS=1        # /containers — список контейнеров, их создание, удаление, inspect и т.п.
+      - IMAGES=1            # /images — просмотр, загрузка и удаление Docker-образов
+      - NETWORKS=1          # /networks — просмотр, создание и удаление сетей Docker
+      - BUILD=1             # /build — сборка образов через API
+      - COMMIT=1            # /commit — создание образа из контейнера (docker commit)
+      - DISTRIBUTION=1      # /distribution — доступ к registry API (например, метаданные образов)
+      - EVENTS=1            # /events — поток событий Docker (создание, запуск, удаление контейнеров)
+      - PLUGINS=1           # /plugins — управление Docker плагинами
+      - VOLUMES=1           # /volumes — управление Docker томами (создание, удаление, просмотр)
+      - SESSION=1           # /session — сессии терминалов и интерактивные API
+      # Swarm
+      - SWARM=0             # /swarm — настройки и статус Swarm кластера
+      - NODES=0             # /nodes — информация о нодах в Swarm
+      - CONFIGS=0           # /configs — используется в Swarm для конфигураций
+      - SECRETS=0           # /secrets — секреты Docker Swarm
+      - SERVICES=0          # /services — управление сервисами Docker Swarm
+      - SYSTEM=0            # /system — общая системная информация Docker (ресурсы, usage)
+      - TASKS=0             # /tasks — задачи Swarm (контейнеры внутри сервисов)
+      # HAProxy stats
+      - STATS_URI=/
+      - STATS_USER=admin
+      - STATS_PASS=admin
+```
 ### Context
 
 `docker context create rpi-106 --docker "host=tcp://192.168.3.106:2375"` добавить подключение к удаленному хосту через протокол `TCP` \
@@ -430,12 +583,28 @@ function dcl() {
     fi
 }
 ```
+### LazyDocker
+
+[LazyDocker](https://github.com/jesseduffield/lazydocker) - TUI интерфейс для управления Docker.
+
+`scoop install lazydocker || choco install lazydocker` установка в Windows (https://github.com/jesseduffield/lazydocker)
+```bash
+wget https://github.com/jesseduffield/lazydocker/releases/download/v0.24.1/lazydocker_0.24.1_Linux_x86.tar.gz -O ~/lazydocker.tar.gz
+tar -xzf ~/lazydocker.tar.gz lazydocker
+rm ~/lazydocker.tar.gz
+mv lazydocker /usr/local/bin/lazydocker
+chmod +x /usr/local/bin/lazydocker
+lazydocker --version
+```
 ### ctop
+
+[ctop](https://github.com/bcicen/ctop) - top-like интерфейс для метрик и управления контейнерами Docker.
 
 `scoop install ctop` установка в Windows (https://github.com/bcicen/ctop)
 ```bash
-wget https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 -O /usr/local/bin/ctop
+wget https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-${dpkg --print-architecture} -O /usr/local/bin/ctop
 chmod +x /usr/local/bin/ctop
+ctop -v
 ```
 `ctop` отображает сводную таблицу (top) CPU, MEM, NET RX/TX, IO R/W \
 `o` - графики \
@@ -446,31 +615,18 @@ chmod +x /usr/local/bin/ctop
 `r` - restart \
 `e` - exec shell
 
+### dtop
+
+[dtop](https://github.com/amir20/dtop) - top real-time для контейнеров Docker от создателя Dozzle.
+```bash
+curl -sSL https://github.com/amir20/dtop/releases/latest/download/dtop-installer.sh | sh
+dtop --version
+```
 ### Dockly
 
-`npm install -g dockly` TUI интерфейс на базе Node.js и Blessed.js \
+`npm install -g dockly` TUI интерфейс на базе `Node.js` и [Blessed](https://github.com/chjj/blessed) \
 `docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly` запуск в Docker \
 `dockly`
-
-### LazyDocker
-
-`scoop install lazydocker || choco install lazydocker` установка в Windows (https://github.com/jesseduffield/lazydocker)
-```bash
-wget https://github.com/jesseduffield/lazydocker/releases/download/v0.23.1/lazydocker_0.23.1_Linux_x86.tar.gz -O ~/lazydocker.tar.gz
-tar -xzf ~/lazydocker.tar.gz lazydocker
-rm ~/lazydocker.tar.gz
-mv lazydocker /usr/local/bin/lazydocker
-chmod +x /usr/local/bin/lazydocker
-```
-lazydocker
-
-### Lazyjournal
-
-`curl -sS https://raw.githubusercontent.com/Lifailon/lazyjournal/main/install.sh | bash` установка в Unix \
-`Invoke-RestMethod https://raw.githubusercontent.com/Lifailon/lazyjournal/main/install.ps1 | Invoke-Expression` установка в Windows \
-`lazyjournal` \
-`lazyjournal --help` \
-`lazyjournal --version`
 
 ### Push
 
@@ -587,7 +743,7 @@ docker run -d --name TorAPI -p 8443:8443 --restart=unless-stopped \
   -e PASSWORD="TorAPI" \
   torapi
 ```
-## Docker Compose
+## Compose
 ```bash
 mkdir -p $HOME/.local/bin
 version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
@@ -677,13 +833,39 @@ TOKEN=$(curl -sS -X POST http://192.168.3.101:8082/login/access-token --data "us
 curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors | jq .
 curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'
 ```
+### Dockge
+
+[Dockge](https://github.com/louislam/dockge) - веб интерфейс для управления стеками Docker Compose от создателя Uptime Kuma.
+```yaml
+services:
+  dockge:
+    image: louislam/dockge:1
+    container_name: dockge
+    restart: always
+    volumes:
+      - ./dockge_data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Docker stacks directory on host:container
+      - /home/lifailon/docker:/home/lifailon/docker
+    # Enable routing for traffic
+    # labels:
+    #   - traefik.enable=true
+    environment:
+      # Enable routing for docker-gen
+      # - VIRTUAL_HOST=dockge.local
+      - DOCKGE_STACKS_DIR=/home/lifailon/docker
+      # Доступ к консоли dockge
+      - DOCKGE_ENABLE_CONSOLE=true
+    ports:
+      - 5001:5001
+```
 ### Dozzle
 
 Dozzle (https://github.com/amir20/dozzle) - легковесное приложение с веб-интерфейсом для мониторинга журналов Docker (без хранения).
 
 `mkdir dozzle && cd dozzle && mkdir dozzle_data`
 
-`echo -n DozzleAdmin | shasum -a 256` получить пароль в формате sha-256 и передать в конфигурацию
+`echo -n DozzleAdmin | shasum -a 256` сгенерировать пароль в формате sha-256 и передать в конфигурацию
 
 `nano ./dozzle_data/users.yml`
 ```yaml
@@ -691,6 +873,10 @@ users:
   admin:
     name: "admin"
     password: "a800c3ee4dac5102ed13ba673589077cf0a87a7ddaff59882bb3c08f275a516e"
+```
+Или сгенерировать пользователя в формате `yaml` конфигурации:
+```
+docker run -it --rm amir20/dozzle generate --name admin --email admin@admin.com --password admin admin1
 ```
 Запускаем контейнер:
 ```yaml
@@ -700,15 +886,21 @@ services:
     container_name: dozzle
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./dozzle_data:/data
     environment:
-      - VIRTUAL_HOST=dozzle.local
+      # Отключить сбор и отправку аналитики
+      - DOZZLE_NO_ANALYTICS=true
+      # Включить действия (start/stop/restart)
+      - DOZZLE_ENABLE_ACTIONS=true
+      # Добавить возможность подключения к работающим контейнерам
+      - DOZZLE_ENABLE_SHELL=true
+      # Включить базовую авторизацию из файла /data/users.yml
       - DOZZLE_AUTH_PROVIDER=simple
-      # Подключиться к удаленному хосту через Docker API (tcp socket)
+      # Подключиться к удаленному хосту через Docker Socket API
       # - DOZZLE_REMOTE_HOST=tcp://192.168.3.101:2375|us-101
       # Подключиться к удаленному хосту через Dozzle Agent
-      # - DOZZLE_REMOTE_AGENT=192.168.3.106:7007
+      # - DOZZLE_REMOTE_AGENT=192.168.3.105:7007,192.168.3.106:7007
     ports:
       - 9090:8080
 
@@ -754,6 +946,42 @@ services:
       start_interval: 5s
     ports:
       - 7007:7007
+```
+### Beszel
+
+[Beszel](https://github.com/henrygd/beszel) - веб-интерфейс (как Grafana) для мониторинга хостов и контейнеров (как node_exporter и cAdvisor вместе), backend на базе [Pocket Base](https://github.com/pocketbase/pocketbase) для хранения данных, также поддерживает оповещения в Telegram и другие мессенджеры через вебхук [shoutrrr](https://github.com/containrrr/shoutrrr) (от создателя Watchtower).
+```yaml
+services:
+  # Сервер (веб-интерфейс и бэкенд)
+  beszel-server:
+    image: henrygd/beszel:latest
+    container_name: beszel-server
+    restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./beszel_server_data:/beszel_data
+    ports:
+      - 8090:8090
+
+  # Агент
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./beszel_agent_data:/var/lib/beszel-agent
+      # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
+    environment:
+      # HUB_URL: http://localhost:8090
+      # LISTEN: /beszel_socket/beszel.sock
+      LISTEN: 45876
+      # TOKEN: <token>
+      KEY: "Копируем публичный ключ из интерфейса и перезапускаем docker compose"
+    # ports:
+    #   - 45876:45876
 ```
 ### Watchtower
 
@@ -804,19 +1032,45 @@ docker run -d --name kinozal-bot \
   kinozal-bot
 ```
 ### Portainer
+```yaml
+services:
+  agent:
+    image: portainer/agent:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
 
-`curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml` скачать yaml файл \
-`version_update=$(cat portainer-agent-stack.yml | sed "s/2.11.1/latest/g")` \
-`printf "%s\n" "$version_update" > portainer-agent-stack.yml` обновить версию в yaml файле на последнюю доступную в Docker Hub (2.19.5) \
-`docker stack deploy -c portainer-agent-stack.yml portainer` развернуть в кластере swarm (на каждом node будет установлен агент, который будет собирать данные, а на manager будет установлен сервер с web панелью) \
+  portainer:
+    image: portainer/portainer-ce:latest
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    ports:
+      - 9443:9443
+      - 9000:9000
+      - 8000:8000
+    volumes:
+      - ./portainer_data:/data
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+```
+`docker stack deploy -c portainer-agent-stack.yml portainer` развернуть в кластере swarm (на каждом node будет установлен агент, который будет собирать данные, а на manager будет установлен сервер с web панелью)
+
 https://192.168.3.101:9443
 
-`docker run -d --name portainer_agent -p 9001:9001 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent:2.19.5` установить агент на удаленный хост \
+`docker run -d --name portainer_agent -p 9001:9001 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent:latest` установить агент на удаленный хост
+
 https://192.168.3.101:9443/#!/endpoints добавить удаленный хост по URL 192.168.3.102:9001
 
 `docker volume create portainer_data` создать volume для установки локального контейнера (не в кластер swarm) \
 `docker create -it --name=portainer -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer` создать локальный контейнер \
-`docker start portainer` \
+`docker start portainer`
+
 http://192.168.3.101:9000
 
 ## Docker.DotNet
@@ -1057,60 +1311,163 @@ kubectl create token headlamp-admin -n kube-system --duration=43800h # выпу�
 ```
 ### k9s
 
-[K9s](https://github.com/derailed/k9s) - это TUI интерфейс для взаимодействия с кластерами Kubernetes (управление и чтение логов).
+[K9s](https://github.com/derailed/k9s) - это TUI интерфейс для взаимодействия с кластерами Kubernetes (базовое управление и просмотр логов) с поддержкой [плагинов](https://k9scli.io/topics/plugins).
 
 `wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && rm k9s_linux_amd64.deb` установка в системе с архитектурой `amd64` \
 `wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_arm64.deb && sudo apt install ./k9s_linux_arm64.deb && rm k9s_linux_arm64.deb` установка в системе с архитектурой `arm64` \
 `winget install k9s || scoop install k9s || choco install k9s || curl.exe -A MS https://webinstall.dev/k9s | powershell` установка в Windows
+```bash
+EDITOR=nano k9s -A
+```
+Подключаем плагин [kubectl-node-shell](https://github.com/kvaps/kubectl-node-shell) как плагин k9s в файле `~/.config/k9s/plugins.yaml` для подключения к терминалу хоста под пользователем `root`:
+```yaml
+# Доступные переменные:
+# $RESOURCE_GROUP - выбранная группа ресурсов
+# $RESOURCE_VERSION - выбранная версия API ресурса
+# $RESOURCE_NAME - выбранное имя ресурса
+# $NAMESPACE - выбранное пространство имен ресурсов
+# $NAME - выбранное имя ресурса
+# $CONTAINER - текущее имя контейнер
+# $FILTER - текущий фильтр, если используется
+# $KUBECONFIG -  расположение KubeConfig
+# $CLUSTER - имя активного кластера
+# $CONTEXT - имя активного контекста
+# $USER - активный пользователь
+# $GROUPS - активные группы
+# $POD - в режиме просмотра контейнера
+# $COL-<RESOURCE_COLUMN_NAME> - просмотр ресурса по заданному названию столбца.
 
+plugins:
+  kubectl-node-shell:
+    shortCut: s
+    description: Open a root shell on a node using the node-shell plugin
+    scopes:
+      - nodes
+    command: kubectl
+    args:
+      - node-shell
+      - $NAME
+      - --context
+      - $CONTEXT
+    background: false
+    confirm: false
+  node-root-shell:
+    shortCut: a
+    description: Run root shell on node
+    dangerous: true
+    scopes:
+      - nodes
+    command: bash
+    background: false
+    confirm: true
+    args:
+      - -c
+      - |
+        host="$1"
+        json='
+        {
+          "apiVersion": "v1",
+          "spec": {
+            "hostIPC": true,
+            "hostNetwork": true,
+            "hostPID": true
+        '
+        if ! [[ -z "$host" ]]; then
+          json+=",
+          \"nodeSelector\" : {
+            \"kubernetes.io/hostname\" : \"$host\"
+          }
+          ";
+        fi
+        json+='
+          }
+        }
+        '
+        kubectl run -ti --image alpine:3.8 --rm --privileged --restart=Never --overrides="$json" root --command -- nsenter -t 1 -m -u -n -i -- bash -l
+```
 ### kubectl
 
-`kubectl get nodes` отобразить список `node` и их статус работы, роль (`master` или `node`), время запуска и версию
+`echo "source <(kubectl completion bash)" >> ~/.bashrc` включить автодополнение для kubectl в bash \
+`echo "alias k=kubectl && complete -F __start_kubectl k" >> ~/.bashrc` добавить псевдоним `k` для команды kubectl \
+`kubectl completion fish | source` автодополнение в [fish shell](https://github.com/fish-shell/fish-shell)
 
-`kubectl get namespaces` вывести список все доступных пространств имен (`namespace`)
-`kubectl config view` отобразить текущую конфигурацию (настройка подключения kubectl к Kubernetes, которое взаимодействует с приложением через конечные точки `REST API`) \
-`kubectl config set-context --current --namespace=kubernetes-dashboard` сменить context в конфигурации
+`KUBECONFIG=~/.kube/config:~/.kube/config2` использовать несколько файлов kubeconfig одновременно (в выводе объеденяет конфигурацию) \
+`kubectl config view` отобразить текущую конфигурацию (настройка подключения kubectl к Kubernetes, которое взаимодействует с приложением через конечные точки `REST API`)
 
-`kubectl create deployment torapi --image=torapi --replicas=3 --dry-run=client -o yaml` генерация манифеста `deployment.yaml` \
-`kubectl create service loadbalancer torapi --tcp=8444:8443 --dry-run=client -o yaml` генерация манифеста `service.yaml` (`<port>:<targetPort>`)
+`kubectl config get-contexts` отобразить список всех доступных контекстов (список кластеров) \
+`kubectl config current-context` отобразить текущий контекст \
+`kubectl config use-context default` переключить контекст (установить контекст `default` как контекст по умолчанию)
+
+`kubectl auth can-i --list` отобразить права доступа
+
+`kubectl cluster-info`отобразить адреса главного узла и сервисов \
+`kubectl cluster-info dump` вывести состояние текущего кластера \
+`kubectl cluster-info dump --output-directory=./cluster-state` выгрузить состояние текущего кластера в директорию `cluster-state` (информация для отладки)
+
+`kubectl api-resources` отобразить все поддерживаемые типы ресурсов
+
+`kubectl get events --sort-by=.metadata.creationTimestamp` вывести все логи, отсортированные по времени
+
+`kubectl get nodes` отобразить список `node` и их статус работы, роль (`master` или `node`), время запуска и версию \
+`kubectl get node --selector='!node-role.kubernetes.io/master'` отобразить все рабочие узлы (с помощью селектора исключаем узлы с меткой `master`) \
+`kubectl describe nodes rpi-105` отобразить детальную информацию по конкретной ноде (labels, annotations, системная информация, запущенные поды и используемые ими и суммарно нодой ресурсы, а также логи - events) \
+`kubectl top nodes` отобразить метрики всех нод
+
+`kubectl get namespaces` вывести список все доступных пространств имен
+
+`kubectl get jobs -A` проверить статус выполнения заданий во всех namespace
+
+`kubectl get pv --sort-by=.spec.capacity.storage` вывести список `PersistentVolumes` (физический или логический том, например, NFS или локальное хранилища на конкретной ноде), отсортированные по емкости \
+`kubectl get pvc -A` отобразить все `PersistentVolumeClaim` (запрос PV для использования в контейнерах для хранения данных) во всех неймспейсах
+
+`kubectl create deployment torapi --image=lifailon/torapi:latest --replicas=3 --dry-run=client -o yaml` генерация манифеста `deployment.yaml` \
+`kubectl create service loadbalancer torapi --tcp=8444:8443 --dry-run=client -o yaml` генерация манифеста `service.yaml` в режиме балансировки нагрузки (`port:targetPort (порт контейнера)`)
+
+`kubectl diff -f ./deployment.yaml` сравнить текущее состояние кластера с состоянием, в котором находился бы кластер в случае применения манифеста
 
 `kubectl get deployments` отобразить статус всех Deployments в указанном namespace (`-n kubernetes-dashboard`), которые в свою очередь управляют Pod-ами (`RADY` - текущее количество желаемых реплик в рабочем состояние, например, 2 из 2 и `UP-TO-DATE` — количество реплик, обновленных до последней версии)
 
-`kubectl get pods` статус всех подов \
-`kubectl get pods -o wide` отобразить количество всех подов и на какой ноде он работает (у каждого пода свой ip-адрес) \
-`kubectl get pods -o json` отобразить подробный вывод в формате `json` \
-`kubectl get pods -o jsonpath='{range .items[*]}{.spec.nodeName}{": "}{.metadata.name}{"\n"}{end}'` фильтрация по `json` как в `jq` \
-`kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'` получить список имен всех под через шаблон фильтра
+`kubectl get pods` отобразить статус всех подов \
+`kubectl get pods --show-labels` отобразить все заданные `lables` в подах \
+`kubectl get pods --field-selector=status.phase=Running` отобразить все запущенные поды (фильтрация по статусу) \
+`kubectl get pods -o name` отобразить только имена в формате `pod/<podName>`
+`kubectl get pods -o wide` выводит дополнительную информации в текстовом формате (для подов это внутренний ip-адрес и название ноды, на которой он работает) \
+`kubectl get pods -o json` отобразить подробный вывод в формате `json` или `yaml` \
+`kubectl get pods -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName` отобразить нужные поля таблицы вывода в пользовательском формате
+
+`kubectl top pods` отобразить нагрузку на подах \
+`kubectl top pods --containers` отобразить метрики вместе с используемыми в подах контейнерами
+
+`KUBE_EDITOR="nano" kubectl edit deployments.apps/torapi` отредактировать манифест Deployment в редакторе `nano`
+
+`kubectl get rs` состояние реплик (`ReplicaSet`) для всех подов (`DESIRED` - желаемое количество экземпляров-реплик и `CURRENT` - текущее количество реплик) \
+`kubectl scale deployments/torapi --replicas=3` масштабировать или уменьшить количество подов в deployment до указанного числа реплик \
+`kubectl patch deployment/torapi --type=json -p '[{"op":"replace","path":"/spec/replicas","value":3}]'` пропатчить текущую конфигурацию \
+`kubectl events rs/torapi` изменения фиксируется в логах `ReplicaSet` (`Scaled up replica set torapi-54775d94b8 from 2 to 3`) \
+`kubectl describe deployments.apps/torapi` отобразить подробную конфигурацию развертвывания (шаблон и логи) \
+`kubectl autoscale deployment torapi --min=2 --max=10` автоматически масштабировать развёртывание в диапазоне от 2 до 10 подов
 
 `kubectl get services` отобразить список сервисов (их `TYPE`, `CLUSTER-IP`, `EXTERNAL-IP` и `PORT(S)`), которые принимают внешний трафик \
-`kubectl describe services torapi-service` отобразить настройки сервиса для внешнего доступа (ip, тип сервиса и конечные точки) \
 `kubectl get endpoints torapi-service` отобразить на какие адреса (ip и порт) подов перенаправляется трафик сервиса
 
-`kubectl describe pods torapi-54775d94b8-t2dhm` отобразить какие контейнеры находятся внутри пода и на каких нодах запущены \
-`kubectl logs torapi-54775d94b8-t2dhm` отобразить логи выбранного контейнера в поде (сообщения, которые приложение отправляет в `stdout`) \
-`kubectl logs -l app=torapi --follow` выводить лог для всех запущенных репликах подов в реальном времени
+`kubectl delete service torapi-service` удалить service
 
-`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- ls -lha` выполнить команду в указанноv контейнере внутри пода \
-`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- env` отобразить список глобальных переменных в контейнере \
+`kubectl logs torapi-54775d94b8-t2dhm` отобразить логи выбранного пода (сообщения, которые приложение отправляет в `stdout`) \
+`kubectl logs -l app=torapi --follow` выводить лог на всех запущенных репликах подов (фильтрация по `label`) в реальном времени (`--follow`)
+
+`kubectl attach pods/torapi-54775d94b8-t2dhm`
+
+`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- ls -lha` выполнить команду в указанноv контейнере внутри указанного пода \
+`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- env` отобразить список глобальных переменных в контейнере (например определить `$HOME`) \
 `kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- curl http://localhost:8443/api/provider/list` проверить доступность приложения внутри контейнера \
 `kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- sh` запустить `sh` или `bash` сессию в контейнере пода
 
-`kubectl get rs` состояние реплик (`ReplicaSet`) для всех deployment (`DESIRED` - желаемое количество экземпляров-реплик и `CURRENT` - текущее количество реплик) \
-`kubectl scale deployments/torapi --replicas=3` масштабировать (или уменьшить) deployment до указанного числа реплик подов \
-`kubectl describe deployments/torapi` изменения фиксируется в конфигурации deployment - Events: `Scaled up replica set torapi-54775d94b8 from 2 to 3`
+`kubectl -n $NS exec $pod -c $container -- sh -c "for i in \$(seq 1 $cpuCount); do yes $procName > /dev/null 2>&1 & done"` запустить нагрузку \
+`kubectl -n $NS exec $pod -c $container -- sh -c "grep $procName /proc/[0-9]*/cmdline | awk -F'/proc/' '{split(\$2,a,\"/\");sum=sum\" \"a[1]}END{print sum}' | xargs kill"` остановить нагрузку \
+`kubectl -n $NS exec $pod -c $container -- sh -c "echo \"Количество процессов нагрузки: \"\$((\$(grep $procName /proc/[0-9]*/cmdline 2>&1 | wc -l)-3))"` получить количество процессов нагрузки (1 yes процесс = 1 vCPU)
 
-`kubectl delete service torapi-service` удалить service \
-`kubectl delete deployment torapi` удалить deployment
-
-`kubectl create deployment kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1` \
-`kubectl expose deployment/kubernetes-bootcamp --type="NodePort" --port 3088` \
-`kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=docker.io/jocatalin/kubernetes-bootcamp:v2` выполнение плавающего обновления версии образа работающего контейнера \
-`kubectl rollout status deployments/kubernetes-bootcamp` проверить статус обновления \
-`kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=gcr.io/google-samples/kubernetes-bootcamp:v10` выполнить обновление на несуществующую версию \
-`kubectl rollout undo deployments/kubernetes-bootcamp` откатить deployment к последней работающей версии (к предыдущему известному состоянию в образе v2)
-
-`kubectl get configmap` получить все ConfigMap \
-`kubectl describe configmap kube-root-ca.crt` отобразить содержимое ConfigMap (на примере корневого сертифика)
+`kubectl get cm` получить все ConfigMap \
+`kubectl describe cm kube-root-ca.crt` отобразить содержимое ConfigMap (на примере корневого сертифика)
 
 `kubectl create secret generic admin-password --from-literal=username=admin --from-literal=password=pass` создать секрет в формате ключ-значение \
 `kubectl create secret generic api-key --from-file=api-key.txt` создать секрет из содержимого файла \
@@ -1120,8 +1477,65 @@ kubectl create token headlamp-admin -n kube-system --duration=43800h # выпу�
 `kubectl get secret admin-password -o jsonpath="{.data.password}" | base64 --decode` декодировать содержимое секрета \
 `kubectl delete secret admin-password` удалить секрет
 
-`kubectl get jobs -n kube-system` проверить статус выполнения заданий (job)
+`kubectl set image deployments/openrouter-bot openrouter-bot=lifailon/openrouter-bot:0.5.0` выполнить плавающие обновление образа работающих контейнеров (формат: `containerName=imagePath:tag` ) \
+`kubectl rollout status deployments/openrouter-bot` проверить статус обновления \
+`kubectl set image deployments/openrouter-bot openrouter-bot=lifailon/openrouter-bot:0.1.0` выполнить обновление на несуществующую версию \
+`kubectl rollout undo deployments/openrouter-bot` откатить deployment к редыдущему развёртыванию (к предыдущему известному и работающему состоянию) \
+`kubectl rollout history deployment/openrouter-bot` отобразить историю образов \
+`kubectl rollout undo deployments/openrouter-bot --to-revision=1` откатиться к определённой ревизии из истории
 
+`kubectl label pods podName new-label=awesome` добавить метку \
+`kubectl annotate pods podName icon-url=http://goo.gl/XXBTWq` добавить аннотацию
+
+Ключевые уровни детального вывода для отладки в Kubectl:
+
+`--v=3`	Расширенная информация об изменениях \
+`--v=6`	Показать запрашиваемые ресурсы \
+`--v=9`	Показать содержимого HTTP-запроса в полном виде (включая заголовки)
+
+### JSONPath
+
+`kubectl get nodes -o=jsonpath='{.items[*].status.addresses[*].address}'` отобразить ip-адреса всех node \
+`kubectl config view -o jsonpath='{.users[*].name}'` получить список пользователей в конфигурации \
+`kubectl config view -o jsonpath='{.users[?(@.name == "test")].user.password}'` получить пароль для пользователя test
+
+| Функция             | Описание                                        | Пример                                                          | Результат                                       |
+| -                   | -                                               | -                                                               | -                                               |
+| `text`              | обычный текст	                                  | `kind is {.kind}`                                               | kind is List                                    |
+| `@`	                | текущий объект	                                | `{@}`	                                                          | то же, что и ввод                               |
+| `.` или `[]`        | оператор выбора по ключу	                      | `{.kind}, {['kind']}` или `{['name\.type']}`                    | List                                            |
+| `..`	              | рекурсивный спуск	                              | `{..name}`                                                      | 127.0.0.1 127.0.0.2 myself e2e                  |
+| `*`	                | шаблон подстановки для получение всех объектов  | `{.items[*].metadata.name}`                                     | [127.0.0.1 127.0.0.2]                           |
+| `[start:end:step]`  | оператор индексирования                         | `{.users[0].name}`                                              | myself                                          |
+| `[,]`               | оператор объединения                            | `{.items[*]['metadata.name', 'status.capacity']}`               | 127.0.0.1 127.0.0.2 map[cpu:4] map[cpu:8]       |
+| `?()`               | фильтрация                                      | `{.users[?(@.name=="e2e")].user.password}`                      | secret                                          |
+| `range` и `end`     | перебор списка (цикл)                           | `{range .items[*]}[{.metadata.name}, {.status.capacity}] {end}` | [127.0.0.1, map[cpu:4]] [127.0.0.2, map[cpu:8]] |
+| `''`	              | интерпретируемая в кавычках строка              | `{range .items[*]}{.metadata.name}{'\t'}{end}`                  | 127.0.0.1 127.0.0.2                             |
+
+### Go Template
+
+`kubectl get pods -o jsonpath='{range .items[*]}{.spec.nodeName}{": "}{.metadata.name}{"\n"}{end}'` отобразить в формате `nodeName: podeName` \
+`kubectl get pods -o go-template --template '{{range .items}}{{.spec.nodeName}}: {{.metadata.name}}{{"\n"}}{{end}}'` тоже самое, используя [Go template](https://pkg.go.dev/text/template)
+
+[Go Template Playground Online](https://repeatit.io)
+
+Пример условия и цикла:
+```go
+{{ range .Items -}}
+    {{ if eq  . "sleep" -}}
+        pause
+  {{- else -}}
+        Go {{ . -}}
+    {{ end }}
+{{ end }}
+```
+Для шаблона:
+```yaml
+Items:
+  - start
+  - sleep
+  - stop
+```
 ### Deployment and Service
 ```yaml
 apiVersion: v1
@@ -1285,13 +1699,10 @@ kind: Ingress
 metadata:
   name: torapi-ingress
   namespace: rest-api
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
-  # ingressClassName: traefik
+  ingressClassName: traefik
   rules:
-  - host: torapi.local # доменное имя (которое необходимо прописать на DNS сервере)
+  - host: torapi.k8s.local
     http:
       paths:
       - path: /
@@ -1336,10 +1747,23 @@ spec:
 ### MetalLB
 
 [MetalLB](https://github.com/metallb/metallb) - балансировщик нагрузки для локальных кластеров, эмулирующий работу облачных провайдеров. Настраивается пул адресов, и в случае падения ноды, переводит IP-адреса сервисов на другую ноду. Для сервисов LoadBalancer (включая Ingress-контроллер) выдается один внешний виртуальный ip-адрес, который прописывается на внешнем DNS сервере.
+```bash
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.2/config/manifests/metallb-native.yaml
+```
+Разрешить анонсирование IP-адресов из `default-pool` в локальной сети через протокол ARP на уровне L2/Ethernet:
+```yaml
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default-l2
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - default-pool
+```
+`kubectl apply -f l2-advertisement.yaml`
 
-`kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.2/config/manifests/metallb-native.yaml` установка в кластер из манифеста
-
-Настройка пула адресов:
+Создаем новый пул адресов:
 ```yaml
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -1348,34 +1772,406 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 192.168.3.201/32
-  # - 192.168.3.201-192.168.3.210
-  # autoAssign: false # требует аннотации пула или указания адреса в Service
-
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: torapi-service
-#   namespace: rest-api
-#   annotations:
-#     metallb.universe.tf/address-pool: "default-pool"      # Использовать указанный пул
-#     metallb.universe.tf/loadBalancerIPs: "192.168.3.201"  # Привязка адреса из пула
+  # - 192.168.3.201/32
+  - 192.168.3.201-192.168.3.210
+  autoAssign: false # требует аннотации пула и указания адреса в service
 ```
 `kubectl apply -f ip-address-pool.yaml`
 
-Анонсировать адреса из `default-pool` в сети через протокол ARP на уровне L2/Ethernet:
+Добавляем annotations на нужном сервисе:
 ```yaml
-apiVersion: metallb.io/v1beta1
-kind: L2Advertisement
+kind: Service
+apiVersion: v1
 metadata:
-  name: default
-  namespace: metallb-system
-spec:
-  ipAddressPools:
-  - default-pool
+  name: headlamp
+  namespace: kubernetes-dashboard
+  annotations:
+    metallb.universe.tf/address-pool: "default-pool"
+    metallb.universe.tf/loadBalancerIPs: "192.168.3.201"
 ```
-`kubectl apply -f l2-advertisement.yaml`
+### Longhorn
 
+[Longhorn](https://github.com/longhorn/longhorn) — это распределённая блочная система хранения данных для Kubernetes с поддержкой управления через Web UI, которая превращает локальные диски нод в кластерное хранилище за счет репликации. Pod обращается к тому через Engine -> Engine записывает данные во все реплики синхронно -> Чтение может происходить из любой реплики
+```bash
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.9.2/deploy/longhorn.yaml
+# Сделить за процессом установки
+kubectl get pods \
+--namespace longhorn-system \
+--watch
+# Отобразить все доступные хранилища
+kubectl get storageclass
+```
+Требуется установить зависимости на нодах:
+```bash
+sudo apt-get install -y nfs-common # установка NFS клиента для доступа в режиме ReadWriteMany
+sudo apt-get install -y open-iscsi # установка iSCSI клента для размещения томов как тергетов на нодах для подключения к ним подам как клиентов (чаще предустановлен на серверных ОС)
+iscsiadm --version
+sudo systemctl enable iscsid
+sudo systemctl start iscsid
+sudo systemctl status iscsid
+```
+Доступ к данным:
+```bash
+# Директория хранения данных на нодах
+ls ls /var/lib/longhorn
+lsof /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000.img # проверить, что образ используется процессом longhorn
+# Просмотреть содержимое образа
+cp /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000.img /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000-backup.img # скопировать образ
+losetup -f -P --show /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000-backup.img # создать виртуальный диск
+mkdir -p /mnt/loops && mount /dev/loop2 /mnt/loops # примонтировать диск
+debugfs /dev/loop2 # поключиться к фс без монтирования
+umount /mnt/loops # отмонтировать
+losetup -d /dev/loop2 # отключить диск
+```
+### PersistentVolume
+Настройка `NFS` сервера:
+```bash
+# Установка NFS сервера
+sudo apt update && sudo apt install nfs-kernel-server -y
+# Создание директории
+sudo mkdir -p /k8s_data
+sudo chown nobody:nogroup /k8s_data
+sudo chmod 777 /k8s_data
+# Настройка экспорта
+echo "/k8s_data *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
+# Применение настроек
+sudo exportfs -ra
+sudo systemctl enable nfs-kernel-server
+sudo systemctl restart nfs-kernel-server
+# Установка NFS клиента на всех узлах Kubernetes
+sudo apt install nfs-common -y
+```
+Создание `PersistentVolume` в кластере (хранилище):
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    server: 192.168.3.101
+    path: /k8s_data
+    readOnly: false
+```
+`kubectl apply -f pv-nfs.yaml`
+
+`kubectl get pv`
+
+Создание `PersistentVolumeClaim` для использования подом:
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nfs
+spec:
+  volumeName: pvc-test-volume
+  storageClassName: nfs
+  accessModes:
+    # - ReadWriteOnce # подключен к одной ноде в режиме чтения-записи
+    # - ReadOnlyMany # подключен к многим нодам в режиме только на чтение
+    - ReadWriteMany # подключен к многим нодам в режиме чтения-записи
+  resources:
+    requests:
+      storage: 1Gi
+```
+`kubectl apply -f pvc-nfs.yaml`
+
+`kubectl get pvc`
+
+### S3
+
+[MinIO](https://github.com/minio/minio) — это высокопроизводительное, совместимое с S3 решение для хранения объектов.
+```yaml
+services:
+  minio1:
+    image: minio/minio
+    container_name: minio1
+    restart: unless-stopped
+    hostname: minio1
+    command: server http://minio1:9000/data http://minio2:9000/data --console-address ":9001"
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=MinioAdmin
+    volumes:
+      - ./minio1_data:/data
+    ports:
+      - 9000:9000 # API
+      - 9001:9001 # WebUI
+
+  minio2:
+    image: minio/minio
+    container_name: minio2
+    restart: unless-stopped
+    hostname: minio2  
+    command: server http://minio1:9000/data http://minio2:9000/data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: MinioAdmin
+    volumes:
+      - ./minio2_data:/data
+    ports:
+      - 9002:9000
+      - 9003:9001
+```
+
+### s3fs
+
+[s3fs](https://github.com/s3fs-fuse/s3fs-fuse) - инструмент для монтирования S3 совместимого хранилища на базе FUSE, позволяя управлять файлами и каталогами в локальной файловой системе.
+
+`sudo apt install -y s3fs` установка \
+`sudo mkdir -p /mnt/s3` создать директорию для монтирования \
+`echo "admin:MinioAdmin" > /tmp/s3cred && chmod 600 /tmp/s3cred` сохранить авторизационные данные для подключения к s3 \
+`s3fs <BUCKET_NAME:PATH> <MOUNTPOINT_PATH> <OPTION>` формат монтирования \
+`sudo s3fs velero /mnt/s3 -o url=http://localhost:9000 -o use_path_request_style -o passwd_file=/tmp/s3_cred` монтировать файловую систему \
+`mount | grep /mnt/s3` отобразить точки монтирования \
+`sudo umount /mnt/s3` отмонтировать
+
+```yaml
+services:
+  s3fs:
+    image: efrecon/s3fs:1.95
+    container_name: velero_data
+    restart: unless-stopped
+    privileged: true
+    stdin_open: true
+    tty: true
+    devices:
+      - /dev/fuse
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    environment:
+      - AWS_S3_URL=http://minio1:9000
+      - AWS_S3_BUCKET=velero
+      - AWS_S3_ACCESS_KEY_ID=admin
+      - AWS_S3_SECRET_ACCESS_KEY=MinioAdmin
+      - S3FS_ARGS=use_path_request_style,allow_other
+    volumes:
+      - ./velero_data:/opt/s3fs/bucket:rshared
+```
+
+### Velero
+
+[Velero](https://github.com/vmware-tanzu/velero) (ранее Heptio Ark) - это инструменты для резервного копирования и восстановления ресурсов кластера Kubernetes и постоянных томов.
+```bash
+curl -sSL https://github.com/vmware-tanzu/velero/releases/download/v1.17.0/velero-v1.17.0-linux-amd64.tar.gz -o velero-linux-amd64.tar.gz
+tar -xvf velero-linux-amd64.tar.gz
+mv velero-*/velero ~/.local/bin/
+rm -rf velero-*
+velero version
+```
+Создаем креды для подключения к s3 хранилищу [minio](https://github.com/minio/minio):
+```bash
+cat <<EOF > velero-minio.env
+[default]
+aws_access_key_id=admin
+aws_secret_access_key=MinioAdmin
+EOF
+```
+Установка в кластер:
+```bash
+velero install \
+    --provider aws \
+    --plugins velero/velero-plugin-for-aws:v1.13.0 \
+    --bucket velero \
+    --secret-file ./velero-minio.env \
+    --backup-location-config region=minio,s3ForcePathStyle=true,s3Url=http://192.168.3.101:9000 \
+    --namespace velero
+```
+`kubectl get pods -n velero` проверяем, что под запущен \
+`kubectl logs deploy/velero -n velero` проверяем, что нет ошибок подключения к s3 \
+`velero backup-location get` отобразить статус BSL (Backup Storage Location) (`PHASE` - `Available`)
+
+`velero backup create telegram-bot-backup --include-namespaces telegram` запустить backup \
+`velero schedule create telegram-daily --schedule "0 3 * * *" --include-namespaces telegram --ttl 168h` запускать каждый день в 03:00 (ttl определяет автоматическуое удаление всех созданных velero ресурсов через 7 дней) \
+`velero backup describe telegram-bot-backup --details` отобразить статус резервного копирования (ключевое - статус, продолжительность копирования и список ресурсов) \
+`velero backup get` отобразить список всех бэкапов, их статус (`Completed`, `Failed`, `InProgress`) и namespace
+
+`velero restore create --from-backup telegram-bot-backup --include-namespaces telegram` восстанавливает все ресурсы из указанного бэкапа \
+`kubectl get deployments -n telegram --show-labels` отобразить все доступные `lables` в deployments \
+`kubectl get all -n telegram --show-labels` отобразить все доступные ресурсы в указанном namespace \
+`velero restore create --from-backup telegram-bot-backup --include-namespaces telegram --include-resources deployments,configmaps --selector app=your-deployment-name` восстановить только конкретные ресурсы с фильтрацией по `lables` \
+`velero restore get` отобразить статус восстановления
+
+### Velero UI
+
+[velero-ui](https://github.com/otwld/velero-ui) - веб-интерфейс для управления Velero (vmware-tanzu).
+```yaml
+services:
+  velero-ui:
+    image: otwld/velero-ui:latest
+    container_name: velero-ui
+    restart: unless-stopped
+    volumes:
+      - ~/.kube/config:/app/.kube/config:ro
+      # - /etc/rancher/k3s/k3s.yaml:/app/.kube/config:ro
+    environment:
+      - PORT=3504
+      - KUBE_CONFIG_PATH=/app/.kube/config
+    # network_mode: host # use for k3s cluster config on localhost
+    ports:
+      - 3504:3504 # admin:admin
+```
+### ArgoCD
+
+[Argo CD](https://github.com/argoproj/argo-cd) - это декларативный инструмент непрерывного развертывания Kubernetes, использующий методологию GitOps, где Git репозиторий является единственным источником правды.
+```bash
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# Включить режим LB
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+# Зайти и изменить порт
+port: 8466
+port: 8467
+# Получить пароль
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+### Keel
+
+[Keel](https://github.com/keel-hq/keel) — это инструмент для автоматизации обновлений образов в Kubernetes.
+
+Пример развертвывания Keel с помощью Helm Chart через ArgoCD:
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keel
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/keel-hq/keel
+    path: chart/keel
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |-
+        service:
+          enabled: true
+          type: LoadBalancer
+          externalPort: 80
+        serviceAnnotations:
+            metallb.universe.tf/address-pool: "default-pool"
+            metallb.universe.tf/loadBalancerIPs: "192.168.3.208"
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+          hosts:
+          - host: keel.k8s.local
+            paths:
+              - /
+        polling:
+          enabled: true
+          defaultSchedule: "@every 10m"
+        basicauth:
+          enabled: true
+          user: "admin"
+          password: "admin"
+        # Используйте https://github.com/KostyaEsmukov/smtp_to_telegram для переадресации сообщений
+        # mail:
+        #   enabled: true
+        #   from: "keel@k8s.local"
+        #   to: "admin@k8s.local"
+        #   smtp:
+        #     server: "192.168.3.101"
+        #     port: 2525
+        #     user: "admin"
+        #     pass: "admin"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: keel
+```
+Добавить аннотации в Deployment для отслеживания обновлений образов по major (`1.0`), minor (`1.1`) или patch (`1.1.1`) версии:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero-ui
+  namespace: velero-ui
+  annotations:
+    keel.sh/policy: patch
+    keel.sh/trigger: poll
+```
+### Krew
+
+[Krew](https://github.com/kubernetes-sigs/krew) — менеджер плагинов для kubectl.
+```bash
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  KREW="krew-${OS}_${ARCH}" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" &&
+  ./"${KREW}" install krew
+) &&
+echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.bashrc &&
+source ~/.bashrc
+```
+
+| Плагин                                                              | Описание                                                                                                  |
+| -                                                                   | -                                                                                                         |
+| [kubectx & kubens](https://github.com/ahmetb/kubectx)               | Быстрое переключение между контекстами (кластерамси) и пространствами имен (требует установку `fzf`).     |
+| [ktop](https://github.com/vladimirvivien/ktop)                      | Мониторинг нагрузки всех node и pods в реальном времени.                                                  |
+| [ketall/get-all](https://github.com/corneliusweig/ketall)           | Отображает все ресурсы Kubernetes.                                                                        |
+| [kubectl-tree](https://github.com/ahmetb/kubectl-tree)              | Отображает зависимости ресурсов в древовидном формате.                                                    |
+| [kubectl-node-shell](https://github.com/kvaps/kubectl-node-shell)   | Bash скрипт для подключения к оболочке операционной системы хоста (node, монтирует pode на базе Alpine).  |
+| [kubetail](https://github.com/johanhaleby/kubetail)                 | Bash скрипт, позволяющий объединять логи из нескольких подов в один поток.                                |
+| [kubetail & Dashboard](https://github.com/kubetail-org/kubetail)    | Панель управления для просмотра логов в терминале или браузер.                                            |
+| [stern](https://github.com/stern/stern)                             | Одновременный просмотр логов из нескольких подов в одном потоке.                                          |
+| [outdated](https://github.com/replicatedhq/outdated)                | Отображает устаревшие образы, которые доступны к обновлению.                                              |
+
+```bash
+kubectl krew install ctx ns ktop get-all tree kubectl-node-shell kubetail stern outdated
+
+kubectl ctx
+kubectl ns
+
+kubectl ktop
+
+kubectl get all -A
+kubectl get-all
+kubectl get-all --since 24h
+
+kubectl tree deployment traefik -n default
+
+kubectl get node
+kubectl node-shell rpi-105
+
+kubectl kubetail logs traefik-977b5d47-mzhwx httpbin-7c454b5b68-q2mfb
+kubectl kubetail serve
+
+kubectl stern . -n default --tail 5
+kubectl stern . --all-namespaces --tail 5 --since 10m --no-follow 100
+
+kubectl outdated
+```
+Kubetail Dashboard:
+```yaml
+services:
+  kubetail-dashboard:
+    image: kubetail/kubetail-dashboard:0.8.2
+    container_name: kubetail-dashboard
+    restart: unless-stopped
+    ports:
+      - 7500:7500
+    volumes:
+      - ~/.kube/config:/kubetail/.kube/config:ro
+    command:
+      [
+        "-a", ":7500",
+        "-p", "dashboard.environment:desktop",
+        "-p", "kubeconfig:/kubetail/.kube/config",
+      ]
+```
 ### Kompose
 
 [Kompose](https://github.com/kubernetes/kompose) - инструмент, который конвертируемт спецификацию `docker-compose` в манифесты Kubernetes.
@@ -1391,6 +2187,8 @@ curl -sSL https://github.com/kubernetes/kompose/releases/download/$version/kompo
 chmod +x $HOME/.local/bin/kompose
 ```
 `kompose --file docker-compose.yaml convert` конвертация
+
+`docker-compose bridge convert` встроенный конвертер в `compose` на базе [шаблонов helm](https://github.com/docker/compose-bridge-transformer).
 
 ### Kustomize
 
@@ -1980,26 +2778,29 @@ Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild
 ```
 ### Plugins
 
-| Плагин                                                                         | Описание                                                                                                      |
-| -                                                                              | -                                                                                                             |
-| [Pipeline: Stage View](https://plugins.jenkins.io/pipeline-stage-view)         | Визуализация шагов (stages) в интерфейсе проекта с временем их выполнения.                                    |
-| [Rebuilder](https://plugins.jenkins.io/rebuild)                                | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке.         |
-| [Schedule Build](https://plugins.jenkins.io/schedule-build)                    | Позволяет запланировать сборку на указанный момент времени.                                                   |
-| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)       | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) и позволяет производить сверку.    |
-| [Export Job Parameters](https://plugins.jenkins.io/export-job-parameters)      | Добавляет кнопку `Export Job Parameters` для конвертации все параметров в декларативный синтаксис Pipeline.   |
-| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                     | Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.                            |
-| [Active Choices](https://plugins.jenkins.io/uno-choice)                        | Активные параметры, которые позволяют динамически обновлять содержимое параметров.                            |
-| [File Parameters](https://plugins.jenkins.io/file-parameters)                  | Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).          |
-| [Ansible](https://plugins.jenkins.io/ansible)                                  | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`.      |
-| [HTTP Request](https://plugins.jenkins.io/http_request)                        | Простой REST API Client для отправки и обработки `GET` и `POST` запросов через метод `httpRequest`.           |
-| [Pipeline Utility Steps](https://plugins.jenkins.io/pipeline-utility-steps)    | Добавляет методы `readJSON` и `writeJSON`.                                                                    |
-| [ANSI Color](https://plugins.jenkins.io/ansicolor)                             | Добавляет поддержку стандартных escape-последовательностей ANSI для покраски вывода.                          |
-| [Email Extension](https://plugins.jenkins.io/email-ext)                        | Отправка сообщений на почту из Pipeline.                                                                      |
-| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)      | Показывает историю результатов сборки `junit` тестов в табличном древовидном виде.                            |
-| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status)  | Предоставляет настраиваемые значки (like `shields.io`), который возвращает статус сборки.                     |
-| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                    | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных.                |
-| [Web Monitoring](https://plugins.jenkins.io/monitoring)                        | Добавляет конечную точку `/monitoring` для отображения графиков мониторинга в веб-интерфейсе.                 |
-| [CloudBees Disk Usage](https://plugins.jenkins.io/cloudbees-disk-usage-simple) | Отображает использование диска всеми заданиями во вкладке `Manage-> Disk usage`.                              |
+| Плагин                                                                          | Описание                                                                                                    |
+| -                                                                               | -                                                                                                           |
+| [Pipeline Stage View](https://plugins.jenkins.io/pipeline-stage-view)           | Визуализация шагов (stages) в интерфейсе проекта с временем их выполнения.                                  |
+| [Rebuilder](https://plugins.jenkins.io/rebuild)                                 | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке.       |
+| [Schedule Build](https://plugins.jenkins.io/schedule-build)                     | Позволяет запланировать сборку на указанный момент времени.                                                 |
+| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)        | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) и позволяет производить сверку.  |
+| [Export Job Parameters](https://plugins.jenkins.io/export-job-parameters)       | Добавляет кнопку `Export Job Parameters` для конвертации все параметров в декларативный синтаксис Pipeline. |
+| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                      | Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.                          |
+| [Active Choices Parameters](https://plugins.jenkins.io/uno-choice)              | Активные параметры, которые позволяют динамически обновлять содержимое параметров.                          |
+| [File Parameters](https://plugins.jenkins.io/file-parameters)                   | Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).        |
+| [Separator Parameter](https://plugins.jenkins.io/parameter-separator)           | Параметр для разграничения набора параметров на странице сборки задания с поддержкой HTML.                  |
+| [Custom Tools](https://plugins.jenkins.io/custom-tools-plugin)                  | Позволяет загружать пакеты из интернета с помощью предустановленного набора команд.                         |
+| [Ansible](https://plugins.jenkins.io/ansible)                                   | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`.    |
+| [HashiCorp Vault](https://plugins.jenkins.io/hashicorp-vault-plugin)            | Автоматизирует процесс получения содержимого значений из Vault с помощью метода `withVault`                 |
+| [HTTP Request](https://plugins.jenkins.io/http_request)                         | Простой REST API Client для отправки и обработки `GET` и `POST` запросов через метод `httpRequest`.         |
+| [Pipeline Utility Steps](https://plugins.jenkins.io/pipeline-utility-steps)     | Добавляет методы `readJSON` и `writeJSON`.                                                                  |
+| [ANSI Color](https://plugins.jenkins.io/ansicolor)                              | Добавляет поддержку стандартных escape-последовательностей ANSI для покраски вывода.                        |
+| [Email Extension](https://plugins.jenkins.io/email-ext)                         | Отправка сообщений на почту из Pipeline.                                                                    |
+| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)       | Показывает историю результатов сборки `junit` тестов в табличном древовидном виде.                          |
+| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status)   | Предоставляет настраиваемые значки (like `shields.io`), который возвращает статус сборки.                   |
+| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                     | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных.              |
+| [Web Monitoring](https://plugins.jenkins.io/monitoring)                         | Добавляет конечную точку `/monitoring` для отображения графиков мониторинга в веб-интерфейсе.               |
+| [CloudBees Disk Usage](https://plugins.jenkins.io/cloudbees-disk-usage-simple)  | Отображает использование диска всеми заданиями во вкладке `Manage-> Disk usage`.                            |
 
 ### SSH Steps and Artifacts
 
@@ -2402,6 +3203,178 @@ pipeline {
     }
 }
 ```
+### withVault
+
+Команда (скрипт) для загрузки `kubectl` в Custom tool:
+```bash
+mkdir -p ./bin
+curl https://dl.k8s.io/release/v1.33.3/bin/linux/amd64/kubectl -sSLo ./bin/kubectl
+chmod +x ./bin/kubectl
+# Домашний каталог утилиты: bin
+```
+Получение секретов (на примере содержимого `kubeconfig`) с помощью метода `withVault`:
+```Groovy
+def log = {
+    def m = [:]
+    m.info = { text -> echo "\u001B[34m${text}\u001B[0m" }
+    m.success = { text -> echo "\u001B[32m${text}\u001B[0m" }
+    m.error = { text -> echo "\u001B[31m${text}\u001B[0m" }
+    return m
+}()
+
+pipeline {
+    agent any
+    options {
+        ansiColor("xterm")
+        timestamps()
+        timeout(time: 10, unit: "MINUTES")
+    }
+    parameters {
+        separator(
+            name: "separatorVault",
+            sectionHeader: "Vault",
+            separatorStyle: "border-color: blue",
+            sectionHeaderStyle: "font-size: 1.5em; font-weight: bold;"
+        )
+        string(
+            name: "vaultUrl",
+            defaultValue: "http://192.168.3.101:8200",
+            description: "Адрес Vault"
+        )
+        string(
+            name: "vaultPath",
+            defaultValue: "v1/kv/kube",
+            description: "Путь к секретам в Vault (где хранится ключ config с содержимым kubeconfig)"
+        )
+        credentials(
+            name: "vaultAppRole",
+            credentialType: "com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential",
+            defaultValue: "main_approle",
+            description: "AppRole для доступа на чтение секретов из Vault"
+        )
+        separator(
+            name: "separatorDebug",
+            sectionHeader: "Debug",
+            separatorStyle: "border-color: blue",
+            sectionHeaderStyle: "font-size: 1.5em; font-weight: bold;"
+        )
+        booleanParam(
+            name: "checkConfig",
+            defaultValue: true,
+            description: "Проверить содержимое kubeconfig и версию kubectl"
+        )
+        // text(name: "multiLine", defaultValue: "line1\nline2")
+        // choice(name: "addresses", choices: ["192.168.3.101", "192.168.3.105","192.168.3.106"])
+        // password(name: "token", defaultValue: "YWRtaW4K")
+        // credentials(name: "sshKey", credentialType: "com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey", defaultValue: "d5da50fc-5a98-44c4-8c55-d009081a861a", required: true)
+        // activeChoice(
+        //     name: "activeChoicesParameter", choiceType: "PT_CHECKBOX", filterable: true,
+        //     script: [$class: "GroovyScript", box: true, script: [script: '''return ["1","2","3"]''']]
+        // )
+        // reactiveChoice(
+        //     name: "activeChoicesReactiveParameter", choiceType: "PT_RADIO", filterable: false,
+        //     referencedParameters: "activeChoicesParameter",
+        //     script: [$class: "GroovyScript", box: true, script: [script: '''return [activeChoicesParameter]''']]
+        // )
+    }
+    environment {
+        KUBECONFIG = "${WORKSPACE}/kubeconfig"
+        KUBECTLPATH = tool(
+            name: "kubectl-amd64-1.33.3",
+            type: "com.cloudbees.jenkins.plugins.customtools.CustomTool"
+        )
+        PATH = "${KUBECTLPATH}:${env.PATH}"
+    }
+    stages {
+        // stage("Checkout") {
+        //     steps {
+        //         script {
+        //             checkout scm
+        //         }
+        //     }
+        // }
+        stage("Get kubeconfig from Vault") {
+            steps {
+                script {
+                    // Конфигурация для подключения к Vault
+                    def vaultConfiguration = [
+                        vaultUrl:           params.vaultUrl,
+                        vaultCredentialId:  params.vaultAppRole,
+                        engineVersion:      1
+                    ]
+                    // Переменная для извлечения секретов
+                    def vaultSecrets  = [
+                        [
+                            path: params.vaultPath,
+                            engineVersion: 1,
+                            secretValues: [
+                                [
+                                    envVar: "kubeconfig", // название переменной
+                                    vaultKey: "config"    // ключ в Vault
+                                ]
+                            ]
+                        ]
+                    ]
+                    // Метод извлечения секретов из Vault
+                    withVault(
+                        [
+                            configuration:  vaultConfiguration,
+                            vaultSecrets:   vaultSecrets
+                        ]
+                    ) {
+                        // Записываем содержимое в файл
+                        writeFile(
+                            file: "${WORKSPACE}/kubeconfig", // Не принимает переопределенные env
+                            text: kubeconfig
+                        )
+                    }
+                }
+            }
+        }
+        stage("Check kubeconfig and kubectl") {
+            when {
+                expression { params.checkConfig }
+            }
+            steps {
+                script {
+                    log.info("Проверяем содержимое kubeconfig")
+                    def kubeconfig = readFile(
+                        file: KUBECONFIG
+                    )
+                    if (kubeconfig.trim().length() == 0) {
+                        log.error("Конфигурация отсутствует (файл kubeconfig пустой)")
+                    } else {
+                        def firstLine = kubeconfig.split("\n")[0]
+                        log.success("Конфигурация получена")
+                        log.success(firstLine)
+                    }
+                    log.info("Проверяем версию kubectl")
+                    sh(
+                        script: """
+                            kubectl version --output=json
+                        """,
+                        returnStatus: true, // Не возвращаем статус (игнорируем ошибки)
+                        returnStdout: false // Выводим stdout
+                    )
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                sh(
+                    script: """
+                        ls -lh
+                        rm -rf ./*
+                        ls -lh
+                    """
+                )
+            }
+        }
+    }
+}
+```
 ### Email Extension
 
 Для отправки на почту и настроить SMTP сервер в настройках Jenkins (`System` => `Extended E-mail Notification`)
@@ -2731,6 +3704,8 @@ new File("file.txt").write("text")              // перезаписывает 
 new File("file.txt").setText("text")            // аналог write() => void
 new File("file.txt").bytes = [1, 2, 3]          // записывает массив байтов => void
 new File("file.txt") << "text"                  // добавляет текст в конец файла => void
+
+(versions[1].toInteger() + 1).toString().padLeft(4, '0') // 0019 + 1 = 0020 ("19".padLeft(4, '0') -> "0019")
 ```
 ## Ansible
 
@@ -3531,7 +4506,7 @@ docker exec -it vault vault status
 docker exec -it vault vault login hvs.rxlYkJujkX6Fdxq2XAP3cd3a
 ```
 `Secrets Engines` -> `Enable new engine` + `KV` \
-API Swagger: http://192.168.3.100:8200/ui/vault/tools/api-explorer
+API Swagger: http://192.168.3.101:8200/ui/vault/tools/api-explorer
 ```PowerShell
 $TOKEN = "hvs.rxlYkJujkX6Fdxq2XAP3cd3a"
 $Headers = @{
@@ -3556,11 +4531,11 @@ $Body = @{
     options = @{}
     version = 0
 } | ConvertTo-Json
-$urlUpdate = "http://192.168.3.100:8200/v1/kv/data/main-path"
+$urlUpdate = "http://192.168.3.101:8200/v1/kv/data/main-path"
 Invoke-RestMethod -Uri $urlUpdate -Method POST -Headers $Headers -Body $Body
 
 # Удалить все секреты
-Invoke-RestMethod -Uri "http://192.168.3.100:8200/v1/kv/data/main-path" -Method DELETE -Headers $Headers
+Invoke-RestMethod -Uri "http://192.168.3.101:8200/v1/kv/data/main-path" -Method DELETE -Headers $Headers
 ```
 Vault client:
 ```bash
@@ -3813,73 +4788,79 @@ Get-Service winlogbeat | Start-Service
 
 ## HAProxy
 
-`apt install haproxy` \
-`systemctl status haproxy`
+Запускаем HAProxy в контейнере Docker:
+```yml
+services:
+  httpbin-proxy:
+    image: haproxy:3.2.4-alpine
+    container_name: httpbin-proxy
+    restart: unless-stopped
+    ports:
+      - 8089:8080
+      - 2376:2376
+    volumes:
+      - ./haproxy.cfg:/haproxy.cfg
+    command:
+      - haproxy
+      - -f
+      - /haproxy.cfg
+      - -d
+    environment:
+      - STATS_USER=admin
+      - STATS_PASS=admin
+      - STATS_URI=/
+      - METRICS_URI=/metrics
 
-`/etc/default/haproxy`
+  httpbin-go:
+    image: ghcr.io/mccutchen/go-httpbin
+    container_name: httpbin-go
+    restart: unless-stopped
 ```
-ENABLED=1
-```
-`/etc/haproxy/haproxy.cfg`
+Конфигурация с проверкой тела ответа:
 ```conf
 global
-log 127.0.0.1 local0 notice
-maxconn 10000
-nbproc 1
-user haproxy
-group haproxy
-daemon
+    log stdout format raw daemon info
+    maxconn 4096
 
 defaults
-log global
-maxconn global
-timeout client 5s
-timeout server 5s
-timeout connect 5s
+    mode http
+    maxconn global
+    log global
+    option httplog
+    option log-health-checks
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
 
-frontend http_front
-mode http
-bind *:8081
-#bind *:443 ssl crt /etc/ssl/domain.ru/cert.pem 
-option httplog
-###mode tcp
-###bind *:3389
-###option tcplog
-use_backend http_back
+frontend metrics
+    bind *:2376
+    mode http
+    stats enable
+    stats uri "$STATS_URI"
+    stats auth "$STATS_USER":"$STATS_PASS"
+    stats refresh 5s
+    http-request use-service prometheus-exporter if { path "$METRICS_URI" }
+    no log
 
-backend http_back
-mode http
-balance roundrobin
-###mode tcp
-###balance leastconn
-option httpchk GET / HTTP/1.1\r\nHost:\ localhost
-###option tcp-check
-###tcp-check connect port 3389
-#server term1.domain.ru 192.168.55.30:443 ssl verify none weight 100 check inter 5s fall 5 rise 3
-#server term2.domain.ru 192.168.55.35:443 ssl verify none weight 100 check inter 5s fall 5 rise 3
-server pi-hole-01 192.168.3.101:8081 weight 100 check inter 5s fall 5 rise 3
-server netbox-01 192.168.3.104:8081 weight 100 check inter 5s fall 5 rise 3
+frontend frontend_httpbin
+    bind *:8080
+    default_backend backend_httpbin
 
-listen stats
-bind *:8082
-#bind *:8080 ssl crt /etc/ssl/domain.ru/cert.pem 
-mode http
-stats enable
-stats uri /
-stats auth admin:password
-stats show-legends
-stats show-node
-stats refresh 5s
+backend backend_httpbin
+    mode http
+    balance roundrobin
+
+    timeout check 10s
+    default-server inter 5s fall 3 rise 3
+    option httpchk GET /get
+    http-check expect status 200
+    http-check expect string "origin"
+
+    server internal-httpbin-go httpbin-go:8080 check weight 20
+    # server external-httpbin-go httpbingo.org:443 ssl verify none check weight 10
+    server external-httpbin httpbin.org:443 ssl verify none check weight 10
+
 ```
-`haproxy -f /etc/haproxy/haproxy.cfg -c` проверить синтаксис (Configuration file is valid) \
-`systemctl restart haproxy` применить настройки (перечитать конфигурацию) \
-`ss -lpn | grep 8081` \
-`curl http://192.168.3.102:8081` проверка http-трафика \
-`http://192.168.3.102:8082` статистика \
-`cat /var/log/haproxy.log` \
-`journalctl -eu haproxy` \
-`systemctl stop apache2` отключить на 101
-
 - options:
 
 `maxconn` максимальное количество одновременных соединений \
@@ -3969,3 +4950,53 @@ vrrp_instance web {
 `journalctl -u keepalived` \
 `cat /var/log/messages | grep -i keepalived` \
 `tail /var/run/keepalived.INSTANCE.web.state`
+
+## GlusterFS
+```bash
+# Определить имена хостов для всех нод
+echo '
+192.168.3.101  hv-us-101
+192.168.3.105  rpi-105
+192.168.3.106  rpi-106
+' >> /etc/hosts
+
+# Установить сервер на все ноды
+add-apt-repository ppa:gluster/glusterfs-11
+apt update
+apt install glusterfs-server -y
+systemctl start glusterd
+systemctl enable glusterd
+systemctl status glusterd
+
+# Подключить (peer detach для отключения) все узлы к пулу Trusted Server Pool (TSP)
+gluster peer probe rpi-105
+gluster peer probe rpi-106
+gluster peer status
+gluster pool list
+
+# Создать директорию хранения на всех нодах
+mkdir /gluster
+
+# Создать том в пуле и запустить его
+gluster volume create docker-fs replica 3 hv-us-01:/gluster rpi-105:/gluster rpi-106:/gluster force
+gluster volume start docker-fs
+gluster volume status docker-fs
+gluster volume info docker-fs
+gluster volume list
+
+echo 'localhost:/docker-fs /mnt glusterfs defaults,_netdev,backupvolfile-server=localhost 0 0' >> /etc/fstab
+mount localhost:/docker-fs /mnt
+df -h
+
+# Монтирование с помощью клиента
+apt install -y glusterfs-client
+mount -t glusterfs server1:/gv0 /mnt/gluster-volume
+
+# Включение модуля NFS для удаленного монтирования
+gluster volume set docker-fs nfs.disable off
+mount -t nfs hv-us-101:/docker-fs /mnt/gluster-nfs
+
+# Включить CIFS/SMB протокол
+gluster volume set docker-fs storage.brick-multiplex off
+gluster volume set docker-fs server.allow-insecure on
+```
