@@ -66,7 +66,7 @@ jobs:
           cat PS-Commands/devops.md | sed -Ez "s/(.*\n)?---\n//" >> content/DevOps/index.md
 
       - name: Update Compose Stacks
-        if: ${{ github.event.inputs.devops == 'true' }}
+        if: ${{ github.event.inputs.compose == 'true' }}
         run: |
           rm content/Compose/index.md
           cp templates/compose.md content/Compose/index.md
@@ -80,7 +80,7 @@ jobs:
           cat golang-cheat-sheet-ru/README.md | sed -Ez "s/(.*\n)?---\n//" >> content/GoLang/index.md
 
       - name: Commit and push
-        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' || github.event.inputs.golang == 'true' }}
+        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' || github.event.inputs.compose == 'true' || github.event.inputs.golang == 'true' }}
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
