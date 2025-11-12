@@ -7,7 +7,7 @@ go_to_top = true
 +++
 
 <p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands"><img title="PS-Commands Logo"src="logo.png"></a>
+    <a href="https://github.com/Lifailon/PS-Commands"><img title="PowerShell Commands"src="logo.png"></a>
 </p>
 
 <p align="center">

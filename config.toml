@@ -81,6 +81,7 @@ links = [
   { url = "@/PowerShell/index.md", name = "PowerShell" },
   { url = "@/Linux/index.md", name = "Linux" },
   { url = "@/DevOps/index.md", name = "DevOps" },
+  { url = "@/Compose/index.md", name = "Compose Stacks" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
 ]
@@ -90,6 +91,7 @@ links = [
   { url = "@/PowerShell/index.md", name = "PowerShell" },
   { url = "@/Linux/index.md", name = "Linux" },
   { url = "@/DevOps/index.md", name = "DevOps" },
+  { url = "@/Compose/index.md", name = "Compose Stacks" },
   { url = "@/GoLang/index.md", name = "GoLang" },
   { url = "@/Node-js/index.md", name = "Node.js" },
 ]
