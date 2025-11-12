@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clone PS-Commands repository
-        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' }}
+        if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' || github.event.inputs.compose == 'true' }}
         run: git clone https://github.com/Lifailon/PS-Commands
 
       - name: Clone golang-cheat-sheet-ru repository
