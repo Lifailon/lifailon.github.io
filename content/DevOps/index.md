@@ -565,7 +565,7 @@ services:
 `docker context use rpi-106` переключиться на выбранный контекст (возможно на прямую взаимосдействовать с удаленным Docker Engine через cli, за исключением взаимодействия через Socket) \
 `docker context rm rpi-106` удалить контекст
 
-### dcm
+### DCM
 
 `dcm` (Docker Context Manager) - это простая реализация TUI интерфейса на базе [fzf](https://github.com/junegunn/fzf), для переключения контекста из перечисленного списка хостов. Т.к. для использовать TUI интерфейсов требуется взаимодействие с сокетом, недостаточно изменить только переменную `DOCKER_HOST` или использовать команду `docker context`, по этому используется механиз `ssh forwarding`, который пробрасывает сокета с удаленной машины в локальную систему (используется временный файл, с изменением пути в переменной окружения).
 
@@ -701,7 +701,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t lifailon/logporter --p
 ARG TARGETOS TARGETARCH
 FROM --platform=${TARGETOS}/${TARGETARCH} node:alpine AS build
 ```
-## Dockerfile
+### Dockerfile
 
 `FROM` указывает базовый образ, на основе которого будет создаваться новый образ \
 `LABEL` добавляет метаданные к образу в формате ключ-значение \
@@ -781,7 +781,7 @@ docker run -d --name TorAPI -p 8443:8443 --restart=unless-stopped \
   -e PASSWORD="TorAPI" \
   torapi
 ```
-## Compose
+### Compose
 ```bash
 mkdir -p $HOME/.local/bin
 version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
@@ -791,7 +791,7 @@ mkdir -p $HOME/.docker/cli-plugins
 cp $HOME/.local/bin/docker-compose $HOME/.docker/cli-plugins/docker-compose
 docker compose version
 ```
-### Uptime-Kuma
+#### Uptime-Kuma
 
 [Uptime-Kuma](https://github.com/louislam/uptime-kuma) - веб-интерфейс для мониторинга доступности хостов (ICMP), портов (TCP), веб-контент (HTTP/HTTPS запросы), gRPC, DNS, контейнеры Docker, базы данных и т.д с поддержкой уведомлений в Telegram.
 
@@ -871,7 +871,7 @@ TOKEN=$(curl -sS -X POST http://192.168.3.101:8082/login/access-token --data "us
 curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors | jq .
 curl -s -X GET -H "Authorization: Bearer ${TOKEN}" http://192.168.3.101:8082/monitors/1 | jq '.monitor | "\(.name) - \(.active)"'
 ```
-### Dockge
+#### Dockge
 
 [Dockge](https://github.com/louislam/dockge) - веб интерфейс для управления стеками Docker Compose от создателя Uptime Kuma.
 ```yaml
@@ -897,7 +897,7 @@ services:
     ports:
       - 5001:5001
 ```
-### Dozzle
+#### Dozzle
 
 Dozzle (https://github.com/amir20/dozzle) - легковесное приложение с веб-интерфейсом для мониторинга журналов Docker (без хранения).
 
@@ -985,7 +985,7 @@ services:
     ports:
       - 7007:7007
 ```
-### Beszel
+#### Beszel
 
 [Beszel](https://github.com/henrygd/beszel) - веб-интерфейс (как Grafana) для мониторинга хостов и контейнеров (как node_exporter и cAdvisor вместе), backend на базе [Pocket Base](https://github.com/pocketbase/pocketbase) для хранения данных, также поддерживает оповещения в Telegram и другие мессенджеры через вебхук [shoutrrr](https://github.com/containrrr/shoutrrr) (от создателя Watchtower).
 ```yaml
@@ -1021,7 +1021,7 @@ services:
     # ports:
     #   - 45876:45876
 ```
-### Watchtower
+#### Watchtower
 
 [Watchtower](https://github.com/containrrr/watchtower) - следит за тегом `latest` в реестре Docker Hub и обновлять контейнер, если он станет устаревшим.
 ```yaml
@@ -1111,7 +1111,7 @@ https://192.168.3.101:9443/#!/endpoints добавить удаленный хо
 
 http://192.168.3.101:9000
 
-## Docker.DotNet
+### Docker.DotNet
 ```PowerShell
 # Импорт библиотеки Docker.DotNet (https://nuget.info/packages/Docker.DotNet/3.125.15)
 Add-Type -Path "$home\Documents\Docker.DotNet-3.125.15\lib\netstandard2.1\Docker.DotNet.dll"
@@ -2071,6 +2071,25 @@ port: 8467
 # Получить пароль
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
+
+Режимы синхронизации:
+
+- **Force** - принудительно пересоздает ресурсы, даже если Kubernetes запрещает их изменение без подтверждения (эквивалент, `kubectl --force`).
+- **Prune** - удаляет любые ресурсы в кластере, которые отсутствуют в текущем состоянии Git-репозитория (т.е. помечены желтой корзиной).
+- **Dry Run** - тестовый запуск (проверка синхронизации), позволяющий отобразить какие изменения будут применены к кластеру без фактического их выполнения.
+- **Apply Only** - будет только добавлять/обновлять ресурсы, но никогда не удалит ресурсы (обратное действие **Prune**).
+
+Опции синхронизации:
+
+- **Skip Schema Validation** - отключает проверку на соответствие YAML-манифестов официальной схеме Kubernetes OpenAPI, например, для работы с кастомными ресурсами (CRD) или при ошибках валидации.
+- **Auto-Create Namespace** - автоматическое создание namespace перед синхронизацией ресурсов, если пространство имен, указанное в манифесте, не существует.
+- **Prune Last** - изменяет порядок, сначала применяет новые ресурсы, дожидается их готовности, и только потом удаляет старые/устаревшие ресурсы.
+- **Apply Out of Sync Only** - обрабатывает только те ресурсы, которые Argo CD пометил как Out of Sync (который определяется после Refresh в процессе сравнения с Git-репозиторием), пропуская все остальные, ускоряя процесс.
+- **Respect Ignore Differences** - игнорировать изменения в определенных полях, например, количество реплик, если используется HPA (Horizontal Pod Autoscaling).
+- **Server-Side Apply** - использует логику объединения изменений на стороне API-сервера Kubernetes, а не на стороне клиента Argo CD, что помогает с большими ресурсами и предотвращает конфликты last-applied-configuration.
+- **Replace** - вместо стандартного `kubectl apply`, для объединения изменений, использует `kubectl replace`, где полностью заменяются существующие объекты, или `kubectl create`, если объекта нет.
+- **Retry** - если синхронизация завершается с ошибкой (например, API-сервер недоступен или лимит запросов превышен), будет повторяться попытка синхронизации через заданные интервалы времени.
+
 ### Keel
 
 [Keel](https://github.com/keel-hq/keel) — это инструмент для автоматизации обновлений образов в Kubernetes.
@@ -2482,7 +2501,7 @@ helm upgrade --install <repo_name> <repo_name>/<repo_name> # установит�
 
 ## GitHub Actions
 
-### Runner (Agent)
+### Runner
 
 `mkdir actions-runner; cd actions-runner` \
 `Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-win-x64-2.316.1.zip -OutFile actions-runner-win-x64-2.316.1.zip` загрузить пакет с Runner последней версии \
@@ -2495,7 +2514,7 @@ helm upgrade --install <repo_name> <repo_name>/<repo_name> # установит�
 `Get-Process *Runner.Listener*` \
 `./config.cmd remove --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX` удалить конфигурацию
 
-### Build (Pipeline)
+### Pipeline
 ```yaml
 name: build-game-list
 
@@ -2583,7 +2602,7 @@ Invoke-RestMethod -Uri $url -Headers $headers # получить логи зад
 ```
 ### act
 
-[act](https://github.com/nektos/act) - пользволяет запускать действия GitHub Actions локально.
+[act](https://github.com/nektos/act) - пользволяет запускать действия GitHub Actions локально (используется в [Gitea](https://github.com/go-gitea/gitea)).
 ```bash
 version=$(curl -s https://api.github.com/repos/nektos/act/releases/latest | jq -r .tag_name)
 curl -L "https://github.com/nektos/act/releases/download/$version/act_$(uname -s)_$(uname -m).tar.gz" -o $HOME/.local/bin/act.tar.gz
@@ -2659,7 +2678,6 @@ echo "DOCKER_HUB_PASSWORD=password" >> .secrets
 `vercel secrets ls` показывает список всех секретов \
 `vercel switch <team>` переключается между командами и аккаунтами Vercel
 
-### CD
 ```yaml
 name: Deploy to Vercel
 
@@ -2756,6 +2774,225 @@ test:
             Stop-Process -Name 'node' -Force -ErrorAction SilentlyContinue
         "
 ```
+## Groovy
+
+Базовый синтаксис языка `Groovy`:
+```Groovy
+// Переменные
+javaString = 'java'
+javaString
+println javaString
+javaString.class    // class java.lang.String
+println 100.class   // class java.lang.Integer
+j = '${javaString}' // не принимает переменные в одинарных кавычках
+groovyString = "${javaString}"
+bigGroovyString = """
+    ${javaString}
+    ${j}
+    ${groovyString}
+    ${2 + 2}
+"""
+
+// java
+// ${javaString}
+// java
+// 4
+
+a = "a"   // a
+a + "123" // a123
+a * 5     // aaaaa
+
+// Массивы и списки
+list =[1,2,3]
+list[0]    // 1
+list[0..1] // [1, 2]
+range = "0123456789"
+range[1..5] // 12345
+map = [key1: true, key2: false]
+map["key1"] // true
+server = [:]
+server.ip = "192.168.3.1"
+server.port = 22
+println(server) // [ip:192.168.3.1, port:22]
+
+// Функции
+def sum(a,b) {
+    println a+b
+}
+sum(2,2) // 4
+
+// Условия
+def diff(x) {
+    if (x < 10) {
+        println("${x} < 10")
+    } else if (x == 10) {
+        println("${x} = 10")
+    } else {
+        println("${x} > 10")
+    }
+}
+diff(11) // 11 > 10
+
+// Циклы
+list.each { l ->
+    print l
+}
+// 123
+
+for (i in 0..5) { 
+    print i
+}
+// 012345
+
+for (int i = 0; i < 10; i++) {
+    print i
+}
+// 0123456789
+
+i = 0
+while (i < 3) {
+    println(i)
+    i++
+}
+// 0
+// 1
+// 2
+
+// Классы
+def str = "start"
+println str
+class Main {
+    def echo (param) {
+        println param
+    }
+}
+def main = new Main()
+def array = [1, 2, 3]
+for (element in array) {
+    main.echo(element)
+}
+// 1
+// 2
+// 3
+
+// Обработка ошибок
+def newList = [:]
+newList[0] = 1
+newList[1] = 2
+for (index in 0..1) {
+    try {
+        newList[index] += 3
+        main.echo(newList[index])
+    } catch (Exception e) {
+        main.echo("Ошибка: ${e.message}")
+    } finally {
+        if (newList[index] >= 5) {
+            main.echo(newList[index]+1)
+        }
+    }
+}
+// 4
+// 5
+// 6
+
+println str.replace("start", "final")
+
+// Коллекция для синхронизации сохранения данных в потоках
+def sharedList = Collections.synchronizedList([])
+// Анонимная функция для обработки данных в потоке
+def runTask = { name, delay ->
+    Thread.start {
+        println "${name} запущена в потоке ${Thread.currentThread().name}"
+        sleep(delay)
+        println "${name} завершена"
+        synchronized(sharedList) {
+            sharedList << "${name} завершена"
+        }
+    }
+}
+
+def threads = []
+// Ждём завершения всех потоков
+threads << runTask("Задача 1", 3000)
+threads << runTask("Задача 2", 2000)
+threads << runTask("Задача 3", 1000)
+
+threads*.join()
+println "Результат: $sharedList"
+
+// Функции строк
+" text ".trim()                     // удаляет пробелы в начале и конце => "text"
+"ping".replace("i", "o")            // заменяет буквы в строке => pong
+"a,b,c".split(",")                  // разбивает строку по разделителю => ["a", "b", "c"]
+"abc".size()                        // возвращает длину строки или размер списка (кол-во элементов) => 3
+"abc".reverse()                     // переворачивает строку => "cba"
+"abc".contains("b")                 // проверяет наличие подстроки => true
+"abc".startsWith("a")               // проверяет начало строки => true
+"abc".endsWith("c")                 // проверяет конец строки => true
+"123".isNumber()                    // проверяет, является ли строка числом => true
+"abc".matches("a.*")                // проверяет соответствие регулярному выражения => true
+"hello".toUpperCase()               // преобразует строку в верхний регистр => "HELLO"
+"HELLO".toLowerCase()               // преобразует строку в нижний регистр => "hello"
+
+// Функции массивов
+["a","b","c"].join(",")             // объединяет элементы в строку => "a,b,c"
+["a","b","c"].contains("b")         // проверяет наличие элемента => true
+[1, 2, 3].sum()                     // суммирует элементы => 6
+[1, 2, 3].max()                     // находит максимум => 3
+[1, 2, 3].min()                     // находит минимум => 1
+[1, 2, 3].average()                 // вычисляет среднее => 2
+[1, 2, 3].reverse()                 // переворачивает список => [3, 2, 1]
+[3, 2, 1].sort()                    // сортирует список => [1, 2, 3]
+[1, 2, 2, 3, 3].unique()            // удаляет дубли => [1, 2, 3]
+[1, 2, 3].findAll { it > 1 }        // фильтрует элементы => [2, 3]
+[1, 2, 3].collect { it * 2 }        // преобразует элементы => [2, 4, 6]
+["1","2"].collect {it.toInteger()}  // строки => числа => [1, 2]
+
+def users = [
+    [name: "Alex", age: 30],
+    [name: "Jack", age: 35]
+]  
+users.collect { it.name }
+// ["Alex", "Jack"]
+
+// Функции карт (map)
+["a": 1, "b": 2].get("a")                       // получает значение по ключу => 1
+["a": 1, "b": 2].keySet()                       // возвращает все ключи => ["a", "b"]
+["a": 1, "b": 2].values()                       // возвращает все значения => [1, 2]
+["a": 1, "b": 2].containsKey("a")               // проверяет наличие ключа => true
+["a": 1, "b": 2].findAll { k, v -> v > 1 }      // фильтрует записи => ["b": 2]
+["a": 1, "b": 2].collect { k, v -> "$k-$v" }    // преобразует => ["a-1", "b-2"]
+["a": 1].put("b", 2)                            // добавляет новую пару ключ-значение => ["a": 1, "b": 2]
+["a": 1].plus(["b": 2])                         // объединяет мапы => ["a": 1, "b": 2]
+
+// Директории и файлы
+new File("dir").mkdir()                         // создает директорию => boolean
+new File("dir/subdir").mkdirs()                 // создает все недостающие директории d genb => boolean
+new File("dir").list()                          // список имен файлов => String[]
+new File("dir").listFiles()                     // возвращает список файлов в директории => File[]
+new File("dir").deleteDir()                     // удаляет директорию (рекурсивно) => boolean
+new File("dir").isDirectory()                   // проверяет, что это директория => boolean
+new File("file.txt").createNewFile()            // создает пустой файл => boolean
+new File("file.txt").delete()                   // удаляет файл => boolean
+new File("file.txt").exists()                   // проверяет существование файла => boolean
+new File("file.txt").isFile()                   // проверяет, что это файл => boolean
+new File("file.txt").length()                   // возвращает размер файла в байтах => long
+new File("file.txt").lastModified()             // возвращает время последнего изменения => long (timestamp)
+new File("file.txt").getName()                  // возвращает имя файла (без пути) => String
+new File("file.txt").getPath()                  // возвращает относительный путь => String
+new File("file.txt").getAbsolutePath()          // возвращает абсолютный путь => String
+new File("file.txt").text                       // читает содержимое файла в строку
+new File("file.txt").getText("UTF-8")           // указать кодировку при чтение
+new File("file.txt").readBytes()                // читает файл как массив байтов => byte[]
+new File("file.txt").readLines()                // читает файл построчно (получаем массив из строк) => List<String>
+new File("file.txt").eachLine { it }            // обработать каждую строку
+new File("file.txt").write("text")              // перезаписывает файл (если существует) => void
+new File("file.txt").setText("text")            // аналог write() => void
+new File("file.txt").bytes = [1, 2, 3]          // записывает массив байтов => void
+new File("file.txt") << "text"                  // добавляет текст в конец файла => void
+
+(versions[1].toInteger() + 1).toString().padLeft(4, '0') // 0019 + 1 = 0020 ("19".padLeft(4, '0') -> "0019")
+```
 ## Jenkins
 
 `docker run -d --name=jenkins -p 8080:8080 -p 50000:50000 --restart=unless-stopped -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest` \
@@ -2816,29 +3053,78 @@ Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild
 ```
 ### Plugins
 
-| Плагин                                                                          | Описание                                                                                                    |
-| -                                                                               | -                                                                                                           |
-| [Pipeline Stage View](https://plugins.jenkins.io/pipeline-stage-view)           | Визуализация шагов (stages) в интерфейсе проекта с временем их выполнения.                                  |
-| [Rebuilder](https://plugins.jenkins.io/rebuild)                                 | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке.       |
-| [Schedule Build](https://plugins.jenkins.io/schedule-build)                     | Позволяет запланировать сборку на указанный момент времени.                                                 |
-| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)        | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) и позволяет производить сверку.  |
-| [Export Job Parameters](https://plugins.jenkins.io/export-job-parameters)       | Добавляет кнопку `Export Job Parameters` для конвертации все параметров в декларативный синтаксис Pipeline. |
-| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                      | Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.                          |
-| [Active Choices Parameters](https://plugins.jenkins.io/uno-choice)              | Активные параметры, которые позволяют динамически обновлять содержимое параметров.                          |
-| [File Parameters](https://plugins.jenkins.io/file-parameters)                   | Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).        |
-| [Separator Parameter](https://plugins.jenkins.io/parameter-separator)           | Параметр для разграничения набора параметров на странице сборки задания с поддержкой HTML.                  |
-| [Custom Tools](https://plugins.jenkins.io/custom-tools-plugin)                  | Позволяет загружать пакеты из интернета с помощью предустановленного набора команд.                         |
-| [Ansible](https://plugins.jenkins.io/ansible)                                   | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`.    |
-| [HashiCorp Vault](https://plugins.jenkins.io/hashicorp-vault-plugin)            | Автоматизирует процесс получения содержимого значений из Vault с помощью метода `withVault`                 |
-| [HTTP Request](https://plugins.jenkins.io/http_request)                         | Простой REST API Client для отправки и обработки `GET` и `POST` запросов через метод `httpRequest`.         |
-| [Pipeline Utility Steps](https://plugins.jenkins.io/pipeline-utility-steps)     | Добавляет методы `readJSON` и `writeJSON`.                                                                  |
-| [ANSI Color](https://plugins.jenkins.io/ansicolor)                              | Добавляет поддержку стандартных escape-последовательностей ANSI для покраски вывода.                        |
-| [Email Extension](https://plugins.jenkins.io/email-ext)                         | Отправка сообщений на почту из Pipeline.                                                                    |
-| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)       | Показывает историю результатов сборки `junit` тестов в табличном древовидном виде.                          |
-| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status)   | Предоставляет настраиваемые значки (like `shields.io`), который возвращает статус сборки.                   |
-| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                     | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных.              |
-| [Web Monitoring](https://plugins.jenkins.io/monitoring)                         | Добавляет конечную точку `/monitoring` для отображения графиков мониторинга в веб-интерфейсе.               |
-| [CloudBees Disk Usage](https://plugins.jenkins.io/cloudbees-disk-usage-simple)  | Отображает использование диска всеми заданиями во вкладке `Manage-> Disk usage`.                            |
+| Плагин                                                                                  | Описание                                                                                                                |
+| -                                                                                       | -                                                                                                                       |
+| [Pipeline: Nodes and Processes](https://plugins.jenkins.io/pipeline-stage-view)         | Плагин, который предоставляет доступ к интерпретаторам `sh`, `bat`, `powershell` и `pwsh`                               |
+| [Pipeline Utility Steps](https://jenkins.io/doc/pipeline/steps/pipeline-utility-steps)  | Добавляет методы `readJSON`, `writeJSON`, `readYaml`, `writeYaml`, `readTOML`, `writeTOM`, `untar`, `unzip`, и другие.  |
+| [HTTP Request](https://plugins.jenkins.io/http_request)                                 | Простой REST API Client для отправки и обработки `GET` и `POST` запросов через метод `httpRequest`.                     |
+| [Credentials Binding Plugin](https://jenkins.io/doc/pipeline/steps/credentials-binding) | Добавляет метод `withCredentials` для доступа к секретам.                                                               |
+| [HashiCorp Vault](https://plugins.jenkins.io/hashicorp-vault-plugin)                    | Автоматизирует процесс получения содержимого значений из Vault с помощью метода `withVault`                             |
+| [Ansible](https://plugins.jenkins.io/ansible)                                           | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`.                |
+| [Pipeline Stage View](https://plugins.jenkins.io/pipeline-stage-view)                   | Визуализация шагов (stages) в интерфейсе проекта с временем их выполнения.                                              |
+| [Rebuilder](https://plugins.jenkins.io/rebuild)                                         | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке.                   |
+| [Schedule Build](https://plugins.jenkins.io/schedule-build)                             | Позволяет запланировать сборку на указанный момент времени.                                                             |
+| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)                | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) и позволяет производить сверку.              |
+| [Export Job Parameters](https://plugins.jenkins.io/export-job-parameters)               | Добавляет кнопку `Export Job Parameters` для конвертации все параметров в декларативный синтаксис Pipeline.             |
+| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                              | Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.                                      |
+| [SSH Agent Plugin](https://www.jenkins.io/doc/pipeline/steps/ssh-agent)                 | Плагин для подключения к удаленным машинам с использованием `ssh-agent` и `credentials`.                                |
+| [Active Choices Parameters](https://plugins.jenkins.io/uno-choice)                      | Активные параметры, которые позволяют динамически обновлять содержимое параметров.                                      |
+| [File Parameters](https://plugins.jenkins.io/file-parameters)                           | Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).                    |
+| [Separator Parameter](https://plugins.jenkins.io/parameter-separator)                   | Параметр для разграничения набора параметров на странице сборки задания с поддержкой HTML.                              |
+| [Custom Tools](https://plugins.jenkins.io/custom-tools-plugin)                          | Позволяет загружать пакеты из интернета с помощью предустановленного набора команд.                                     |
+| [ANSI Color](https://plugins.jenkins.io/ansicolor)                                      | Добавляет поддержку стандартных escape-последовательностей ANSI для покраски вывода.                                    |
+| [Email Extension](https://plugins.jenkins.io/email-ext)                                 | Отправка сообщений на почту из Pipeline.                                                                                |
+| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)               | Показывает историю результатов сборки `junit` тестов в табличном древовидном виде.                                      |
+| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status)           | Предоставляет настраиваемые значки (like `shields.io`), который возвращает статус сборки.                               |
+| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                             | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных.                          |
+| [Web Monitoring](https://plugins.jenkins.io/monitoring)                                 | Добавляет конечную точку `/monitoring` для отображения графиков мониторинга в веб-интерфейсе.                           |
+| [CloudBees Disk Usage](https://plugins.jenkins.io/cloudbees-disk-usage-simple)          | Отображает использование диска всеми заданиями во вкладке `Manage-> Disk usage`.                                        |
+
+### Credentials
+
+Примеры использования метода `withCredentials` для извлечения и использования секретов:
+
+```Groovy
+withCredentials([string(
+  credentialsId: 'github-token', variable: 'TOKEN'
+)]) {
+  sh 'curl -H "Authorization: Bearer $TOKEN" https://api.github.com/rate_limit'
+}
+
+withCredentials([usernamePassword(
+  credentialsId: 'nexus-creds',
+  usernameVariable: 'NEXUS_USER',
+  passwordVariable: 'NEXUS_PASS'
+)]) {
+  sh 'echo "$NEXUS_PASS" | docker login -u "$NEXUS_USER" --password-stdin registry.example.com'
+}
+
+withCredentials([sshUserPrivateKey(
+  credentialsId: params.credentials,
+  usernameVariable: 'SSH_USER',
+  keyFileVariable: 'SSH_KEY',
+  passphraseVariable: ''
+)]) {
+    // sh 'GIT_SSH_COMMAND="ssh -i $SSH_KEY -o StrictHostKeyChecking=no" git fetch'
+    writeFile(file: env.SSH_KEY_FILE, text: readFile(SSH_KEY))
+    sh "chmod 600 ${env.SSH_KEY_FILE}"
+}
+
+withCredentials([file(
+  credentialsId: 'google-cloud-key',
+  variable: 'KEYFILE'
+)]) {
+  sh 'gcloud auth activate-service-account --key-file="$KEYFILE"'
+}
+```
+
+### SSH Agent
+
+```Groovy
+sshagent (credentials: ['d5da50fc-5a98-44c4-8c55-d009081a861a']) {
+  sh 'ssh -o StrictHostKeyChecking=no -l lifailon 192.168.3.101 uname -a'
+}
+```
 
 ### SSH Steps and Artifacts
 
@@ -3267,6 +3553,14 @@ pipeline {
         timestamps()
         timeout(time: 10, unit: "MINUTES")
     }
+    environment {
+        KUBECONFIG = "${WORKSPACE}/kubeconfig"
+        KUBECTLPATH = tool(
+            name: "kubectl-amd64-1.33.3",
+            type: "com.cloudbees.jenkins.plugins.customtools.CustomTool"
+        )
+        PATH = "${KUBECTLPATH}:${env.PATH}"
+    }
     parameters {
         separator(
             name: "separatorVault",
@@ -3315,22 +3609,7 @@ pipeline {
         //     script: [$class: "GroovyScript", box: true, script: [script: '''return [activeChoicesParameter]''']]
         // )
     }
-    environment {
-        KUBECONFIG = "${WORKSPACE}/kubeconfig"
-        KUBECTLPATH = tool(
-            name: "kubectl-amd64-1.33.3",
-            type: "com.cloudbees.jenkins.plugins.customtools.CustomTool"
-        )
-        PATH = "${KUBECTLPATH}:${env.PATH}"
-    }
     stages {
-        // stage("Checkout") {
-        //     steps {
-        //         script {
-        //             checkout scm
-        //         }
-        //     }
-        // }
         stage("Get kubeconfig from Vault") {
             steps {
                 script {
@@ -3362,7 +3641,7 @@ pipeline {
                     ) {
                         // Записываем содержимое в файл
                         writeFile(
-                            file: "${WORKSPACE}/kubeconfig", // Не принимает переопределенные env
+                            file: "${WORKSPACE}/kubeconfig", // Не принимает переменные из environment
                             text: kubeconfig
                         )
                     }
@@ -3386,14 +3665,15 @@ pipeline {
                         log.success("Конфигурация получена")
                         log.success(firstLine)
                     }
-                    log.info("Проверяем версию kubectl")
-                    sh(
+                    log.info("Проверка версии kubectl")
+                    def kubectlVersion = sh(
                         script: """
-                            kubectl version --output=json
+                            kubectl version --output=json || true
                         """,
-                        returnStatus: true, // Не возвращаем статус (игнорируем ошибки)
-                        returnStdout: false // Выводим stdout
+                        returnStatus: false, // Возвращяет код возврата если true (для проверки или игнорирования ошибок)
+                        returnStdout: true   // Возвращяет вывод в переменную
                     )
+                    log.success(kubectlVersion)
                 }
             }
         }
@@ -3525,225 +3805,6 @@ pipeline {
         }
     }
 }
-```
-## Groovy
-
-Базовый синтаксис языка `Groovy`:
-```Groovy
-// Переменные
-javaString = 'java'
-javaString
-println javaString
-javaString.class    // class java.lang.String
-println 100.class   // class java.lang.Integer
-j = '${javaString}' // не принимает переменные в одинарных кавычках
-groovyString = "${javaString}"
-bigGroovyString = """
-    ${javaString}
-    ${j}
-    ${groovyString}
-    ${2 + 2}
-"""
-
-// java
-// ${javaString}
-// java
-// 4
-
-a = "a"   // a
-a + "123" // a123
-a * 5     // aaaaa
-
-// Массивы и списки
-list =[1,2,3]
-list[0]    // 1
-list[0..1] // [1, 2]
-range = "0123456789"
-range[1..5] // 12345
-map = [key1: true, key2: false]
-map["key1"] // true
-server = [:]
-server.ip = "192.168.3.1"
-server.port = 22
-println(server) // [ip:192.168.3.1, port:22]
-
-// Функции
-def sum(a,b) {
-    println a+b
-}
-sum(2,2) // 4
-
-// Условия
-def diff(x) {
-    if (x < 10) {
-        println("${x} < 10")
-    } else if (x == 10) {
-        println("${x} = 10")
-    } else {
-        println("${x} > 10")
-    }
-}
-diff(11) // 11 > 10
-
-// Циклы
-list.each { l ->
-    print l
-}
-// 123
-
-for (i in 0..5) { 
-    print i
-}
-// 012345
-
-for (int i = 0; i < 10; i++) {
-    print i
-}
-// 0123456789
-
-i = 0
-while (i < 3) {
-    println(i)
-    i++
-}
-// 0
-// 1
-// 2
-
-// Классы
-def str = "start"
-println str
-class Main {
-    def echo (param) {
-        println param
-    }
-}
-def main = new Main()
-def array = [1, 2, 3]
-for (element in array) {
-    main.echo(element)
-}
-// 1
-// 2
-// 3
-
-// Обработка ошибок
-def newList = [:]
-newList[0] = 1
-newList[1] = 2
-for (index in 0..1) {
-    try {
-        newList[index] += 3
-        main.echo(newList[index])
-    } catch (Exception e) {
-        main.echo("Ошибка: ${e.message}")
-    } finally {
-        if (newList[index] >= 5) {
-            main.echo(newList[index]+1)
-        }
-    }
-}
-// 4
-// 5
-// 6
-
-println str.replace("start", "final")
-
-// Коллекция для синхронизации сохранения данных в потоках
-def sharedList = Collections.synchronizedList([])
-// Анонимная функция для обработки данных в потоке
-def runTask = { name, delay ->
-    Thread.start {
-        println "${name} запущена в потоке ${Thread.currentThread().name}"
-        sleep(delay)
-        println "${name} завершена"
-        synchronized(sharedList) {
-            sharedList << "${name} завершена"
-        }
-    }
-}
-
-def threads = []
-// Ждём завершения всех потоков
-threads << runTask("Задача 1", 3000)
-threads << runTask("Задача 2", 2000)
-threads << runTask("Задача 3", 1000)
-
-threads*.join()
-println "Результат: $sharedList"
-
-// Функции строк
-" text ".trim()                     // удаляет пробелы в начале и конце => "text"
-"ping".replace("i", "o")            // заменяет буквы в строке => pong
-"a,b,c".split(",")                  // разбивает строку по разделителю => ["a", "b", "c"]
-"abc".size()                        // возвращает длину строки или размер списка (кол-во элементов) => 3
-"abc".reverse()                     // переворачивает строку => "cba"
-"abc".contains("b")                 // проверяет наличие подстроки => true
-"abc".startsWith("a")               // проверяет начало строки => true
-"abc".endsWith("c")                 // проверяет конец строки => true
-"123".isNumber()                    // проверяет, является ли строка числом => true
-"abc".matches("a.*")                // проверяет соответствие регулярному выражения => true
-"hello".toUpperCase()               // преобразует строку в верхний регистр => "HELLO"
-"HELLO".toLowerCase()               // преобразует строку в нижний регистр => "hello"
-
-// Функции массивов
-["a","b","c"].join(",")             // объединяет элементы в строку => "a,b,c"
-["a","b","c"].contains("b")         // проверяет наличие элемента => true
-[1, 2, 3].sum()                     // суммирует элементы => 6
-[1, 2, 3].max()                     // находит максимум => 3
-[1, 2, 3].min()                     // находит минимум => 1
-[1, 2, 3].average()                 // вычисляет среднее => 2
-[1, 2, 3].reverse()                 // переворачивает список => [3, 2, 1]
-[3, 2, 1].sort()                    // сортирует список => [1, 2, 3]
-[1, 2, 2, 3, 3].unique()            // удаляет дубли => [1, 2, 3]
-[1, 2, 3].findAll { it > 1 }        // фильтрует элементы => [2, 3]
-[1, 2, 3].collect { it * 2 }        // преобразует элементы => [2, 4, 6]
-["1","2"].collect {it.toInteger()}  // строки => числа => [1, 2]
-
-def users = [
-    [name: "Alex", age: 30],
-    [name: "Jack", age: 35]
-]  
-users.collect { it.name }
-// ["Alex", "Jack"]
-
-// Функции карт (map)
-["a": 1, "b": 2].get("a")                       // получает значение по ключу => 1
-["a": 1, "b": 2].keySet()                       // возвращает все ключи => ["a", "b"]
-["a": 1, "b": 2].values()                       // возвращает все значения => [1, 2]
-["a": 1, "b": 2].containsKey("a")               // проверяет наличие ключа => true
-["a": 1, "b": 2].findAll { k, v -> v > 1 }      // фильтрует записи => ["b": 2]
-["a": 1, "b": 2].collect { k, v -> "$k-$v" }    // преобразует => ["a-1", "b-2"]
-["a": 1].put("b", 2)                            // добавляет новую пару ключ-значение => ["a": 1, "b": 2]
-["a": 1].plus(["b": 2])                         // объединяет мапы => ["a": 1, "b": 2]
-
-// Директории и файлы
-new File("dir").mkdir()                         // создает директорию => boolean
-new File("dir/subdir").mkdirs()                 // создает все недостающие директории d genb => boolean
-new File("dir").list()                          // список имен файлов => String[]
-new File("dir").listFiles()                     // возвращает список файлов в директории => File[]
-new File("dir").deleteDir()                     // удаляет директорию (рекурсивно) => boolean
-new File("dir").isDirectory()                   // проверяет, что это директория => boolean
-new File("file.txt").createNewFile()            // создает пустой файл => boolean
-new File("file.txt").delete()                   // удаляет файл => boolean
-new File("file.txt").exists()                   // проверяет существование файла => boolean
-new File("file.txt").isFile()                   // проверяет, что это файл => boolean
-new File("file.txt").length()                   // возвращает размер файла в байтах => long
-new File("file.txt").lastModified()             // возвращает время последнего изменения => long (timestamp)
-new File("file.txt").getName()                  // возвращает имя файла (без пути) => String
-new File("file.txt").getPath()                  // возвращает относительный путь => String
-new File("file.txt").getAbsolutePath()          // возвращает абсолютный путь => String
-new File("file.txt").text                       // читает содержимое файла в строку
-new File("file.txt").getText("UTF-8")           // указать кодировку при чтение
-new File("file.txt").readBytes()                // читает файл как массив байтов => byte[]
-new File("file.txt").readLines()                // читает файл построчно (получаем массив из строк) => List<String>
-new File("file.txt").eachLine { it }            // обработать каждую строку
-new File("file.txt").write("text")              // перезаписывает файл (если существует) => void
-new File("file.txt").setText("text")            // аналог write() => void
-new File("file.txt").bytes = [1, 2, 3]          // записывает массив байтов => void
-new File("file.txt") << "text"                  // добавляет текст в конец файла => void
-
-(versions[1].toInteger() + 1).toString().padLeft(4, '0') // 0019 + 1 = 0020 ("19".padLeft(4, '0') -> "0019")
 ```
 ## Ansible
 
