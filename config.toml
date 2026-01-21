@@ -1,4 +1,4 @@
-title = "ruDocs"
+title = "ruDocs by Lifailon"
 base_url = "https://lifailon.github.io"
 description = "Web version for PowerShell notes, Linux commands, DevOps tools, Go and Node.js syntax in ru language."
 
@@ -31,7 +31,7 @@ index_format = "fuse_json"
 
 # [languages.ru]
 # title = "ruDocs"
-# description = "Веб-версия заметок по PowerShell, командам Linux, инструментам DevOps, синтаксису Go и Node.js на русском языке."
+# description = "Веб-версия заметок по PowerShell, командам Linux, инструментам DevOps, а также синтаксису Go и Node.js на русском языке."
 # generate_feeds = true
 # taxonomies = [{ name = "tags", feed = true }]
 
@@ -96,7 +96,7 @@ links = [
   { url = "@/Node-js/index.md", name = "Node.js" },
 ]
 
-copyright = "**2023-2026** © *Lifailon*"
+copyright = "ruDocs by Lifailon © 2023-2026"
 show_copyright = true
 show_source = false
 show_powered_by = true

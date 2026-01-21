@@ -11,7 +11,7 @@ theme = "dark-theme-editor"
 # Заголовок сайта (указывается в шапке, теме и наименование вкладки главной страницы)
 title = "Lifailon.GitHub.io"
 # Описание на главное странице
-subtitle = "Веб-версия заметок по PowerShell, командам Linux, инструментам DevOps, синтаксису Go и Node.js на русском языке."
+subtitle = "Веб-версия заметок по PowerShell, командам Linux, инструментам DevOps, а также синтаксису Go и Node.js на русском языке."
 
 # Логотип
 [params.header.logo]

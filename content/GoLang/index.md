@@ -11,7 +11,7 @@ go_to_top = true
 </p>
 
 <p align="center">
-    Вольный и расширенный перевод оригинального репозитория <a href="https://github.com/a8m/golang-cheat-sheet">Go Cheat Sheet</a> на русский язык.
+    Вольный и расширенный перевод репозитория <a href="https://github.com/a8m/golang-cheat-sheet">Go Cheat Sheet</a> на русский язык.
 </p>
 
 ---
