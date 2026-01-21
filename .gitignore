@@ -15,4 +15,6 @@
 
 # merge from source repository for CI
 /PS-Commands
+/rudocs
 /golang-cheat-sheet-ru
+/node.js-cheat-sheet-ru

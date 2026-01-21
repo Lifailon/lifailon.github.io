@@ -30,8 +30,6 @@ go_to_top = true
     а также коллекция стеков <a href="/compose/">Docker Compose</a> из более чем 200 сервисов.
 </p>
 
-[PowerShell](https://github.com/PowerShell/PowerShell) - это объектно-ориентированный и кроссплатформенный язык программирования с открытым исходным кодом, который способен напрямую работать с классами и методами `C#` через платформу `.NET`, что позволяет создавать программы с графическим интерфейсом на базе [WinForms](https://github.com/Lifailon/PS-Commands/blob/rsa/WinForms) и [WPF](https://ru.wikipedia.org/wiki/Windows_Presentation_Foundation), веб-сервера и `REST API` с помощью класса [HttpListener](https://github.com/Lifailon/PS-Commands/blob/rsa/HttpListener/KeePassREST.psm1), управлять браузером с помощь библиотеки [Selenium](https://github.com/Lifailon/Selenium-Modules), управление различными СУБД и языками разметки (нативная поддержка `XML`, `JSON` и `CSV`, [YAML](https://github.com/Phil-Factor/PSYaml) и [TOML](https://github.com/jborean93/PSToml) с помощью модулей или `HTML` через библиотеку [HAP](https://github.com/zzzprojects/html-agility-pack)) как с любыми другими объектами за счет типовой экосистемы взаимодействия. Такой язык в первую очередь будет полезен DevOps инженерам и системным администраторам, так как является незаменимым инструментом для автоматизации Windows систем и управления компонентами Windows Server (`Active Directory`, `MS Exchange`, `MS SQL`, `Hyper-V`, `DNS`, `DHCP`, `SMB` и т.п.).
-
 ---
 
 ### Другие проекты

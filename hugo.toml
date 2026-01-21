@@ -1,6 +1,6 @@
 baseURL = "https://lifailon.github.io"
 languageCode = "en-us"
-title = "PS-Commands"
+title = "ruDocs"
 
 # git clone https://github.com/JingWangTW/dark-theme-editor.git themes/dark-theme-editor
 theme = "dark-theme-editor"
@@ -11,7 +11,7 @@ theme = "dark-theme-editor"
 # Заголовок сайта (указывается в шапке, теме и наименование вкладки главной страницы)
 title = "Lifailon.GitHub.io"
 # Описание на главное странице
-subtitle = "Большая база заметок PowerShell на русском языке."
+subtitle = "Веб-версия заметок по PowerShell, командам Linux, инструментам DevOps, синтаксису Go и Node.js на русском языке."
 
 # Логотип
 [params.header.logo]
@@ -52,7 +52,7 @@ author = "Lifailon"
 
 # Описание главное страницы
 [params.homePage]
-siteLongDescriptionTitle = "PowerShell Commands"
+siteLongDescriptionTitle = "ruDocs"
 siteLongDescription = "Структура языка, синтаксис командлетов и модулей, работа с системными и внешними утилитами, платформой .NET, различными сервисами через REST API, а так же системами AD, Exchange, Hyper-V, VMWare, базами данных и т.д."
 showRecentPostsBlock = false # Отображать последние добавленные посты на главной страницы
 numOfRecentPosts = 5 # Количество отображамых постов

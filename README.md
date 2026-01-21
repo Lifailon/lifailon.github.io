@@ -1,4 +1,8 @@
-## Web version for [PowerShell Commands](https://github.com/Lifailon/PS-Commands)
+## Web version for ruDocs
+
+Веб-версия заметок по PowerShell, командам Linux и инструментам DevOps из репозитория [ruDocs](https://github.com/Lifailon/rudocs), а также синтаксису [Go](https://github.com/Lifailon/golang-cheat-sheet-ru) и [Node.js](https://github.com/Lifailon/node.js-cheat-sheet-ru).
+
+## Branches
 
 👉 Статья на Хабр: [Создание статических сайтов из Markdown без HTML]()
 

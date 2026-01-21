@@ -7,7 +7,7 @@ go_to_top = true
 +++
 
 <p align="center">
-    <a href="https://github.com/Lifailon/golang-cheat-sheet-ru"><img title="PS-Commands Logo"src="logo.png"></a>
+    <a href="https://github.com/Lifailon/golang-cheat-sheet-ru"><img title="GoLang Cheat Sheet Logo"src="logo.png"></a>
 </p>
 
 <p align="center">

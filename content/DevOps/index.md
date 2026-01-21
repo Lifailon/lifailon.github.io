@@ -7,7 +7,7 @@ go_to_top = true
 +++
 
 <p align="center">
-    <a href="https://github.com/Lifailon/PS-Commands/blob/rsa/devops.md"><img title="DevOps Tools"src="logo.png"></a>
+    <a href="https://github.com/Lifailon/rudocs/tree/main/devops.md"><img title="DevOps Tools"src="logo.png"></a>
 </p>
 
 <p align="center">

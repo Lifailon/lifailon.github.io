@@ -1,7 +1,7 @@
-site_name: PowerShell Commands
+site_name: ruDocs
 site_url: https://lifailon.github.io
-repo_url: https://github.com/Lifailon/PS-Commands
-copyright: Copyright © 2023-2024 Alex Kup (Lifailon)
+repo_url: https://github.com/Lifailon/rudocs
+copyright: Copyright © 2023-2026 Alex Kup (Lifailon)
 
 docs_dir: content
 
@@ -28,8 +28,8 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/Lifailon/PS-Commands
-      name: PS-Commands on Github
+      link: https://github.com/Lifailon/rudocs
+      name: rudocs on Github
 
 theme:
   name: material
