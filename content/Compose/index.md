@@ -11,7 +11,7 @@ go_to_top = true
 </p>
 
 <p align="center">
-    Коллекция стеков Docker Compose из более чем 200 сервисов. Каждое приложение было отлажено и проверено в домашней лаборатории, конфигурации к некоторым сервисам доступны в исходном <a href="https://github.com/Lifailon/rudocs/tree/main/Docker-Compose">репозитории</a>.
+    Коллекция стеков Docker Compose из более чем 300 сервисов. Каждое приложение было отлажено и проверено в домашней лаборатории, конфигурации к некоторым сервисам доступны в исходном <a href="https://github.com/Lifailon/rudocs/tree/main/Docker-Compose">репозитории</a>.
 </p>
 
 ---
@@ -291,6 +291,55 @@ services:
       - ./sessions/:/app/sessions
       - ./temp/:/app/temp
 ```
+
+### Pentaract
+
+[Pentaract](https://github.com/Dominux/Pentaract) - система облачного хранения данных, использующая Telegram в качестве хранилища, не используя файловую систему локального сервера или стороннего облачного хранилища.
+
+```yaml
+services:
+  pentaract:
+    image: pentaract
+    container_name: pentaract
+    restart: unless-stopped
+    build: .
+    env_file:
+      - PORT=5050
+      - TELEGRAM_API_BASE_URL=https://api.telegram.org
+      - SECRET_KEY=<TOKEN>
+      - SUPERUSER_EMAIL=pentaract@pentaract.pentaract
+      - SUPERUSER_PASS=pentaract
+      - ACCESS_TOKEN_EXPIRE_IN_SECS=1800
+      - REFRESH_TOKEN_EXPIRE_IN_DAYS=14
+      - WORKERS=4
+      - CHANNEL_CAPACITY=32
+      # Database
+      - DATABASE_HOST=pentaract-db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=pentaract
+      - DATABASE_USER=pentaract
+      - DATABASE_PASSWORD=pentaract
+    ports:
+      - 5050:5050
+    depends_on:
+      - pentaract-db
+
+  pentaract-db:
+    image: postgres:15.0-alpine
+    container_name: pentaract-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=pentaract
+      - POSTGRES_PASSWORD=pentaract
+    volumes:
+      - ./pentaract_data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready --username=${DATABASE_USER} --dbname=${DATABASE_NAME}
+      interval: 10s
+      timeout: 5s
+      retries: 10
+```
+
 
 ## LLM Stack
 
@@ -1139,6 +1188,16 @@ services:
       # - $HOME/docker/vaultwarden/log:/remotelogs/vaultwarden:ro
       # - $HOME/docker/nextcloud/log:/remotelogs/nextcloud:ro
 ```
+
+### Temp Mail
+
+🔗 [Temp Mail UI](https://github.com/mehmetkahya0/temp-mail) ↗
+
+🔗 [Temp Mail UI Demo](https://mehmetkahya0.github.io/temp-mail) ↗
+
+🔗 [Temp Fast Mail](https://github.com/kasteckis/TempFastMail) ↗
+
+🔗 [Temp Fast Mail Demo](https://tempfastmail.com) ↗
 
 ## SMTP Stack
 
@@ -2463,6 +2522,75 @@ services:
       -p
 ```
 
+### SFTPGo
+
+[SFTPGo](https://github.com/drakkan/sftpgo) - SFTP, HTTP/S, FTP/S и WebDAV сервер, с поддержкой хранилища в локальной файловой системе, объектно-совместимом S3 хранилище, Google Cloud Storage, Azure Blob Storage или других SFTP-серверах.
+
+```yaml
+services:
+  sftpgo:
+    image: drakkan/sftpgo:edge
+    container_name: sftpgo
+    restart: unless-stopped
+    ports:
+      - 2022:2022
+      - 8088:8080
+```
+
+### Syncthing
+
+[Syncthing](https://github.com/syncthing/syncthing) - программа для непрерывной синхронизации файлов между двумя или более компьютерами. Работает на основе Block Exchange Protocol (BEP) для обмена данными, который использует TLS-шифрование для безопасной передачи данных по протоколу TCP.
+
+```yaml
+services:
+  file-syncthing:
+    image: syncthing/syncthing
+    container_name: file-syncthing
+    restart: unless-stopped
+    network_mode: host
+    # ports:
+    #   - 8384:8384         # Web UI
+    #   - 22000:22000/tcp   # TCP file transfers
+    #   - 22000:22000/udp   # QUIC file transfers
+    #   - 21027:21027/udp   # Receive local discovery broadcasts
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - ./syncthing_data:/var/syncthing   # configs
+      - $HOME/docker:/sync_data           # src sync data on server
+      # - ./backup:/sync_data             # dst sync data on client (mkdir backup && chown -R 1000:1000 backup)
+    healthcheck:
+      test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3
+```
+
+### h5ai
+
+[h5ai](https://github.com/lrsjng/h5ai) - современный интерфейс веб-сервера для файлового индексера. Визуально напоминается FTP сервер для удобного отображения и загрузки (например, его использует [Libretro/RetroArch](https://buildbot.libretro.com) для публикации релизов).
+
+```yaml
+services:
+  h5ai:
+    image: awesometic/h5ai
+    container_name: h5ai
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/GMT+3
+      - HTPASSWD=false
+      - HTPASSWD_USER=admin
+      - HTPASSWD_PW=admin
+    volumes:
+      - $HOME/docker:/h5ai    # public data
+      - ./h5ai_conf:/config
+    ports:
+      - 8889:80
+```
+
 ### FileBrowser
 
 [FileBrowser](https://github.com/filebrowser/filebrowser) - веб-интерфейс для управления файлами в указанном каталоге. Поддерживает управление пользователями, загрузку, удаление, просмотр и редактирование файлов.
@@ -2536,75 +2664,6 @@ services:
       - 8000:8000
     stdin_open: true
     tty: true
-```
-
-### Syncthing
-
-[Syncthing](https://github.com/syncthing/syncthing) - программа для непрерывной синхронизации файлов между двумя или более компьютерами. Работает на основе Block Exchange Protocol (BEP) для обмена данными, который использует TLS-шифрование для безопасной передачи данных по протоколу TCP.
-
-```yaml
-services:
-  file-syncthing:
-    image: syncthing/syncthing
-    container_name: file-syncthing
-    restart: unless-stopped
-    network_mode: host
-    # ports:
-    #   - 8384:8384         # Web UI
-    #   - 22000:22000/tcp   # TCP file transfers
-    #   - 22000:22000/udp   # QUIC file transfers
-    #   - 21027:21027/udp   # Receive local discovery broadcasts
-    environment:
-      - PUID=0
-      - PGID=0
-    volumes:
-      - ./syncthing_data:/var/syncthing   # configs
-      - $HOME/docker:/sync_data           # src sync data on server
-      # - ./backup:/sync_data             # dst sync data on client (mkdir backup && chown -R 1000:1000 backup)
-    healthcheck:
-      test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
-      interval: 1m
-      timeout: 10s
-      retries: 3
-```
-
-### h5ai
-
-[h5ai](https://github.com/lrsjng/h5ai) - современный интерфейс веб-сервера для файлового индексера. Визуально напоминается FTP сервер для удобного отображения и загрузки (например, его использует [Libretro/RetroArch](https://buildbot.libretro.com) для публикации релизов).
-
-```yaml
-services:
-  h5ai:
-    image: awesometic/h5ai
-    container_name: h5ai
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/GMT+3
-      - HTPASSWD=false
-      - HTPASSWD_USER=admin
-      - HTPASSWD_PW=admin
-    volumes:
-      - $HOME/docker:/h5ai    # public data
-      - ./h5ai_conf:/config
-    ports:
-      - 8889:80
-```
-
-### SFTPGo
-
-[SFTPGo](https://github.com/drakkan/sftpgo) - сервер SFTP, HTTP/S, FTP/S и WebDAV, с поддержкой объектное-совместимого S3 хранилища, Google Cloud Storage, файловой системы хранкения и другие SFTP-серверы.
-
-```yaml
-services:
-  sftpgo:
-    image: drakkan/sftpgo:edge
-    container_name: sftpgo
-    restart: unless-stopped
-    ports:
-      - 2022:2022
-      - 8088:8080
 ```
 
 ## S3 Stack
@@ -2847,28 +2906,37 @@ HTTP_PORT=8080
 
 ### localstack
 
-[Local Stack](https://github.com/localstack/localstack) - эмулятор облачных сервисов, работающий в одном контейнере на ноутбуке или в среде CI. Позволяет запускать свои приложения AWS или Lambda-функции полностью на локальном компьютере, не подключаясь к удаленному облачному провайдеру.
+[Local Stack](https://github.com/localstack/localstack) - эмулятор облачных сервисов, работающий в одном контейнере на ноутбуке или в среде CI. Позволяет запускать свои приложения AWS (Amazon Web Services, например, S3 хранилище, CloudWatch Log Events или Lambda-функции) полностью на локальном компьютере, не подключаясь к удаленному облачному провайдеру.
 
 ```yaml
 services:
   localstack:
     image: localstack/localstack
-    # image: localstack/localstack-pro
     container_name: localstack
-    restart: unless-stopped
+    restart: always
     ports:
-      - 4566:4566            # LocalStack Gateway
-      - 4510-4559:4510-4559  # external services port range
-      # - 443:443            # LocalStack HTTPS Gateway (Pro)
+      - 4566:4566
+      - 4510-4559:4510-4559
     environment:
-      # Activate LocalStack Pro: https://docs.localstack.cloud/getting-started/auth-token/
-      # - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN:?}  # required for Pro
-      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
-      - DEBUG=0
-      - PERSISTENCE=0
+      - DEBUG=1
+      - PERSISTENCE=1
+      - EXTRA_CORS_ALLOWED_ORIGINS=*
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./localstack_data:/var/lib/localstack
+
+  fluent-bit:
+    image: fluent/fluent-bit:latest
+    container_name: fluent-bit
+    ports:
+      - 24224:24224
+    environment:
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+    volumes:
+      - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
 ```
 
 ## DNS Stack
@@ -5090,19 +5158,14 @@ services:
 ```yaml
 services:
   kubetail-dashboard:
-    image: kubetail/kubetail-dashboard:0.8.2
+    image: kubetail/kubetail-cli # https://github.com/kubetail-org/kubetail/issues/770
     container_name: kubetail-dashboard
     restart: unless-stopped
+    command: serve --host 0.0.0.0 --skip-open
     ports:
       - 7500:7500
     volumes:
-      - ~/.kube/config:/kubetail/.kube/config:ro
-    command:
-      [
-        "-a", ":7500",
-        "-p", "dashboard.environment:desktop",
-        "-p", "kubeconfig:/kubetail/.kube/config",
-      ]
+      - ~/.kube/config:/root/.kube/config:ro
 ```
 
 ### Velero UI
@@ -6261,7 +6324,7 @@ services:
     container_name: github-exporter
     restart: always
     environment:
-      - REPOS=Lifailon/PS-Commands,Lifailon/lazyjournal
+      - REPOS=Lifailon/rudocs,Lifailon/lazyjournal
       - USERS=Lifailon
       # - GITHUB_TOKEN=
     # ports:
@@ -6922,21 +6985,48 @@ services:
     command: syslog://sloggo:1514
 ```
 
-### Fluent-bit
+### Fluent Bit
 
-[Fluent-bit](https://github.com/fluent/fluent-bit) - быстрый и легковесный агент для сбора логов, метрик и трассировок в системах Linux, BSD, OSX и Windows.
+[Fluent Bit](https://github.com/fluent/fluent-bit) - быстрый и легковесный агент для сбора логов, метрик и трассировок в системах Linux, BSD, OSX и Windows.
+
+Пример пересылки логов из контейнера [Zerobyte](https://github.com/nicotsx/zerobyte) в AWS CloudWatch через Fluent Bit:
 
 ```yaml
+services:
   fluent-bit:
     image: fluent/fluent-bit:latest
     container_name: fluent-bit
-    restart: unless-stopped
-    # ports:
-    #   - 24224:24224/tcp
-    #   - 24224:24224/udp
+    ports:
+      - 24224:24224
     volumes:
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+    environment:
+      - AWS_ENDPOINT_URL=http://192.168.3.101:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+
+  zerobyte:
+    image: ghcr.io/nicotsx/zerobyte:v0.19
+    container_name: zerobyte
+    restart: always
+    ports:
+      - 4096:4096
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse:/dev/fuse
+    environment:
+      - TZ=Etc/UTC+3
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/zerobyte:/var/lib/zerobyte
+      - /home/lifailon/docker/gitea/gitea_data:/backup_src_volume
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: zerobyte
 ```
 
 ### Vector
@@ -6957,7 +7047,7 @@ services:
 
 ### Toolong
 
-[Toolong](https://github.com/Textualize/toolong) - терминальное приложение для просмотра, отслеживания, объединения и поиска по содержимому файловых журналов, а также собранный [образ](https://hub.docker.com/r/lifailon/toolong-web) с веб-интерфейсом на базе [ttyd](https://github.com/tsl0922/ttyd).
+[Toolong](https://github.com/Textualize/toolong) - терминальное приложение (TUI) для просмотра, отслеживания, объединения и поиска по содержимому файловых журналов, а также собранный [образ](https://hub.docker.com/r/lifailon/toolong-web) с веб-интерфейсом на базе [ttyd](https://github.com/tsl0922/ttyd).
 
 ```yaml
 services:
@@ -6980,6 +7070,25 @@ services:
       - /var/log:/var/log:ro
 ```
 
+### WebTail
+
+[WebTail](https://github.com/LeKovr/webtail) - веб-интерфейс и пакет Go для непрерывного стрименга файлов (приемущественно логов) через веб-сокет в браузер (русский разработчик).
+
+```yaml
+services:
+  webtail:
+    image: ghcr.io/lekovr/webtail:latest
+    container_name: webtail
+    restart: unless-stopped
+    user: 0:0
+    ports:
+      - 8060:8080
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/log:/log:ro
+```
+
 ### PatchMon
 
 [PatchMon](https://github.com/PatchMon/PatchMon) - централизованное управление обновлениями в различных серверных средах. Агенты обмениваются данными с сервером PatchMon только по исходящим каналам, исключая входящие порты на контролируемых хостах, обеспечивая при этом всестороннюю видимость и безопасную автоматизацию.
@@ -6988,6 +7097,7 @@ services:
 services:
   patchmon:
     image: ghcr.io/patchmon/patchmon-backend:latest
+    container_name: patchmon
     restart: unless-stopped
     environment:
       LOG_LEVEL: info

@@ -14,11 +14,13 @@ go_to_top = true
     Большая база заметок <b>PowerShell</b> на русском языке.
 </p>
 
+[PowerShell](https://github.com/PowerShell/PowerShell) - это объектно-ориентированный и кроссплатформенный язык программирования с открытым исходным кодом (начиная с 6-ой версии **Core**). Он способен напрямую взаимодействовать с классами и методами `C#` через платформу `.NET`, что позволяет создавать программы с графическим интерфейсом на базе [WinForms](https://github.com/Lifailon/rudocs/blob/main/WinForms) или [WPF](https://ru.wikipedia.org/wiki/Windows_Presentation_Foundation), TUI на базе [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui), веб-сервера и `REST API` с помощью класса [HttpListener](https://github.com/Lifailon/rudocs/blob/main/HttpListener/KeePassREST.psm1) или [Pode](https://github.com/Badgerati/Pode) framework, управлять браузером с помощь библиотеки [Selenium](https://github.com/Lifailon/Selenium-Modules), базами данных (поддерживается большенство СУБД через [ODBC](https://ru.wikipedia.org/wiki/ODBC) драйверы или `.NET` коннекторы) и языками разметки (нативная поддержка `XML`, `JSON` и `CSV`, а также другими с помощью модулей или парсинг `HTML` через библиотеку [HAP](https://github.com/zzzprojects/html-agility-pack)) как с любыми другими объектами за счет типовой экосистемы взаимодействия. Такой язык в первую очередь будет полезен DevOps инженерам и системным администраторам, так как является незаменимым инструментом для автоматизации Windows систем, управления облачной инфрастуры Microsoft Azure и компонентами Windows Server, такими как `Hyper-V`, `Active Directory`, `MS Exchange`, `DNS`, `DHCP`, `SMB` и другими.
+
 ---
 
 ## Cheat-Sheet
 
-![Image alt](Cheat-Sheet/PowerShell-Cheat-Sheet-RU.jpg)
+![Image alt](Images/powershell-cheat-sheet-ru.jpg)
 
 ## Help
 
@@ -606,7 +608,7 @@ function Get-Function {
     .DESCRIPTION
     Описание
     .LINK
-    https://github.com/Lifailon/PS-Commands
+    https://github.com/Lifailon/rudocs
     #>
     param (
         [Parameter(Mandatory,ValueFromPipeline)][string]$Text,
@@ -634,7 +636,7 @@ function Get-Function {
     PrivateData       = @{
         PSData = @{
             Tags         = @("Function","Example")
-            ProjectUri   = "https://github.com/Lifailon/PS-Commands"
+            ProjectUri   = "https://github.com/Lifailon/rudocs"
             LicenseUri   = "https://github.com/Lifailon/Console-Translate/blob/rsa/LICENSE"
             ReleaseNotes = "Second release"
         }
@@ -1562,7 +1564,7 @@ function Start-Shutdown {
     # Start-Shutdown -Restart -Time "18:00"
     # Start-Shutdown -Cancel
     .LINK
-    https://github.com/Lifailon/PS-Commands
+    https://github.com/Lifailon/rudocs
     #>
     param(
         [string]$Time,
@@ -2709,89 +2711,6 @@ New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\Policy
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowSavedCredentials -Name Hyper-V -PropertyType String -Value "Microsoft Virtual Console Service/*" -Force
 New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\Credssp\PolicyDefaults\AllowSavedCredentialsDomain -Name Hyper-V -PropertyType String -Value "Microsoft Virtual Console Service/*" -Force
 ```
-## Azure
-
-`Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force` установить все модули для работы с Azure \
-`Get-Module *Az.*` список всех модулей
-
-`Get-Command -Module Az.Accounts` отобразить список команд модуля Az.Accounts \
-`Connect-AzAccount` подключиться у учетной записи Azure \
-`Get-AzContext` получить текущий статус подключения к Azure \
-`Get-AzSubscription` получить список подписок Azure, доступных для текущего пользователя \
-`Set-AzContext` установить контекст Azure для конкретной подписки и/или учетной записи \
-`Disconnect-AzAccount` отключиться от учетной записи Azure
-
-`Get-Command -Module Az.Compute` \
-`Get-AzVM` получить список виртуальных машин в текущей подписке или группе ресурсов \
-`Get-AzVMSize` получить список доступных размеров виртуальных машин в определенном регионе \
-`Get-AzVMImage` получить список доступных образов виртуальных машин \
-`New-AzVM` создать новую виртуальную машину \
-`Remove-AzVM` удалить виртуальную машину \
-`Start-AzVM` запустить виртуальную машину \
-`Stop-AzVM` остановить виртуальную машину \
-`Restart-AzVM` перезагрузить виртуальную машину
-
-`Get-Command -Module Az.Network` \
-`Get-AzVirtualNetwork` получить список виртуальных сетей в текущей подписке или группе ресурсов \
-`New-AzVirtualNetwork` создать новую виртуальную сеть \
-`Remove-AzVirtualNetwork` удалить виртуальную сеть \
-`Get-AzNetworkInterface` получить список сетевых интерфейсов \
-`New-AzNetworkInterface` создать новый сетевой интерфейс \
-`Remove-AzNetworkInterface` удалить сетевой интерфейс
-
-`Get-Command -Module Az.Storage` \
-`Get-AzStorageAccount` получить список учетных записей хранилища \
-`New-AzStorageAccount` создать новую учетную запись хранилища \
-`Remove-AzStorageAccount` удалить учетную запись хранилища \
-`Get-AzStorageContainer` список контейнеров в учетной записи хранилища \
-`New-AzStorageContainer` создать новый контейнер в учетной записи хранилища \
-`Remove-AzStorageContainer` удалить контейнер
-
-`Get-Command -Module Az.ResourceManager` \
-`Get-AzResourceGroup` получить список групп ресурсов в текущей подписке \
-`New-AzResourceGroup` создать новую группу ресурсов \
-`Remove-AzResourceGroup` удалить группу ресурсов \
-`Get-AzResource` получить список ресурсов \
-`New-AzResource` создать новый ресурс \
-`Remove-AzResource` удалить ресурс
-
-`Get-Command -Module Az.KeyVault` \
-`Get-AzKeyVault` список хранилищ ключей \
-`New-AzKeyVault` создать новое хранилище ключей в Azure \
-`Remove-AzKeyVault` удалить хранилище ключей в Azure
-
-`Get-Command -Module Az.Identity` \
-`Get-AzADUser` получить информацию о пользователях Azure Active Directory \
-`New-AzADUser` создать нового пользователя \
-`Remove-AzADUser` удалить пользователя \
-`Get-AzADGroup` получить информацию о группах \
-`New-AzADGroup` создать новую группу \
-`Remove-AzADGroup` удалить группу
-
-### Manage-VM
-
-Source: https://learn.microsoft.com/ru-ru/azure/virtual-machines/windows/tutorial-manage-vm
-
-`New-AzResourceGroup -Name "Resource-Group-01" -Location "EastUS"` создать группу ресурсов (логический контейнер, в котором происходит развертывание ресурсов Azure) \
-`Get-AzVMImageOffer -Location "EastUS" -PublisherName "MicrosoftWindowsServer"` список доступных образов Windows Server для установки \
-`$cred = Get-Credential` \
-`New-AzVm -ResourceGroupName "Resource-Group-01" -Name "vm-01" -Location 'EastUS' -Image "MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest" -Size "Standard_D2s_v3" -OpenPorts 80,3389 --Credential $cred` создать виртуальную машину \
-`Get-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01" -Status | Select @{n="Status"; e={$_.Statuses[1].Code}}` статус виртуальной машины \
-`Start-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01"` запустить виртуальную машину \
-`Stop-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01" -Force` остановить виртуальную машину \
-`Invoke-AzVMRunCommand -ResourceGroupName "Resource-Group-01" -VMName "vm-01" -CommandId "RunPowerShellScript" -ScriptString "Install-WindowsFeature -Name Web-Server -IncludeManagementTools"` установить роль веб-сервера IIS
-
-### Manage-Disk
-
-Source: https://learn.microsoft.com/ru-ru/azure/virtual-machines/windows/tutorial-manage-data-disk
-
-`$diskConfig = New-AzDiskConfig -Location "EastUS" -CreateOption Empty -DiskSizeGB 512 -SkuName "Standard_LRS"` создать диск на 512 Гб \
-`$dataDisk = New-AzDisk -ResourceGroupName "Resource-Group-01" -DiskName "disk-512" -Disk $diskConfig` создание объекта диска для подготовки диска данных к работе \
-`Get-AzDisk -ResourceGroupName "Resource-Group-01" -DiskName "disk-512"` список дисков \
-`$vm = Get-AzVM -ResourceGroupName "Resource-Group-01" -Name "vm-01"` \
-`Add-AzVMDataDisk -VM $vm -Name "Resource-Group-01" -CreateOption Attach -ManagedDiskId $dataDisk.Id -Lun 1` подключить диск к виртуальной машине \
-`Update-AzVM -ResourceGroupName "Resource-Group-01" -VM $vm` обновить конфигурацию виртуальной машины \
-`Get-Disk | Where PartitionStyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "disk-512" -Confirm:$false` инициализировать диск в ОС (необходимо подключиться к виртуальной машине) с таблицей MBR, создать раздел и назначить все пространство и форматировать в файловую систему NTFS
 
 ## Exchange/EMShell
 
@@ -3832,8 +3751,9 @@ set { Marshal.ThrowExceptionForHR(Vol().SetMute(value, System.Guid.Empty)); }
 
 ### NetSessionEnum
 
-[Function](https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN) \
-[Source](https://fuzzysecurity.com/tutorials/24.html)
+[Функцияя (методы)](https://learn.microsoft.com/ru-ru/windows/win32/api/lmshare/nf-lmshare-netsessionenum?redirectedfrom=MSDN)
+
+[Оригинальный источник](https://fuzzysecurity.com/tutorials/24.html)
 ```PowerShell
 function Invoke-NetSessionEnum {
 param (
@@ -3907,8 +3827,9 @@ echo "`nCalling NetApiBufferFree, no memleaks here!"
 
 ### CopyFile
 
-[Function](https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile) \
-[Source](https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1/)
+[Функции](https://learn.microsoft.com/ru-ru/windows/win32/api/winbase/nf-winbase-copyfile)
+
+[Оригинальный источник](https://devblogs.microsoft.com/scripting/use-powershell-to-interact-with-the-windows-api-part-1)
 ```PowerShell
 $MethodDefinition = @"
 [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
@@ -3919,7 +3840,7 @@ $Kernel32::CopyFile("$($Env:SystemRoot)\System32\calc.exe", "$($Env:USERPROFILE)
 ```
 ### ShowWindowAsync
 
-[Function](https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync)
+[Функции](https://learn.microsoft.com/ru-ru/windows/win32/api/winuser/nf-winuser-showwindowasync)
 ```PowerShell
 $Signature = @"
 [DllImport("user32.dll")]public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
@@ -3959,7 +3880,7 @@ Start-Sleep -Seconds 0.5
 ```
 ## Console API
 
-[Source](https://powershell.one/tricks/input-devices/detect-key-press)
+[Оригинальный источник](https://powershell.one/tricks/input-devices/detect-key-press)
 
 `[Console] | Get-Member -Static` \
 `[Console]::BackgroundColor = "Blue"` \
@@ -4066,7 +3987,7 @@ $date = Get-Date -f hh:mm:ss
 
 ### UDP-Socket
 
-[Source](https://cloudbrothers.info/en/test-udp-connection-powershell/)
+[Оригинальный источник](https://cloudbrothers.info/en/test-udp-connection-powershell)
 ```PowerShell
 function Start-UDPServer {
     param(
@@ -4178,11 +4099,6 @@ while (!([console]::KeyAvailable)) {
 }
 $httpListener.Close()
 ```
-### WebClient
-
-`[System.Net.WebClient] | Get-Member` \
-`(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/Lifailon/PowerShell-Commands/rsa/README.md")`
-
 ### HttpClient
 ```PowerShell
 $url = "https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/PowerShell-7.4.2-win-x64.zip"
@@ -4706,7 +4622,7 @@ ps | Select ProcessName, Id, CPU, WorkingSet, *MemorySize | New-Table "All Proce
 ```
 ## HtmlAgilityPack
 
-[Source](https://www.nuget.org/packages/HtmlAgilityPack)
+Пакет в менеджере пакетов [NuGet](https://www.nuget.org/packages/HtmlAgilityPack)
 ```PowerShell
 # Загрузка библиотеки C#, которая позволяет парсить HTML-документы, выбирать элементы DOM и извлекать из них данные
 Add-Type -Path "C:\Users\Lifailon\Downloads\HtmlAgilityPack\Net40\HtmlAgilityPack.dll"
@@ -5937,10 +5853,12 @@ while True:
 ```
 ## Elasticsearch
 
-`Install-Module -Name Elastic.Console -AllowPrerelease` [github source](https://github.com/elastic/powershell/blob/master/Elastic.Console/README.md) \
-`Get-Command -Module Elastic.Console` \
-`Get-ElasticsearchVersion` \
-`Set-ElasticsearchVersion 7.3.0` \
+Исходник на [GitHub](https://github.com/elastic/powershell/blob/master/Elastic.Console/README.md).
+
+`Install-Module -Name Elastic.Console -AllowPrerelease` установить модуль \
+`Get-Command -Module Elastic.Console` вывести список команд \
+`Get-ElasticsearchVersion` отобразить версию \
+`Set-ElasticsearchVersion 7.3.0` сменить версию \
 `Invoke-Elasticsearch` REST API запросы
 
 ## CData
@@ -6001,7 +5919,9 @@ $cmd.ExecuteNonQuery()
 `Get-Command -Module Wdac` \
 `Get-OdbcDriver | ft` список установленных драйверов
 
-[Elasticsearch ODBC драйвер для доступа к данным Elasticsearch из Microsoft PowerShell](https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-client-apps-ps1.html)
+### Elasticsearch
+
+[ODBC драйвер](https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-client-apps-ps1.html) для доступа к данным Elasticsearch из PowerShell.
 ```PowerShell
 $connectstring = "DSN=Local Elasticsearch;"
 $sql = "SELECT * FROM library"
@@ -6014,11 +5934,32 @@ $null = $da.fill($dt)
 $conn.close()
 $dt
 ```
-## PostgreSQL
+### ClickHouse
 
-### ODBC Driver
+Последняя версия ODBC драйвера доступна на [GitHub](https://github.com/ClickHouse/clickhouse-odbc/releases/latest).
 
-[Скачать и установить драйвер](https://www.postgresql.org/ftp/odbc/versions/msi/)
+[Оригинальный источник](https://clickhouse.com/docs/ru/interfaces/odbc).
+```PowerShell
+$url = "http://127.0.0.1:8123/"
+$user = "default"
+$password = ""
+$conn = New-Object System.Data.Odbc.OdbcConnection("`
+    Driver={ClickHouse ODBC Driver (Unicode)};`
+    Url=$url;`
+    Username=$username;`
+    Password=$password")
+$conn.Open()
+$cmd = $conn.CreateCommand()
+$cmd.CommandText = "select version()"
+$reader = $cmd.ExecuteReader()
+$reader.Read()
+$reader.GetValue(0)
+$reader.Close()
+$conn.Close()
+```
+### PostgreSQL
+
+[Загрузить и установить драйвер](https://www.postgresql.org/ftp/odbc/versions/msi)
 ```PowerShell
 $dbServer = "192.168.3.101"
 $port = "5432"
@@ -6048,7 +5989,8 @@ foreach ($row in $dsDB[0].Tables[0].Rows) {
 ```
 ### npgsql
 
-[Source](https://github.com/npgsql/npgsql) \
+[Исходный код](https://github.com/npgsql/npgsql)
+
 [Package](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL)
 ```PowerShell
 # Подключаем сборку Npgsql
@@ -7097,8 +7039,7 @@ New-WSManInstance -ResourceURI "winrm/config/Listener" -SelectorSet $selector_se
 
 ### winget
 
-[Source](https://github.com/microsoft/winget-cli)
-[Web](https://winget.run)
+[Исходный код](https://github.com/microsoft/winget-cli)
 
 `winget list` список установленных пакетов \
 `winget search VLC` найти пакет \
@@ -7539,7 +7480,7 @@ Remove-Item "$home\Downloads\Bitbucket*" -Recurse -Force
 
 ## Pester
 
-[Source](https://github.com/pester/Pester)
+[Исходный код](https://github.com/pester/Pester)
 
 `Install-Module -Name Pester -Repository PSGallery -Force -AllowClobber` \
 `Import-Module Pester` \
@@ -8186,9 +8127,11 @@ Invoke-RestMethod -Method POST -Uri "https://llm.api.cloud.yandex.net/foundation
 ```
 ## SuperAGI
 
-[Source](https://github.com/TransformerOptimus/SuperAGI) \
-[Playground generate](https://models.superagi.com/playground/generate) \
-[API Doc (exaples)](https://documenter.getpostman.com/view/30119783/2s9YR3cFJG)
+[Исходный код](https://github.com/TransformerOptimus/SuperAGI)
+
+[Playground generate](https://models.superagi.com/playground/generate)
+
+[API документация](https://documenter.getpostman.com/view/30119783/2s9YR3cFJG)
 ```Bash
 SUPERAGI_API_KEY="31f72164129XXXXX"
 prompt="посчитай сумму 22+33, дай только ответ без лишнего текста"
@@ -8530,9 +8473,9 @@ Invoke-RestMethod -Uri 'https://kinopoiskapiunofficial.tech/api/v2.2/films/11421
 
 ## VideoCDN
 
-[API](https://github.com/notssh/videocdn-api) \
-[Source](https://github.com/API-Movies/videocdn) \
-[API JSON](https://api-movies.github.io/videocdn/index.json)
+[Исходный код](https://github.com/API-Movies/videocdn)
+
+[API](https://github.com/notssh/videocdn-api) и [API JSON](https://api-movies.github.io/videocdn/index.json)
 ```PowerShell
 $kp_id = 5106881
 $token = "YfTWH2p3Mai7ziqDoGjS3yXXXXXXXXXX"
@@ -8550,7 +8493,7 @@ curl -s "https://videocdn.tv/api/$ep?api_token=$token&field=kinopoisk_id&query=$
 
 ### Jackett
 
-[Source](https://github.com/Jackett/Jackett)
+[Исходный код](https://github.com/Jackett/Jackett)
 
 `mkdir /jackett` \
 `docker-compose.yml`
@@ -8588,8 +8531,9 @@ services:
 
 ### Torrent-API-py
 
-[Source](https://github.com/Ryuk-me/Torrent-Api-py) \
-[Documentation](https://torrent-api-py-nx0x.onrender.com/docs#/default/health_route_health_get)
+[Исходный код](https://github.com/Ryuk-me/Torrent-Api-py)
+
+[Документация](https://torrent-api-py-nx0x.onrender.com/docs#/default/health_route_health_get)
 ```
 git clone https://github.com/Ryuk-me/Torrent-Api-py
 cd Torrent-Api-py
@@ -8630,8 +8574,9 @@ $headers = @{
 
 ### Jellyfin
 
-[Source](https://github.com/jellyfin/jellyfin) \
-[API Docs](https://api.jellyfin.org)
+[Исходный код](https://github.com/jellyfin/jellyfin)
+
+[API документация](https://api.jellyfin.org)
 
 `$API_TOKEN "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"` \
 `Invoke-RestMethod -Headers @{"X-Emby-Token" = $API_TOKEN} http://localhost:8096/Users` список пользователей и их id \

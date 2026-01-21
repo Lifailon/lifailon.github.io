@@ -443,7 +443,7 @@ brew --version
 ### jqp
 
 `brew install noahgorstein/tap/jqp` установить jqp (https://github.com/noahgorstein/jqp) TUI интерфейс для отображения jq запросов на GoLang \
-`curl -s https://api.github.com/repos/Lifailon/PS-Commands/contents | jqp` слева отображается исходный файл, справа отфильтрованный вывод \
+`curl -s https://api.github.com/repos/Lifailon/rudocs/contents | jqp` слева отображается исходный файл, справа отфильтрованный вывод \
 `curl -s https://check-host.net/nodes/hosts | jqp` # пример для фильтрации: `.nodes | to_entries[] | select(.value.location[0] == "ru") | .key`
 
 ### xmllint
