@@ -1,3 +1,7 @@
 :root {
     --container-width:1100px
 }
+
+code {
+    color: #38b4d6 !important;
+}
