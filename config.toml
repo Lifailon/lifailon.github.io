@@ -1,4 +1,4 @@
-title = "ruDocs by Lifailon"
+title = "ruDocs"
 base_url = "https://lifailon.github.io"
 description = "Web version for PowerShell notes, Linux commands, DevOps tools, Go and Node.js syntax in ru language."
 
@@ -36,19 +36,16 @@ index_format = "fuse_json"
 # taxonomies = [{ name = "tags", feed = true }]
 
 [extra]
-default_theme = "dark"
-accent_color = "#ff7800"
-accent_color_dark = "#ffa348"
-fix_contrast = true
-fix_contrast_dark = true
-
 styles = [
   "custom.css"
 ]
 
-# emoji_favicon = "🦆"
-# favicon = "/docs/Logo/PowerShell-Logo.png"
-# logo = "/docs/Logo/PowerShell-Logo.png"
+# emoji_favicon = "📘"
+default_theme = "dark"
+accent_color = "#ff7800"
+accent_color_dark = "#47D7FF"
+fix_contrast = true
+fix_contrast_dark = true
 
 source_url = "https://github.com/Lifailon/rudocs"
 issues_url = "https://github.com/Lifailon/rudocs/issues"
