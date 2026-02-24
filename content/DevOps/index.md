@@ -2259,7 +2259,7 @@ chmod +x $HOME/.local/bin/kompose
 
 `docker-compose bridge convert` встроенный конвертер в `compose` на базе [шаблонов helm](https://github.com/docker/compose-bridge-transformer).
 
-### Kustomize
+## Kustomize
 
 [Kustomize](https://github.com/kubernetes-sigs/kustomize) — это встроенный в `kubectl` (с версии 1.14) инструмент для управления и слияния конфигураций Kubernetes без использования шаблонизаторов (как в [Helm](https://github.com/helm/helm)). Он похож на Make, т.к. его действия объявлены в файле `kustomization.yaml`, и на `sed`, т.к. он выводит отредактированный текст (без создания новых и изменения исходных манифестов).
 
@@ -2997,6 +2997,84 @@ jobs:
           
           $AI_RESPONSE"
 ```
+### AI README Translate
+
+Перевод README файла на англйский язык с помощью AI.
+```yaml
+name: AI README Translator
+
+on:
+  workflow_dispatch:
+    inputs:
+      Input:
+        description: 'Input README file'
+        required: true
+        default: 'README_RU.md'
+      Output:
+        description: 'Output README file'
+        required: true
+        default: 'README.md'
+      Language:
+        description: 'Target language of translation'
+        required: true
+        default: 'English'
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      models: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read README
+        id: read_file
+        run: |
+          INPUT_README=$(cat ${{ github.event.inputs.Input }})
+          {
+            echo "readme<<EOF"
+            echo "$INPUT_README"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: AI-powered translation
+        id: ai_translate
+        uses: actions/ai-inference@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          endpoint: https://models.github.ai/inference
+          model: gpt-4.1
+          max-tokens: 2048
+          system-prompt: |
+            You are a professional translator.
+            Translate the following README file into ${{ github.event.inputs.Language }}.
+            Maintain the original Markdown formatting and links.
+          prompt: ${{ steps.read_file.outputs.readme }}
+
+      - name: Write README
+        env:
+          README_TRANSLATE: ${{ steps.ai_translate.outputs.answer }}
+        run: |
+          cat <<'EOF' > ${{ github.event.inputs.Output }}
+          ${{ env.README_TRANSLATE }}
+          EOF
+
+      - name: Create PR with translation
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "actions: readme translation"
+          branch: "docs/translation"
+          title: "README translation"
+          body: "AI-powered translation of a README file"
+          add-paths: |
+            ${{ github.event.inputs.Output }}
+```
 ### Go Build and Testing
 
 Процесс тестирования и сборки Go приложений с выгрузкой артифактов.
@@ -3195,7 +3273,7 @@ jobs:
 https://launchpad.net/~<userName>/+archive/ubuntu/<ppaName>/+edit \
 Добавляем `amd64` и `arm64` в `Processors` для мультиархитектурной сборки
 
-### Ubuntu Build and Pfush
+### Ubuntu Build and Push
 
 Использование данного подхода может сэкономить много времени на подготовке к сборке и публикации Go приложения в PPA.
 
@@ -3205,6 +3283,11 @@ name: Build deb package and push to PPA
 on:
   workflow_dispatch:
     inputs:
+      # Запустить только установку
+      Install:
+        description: 'Check install only'
+        default: false
+        type: boolean
       # Дистрибутив на котором будет производиться сборка
       # Это влияет на название версии дистрибутива Ubuntu в файле changelog по умолчанию
       Runner:
@@ -3240,11 +3323,6 @@ on:
         description: 'Push to PPA'
         default: false
         type: boolean
-      # Запустить только установку
-      Install:
-        description: 'Check install only'
-        default: false
-        type: boolean
 
 jobs:
   test:
@@ -3254,17 +3332,42 @@ jobs:
 
     steps:
       - name: Checkout repository (main branch and 1 last commits)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           ref: main
 
-      # Устанавливаем зависимости для сборки
-      - name: Install package tools
+      # Шаг проверки установки пакета
+      - name: Check install package from PPA
+        if: ${{ github.event.inputs.Install == 'true' }}
+        run: |
+          sudo add-apt-repository -y ppa:lifailon/lazyjournal
+          sudo apt update
+          apt-cache policy lazyjournal
+          sudo apt install -y lazyjournal
+          lazyjournal -v
+          sudo apt remove -y lazyjournal
+
+      # Устанавливаем Go
+      - name: Install Go
         if: ${{ github.event.inputs.Install != 'true' }}
         run: |
           sudo apt-get update
-          sudo apt-get install -y devscripts debhelper dh-make-golang dput
+          sudo apt-get install -y golang-1.23-go
+          /usr/lib/go-1.23/bin/go version
+
+      # Устанавливаем зависимости для сборки
+      - name: Install dependencies for build deb package
+        if: ${{ github.event.inputs.Install != 'true' }}
+        run: |
+          sudo apt-get install -y \
+            devscripts \
+            debhelper \
+            dh-golang \
+            dh-make-golang \
+            dput \
+            golang-golang-x-text-dev \
+            golang-gopkg-yaml.v3-dev
 
       # Импортируем GPG ключ из секретов в систему
       - name: Import GPG key
@@ -3275,19 +3378,26 @@ jobs:
 
       - name: Build deb package and publish to Launchpad PPA
         if: ${{ github.event.inputs.Install != 'true' }}
+        env:
+          DEB_FULLNAME: "lifailon"
+          DEB_EMAIL: ${{ secrets.PPA_EMAIL }}
+          DISTRO: ${{ github.event.inputs.Distro }}
+          APP_VERSION: ${{ github.event.inputs.Version }}
         run: |
-          # Объявляем переменные для сборки
-          export DEBFULLNAME="lifailon"
+          # Объявляем переменные для локальной сборки
+          export PATH="/usr/lib/go-1.23/bin:$PATH"
+          # Не загружать зависимости
+          export GOTOOLCHAIN=local
+          export DEBFULLNAME="$DEB_FULLNAME"
           # Email из gpg ключа
-          export DEBEMAIL="${{ secrets.PPA_EMAIL }}"
+          export DEBEMAIL="$DEB_EMAIL"
           
           # Генерируем Debia шаблоны (структуру файлов и каталогов) для Go приложения
           echo -e "\n\033[33m>>> Debian template generation\033[0m\n"
           dh-make-golang make github.com/Lifailon/lazyjournal
           cd lazyjournal
 
-          # Загружаем все зависимости (используемые пакеты) и обновляем архив
-          # Для сборки без интернета на серверах Ubuntu
+          # Загружаем все зависимости (используемые пакеты) и обновляем архив для сборки без интернета на серверах Ubuntu
           echo -e "\n\033[33m>>> Download dependencies for offline build\033[0m\n"
           go mod vendor
           VERSION=$(ls ../*.orig.tar.gz | sed -E 's/.*_([0-9.]+)\.orig\.tar\.gz/\1/')
@@ -3300,6 +3410,7 @@ jobs:
           sed -i 's/golang-any/golang-1.23-go/' debian/control
           # Экспортируем путь к Go в основной Makefile для сборки
           sed -i '1a export PATH := /usr/lib/go-1.23/bin:$(PATH)' debian/rules
+          sed -i '1a export GOTOOLCHAIN := local' debian/rules
 
           # Обновляем секцию TODO в файл debian control для избежания ошибок
           echo -e "\n\033[33m>>> Update debian control\033[0m\n"
@@ -3317,15 +3428,15 @@ jobs:
 
           # Обновляем название дистрибутива
           echo -e "\n\033[33m>>> Update distro name in changelog\033[0m\n"
-          sed -i "1s/)[[:space:]]\+[^;]\+;/) ${{ github.event.inputs.Distro }};/" debian/changelog
+          sed -i "1s/)[[:space:]]\+[^;]\+;/) $DISTRO;/" debian/changelog
           sed -i 's/(Closes: TODO)//' debian/changelog
           
           # Обновляем версию (если значение определено в параметре)
-          if [ -n "${{ github.event.inputs.Version }}" ]; then
+          if [ -n "$APP_VERSION" ]; then
             echo -e "\n\033[33m>>> Update version in changelog\033[0m\n"
             VERSION=$(cat debian/changelog | head -n 1 | sed -E "s/.+\(//" | sed -E "s/\).+//" | sed -E "s/-[0-9]+//")
-            sed -i -E "s/$VERSION-/${{ github.event.inputs.Version }}-/" debian/changelog
-            mv ../lazyjournal_$VERSION.orig.tar.gz ../lazyjournal_${{ github.event.inputs.Version }}.orig.tar.gz
+            sed -i -E "s/$VERSION-/$APP_VERSION-/" debian/changelog
+            mv ../lazyjournal_$VERSION.orig.tar.gz ../lazyjournal_$APP_VERSION.orig.tar.gz
             echo -e "\n\033[33m>>> Changelog\033[0m\n"
             cat debian/changelog
           fi
@@ -3345,18 +3456,7 @@ jobs:
       - name: Push to PPA
         if: ${{ github.event.inputs.Install != 'true' && github.event.inputs.Push == 'true' }}
         run: |
-          dput ppa:lifailon/lazyjournal ../*.changes
-
-      # Шаг проверки установки пакета
-      - name: Check install package
-        if: ${{ github.event.inputs.Install == 'true' }}
-        run: |
-          sudo add-apt-repository -y ppa:lifailon/lazyjournal
-          sudo apt update
-          apt-cache policy lazyjournal
-          sudo apt install -y lazyjournal
-          lazyjournal -v
-          sudo apt remove -y lazyjournal
+          dput ppa:lifailon/lazyjournal *.changes
 ```
 API запрос для получения версии и создание динамического бейджа в [Shields](https://shields.io/badges/dynamic-json-badge) c помощью json запрос.
 ```bash
@@ -3370,11 +3470,88 @@ ppaUrl=$(jq -rn --arg url "$apiUrl" '$url | @uri')
 # Формируем динамический json запрос в Shields для получения бейджа с версией
 echo "https://img.shields.io/badge/dynamic/json?url=$ppaUrl&query=$apiQuery&label=Ubuntu+PPA&logo=ubuntu&color=orange"
 ```
+### Composite Action
+
+Пример создания своего Action для подключения в Workflow других проектах на примере объединения результатов unit-тестирования в Go приложении с использованием [gocovmerge](https://github.com/wadey/gocovmerge).
+```yaml
+name: 'Go Coverage Merge Action'
+description: 'Merges multiple Go coverage profiles using gocovmerge'
+author: 'Lifailon'
+
+inputs:
+  go-version:
+    description: 'Go version'
+    required: false
+    default: 'stable'
+  input-pattern:
+    description: 'Glob pattern for coverage files'
+    required: false
+    default: '*.out'
+  output-coverage:
+    description: 'Output merged filename'
+    required: false
+    default: 'summary.out'
+
+runs:
+  using: composite
+  steps:
+    - name: Install Go
+      uses: actions/setup-go@v6
+      with:
+        go-version: ${{ inputs.go-version }}
+
+    - name: Install gocovmerge
+      shell: bash
+      run: go install github.com/wadey/gocovmerge@latest
+
+    - name: Merge files
+      shell: bash
+      run: |
+        files=$(ls ${{ inputs.input-pattern }})
+        if [ -z "$files" ]; then
+          echo "No coverage files found for pattern: ${{ inputs.input-pattern }}"
+          exit 1
+        fi
+        gocovmerge $files > "${{ inputs.output-coverage }}"
+
+    - name: Summary
+      shell: bash
+      run: go tool cover -func "${{ inputs.output-coverage }}"
+```
+Использование в Workflow:
+```yaml
+- name: Go coverage merge
+  uses: Lifailon/gocovmerge-action@v1
+  with:
+    pattern: 'coverage/*.out'
+    output: 'coverage/total.out'
+```
+
 ### Repository Dispatch
 
-Repository Dispatch используется для отправки запроса из скрипта или другой системы для запуска Workflow.
+[Repository Dispatch](https://github.com/peter-evans/repository-dispatch) используется для отправки запроса из скрипта или другой системы для запуска Workflow.
 
-Отправляем запрос на сервер:
+Создаем действие для реакции на событие:
+```yaml
+name: Webhook Payload
+
+on:
+  repository_dispatch:
+    # Workflow запустится только если event_type совпадает с одним из списка
+    types: [script_run, action_run]
+
+jobs:
+  payload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check version
+        run: |
+          echo "App version: ${{ github.event.client_payload.app_version }}"
+          echo "Run tests: ${{ github.event.client_payload.run_tests }}"
+```
+Отправляем запрос для вызова события:
 ```bash
 userName=Lifailon
 repoName=lazyjournal
@@ -3391,26 +3568,18 @@ curl -X POST "https://api.github.com/repos/$userName/$repoName/dispatches" \
       }
     }'
 ```
-Создаем действие для реакции на событие:
+Использует workflow для вызова события:
 ```yaml
-name: Webhook Payload
-
-on:
-  repository_dispatch:
-    # Workflow запустится только если event_type совпадает с одним из списка
-    types: [script_run, test]
-
 jobs:
-  payload:
+  Dispatch:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Check version
-        run: |
-          echo "App version: ${{ github.event.client_payload.app_version }}"
-          echo "Run tests: ${{ github.event.client_payload.run_tests }}"
-
+    permissions:
+      contents: write
+     steps:
+       - name: Repository Dispatch
+         uses: peter-evans/repository-dispatch@v4
+         with:
+           event-type: action_run
 ```
 ### Actions API
 ```PowerShell
@@ -4524,6 +4693,162 @@ pipeline {
             }
         }
     }
+}
+```
+### SimpleTemplateEngine
+
+[SimpleTemplateEngine](https://github.com/groovy/groovy-core/blob/master/subprojects/groovy-templates/src/main/groovy/groovy/text/SimpleTemplateEngine.java) - простой движок шаблонов, который встроен в язык Groovy. Он принимает текст, в котором заменяет значения на содержимое переданных переменных.
+
+Шаблон для подстановки значений:
+```yaml
+apiVersion: v1
+kind: Config
+current-context: ${contextName}
+preferences: {}
+
+clusters:
+- name: ${contextName}-ctx
+  cluster:
+    server: ${clusterUrl}
+
+users:
+- name: ${contextName}-usr
+  user:
+    token: ${token}
+
+contexts:
+- name: ${contextName}
+  context:
+    cluster: ${contextName}-ctx
+    namespace: ${namespace}
+    user: ${contextName}-usr
+```
+Запускаем рендеринг (шаблонизируем конфигурацию):
+```groovy
+import groovy.text.SimpleTemplateEngine
+
+def renderTemplate(String fileName, Map varMap) {
+    def templateFile = readFile(fileName)
+    def outputFile = fileName.replace('.tmpl', '').replace('.tmp', '')
+    echo "\n\u001B[34mRender template: ${fileName} => ${outputFile}\u001B[0m\n"
+    def engine = new SimpleTemplateEngine()
+    def result = engine.createTemplate(templateFile).make(varMap).toString()
+    writeFile file: outputFile, text: result
+    return "\u001B[34m${result}\u001B[0m"
+}
+
+pipeline {
+    agent {
+        label "masterLin"
+    }
+    options {
+        ansiColor("xterm")
+        timestamps()
+        timeout(time: 5, unit: "MINUTES")
+    }
+    stages {
+        stage("Render kubeconfig") {
+            steps {
+                script {
+                    def varMap = [
+                        contextName: 'ctx-test',
+                        clusterUrl: 'https://api.test.local:6443',
+                        namespace: 'ns-test',
+                        token: 'KEY'
+                    ]
+                    def result = renderTemplate('templates/kubeconfig.tmp', varMap)
+                    echo result
+                }
+            }
+        }
+    }
+}
+```
+Пример условий и циклов:
+```yaml
+apiVersion: v1
+kind: Config
+current-context: <%= clusters[0].name %>
+preferences: {}
+
+clusters:
+<% clusters.each { c -> %>
+- name: ${c.name}-cluster
+  cluster:
+    server: ${c.url}
+<% } %>
+
+users:
+<% clusters.each { c -> %>
+<% if (c.token) { %>
+- name: ${c.name}-usr
+  user:
+    token: ${c.token}
+<% } %>
+<% } %>
+
+contexts:
+<% clusters.each { c -> %>
+- name: ${c.name}-ctx
+  context:
+    cluster: ${c.name}-cluster
+    namespace: ${c.namespace ?: 'default'}
+    user: ${c.token ? c.name + '-usr' : ''}
+<% } %>
+```
+Переменные для заполнения:
+```groovy
+def varMap = [
+    clusters: [
+        [
+            name: 'ctx-01',
+            url: 'https://api.test-01.local:6443',
+            namespace: 'ns-test',
+            token: 'token'
+        ],
+        [
+            name: 'ctx-02',
+            url: 'https://api.test-02.local:6443',
+            namespace: 'ns-test',
+            token: 'token'
+        ],
+        [
+            name: 'ctx-03',
+            url: 'https://api.test-03.local:6443'
+            // namespace и token отсутствуют, в шаблоне сработает default и проверка на null
+        ]
+    ]
+]
+```
+### YamlSlurper
+
+[YamlSlurper](https://docs.groovy-lang.org/latest/html/api/groovy/yaml/YamlSlurper.html) - преобразует `YAML` файлы в объекты Groovy (списки и мапы), например, для чтения конфигураций с специфичными параметрами для разных окружений и заполнения шаблонов в процессе рендеринга.
+```groovy
+// @Grab('org.apache.groovy:groovy-yaml:3.0.9')
+import groovy.yaml.YamlSlurper
+
+def yamlConfig = '''
+clusters:
+  dev:
+    contextName: "ctx-test"
+    clusterUrl: "https://api.test.local:6443"
+    namespace: "ns-test"
+    token: "TEST_KEY"
+  prod:  
+    contextName: "ctx-prod"
+    clusterUrl: "https://api.prod.local:6443"
+    namespace: "ns-prod"
+    token: "PROD_KEY"
+'''
+
+def config = new YamlSlurper().parseText(yamlConfig)
+
+config.clusters.each { clusterName, varMap ->
+    echo "=== Cluster: ${clusterName} ==="
+    varMap.each { key, value ->
+        echo "${key}: ${value}"
+    }
+    // renderTemplate('templates/kubeconfig.tmp', varMap)
 }
 ```
 ## Configuration Management
