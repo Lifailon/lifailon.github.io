@@ -1,10 +1,8 @@
-## Web version for ruDocs
+## ruDocs Web
 
-Веб-версия заметок по PowerShell, командам Linux, инструментам DevOps и сервисам Docker Compose из репозитория [ruDocs](https://github.com/Lifailon/rudocs), а также синтаксису [Go](https://github.com/Lifailon/golang-cheat-sheet-ru) и [Node.js](https://github.com/Lifailon/node.js-cheat-sheet-ru).
+Веб-версия заметок для репозиториев [ruDocs](https://github.com/Lifailon/rudocs), [GoLang Cheat Sheet](https://github.com/Lifailon/golang-cheat-sheet-ru) и [Node.js Cheat Sheet](https://github.com/Lifailon/node.js-cheat-sheet-ru).
 
 ## Branches
-
-👉 Статья на Хабр: [Создание статических сайтов из Markdown без HTML]()
 
 | **Branch**                                                                                      | **Engine**                                                                                                              |
 | -                                                                                               | -                                                                                                                       |

@@ -1,28 +1,37 @@
-name: Merge with source repository
+name: Merge with source Git repositories
 
 on:
+  # push:
+  #   branches:
+  #     - main
+  # schedule:
+  #   - cron: "0 23 * * 0"
   workflow_dispatch:
     inputs:
       powershell:
         description: "Update PowerShell commands"
-        default: false
+        default: true
         type: boolean
       linux:
         description: "Update Linux commands"
-        default: false
+        default: true
         type: boolean
       devops:
         description: "Update DevOps Tools"
-        default: false
+        default: true
         type: boolean
       compose:
         description: "Update Compose Stacks"
-        default: false
+        default: true
         type: boolean
       golang:
         description: "Update GoLang Cheat Sheet"
         default: false
         type: boolean
+      # nodejs:
+      #   description: "Update Node.js Cheat Sheet"
+      #   default: false
+      #   type: boolean
       message:
         description: "Commit message"
         required: false
@@ -34,7 +43,7 @@ jobs:
 
     steps:
       - name: Copy current repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Clone rudocs repository
         if: ${{ github.event.inputs.powershell == 'true' || github.event.inputs.linux == 'true' || github.event.inputs.devops == 'true' || github.event.inputs.compose == 'true' }}
