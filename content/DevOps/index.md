@@ -89,107 +89,187 @@ sudo usermod -aG docker lifailon
 newgrp docker
 ```
 
-Компоненты ядра Linux для имитации изоляции системы контейнеризации:
-
-- `Namespaces` для опредиления, что процесс может видеть. Внутренний процесс получает `PID 1`, свой IP-адрес и порты, изолированную файловую систему и права доступа.
-- `Cgroups` (Control Groups) - ограничители, которые определяют, сколько ресурсов процесс может потреблять (лимиты на CPU, RAM, скорость диска). Без них один контейнер мог бы потреблять всю память сервера.
-
 Компоненты Docker:
 
 - `Docker Daemon` (`docker.service`/`dockerd`) - процесс, который работает в фоне и управляет образами, сетями и томами через `socket`. Если сервис остановлен, управление контейнерами невозможно. Сам `dockerd` не запускает контейнеры напрямую, а делегирует процесс `containerd`. 
-- `containerd` - процесс, который отвечает за запуск контейнеров - скачивает образы из реестра, управляет хранилищем (все данные хранятся в `/var/lib/docker/`) и следит за состоянием работающих контейнеров, это позволяет перезагружать или обновлять Docker Daemon, не останавливая при этом запущенные контейнеры. Если `dockerd` упадет из-за ошибки или нехватки памяти, контейнеры не выключатся.
+- `containerd` - процесс, который отвечает за запуск контейнеров - скачивает образы из реестра, управляет хранилищем (все данные хранятся в `/var/lib/docker/`) и следит за состоянием работающих контейнеров, это позволяет перезагружать или обновлять `Docker Daemon`, не останавливая при этом запущенные контейнеры. Если `dockerd` упадет из-за ошибки или нехватки памяти, контейнеры не выключатся за счет работы дочерних процессов `shim-runc`.
 - `runc`  - это процесс, который подготавливает изоляцию. 
-- Для запуска нового контейнера, сначала запускается промежуточный процесс `containerd-shim-runc-v2`, он живет все время, пока работает контейнер и является родителем для процесса внутри контейнера (он забирает код возврата, если приложение упадет и держит каналы `stdin`/`stdout` открытыми для доступа к логам). Процесс `containerd-shim` создает (создает новый процесс с помощью `fork()` и `exec()`) дочерний процесс `runc` (Low-level Runtime), который напрямую взаимодействует с ядром Linux через системные вызовы (разрывает связь с родительскими пространствами имен с помощью `unshare()`, записывает ограничения в файл `/sys/fs/cgroup/`, меняет корневую файловую систему на путь из `/var/lib/docker/overlay2/<IMAGE_ID>/merged` с помощью `pivot_root()` и `umount` для старого кореня хоста). После настройки изоляции, `runc` заменяет себя процессом приложения (командой `ENTRYPOINT` или `CMD` в `Dockerfile`).
 - `docker-cli` - утилита командной строки, через которую передаются команды управления через REST API локально на Unix-сокет (`/var/run/docker.sock`) или удаленно по TCP.
+
+Для запуска нового контейнера, сначала запускается промежуточный процесс `containerd-shim-runc-v2`, он живет все время, пока работает контейнер и является родителем для процесса внутри контейнера (он забирает код возврата, если приложение упадет и держит каналы `stdin`/`stdout` открытыми для доступа к логам). Процесс `containerd-shim` создает дочерний процесс `runc` (создает новый процесс с помощью `fork()` и `exec()`), который напрямую взаимодействует с ядром Linux через системные вызовы (разрывает связь с родительскими пространствами имен с помощью `unshare()`, записывает ограничения в файл `/sys/fs/cgroup/`, меняет корневую файловую систему на путь из `/var/lib/docker/overlay2/<IMAGE_ID>/merged` с помощью `pivot_root()` и `umount` для старого кореня хоста). После настройки изоляции, `runc` заменяет себя процессом приложения в контейнере (командой `ENTRYPOINT` или `CMD` в `Dockerfile`).
 
 `ps axf | grep -A 3 containerd-shim` - отобразить дерево процессов контейнеров
 
-### Dockerfile
+### Namespaces/Cgroups
 
-- `FROM` - базовый образ, на основе которого будет создаваться новый (текущий) образ (например, `FROM alpine:latest` или `FROM node:alpine AS build` для указания метки при использование нескольких образов).
-- `LABEL` - добавляет метаданные к образу в формате ключ-значение (например, `LABEL traefik.enable=true` или `LABEL stand=test`, может использоваться для поиска и фильтрации, например, `docker ps --filter "stand=test"`).
-- `ARG` - определяет переменные, которые будут доступны только на этапе сборки образа и недоступны в контейнере (например, объявление с помощью `ARG TARGETARCH` и изменение `docker build --build-arg TARGETARCH=arm64`).
-- `ENV` - устанавливает переменные окружения, которые будут доступны внутри контейнера со значениями по умолчанию (например, `ENV PORT=80`, можно переопределить через `-e PORT=8080`, который имеет повышенный приоритет).
-- `WORKDIR` - устанавливает рабочий каталог внутри контейнера для последующих команд (например, `WORKDIR /app`).
-- `SHELL` - задает командную оболочку, которая будет использоваться для выполнения команд `RUN`, `CMD` и `ENTRYPOINT` (например, `SHELL ["/bin/bash", "-c"]`, по умолчанию `SHELL ["/bin/sh", "-c"]`).
-- `RUN` - выполняет команды в контейнере во время сборки образа (например, `RUN apk add --progress --no-cache util-linux bash curl` или `RUN useradd -m node`).
-- `USER` - устанавливает пользователя, от имени которого будут выполняться следующие команды (например, `USER node`, по умолчанию `USER root`).
-- `COPY` - копирует файлы (например, `COPY . .` для копирования всего содержимого из текущей директории в контейнер или `COPY --from=build` для указания  метки при копирование файлов из другого образа).
-- `ADD` - загружает файлы из `URL` (например, `ADD alpine-minirootfs-3.23.3-aarch64.tar.gz /img/`) с распаковкой архивов в формате `tar.gz` (актуально для базовых образов).
-- `CMD` - определяет параметры команды, которые будут выполняться при запуске контейнера (может быть переопределена при запуске контейнера).
-- `ENTRYPOINT` - определяет основную команду, которая будет выполняться при запуске контейнера (можно переопределить, например, `docker run --entrypoint "tail -f /var/log/syslog" ping`).
-- `VOLUME` - создает точку монтирования для хранения данных в хостовой системе, вместо слоев контейнера (например, `VOLUME /var/log/app`).
-- `EXPOSE` - документирует порты без их проброса (например, `EXPOSE 8080`).
-- `HEALTHCHECK` - определяет команду для проверки состояния работающего контейнера (например, `HEALTHCHECK CMD curl -f http://localhost:8080 || exit 1`).
-- `STOPSIGNAL` - определяет сигнал, который будет отправлен контейнеру для его остановки (например, `STOPSIGNAL SIGQUIT`).
-- `ONBUILD` - задает команды, которые будут автоматически выполнены при сборке дочерних образов.
+Технологии ядра Linux для настройки изоляции:
 
-Пример сборки контейнера для выполнения команды ping:
+- `Namespaces` (пространства имен) - изоляции видимости системных ресурсов.
+- `Cgroups` (Control Groups) - ограничения потребления ресурсов процессом (лимиты на CPU, RAM, скорость диска). Без них один контейнер мог бы потреблять всю память хоста.
 
-```Dockerfile
-FROM alpine:latest
+Пространства имен:
 
-ADD https://github.com/Lifailon/lazyjournal/archive/refs/heads/main.zip /app/
-RUN ls -lh /app/
+- `PID Namespace` - изолирует дерево процессов. Процесс в контейнере может иметь `PID 1`, не конфликтуя с `PID 1` (`init`) основной системы.
+- `Network Namespace` - создает собственные сетевые интерфейсы (IP-адреса и таблицы маршрутизации).
+- `Mount Namespace` - изолирует точки монтирования файловой системы.
+- `UTS Namespace` - позволяет задавать отдельное имя хоста (`hostname`) и домен.
+- `IPC Namespace` - ограничивает межпроцессное взаимодействие (shared memory, очереди сообщений).
+- `User Namespace` - сопоставляет идентификаторы пользователей (`UID`/`GID`) внутри контейнера с другими ID на хосте (например, `root` в контейнере может быть обычным пользователем на хосте).
 
-ENTRYPOINT ["ping"]
+`unshare` (разъединитель) - запускает процесс в новых изолированных пространствах имен (namespaces), отделяя его от родительских ресурсов.
 
-CMD ["localhost"]
+`netns` (`Network Namespace`) - создает и настраивает сетевое пространство имен, которое позволяет иметь в одной операционной системе несколько полностью независимых сетевых стеков. В отличии от `unshare --net` дает возможность настроить сеть до ее изоляции (связать с хостом через `veth`).
+
+Скрипт для создания изолированной и ограниченной по ресурсам операционной системы Alpine Linux:
+
+```bash
+# Идентификатор изоляции
+UUID=$(cat /proc/sys/kernel/random/uuid | tr -dc 'a-f0-9' | fold -w 12 | head -n 1)
+
+# Подготавливаем хранилище btrfs
+VOLUMES="/tmp/volumes"
+mkdir -p $VOLUMES
+IMG="/tmp/volumes/$UUID.img"
+truncate -s 512M $IMG
+mkfs.btrfs $IMG
+VOLUME="/tmp/volumes/$UUID"
+mkdir -p $VOLUME
+sudo mount -o loop $IMG $VOLUME
+sudo chown $USER:$USER $VOLUME
+
+# Загружаем базовый образ Alpine в btrfs volume
+ALPINE="$VOLUME/base_image_alpine"
+btrfs subvolume create $ALPINE
+curl -L https://dl-cdn.alpinelinux.org/alpine/v3.23/releases/$(uname -m)/alpine-minirootfs-3.23.3-$(uname -m).tar.gz | tar -xz -C $ALPINE
+ls $ALPINE
+
+# Подготавливаем файловую систему
+ROOTFS="$VOLUME/container_rootfs"
+btrfs subvolume snapshot "$ALPINE" "$ROOTFS"
+
+# Настраиваем DNS
+echo 'nameserver 8.8.8.8' > "$ROOTFS"/etc/resolv.conf
+
+# Функция для очистки
+cleanup() {
+    # Возвращаем текущий процесс в общую группу
+    echo $$ | sudo tee /sys/fs/cgroup/cgroup.procs > /dev/null
+    # Удаляем cgroup (после выхода из нее)
+    sudo rmdir /sys/fs/cgroup/memory/$UUID
+    # Удаляем сетевое пространство из /run/netns/ns$UUID
+    sudo ip netns delete "ns$UUID"
+    # Размонтируем ресурсы
+    sudo umount "$VOLUME"
+}
+
+# Перехватывает выход из скрипта (EXIT) или прерывание (Ctrl+C)
+trap cleanup EXIT
+
+# Создаем виртуальный интерфейс на хосте в режиме моста (L2 коммутатор) для всех контейнеров
+sudo ip link add br0 type bridge
+sudo ip addr add 172.172.0.1/24 dev br0
+sudo ip link set br0 up
+# Настраиваем NAT для маршрутизации пакетов в Интернет чере хост
+sudo sysctl -w net.ipv4.ip_forward=1 > /dev/null
+sudo iptables -t nat -A POSTROUTING -s 172.172.0.0/24 ! -o br0 -j MASQUERADE
+# Создаем интерфейс в режиме veth (виртуальный сетевой кабель для двусторонней связи)
+sudo ip link add vh$UUID type veth peer name vc$UUID
+# Подключаем один конец к бриджу (позволяет общаться между контейнерами в подсети и выходить в Интернет через хост)
+sudo ip link set vh$UUID master br0
+sudo ip link set vh$UUID up
+# Создаем сетевое пространство (Network Namespace)
+sudo ip netns add ns$UUID
+# Подключаем второй конец к изолированному стеку (для связи с хостом в режиме Point-to-Point и bridge)
+sudo ip link set vc$UUID netns ns$UUID
+# Настройка сети внутри внутри изолированного стека
+# Поднимаем интерфейс loopback, чтобы программы могли обращаться к localhost
+sudo ip netns exec ns$UUID ip link set lo up
+# Назначаем адрес и поднимает интерфейс
+sudo ip netns exec ns$UUID ip addr add 172.172.0.2/24 dev vc$UUID
+sudo ip netns exec ns$UUID ip link set vc$UUID up
+# Настраиваем маршрут по умолчанию (любой пакет не предназначенный для подсети 172.172.0.0/24 отправится на хост)
+sudo ip netns exec ns$UUID ip route add default via 172.172.0.1
+
+# sudo apt install cgroup-tools
+# sudo cgcreate -g memory:/$UUID
+# sudo cgset -r memory.limit_in_bytes=$((512 * 1024 * 1024)) $UUID
+# Включаем лимиты перед netns
+# sudo cgexec -g memory:$UUID
+
+# Включаем управление памятью с помощью групп
+echo "+memory" | sudo tee /sys/fs/cgroup/memory/cgroup.subtree_control
+# Создаем новую контрольную группу
+sudo mkdir -p /sys/fs/cgroup/memory/$UUID
+# Устанавливаем лимит на память в 512 МБайт
+echo $((512 * 1024 * 1024)) | sudo tee /sys/fs/cgroup/memory/$UUID/memory.max
+# Записываем PID текущей оболочки в cgroup
+echo $$ | sudo tee /sys/fs/cgroup/memory/$UUID/cgroup.procs
+
+# 1. Заходим в настроенную изолированную сеть (или nsenter --net=/var/run/netns/ns$UUID)
+# 2. Создаем изоляцию для процессов, файловой системы, UTS и IPC
+# 3. Мменяет корневой каталог с помощью chroot
+# 4. Очищаем и заново определяем переменные окружения
+# 5. Монтируем новую файловую систему процессов и заменяем текущий процесс на новый
+sudo ip netns exec ns$UUID \
+  unshare --pid --fork --mount --uts --ipc \
+    chroot $ROOTFS \
+      /usr/bin/env -i HOME=/root TERM="xterm-256color" PATH=/bin:/usr/bin:/sbin:/usr/sbin \
+        /bin/sh -c "
+          mount -t proc proc /proc;
+          exec /bin/sh
+        "
 ```
 
-`docker build -t ping .`
+### Namespace Enter
 
-При запуске команды: `docker run ping`, контейнер выполнит команду: `ping localhost`.
+`nsenter` (`Namespace Enter`) - это инструмент командной строки, который позволяет запускать процессы в контексте пространств имен других процессов.
 
-При запуске команды `docker run ping google.com`, аргумент `google.com` целиком переопределяет команду в `CMD` и контейнер выполнит команду: `ping google.com`.
+```bash
+# Целевой контейнер
+containerName=dozzle
 
-Пример загрузки и распаковки архива:
+# Получить PID 1 контейнера внутри хостовой системе
+PID=$(pgrep $containerName)
+# PID=$(docker inspect -f {{.State.Pid}} $containerName)
+# PID=$(docker top $containerName -o pid | sed 1d)
 
-```Dockerfile
-FROM alpine:latest
+# Отобразить содержимое файловой системы контейнера
+sudo ls -la /proc/$PID/root/
+sudo cat /proc/$PID/root/data/users.yml
+# Отобразить переменные окружения
+sudo cat /proc/$PID/environ | tr '\0' '\n'
+# Файловые дескрипторы, занятые процессом (обычно 1w и 2w используются через FIFO/pipe)
+sudo lsof -p $PID
+# Доступ к стандартным дескрипторам вывода процесса (stdout и stderr)
+sudo tail -n +1 -f /proc/$PID/fd/1 /proc/$PID/fd/2
+# Системные вызовы для всех дочерних процессов с фильтрацией на запись
+sudo strace -f -p $PID -e write -s 1024 2>&1 | grep "write(1,\|write(2,"
 
-RUN apk add --progress --no-cache curl unzip && \
-    curl -sSL https://github.com/Lifailon/lazyjournal/archive/refs/heads/main.zip -o /tmp/main.zip && \
-    unzip /tmp/main.zip -d /app/ && \
-    rm /tmp/main.zip && \
-    apk del curl unzip
+# Получить прямой доступ к файловой системе контейнера
+# При использование образа scratch не будут доступны системные команды из каталога /bin
+sudo nsenter -t $($PID) -m
 
-WORKDIR /app/lazyjournal-main
-RUN ls -lh
-```
+# Подключиться к пространству имен процесса контейнера (доступ к сетевому стеку и процессам)
+sudo nsenter -t $PID -n -p
+ss -tunlp
+ip a
+tcpdump -i eth0
+# Примонтировать виртуальную файловую систему процессов (procfs) контейнера
+mount -t proc proc /proc
+ps aux
 
-### Buildx
-
-`sudo apt install docker-buildx -y` установить систему для мультиплатформенной сборки \
-`docker buildx create --use --name multiarch-builder --driver docker-container` создать и запустить сборщик в контейнере \
-`docker buildx ls` \
-`docker buildx rm multiarch-builder`
-
-`go list -u -m all && go get -u ./...` обновить пакеты приложения на Go
-
-Добавить аргументы в `Dockerfile` и передать их в переменные для сборки:
-
-```Dockerfile
-ARG TARGETOS TARGETARCH
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build
-```
-
-`docker buildx build --platform linux/amd64,linux/arm64 .` собрать
-
-`docker buildx build --platform linux/amd64,linux/arm64 -t lifailon/logporter --push .` собрать и опубликовать
-
-`npm outdated && npm update --save` обновить пакеты `node.jd` приложения
-
-Передаем аргументы в параметры платформы для образа:
-
-```Dockerfile
-ARG TARGETOS TARGETARCH
-FROM --platform=${TARGETOS}/${TARGETARCH} node:alpine AS build
+# Альтернатива nsenter -t $PID -n -p
+docker run --rm -it \
+  --privileged \
+  --net=container:$containerName \
+  --pid=container:$containerName \
+  -v /proc:/host/proc:ro \
+  alpine sh
 ```
 
 ### OCI
 
-`OCI` (Open Container Initiative) - это стандарт для упаковки, сбоки, загрузки в реестр и запуска контейнеров (например, через `podman` или `containerd`).
+`OCI` (Open Container Initiative) - это стандарт для упаковки, сбоки, загрузки в реестр и запуска контейнеров (например, через `docker`, `podman` или `containerd`).
 
 Образы контейнеров состоят из слоев. Каждая из команд `FROM`, `RUN`, `COPY` и `ADD` в `Dockerfile` создает новый неизменяемый слой (`Read-Only`). Если в одном слое скачать архив, а в следующем его удалить, этот размер все равно останется в памяти нижнего слоя и будут занимать место в финальном образе. При запуске контейнера (экземпляра образа), Docker добавляет сверху один записываемый слой, который стирается после удаления контейнера. Если используется 10 образов на базе `alpine`, базовый образ хранится на диске в одном экземпляре.
 
@@ -200,18 +280,30 @@ FROM --platform=${TARGETOS}/${TARGETARCH} node:alpine AS build
 - Переиспользование - разные образы могут делить между собой общие слои, что ускоряет их скачивание и экономит дисковое пространство.
 - Скорость - при загрузки образа из registry по сети, каждый слой загружается параллельно как отдельные архив в формате `.tar.gz`.
 
-```Bash
-# Сохранить внесенные изменения в новый временный слой запущенного контейнера и сохранить в новый образ
-docker commit container image:v2
-# Вывести слои (используемая команда и размер). Команды FROM отображается как загрузка архива, например ADD alpine-minirootfs-3.23.3-aarch64.tar.gz
+Сохранить внесенные изменения в новый временный слой запущенного контейнера и сохранить в новый образ:
+
+```bash
+# docker commit <container_name> <image_name>:<new_tag>
+docker commit docker-socket-proxy lifailon/docker-socket-proxy:v2
+```
+
+Вывести историю слоев (используемая команда и размер слоя):
+
+```bash
 docker history lifailon/docker-socket-proxy:arm64
-# Список директорий со слоями образа в системе
+```
+
+Команды `FROM` отображается как загрузка архива, например `ADD alpine-minirootfs-3.23.3-aarch64.tar.gz`.
+
+Список директорий со слоями образа в системе:
+
+```bash
 docker inspect lifailon/docker-socket-proxy:arm64 --format='{{.GraphDriver.Data.LowerDir}}' | sed "s/:/\n/g"
 ```
 
 [Dive](https://github.com/wagoodman/dive) - интерактивный терминальный инструмент для анализа содержимого слоев с целью поиска способов уменьшения размера финального образа Docker.
 
-```Bash
+```bash
 LATEST_VERSION=$(curl -s https://api.github.com/repos/wagoodman/dive/releases/latest | jq -r .tag_name)
 curl -SLf "https://github.com/wagoodman/dive/releases/download/${LATEST_VERSION}/dive_${LATEST_VERSION#v}_linux_$(dpkg --print-architecture).tar.gz" -o /tmp/dive.tar.gz
 mkdir -p $HOME/.local/bin
@@ -221,9 +313,9 @@ rm -rf /tmp/dive.tar.gz
 dive lifailon/docker-socket-proxy:arm64
 ```
 
-Обновление файла и пересборка образа:
+Изменение файла и переупаковка образа:
 
-```Bash
+```bash
 # Переменные: название образа и файла для внесения изменений
 imageName=lifailon/docker-socket-proxy:arm64
 fileName=haproxy.cfg
@@ -320,6 +412,134 @@ rm -rf image image.tar
 docker load -i image_new.tar
 ```
 
+### Dockerfile
+
+- `FROM` - базовый образ, на основе которого будет создаваться новый (текущий) образ (например, `FROM alpine:latest` или `FROM node:alpine AS build` для указания метки при использование нескольких образов).
+- `LABEL` - добавляет метаданные к образу в формате ключ-значение (например, `LABEL traefik.enable=true` или `LABEL stand=test`, может использоваться другими сервисами для своей работы или фильтрации, например, `docker ps --filter "stand=test"`).
+- `ARG` - определяет переменные, которые будут доступны только на этапе сборки образа и недоступны в контейнере (например, объявление с помощью `ARG TARGETARCH` и изменение `docker build --build-arg TARGETARCH=arm64`).
+- `ENV` - устанавливает переменные окружения, которые будут доступны внутри контейнера со значениями по умолчанию (например, `ENV PORT=80`, можно переопределить через `-e PORT=8080`, который имеет повышенный приоритет).
+- `WORKDIR` - устанавливает рабочий каталог внутри контейнера для последующих команд (например, `WORKDIR /app`).
+- `SHELL` - задает командную оболочку, которая будет использоваться для выполнения команд `RUN`, `CMD` и `ENTRYPOINT` (например, `SHELL ["/bin/bash", "-c"]`, по умолчанию `SHELL ["/bin/sh", "-c"]`).
+- `RUN` - выполняет команды в контейнере во время сборки образа (например, `RUN apk add --progress --no-cache util-linux bash curl` или `RUN useradd -m node`).
+- `USER` - устанавливает пользователя, от имени которого будут выполняться следующие команды (например, `USER node`, по умолчанию `USER root`).
+- `COPY` - копирует файлы (например, `COPY . .` для копирования всего содержимого из текущей директории в контейнер или `COPY --from=build` для указания  метки при копирование файлов из другого образа).
+- `ADD` - загружает файлы из `URL` (например, `ADD alpine-minirootfs-3.23.3-aarch64.tar.gz /img/`) с распаковкой архивов в формате `tar.gz` (актуально для базовых образов).
+- `CMD` - определяет параметры команды, которые будут выполняться при запуске контейнера (может быть переопределена при запуске контейнера).
+- `ENTRYPOINT` - определяет основную команду, которая будет выполняться при запуске контейнера (можно переопределить с помощью флага `--entrypoint`).
+- `VOLUME` - создает точку монтирования для хранения данных в хостовой системе, вместо слоев контейнера (например, `VOLUME /var/log/app`).
+- `EXPOSE` - документирует порты без их проброса (например, `EXPOSE 8080`).
+- `HEALTHCHECK` - определяет команду для проверки состояния работающего контейнера (например, `HEALTHCHECK CMD curl -f http://localhost:8080 || exit 1`).
+- `STOPSIGNAL` - определяет сигнал, который будет отправлен контейнеру для его остановки (например, `STOPSIGNAL SIGQUIT`).
+- `ONBUILD` - задает команды, которые будут автоматически выполнены при сборке дочерних образов.
+
+Пример сборки контейнера для выполнения команды ping:
+
+```Dockerfile
+FROM alpine:latest
+
+ENTRYPOINT ["ping"]
+
+CMD ["localhost"]
+```
+
+`docker build -t ping-image .`
+
+При запуске команды: `docker run ping-image`, запустится контейнер, который запустит команду: `ping localhost`.
+
+При запуске команды: `docker run ping-image google.com`, аргумент `google.com` целиком переопределяет команду в `CMD` и контейнер запустит команду: `ping google.com`.
+
+Можно изменить основную команду: `docker run -v /var/log/syslog:/syslog --entrypoint tail ping-image -f /syslog`
+
+Пример загрузки и распаковки архива:
+
+```Dockerfile
+FROM alpine:latest
+
+RUN apk add --progress --no-cache curl unzip && \
+    curl -sSL https://github.com/Lifailon/lazyjournal/archive/refs/heads/main.zip -o /tmp/main.zip && \
+    unzip /tmp/main.zip -d /app/ && \
+    rm /tmp/main.zip && \
+    apk del curl unzip
+
+WORKDIR /app/lazyjournal-main
+RUN ls -lh
+```
+
+Пример использования аргументов:
+
+```Dockerfile
+FROM alpine:latest
+
+# Объявляем переменную для текущей сборки (обязательно) и присваиваем значение (опционально)
+ARG HTTPS_PROXY=http://192.168.3.105:20171
+
+RUN apk update && apk add curl
+```
+
+`docker build --build-arg HTTPS_PROXY=http://192.168.3.105:20171 -t curl-image .`
+
+### Scratch
+
+`Scratch` - это пустой образ, который не содержит операционной системы, системных библиотек (как `glibc` в `Ubuntu` или `musl` в `Alpine`) оболочек (`sh` или `bash`) и файлов, что исключает возможные уязвимости в безопасности и требует использовать для запуска статические бинарные файлы (например, написанные на `Go`, `Rust`, `C++`).
+
+Сборка `Go` приложения c нуля с помощью `scratch`:
+
+```Dockerfile
+FROM golang:1.21-alpine AS builder
+WORKDIR /app
+COPY . .
+RUN CGO_ENABLED=0 go build -o app-0.0.1 main.go
+
+FROM scratch
+# Копируем файл из другого образа
+# COPY --from=busybox:musl /bin/busybox /busybox
+# Копируем приложение из промежуточного слоя
+COPY --from=builder /app/app-0.0.1 /app
+# Копируем корневые сертификаты для доступа по HTTPS из приложения
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+ENTRYPOINT ["/app"]
+```
+
+Загружаем [busybox](https://github.com/mirror/busybox) и копируем в `scratch` контейнер:
+
+```bash
+docker create --name busybox busybox:musl
+docker cp busybox:/bin/busybox ./busybox
+docker cp ./busybox dozzle:/busybox
+docker rm busybox && rm ./busybox
+docker exec -it dozzle /busybox sh -c '/busybox mkdir -p /bin && /busybox --install -s /bin && export PATH=$PATH:/bin && sh'
+```
+
+### Buildx
+
+`sudo apt install docker-buildx -y` установить систему для мультиплатформенной сборки \
+`docker buildx create --use --name multiarch-builder --driver docker-container` создать и запустить сборщик в контейнере \
+`docker buildx ls` \
+`docker buildx rm multiarch-builder`
+
+`go list -u -m all && go get -u ./...` обновить пакеты приложения на Go
+
+Добавить аргументы в `Dockerfile` и передать их в переменные для сборки:
+
+```Dockerfile
+ARG TARGETOS TARGETARCH
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build
+```
+
+`docker buildx build --platform linux/amd64,linux/arm64 .` собрать
+
+`docker buildx build --platform linux/amd64,linux/arm64 -t lifailon/logporter --push .` собрать и опубликовать
+
+`npm outdated && npm update --save` обновить пакеты `node.jd` приложения
+
+Передаем аргументы в параметры платформы для образа:
+
+```Dockerfile
+ARG TARGETOS TARGETARCH
+FROM --platform=${TARGETOS}/${TARGETARCH} node:alpine AS build
+```
+
 ### Docker Registry
 
 #### Docker Hub
@@ -360,7 +580,7 @@ sudo systemctl restart docker
 
 Зеркала необходимы, если прямой доступ к основному хранилищу Docker Hub ограничен или невозможен. Docker будет перебирать их по очереди при загрузке образа, пока не найдет доступный.
 
-```Bash
+```bash
 cat <<EOF > /etc/docker/daemon.json
 {
   "registry-mirrors": [
@@ -382,16 +602,14 @@ docker info | grep Mirror
 mkdir -p /etc/systemd/system/docker.service.d
 ```
 
-Создаем дополнительную конфигурацию для службы Docker в файле `/etc/systemd/system/docker.service.d/http-proxy.conf`:
+Создаем дополнительную конфигурацию для службы Docker в файле `/etc/systemd/system/docker.service.d/http-proxy.conf`
 
 ```ini
 [Service]
-Environment="HTTP_PROXY=http://docker:password@192.168.3.100:9090"
-Environment="HTTPS_PROXY=http://docker:password@192.168.3.100:9090"
+Environment="HTTPS_PROXY=http://192.168.3.105:20171"
 ```
 
-`systemctl daemon-reload` \
-`systemctl restart docker`
+`systemctl daemon-reload && systemctl restart docker`
 
 ### Docker API
 
@@ -720,6 +938,29 @@ services:
       - STATS_PASS=admin
 ```
 
+### File Watch
+
+Атрибут watch автоматически обновляет файлы измененные на хосте в контейнере (`sync`), перезагружает контейнеры (`sync+restart`) и пересобирает образ (`rebuild`) по мере редактирования и сохранения кода.
+
+```yaml
+services:
+  web:
+    build: .
+    command: npm start
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./web
+          target: /src/web
+          initial_sync: true
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+```
+
+`docker compose up --watch`
+
 ### Logging
 
 Определить размер для одного лог-файла и огриничить количество лог-файлов:
@@ -920,27 +1161,57 @@ volumes:
 
 ### Network
 
-Контейнеры в одном стеке взаимодействуют между собой через виртуальный мост (`bridge`) по `container_name` без проброса портов, а также с контейнерами в других стеках через проброс сети в помощью `external: true`.
+#### config
 
-#### bridge/external
+Определяем подсеть и фиксируем адрес хоста:
 
 ```yaml
 services:
-  nginx:
-    image: nginx
-    container_name: nginx
-    ports:
-      - 80:8080 # container:host
+  alpine:
+    image: alpine
+    # Обновляем файл /etc/resolv.conf
     dns:
-      - 8.8.8.8
+      # Внешний DNS сервер запущенный на хосте
+      - 10.5.0.1
+      # Встроенный DNS сервер Docker
+      # - 127.0.0.11
+    # Обновляем файл /etc/hosts
+    extra_hosts:
+      - host.docker.internal:host-gateway
+      # - host.docker.internal:10.5.0.1
     networks:
-      - nginx_net
-      - dns-stack_default
+      alpine-net:
+        ipv4_address: 10.5.0.2
 
 networks:
-  nginx_net:
+  alpine-net:
     driver: bridge
-  dns-stack_default:
+    ipam:
+      config:
+        - subnet: 10.5.0.0/24
+          gateway: 10.5.0.1
+```
+
+#### external
+
+Контейнеры в одном стеке взаимодействуют между собой через виртуальный мост (`bridge`) по `container_name` без проброса портов, а также с контейнерами в других стеках при подключение их сети с помощью `external: true`.
+
+```yaml
+services:
+  alpine:
+    image: alpine
+    container_name: alpine
+    ports:
+      - 80:8080 # container:host
+    networks:
+      - alpine_net
+      - dns-stack_default
+    command: ping postgres
+
+networks:
+  alpine_net:
+    driver: bridge
+  pg-stack_default:
     external: true
 ```
 
@@ -1144,34 +1415,427 @@ volumes:
 - `kubelet` - агент, запущенный на каждой Worker-ноде. Он получает команды (`PodSpecs`) от API-сервера и следит за запуском и здоровьем контейнеров. Порт `10250` используется API-сервером для связи с агентом, например, при использование команды `kubectl logs` или `kubectl exec`.
 - `Container Runtime` - программное обеспечение (например, `containerd` или `CRI-O`), которое непосредственно запускает контейнеры. `Kubelet` общается с ним через протокол `CRI` (Container Runtime Interface).
 - `kube-scheduler` - диспетчер задач, который следит за появлением новых подов, у которых не назначен узел. Он выбирает подходящую Worker-ноду, основываясь на ресурсах (`CPU`/`RAM`), политиках и ограничениях (`affinity`/`taints`).
-- `kube-controller-manager` - состав контроллеров, которые следят за состоянием кластера для приведения его к желаемому виду (например, `Node Controller` следит за доступностью узлов, а `Replication Controller` поддерживает нужное количество копий пода).
+- `kube-controller-manager` - состав контроллеров, которые следят за состоянием кластера для приведения его к желаемому виду (например, `Node Controller` следит за доступностью узлов, а `Replication Controller` поддерживает желаемое количество копий пода).
 - `kube-proxy` - сетевой агент на каждой ноде. Он реализует правила сети Kubernetes через `IPtables` или `IPVS`, позволяя подам общаться друг с другом и обеспечивая работу сервисов. Объект `Service`, который объединяет группу подов в логическую единицу получает один общий виртуальный IP-адрес. Когда на этот адрес приходит запрос, кластер через `kube-proxy` сам балансирует трафик, перенаправляя его на один из живых подов этой группы, независимо от того, на каких нодах они физически находятся.
 
 Краткий сценарий работы:
 
-- Администратор кластера отправляет `YAML` файл через `kubectl` на API-Server.
-- `kube-apiserver` сохраняет план в `etcd`.
-- `kube-scheduler` видит новый под без узла, выбирает лучшую Worker-ноду и пишет ее имя в `etcd`.
+- Администратор кластера отправляет `YAML` файл через `kubectl` на API-Server, например, с содержимым деплоймента.
+- `kube-apiserver` сохраняет план в `etcd` и отправляет события всем подписанным компонентам кластера.
+- `kube-scheduler` видит новый под без узла, выбирает подходящую Worker-ноду и пишет ее имя в `etcd`.
 - `kubelet` видит в `etcd`, что на его ноду назначен новый под и передает команду в `runtime` (например, `containerd`) запустить контейнеры.
 - `kube-proxy` настраивает правила сети, чтобы этот под стал доступен.
+
+### Kompose
+
+[Kompose](https://github.com/kubernetes/kompose) - инструмент, который конвертируемт спецификацию `docker-compose` в манифесты Kubernetes.
+
+```bash
+mkdir -p $HOME/.local/bin
+arch=$(uname -m)
+case $arch in
+    x86_64|amd64) arch="amd64" ;;
+    aarch64) arch="arm64" ;;
+esac
+version=$(curl -s https://api.github.com/repos/kubernetes/kompose/releases/latest | jq -r .tag_name)
+curl -sSL https://github.com/kubernetes/kompose/releases/download/$version/kompose-linux-$arch -o $HOME/.local/bin/kompose
+chmod +x $HOME/.local/bin/kompose
+```
+
+`kompose --file docker-compose.yaml convert` конвертация
+
+`docker-compose bridge convert` встроенный конвертер в `docker compose` на базе [шаблонов Helm](https://github.com/docker/compose-bridge-transformer).
 
 ### Kubeadm
 
 [Kubeadm](https://github.com/kubernetes/kubeadm) - это инструмент командной строки для сборки и настройки кластера Kubernetes.
 
-### K3s
+Настройка кластера:
 
-[K3s](https://github.com/k3s-io/k3s) - это полностью совместимый дистрибутив Kubernetes в формате единого двоичного файле, который удаляет хранение драйверов и поставщика облачных услуг, а также добавляет поддержку `sqlite3` для `backend` хранилища от компании Rancher Labs (SUSE).
+```bash
+# Включаем использования Overlay FS и проброс трафика через bridge
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+sudo modprobe overlay
+sudo modprobe br_netfilter
 
-`curl -sfL https://get.k3s.io | sh -` установка службы в systemd и утилит `kubectl`, `crictl`, `k3s-killall.sh` и `k3s-uninstall.sh` \
-`sudo chmod 644 /etc/rancher/k3s/k3s.yaml && sudo chown $(id -u):$(id -g) /etc/rancher/k3s/k3s.yaml` назначить права на конфигурацию текущему пользователю \
-`sudo cat /var/lib/rancher/k3s/server/node-token` токен авторизации \
-`curl -sfL https://get.k3s.io | K3S_URL=https://192.168.3.101:6443 K3S_TOKEN=<TOKEN> sh -` передать переменные окружения `K3S_URL` и `K3S_TOKEN` токен для установки на рабочие ноды (команда удаления: `sudo /usr/local/bin/k3s-agent-uninstall.sh`) \
-`sudo nano /boot/firmware/cmdline.txt` включить cgroups v1 вместо v2 => `systemd.unified_cgroup_hierarchy=0 cgroup_enable=memory cgroup_memory=1` \
-`k3s kubectl get nodes` отобразить список нод в кластере \
-`sudo k3s crictl ps` отобразить список всех запущенных контейнеров, включая системные для работы класетра \
-`sudo k3s etcd-snapshot save` создать снапшот etcd (распределенного `key-value` хранилища, которое отвечает за состояние всего кластера Kubernetes) \
-`sudo k3s etcd-snapshot restor` восстановление кластера из снапшота
+# Настройка системных параметров для работы сети
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+sudo sysctl --system
+
+# Устанавливаем контейнерную среду выполнения containerd
+sudo apt-get update
+sudo apt-get install -y containerd
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+sudo systemctl restart containerd
+
+# Устанавливаем зависимые пакеты
+# curl -sSLf https://pkgs.k8s.io/core:/stable:/v1.35/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.35/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -sSLf https://packages.cloud.yandex.ru/core:/stable:/v1.35/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://packages.cloud.yandex.ru/core:/stable:/v1.35/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+sudo systemctl enable --now kubelet
+sudo systemctl status kubelet
+
+# Инициализируем кластер (стандартная подсеть для Flannel/Calico)
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+# Список активных токенов и время их жизни
+kubeadm token list
+# Генерация нового токена для подключения Worker Node
+# kubeadm token create
+# Команда для присоединение Worker нод
+kubeadm join 192.168.3.101:6443 --token 2csxxk.pcl8p5n5lj8mu8rd \
+  --discovery-token-ca-cert-hash sha256:72353cb9c1cec097908f766f028cec6f12ec95f62f3447990b45279f7cf88fe2
+
+# Настраиваем конфигурацию, чтобы работать с кластером через kubectl
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+sed 's/127.0.0.1/192.168.3.101/g' -i $HOME/.kube/config
+kubectl get nodes
+# Удалить taint метку на всех Master нодах
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+```
+
+### Cluster Configuration
+
+[Cluster Configuration](https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta4/) - это основной конфигурационный ресурс утилиты `kubeadm`, который определяет глобальные настройки для всего кластера Kubernetes. В отличие от настроек конкретной ноды в момент инициализации с помощь `InitConfiguration`, этот объект описывает общие параметры для всех компонентов [Control Plane](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/control-plane-flags) (API server, scheduler, controller manager) и `etcd`.
+
+Конфигурация кластера определяется в момент инициализации кластера с помощью команды `kubeadm init --config configuration.yaml`
+
+`EDITOR=nano kubectl edit cm -n kube-system kubeadm-config`
+
+```yaml
+kind: ConfigMap
+metadata:
+  name: kubeadm-config
+  namespace: kube-system
+apiVersion: v1
+data:
+  ClusterConfiguration: |
+    kind: ClusterConfiguration
+    kubernetesVersion: v1.35.4
+    imageRepository: registry.k8s.io
+    apiVersion: kubeadm.k8s.io/v1beta4
+    clusterName: kubernetes
+    # Директория с сертификатами (.crt, .key)
+    certificatesDir: /etc/kubernetes/pki
+    # Срок действия корневого сертификата (CA) 10 лет
+    caCertificateValidityPeriod: 87600h0m0s
+    # Срок действия сертификатов компонентов (API, Scheduler и др.) 1 год
+    certificateValidityPeriod: 8760h0m0s
+    encryptionAlgorithm: RSA-2048
+    etcd:
+      local:
+        dataDir: /var/lib/etcd
+    networking:
+      dnsDomain: cluster.local
+      podSubnet: 10.244.0.0/16
+      serviceSubnet: 10.96.0.0/12
+    apiServer: {}
+    dns: {}
+    proxy: {}
+    scheduler: {}
+    controllerManager: {}
+```
+
+### Kubelet Configuration
+
+[Kubelet Configuration](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1) - глобальная конфигурация `Kubelet` агентов.
+
+`EDITOR=nano kubectl edit cm -n kube-system kubelet-config`
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubelet-config
+  namespace: kube-system
+data:
+  kubelet: |
+    apiVersion: kubelet.config.k8s.io/v1beta1
+    kind: KubeletConfiguration
+    # Настройки аутентификации запросов к API kubelet
+    authentication:
+      anonymous:
+        enabled: false
+      # Настройки проверки через Webhook API-сервера
+      webhook:
+        # Время кэширования ответов об аутентификации (отключено)
+        cacheTTL: 0s
+        # Включение проверки прав доступа через API-сервер
+        enabled: true
+      # Настройки аутентификации по клиентским сертификатам
+      x509:
+        # Путь к CA-сертификату для проверки подписей клиентов
+        clientCAFile: /etc/kubernetes/pki/ca.crt
+    # Конфигурация авторизации (проверка прав)
+    authorization:
+      # Режим авторизации через Webhook (запросы прав у API-сервера)
+      mode: Webhook
+      # Параметры кэширования ответов авторизации
+      webhook:
+        cacheAuthorizedTTL: 0s
+        cacheUnauthorizedTTL: 0s
+    # Драйвер управления группами процессов (должен совпадать с runtime)
+    cgroupDriver: systemd
+    # Список IP-адресов внутренних DNS-серверов кластера
+    clusterDNS:
+    - 10.96.0.10
+    # Внутренний домен кластера
+    clusterDomain: cluster.local
+    # Путь к сокету среды выполнения контейнеров (CRI)
+    containerRuntimeEndpoint: ""
+    # Интервал согласования ресурсов для CPU Manager
+    cpuManagerReconcilePeriod: 0s
+    # Настройки поведения при циклической ошибке запуска контейнеров
+    crashLoopBackOff: {}
+    # Время ожидания перед переходом узла из состояния нехватки ресурсов
+    evictionPressureTransitionPeriod: 0s
+    # Частота проверки конфигурационных файлов на диске
+    fileCheckFrequency: 0s
+    # IP-адрес для отдачи данных о состоянии здоровья kubelet
+    healthzBindAddress: 127.0.0.1
+    # Порт для эндпоинта /healthz
+    healthzPort: 10248
+    # Частота выполнения HTTP-проб состояния
+    httpCheckFrequency: 0s
+    # Максимальный возраст образа перед его очисткой (GC)
+    imageMaximumGCAge: 0s
+    # Минимальный возраст образа перед его очисткой (GC)
+    imageMinimumGCAge: 0s
+    # Настройки использования Swap (подкачки) на узле
+    memorySwap: {}
+    # Частота отправки полного отчета о статусе узла в API
+    nodeStatusReportFrequency: 0s
+    # Частота обновления статуса узла внутри системы
+    nodeStatusUpdateFrequency: 0s
+    # Включение автоматического обновления сертификатов узла
+    rotateCertificates: true
+    # Таймаут для запросов к среде выполнения контейнеров
+    runtimeRequestTimeout: 0s
+    # Общий период задержки перед выключением узла
+    shutdownGracePeriod: 0s
+    # Период задержки перед выключением для критических подов
+    shutdownGracePeriodCriticalPods: 0s
+    # Путь к директории с манифестами статических подов
+    staticPodPath: /etc/kubernetes/manifests
+    # Таймаут простоя для потоковых соединений (exec/logs)
+    streamingConnectionIdleTimeout: 0s
+    # Частота синхронизации состояния подов с заданным конфигом
+    syncFrequency: 0s
+    # Интервал сбора статистики использования дисковых томов
+    volumeStatsAggPeriod: 0s
+    # Настройки системы логирования
+    logging:
+      # Уровень логирования
+      verbosity: 0
+      # Частота записи логов из буфера на диск
+      flushFrequency: 0
+      options:
+        json:
+          # Размер буфера для логов в формате JSON
+          infoBufferSize: "0"
+        text:
+          # Размер буфера для текстовых логов
+          infoBufferSize: "0"
+    # Тюнинг
+    # Максимальное кол-во подов на одной ноде
+    maxPods: 50
+    # Резервирование ресурсов для системы
+    systemReserved:
+      cpu: "500m"
+      memory: "1Gi"
+    kubeReserved:
+      cpu: "500m"
+      memory: "1Gi"
+    # Порог вытеснения (Eviction) при нехватке ресурсов
+    # Когда на диске останется меньше 5%, Kubelet начнет удалять поды
+    evictionHard:
+      memory.available: "500Mi"
+      nodefs.available: "5%"
+      imagefs.available: "5%"   
+    # Хранение логов
+    containerLogMaxSize: "10Mi"
+    containerLogMaxFiles: 5
+    # Настройка Garbage Collection (очистка старых образов)
+    imageGCHighThresholdPercent: 85   # Начинать чистку, если диск забит на 85%
+    imageGCLowThresholdPercent: 80    # Чистить, пока не станет 80%
+```
+
+### Metrics Server
+
+[Metrics Server](https://github.com/kubernetes-sigs/metrics-server) собирает метрики ресурсов из `Kubelet` агентов на нодах и предоставляет их в Kubernetes `apiserver` через Metrics API для использования в `HPA` и `VPA`.
+
+```bash
+# Установить metrics-server в кластер
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# Статус запуска
+kubectl get deployment metrics-server -n kube-system
+# Проверить логи metrics-server
+kubectl logs -n kube-system deployment/metrics-server
+# Отключить проверку TLS сертификатов, т.к. требует поле SAN (Subject Alternative Name)
+kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--kubelet-insecure-tls"}]'
+# Отобразить метрики ресурсов для всех узлов в кластере
+kubectl top nodes
+```
+
+### Flannel
+
+[Flannel](https://github.com/flannel-io/flannel) - это сетевой плагин (`CNI`) для создания `overlay` сети для связи между подами на разных нодах кластера.
+
+```yaml
+kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+# Выводим список всех ресурсов в новом пространстве имен kube-flannel
+kubectl get all -n kube-flannel
+# Список DaemonSet и подов
+kubectl get ds -n kube-flannel kube-flannel-ds
+kubectl get pods -n kube-flannel -l app=flannel
+```
+
+### Local Path Provisioner
+
+[Local Path Provisioner](https://github.com/rancher/local-path-provisioner) - это инструмент от Rancher, позволяющий использовать локальные диски нодов для постоянного хранения данных (`Persistent Volumes`). Автоматически создает директории на ноде при создании запросов на хранение (`PVC`).
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+kubectl get all -n local-path-storage
+# Список всех доступных StorageClass
+kubectl get sc
+# Сделать хранилищем по умолчанию (бьз необходимости прописывать storageClassName: local-path в PVC)
+kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+### Headlamp
+
+[Headlamp](https://github.com/kubernetes-sigs/headlamp) - это современная альтернатива [Kubernetes Dashboard](https://github.com/kubernetes-retired/dashboard) c расширенным функционалом, созданная сообществом `SIGs` (Kubernetes Special Interest Groups).
+
+```bash
+# Установить в кластер
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/headlamp/main/kubernetes-headlamp.yaml
+# Создать сервисный аккаунт
+kubectl create serviceaccount headlamp-admin -n kube-system
+# Назначить роль администратора кластера для сервисного аккаунта
+kubectl create clusterrolebinding headlamp-admin --serviceaccount=kube-system:headlamp-admin --clusterrole=cluster-admin
+
+# Сгенерировать временный JWT-токен, который не хранится в базе данных Kubernetes как объект
+# kubectl create token headlamp-admin -n kube-system --duration=43800h
+
+# Создать токен для авторизации
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: headlamp-admin-token
+  namespace: kube-system
+  annotations:
+    kubernetes.io/service-account.name: headlamp-admin
+type: kubernetes.io/service-account-token
+EOF
+# Получить токен авторизации из секрета
+kubectl get secret headlamp-admin-token -n kube-system -o jsonpath='{.data.token}' | base64 --decode
+
+# Пробросить порт через ноду (изменяем режим сервиса на NodePort) и узнаем порты
+kubectl patch svc headlamp -n kube-system -p '{"spec": {"type": "NodePort"}}'
+kubectl get svc headlamp -n kube-system
+# Обновляем порт
+# kubectl patch svc headlamp -n kube-system -p '{"spec": {"ports": [{"port": 80, "nodePort": 30001}]}}'
+kubectl patch svc headlamp -n kube-system --type='json' -p '[{"op": "replace", "path": "/spec/ports/0/nodePort", "value": 30001}]'
+```
+
+### Kubectl Config
+
+[Kubectl](https://github.com/kubernetes/kubectl) - это инструмент командной строки для управления кластерами Kubernetes.
+
+```bash
+# Загрузить kubectl
+curl -L "https://dl.k8s.io/release/$(curl -sSL https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl" -o /usr/bin/kubectl
+# Включить автодополнение для kubectl в bash
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+```
+
+Пример конфигурации для подключения к кластеру:
+
+```yaml
+apiVersion: v1
+kind: Config
+current-context: ${contextName}
+preferences: {}
+
+# Адрес кластера
+clusters:
+  - name: ${contextName}-url
+    cluster:
+      server: https://192.168.3.101:6443
+
+# Токен доступа
+users:
+  - name: ${contextName}-usr
+    user:
+      token: ${token}
+
+# Название контекста (связь адреса с токеном)
+contexts:
+  - name: ${contextName}
+    context:
+      cluster: ${contextName}-url
+      # Название пространтсва имен по умолчанию при переключение кластера
+      namespace: ${namespace}
+      user: ${contextName}-usr
+```
+
+Базовые команды для управления конфигурациями и получения информации:
+
+```bash
+# Использовать несколько файлов kubeconfig одновременно (в выводе объеденяет конфигурацию)
+KUBECONFIG=~/.kube/config:~/.kube/config_new
+
+# Отобразить текущую конфигурацию (настройка подключения kubectl к кластеру)
+kubectl config view
+# Отобразить список всех доступных контекстов, кластеров и пользователей
+kubectl config get-contexts
+kubectl config get-clusters
+kubectl config get-users
+# Отобразить текущий контекст
+kubectl config current-context
+# Переключить контекст (установить контекст default как контекст по умолчанию)
+kubectl config use-context default
+# Изменить контекст по умолчанию в файле kubeconfig (параметр current-context)
+kubectl config set-context default
+
+# Отобразить адреса главного узла и сервисов
+kubectl cluster-info
+# Вывести состояние текущего кластера
+kubectl cluster-info dump
+# выгрузить состояние текущего кластера в директорию
+kubectl cluster-info dump --output-directory=./cluster-state
+
+# Вывести все ресурсы кластера
+kubectl get all
+# Сортировка по дате создания/изменения
+kubectl get all --sort-by=.metadata.creationTimestamp
+
+# Отобразить все поддерживаемые типы ресурсов
+kubectl api-resources
+# Отобразить список всех ресурсов и действий, которые текущему пользователю разрешено совершать с этими ресурсами (права роли RBAC)
+kubectl auth can-i --list
+```
+
+Уровни детального вывода для отладки в командах `kubectl`:
+
+- `--v=3`	- расширенная информация об изменениях
+- `--v=6`	- показать запрашиваемые ресурсы (например, загрузка файла `kubeconfig` и url для GET-запроса при вызове `kubectl get pods`)
+- `--v=9`	- показать содержимого HTTP-запроса в полном виде (включая заголовки)
 
 ### K9s
 
@@ -1293,197 +1957,40 @@ kubectl stern . --all-namespaces --tail 5 --since 10m --no-follow 100
 
 kubectl outdated
 ```
-Kubetail Dashboard:
-```yaml
-services:
-  kubetail-dashboard:
-    image: kubetail/kubetail-dashboard:0.8.2
-    container_name: kubetail-dashboard
-    restart: unless-stopped
-    ports:
-      - 7500:7500
-    volumes:
-      - ~/.kube/config:/kubetail/.kube/config:ro
-    command:
-      [
-        "-a", ":7500",
-        "-p", "dashboard.environment:desktop",
-        "-p", "kubeconfig:/kubetail/.kube/config",
-      ]
-```
 
-### Dashboard
-
-Пример развертывания [Kubernetes Dashboard](https://github.com/kubernetes-retired/dashboard) в кластере Kubernetes:
+### Nodes
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml # загружаем deployment
-kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard # создаем сервисный аккаунт
-kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin # выдаем права cluster-admin
-kubectl -n kubernetes-dashboard create token dashboard-admin # получаем JWT-токен сервисного аккаунта для авторизации
-kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard-kong-proxy -p '{"spec":{"type":"NodePort"}}' # меняем тип сервиса на NodePort
-kubectl -n kubernetes-dashboard get svc kubernetes-dashboard-kong-proxy # узнаем назначенный порт (в диапазоне 30000-32767) для внешнего подключения
+# Отображает список всех узлов и их текущий статус (`Ready`, `SchedulingDisabled` и т.д.) \
+kubectl get nodes
+# отображает подробную информацию об узле (ресурсы, события и запущенные поды)
+kubectl describe node node-01
+# Отображает нагрузку на ноды (CPU и память) от Metrics Server
+kubectl top node
+
+# Подготовка нод к техническому обслуживанию
+# Отключает возможность создания новых нод на поде (не удаляет поды, которые уже запущены)
+kubectl cordon node-01
+# Безопасно вытесняет все запущенные на нем поды
+kubectl drain node-01
+# Возвращяет в рабочее состояние после drain и uncordon
+kubectl uncordon node-01
 ```
-
-### Headlamp
-
-[Headlamp](https://github.com/kubernetes-sigs/headlamp) - это современная альтернатива Kubernetes Dashboard c расширенным функционалом, созданная сообществом Kubernetes Special Interest Groups.
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/headlamp/main/kubernetes-headlamp.yaml # установка в кластер
-kubectl -n kube-system create serviceaccount headlamp-admin # создать сервисный аккаунт
-kubectl create clusterrolebinding headlamp-admin --serviceaccount=kube-system:headlamp-admin --clusterrole=cluster-admin # назначить права администратора кластера для сервисного аккаунта
-kubectl create token headlamp-admin -n kube-system --duration=43800h # выпустить токен для авторизации сроком действия 5 лет
-```
-
-### Kompose
-
-[Kompose](https://github.com/kubernetes/kompose) - инструмент, который конвертируемт спецификацию `docker-compose` в манифесты Kubernetes.
-
-```bash
-mkdir -p $HOME/.local/bin
-arch=$(uname -m)
-case $arch in
-    x86_64|amd64) arch="amd64" ;;
-    aarch64) arch="arm64" ;;
-esac
-version=$(curl -s https://api.github.com/repos/kubernetes/kompose/releases/latest | jq -r .tag_name)
-curl -sSL https://github.com/kubernetes/kompose/releases/download/$version/kompose-linux-$arch -o $HOME/.local/bin/kompose
-chmod +x $HOME/.local/bin/kompose
-```
-
-`kompose --file docker-compose.yaml convert` конвертация
-
-`docker-compose bridge convert` встроенный конвертер в `docker compose` на базе [шаблонов Helm](https://github.com/docker/compose-bridge-transformer).
-
-### Kubectl
-
-`echo "source <(kubectl completion bash)" >> ~/.bashrc` включить автодополнение для kubectl в bash \
-`echo "alias k=kubectl && complete -F __start_kubectl k" >> ~/.bashrc` добавить псевдоним `k` для команды kubectl \
-`kubectl completion fish | source` автодополнение в [fish shell](https://github.com/fish-shell/fish-shell)
-
-`KUBECONFIG=~/.kube/config:~/.kube/config2` использовать несколько файлов kubeconfig одновременно (в выводе объеденяет конфигурацию) \
-`kubectl config view` отобразить текущую конфигурацию (настройка подключения kubectl к Kubernetes, которое взаимодействует с приложением через конечные точки `REST API`)
-
-`kubectl config get-contexts` отобразить список всех доступных контекстов (список кластеров) \
-`kubectl config current-context` отобразить текущий контекст \
-`kubectl config use-context default` переключить контекст (установить контекст `default` как контекст по умолчанию)
-
-`kubectl auth can-i --list` отобразить права доступа
-
-`kubectl cluster-info`отобразить адреса главного узла и сервисов \
-`kubectl cluster-info dump` вывести состояние текущего кластера \
-`kubectl cluster-info dump --output-directory=./cluster-state` выгрузить состояние текущего кластера в директорию `cluster-state` (информация для отладки)
-
-`kubectl api-resources` отобразить все поддерживаемые типы ресурсов
-
-`kubectl get all` вывести все ресурсы кластера
-
-`kubectl get events --sort-by=.metadata.creationTimestamp` вывести все логи, отсортированные по времени
-
-`kubectl get nodes` отобразить список `node` и их статус работы, роль (`master` или `node`), время запуска и версию \
-`kubectl get node --selector='!node-role.kubernetes.io/master'` отобразить все рабочие узлы (с помощью селектора исключаем узлы с меткой `master`) \
-`kubectl describe nodes rpi-105` отобразить детальную информацию по конкретной ноде (labels, annotations, системная информация, запущенные поды и используемые ими и суммарно нодой ресурсы, а также логи - events) \
-`kubectl top nodes` отобразить метрики всех нод
-
-`kubectl get namespaces` вывести список все доступных пространств имен
-
-`kubectl get jobs -A` проверить статус выполнения заданий во всех namespace
-
-`kubectl get pv --sort-by=.spec.capacity.storage` вывести список `PersistentVolumes` (физический или логический том, например, NFS или локальное хранилища на конкретной ноде), отсортированные по емкости \
-`kubectl get pvc -A` отобразить все `PersistentVolumeClaim` (запрос PV для использования в контейнерах для хранения данных) во всех неймспейсах
-
-`kubectl create deployment torapi --image=lifailon/torapi:latest --replicas=3 --dry-run=client -o yaml` генерация манифеста `deployment.yaml` \
-`kubectl create service loadbalancer torapi --tcp=8444:8443 --dry-run=client -o yaml` генерация манифеста `service.yaml` в режиме балансировки нагрузки (`port:targetPort (порт контейнера)`)
-
-`kubectl diff -f ./deployment.yaml` сравнить текущее состояние кластера с состоянием, в котором находился бы кластер в случае применения манифеста
-
-`kubectl get deployments` отобразить статус всех Deployments в указанном namespace (`-n kubernetes-dashboard`), которые в свою очередь управляют Pod-ами (`RADY` - текущее количество желаемых реплик в рабочем состояние, например, 2 из 2 и `UP-TO-DATE` - количество реплик, обновленных до последней версии)
-
-`kubectl get pods` отобразить статус всех подов \
-`kubectl get pods --show-labels` отобразить все заданные `label` в подах \
-`kubectl get pods --field-selector=status.phase=Running` отобразить все запущенные поды (фильтрация по статусу) \
-`kubectl get pods -o name` отобразить только имена в формате `pod/<podName>`
-`kubectl get pods -o wide` выводит дополнительную информации в текстовом формате (для подов это внутренний ip-адрес и название ноды, на которой он работает) \
-`kubectl get pods -o json` отобразить подробный вывод в формате `json` или `yaml` \
-`kubectl get pods -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName` отобразить нужные поля таблицы вывода в пользовательском формате
-
-`kubectl top pods` отобразить нагрузку на подах \
-`kubectl top pods --containers` отобразить метрики вместе с используемыми в подах контейнерами
-
-`KUBE_EDITOR="nano" kubectl edit deployments.apps/torapi` отредактировать манифест Deployment в редакторе `nano`
-
-`kubectl get rs` состояние реплик (`ReplicaSet`) для всех подов (`DESIRED` - желаемое количество экземпляров-реплик и `CURRENT` - текущее количество реплик) \
-`kubectl scale deployments/torapi --replicas=3` масштабировать или уменьшить количество подов в deployment до указанного числа реплик \
-`kubectl patch deployment/torapi --type=json -p '[{"op":"replace","path":"/spec/replicas","value":3}]'` пропатчить текущую конфигурацию \
-`kubectl events rs/torapi` изменения фиксируется в логах `ReplicaSet` (`Scaled up replica set torapi-54775d94b8 from 2 to 3`) \
-`kubectl describe deployments.apps/torapi` отобразить подробную конфигурацию развертвывания (шаблон и логи) \
-`kubectl autoscale deployment torapi --min=2 --max=10` автоматически масштабировать развертывание в диапазоне от 2 до 10 подов
-
-`kubectl get services` отобразить список сервисов (их `TYPE`, `CLUSTER-IP`, `EXTERNAL-IP` и `PORT(S)`), которые принимают внешний трафик \
-`kubectl get endpoints torapi-service` отобразить на какие адреса (ip и порт) подов перенаправляется трафик сервиса
-
-`kubectl delete service torapi-service` удалить service
-
-`kubectl logs torapi-54775d94b8-t2dhm` отобразить логи выбранного пода (сообщения, которые приложение отправляет в `stdout`) \
-`kubectl logs -l app=torapi --follow --timestamps` выводить лог на всех запущенных репликах подов (фильтрация по `label`) в реальном времени (`--follow`) с отображением временной метки (`--timestamps`) \
-`kubectl logs -n telegram --selector="app in (openrouter-bot,ssh-bot)" --prefix --all-pods --all-containers` отобразить логи двух приложений (по лейблу с помощью селектора) во всех подах/репликах в кластере (`--all-pods`) и контейнерах внутри подах (`--all-containers`)
-
-`kubectl attach pods/torapi-54775d94b8-t2dhm`
-
-`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- ls -lha` выполнить команду в указанноv контейнере внутри указанного пода \
-`kubectl exec torapi-54775d94b8-t2dhm -c torapi -- env` отобразить список глобальных переменных в контейнере (например определить `$HOME`) \
-`kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- curl http://localhost:8443/api/provider/list` проверить доступность приложения внутри контейнера \
-`kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- sh` запустить `sh` или `bash` сессию в контейнере пода
-
-`kubectl -n $NS exec $pod -c $container -- sh -c "for i in \$(seq 1 $cpuCount); do yes $procName > /dev/null 2>&1 & done"` запустить нагрузку \
-`kubectl -n $NS exec $pod -c $container -- sh -c "grep $procName /proc/[0-9]*/cmdline | awk -F'/proc/' '{split(\$2,a,\"/\");sum=sum\" \"a[1]}END{print sum}' | xargs kill"` остановить нагрузку \
-`kubectl -n $NS exec $pod -c $container -- sh -c "echo \"Количество процессов нагрузки: \"\$((\$(grep $procName /proc/[0-9]*/cmdline 2>&1 | wc -l)-3))"` получить количество процессов нагрузки (1 yes процесс = 1 vCPU)
-
-`kubectl get cm` получить все ConfigMap \
-`kubectl describe cm kube-root-ca.crt` отобразить содержимое ConfigMap (на примере корневого сертифика)
-
-`kubectl create secret generic admin-password --from-literal=username=admin --from-literal=password=pass` создать секрет в формате ключ-значение \
-`kubectl create secret generic api-key --from-file=api-key.txt` создать секрет из содержимого файла \
-`kubectl get secret` получить список всех секретов \
-`kubectl describe secret admin-password` получить информацию о секрете (размер в байтах) \
-`kubectl get secret admin-password -o yaml` получить содержимое секретов в кодировке base64 \
-`kubectl get secret admin-password -o jsonpath="{.data.password}" | base64 --decode` декодировать содержимое секрета \
-`kubectl delete secret admin-password` удалить секрет
-
-`kubectl set image deployments/openrouter-bot openrouter-bot=lifailon/openrouter-bot:0.5.0` выполнить плавающие обновление образа работающих контейнеров (формат: `containerName=imagePath:tag` ) \
-`kubectl rollout status deployments/openrouter-bot` проверить статус обновления \
-`kubectl set image deployments/openrouter-bot openrouter-bot=lifailon/openrouter-bot:0.1.0` выполнить обновление на несуществующую версию \
-`kubectl rollout undo deployments/openrouter-bot` откатить deployment к редыдущему развертыванию (к предыдущему известному и работающему состоянию) \
-`kubectl rollout history deployment/openrouter-bot` отобразить историю образов \
-`kubectl rollout undo deployments/openrouter-bot --to-revision=1` откатиться к определенной ревизии из истории
-
-`kubectl label pods podName new-label=awesome` добавить метку \
-`kubectl annotate pods podName icon-url=http://goo.gl/XXBTWq` добавить аннотацию
-
-Ключевые уровни детального вывода для отладки в Kubectl:
-
-`--v=3`	Расширенная информация об изменениях \
-`--v=6`	Показать запрашиваемые ресурсы \
-`--v=9`	Показать содержимого HTTP-запроса в полном виде (включая заголовки)
-
-### Node
-
-`kubectl get nodes` отображает список всех узлов и их текущий статус (`Ready`, `SchedulingDisabled` и т.д.) \
-`kubectl describe node node-01` отображает подробную информацию об узле (ресурсы, события и запущенные поды) \
-`kubectl top node` отображает нагрузку на ноды (CPU и память), если установлен `Metrics Server` \
-`kubectl cordon node-01` выводит ноды как недоступный для новых подов, но не удаляет те, что уже запущены \
-`kubectl drain node-01` используется для подготовки ноды к техническому обслуживанию (безопасно вытесняет все запущенные на нем поды) \
-`kubectl uncordon node-01` возвращяет в рабочее состояние после `drain` и `uncordon`
 
 ### Labels
 
 Связи в Kubernetes работают с помощью селекторов (`selectors`) и меток (`labels`) по принципу фильтров. Например, в шаблоне `Deployment` по пути `spec.template.metadata.labels` указана метки `app: torapi`, а `Deployment` управляет только теми подами, чьи метки совпадают с его селектором в `spec.selector.matchLabels`.
 
-`kubectl get nodes --show-labels` отобразить все доступные лейблы на нодах \
-`kubectl label nodes node-01 diskType=hdd` создать новый лейбл на ноде \
-`kubectl label nodes node-01 diskType=ssd --overwrite` изменить значение лейбла \
-`kubectl label nodes node-01 diskType-` удалить лейбл
+```bash
+# Отобразить все доступные лейблы на нодах
+kubectl get nodes --show-labels
+# Создать новый лейбл на ноде
+kubectl label nodes node-01 diskType=hdd
+# Изменить значение лейбла
+kubectl label nodes node-01 diskType=ssd --overwrite
+# Удалить лейбл
+kubectl label nodes node-01 diskType-
+```
 
 ### Namespaces
 
@@ -1527,7 +2034,7 @@ spec:
     persistentvolumeclaims: "5"
 ```
 
-`kubectl create -f ./quotas.yaml --namespace=rest-api`
+`kubectl create -f ./quotas.yaml --namespace=rest-api` применить квоты к указанному пространству имен
 
 `kubectl get quota --namespace=rest-api` вывести список всех квот в пространстве имен
 
@@ -1566,64 +2073,11 @@ spec:
       storage: "10Gi"
 ```
 
-`kubectl apply -f ./limits.yaml --namespace=rest-api`
+`kubectl apply -f ./limits.yaml --namespace=rest-api` применить лимиты к указанному пространству имен
 
-`kubectl get limits --namespace=rest-api` вывести список всех LimitRange в пространстве имен
+`kubectl get limits --namespace=rest-api` вывести список всех лимитов в пространстве имен
 
-`kubectl describe limitrange rest-api-limits --namespace=rest-api` - вывести значения ограничений и значений по умолчанию
-
-### Kubelet Configuration
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kubelet-config-1.28
-  namespace: kube-system
-data:
-  kubelet: |
-    apiVersion: kubelet.config.k8s.io/v1beta1
-    kind: KubeletConfiguration
-    # Резервирование ресурсов для системы
-    systemReserved:
-      cpu: "500m"
-      memory: "1Gi"
-    kubeReserved:
-      cpu: "500m"
-      memory: "1Gi"
-    # Порог вытеснения (Eviction) при нехватке ресурсов
-    # Когда на диске останется меньше 5%, Kubelet начнет удалять поды
-    evictionHard:
-      memory.available: "500Mi"
-      nodefs.available: "5%"
-      imagefs.available: "5%"
-    
-    # Настройки безопасности и доступа
-    authentication:
-      anonymous:
-        enabled: false # Запрещаем анонимные запросы к API kubelet
-      webhook:
-        enabled: true  # Разрешаем проверку прав через основной API-server
-    
-    # Максимальное кол-во подов на одной ноде
-    maxPods: 50
-    
-    # Хранение логов
-    containerLogMaxSize: "10Mi"
-    containerLogMaxFiles: 5
-    
-    # Настройка Garbage Collection (очистка старых образов)
-    imageGCHighThresholdPercent: 85   # Начинать чистку, если диск забит на 85%
-    imageGCLowThresholdPercent: 80    # Чистить, пока не станет 80%
-    
-    # DNS настройки для подов
-    clusterDNS:
-    - "10.96.0.10"
-    clusterDomain: "k8s.local"
-    
-    # Режим работы с Cgroups
-    cgroupDriver: systemd
-```
+`kubectl describe limitrange rest-api-limits --namespace=rest-api` вывести значения ограничений и значений по умолчанию
 
 ### Deployment
 
@@ -1662,17 +2116,96 @@ spec:
             memory: "256Mi"             # Максимальный объем памяти
 ```
 
+Сравнить текущее состояние кластера с состоянием в файле (в котором находился бы кластер в случае применения манифеста):
+
+`kubectl diff -f ./deployment.yaml`
+
+Применить манифест к кластеру:
+
 `kubectl apply -f deployment.yaml`
 
-`kubectl create deployment torapi --image=lifailon/torapi:latest --replicas=2` создать deployment без описания манифеста \
-`kubectl delete deployment torapi` удалить деплоймент вместе с его `ReplicaSet` и всеми подами \
-`KUBE_EDITOR=nano kubectl edit deployment torapi` открыть манифест, который уже установленный в кластер на редактирование в терминале с сохранением изменений, которые будут применяны в кластере
+```bash
+# Создать ресурс Deployment без описания манифеста
+kubectl create deployment torapi --image=lifailon/torapi:latest --replicas=2
+# Удалить деплоймент вместе с его `ReplicaSet` и всеми подами
+kubectl delete deployment torapi
+# Открыть манифест, который уже установленный в кластер на редактирование в терминале, 
+# с сохранением изменений, которые будут применяны в кластере
+KUBE_EDITOR=nano kubectl edit deployment torapi
 
-`kubectl get deployment` вывести список всех деплойментов, количество их реплик и состояния \
-`kubectl get pods -l app=torapi` вывести список всех подов, которые создал деплоймент по лейблу (через его селектор) \
-`kubectl describe deployment torapi` подробная информация (события, стратегия обновления, селекторы и ошибки) \
-`kubectl get events --field-selector involvedObject.name=torapi` вывести только события для деплоймента \
-`kubectl get events --field-selector involvedObject.kind=Deployment` вывести события всех деплойментов
+# Вывести список всех деплойментов, количество их реплик и состояние
+kubectl get deployments
+# Вывести список всех подов, которые создал деплоймент по лейблу (через его селектор)
+kubectl get pods -l app=torapi
+# Подробная информация (события, стратегия обновления, селекторы и ошибки)
+kubectl describe deployment torapi
+
+# Вывести только события для деплоймента
+kubectl get events --field-selector involvedObject.name=torapi
+# Вывести события всех деплойментов
+kubectl get events --field-selector involvedObject.kind=Deployment
+```
+
+### Pods
+
+```bash
+# Отобразить статус всех подов
+kubectl get pods
+# Выводит дополнительную информации (для подов это внутренний ip-адрес и название ноды, на которой он работает)
+kubectl get pods -o wide
+# Отобразить только имена в формате pod/<podName>
+kubectl get pods -o name
+# Отобразить нужные поля таблицы вывода в пользовательском формате
+kubectl get pods -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName
+# Отобразить все заданные лейблы в подах
+kubectl get pods --show-labels
+# Отобразить все запущенные поды с фильтрацией по лейблу
+kubectl get pods -l app=torapi
+# Отобразить все запущенные поды с фильтрацией по статусу
+kubectl get pods --field-selector=status.phase=Running
+# Отобразить нагрузку на подах из Metrics Server
+kubectl top pods
+# Отобразить метрики вместе с используемыми в подах контейнерами
+kubectl top pods --containers
+
+# Состояние всех реплик для всех подов и время их работы
+# DESIRED - желаемое количество реплик
+# CURRENT - текущее количество реплик
+# READY - успешно прошли проверки готовности (probes)
+kubectl get rs
+# Увеличить (масштабировать) или уменьшить количество подов в Deployment до указанного числа реплик
+kubectl scale deployments/torapi --replicas=3
+# Обновить текущую конфигурацию
+kubectl patch deployment/torapi --type=json -p '[{"op":"replace","path":"/spec/replicas","value":3}]'
+# Изменения фиксируется в логах ReplicaSet (Scaled up replica set torapi-54775d94b8 from 2 to 3)
+kubectl events rs/torapi
+# Отобразить подробную конфигурацию развертвывания (шаблон и логи)
+kubectl describe deployments.apps/torapi
+
+# Отобразить логи выбранного пода (сообщения, которые приложение отправляет в stdout)
+kubectl logs torapi-54775d94b8-t2dhm
+# Выводить лог для всех запущенных репликах подов (фильтрация по лейблу) в реальном времени (--follow) с отображением временной метки (--timestamps)
+kubectl logs -l app=torapi -f --timestamps
+# Вывести лог за последние 30 минут
+kubectl logs -l app=torapi --since=30m
+# Отобразить лог предыдущего пода, если контейнер был перезапущен при падение
+kubectl logs -l app=torapi --previous
+# Вывести логи выбранного контейнера
+kubectl logs -l app=torapi -c torapi
+# Вывести логи для всех контейнеров внутри подах
+kubectl logs -l app=torapi --all-containers
+# Отобразить логи во всех найденных подах и их репликах по селекторам
+kubectl logs -n telegram --selector="app in (openrouter-bot,ssh-bot)" --prefix --all-pods --all-containers
+
+# Выполнить команду в указанноv контейнере внутри указанного пода (отобразить список переменных окружения)
+kubectl exec torapi-54775d94b8-t2dhm -c torapi -- env
+# Проверить доступность приложения внутри контейнера
+kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- curl http://localhost:8443/api/provider/list
+# Запустить sh или bash сессию в контейнере пода
+kubectl exec -it torapi-54775d94b8-t2dhm -c torapi -- sh
+# Подключиться к запущенному процессу пода (PID 1)
+kubectl attach pods/torapi-54775d94b8-t2dhm
+```
 
 ### ReplicaSet Rollout
 
@@ -1680,14 +2213,27 @@ spec:
 
 `Deployment` самостоятельно создает новый `ReplicaSet` только в том случае, когда меняется шаблон конфигурации будущего пода в `spec.template`.
 
-`kubectl rollout restart deployment/torapi` перезапуск всех подов, например, для обновления конфигурации или секретов без изменения образа (деплоймент по очереди пересоздаст поды, не прерывая работу сервиса в новом `ReplicaSet`)
+`kubectl rollout restart deployment/torapi` перезапуск всех подов, например, для применения обновленной конфигурации или секретов без изменения образа (деплоймент по очереди пересоздаст поды в новом `ReplicaSet`, не прерывая работу сервиса)
 
-`revisionHistoryLimit` - это журнал всех версий `Deployment`, который хранит старые версии `ReplicaSet` (которые создаются в случае изменения конфигурации самих подов) и позволяет сделать быстрый `rollback` с помощью команды `undo`.
+Новый `ReplicaSet` создается только в том случае, если изменилась конфигурация самих подов. Значение в `revisionHistoryLimit`, это количество версий в журнале `ReplicaSet` в котором хранятся старые версии `Deployment`, что позволяет сделать быстрый `rollback` с помощью команды `undo`.
 
-`kubectl rollout history deployment/torapi` отобразить список доступных версий в истории \
-`kubectl rollout history deployment/torapi --revision=3` вывести содержимое манифестов по номеру ревизии \
-`kubectl rollout undo deployment/torapi --to-revision=3` произвести откат на указанную ревизию \
-`kubectl rollout status deployment/torapi` выводить результат процесса отката в реальном времени
+```bash
+# Выполнить обновление образа работающего контейнера (будет создан новый ReplicaSet)
+# Формат: containerName=imageName:newTag
+kubectl set image deployment/openrouter-bot openrouter-bot=lifailon/openrouter-bot:0.5.0
+# Выводить результат процесса обновления в реальном времени
+kubectl rollout status deployment/openrouter-bot
+
+# Отобразить список доступных версий в истории
+kubectl rollout history deployment/openrouter-bot
+# Вывести содержимое манифеста по номеру ревизии
+kubectl rollout history deployment/openrouter-bot --revision=3
+# Произвести откат на предыдущую или указанную ревизию
+kubectl rollout undo deployment/openrouter-bot
+kubectl rollout undo deployment/openrouter-bot --to-revision=3
+# Выводить результат процесса отката в реальном времени
+kubectl rollout status deployment/openrouter-bot
+```
 
 ### Service
 
@@ -1713,14 +2259,31 @@ spec:
 
 `kubectl apply -f service.yaml`
 
-Типы балансировки:
+Типы сервисов:
 
-- `ClusterIP` - используется для общения сервисов только внутри кластера (значение по умолчанию).
+- `ClusterIP` - используется для общения сервисов внутри кластера (значение по умолчанию, чтобы другой под мог пойти к нему по адресу `http://torapi-service:8444`)
 - `NodePort` - пробрасывает сервис на указанный в `ports.nodePort` (в диапазоне `30000`-`32767`) порт каждой ноды в кластере (используется временно, если нет внешнего балансировщика).
-- `LoadBalancer` - порт указанный в `ports.targetPort` становится доступен из вне на всех нодах.
+- `LoadBalancer` - открывает порт, указанный в `ports.port`, на внешнем IP-адресе в облаке.
 - `ExternalName` - сопоставляют сервис с DNS-именем указанным в `spec.externalName` вместо селектора (например, при поиске хоста `torapi-service.rest-api.svc.cluster.local` служба DNS в кластере возвращает `CNAME` запись типа `torapi.k8s.local`).
 
-Проверить распредиление нагрузки в режиме `LoadBalancer` между репликами подов:
+Команды для создания сервиса вручную:
+
+```yaml
+# Создать сервис, автоматически привязав его к Deployment с помощью Label Selector
+kubectl expose deployment torapi --target-port=8443 --port=8444 --name=torapi-service
+# Изменить тип сервиса
+kubectl patch svc torapi-service -p '{"spec": {"type": "LoadBalancer"}}'
+# Создать внутренний сервис в формате <port>:<targetPort> без привязки к Deployment
+kubectl create service clusterip torapi-service --tcp=8443:80
+# Создать сервис типа NodePort (открывает порт на всех узлах кластера)
+kubectl create service nodeport torapi-service --tcp=8443:80
+# Изменить NodePort
+kubectl patch svc torapi-service --type='json' -p='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value": 30443}]'
+# Удалить сервис
+kubectl delete svc torapi-service
+```
+
+Проверить распредиление нагрузки в режиме `LoadBalancer` (с использованием [ServiceLB](https://docs.k3s.io/networking/networking-services) в кластере `k3s`) между репликами подов:
 
 ```bash
 for i in {1..20}; do
@@ -1728,11 +2291,25 @@ for i in {1..20}; do
 done
 ```
 
+Команды для управления сервисами:
+
+```bash
+# Список всех сервисов в текущем неймспейсе
+kubectl get svc
+# Показать расширенную информацию (включая External IP и селекторы)
+kubectl get svc -o wide
+# Детальное описание сервиса (IP, порты, эндпоинты, селекторы)
+kubectl describe svc torapi-service
+# Список конечных точек (на какие IP подов сервис перенаправляет трафик)
+kubectl get endpoints torapi-service
+```
+
+
 ### DNS
 
-В каждом кластере Kubernetes есть внутренний сервис [CoreDNS](https://github.com/coredns/coredns) в пространстве имен `kube-system`. У него есть фиксированный `ClusterIP` (например, 10.96.0.10), который постоянен на протяжении всей жизни кластера.
+В каждом кластере Kubernetes есть внутренний сервис DNS (чаще [CoreDNS](https://github.com/coredns/coredns)) в пространстве имен `kube-system`. У него есть фиксированный `ClusterIP` (например, `10.96.0.10`), который постоянен на протяжении всей жизни кластера.
 
-На этапе создания пода, `Scheduler` назначает под на конкретную ноду, на котором агент `Kubelet` смотрит в свои настройки по флагу `--cluster-dns`, где прописан IP-адрес DNS-сервиса (10.96.0.10). В момент создания контейнера, `Kubelet` генерирует файл `/etc/resolv.conf` внутри файловой системы контейнера с содержимым:
+На этапе создания пода, планировщик (`kube-scheduler`) назначает под на конкретную ноду, на котором агент `Kubelet` смотрит в свои настройки по флагу `--cluster-dns`, где прописан IP-адрес DNS-сервиса (`10.96.0.10`). В момент создания контейнера, `Kubelet` генерирует файл `/etc/resolv.conf` внутри файловой системы контейнера с содержимым:
 
 ```ini
 nameserver 10.96.0.10
@@ -1740,7 +2317,7 @@ search namespace_name.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 ```
 
-Название в `metadata.name` сервиса становится доменным именем для всех подов внутри кластера, чтобы любой другой под в этом же пространстве имен мог обращаться в нему.
+Название в `metadata.name` объекта `Service` становится доменным именем для всех подов внутри кластера, чтобы любой другой под в этом же пространстве имен мог обращаться к нему по имени.
 
 Формат имени для обращения в другое пространство имен: `<metadata.name>.<namespace_name>.svc.cluster.local`
 
@@ -1773,7 +2350,7 @@ curl http://localhost:8443/api/provider/list
 
 - `livenessProbe` - проверяет, живо ли приложение внутри контейнера (`httpGet` ждет код ответа 200 до 399). Если проба провалена, Kubernetes убивает контейнер и запускает новый (перезагрузка).
 - `readinessProbe` - проверяет, готово ли приложение принимать входящий трафик. Если проба провалена (например, приложение еще загружает кэш или подключается к БД), Kubernetes временно исключает этот под из балансировки в `Service`, и на него не идет трафик.
-- `startupProbe` - используется для проверки инициализации (например, скриптов) перед запуском приложения (пока эта проба не пройдет, `Liveness` и `Readiness` проверки отключены).
+- `startupProbe` - используется для проверки инициализации (например, выполнения скриптов) перед запуском приложения. Сначала отрабатывает `Startup`, а потом уже `Liveness` и `Readiness` параллельно, позволяя не убить приложение во время его инициализации.
 
 ```yaml
 livenessProbe:
@@ -1786,19 +2363,18 @@ livenessProbe:
   httpGet:
     path: /api/provider/list  # Конечная точка в контейнере, по которому будет проверяться работоспособность
     port: 8443                # Порт, на котором доступен этот endpoint внутри контейнера
-  initialDelaySeconds: 5      # Ждет 5 секунд после запуска контейнера перед первой проверкой
-  initialDelaySeconds: 5      # Время ожидания до начала проверок (5 секунд)
+  initialDelaySeconds: 30     # Время ожидания до начала проверок (30 секунд)
   periodSeconds: 10           # Интервал проверок (каждые 10 секунд)
-  timeoutSeconds: 2           # Максимальное время ожидания ответа в секундах
+  timeoutSeconds: 5           # Максимальное время ожидания ответа в секундах
   failureThreshold: 3         # Количество неудачных попыток перед рестартом контейнера
 ```
 
 ### Container Hooks
 
-[Container Lifecycle Hooks](https://kubernetes.io/ru/docs/concepts/containers/container-lifecycle-hooks) - позволяют выполнять заданные действия в определенный момент времени жизни контейнера.
+[Container Lifecycle Hooks](https://kubernetes.io/ru/docs/concepts/containers/container-lifecycle-hooks) - позволяют выполнять заданные действия в определенный момент времени жизненного цикла контейнера.
 
 - `PostStart` - выполняется сразу после создания контейнера, например, для инициализации БД или регистрации сервиса в сторонних системах. Хук не гарантирует, что выполнится до того, как сработает `ENTRYPOINT` контейнера. Если хук завершится с ошибкой, контейнер будет перезапущен.
-- `PreStop` - выполняется непосредственно перед тем, как контейнеру будет отправлен сигнал завершения `SIGTERM`, например, при масштабировании вниз или обновлении для сохранения данных на диск, завершения активных HTTP-запросов или закрытия сетевых соединений. Если хук зависнет, Kubernetes подождет время, указанное в `terminationGracePeriodSeconds` (по умолчанию 30 секунд) и только потом принудительно убьет процесс. 
+- `PreStop` - выполняется непосредственно перед тем, как контейнеру будет отправлен сигнал завершения `SIGTERM`, например, при масштабировании вниз или обновлении для сохранения данных на диск, завершения активных HTTP-запросов или закрытия сетевых соединений. При вызове этого хука Kubernetes подождет время, указанное в `terminationGracePeriodSeconds` (по умолчанию 30 секунд) и только потом принудительно убьет процесс. 
 
 ```yaml
 spec:
@@ -1809,14 +2385,15 @@ spec:
     lifecycle:
       postStart:
         # Отправка GET-запроса на указанный endpoint приложения
-        httpGet:
-          path: /init
-          port: 80
-          scheme: HTTP
-      preStop:
-        # Запуск указанной команды внутри контейнера
+        # httpGet:
+        #   path: /init
+        #   port: 80
+        #   scheme: HTTP
         exec:
-          command: ["/usr/sbin/nginx", "-s", "quit"]
+          command: ["/bin/sh", "-c", "echo Started container"]
+      preStop:
+        exec:
+          command: ["/bin/sh", "-c", "echo Stopped container && sleep 10"]
 ```
 
 ### Strategy Update
@@ -1854,7 +2431,9 @@ spec:
 
 После запуска копии нового приложения в поде с меткой `color: green` и проверки работы (например, через временный порт или логи), переключаем цвет в сервисе:
 
-`kubectl patch service app-service -p '{"spec":{"selector":{"color":"green"}}}'`
+```bash
+kubectl patch service app-service -p '{"spec":{"selector":{"color":"green"}}}'
+```
 
 - `Canary` (канареечный деплой) - стратегия на стороне `Istio` через `VirtualService` и `DestinationRule`, при которой ограничивается количество трафика (например, 10%) на новую версию, чтобы проверить ее на реальных пользователях, прежде чем обновлять все остальное.
 
@@ -1894,9 +2473,270 @@ spec:
       weight: 10 # 10% трафика на новую версию (канарейку)
 ```
 
+### Security Context
+
+[Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context) - определяет параметры привилегий и контроля доступа для пода или контейнера.
+
+```yaml
+spec:
+  # Настройка на уровне ПОДА
+  securityContext:
+    # Запускать все процессы под UID/GID 1000
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 2000
+    # Под не запустится, если образ настроен на запуск от root (UID 0)
+    runAsNonRoot: true
+    # Ограничение системных вызовов
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: secure-container
+      image: alpine:3.23
+      command: ["sh", "-c", "sleep infinity"]
+      # Настройка на уровне контейнера
+      securityContext:
+        # Запрещает процессам получать больше прав, чем у родителя (защита от SUID)
+        allowPrivilegeEscalation: false
+        # Если true, дает контейнеру почти полный доступ к хосту
+        privileged: false
+        # Запрещает запись в корень образа. Все временные файлы должны идти в EmptyDir
+        readOnlyRootFilesystem: false
+        # Тонкая настройка прав ядра
+        capabilities:
+          # Разрешить биндить порты < 1024
+          add: ["NET_BIND_SERVICE"]
+```
+
+### Volumes
+
+#### Empty dir
+
+[emptyDir](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir) - это временное хранилище, которое создается в момент запуска поды и удаляется вместе с ним, а также идеально подходит для передачи данных между контейнерами (включая init containers).
+
+Загрузка оперативной памяти контейнера:
+
+```yaml
+spec:
+  containers:
+    - name: mem-util
+      image: alpine:3.23
+      command: ["sh", "-c"]
+      args:
+        - |
+          # fallocate -l 1G /data/cache
+          dd if=/dev/zero of=/data/cache bs=1M count=1024
+          sleep infinity
+      volumeMounts:
+        - name: mem-data
+          mountPath: /data
+  volumes:
+    - name: mem-data
+      emptyDir:
+        medium: Memory
+        sizeLimit: "1500Mi"
+```
+
+#### Host path
+
+[hostPath](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) - монтирует файл или каталог из файловой системы ноды. Чтобы при перезапуске поды данные не были потеряны, используется привязка к ноде по лейблу с помощью `nodeSelector`.
+
+```yaml
+spec:
+  containers:
+    - name: check-node-data
+      image: alpine:3.23
+      command: ["sh", "-c"]
+      args:
+        - |
+          mkdir -p /data/test
+          echo "test" > /data/test/test.file
+          sleep infinity
+      volumeMounts:
+        - name: alpine-data
+          mountPath: /data
+  volumes:
+    - name: alpine-data
+      hostPath:
+        path: /k8s_data/alpine
+        type: DirectoryOrCreate
+  nodeSelector:
+    kubernetes.io/hostname: "hv-us-101"
+```
+
+### Tolerations
+
+[Taints и Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration) - правила отвержения подов самой нодой.
+
+Отобразить заданные `taint` на всех нодах:
+
+`kubectl get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints[*].effect`
+
+Доступные эффекты для `taint`:
+
+- `NoSchedule` - планировщик (`kube-scheduler`) не будет рассматривать ноду для запуска новых подов, если у них нет подходящего `Toleration`.
+- `PreferNoSchedule` - мягкое условие `NoSchedule`, если во всем кластере другие ноды не подходят по ресурсам, поды будут запущены на этой ноде.
+- `NoExecute` - жесткое правило `NoSchedule`, которое при установки метки `taint` заставляет сразу удалить поды без `Toleration` и попытается перезапустить их на других нодах.
+
+Создание метки `taint` на поде в формате `<Key>:<Value>:<Effect>`:
+
+`kubectl taint nodes node-02 nodeType=backup:NoSchedule`
+
+На ноде с указанной меткой без правила `Toleration` никогда не будут запускаться новые поды.
+
+Добавление `Toleration` в манифест пода:
+
+```yaml
+spec:
+  tolerations:
+    - key: "key"
+      operator: "Equal"
+      value: "backup"
+      effect: "NoSchedule"
+    # Разрешить запуск на master нодах
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+```
+
+Добавить `tolerations` в деплоймент:
+
+```bash
+kubectl patch deployment torapi --type='json' -p='[
+  {"op": "add", "path": "/spec/template/spec/tolerations", "value": [
+    {"key": "node-role.kubernetes.io/control-plane", "operator": "Exists", "effect": "NoSchedule"}
+  ]}
+]'
+```
+
+### Affinity
+
+[Affinity и Anti Affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) - это правила для привязки пода к нодам, которые настраиваются через шаблон подов в `Deployment`.
+
+Доступные параметры для определения типа правил:
+
+- `requiredDuringSchedulingIgnoredDuringExecution` - обязательное условие. Если подходящей ноды нет, то под не запустится (будет в статусе `Pending`)
+- `preferredDuringSchedulingIgnoredDuringExecution` - желательное условие, которое работает по принципу бальной системы, суммируя вес (`weight`) всех меток на нодах.
+
+Доступные операторы в `matchExpressions` для проверки условий (фильтрация лейблов):
+
+- `In` - значение лейбла (указанное в values) на ноде должно быть одним из списка
+- `NotIn` - значение лейбла не должно входить в список (для исключения нод)
+- `Exists` - проверяет только наличие ключа (список values не указывается)
+- `DoesNotExist` - проверяет отсутствие ключа
+- `Gt` - значение лейбла должно быть больше (только для числовых значений)
+- `Lt` - значение лейбла должно быть меньше
+
+#### Node Affinity
+
+`nodeAffinity` - определяют правила притяжения подов к нодам.
+
+```yaml
+spec:
+  affinity:
+    nodeAffinity:
+      # Обязательное условие (Hard)
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: diskType
+              operator: In
+              values: 
+                - "ssd"
+            - key: diskType
+              operator: NotIn
+              values: 
+                - "hdd"
+            - key: cpuCount
+              operator: Gt
+              values: 
+                - "7"
+      # Желательное условие (Soft) с весами
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - preference:
+          matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - arm64
+        weight: 50
+```
+
+#### Pod Anti Affinity
+
+`podAntiAffinity` - определяют правила отвержения (обратное условию `nodeAffinity`), например, чтобы две копии одного приложения не запускались на одной ноде.
+
+```yaml
+spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - torapi
+          topologyKey: "kubernetes.io/hostname"
+        weight: 100
+```
+
+### Pod Topology Spread
+
+[Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints) (`TSC`) - это механизм, который позволяет гибко и равномерно распределять поды по разным нодам в кластере или любым другим логическим группам (например, не размещать на одном хосте или зонам доступности).
+
+В отличие от `podAntiAffinity`, который работает по принципу либо разрешить, либо запретить, `topologySpreadConstraints` фокусируется на балансе. Планировщик (`kube-scheduler`) при размещении нового пода считает количество уже запущенных подов в каждой логической группе по лейблу и выбирает ту, где размещение пода не нарушит значение `maxSkew`.
+
+Как и `affinity`, настройка определяется на уровне спецификации шаблона пода:
+
+```yaml
+spec:
+  topologySpreadConstraints:
+    # Максимально допустимая разница в количестве подов
+    - maxSkew: 1
+      # Метка на ноде, по которому определяются границы
+      topologyKey: kubernetes.io/hostname
+      # Что делать, если идеальное распределение невозможно
+      # Soft (все равно запланировать под, стараясь соблюсти баланс)
+      whenUnsatisfiable: ScheduleAnyway
+      # Hard (оставить под в статусе Pending, пока не появится подходящая пода)
+      # whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app: torapi
+```
+
+### Pod Disruption Budget
+
+[Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb) (`PDB`) - гарантирует, что если будут выводиться ноды на обслуживание (с помощью команды `kubectl drain`), поды на ноде не будут удалены, пока количество подов, указанных в `minAvailable` не будет запущены на всех доступных нодах.
+
+Если в кластере 2 ноды и всего 2 реплики по 1 на каждой ноде, процесс `drain` зависнет, поэтому нужно сначала вывести ноду в состояние `kubectl cordon`, увеличить количество реплик до трех `kubectl scale deployment torapi --replicas=3` на оставшихся доступных нодах и уже после этого запустить `kubectl drain`.
+
+```yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: rest-api-pdb
+  namespace: rest-api
+spec:
+  # Минимум доступных подов (число или процент)
+  minAvailable: 2
+  # Привяка к подам (должно совпадать с label в Deployment)
+  selector:
+    matchLabels:
+      app: torapi
+      # pdbGroup: high-priority
+```
+
+`kubectl apply -f ./pdb.yaml --namespace=rest-api`
+
+`kubectl get pdb --namespace=rest-api` список всех `PDB` и их текущий статус
+
+`kubectl describe pdb rest-api-pdb --namespace=rest-api` - отобразить, какие поды попадают под селектор
+
 ### Pod Priority Class
 
-[Pod PriorityClass](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption) - это глобальный объект (не привязанный к `namespace`), который сообщает планировщику Kubernetes, какие поды важнее для запуска. Если в кластере закончатся ресурсы, будут удалены менее важные поды (с самым низким приоритетом), чтобы запустить более приоритетные.
+[Pod PriorityClass](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption) (`PC`) - это глобальный объект (не привязанный к `namespace`), который сообщает планировщику Kubernetes, какие поды важнее для запуска. Если в кластере закончатся ресурсы, будут удалены менее важные поды (с самым низким приоритетом), чтобы запустить более приоритетные.
 
 ```yaml
 apiVersion: scheduling.k8s.io/v1
@@ -1931,112 +2771,9 @@ spec:
 
 `kubectl get pods -A -o custom-columns=NAME:.metadata.name,PRIORITY:.spec.priorityClassName` отобразить назначенные классы приоритета для всех подов в кластере
 
-### Pod Disruption Budget
-
-[Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb) (`PDB`) - гарантирует, что если будут выводиться ноды на обслуживание, поды на ноде не будут удалены, пока количество подов, указанных в `minAvailable` не будет запущены на всех доступных нодах.
-
-Если в кластере 2 ноды и всего 2 реплики по 1 на каждой ноде, процесс `drain` зависнет, поэтому нужно сначала вывести ноду в состояние `kubectl cordon`, увеличить количество реплик до трех `kubectl scale deployment torapi --replicas=3` на оставшихся доступных нодах и уже после этого запустить `kubectl drain`.
-
-```yaml
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: rest-api-pdb
-  namespace: rest-api
-spec:
-  # Минимум доступных подов (число или процент)
-  minAvailable: 2
-  # Привяка к подам (должно совпадать с label в Deployment)
-  selector:
-    matchLabels:
-      app: torapi
-      # pdbGroup: high-priority
-```
-
-`kubectl apply -f ./pdb.yaml --namespace=rest-api`
-
-`kubectl get pdb --namespace=rest-api` список всех `PDB` и их текущий статус
-
-`kubectl describe pdb rest-api-pdb --namespace=rest-api` - отобразить, какие поды попадают под селектор
-
-### Node Affinity
-
-[nodeAffinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) - правила для привязки пода к нодам, настраивается через шаблон подов в `Deployment`.
-
-```yaml
-spec:
-  affinity:
-    nodeAffinity:
-      # Обязательное условие (Hard)
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          # Используем кастомный label
-          - key: diskType
-            operator: In
-            values: ["ssd"]
-          # Используем встроенный label
-          - key: kubernetes.io/arch
-            operator: In
-            values:
-            - arm64
-      # Желательное условие (Soft)
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        preference:
-          matchExpressions:
-          - key: zone
-            operator: In
-            values: ["public"]
-```
-
-### Pod Anti Affinity
-
-`podAntiAffinity` - правила отвержения (обратное условию `nodeAffinity`), например, чтобы две копии одного приложения не запускались на одной ноде.
-
-```yaml
-spec:
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchLabels:
-            app: rest-api  
-        topologyKey: "kubernetes.io/hostname"
-```
-
-### Tolerations
-
-[Taints и Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration) - правила отвержения подов самой нодой.
-
-Создание специальной метки `taint` на поде:
-
-`kubectl taint nodes node-02 key=type:fast`
-
-Без правила `Toleration`, на помечанной ноде никогда не будут запускаться новые поды.
-
-Добавление `Toleration` в манифест пода:
-
-```yaml
-spec:
-  tolerations:
-  - key: "type"
-    effect: "fast"
-    operator: "Equal"
-    value: "true"
-```
-
-По умолчанию на мастер нодах стоит `taint`:
-
-`node-role.kubernetes.io/control-plane:NoSchedule`
-
-Отобразить `taint` на всех нодах:
-
-`kubectl get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints[*].effect`
-
 ### StatefulSet
 
-[StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset) используется для приложений, которым необходимо сохранять свое состояние и уникальность.
+[StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset) (`STS`) используется для приложений, которым необходимо сохранять свое состояние и уникальность.
 
 Основные приемущества `StatefulSet`:
 
@@ -2053,7 +2790,9 @@ metadata:
 spec:
   # Имя Headless Service, с помощью которого поды получат стабильные DNS-имена в формате pg-0.pg-svc
   serviceName: "pg-svc" 
-  replicas: 1  
+  replicas: 1
+  # Разрешить параллельный запуск с сохранением имени (не дожидаясь очередности запуска)
+  # podManagementPolicy: Parallel
   # Привязка подов (должно строго совпадать с labels в секции template)
   selector:
     matchLabels:
@@ -2094,6 +2833,10 @@ spec:
           storage: 50Gi
 ```
 
+Вывести список всех `StatefulSet` (набор команд идентичен `Deployment`):
+
+`kubectl get sts`
+
 ### Headless Service
 
 Главное отличие `Headless Service` от обычного `Service` заключается в отсутствие виртуального IP-адреса (`ClusterIP: none`).
@@ -2118,7 +2861,7 @@ spec:
 
 ### DaemonSet
 
-[DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) используется для запуска приложений для взаимодействия с ресурсами `node`. Он гарантирует, что запустит количество подов, равное количесту воркер нод (отсутствует параметр `replicas`), в случае добавления новых рабочих серверов в кластер, `DaemonSet` автоматически обнаружит их и поднимит на них свои поды.
+[DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) (`DS`) используется для запуска приложений для взаимодействия с ресурсами `node`. Он гарантирует, что запустит количество подов, равное количесту воркер нод (отсутствует параметр `replicas`), в случае добавления новых рабочих серверов в кластер, `DaemonSet` автоматически обнаружит их и поднимит на них свои поды.
 
 ```yaml
 apiVersion: apps/v1
@@ -2149,6 +2892,10 @@ spec:
         hostPath:
           path: /var/log
 ```
+
+Вывести список всех `DaemonSet` (набор команд идентичен `Deployment`):
+
+`kubectl get ds`
 
 ### Job
 
@@ -2209,10 +2956,16 @@ spec:
 
 `kubectl get job db-migrate -o yaml | kubectl replace --force -f -`
 
-`kubectl get jobs` отобразить список всех задач \
-`kubectl describe job db-migrate` получить подробную информацию о работе, включая `Events` \
-`kubectl get pods --selector=job-name=db-migrate` список подов, созданных этой задачей \
-`kubectl logs job/db-migrate` отобразить логи задачи
+```bash
+# Отобразить список всех задач
+kubectl get jobs
+# получить подробную информацию о работе, включая Events
+kubectl describe job db-migrate
+# Список подов, созданных этой задачей
+kubectl get pods --selector=job-name=db-migrate
+# Отобразить логи задачи
+kubectl logs job/db-migrate
+```
 
 ### Cron Job
 
@@ -2222,7 +2975,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: db-migrate-daily
+  name: image-checker-daily
 spec:
   # Расписание в формате Unix-cron (минута час день месяц день-недели)
   schedule: "0 0 * * *"
@@ -2238,11 +2991,54 @@ spec:
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      template:
+        spec:
+          serviceAccountName: image-checker-sa
+          restartPolicy: OnFailure
+          containers:
+            - name: image-checker
+              image: alpine:3.23
+              command: ["sh", "-c"]
+              args:
+                - |
+                  apk add --no-cache kubectl skopeo jq              
+                  IMAGES=$(kubectl get pods --all-namespaces -o jsonpath='{range .items[*].status.containerStatuses[*]}{.image}{" "}{.imageID}{"\n"}{end}' | sort -u)
+                  echo "$IMAGES" | while read -r line; do
+                    [ -z "$line" ] && continue
+                    IMAGE=$(echo $line | cut -d' ' -f1)
+                    LOCAL_DIGEST=$(echo $line | cut -d'@' -f2)
+                    if [[ "$IMAGE" == *":"* ]]; then
+                      echo "- Image: ${IMAGE}"
+                      REMOTE_DIGEST=$(skopeo inspect docker://$IMAGE --format "{{.Digest}}" 2>/dev/null)
+                      if [ "$?" -eq 0 ] && [ "$LOCAL_DIGEST" != "$REMOTE_DIGEST" ]; then
+                        echo "   --- Local sha: ${LOCAL_DIGEST}"
+                        echo "   +++ Remote sha:  ${REMOTE_DIGEST}"
+                      else
+                        echo "   Local sha: ${LOCAL_DIGEST}"
+                        echo "   Remote sha:  ${REMOTE_DIGEST}"
+                      fi
+                      IMAGE_CLEAR=$(echo $IMAGE | sed -r "s/\s.+//")
+                      IMAGE_URL=$(echo $IMAGE_CLEAR | cut -d':' -f1)
+                      LOCAL_TAG=$(echo $IMAGE_CLEAR | cut -d':' -f2)
+                      REMOTE_TAGS=$(skopeo list-tags docker://$IMAGE_URL | jq -r '.Tags[]')
+                      LATEST_TAG=$(echo "$REMOTE_TAGS" | sort -V | tail -n 1)
+                      if [ "$LOCAL_TAG" != "$LATEST_TAG" ]; then
+                        echo "   --- Current local tag: $LOCAL_TAG"
+                        echo "   +++ Latest remote tag: $LATEST_TAG"
+                      else
+                        echo "   Current local tag: $LOCAL_TAG"
+                        echo "   Latest remote tag: $LATEST_TAG"
+                      fi
+                      echo
+                    fi
+                  done
 ```
+
+`kubectl apply -f job-daily.yaml`
 
 Запустить задачу, не дожидаясь ее времени запуска:
 
-`kubectl create job --from=cronjob/db-migrate-daily db-migrate-manual-run`
+`kubectl create job --from=cronjob/image-checker-daily image-checker-job`
 
 ### Init Containers
 
@@ -2252,59 +3048,39 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app
+  name: alpine
 spec:
   replicas: 1
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
-      app: app
+      app: alpine
   template:
     metadata:
       labels:
-        app: app
-      annotations:
-        vault.hashicorp.com/agent-limits-cpu: 200m
-        vault.hashicorp.com/agent-limits-mem: 128Mi
-        vault.hashicorp.com/agent-requests-cpu: 100m
-        vault.hashicorp.com/agent-requests-mem: 64Mi
-        vault.hashicorp.com/agent-inject: 'true'
-        vault.hashicorp.com/agent-init-first: 'false'
-        vault.hashicorp.com/agent-pre-populate: 'false'
-        vault.hashicorp.com/log-level: debug
-        vault.hashicorp.com/namespace: main
-        vault.hashicorp.com/role: vault-role
-        vault.hashicorp.com/agent-inject-secret-envs: main/A/app/KV/app-env
+        app: alpine
     spec:
       initContainers:
-      - name: wait-vault-secrets
-        image: busybox:1.36
-        volumeMounts:
-        - name: vault-secrets
-          mountPath: /vault/secrets
-        command: ["sh", "-c"]
-        args:
-          - |
-            counter=0
-            while [ ! -s /vault/secrets/envs ]; do
-              sleep 1
-              counter=$(( counter + 1 ))
-              echo "Waiting secrets $counter sec"
-            done
-            echo "Vault is ready"
+        - name: config-init
+          image: alpine:3.23
+          command: ["sh", "-c"]
+          args:
+            - |
+              apk add --no-cache curl
+              curl -L https://raw.githubusercontent.com/Lifailon/rudocs/refs/heads/main/Docker-Compose/gatus/config/config.yaml -o /data/gatus.config
+          volumeMounts:
+            - name: shared-data
+              mountPath: /data
       containers:
-      - name: app
-        image: app:latest
-        command: ["sh", "-c", "export $(cat /vault/secrets/envs | sed 's/\:\ /=/g' | xargs) && ./app"]
-        volumeMounts:
-        - name: vault-secrets
-          mountPath: /vault/secrets
+        - name: config-checker
+          image: alpine:3.23
+          command: ["sh", "-c", "cat /config/gatus.config && sleep infinity"]
+          volumeMounts:
+            - name: shared-data
+              mountPath: /config
       volumes:
-        - name: vault-secrets
-          configMap:
-            name: secman-export-env
-            items:
-              - key: envs
-                path: envs
+        - name: shared-data
+          emptyDir: {}
 ```
 
 ### Image Pull Secrets
@@ -2381,9 +3157,26 @@ binaryData:
   favicon.ico: iVBORw0KGgoAAAANSUhEUgAA...
 ```
 
-### Secret
+Работа с конфигурациями:
 
-[Secret](https://kubernetes.io/docs/concepts/configuration/secret) - это объект для хранения конфиденциальных данных, таких как пароли, токены или ключи.
+```bash
+# Создать ConfigMap с данными из файла
+kubectl create cm event-exporter-config --from-file=config.yaml
+# Изменить конфигурацию
+kubectl edit cm event-exporter-config
+# Получить список всех ConfigMap, количество данных и дату их создания
+kubectl get cm
+# Отобразить содержимое ConfigMap (на примере корневого сертифика)
+kubectl get cm kube-root-ca.crt -o yaml
+# Вывести метаданные (лейблы и аннотации манифеста)
+kubectl describe cm kube-root-ca.crt
+# Выведет только содержимое ключа ca.crt
+kubectl get cm kube-root-ca.crt -o jsonpath='{.data.ca\.crt}'
+```
+
+### Secrets
+
+[Secrets](https://kubernetes.io/docs/concepts/configuration/secret) - это объект для хранения конфиденциальных данных, таких как пароли, токены или ключи.
 
 Секреты принято хранить в формате `Base64`:
 
@@ -2406,11 +3199,30 @@ data:
   TELEGRAM-CHAT-ID: LTc3Nzc3Nzc3Nzc=
 ```
 
+`kubectl apply -f telegram-secrets.yaml`
+
+```bash
+# Создать секрет в формате ключ-значение
+kubectl create secret generic admin-password --from-literal=username=admin --from-literal=password=pass
+# Создать секрет из содержимого файла
+kubectl create secret generic api-key --from-file=api-key.txt
+# Получить список всех секретов
+kubectl get secret
+# Получить информацию о секрете (размер в байтах)
+kubectl describe secret admin-password
+# Получить содержимое секретов в кодировке base64
+kubectl get secret admin-password -o yaml
+# Декодировать содержимое секрета
+kubectl get secret admin-password -o jsonpath="{.data.password}" | base64 --decode
+# Удалить секрет
+kubectl delete secret admin-password
+```
+
 ### RBAC
 
 [ServiceAccount](https://kubernetes.io/docs/concepts/security/service-accounts) - это УЗ, с помощью которой поды приложений могут использовать для идентификации себя от ее имени на внешних ресурсах, так и внутри самого кластера.
 
-Пример создания `ServiceAccount` (который подключается в спецификации пода через `spec.serviceAccountName`) для доступа к событиям кластера.
+Пример создания `ServiceAccount` (который подключается в спецификации пода через `spec.serviceAccountName`) для доступа ко всем ресурсам кластера на чтение.
 
 ```yaml
 apiVersion: v1
@@ -2428,8 +3240,9 @@ kind: ClusterRole
 metadata:
   name: event-exporter-role
 rules:
+# Доступ ко всем группам ресурсов (включая CRD)
 - apiGroups: ["*"]
-  # Даем доступ ко всем типам ресурсов (поды, ноды, сервисы и т.д.)
+  # Доступ ко всем типам ресурсов (поды, ноды, сервисы и т.д.)
   resources: ["*"]
   # Доступ только на чтение и наблюдение в реальном времени
   verbs: ["get", "watch", "list"]
@@ -2482,7 +3295,7 @@ subjects:
   namespace: monitoring
 ```
 
-Создаем секрет с токеном доступа для `SA`, который можно использовать в `kubeconfig` для подключения к кластеру:
+Создаем секрет с токеном доступа, который можно использовать в `kubeconfig` для подключения к кластеру под `SA` с привязанными к нему правами через `RoleBinding`:
 
 ```yaml
 apiVersion: v1
@@ -2501,10 +3314,16 @@ metadata:
 
 [Events](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_events) - это записи в API, описывающие изменения состояния объектов (нодов, подов, деплойментов, сервисов и т.д.) и ошибки, которые помогают понять, почему приложение не запускается (например, нехватка ресурсов). Все события автоматически удаляются из базы данных `etcd` через 1 час.
 
-`kubectl get events` вывести события для всех объектов в текущем пространстве имен \
-`kubectl get events --sort-by='.lastTimestamp'` сортировка событий по времени \
-`kubectl get events --field-selector type=Warning` фильтрация событий по типу \
-`kubectl get events --field-selector involvedObject.kind=Pod` фильтрация событий по типу объекта (для всех подов)
+```bash
+# Вывести события для всех объектов в текущем пространстве имен
+kubectl get events
+# Сортировка событий по времени
+kubectl get events --sort-by='.lastTimestamp'
+# Фильтрация событий по типу события
+kubectl get events --field-selector type=Warning
+# Фильтрация событий по типу объекта (для всех подов)
+kubectl get events --field-selector involvedObject.kind=Pod
+```
 
 ### Event Exporter
 
@@ -2567,27 +3386,36 @@ spec:
     metadata:
       labels:
         app: event-exporter
-      # annotations:
-      #   prometheus.io/scrape: 'true'
-      #   prometheus.io/port: '2112'
-      #   prometheus.io/path: '/metrics'
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '2112'
+        prometheus.io/path: '/metrics'
     spec:
       serviceAccountName: event-exporter-sa
       containers:
         - name: event-exporter
-          image: ghcr.io/resmoio/kubernetes-event-exporter:latest
+          image: ghcr.io/resmoio/kubernetes-event-exporter:v1.7
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
           env:
             - name: TELEGRAM_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: telegram-secret
+                  name: telegram-secrets
                   key: TELEGRAM-API-KEY
             - name: TELEGRAM_CHAT_ID
               valueFrom:
                 secretKeyRef:
-                  name: telegram-secret
+                  name: telegram-secrets
                   key: TELEGRAM-CHAT-ID
+            - name: HTTPS_PROXY
+              values: http://192.168.3.105:20171
           args:
             - -conf=/data/config.yaml
           volumeMounts:
@@ -2603,10 +3431,27 @@ spec:
 
 [Shell Operator](https://github.com/flant/shell-operator) - это инструмент для запуска bash-скриптов, которые оперируют событиями в кластере Kubernetes.
 
-Пример скрипта для отправки системных событий в Telegram:
+Пример отслеживания создания новых подов:
 
 ```bash
-if [[ $1 == "--config" ]] ; then
+if [[ $1 == "--config" ]]; then
+  cat <<EOF
+configVersion: v1
+kubernetes:
+- apiVersion: v1
+  kind: Pod
+  executeHookOnEvent: ["Added"]
+EOF
+else
+  podName=$(jq -r .[0].object.metadata.name $BINDING_CONTEXT_PATH)
+  echo "Pod '${podName}' added"
+fi
+```
+
+Пример скрипта для отправки системных событий в Telegram или любой другой месенджер с помощью [Shoutrrr](https://github.com/containrrr/shoutrrr):
+
+```bash
+if [[ $1 == "--config" ]]; then
     cat <<EOF
 configVersion: v1
 kubernetes:
@@ -2615,25 +3460,31 @@ kubernetes:
   executeHookOnEvent: ["Added"]
 EOF
 else
-    SHELL_TYPE=$(cat "$BINDING_CONTEXT_PATH" | jq -r .[0].type)
-    if [[ "$SHELL_TYPE" == "Added" ]]; then
-        KIND=$(cat "$BINDING_CONTEXT_PATH" | jq -r .[0].object.kind)
-        case "$KIND" in
-            "Event")
-                EVENT_TYPE=$(jq -r '.[0].object.type' "$BINDING_CONTEXT_PATH")
-                if [[ "$EVENT_TYPE" == "Warning" ]]; then
-                    REASON=$(cat "$BINDING_CONTEXT_PATH" | jq -r '.[0].object.reason')
-                    MESSAGE=$(cat "$BINDING_CONTEXT_PATH" | jq -r '.[0].object.message')
-                    OBJECT_KIND=$(cat "$BINDING_CONTEXT_PATH" | jq -r '.[0].object.involvedObject.kind')
-                    OBJECT_NAME=$(cat "$BINDING_CONTEXT_PATH" | jq -r '.[0].object.involvedObject.name')
-                    curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_API_KEY/sendMessage" \
-                        -d "chat_id=$TELEGRAM_CHAT_ID_DEFAULT" \
-                        -d "text=⚠ [K8s Warning Event]\n\n*Object:* $OBJECT_KIND/$OBJECT_NAME\n*Reason:* $REASON\n*Message:* $MESSAGE" \
-                        -d "parse_mode=markdown"
-                fi
-            ;;
-        esac
-    fi
+    KIND=$(jq -r '.[0].object.kind' "$BINDING_CONTEXT_PATH")
+    case "$KIND" in
+        "Event")
+            EVENT_TYPE=$(jq -r '.[0].object.type' "$BINDING_CONTEXT_PATH")
+            if [[ "$WARNING_ONLY" == "true" && "$EVENT_TYPE" != "Warning" ]]; then
+                exit 0
+            fi
+            REASON=$(jq -r '.[0].object.reason' "$BINDING_CONTEXT_PATH")
+            CONTENT=$(jq -r '.[0].object.message' "$BINDING_CONTEXT_PATH")
+            OBJECT_KIND=$(jq -r '.[0].object.involvedObject.kind' "$BINDING_CONTEXT_PATH")
+            OBJECT_NAME=$(jq -r '.[0].object.involvedObject.name' "$BINDING_CONTEXT_PATH")
+            ICON="🔔"; [[ "$EVENT_TYPE" == "Warning" ]] && ICON="⚠️"
+            MESSAGE=$(cat <<EOF
+☸️ Kubernetes
+
+*Type*: ${ICON} ${EVENT_TYPE}
+*Action*: ${REASON}
+*Object*: ${OBJECT_KIND}/${OBJECT_NAME}
+
+${CONTENT}
+EOF
+)
+            shoutrrr send --url "$SHOUTRRR_TELEGRAM" --message "$MESSAGE"
+        ;;
+    esac
 fi
 ```
 
@@ -2642,9 +3493,40 @@ fi
 ```Dockerfile
 FROM flant/shell-operator:latest
 
-COPY notify-operator.sh /hooks/handler.sh
+ARG TARGETARCH
+ARG SHOUTRRR_VERSION=v0.8.0
 
-RUN chmod +x /hooks/handler.sh
+COPY event-notify-operator.sh /hooks/handler.sh
+RUN apk add --no-cache curl tar && \
+    curl -Lf "https://github.com/containrrr/shoutrrr/releases/download/${SHOUTRRR_VERSION}/shoutrrr_linux_${TARGETARCH}.tar.gz" \
+    -o /tmp/shoutrrr.tar.gz && \
+    tar -xzf /tmp/shoutrrr.tar.gz -C /usr/local/bin shoutrrr && \
+    chmod +x /usr/local/bin/shoutrrr /hooks/handler.sh && \
+    rm /tmp/shoutrrr.tar.gz && \
+    apk del curl tar
+```
+
+Собираем образ и проверяем отправку:
+
+```bash
+docker build --build-arg TARGETARCH=amd64 --no-cache -t lifailon/event-notify-operator:v1 .
+docker push lifailon/event-notify-operator:v1
+docker run --rm -it --entrypoint /bin/sh lifailon/event-notify-operator:v1
+export HTTPS_PROXY=http://192.168.3.105:20171
+shoutrrr send --url "telegram://123456789:ABC...@telegram?channels=123456789&parseMode=markdown" --message "this is *test*"
+```
+
+Создаем секрет в формате `stringData` (без кодирования в `Base64`):
+
+```yaml
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: shoutrrr-secrets
+  namespace: monitoring
+stringData:
+  SHOUTRRR-TELEGRAM: "telegram://123456789:ABC...@telegram?channels=123456789&parseMode=markdown"
 ```
 
 Запускаем оператор в кластере для отслеживания системных событий:
@@ -2653,38 +3535,79 @@ RUN chmod +x /hooks/handler.sh
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: event-operator
-  namespace: default
+  name: event-notify-operator
+  namespace: monitoring
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: event-operator
+      app: event-notify-operator
   template:
     metadata:
       labels:
-        app: event-operator
+        app: event-notify-operator
     spec:
       # SA с правами выполнения kubectl get events
       serviceAccountName: event-exporter-sa
+      # serviceAccountName: event-notify-operator-sa
       containers:
-      - name: operator
-        image: lifailon/event-operator:v1
-        # Прокидываем переменные окружения из секрета в контейнер
-        env:
-        - name: TELEGRAM_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: telegram-secrets
-              key: TELEGRAM-API-KEY
-        - name: TELEGRAM_CHAT_ID_DEFAULT
-          valueFrom:
-            secretKeyRef:
-              name: telegram-secrets
-              key: TELEGRAM-CHAT-ID
+        - name: operator
+          image: lifailon/event-notify-operator:v1
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          env:
+            # Прокидываем переменную окружения из секрета в контейнер
+            - name: SHOUTRRR_TELEGRAM
+              valueFrom:
+                secretKeyRef:
+                  name: shoutrrr-secrets
+                  key: SHOUTRRR-TELEGRAM
+            # Статическая переменная для фильтрации событий
+            - name: WARNING_ONLY
+              value: "false"
+            # Стандартные переменные для настройки пересылки трафика через прокси сервер и исключения
+            - name: HTTPS_PROXY
+              value: http://192.168.3.105:20171
+            - name: NO_PROXY
+              value: kubernetes.default,svc.cluster.local,cluster.local,localhost,10.96.0.1,127.0.0.1,192.168.3.0/24
 ```
 
 ### Persistent Volume
+
+[Persistent Volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes) (`PV`) - это объект для настройки ручного подключения хранилища в кластер.
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  # Путь на ноде для хранения данных
+  local:
+    path: /mnt/k8s_data
+  # Привязываем том к ноде и под при подключение хранилища
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+              - hv-us-101
+```
 
 Настройка `NFS` сервера для удаленного хранения данных:
 
@@ -2705,7 +3628,7 @@ sudo systemctl restart nfs-kernel-server
 sudo apt install nfs-common -y
 ```
 
-[Persistent Volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes) (`PV`) - это объект для настройки ручного подключения хранилища в кластер.
+Подключаем NFS хранилище к кластеру
 
 ```yaml
 apiVersion: v1
@@ -2873,38 +3796,6 @@ mountOptions:
   - gid=1001
 ```
 
-### Metrics Server
-
-[Metrics Server](https://github.com/kubernetes-sigs/metrics-server) собирает метрики ресурсов из `Kubelet` агентов на нодах и предоставляет их в Kubernetes `apiserver` через Metrics API для использования в `HPA` и `VPA`.
-
-```bash
-# Установить metrics-server в кластер
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
-# Отобразить статус работы metrics-server
-kubectl get deployment metrics-server -n kube-system
-# Проверить логи metrics-server
-kubectl logs -n kube-system deployment/metrics-server
-
-# Отобразить метрики ресурсов для всех узлов в кластере
-kubectl top nodes
-```
-
-Отключить проверку TLS:
-
-`kubectl edit deployment metrics-server -n kube-system`
-
-```yaml
-spec:
-  containers:
-  - args:
-    - --kubelet-insecure-tls
-```
-
-Перезапустить metrics-server:
-
-`kubectl rollout restart deployment metrics-server -n kube-system`
-
 ### HPA
 
 [Horizontal Pod Autoscaling](https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale) (`HPA`) - это механизм горизонтального масштабирования, который позволяет автоматически увеличивать или уменьшать количество реплик (подов) в зависимости от текущей нагрузки по показателям метрик, получаемых из `metrics-server`. Если нагрузка на одну поду увеличивается, то новая реплика должна снять нагрузку с первого пода, тем самым средняя нагрузка на 1 под будет ниже.
@@ -2961,11 +3852,45 @@ spec:
 
 `kubectl apply -f torapi-hpa.yaml`
 
-`kubectl get hpa` отобразить статус работы всех HPA и текущие таргеты (`cpu: 1%/50%`) \
-`kubectl describe hpa -n rest-api torapi-hpa` отобразить статус работы HPA (текущее и тригерное значение для масштабирования) \
-`kubectl top pods -n rest-api` отобразить нагрузку на подах по cpu и memory \
-`kubectl get --raw "/apis/metrics.k8s.io/v1beta1/namespaces/rest-api/pods" | jq .` получить метрики напрямую из API
-`kubectl get pods` будет активен 1 под из 5 подов (вместо двух, изначально определенных в Deployment)
+```bash
+# Отобразить статус работы всех HPA и текущие таргеты (`cpu: 1%/50%`)
+kubectl get hpa
+# Отобразить статус работы HPA (текущее и тригерное значение для масштабирования)
+kubectl describe hpa -n rest-api torapi-hpa
+# Отобразить нагрузку на подах по cpu и memory
+kubectl top pods -n rest-api
+# Получить метрики напрямую из API
+kubectl get --raw "/apis/metrics.k8s.io/v1beta1/namespaces/rest-api/pods" | jq .
+# Будет активен 1 под из 5 подов (вместо двух, изначально определенных в Deployment)
+kubectl get pods
+```
+
+Запустить нагрузку на CPU (удобно для проверки срабатывания HPA)
+
+```bash
+# Запустить процессы
+cpuCount=2
+kubectl exec $pod -c $container -- sh -c "for i in \$(seq 1 $cpuCount); do yes $procName > /dev/null 2>&1 & done"
+
+# Получить количество запущенных процессов с нагрузкой
+function getPids() {
+  kubectl -n $NS exec $podName -c $container -- sh -c "grep -a $procName /proc/[0-9]*/cmdline | grep -av grep |
+    awk -F'/proc/' '{split(\$2,a,\"/\");sum=sum\" \"a[1]}END{print sum}'"
+}
+echo -e "Количество процессов нагрузки на поде $pod - $(getPids)"
+
+# Остановить нагрузку
+pids=$(getPids)
+kubectl -n $NS exec $podName -c $container -- sh -c '
+    PIDs="$1"
+    if [ -n "$PIDs" ]; then
+        for PID in $PIDs; do
+            echo "Остановка процесса: $PID"
+            kill -9 "$PID" 2>/dev/null || true
+        done
+    fi
+' -- "$pids"
+```
 
 ### VPA
 
@@ -3382,7 +4307,7 @@ istioctl dashboard envoy <pod-name>
 
 #### Kiali
 
-[Kiali](https://github.com/kiali/kiali) - это графическая панель, которая на основе метрик рисует карту сети в реальном времении и отображает как сервисы связаны друг с другом (стрелочки трафика), где проходят ошибки (красные линии) и объем трафика (RPS), а также поддерживает управление ресурсами Istio.
+[Kiali](https://github.com/kiali/kiali) - это графическая панель, которая на основе метрик рисует карту сети в реальном времении и отображает как сервисы связаны друг с другом (стрелочки трафика), где проходят ошибки (красные линии) и объем трафика (`RPS`), а также поддерживает управление ресурсами Istio.
 
 ```bash
 helm repo add kiali https://kiali.org/helm-charts
@@ -3792,7 +4717,7 @@ spec:
 
 ### Longhorn
 
-[Longhorn](https://github.com/longhorn/longhorn) - это распределенная блочная система хранения данных для Kubernetes с поддержкой управления через Web UI, которая превращает локальные диски нод в кластерное хранилище за счет репликации. Pod обращается к тому хранилища через `Engine`, который в свою очередь записывает данные во все реплики синхронно, при этом чтение может происходить из любой реплики.
+[Longhorn](https://github.com/longhorn/longhorn) - это распределенная блочная система хранения данных для Kubernetes с поддержкой управления через Web UI, которая превращает локальные диски нод в высокодоступное кластерное хранилище за счет механизма репликации. Поды обращаются к тому хранилища через движок, который в свою очередь записывает данные во все реплики синхронно, при этом чтение может происходить из любой реплики параллельно.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.9.2/deploy/longhorn.yaml
@@ -3818,16 +4743,50 @@ sudo systemctl start iscsid
 sudo systemctl status iscsid
 ```
 
+Создание `VPC`:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: beszel-pvc
+  namespace: monitoring
+spec:
+  # storageClassName: local-path
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteMany
+    # - ReadWriteOnce
+    # - ReadOnlyMany
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+Подключение хранилища к контейнеру в спецификации пода:
+
+```yaml
+spec:
+  containers:
+    - name: beszel-server
+      image: henrygd/beszel:latest
+      volumeMounts:
+        - name: beszel-data
+          mountPath: /beszel_data
+  volumes:
+    - name: beszel-data
+      persistentVolumeClaim:
+        claimName: beszel-pvc
+```
+
 Доступ к данным:
 
 ```bash
 # Директория хранения данных на нодах
-ls ls /var/lib/longhorn
+ls /var/lib/longhorn
 # Проверить, что образ используется процессом longhorn
-lsof /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000.img
-
+lsof /var/lib/longhorn/replicas
 # Просмотреть содержимое образа
-# Скопировать образ
 cp /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000.img /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000-backup.img
 # Создать виртуальный диск
 losetup -f -P --show /var/lib/longhorn/replicas/pvc-eef4de6d-94b1-4e89-95e1-6a12fba607fa-1b4fe8ac/volume-head-000-backup.img
@@ -3846,13 +4805,12 @@ losetup -d /dev/loop2
 
 ```bash
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-# Включить режим LB
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-# Зайти и изменить порт
-port: 8466
-port: 8467
-# Получить пароль
+kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl get all -n argocd
+# Включить режим NodePort или LoadBalancer
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+kubectl patch svc argocd-server -n argocd --type='json' -p '[{"op": "replace", "path": "/spec/ports/0/nodePort", "value": 30002}]'
+# Получить пароль от пользователя admin
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
@@ -3881,17 +4839,8 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 annotations:
   # Управляет очередностью развертывания ресурсов
   argocd.argoproj.io/sync-wave: "0"
-  # Не помечать приложение как OutOfSync, если этот ресурс есть в кластере, но нет в Git
-  argocd.argoproj.io/compare-options: IgnoreExtraneous
-  # Игнорировать ресурс при проверке здоровья всего приложения (Application Health)
-  argocd.argoproj.io/ignore-healthcheck: "true"
-  # Создать ресурс один раз и отключить его синхронизацию и проверку изменений с Git
-  argocd.argoproj.io/compare-options: IgnoreAll
 
-  # Опции синхронизации (можно комбинировать через запятую)
-  argocd.argoproj.io/sync-options: "Force=true,Prune=true,Replace=false"
-
-  # Хуки для Job/Pod
+  # Настройка хуков (например, для для Jobs)
   argocd.argoproj.io/hook: PreSync        # До начала синхронизации
   # argocd.argoproj.io/hook: Sync         # Во время синхронизации
   # argocd.argoproj.io/hook: PostSync     # После успешной синхронизации (Healthy)
@@ -3901,7 +4850,84 @@ annotations:
   argocd.argoproj.io/hook-delete-policy: HookSucceeded      # После успеха
   argocd.argoproj.io/hook-delete-policy: HookFailed         # После ошибки
   argocd.argoproj.io/hook-delete-policy: BeforeHookCreation # Перед новым запуском ошибки
+
+  # Опции синхронизации (можно комбинировать через запятую)
+  argocd.argoproj.io/sync-options: "Force=true,Prune=true,Replace=false"
+  # Не помечать приложение как OutOfSync, если этот ресурс есть в кластере, но нет в Git
+  argocd.argoproj.io/compare-options: IgnoreExtraneous
+  # Игнорировать ресурс при проверке здоровья всего приложения (Application Health)
+  argocd.argoproj.io/ignore-healthcheck: "true"
+  # Создать ресурс один раз и отключить его синхронизацию и проверку изменений с Git
+  argocd.argoproj.io/compare-options: IgnoreAll
 ```
+
+Пример добавления приложения:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dozzle
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      enabled: false
+  syncOptions:
+    - CreateNamespace=true
+  source:
+    path: Kubernetes/dozzle
+    repoURL: https://github.com/Lifailon/rudocs
+    targetRevision: main
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+```
+
+Добавляем поддержку источника `Kustomize` в ArgoCD:
+
+```yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: kustomizations.kustomize.config.k8s.io
+  annotations:
+    "api-approved.kubernetes.io": "https://github.com/kubernetes-sigs/kustomize/blob/master/cmd/config/docs/api-conventions/full-resource.md"
+spec:
+  group: kustomize.config.k8s.io
+  names:
+    kind: Kustomization
+    listKind: KustomizationList
+    plural: kustomizations
+    singular: kustomization
+  scope: Namespaced
+  versions:
+  - name: v1beta1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        x-kubernetes-preserve-unknown-fields: true
+```
+
+`kubectl apply -f argocd-crd-kustomization.yaml`
+
+Добавляем поддержку использования `helmCharts` с помощью `Kustomize`:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd
+data:
+  kustomize.buildOptions: "--enable-helm --load-restrictor LoadRestrictionsNone"
+```
+
+`kubectl kustomize --enable-helm --load-restrictor LoadRestrictionsNone`
 
 ### MinIO
 
@@ -4078,7 +5104,7 @@ resources:
 kubectl kustomize ./base
 ```
 
-Для каждого ресурса автоматически добавляется указанный `namespace`, все `labels` и `annotations`.
+Для каждого ресурса автоматически добавляется указанный `namespace`, а также все `labels` и `annotations` указанные в файле.
 
 Применить все перечисленные манифесты из файла `kustomization.yaml` в кластере:
 
@@ -4187,7 +5213,7 @@ configMapGenerator:
 
 ### Helm Charts
 
-Используя Kustomize, возможно запускать нескольких Helm-чартов одновременно, например, для объединения в один ArgoCD Application.
+Используя Kustomize, возможно объединить запуск нескольких Helm-чартов, например, для группировки в один ArgoCD Application.
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -4351,8 +5377,8 @@ spec:
 ```
 
 `helm template torapi .` напечатать итоговую спецификацию (проверить подстановку переменных) \
-`helm install torapi .` установка в кластер \
-`helm upgrade torapi .` обновление релиза (при изменение значение в `values.yaml`) \
+`helm install torapi . -n monitoring --create-namespace` установка в кластер \
+`helm upgrade --install torapi . -n monitoring` обновление релиза (при изменение значение в `values.yaml`) \
 `helm uninstall torapi .` удалить
 
 Публикация и установка:
@@ -4365,6 +5391,45 @@ helm repo index . --url https://<username>.github.io/<repo_name> # создат�
 helm repo add openrouter-bot https://<username>.github.io/<repo_name> # добавить новый репозиторий
 helm repo list
 helm upgrade --install <repo_name> <repo_name>/<repo_name> # установить пакет
+```
+
+### Hooks
+
+В Helm хуки позволяют запускать кастомные скрипты или задания (`Jobs`) на определенных этапах жизненного цикла релиза (например, до или после установки).
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+  annotations:
+    # Очередность выполнения хуков (чем меньше число, тем выше приоритет)
+    "helm.sh/hook-weight": "0"
+    # Политика по умолчанию, для удаления старого ресурса того же типа и имени перед тем, как запустить новый
+    "helm.sh/hook-delete-policy": before-hook-creation
+    # Политика удаления ресурса (например, Job) после успешного завершения (статус Complete)
+    "helm.sh/hook-delete-policy": hook-succeeded
+    # Политика удаления ресурса, если выполнение прошло успешно или произошла ошибка
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+    # Политика не удалять ресурс (например, configMap) после установки, т.к. он нужен приложению
+    # "helm.sh/hook-delete-policy": before-hook-creation
+    # Запускать после рендеринга шаблонов, но до создания ресурсов в Kubernetes
+    # Если pre-install job упадет, Helm не начнет установку чарта
+    "helm.sh/hook": pre-install
+    # Запускать после того, как все ресурсы манифеста уже созданы
+    # "helm.sh/hook": post-install
+    # Запускается перед удалением любых ресурсов из Kubernetes
+    # "helm.sh/hook": pre-delete
+    # Запускается после того, как все ресурсы релиза были удалены
+    # "helm.sh/hook": post-delete
+    # Запуск перед или после обновления ресурсов
+    # "helm.sh/hook": pre-upgrade
+    # "helm.sh/hook": post-upgrade
+    # Запуск перед или после выполнения команды отката
+    # "helm.sh/hook": pre-rollback
+    # "helm.sh/hook": post-rollback
+    # Запускается при выполнении команды helm test
+    # "helm.sh/hook": test
 ```
 
 ### Переменные
@@ -4748,6 +5813,8 @@ curl -sSL https://github.com/helmfile/helmfile/releases/download/v1.4.4/helmfile
 repositories:
   - name: prometheus-community
     url: https://prometheus-community.github.io/helm-charts
+  - name: headlamp
+    url: ttps://kubernetes-sigs.github.io/headlamp
 
 # Стендозависимые параметры
 environments:
@@ -4773,14 +5840,13 @@ releases:
     values:
       - {{ .Values.path }}
     # Игнорировать ошибку, если файл с переменными не найден
-    missingFileHandler: Warn 
-    # Переопределить переменную
-    # set:
-    #   - name: global.rbac.create
-    #     value: false
-    # Приоритезация (название релиза, от которого зависит запуск чарта)
-    # needs:
-    # - redis
+    missingFileHandler: Warn
+    # Приоритет (запускать после указанных чартов)
+    needs:
+    - headlamp
+  - name: headlamp
+    chart: headlamp/headlamp
+    namespace: kube-system
 ```
 
 `helmfile init` проверяет и устанавливает/обновляет зависимости, необходимые для работы Helmfile (`helm` и плагины) \
@@ -4941,7 +6007,6 @@ jobs:
 
 ```yaml
 - name: Send report to Telegram
-  if: ${{ github.event.inputs.Lint == 'true' || github.event.inputs.Hadolint == 'true' }}
   uses: appleboy/telegram-action@master
   with:
     token: ${{ secrets.TELEGRAM_API_TOKEN }}
@@ -4956,6 +6021,21 @@ jobs:
       
       ${{ steps.lint.outcome == 'failure' && '❌' || '✅' }} **Dockerfile basic linters check**: ${{ steps.lint.outcome }}
       ${{ steps.hadolint.outcome == 'failure' && '❌' || '✅' }} **Dockerfile hadolint check**: ${{ steps.hadolint.outcome }}
+```
+
+Или отправка с помощью [Shoutrrr](https://github.com/containrrr/shoutrrr)
+
+```yaml
+- name: Send report to Telegram using Shoutrrr
+  uses: containrrr/shoutrrr-action@v1
+  with:
+    # Секрет в формате: telegram://123456789:ABC...@telegram?channels=123456789
+    url: ${{ secrets.SHOUTRRR_URL }}
+    title: "🔔 Action from ${{ github.repository }}"
+    message: |
+      Commit: ${{ github.sha }}
+      Compare: ${{ github.event.compare }}
+      Author: ${{ github.actor }}
 ```
 
 ### AI Issue Analysis
@@ -5581,8 +6661,6 @@ runs:
 
 ### Repository Dispatch
 
-[Repository Dispatch](https://github.com/peter-evans/repository-dispatch) используется для отправки запроса из скрипта или другой системы для запуска Workflow.
-
 Создаем действие для реакции на событие:
 
 ```yaml
@@ -5598,8 +6676,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Check version
+      - name: Check params
         run: |
           echo "App version: ${{ github.event.client_payload.app_version }}"
           echo "Run tests: ${{ github.event.client_payload.run_tests }}"
@@ -5624,7 +6701,7 @@ curl -X POST "https://api.github.com/repos/$userName/$repoName/dispatches" \
     }'
 ```
 
-Использует workflow для вызова события:
+Вызываем событие из одного workflow для запуска другого workflow с помощью [Repository Dispatch](https://github.com/peter-evans/repository-dispatch):
 
 ```yaml
 jobs:
@@ -5636,7 +6713,10 @@ jobs:
        - name: Repository Dispatch
          uses: peter-evans/repository-dispatch@v4
          with:
-           event-type: action_run
+          event-type: action_run
+          # Other repository
+          # repository: username/my-repo
+          # token: ${{ secrets.PAT }}
 ```
 
 ### Actions API
@@ -5979,7 +7059,7 @@ test {
 `docker exec -it jenkins /bin/bash` подключиться к контейнеру \
 `cat /var/jenkins_home/secrets/initialAdminPassword` получить токен инициализации
 
-```Bash
+```bash
 docker run -d \
   --name jenkins-remote-agent-01 \
   --restart unless-stopped \
@@ -6036,33 +7116,37 @@ Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild
 
 ### Plugins
 
-| Плагин                                                                                  | Описание                                                                                                                |
-| -                                                                                       | -                                                                                                                       |
-| [Pipeline: Nodes and Processes](https://plugins.jenkins.io/pipeline-stage-view)         | Плагин, который предоставляет доступ к интерпретаторам `sh`, `bat`, `powershell` и `pwsh`                               |
-| [Pipeline Utility Steps](https://jenkins.io/doc/pipeline/steps/pipeline-utility-steps)  | Добавляет методы `readJSON`, `writeJSON`, `readYaml`, `writeYaml`, `readTOML`, `writeTOM`, `untar`, `unzip`, и другие.  |
-| [HTTP Request](https://plugins.jenkins.io/http_request)                                 | Простой REST API Client для отправки и обработки `GET` и `POST` запросов через метод `httpRequest`.                     |
-| [Credentials Binding Plugin](https://jenkins.io/doc/pipeline/steps/credentials-binding) | Добавляет метод `withCredentials` для доступа к секретам.                                                               |
-| [HashiCorp Vault](https://plugins.jenkins.io/hashicorp-vault-plugin)                    | Автоматизирует процесс получения содержимого значений из Vault с помощью метода `withVault`                             |
-| [Ansible](https://plugins.jenkins.io/ansible)                                           | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`.                |
-| [Pipeline Stage View](https://plugins.jenkins.io/pipeline-stage-view)                   | Визуализация шагов (stages) в интерфейсе проекта с временем их выполнения.                                              |
-| [Rebuilder](https://plugins.jenkins.io/rebuild)                                         | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке.                   |
-| [Schedule Build](https://plugins.jenkins.io/schedule-build)                             | Позволяет запланировать сборку на указанный момент времени.                                                             |
-| [Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger)                   | Принимает POST запросы на конечной точке `/generic-webhook-trigger/invoke` для извлечения значений и запуска Pipeline.  |
-| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)                | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) и позволяет производить сверку.              |
-| [Export Job Parameters](https://plugins.jenkins.io/export-job-parameters)               | Добавляет кнопку `Export Job Parameters` для конвертации все параметров в декларативный синтаксис Pipeline.             |
-| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                              | Плагин для подключения к удаленным машинам через протокол ssh по ключу или паролю.                                      |
-| [SSH Agent Plugin](https://www.jenkins.io/doc/pipeline/steps/ssh-agent)                 | Плагин для подключения к удаленным машинам с использованием `ssh-agent` и `credentials`.                                |
-| [Active Choices Parameters](https://plugins.jenkins.io/uno-choice)                      | Активные параметры, которые позволяют динамически обновлять содержимое параметров.                                      |
-| [File Parameters](https://plugins.jenkins.io/file-parameters)                           | Поддержка параметров для загрузки файлов (перезагрузить Jenkins для использования нового параметра).                    |
-| [Separator Parameter](https://plugins.jenkins.io/parameter-separator)                   | Параметр для разграничения набора параметров на странице сборки задания с поддержкой HTML.                              |
-| [Custom Tools](https://plugins.jenkins.io/custom-tools-plugin)                          | Позволяет загружать пакеты из интернета с помощью предустановленного набора команд.                                     |
-| [ANSI Color](https://plugins.jenkins.io/ansicolor)                                      | Добавляет поддержку стандартных escape-последовательностей ANSI для покраски вывода.                                    |
-| [Email Extension](https://plugins.jenkins.io/email-ext)                                 | Отправка сообщений на почту из Pipeline.                                                                                |
-| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)               | Показывает историю результатов сборки `junit` тестов в табличном древовидном виде.                                      |
-| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status)           | Предоставляет настраиваемые значки (like `shields.io`), который возвращает статус сборки.                               |
-| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                             | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных.                          |
-| [Web Monitoring](https://plugins.jenkins.io/monitoring)                                 | Добавляет конечную точку `/monitoring` для отображения графиков мониторинга в веб-интерфейсе.                           |
-| [CloudBees Disk Usage](https://plugins.jenkins.io/cloudbees-disk-usage-simple)          | Отображает использование диска всеми заданиями во вкладке `Manage-> Disk usage`.                                        |
+| Плагин                                                                                            | Описание                                                                                                                        |
+| -                                                                                                 | -                                                                                                                               |
+| [Pipeline Nodes and Processes](https://jenkins.io/doc/pipeline/steps/workflow-durable-task-step)  | Плагин, который предоставляет доступ к интерпретаторам `sh`, `bat`, `powershell` и `pwsh`                                       |
+| [Pipeline Utility Steps](https://jenkins.io/doc/pipeline/steps/pipeline-utility-steps)            | Добавляет методы `readJSON`, `writeJSON`, `readYaml`, `writeYaml`, `readTOML`, `writeTOM`, `untar`, `unzip`, и другие           |
+| [HTTP Request](https://plugins.jenkins.io/http_request)                                           | Простой `REST` API Client для отправки и обработки `GET` и `POST` запросов через метод `httpRequest(url: url, httpMode: "GET")` |
+| [Credentials Binding](https://jenkins.io/doc/pipeline/steps/credentials-binding)                  | Добавляет метод `withCredentials` для доступа к секретам                                                                        |
+| [HashiCorp Vault](https://plugins.jenkins.io/hashicorp-vault-plugin)                              | Автоматизирует процесс получения содержимого значений из `HashCorp Vault` с помощью метода `withVault`                          |
+| [Ansible](https://plugins.jenkins.io/ansible)                                                     | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`                         |
+| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                                        | Плагин для подключения к удаленным машинам через протокол `ssh` по ключу или паролю                                             |
+| [SSH Agent](https://www.jenkins.io/doc/pipeline/steps/ssh-agent)                                  | Плагин для подключения к удаленным машинам с использованием `ssh-agent` и `Credentials`                                         |
+| [Pipeline Stage View](https://plugins.jenkins.io/pipeline-stage-view)                             | Визуализация шагов (`stages`) в интерфейсе проекта с временем их выполнения                                                     |
+| [Rebuilder](https://plugins.jenkins.io/rebuild)                                                   | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке                            |
+| [Schedule Build](https://plugins.jenkins.io/schedule-build)                                       | Позволяет запланировать сборку на указанный момент времени                                                                      |
+| [Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger)                             | Принимает `POST` запросы на конечной точке `/generic-webhook-trigger/invoke` для извлечения значений и запуска Pipeline         |
+| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)                          | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) в истории для сверки                                 |
+| [Export Job Parameters](https://plugins.jenkins.io/export-job-parameters)                         | Добавляет кнопку `Export Job Parameters` для конвертации все параметров в декларативный синтаксис Pipeline                      |
+| [Active Choices Parameters](https://plugins.jenkins.io/uno-choice)                                | Активные параметры, которые позволяют динамически обновлять содержимое параметров                                               |
+| [File Parameters](https://plugins.jenkins.io/file-parameters)                                     | Добавляет параметры для загрузки файлов                                                                                         |
+| [Separator Parameter](https://plugins.jenkins.io/parameter-separator)                             | Параметр для визуального разделения набора параметров на странице сборки задания с поддержкой `HTML`                            |
+| [Custom Tools](https://plugins.jenkins.io/custom-tools-plugin)                                    | Позволяет загружать пакеты (исполняемые файлы) из Интернета с помощью предустановленного набора команд                          |
+| [Copy Artifact](https://plugins.jenkins.io/copyartifact)                                          | Позволяет копировать артифакты из одной сборки в другую (например, из последней успешной `copyArtifacts(projectName: jobName)`) |
+| [ANSI Color](https://plugins.jenkins.io/ansicolor)                                                | Добавляет поддержку стандартных escape-последовательностей `ANSI` для покраски вывода                                           |
+| [Email Extension](https://plugins.jenkins.io/email-ext)                                           | Отправка сообщений на почту по протоколу `SMTP` из Pipeline                                                                     |
+| [Config File Provider](https://plugins.jenkins.io/config-file-provider)                           | Хранение конфигураци (например, `settings.xml` для `Maven`) в интерфейсе Jenkins и их шаблонизация c `Credentials`              |
+| [Allure](https://plugins.jenkins.io/allure-jenkins-plugin)                                        | Создает отчеты [Allure](https://allurereport.org) для автотестов в интерфейсе Pipeline с отправкой в TestOps                    |
+| [SonarQube Scanner](https://plugins.jenkins.io/sonar)                                             | Интегрирует статический анализ кода с помощью метода [withSonarQubeEnv](https://jenkins.io/doc/pipeline/steps/sonar)            |
+| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)                         | Показывает историю результатов сборки `junit` тестов в табличном древовидном виде                                               |
+| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status)                     | Предоставляет настраиваемые значки [Shields](https://shields.io), который возвращает статус сборки                              |
+| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                                       | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных                                   |
+| [Web Monitoring](https://plugins.jenkins.io/monitoring)                                           | Добавляет конечную точку `/monitoring` для отображения графиков мониторинга в веб-интерфейсе                                    |
+| [CloudBees Disk Usage](https://plugins.jenkins.io/cloudbees-disk-usage-simple)                    | Отображает использование диска всеми заданиями во вкладке `Manage-> Disk usage` для анализа                                     |
 
 ### Credentials
 
@@ -6992,6 +8076,50 @@ config.clusters.each { clusterName, varMap ->
 }
 ```
 
+### Generic Webhook Trigger
+
+```groovy
+pipeline {
+    agent any
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+                // Парсинг значений в формате json из запроса
+                [key: 'ACTION', value: '$.action'],
+                [key: 'BRANCH', value: '$.ref']
+            ],
+            // Токен доступа для привязки хука к текущей джобе
+            token: 'test-token',
+            // Проверка условия для запуска
+            regexpFilterText: '$ACTION',
+            regexpFilterExpression: '^deploy$'
+        )
+    }
+    stages {
+        stage('Run') {
+            steps {
+                echo "Action: ${BRANCH}"
+                echo "Branch: ${BRANCH}"
+            }
+        }
+    }
+}
+```
+
+Отправка данных:
+
+```yaml
+jenkinsUrl=192.168.3.105:8080
+curl -X POST -H "Content-Type: application/json" \
+  --data-binary @- \
+  "http://$jenkinsUrl/generic-webhook-trigger/invoke?token=test-token" <<EOF
+{
+  "action": "deploy",
+  "ref": "main"
+}
+EOF
+```
+
 ## IaC
 
 ### Ansible
@@ -7016,6 +8144,7 @@ config.clusters.each { clusterName, varMap ->
 `ansible --version`
 
 Конфигурация настроек Ansible в файле `/etc/ansible/ansible.cfg`
+
 ```yaml
 [defaults]
 inventory = /etc/ansible/hosts
@@ -7064,6 +8193,7 @@ ansible_connection=ssh
 #ansible_shell_type=cmd
 ansible_shell_type=powershell
 ```
+
 `ansible-inventory --list` проверить конфигурацию (читает в формате JSON) или YAML (-y) с просмотром все применяемых переменных
 
 #### Windows Modules
@@ -7664,228 +8794,13 @@ tasks:
 ```
 `sake run info --tags bsd` запустить набор из 5 заданий из группы info
 
-## Secret Manager
-
-### Bitwarden
-
-`choco install bitwarden-cli || npm install -g @bitwarden/cli || sudo snap install bw` установить bitwarden cli \
-`bw login <email> --apikey` авторизвация в хранилище, используя client_id и client_secret \
-`$session = bw unlock --raw` получить токен сессии \
-`$items = bw list items --session $session | ConvertFrom-Json` получение всех элементов в хранилище с использованием мастер-пароля \
-`echo "master_password" | bw get item GitHub bw get password $items[0].name` получить пароль по названию секрета \
-`bw lock` завершить сессию
-```PowerShell
-# Авторизация в организации
-$client_id = "organization.ClientId"
-$client_secret = "client_secret"
-$deviceIdentifier = [guid]::NewGuid().ToString()
-$deviceName = "PowerShell-Client"
-$response = Invoke-RestMethod -Uri "https://identity.bitwarden.com/connect/token" -Method POST `
-    -Headers @{ "Content-Type" = "application/x-www-form-urlencoded" } `
-    -Body @{
-        grant_type = "client_credentials"
-        scope = "api.organization"
-        client_id = $client_id
-        client_secret = $client_secret
-        deviceIdentifier = $deviceIdentifier
-        deviceName = $deviceName
-    }
-# Получение токена доступа
-$accessToken = $response.access_token
-# Название элемента в хранилище
-$itemName = "GitHub"
-# Поиск элемента в хранилище
-$itemResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects?search=$itemName" -Method GET `
-    -Headers @{ "Authorization" = "Bearer $accessToken" }
-$item = $itemResponse.data[0]
-# Получение информации об элементе
-$detailsResponse = Invoke-RestMethod -Uri "https://api.bitwarden.com/v1/objects/$($item.id)" -Method GET `
-    -Headers @{ "Authorization" = "Bearer $accessToken" }
-# Получение логина и пароля
-$login = $detailsResponse.login.username
-$password = $detailsResponse.login.password
-```
-### Infisical
-
-`npm install -g @infisical/cli` \
-`infisical login` авторизоваться в хранилище (cloud или Self-Hosting) \
-`infisical init` инициализировать - выбрать организацию и проект \
-`infisical secrets` получить список секретов и их SECRET VALUE из добавленных групп Environments (Development, Staging, Production)
-```PowerShell
-$clientId = "<client_id>" # создать организацию и клиент в Organization Access Control - Identities и предоставить права на Projects (Secret Management)
-$clientSecret = "<client_secret>" # на той же вкладке вкладке в Authentication сгенерировать секрет (Create Client Secret)
-$body = @{
-    clientId     = $clientId
-    clientSecret = $clientSecret
-}
-$response = Invoke-RestMethod -Uri "https://app.infisical.com/api/v1/auth/universal-auth/login" `
-    -Method POST `
-    -ContentType "application/x-www-form-urlencoded" `
-    -Body $body
-$TOKEN = $response.accessToken # получить токен доступа
-# Получить содержимое секрета
-$secretName = "FOO" # название секрета
-$workspaceId = "82488c0a-6d3a-4220-9d69-19889f09c8c8" # можно взять из url проекта Secret Management
-$environment = "dev" # группа
-$headers = @{
-    Authorization = "Bearer $TOKEN"
-}
-$secrets = Invoke-RestMethod -Uri "https://app.infisical.com/api/v3/secrets/raw/${secretName}?workspaceId=${workspaceId}&environment=${environment}" -Method GET -Headers $headers
-$secrets.secret.secretKey
-$secrets.secret.secretValue
-```
-### HashiCorp/Vault
-
-`mkdir vault && cd vault && mkdir vault_config`
-
-Создать конфигурацию:
-```bash
-echo '
-# Использовать локальное файловое хранилище
-storage "file" {
-  path = "/vault/file"
-}
-# Отключение режим dev (не будет выгружать данные в память)
-disable_mlock = false
-# Настройка слушателя для REST API
-listener "tcp" {
-  address = "0.0.0.0:8200"
-  tls_disable = 1  # Отключить TLS
-}
-# Включение интерфейс
-ui = true
-# Включение аутентификации в API по токену
-api_addr = "http://localhost:8200"
-auth "token" {}
-' > vault_config/vault.hcl
-```
-Запускаем в контейнере:
-```bash
-docker run -d --name=vault \
-  --restart=unless-stopped \
-  -e VAULT_ADDR=http://0.0.0.0:8200 \
-  -e VAULT_API_ADDR=http://localhost:8200 \
-  -p 8200:8200 \
-  -v ./vault_config:/vault/config \
-  -v ./vault_data:/vault/file \
-  --cap-add=IPC_LOCK \
-  hashicorp/vault:latest \
-  vault server -config=/vault/config/vault.hcl
-```
-Получить ключи разблокировки и root ключ для первичной инициализации:
-```bash
-docker exec -it vault vault operator init
-```
-Ввести любые 3 из 5 ключей для разблокировки после перезапуска контейнера:
-```bash
-docker exec -it vault vault operator unseal BPJSmuLvKAEr6wtE/8TOMRMM+x0fW3UhOxGFLn9Gmi5N
-docker exec -it vault vault operator unseal 44ntLYvSMN5FNLyddLo2IylRsLk7lqYXZOShvhV/2gbG
-docker exec -it vault vault operator unseal xP9+YTyW13W6xGz52mMut2MdOnzxtbhDW8dK9zdF4aLY
-```
-Проверить статус (должно быть `Sealed: false`) и авторизацию по root ключу в хранилище:
-```bash
-docker exec -it vault vault status
-docker exec -it vault vault login hvs.rxlYkJujkX6Fdxq2XAP3cd3a
-```
-`Secrets Engines` -> `Enable new engine` + `KV` \
-API Swagger: http://192.168.3.101:8200/ui/vault/tools/api-explorer
-```PowerShell
-$TOKEN = "hvs.rxlYkJujkX6Fdxq2XAP3cd3a"
-$Headers = @{
-    "X-Vault-Token" = $TOKEN
-}
-# Указать путь до секретов (создается в корне kv)
-$path = "main-path"
-$url = "http://192.168.3.101:8200/v1/kv/data/$path"
-$data = Invoke-RestMethod -Uri $url -Method GET -Headers $Headers
-# Получить содержимое ключа по его названию (key_name)
-$data.data.data.key_name # secret_value
-
-# Перезаписать все секреты
-$Headers = @{
-    "X-Vault-Token" = $TOKEN
-}
-$Body = @{
-    data = @{
-        key_name_1 = "key_value_1"
-        key_name_2 = "key_value_2"
-    }
-    options = @{}
-    version = 0
-} | ConvertTo-Json
-$urlUpdate = "http://192.168.3.101:8200/v1/kv/data/main-path"
-Invoke-RestMethod -Uri $urlUpdate -Method POST -Headers $Headers -Body $Body
-
-# Удалить все секреты
-Invoke-RestMethod -Uri "http://192.168.3.101:8200/v1/kv/data/main-path" -Method DELETE -Headers $Headers
-```
-Vault client:
-```bash
-# Установить клиент в Linux (debian):
-wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update && sudo apt install vault
-# Включить механизм секретов KV
-vault secrets enable -version=1 kv 
-# Создать секрет
-vault kv put kv/main-path key_name=secret_value
-# Список секретов
-vault kv list kv/
-# Получить содержимое секрета
-vault kv get -mount="kv" "main-path"
-# Удалить секреты
-vault kv delete kv/my-secret
-```
-### HashiCorp/Consul
-
-[Consul](https://github.com/hashicorp/consul) используется для кластеризации и централизованного хранения данных `Vault`, а также как самостоятельное `Key-Value` хранилище.
-
-Создать конфигурацию:
-```bash
-echo '
-ui = true
-log_level = "INFO"
-acl {
-  enabled = true
-  default_policy = "deny"
-  enable_token_persistence = true
-}
-' > consul.hcl
-```
-Запускаем в контейнере:
-```bash
-docker run -d \
-  --name=consul \
-  --restart=unless-stopped \
-  -p 8500:8500 \
-  -v ./consul_data:/consul/data \
-  -v ./consul.hcl:/consul/config/consul.hcl \
-  hashicorp/consul:latest \
-  agent -server -bootstrap-expect=1 -client=0.0.0.0
-```
-Создать `root token`, который будет использоваться для управления системой `ACL` и для создания политик доступа и других токенов доступа:
-```bash
-docker exec -it consul consul acl bootstrap
-```
-Создать новую политику доступа:
-```bash
-docker exec -it consul consul acl policy create -name "default" -rules 'node_prefix "" { policy = "write" } service_prefix "" { policy = "write" } key_prefix "" { policy = "write" }' -token "382834da-28b6-c72c-7ffb-11acf9bf20bc"
-```
-Создать новый токен доступа:
-```bash
-docker exec -it consul consul acl token create -policy-name "default" -token "382834da-28b6-c72c-7ffb-11acf9bf20bc"
-```
-`curl http://localhost:8500/v1/health/service/consul?pretty` \
-`curl --request PUT --data "ssh-rsa AAAA" http://localhost:8500/v1/kv/ssh/key` записать секрет KV Store Consul \
-`curl -s http://localhost:8500/v1/kv/ssh/key | jq -r .[].Value | base64 --decode` извлечь содержимое секрета
-
 ## Prometheus
 
 Создание экспортера на примере получения метрик температуры всех дисков из [CrystalDiskInfo](https://crystalmark.info/en/software/crystaldiskinfo) с помощью PowerShell и отправки в [Prometheus](https://github.com/prometheus/prometheus) через [PushGateway](https://github.com/prometheus/pushgateway).
 
 Формат метрик:
 
-```
+```ini
 # HELP название_метрики Описание метрики
 # TYPE название_метрики ТИП-ДАННЫХ
 название_метрики{лейбл="НАЗВАНИЕ ДИСКА 1", instance="HOSTNAME"} ЗНАЧЕНИЕ
@@ -8088,7 +9003,7 @@ services:
 
 Создаем конфигурацию `fluent-bit.conf` для приема логов из контейнеров Docker и их переадресации в AWS CloudWatch:
 
-```conf
+```ini
 [SERVICE]
     Log_Level    info
 
@@ -8541,7 +9456,7 @@ services:
 
 Конфигурация с проверкой тела ответа:
 
-```conf
+```ini
 global
     log stdout format raw daemon info
     maxconn 4096
@@ -8627,7 +9542,8 @@ Master сервер с заданным интервалом отправляе�
 **Gratuitous ARP** - это вид ARP ответа, который обновляет MAC таблицу на подключенных коммутаторах, чтобы проинформировать о смене владельца виртуального IP-адреса и MAC-адреса для перенаправления трафика. При настройке VRRP, в качестве адреса для виртуального IP не используется реальный адрес сервера, так как, в случае сбоя, его адрес переместится на соседний, и при восстановлении, он окажется изолированным от сети, и чтобы вернуть свой адрес, нужно отправить в сеть VRRP пакет, но не будет IP адреса, с которого это возможно сделать.
 
 `nano /etc/keepalived/keepalived.conf`
-```conf
+
+```ini
 global_defs {
     enable_script_security
 }
@@ -8656,6 +9572,7 @@ vrrp_instance web {
     }
 }
 ```
+
 `state <MASTER|BACKUP>` начальное состояние при запуске, в режиме nopreempt единственное допустимое значение - BACKUP \
 `interface` интерфейс, на котором будет работать VRRP и подниматься VIP \
 `virtual_router_id <0-255>` уникальный идентификатор VRRP экземпляра, должен совпадать на всех серверах одной группы \
