@@ -18,62 +18,508 @@ go_to_top = true
 
 ## Git
 
-`git --version` \
-`git config --global user.name "Lifailon"` добавить имя для коммитов \
-`git config --global user.email "lifailon@yandex.ru"` \
-`git config --global --edit` \
-`git config --global core.editor "code --wait"` изменить редактор коммитов по умолчанию \
-`ssh-keygen -t rsa -b 4096` \
-`Get-Service | where name -match "ssh-agent" | Set-Service -StartupType Automatic` \
-`Get-Service | where name -match "ssh-agent" | Start-Service` \
-`Get-Service | where name -match "ssh-agent" | select Name,Status,StartType` \
-`ssh-agent` \
-`ssh-add C:\Users\Lifailon\.ssh\id_rsa` \
-`cat ~\.ssh\id_rsa.pub | Set-Clipboard` copy to [settings keys](https://github.com/settings/keys) \
-`cd $home\Documents\Git` \
-`git clone git@github.com:Lifailon/lifailon.github.io` \
-`cd lifailon.github.io` \
-`git grep "ping ya.ru"` поиск текста в файлах \
-`git fetch` загрузить изменения из удаленного хранилища для обновления всех веток локального репозитория, не затрагивая текущую рабочую ветку (загружает все коммиты, ветки и т.д. которые не присутствуют в локальном репозитории) \
-`git fetch --all` загрузить все ветки с удаленного репозитория (обновляет информацию о состоянии удаленного репозитория и загружает все изменения ваших веток без автоматического объединения) \
-`git pull` загрузить изменения из удаленного хранилища для обновления локального репозитория (выполняет `git fetch`, чтобы получить последние изменения из удаленного репозитория, а затеим объеденяем изменения с локальной копией с помощью `git merge` для обновления текущей рабочей ветки) \
-`git stash` сохраняет текущие незакоммиченные изменения в временное хранилище (например, на время выполнения `git pull`), в т.ч. неотслеживаемые файлы и очищает рабочую директорию (вернет в состояние, соответствующее последнему коммиту) \
-`git stash pop` применяет последние изменения из стэша к текущей ветке (вернутся только измененные строки в файлах, при этом будут сохранены новые добавленные строки в файле без конфликтов) и удаляет их из стэша \
-`git stash apply` применяет изменения, но не удаляет их из стэша \
-`git status` отобразить статус изменений по файлам \
-`git diff` отобразить историю изменений построчно \
-`git diff pandoc` сравнивает изменения в текущей рабочей директории с последним коммитом в указанной ветке `pandoc` \
-`git add .` добавить (проиндексировать) изменения во всех файлах текущего каталога \
-`git commit -m "update powershell commands"` сохранить изменения с комментарием \
-`git push` синхронизировать локальные изменения с репозиторием на сервере \
-`git push origin mkdocs-material` отправить в конкретную ветку \
-`git push origin --delete mkdocs` удалить ветку на удаленном сервере \
-`git commit --amend` изменить комментарий в последнем коммите (до `push`) \
-`git commit --amend --no-edit --date="Sun Oct 27 23:20:00 2024 +0300"` изменить дату последнего коммита \
-`git branch -a` отобразить все ветки (в том числе удаленные remotes/origin) \
-`git branch hugo` создать новую ветку \
-`git branch -m hugo-public` переименовать текущую ветку \
-`git branch -d hugo-public` удалить ветку \
-`git switch hugo` переключиться на другую ветку \
-`git push origin hugo` отправить изменения в указанную ветку \
-`git branch --set-upstream-to=origin/hugo hugo` локальная ветка `hugo` будет отслеживать удаленную ветку `hugo` на удаленном сервере-репозитории `origin` (позволяет не указывать название удаленной ветки при каждом использовании команд `git push` или `git pull`) \
-`git switch pandoc` переключиться на другую ветку \
-`git merge hugo` слияние указанной ветки (`hugo`) в текущую ветку (`pandoc`)  \
-`git log --oneline --all` отобразить список всех коммитов и их сообщений \
-`git log --graph` коммиты и следование веток \
-`git log --author="Lifailon"` показывает историю коммитов указанного пользователя \
-`git blame .\posh.md` показывает, кто и когда внес изменения в каждую строку указанного файла (`НОМЕР_КОММИТА (ИМЯ_ПОЛЬЗОВАТЕЛЯ ДАТА НОМЕР_СТРОКИ) ТЕКСТ.`) \
-`git show d01f09dead3a6a8d75dda848162831c58ca0ee13` отобразить подробный лог по номеру коммита \
-`git checkout filename` устаревшая команда, откатить не проиндексированные изменения для коммита, возвращая его к состоянию, каким оно было на момент последнего коммита (если не было индексации через `add`) \
-`git restore filename` отменить все локальные изменения в рабочей копии независимо от того, были они проиндексированы или нет (через `add`), возвращая его к состоянию на момент последнего коммита \
-`git restore --source d01f09dead3a6a8d75dda848162831c58ca0ee13 filename` восстановить файл на указанную версию по хэшу индентификатора коммита \
-`git reset HEAD filename` удалить указанный файл из индекса без удаления самих изменений в файле для последующей повторной индексации (если был `add` но не было `commit`, потом выполнить `checkout`) \
-`git reset --soft HEAD^` отменяет последний (^) коммит, сохраняя изменения из этого коммита в рабочем каталоге и индексе (подготовленной области), можно внести изменения в файлы и повторно их зафиксировать через `commit` \
-`git reset --hard HEAD^` полностью отменяет последний коммит, удаляя все его изменения из рабочего каталога и индекса до состояния предыдущего перед последним коммитом (аналогично `HEAD~1`) \
-`git push origin main --force` удалить последний коммит на удаленном сервере репозитория после `reset --hard HEAD^`  \
-`git reset --hard d01f09dead3a6a8d75dda848162831c58ca0ee13` откатывает изменения к указанному коммиту и удаляет все коммиты, которые были сделаны после него (будут потеряны все незакоммиченные изменения и историю коммитов после указанного) \
-`git revert HEAD --no-edit` создает новый коммит, который отменяет последний коммит (`HEAD^`) и новый коммит будет добавлен поверх него (события записываются в `git log`) \
-`git revert d01f09dead3a6a8d75dda848162831c58ca0ee13` создает новый коммит, который отменяет изменения, внесенные в указанный коммит с хешем (не изменяет историю коммитов, а создает новый коммит с изменениями отмены)
+### Config
+
+```Bash
+# Настройка автора для коммитов
+git config --global user.name "Lifailon"
+git config --global user.email "lifailon@yandex.ru"
+
+# Изменить редактор по умолчанию для сообщений коммитов и интерактивного rebase
+git config --global core.editor "code --wait"
+git config --global --edit
+
+# Выпускаем ключ и копируем в https://github.com/settings/keys
+ssh-keygen -t rsa -b 4096
+# Добавляем ключ в ssh-agent для сохранения passphrase в оперативной памяти для последующих команд
+ssh-add /home/lifailon/.ssh/id_rsa
+ssh-add -l
+```
+
+Автоматически добавлять ключ в агента при перезагрузки системы через файл `~/.ssh/config`
+
+```sshconfig
+# Host *
+#   AddKeysToAgent yes
+#   IdentityFile ~/.ssh/id_rsa
+```
+
+Базовые команды:
+
+```bash
+# Глобальный поиск текста во всех файлах проекта
+git --no-pager grep -n "^ping"
+
+# Показать список всех файлов, которые отслеживает Git
+git ls-files
+
+# Удалить файл из индекса и при этом оставить его физически на диске (например, если файл был добавлен в файл .gitignore) 
+git rm --cached test.log
+# Применить .gitignore ко всем файлам заново
+git rm -r --cached .
+
+# Удалить все неотслеживаемые файлы на диске (которые добавлены в файл .gitinore)
+git clean -f
+# Показать, что будет удалено (режим dry-run)
+git clean -n
+```
+
+### Clone/WorkTree
+
+```bash
+# Клонируем репозиторий по протоколу https
+git clone https://github.com/Lifailon/lifailon.github.io.git
+cd lifailon.github.io
+
+# Создаем новую рабочую область из ветки dev (при этом будет синхронизация изменений между директориями и одна директория .git)
+git worktree add ../lifailon.github.io-zola-duckquill zola-duckquill
+git worktree list
+ls ../lifailon.github.io*
+# Удалить рабочаю область или очистить список при удаление директории
+git worktree remove ../lifailon.github.io-zola-duckquill
+git worktree prune
+```
+
+### Submodules
+
+Submodules - это механизм встраивания одного Git-репозитория внутрь другого как дочернюю директорию. Например, если есть библиотека или тема оформления, которая используется в множестве разных проектах, и чтобы не копировать файлы проекта вручную (и не обновлять их потом везде), подключается подмодуль.
+
+```bash
+# Создать и инициализировать новый сайт
+hugo new site lifailon.github.io
+cd lifailon.github.io
+# Инициализировать новый Git репозиторий в текущем каталоге
+git init
+# Добавляем новый репозиторий как модуль
+git submodule add -f https://github.com/JingWangTW/dark-theme-editor.git themes/dark-theme-editor
+echo 'theme = "dark-theme-editor"' >> hugo.toml
+# Скопировать markdown документацию в директорию content и запустить сервер
+hugo server
+```
+
+При подключение первого submodule, в репозитории создается файл `.gitmodules`, который хранит пути к подмодулям. При обычном клонирование, директории подмодулей будут пустыми.
+
+```bash
+# Загрузить все подмодули при клонирование репозитория
+git clone --recursive https://github.com/Lifailon/lifailon.github.io.git
+# Если проект уже клонирован, но подмодули не были загружены
+git submodule update --init --recursive
+# Обновить изменения для подмодулей
+git submodule update --remote --merge
+```
+
+Когда вы меняете версию подмодуля, Git видит это не как изменение файлов, а как изменение ссылки на коммит:Subproject commit a1b2c3d4...
+
+### Fetch/Pull
+
+```bash
+# Загружаем изменения из удаленного репозитория, не затрагивая локальные изменения
+git fetch --all
+# Выполняет git fetch и git merge (если был локальный commit, создается новый merge commit) для объединения изменений с локальной копией репозитория
+git pull
+# Вытягиваем изменения из удаленного репозитория и накладывает поверх локальные изменений (избегая git merge commit)
+git pull --rebase
+# Включить rebase по умолчанию
+git config --global pull.rebase true
+```
+
+### Commits
+
+```bash
+# Отобразить статус изменений в файлах локального репозитория
+git status
+
+# Отобразить историю изменений с последнем коммитом в указанной ветке
+git diff
+git diff dev
+
+# Добавить (проиндексировать) изменения во всех файлах
+git add .
+
+# Сохранить изменения с комментарием
+git commit -m "фиксируем новые изменения"
+# Изменить комментарий (до push) или дату последнего коммита
+git commit --amend -m "новое сообщение"
+git commit --amend --no-edit --date="Sun Oct 27 23:20:00 2024 +0300"
+
+# Синхронизировать локальные изменения с удаленным репозиторием на сервере
+git push
+# Отправить изменения в конкретную ветку
+git push origin dev
+```
+
+### Branches/Tags
+
+```bash
+# Отобразить все локальные и удаленные (-r) ветки
+git branch -a
+# Создать новую ветку
+git branch test
+# Переключиться на другую ветку
+git switch test
+# Переименовать ветку, отправить в удаленный репозиторий и удалить ее локально
+git branch -m tests
+git push -u origin tests # или git push -u origin HEAD (ветка на которой стоим)
+git branch -d tests
+
+# Вывести список тегов
+git tag
+# Создать легковесный тег с ссылкой на коммит
+git tag 0.1
+git tag 0.2 9fceb02
+# Создать аннотированный тег
+git tag -a 1.0 -m "Стабильный релиз"
+# Запушить указанный тег или все в удаленный репозиторий
+git push origin 1.0
+git push origin --tags
+# Получить подробную информацию по тегу и коммиту под ним
+git show 1.0
+# Переключиться на коммит по тегу
+git switch --detach 1.0
+# Создать новую ветку feature/1.0 на основе тега 1.0
+git switch -c feature/1.0 1.0
+# Удалить тег локально и в удаленном репозитории
+git tag -d 1.0
+git push origin --delete 1.0
+```
+
+### Merge/Cherry-Pick
+
+```bash
+# Слияние изменений из указанной ветки (zola-duckquill) в текущую ветку (на которой стоим)
+git merge zola-duckquill
+
+# Влить изменения указанного коммита в текущую ветку, что позволяет не дублировать код и избегать конфликтов при последующем git merge
+git cherry-pick a1b2c3d
+# Добавляет комментарий к коммиту в формате - cherry picked from commit a1b2c3d...
+git cherry-pick -x a1b2c3d
+# Перенести несколько коммитов
+git cherry-pick -x a1b2c3d..e5f6g7h
+```
+
+### Stash
+
+Stash - это временное локальное хранилище, которое сохраняет текущие непроиндексированные изменения (до `git commit`), возвращая к состоянию последнего коммита. Например, на время смены ветки (`git switch`) или выполнения `git pull`, что пользволяет избежать временных коммитов (для возможности смены ветки без потери данных) и коммитов слияния (`git merge`) перед или во время `git push`.
+
+```bash
+# Сохранить текущее состояние
+git stash
+# Сохранить все измененные файлы, включая те, что еще не были проиндексированны через git add
+git stash -u
+git stash push -m "временные изменения в README" README.md
+git stash list
+
+# Применяет изменения из stash к текущей ветке (вернутся только измененные строки в файлах, при этом будут сохранены новые добавленные строки)
+git stash apply
+git stash apply stash@{1}
+# Удалить сохранку по номеру
+git stash drop stash@{1}
+# Создать новую ветку на момент состояния создания stash с содержимым сохранения (полезно при возможных конфликтах слияния)
+git stash branch check-stash stash@{0}
+# Применяет и удаляет изменения из stash
+git stash pop
+```
+
+### Logs
+
+```bash
+# Отключить прокрутку (включить --no-pager для всех команд по умолчанию)
+git config --global core.pager cat
+
+# Отобразить историю коммитов для всех веток (--all) в сжатом формате (--oneline) или с изменениями в файлах (--patch)
+git log --all --oneline
+git log --all --graph --oneline
+git log --all --graph --date=short --pretty='%ad %an %h %S: %s'
+git log --all --graph --date=short --pretty='%C(cyan)%ad%Creset %C(green)%an%Creset %C(yellow)%h%Creset %C(magenta)%S%Creset: %s'
+# Отобразить историю коммитов указанного пользователя
+git log --author="Lifailon"
+# Найти все коммиты, где в коде указанный текст в строке добавлися иди удалился
+git log -S "func_name" --oneline
+
+# Отобразить историю локальных изменений с момента клонирования репозитория и удаленные коммиты, которых уже нет в истории
+git reflog
+# Отобразить изменения в файлах (diff) по номеру коммита
+git show f6034e9
+# Отобразить кто и когда внес изменения в каждую строку указанного файла
+git blame README.md
+# Узнать какой коммит принес изменения в указанные строки файла
+git blame -L 10,20 main.go
+```
+
+### Reset
+
+```bash
+# Отменить не проиндексированные (до git add) изменения содержимого в файле, возвращая к состоянию на момент последнего коммита
+git restore README.md
+# Отменить индекацию (git add README.md) без изменения содержимого в файле
+git restore --staged README.md
+# Восстановить файл на указанную версию по хэшу коммита
+git restore --source f6e4ca8eaa4db18632a6ce747452b9b0ce8a518c ./content/_index.md
+git restore --source f4a35518f501cdb6d7a563f27124a20233ebbec7 ./content/_index.md
+
+# Аналог команды git restore --staged README.md (если был git add но не было git commit)
+git reset HEAD README.md
+# Отменяет последний (^ или ~1) коммит, сохраняя изменения из этого коммита в рабочем каталоге и индексе, позволяя внести изменения в файлы и повторно их зафиксировать
+git reset --soft HEAD^
+# Отменяет последние 5 коммитов, сохраняя все локальные изменения, для последующего их объединения в один коммит (like squash from rebase)
+git reset --soft HEAD~5
+# Откатывает изменения к указанному коммиту и удаляет все коммиты, которые были сделаны после него
+git reset --soft d01f09dead3a6a8d75dda848162831c58ca0ee13
+# Отменяет последний коммит, удаляя все его изменения из рабочего каталога и индекса до состояния последнего коммита
+git reset --hard HEAD^
+# Удалить последний коммит в удаленном репозитории (после git reset --hard) 
+git push origin main --force
+
+# Создает новый коммит, который отменяет изменения последнего коммита (тем самым сохраняя историю коммитов, в отличии от reset, который удаляет коммиты)
+git revert HEAD --no-edit
+# Создает новый коммит, который отменяет изменения, внесенные в указанный коммит (удалит то, что было добавлено, и вернет то, что было удалено) - возможны конфликты
+git revert d01f09dead3a6a8d75dda848162831c58ca0ee13
+```
+
+### Rebase
+
+Rebase - интерактивный интерфейс для изменения истории коммитов.
+
+```bash
+# Открыть последние пять коммитов
+git rebase -i HEAD~5
+```
+
+- `pick` - оставить коммит без изменений
+- `reword`/`r` - изменить только сообщение коммита
+- `squash`/`s` - склеить этот коммит с предыдущим (сообщения объединятся)
+- `fixup`/`f` - склеить коммит с предыдущим и удалить его сообщение
+- `edit`/`e` - остановиться на этом коммите, чтобы изменить код
+- `drop`/`d` - полностью удалить указанный коммит из истории
+
+Пример:
+
+```
+drop  a1b2c3d Доработал кнопку обновления
+r     e5f6g7h Добавил новую кнопку для повторного обновления
+f     i9j0k1l Исправил цвет кнопки
+```
+
+Если во время rebase возник конфликт, после правок делается `git add .` и вместо коммита `git rebase --continue`.
+
+```bash
+# Откатить все действия до начала rebase
+git rebase --abort
+# Запушить изменения с проверкой новых коммитов в удаленном репозитории перед изменением истории
+git push --force-with-lease
+```
+
+### Bisect
+
+Bisect - механизм поиска виновного коммита. Гит всегда прыгает в середину, по этому, даже если прошло 1000 коммитов, можно найти виновного максимум за 10 шагов.
+
+```yaml
+# Запускает процесс поиска
+git bisect start
+# Пометить текущий коммит как плохой
+git bisect bad HEAD
+# Пометить старый известный коммит как плохой (по тегу или хешу коммита)
+git bisect good 0.8.0 # f6034e9
+# Git сам переключает коммиты, можно проверять код и помечать коммиты
+# Если баг не воспроизводится
+# Если баг есть
+git bisect good
+git bisect bad
+# По завершению Git напишет "... is the first bad commit", смотрим изменения:
+git show
+# Завершить bisect и вернуться на свою ветку
+git bisect reset
+
+# Автоматический поиск с использованием теста, который возврощает код возврата
+git bisect start HEAD v1.0.0
+git bisect run go test ./...
+```
+
+### Remote
+
+Добавление второго сервера Git:
+
+```bash
+# Посмотреть текущий URL удаленного репозитория (для origin - где стоим)
+git remote -v
+# Загружаем все ветки из текущего репозитория
+git fetch origin
+# Добавляем новый удаленный репозиторий на другом сервере или изменяем его url
+git remote add gitlab $gitlabUrl || git remote set-url gitlab $gitlabUrl
+# Загружаем все ветки из нового репозитория
+git fetch gitlab
+# Переключаемся на ветку нового репозитория (куда вливаем)
+# git checkout -B main gitlab/main
+git switch -C main gitlab/main
+# Выводим изменения перед объединением
+git diff --stat HEAD..origin/dev
+# Вливаем изменения из локального репозитория GitHub (по названию указанной ветке) в удаленный (на которой стоим)
+git merge origin/dev --no-edit
+# Отправляем изменения в удаленный репозиторий
+git push gitlab main
+```
+
+## SQL
+
+### Базовые инструкции
+
+- `CREATE` - создает новые объекты, такие как базы, таблицы, индексы (`CREATE TABLE users (id INT, name TEXT, status TEXT)`).
+- `SELECT` - выборка (чтение) данных ИЗ таблицы по столбцам (`SELECT * FROM users` или `SELECT name FROM users`).
+- `INSERT` - добавление новых строк В таблицу (`INSERT INTO users (id, name, status) VALUES (10, 'alex', 'active'),(11, 'jack', 'active')`).
+- `UPDATE` - обновление существующие данных (`UPDATE users SET status = 'inactive' WHERE id = 10`). Сначала находим нужные строки с помощью фильтра (`SELECT * FROM users WHERE id = 10`) и потом обновляем.
+- `DELETE` - удаление конкретных строк (`DELETE FROM users WHERE status = 'inactive'`).
+- `ALTER` - изменение структуры - добавление или удаление полей/столбцов (`ALTER TABLE users ADD age INT`).
+- `DROP` - полностью удаляет таблицу или базу данных (`DROP TABLE users`).
+- `TRUNCATE` - мгновенно очищает таблицу от всех данных, оставляя пустую таблицу (`TRUNCATE TABLE users`).
+
+### Ключевые слова
+
+- `FROM` - указывает таблицу-источник (`SELECT name FROM users`).
+- `JOIN` - соединяет несколько таблиц по общему полю (`JOIN users_orders ON users.id = orders.user_id`).
+- `WHERE` - фильтрует строки по условию (`WHERE age >= 18`).
+- `GROUP BY` - группировка строк по значению поля (например, узнать количество пользователей в состояние каждого отдельного статуса с помощью функции `COUNT(*)` - `SELECT status, COUNT(*) FROM users GROUP BY status`)
+- `HAVING` - фильтрует уже сгруппированные данные (`SELECT status, COUNT(*) FROM users GROUP BY status HAVING COUNT(*) > 5`).
+- `ORDER BY` - сортирует результат (по возрастанию/убыванию) (`SELECT * FROM users ORDER BY name ASC` или `DESC`).
+- `LIMIT`/`TOP` - ограничивает количество выводимых строк (например, только первые 10) (`SELECT * FROM users LIMIT 10`).
+
+### Логические операторы
+
+- `AND` - логическое И (`SELECT * FROM users WHERE status = 'active' AND age >= 18`).
+- `OR` - логическое ИЛИ (`SELECT * FROM users WHERE status = 'active' OR status = 'inactive'`).
+- `NOT` - отрицание (`SELECT * FROM users WHERE NOT status = 'inactive'`).
+- `IN` - проверка по списку (`SELECT * FROM users WHERE age IN (18, 20, 25, 30)`).
+- `BETWEEN` - проверка диапазона (`SELECT * FROM users WHERE age BETWEEN 18 AND 30`).
+- `LIKE` - поиск по шаблону (`SELECT * FROM users WHERE name LIKE 'alex%'`, найдет `alex` и `alexander`).
+- `IS NULL` - поиск пустых значений (`SELECT * FROM users WHERE email IS NULL`).
+
+### Функции вычисления
+
+- `COUNT()` - считает количество строк (например, общее число пользователей - `SELECT COUNT(id) FROM users`).
+- `SUM()` - считает сумму чисел (например, общая сумма баланса всех пользователей - `SELECT SUM(balance) FROM users` или сумма баланса пользователей для всех статусов `SELECT status, SUM(balance) AS total_balance FROM users GROUP BY status`).
+- `AVG()` - вычисляет среднее значение (например, средний возраст - `SELECT AVG(age) FROM users`).
+- `MAX()`/`MIN()` - находит максимальное или минимальное значение (например, самого взрослого пользователя - `SELECT MAX(age) FROM users`).
+- `DISTINCT` - получить список уникальных значений (`SELECT DISTINCT name FROM users`)
+
+### Операторы объединения
+
+- `UNION` - склеивает результаты двух запросов в один список, убирая дубликаты (`SELECT name FROM users UNION SELECT name FROM admins`).
+- `UNION ALL` - склеивает результаты двух запросов, сохраняя все дубликаты (`SELECT name FROM users UNION ALL SELECT name FROM admins`).
+- `INTERSECT` - оставляет только те строки людей, которые есть в обоих списках (`SELECT name FROM users INTERSECT SELECT name FROM admins`).
+- `EXCEPT`/`MINUS` - вычитает данные одного запроса из другого (например, оставить только список пользователей не являющихся админами `SELECT name FROM users EXCEPT SELECT name FROM admins`).
+
+### Настройка ролей
+
+В PostgreSQL пользователь и роль - это одно почти и то же, разница заключается только в праве на вход в систему. По умолчанию команда `CREATE ROLE` создает роль без права входа (`NOLOGIN`), а команда `CREATE USER` — это удобный псевдоним для CREATE ROLE ... LOGIN.
+
+```sql
+-- Создать пользователя с паролем
+CREATE USER gatusdb_read WITH PASSWORD '123098';
+-- Создать только роль
+CREATE ROLE gatusdb_admin;
+-- Дать права на логин (создать пользователя из роли)
+ALTER ROLE gatusdb_admin WITH LOGIN PASSWORD '123098';
+
+-- Предоставить разрешения на создание базы данных для роли
+ALTER ROLE gatusdb_admin CREATEDB;
+-- Разрешить создание других пользователей
+ALTER ROLE gatusdb_admin CREATEROLE;
+-- Дать права суперпользователя (полный доступ)
+-- ALTER ROLE gatusdb_admin SUPERUSER;
+
+-- Создать базу данных
+CREATE DATABASE gatusdb;
+-- Дать права роли на подключение к базе данных
+GRANT CONNECT ON DATABASE gatusdb TO gatusdb_read,gatusdb_admin;
+-- Дать права роли на просмотр схемы
+GRANT USAGE ON SCHEMA gatusdb TO gatusdb_read,gatusdb_admin;
+-- Разрешить указанные действия (SELECT,INSERT или ALL) с всеми таблицами (ALL TABLES) в схеме gatusdb для роли gatusdb_admin
+GRANT SELECT,INSERT ON ALL TABLES IN SCHEMA gatusdb TO gatusdb_admin;
+```
+
+### Настройка схем
+
+В PostgreSQL схема - это именованное пространство имен (namespace), содержащее независимые объекты базы данных (таблицы, представления, типы, функции) от других namespaces.
+
+```sql
+-- Удаляем схему gatusdb со всеми вложенными объектами, если она уже существует
+DROP SCHEMA IF EXISTS gatusdb CASCADE;
+-- Создаем схему gatusdb (только если она еще не существует) и назначаем ее владельцем роль gatusdb_admin
+CREATE SCHEMA IF NOT EXISTS gatusdb AUTHORIZATION gatusdb_admin;
+
+-- Предоставляем полные права (USAGE + CREATE) роли gatusdb_admin на схему
+GRANT ALL ON SCHEMA gatusdb TO gatusdb_admin;
+-- Предоставляем права только на чтение для роли gatusdb_read
+GRANT USAGE ON SCHEMA gatusdb TO gatusdb_read;
+
+-- Предоставляет полные права по умолчанию для всех будущих создаваемых таблиц внутри схемы
+ALTER DEFAULT PRIVILEGES IN SCHEMA gatusdb GRANT ALL ON TABLES TO gatusdb_admin;
+-- Предоставляет права только на выполнение команд SELECT (или к примеру SELECT,UPDATE,INSERT)
+ALTER DEFAULT PRIVILEGES IN SCHEMA gatusdb GRANT SELECT ON TABLES TO gatusdb_read;
+
+-- Предоставить права на текущие таблицы
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA gatusdb TO gatusdb_admin;
+GRANT SELECT ON ALL TABLES IN SCHEMA gatusdb TO gatusdb_read;
+
+-- Предоставить права на последовательность (порядковый номер при INSERT)
+ALTER DEFAULT PRIVILEGES IN SCHEMA gatusdb GRANT ALL ON SEQUENCES TO gatusdb_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA gatusdb GRANT SELECT, USAGE ON SEQUENCES TO gatusdb_read;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA gatusdb TO gatusdb_admin;
+GRANT SELECT, USAGE ON ALL SEQUENCES IN SCHEMA gatusdb TO gatusdb_read;
+```
+
+### Таблицы связей
+
+Таблица `Actors` содержит только личные данные:
+
+```
+id	      name
+-         -
+1         Киану Ривз
+2         Лоренс Фишберн
+```
+
+Таблица `Movies` содержит только данные о фильмах:
+
+```
+id	      title
+-         -
+101       Матрица
+102       Джон Уик
+```
+
+Промежуточная таблица `Movie_Actors` содержит только пары для связи идентификаторов:
+
+```
+actor_id	movie_id
+-         -
+1	        101
+2	        101
+1	        102
+```
+
+Получить список всех актеров фильма Матрица с помощью `JOIN`:
+
+```sql
+SELECT Actors.name
+FROM Actors
+JOIN Movie_Actors ON Actors.id = Movie_Actors.actor_id
+JOIN Movies ON Movies.id = Movie_Actors.movie_id
+WHERE Movies.title = 'Матрица';
+-- или используя псевдонимы для сокращения
+SELECT a.name
+FROM Actors AS a
+JOIN Movie_Actors AS ma ON a.id = ma.actor_id
+JOIN Movies AS m ON m.id = ma.movie_id
+WHERE m.title = 'Матрица';
+```
+
+Вывод:
+
+```
+name
+Киану Ривз
+Лоренс Фишберн
+```
 
 ## Docker
 
@@ -1278,6 +1724,32 @@ networks:
       config:
         - subnet: 192.168.3.0/24
           gateway: 192.168.3.1
+```
+
+### Depends on
+
+[Depends on](https://docs.docker.com/compose/how-tos/startup-order) - механизм управление порядком запуска с проверкой готовности.
+
+```yaml
+services:
+  pg-migrate:
+    image: app
+    command: ["./pg-migrate.sh"]
+    environment:
+      - DATABASE_URL=postgres://user:pass@pg:5432/dbname
+    # Дожидаемся успешного запуска контейнера с базой данных
+    depends_on:
+      pg:
+        condition: service_healthy
+
+  # Основное приложение
+  app:
+    image: app
+    command: ["./app-start.sh"]
+    # Ждет успешного завершения миграции
+    depends_on:
+      pg-migrate:
+        condition: service_completed_successfully
 ```
 
 ## Swarm
@@ -5917,7 +6389,7 @@ jobs:
     steps:
       # Клонируем репозиторий (ветку main и историю всех комиттов)
       - name: Checkout repository (main branch and all commits)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: main
@@ -5983,7 +6455,7 @@ jobs:
       # Клонируем репозиторий (ветку main и последний коммит)
       - name: Checkout repository (main branch and all commits)
         id: dockerPull
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           ref: main
@@ -6063,7 +6535,7 @@ jobs:
 
     steps:
       - name: Checkout repository (main branch and 1 last commits)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           ref: main
@@ -6261,7 +6733,7 @@ jobs:
 
     steps:
       - name: Checkout repository (main branch and 1 last commits)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           ref: main
@@ -6675,7 +7147,7 @@ jobs:
   payload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Check params
         run: |
           echo "App version: ${{ github.event.client_payload.app_version }}"
@@ -7126,6 +7598,7 @@ Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild
 | [Ansible](https://plugins.jenkins.io/ansible)                                                     | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`                         |
 | [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                                        | Плагин для подключения к удаленным машинам через протокол `ssh` по ключу или паролю                                             |
 | [SSH Agent](https://www.jenkins.io/doc/pipeline/steps/ssh-agent)                                  | Плагин для подключения к удаленным машинам с использованием `ssh-agent` и `Credentials`                                         |
+| [Workspace Cleanup](https://plugins.jenkins.io/ws-cleanup)                                        | Плагин добавляет метод `cleanWs()` для удаления рабочей область сборки.                                                         |
 | [Pipeline Stage View](https://plugins.jenkins.io/pipeline-stage-view)                             | Визуализация шагов (`stages`) в интерфейсе проекта с временем их выполнения                                                     |
 | [Rebuilder](https://plugins.jenkins.io/rebuild)                                                   | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке                            |
 | [Schedule Build](https://plugins.jenkins.io/schedule-build)                                       | Позволяет запланировать сборку на указанный момент времени                                                                      |
