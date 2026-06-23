@@ -157,9 +157,13 @@ git branch -a
 git branch test
 # Переключиться на другую ветку
 git switch test
-# Переименовать ветку, отправить в удаленный репозиторий и удалить ее локально
+# Быстро переключиться на предыдущую ветку
+git switch -
+# Переименовать ветку
 git branch -m tests
-git push -u origin tests # или git push -u origin HEAD (ветка на которой стоим)
+# Отправить указанную ветку (или HEAD на которой стоим) на удаленный репозиторий
+git push -u origin tests
+# Удалить ветку локально
 git branch -d tests
 
 # Вывести список тегов
@@ -360,6 +364,35 @@ git push gitlab main
 ```
 
 ## SQL
+
+Индексы в базе данных - это специальные структуры, которые ускоряют поиск данных. Без индекса базе данных приходится выполнять полное сканирование (перебирать все строки в таблице одну за другой, что крайне медленно на больших объемах данных). Индекс хранит отсортированные значения определенных столбцов и ссылки на соответствующие строки, позволяя СУБД мгновенно находить нужные записи.
+
+Когда индексов мало или нет совсем:
+
+- Плюс: Данные записываются максимально быстро (операции `INSERT`, `UPDATE` и `DELETE`), так как базе не нужно ничего обновлять, кроме самой таблицы.
+- Минус: Поиск данных (`SELECT`) становится очень медленным при росте базы. Нагрузка на процессор и диск возрастает, так как системе приходится обрабатывать огромные массивы информации.
+
+Когда индексов слишком много:
+
+- Плюс: Можно мгновенно найти данные по любому критерию.
+- Минусы: замедляется запись (при каждом изменении данных, базе приходится обновлять и все связанные индексы) и повышенный расход памяти (индексы занимают место на диске и в оперативной памяти, часто 10–20% от размера таблицы на каждый индекс).
+
+Репликация - это когда есть основной сервер (Master) и его копии (Replica). Все изменения идут на мастер, а он в свою очередь копирует их на реплики, чтобы распределить чтение (например, если тысячи человек хотят просто посмотреть товары, они идут на реплики, не нагружая основной сервер), а также если мастер выйдет из строя, его сможет заменить реплика.
+
+Репликация в синхронном режиме дожидается ответа. Мастер записывает данные и отправляет их реплики, реплика подтверждает получение и мастер говорит пользователю - УСПЕХ.
+
+- Плюс: Данные везде идентичны на 100%. Если мастер выйдет из строя, все данные гарантированно будут на реплике.
+- Минус: Это медленно. Если реплика или сеть между ними тормозит, то запись для пользователя будет висеть.
+
+Репликация в асинхронном режиме не дожидается ответа от реплики. Мастер записал у себя и сразу сказал пользователю - УСПЕХ, и уже после этого в фоновом режиме отправил данные на реплики.
+
+- Плюс: максимально высокая скорость.
+- Минус: есть риск потери данных.
+
+Шардирование - это стратегия горизонтального масштабирования, при которой одна физическая БД разбивается на несколько логических и независимых частей (шардов), каждая из которых размещается на отдельном физическом узле (экземпляре СУБД), в отличии от репликации, где каждая реплика хранит копию базу целиком. Данного механизма можно добиться за счет прокси-слоя, где прокси-сервер парсит SQL-запрос на лету, вычленяет Shard Key и перенаправляет запрос на нужный физический сервер, что позволяет увиличить производительность на запись.
+
+- Плюс: приложение не знает, что база разделена, по этому удобно масштабировать и проводить обслуживание шардов.
+- Минус: сам прокси становится узким местом, которое тоже нужно масштабировать и увеличивается шанс потери данных (если из 10 шардов 1 упал то 10% данных недоступно, поэтому шардирование никогда не используется без репликации).
 
 ### Базовые инструкции
 
@@ -1429,6 +1462,12 @@ logging:
     max-file: 3
 ```
 
+Очистить содержимое всех логов контейнеров:
+
+```bash
+truncate -s 0 /var/lib/docker/containers/*/*-json.log
+```
+
 #### journald
 
 Доступа к логам через `journalctl` используя `systemd`/`journald`
@@ -1475,6 +1514,17 @@ logging:
   options:
     gelf-address: udp://1.2.3.4:12201
     tag: "{{.Name}}"
+```
+
+#### loki
+
+Отправка напрямую в систему агрегации логов [Loki](https://github.com/grafana/loki).
+
+```yaml
+logging:
+  driver: loki
+  options:
+    loki-url: "http://loki:3100/loki/api/v1/push"
 ```
 
 #### fluentd
@@ -1979,6 +2029,79 @@ kubectl get nodes
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
 
+### Etcd
+
+[etcd](https://github.com/etcd-io/etcd) - это распределенное хранилище данных формата ключ-значение в распределенной системы, например, Kubernetes.
+
+[auger](https://github.com/etcd-io/auger) - декодировщик содержимого объектов данных Kubernetes, хранящимся в etcd.  
+
+```bash
+ETCD_VER=v3.6.11
+GITHUB_URL=https://github.com/etcd-io/etcd/releases/download
+
+curl -L ${GITHUB_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+sudo tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /usr/local/bin --strip-components=1 --no-same-owner
+rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+
+etcd --version
+etcdctl version
+etcdutl version
+
+sudo curl https://github.com/etcd-io/auger/releases/download/v1.0.3/auger_1.0.3_linux_amd64.tar.gz -o /usr/local/bin/auger
+sudo chmod +x /usr/local/bin/auger
+
+export ETCDCTL_API=3
+
+# Проверить подключение к БД и ее работоспособность
+etcdctl --endpoints=https://127.0.0.1:2379 \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key \
+  endpoint health
+
+# Вывести все ключи в базе
+etcdctl --endpoints=localhost:2379 get / --prefix --keys-only
+# Вывести ключи всех Deployment в БД
+etcdctl --endpoints=localhost:2379 get /registry/deployments/ --prefix --keys-only
+# Вывести содержимое манифеста указаного Deployment с декодированием (/registry/<kind>/<namespace>/<metadata.name>)
+etcdctl --endpoints=localhost:2379 get /registry/deployments/default/torapi --print-value-only | /usr/local/bin/auger decode
+# Вытащить содержимое секрета
+etcdctl --endpoints=localhost:2379 get /registry/secrets/monitoring/telegram-secrets --print-value-only | strings
+# Получить данные обо всех подах
+etcdctl --endpoints=localhost:2379 get /registry/pods --prefix
+
+# Записать, прочитать и удалить ключ
+etcdctl --endpoints=localhost:2379 put key value
+etcdctl --endpoints=localhost:2379 get key
+etcdctl --endpoints=localhost:2379 del key
+
+# Список узлов кластера etcd
+etcdctl --endpoints=localhost:2379 member list
+# Детальный статус - размер БД (кота на запись по умолчанию 2 Гб), количество revision и лидер ли этот узел
+etcdctl --endpoints=localhost:2379 endpoint status -w table # json
+# Сжатие - удалет всю историю записи до 152043 ревизии (останется 1 ривизия)
+etcdctl --endpoints=localhost:2379 compact 152043
+# Дефрагминатция данных на диске в файловой системе
+etcdctl --endpoints=localhost:2379 defrag 152043
+# Список событий
+etcdctl --endpoints=localhost:2379 alarm list
+# Логи
+journalctl -u etcd
+kubectl logs -n kube-system <etcd-pod-name>
+
+# Сделать backup базы данных и конфигурации
+etcdctl snapshot save snapshot.db
+cp /etc/kubernetes/manifests/etcd.yaml ~/.etcd.yaml.backup
+# Очистить содержимое БД в файловой системе перед восстановлением (например, при потере кворума)
+# rm -rf /var/lib/etcd/*
+# Восстановление из снапшота
+etcdutl snapshot restore snapshot.db \
+  --data-dir=/var/lib/etcd \
+  --name=master-node \
+  --initial-cluster=master-node=https://127.0.0.1:2380 \
+  --initial-advertise-peer-urls=https://127.0.0.1:2380
+```
+
 ### Cluster Configuration
 
 [Cluster Configuration](https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta4/) - это основной конфигурационный ресурс утилиты `kubeadm`, который определяет глобальные настройки для всего кластера Kubernetes. В отличие от настроек конкретной ноды в момент инициализации с помощь `InitConfiguration`, этот объект описывает общие параметры для всех компонентов [Control Plane](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/control-plane-flags) (API server, scheduler, controller manager) и `etcd`.
@@ -2308,6 +2431,13 @@ kubectl auth can-i --list
 - `--v=3`	- расширенная информация об изменениях
 - `--v=6`	- показать запрашиваемые ресурсы (например, загрузка файла `kubeconfig` и url для GET-запроса при вызове `kubectl get pods`)
 - `--v=9`	- показать содержимого HTTP-запроса в полном виде (включая заголовки)
+
+### Swagger
+
+```bash
+kubectl get --raw /openapi/v2 --insecure-skip-tls-verify > kube-openapi.json
+docker run -d --name=k8s-swagger -p 8099:8080 -v $(pwd)/kube-openapi.json:/tmp/swagger.json -e SWAGGER_JSON=/tmp/swagger.json swaggerapi/swagger-ui
+```
 
 ### K9s
 
@@ -7586,41 +7716,6 @@ $body = @{".crumb" = $crumb} # добавляем crumb в тело запрос
 Invoke-RestMethod "http://192.168.3.101:8080/job/${jobName}/${lastCompletedBuild}/rebuild" -Headers $headers -Method POST -Body $body # перезапустить сборку
 ```
 
-### Plugins
-
-| Плагин                                                                                            | Описание                                                                                                                        |
-| -                                                                                                 | -                                                                                                                               |
-| [Pipeline Nodes and Processes](https://jenkins.io/doc/pipeline/steps/workflow-durable-task-step)  | Плагин, который предоставляет доступ к интерпретаторам `sh`, `bat`, `powershell` и `pwsh`                                       |
-| [Pipeline Utility Steps](https://jenkins.io/doc/pipeline/steps/pipeline-utility-steps)            | Добавляет методы `readJSON`, `writeJSON`, `readYaml`, `writeYaml`, `readTOML`, `writeTOM`, `untar`, `unzip`, и другие           |
-| [HTTP Request](https://plugins.jenkins.io/http_request)                                           | Простой `REST` API Client для отправки и обработки `GET` и `POST` запросов через метод `httpRequest(url: url, httpMode: "GET")` |
-| [Credentials Binding](https://jenkins.io/doc/pipeline/steps/credentials-binding)                  | Добавляет метод `withCredentials` для доступа к секретам                                                                        |
-| [HashiCorp Vault](https://plugins.jenkins.io/hashicorp-vault-plugin)                              | Автоматизирует процесс получения содержимого значений из `HashCorp Vault` с помощью метода `withVault`                          |
-| [Ansible](https://plugins.jenkins.io/ansible)                                                     | Параметраризует запуск `ansible-playbook` (требуется установка на агенте) через метод `ansiblePlaybook`                         |
-| [SSH Pipeline Steps](https://plugins.jenkins.io/ssh-steps)                                        | Плагин для подключения к удаленным машинам через протокол `ssh` по ключу или паролю                                             |
-| [SSH Agent](https://www.jenkins.io/doc/pipeline/steps/ssh-agent)                                  | Плагин для подключения к удаленным машинам с использованием `ssh-agent` и `Credentials`                                         |
-| [Workspace Cleanup](https://plugins.jenkins.io/ws-cleanup)                                        | Плагин добавляет метод `cleanWs()` для удаления рабочей область сборки.                                                         |
-| [Pipeline Stage View](https://plugins.jenkins.io/pipeline-stage-view)                             | Визуализация шагов (`stages`) в интерфейсе проекта с временем их выполнения                                                     |
-| [Rebuilder](https://plugins.jenkins.io/rebuild)                                                   | Позволяет перезапускать параметризованную сборку с предустановленными параметрами в выбранной сборке                            |
-| [Schedule Build](https://plugins.jenkins.io/schedule-build)                                       | Позволяет запланировать сборку на указанный момент времени                                                                      |
-| [Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger)                             | Принимает `POST` запросы на конечной точке `/generic-webhook-trigger/invoke` для извлечения значений и запуска Pipeline         |
-| [Job Configuration History](https://plugins.jenkins.io/jobConfigHistory)                          | Сохраняет копию файла сборки в формате `xml` (который хранится на сервере) в истории для сверки                                 |
-| [Export Job Parameters](https://plugins.jenkins.io/export-job-parameters)                         | Добавляет кнопку `Export Job Parameters` для конвертации все параметров в декларативный синтаксис Pipeline                      |
-| [Active Choices Parameters](https://plugins.jenkins.io/uno-choice)                                | Активные параметры, которые позволяют динамически обновлять содержимое параметров                                               |
-| [File Parameters](https://plugins.jenkins.io/file-parameters)                                     | Добавляет параметры для загрузки файлов                                                                                         |
-| [Separator Parameter](https://plugins.jenkins.io/parameter-separator)                             | Параметр для визуального разделения набора параметров на странице сборки задания с поддержкой `HTML`                            |
-| [Custom Tools](https://plugins.jenkins.io/custom-tools-plugin)                                    | Позволяет загружать пакеты (исполняемые файлы) из Интернета с помощью предустановленного набора команд                          |
-| [Copy Artifact](https://plugins.jenkins.io/copyartifact)                                          | Позволяет копировать артифакты из одной сборки в другую (например, из последней успешной `copyArtifacts(projectName: jobName)`) |
-| [ANSI Color](https://plugins.jenkins.io/ansicolor)                                                | Добавляет поддержку стандартных escape-последовательностей `ANSI` для покраски вывода                                           |
-| [Email Extension](https://plugins.jenkins.io/email-ext)                                           | Отправка сообщений на почту по протоколу `SMTP` из Pipeline                                                                     |
-| [Config File Provider](https://plugins.jenkins.io/config-file-provider)                           | Хранение конфигураци (например, `settings.xml` для `Maven`) в интерфейсе Jenkins и их шаблонизация c `Credentials`              |
-| [Allure](https://plugins.jenkins.io/allure-jenkins-plugin)                                        | Создает отчеты [Allure](https://allurereport.org) для автотестов в интерфейсе Pipeline с отправкой в TestOps                    |
-| [SonarQube Scanner](https://plugins.jenkins.io/sonar)                                             | Интегрирует статический анализ кода с помощью метода [withSonarQubeEnv](https://jenkins.io/doc/pipeline/steps/sonar)            |
-| [Test Results Analyzer](https://plugins.jenkins.io/test-results-analyzer)                         | Показывает историю результатов сборки `junit` тестов в табличном древовидном виде                                               |
-| [Embeddable Build Status](https://plugins.jenkins.io/embeddable-build-status)                     | Предоставляет настраиваемые значки [Shields](https://shields.io), который возвращает статус сборки                              |
-| [Prometheus Metrics](https://plugins.jenkins.io/prometheus)                                       | Предоставляет конечную точку `/prometheus` с метриками, которые используются для сбора данных                                   |
-| [Web Monitoring](https://plugins.jenkins.io/monitoring)                                           | Добавляет конечную точку `/monitoring` для отображения графиков мониторинга в веб-интерфейсе                                    |
-| [CloudBees Disk Usage](https://plugins.jenkins.io/cloudbees-disk-usage-simple)                    | Отображает использование диска всеми заданиями во вкладке `Manage-> Disk usage` для анализа                                     |
-
 ### Credentials
 
 Примеры использования метода `withCredentials` для извлечения и использования секретов:
@@ -8036,230 +8131,41 @@ pipeline {
 }
 ```
 
-### Vault
+### HTML Parameters
 
-Интеграция [HashiCorp Vault](https://github.com/hashicorp/vault) в Jenkins Pipeline через `REST API` для получения содержимого секретов и использовая в последующих стадиях/этапах сборки:
+[HTML Parameters](https://plugins.jenkins.io/html-parameters) - это плагин, который позволяет создавать формы с помощью параметра `uiHtmlFormParameter` и поддержкой CSS для доступа к выбранным значениями через `env`.
 
 ```Groovy
-def getVaultSecrets(
-    String address,
-    String path,
-    String token
-) {
-    def url = new URL("${address}/${path}")
-    
-    def connection = url.openConnection()
-    connection.setRequestMethod("GET")
-    connection.setRequestProperty("X-Vault-Token", token)
-    connection.setRequestProperty("Accept", "application/json")
-    
-    def response = new groovy.json.JsonSlurper().parse(connection.inputStream)
-    def user = response.data.data.user
-    def password = response.data.data.password
-    return [
-        user: user,
-        password: password
-    ]
-}
-
-def USER_NAME
-def USER_PASS
-
 pipeline {
     agent any
     parameters {
-        string(name: 'url', defaultValue: 'http://192.168.3.101:8200', description: 'Url адресс хранилища секретов')
-        string(name: 'path', defaultValue: 'v1/kv/data/ssh-auth', description: 'Путь для извлечения секретов')
-        password(name: 'token', defaultValue: 'hvs.bySybhyYOxSWEVk4FQDdcyyg', description: 'Токен доступа к API HashiCorp Vault')
+        uiHtmlFormParameter(
+            name: 'UI',
+            description: 'Форма для выбора окружения',
+            templateHtml: '''
+                <div class="html-parameters-container">
+                    <label for="html-parameters-env">Выберите стенд:</label>
+                    <div class="jenkins-select">
+                        <select id="html-parameters-env" class="jenkins-select__input">
+                            <option value="dev" selected>Development</option>
+                            <option value="prod">Production</option>
+                        </select>
+                    </div>
+                </div>
+            ''',
+            customCss: '.html-parameters-container { margin: 10px; }',
+            mappings: [
+                [
+                    sourceId: 'html-parameters-env',
+                    outputName: 'TARGET_ENV'
+                ]
+            ]
+        )
     }
     stages {
-        stage('Get vault secrets') {
+        stage('Deploy') {
             steps {
-                script {
-                    def secrets = getVaultSecrets(
-                        "${params.url}",
-                        "${params.path}",
-                        "${params.token}"
-                    )
-                    USER_NAME = secrets.user
-                    USER_PASS = secrets.password
-                }
-            }
-        }
-        stage('Use secrets') {
-            steps {
-                script {
-                    echo "User: ${USER_NAME}"
-                    echo "Password: ${USER_PASS}"
-                }
-            }
-        }
-    }
-}
-```
-
-### withVault
-
-Команда (скрипт) для загрузки `kubectl` в Custom tool:
-
-```bash
-mkdir -p ./bin
-curl https://dl.k8s.io/release/v1.33.3/bin/linux/amd64/kubectl -sSLo ./bin/kubectl
-chmod +x ./bin/kubectl
-# Домашний каталог утилиты: bin
-```
-Получение секретов (на примере содержимого `kubeconfig`) с помощью метода `withVault`:
-```Groovy
-def log = {
-    def m = [:]
-    m.info = { text -> echo "\u001B[34m${text}\u001B[0m" }
-    m.success = { text -> echo "\u001B[32m${text}\u001B[0m" }
-    m.error = { text -> echo "\u001B[31m${text}\u001B[0m" }
-    return m
-}()
-
-pipeline {
-    agent any
-    options {
-        ansiColor("xterm")
-        timestamps()
-        timeout(time: 10, unit: "MINUTES")
-    }
-    environment {
-        KUBECONFIG = "${WORKSPACE}/kubeconfig"
-        KUBECTLPATH = tool(
-            name: "kubectl-amd64-1.33.3",
-            type: "com.cloudbees.jenkins.plugins.customtools.CustomTool"
-        )
-        PATH = "${KUBECTLPATH}:${env.PATH}"
-    }
-    parameters {
-        separator(
-            name: "separatorVault",
-            sectionHeader: "Vault",
-            separatorStyle: "border-color: blue",
-            sectionHeaderStyle: "font-size: 1.5em; font-weight: bold;"
-        )
-        string(
-            name: "vaultUrl",
-            defaultValue: "http://192.168.3.101:8200",
-            description: "Адрес Vault"
-        )
-        string(
-            name: "vaultPath",
-            defaultValue: "v1/kv/kube",
-            description: "Путь к секретам в Vault (где хранится ключ config с содержимым kubeconfig)"
-        )
-        credentials(
-            name: "vaultAppRole",
-            credentialType: "com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential",
-            defaultValue: "main_approle",
-            description: "AppRole для доступа на чтение секретов из Vault"
-        )
-        separator(
-            name: "separatorDebug",
-            sectionHeader: "Debug",
-            separatorStyle: "border-color: blue",
-            sectionHeaderStyle: "font-size: 1.5em; font-weight: bold;"
-        )
-        booleanParam(
-            name: "checkConfig",
-            defaultValue: true,
-            description: "Проверить содержимое kubeconfig и версию kubectl"
-        )
-        // text(name: "multiLine", defaultValue: "line1\nline2")
-        // choice(name: "addresses", choices: ["192.168.3.101", "192.168.3.105","192.168.3.106"])
-        // password(name: "token", defaultValue: "YWRtaW4K")
-        // credentials(name: "sshKey", credentialType: "com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey", defaultValue: "d5da50fc-5a98-44c4-8c55-d009081a861a", required: true)
-        // activeChoice(
-        //     name: "activeChoicesParameter", choiceType: "PT_CHECKBOX", filterable: true,
-        //     script: [$class: "GroovyScript", box: true, script: [script: '''return ["1","2","3"]''']]
-        // )
-        // reactiveChoice(
-        //     name: "activeChoicesReactiveParameter", choiceType: "PT_RADIO", filterable: false,
-        //     referencedParameters: "activeChoicesParameter",
-        //     script: [$class: "GroovyScript", box: true, script: [script: '''return [activeChoicesParameter]''']]
-        // )
-    }
-    stages {
-        stage("Get kubeconfig from Vault") {
-            steps {
-                script {
-                    // Конфигурация для подключения к Vault
-                    def vaultConfiguration = [
-                        vaultUrl:           params.vaultUrl,
-                        vaultCredentialId:  params.vaultAppRole,
-                        engineVersion:      1
-                    ]
-                    // Переменная для извлечения секретов
-                    def vaultSecrets  = [
-                        [
-                            path: params.vaultPath,
-                            engineVersion: 1,
-                            secretValues: [
-                                [
-                                    envVar: "kubeconfig", // название переменной
-                                    vaultKey: "config"    // ключ в Vault
-                                ]
-                            ]
-                        ]
-                    ]
-                    // Метод извлечения секретов из Vault
-                    withVault(
-                        [
-                            configuration:  vaultConfiguration,
-                            vaultSecrets:   vaultSecrets
-                        ]
-                    ) {
-                        // Записываем содержимое в файл
-                        writeFile(
-                            file: "${WORKSPACE}/kubeconfig", // Не принимает переменные из environment
-                            text: kubeconfig
-                        )
-                    }
-                }
-            }
-        }
-        stage("Check kubeconfig and kubectl") {
-            when {
-                expression { params.checkConfig }
-            }
-            steps {
-                script {
-                    log.info("Проверяем содержимое kubeconfig")
-                    def kubeconfig = readFile(
-                        file: KUBECONFIG
-                    )
-                    if (kubeconfig.trim().length() == 0) {
-                        log.error("Конфигурация отсутствует (файл kubeconfig пустой)")
-                    } else {
-                        def firstLine = kubeconfig.split("\n")[0]
-                        log.success("Конфигурация получена")
-                        log.success(firstLine)
-                    }
-                    log.info("Проверка версии kubectl")
-                    def kubectlVersion = sh(
-                        script: """
-                            kubectl version --output=json || true
-                        """,
-                        returnStatus: false, // Возвращяет код возврата если true (для проверки или игнорирования ошибок)
-                        returnStdout: true   // Возвращяет вывод в переменную
-                    )
-                    log.success(kubectlVersion)
-                }
-            }
-        }
-    }
-    post {
-        always {
-            script {
-                sh(
-                    script: """
-                        ls -lh
-                        rm -rf ./*
-                        ls -lh
-                    """
-                )
+                echo "Выбран стенд: ${env.TARGET_ENV}"
             }
         }
     }
@@ -9267,7 +9173,584 @@ tasks:
 ```
 `sake run info --tags bsd` запустить набор из 5 заданий из группы info
 
+## Vault
+
+### Server
+
+[Vault](https://github.com/hashicorp/vault) - инструмент для управления секретами от компании HashiCorp.
+
+`mkdir -p vault/vault_config && cd vault`
+
+Создать конфигурацию в файле `vault_config/vault.hcl`:
+
+```hcl
+# Использовать локальное файловое хранилище
+storage "file" {
+  path = "/vault/file"
+}
+
+# Использование Consul для хранения данных (backend)
+# storage "consul" {
+#   address = "consul-master:8500"
+#   path    = "vault/"
+#   # Получить токен доступа с помощью команды consul acl bootstrap
+#   token   = "65a0093a-b8cb-3a94-642f-fb9187265f46"
+# }
+
+# Режим высокой доступности Vault (frontend)
+# На второй ноде используется такая же конфигурация с пробросом порта 8201:8200
+# ha_enabled = true
+# api_addr     = "http://vault-01:8200" 
+# cluster_addr = "https://vault-02:8201"
+
+# Если false, запретит выгрузку данных Vault в файл подкачки на диск
+disable_mlock = true
+
+# Настройка слушателя для REST API
+# Swagger UI: http://192.168.3.101:8200/ui/vault/tools/api-explorer
+listener "tcp" {
+  address = "0.0.0.0:8200"
+  tls_disable = 1
+}
+
+# Включение интерфейс
+ui = true
+
+# Включить метрики для Prometheus
+telemetry {
+  prometheus {
+    enabled = true
+    endpoint = "/metrics"
+  }
+}
+
+# Логирование
+log_level = "debug"
+audit "file" {
+  file_path = "/vault/file/logs/audit.log"
+}
+```
+
+Запускаем в контейнере:
+
+```yaml
+services:
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+      - SKIP_SETCAP=true
+      - SKIP_CHOWN=true
+    ports:
+      - 8200:8200
+    volumes:
+      - ./vault_config:/vault/config
+      # Использовать локальное хранилище (если отключен Consul)
+      - ./vault_data:/vault/file
+    command: vault server -config=/vault/config/vault.hcl
+```
+
+Получить ключи разблокировки и `root` ключ для первичной инициализации:
+
+```bash
+docker exec -it vault vault operator init
+
+Unseal Key 1: nq4Er7qY4AIyoQFIndlkioKr9wd/23G2VQW/Ilhcok+8
+Unseal Key 2: ONhVACz0DBLNDb1M6KzL7h1x/+S4Xg6oDfruobynrEqo
+Unseal Key 3: 1hE3RbHH5xC9f9J9MbYmSRT7CeR8N7rT+a4YOYvE/fou
+Unseal Key 4: o8dDShL8qy18mCzj2kbImco6Gc2LxPmTbmtbqSQm7THW
+Unseal Key 5: nYsziY88gQvT4dz4mbJN63hWGYPeR7ElBNMdBZLa1M83
+
+Initial Root Token: hvs.sWABUNCFijc9kAOhoYi7gOu1
+```
+
+Ввести любые 3 из 5 ключей для разблокировки после перезапуска контейнера:
+
+```bash
+docker exec -it vault vault operator unseal nq4Er7qY4AIyoQFIndlkioKr9wd/23G2VQW/Ilhcok+8
+docker exec -it vault vault operator unseal ONhVACz0DBLNDb1M6KzL7h1x/+S4Xg6oDfruobynrEqo
+docker exec -it vault vault operator unseal 1hE3RbHH5xC9f9J9MbYmSRT7CeR8N7rT+a4YOYvE/fou
+
+# Статус должен изменить на Sealed: false
+docker exec -it vault vault status
+# Авторизоваться в хранилище под Root Token
+docker exec -it vault vault login hvs.sWABUNCFijc9kAOhoYi7gOu1
+```
+
+### Client
+
+```bash
+# Загрузить vault cli из контейнера
+sudo docker cp vault:/bin/vault /usr/local/bin/vault
+
+# Авторизация под токеном
+export VAULT_ADDR=http://127.0.0.1:8200
+vault login hvs.sWABUNCFijc9kAOhoYi7gOu1
+# Токен будет сохранен в файл
+cat ~/.vault-token
+
+# Swagger UI: http://192.168.3.101:8200/ui/vault/tools/api-explorer
+curl -sS -H "X-Vault-Token: hvs.sWABUNCFijc9kAOhoYi7gOu1" http://127.0.0.1:8200/v1/configs/data/db/pg | jq .data.data
+```
+
+Методы авторизации:
+
+| Команда                                                             | Описание                                                          |
+| -                                                                   | -                                                                 |
+| `vault login -method=userpass`                                      | Авторизация с помощью логина и пароля                             |
+| `vault login -method=ldap username=<name>`                          | Авторизация через каталог `ldap`                                  |
+| `vault login -method=kubernetes role=<role> jwt=<token>`            | Авторизация внутри кластера Kubernetes через SA `JWT` токен       |
+| `vault login -method=cert -client-cert=crt.pem -client-key=key.pem` | Авторизация с использованием клиентского TLS-сертификата          |
+| `vault status`                                                      | Проверить состояние сервера (запечатан или распечатан)            |
+| `vault read sys/leader`                                             | Информация о работе `HA`                                          |
+| `vault operator seal`                                               | Запечатать хранилище (прекратить доступ к данным)                 |
+| `vault operator unseal <key>`                                       | Ввод ключа для распечатывания хранилища                           |
+| `vault operator init`                                               | Инициализация нового сервера (генерация master-ключей)            |
+| `vault auth enable approle`                                         | Включить новый метод аутентификации (`pki`, `ldap`, `kubernetes`) |
+| `vault auth list`                                                   | Вывести список всех активных методов аутентификации               |
+| `vault write auth/approle/role/k8s policies=default`                | Создать `AppRole` с привязкой политик по умолчанию                |
+| `vault read auth/approle/role/k8s/role-id`                          | Получить `RoleID`                                                 |
+| `vault write -f auth/approle/role/k8s/secret-id`                    | Сгенерировать новый `SecretID` для приложения                     |
+| `vault login -method=approle role_id=<id> secret_id=<id>`           | Авторизация из приложения или скрипта                             |
+
+Работа с движками (тип данных для хранения) и секретами:
+
+| `vault secrets enable -version=2 -path=secrets kv`                  | Включить движок секретов `Key-Value` (`pki`, `ssh`, `database`)   |
+| `vault secrets move secrets/ creds/`                                | Переместить (переименовать) путь движка                           |
+| `vault secrets list`                                                | Показать все включенные движки секретов                           |
+| `vault secrets list -detailed`                                      | Показать все выключенные движки секретов                          |
+| `vault secrets disable creds/`                                      | Удалить движок                                                    |
+| `vault kv put creds/db username=admin password=admin`               | Создать новый секрет в движке `KV` по пути `creds/db`             |
+| `vault kv put creds/db username=admin`                              | Заменить содержимое секрета по пути (перезаписать все поля)       |
+| `vault kv patch creds/db password=admin`                            | Добавить новый или обновить текущий ключ в секрете                |
+| `vault kv list creds/`                                              | Показать список путей к секретам в директории                     |
+| `vault kv get creds/db`                                             | Прочитать значения последней версии секрета                       |
+| `vault kv get -field=password creds/db`                             | Вывести значение указанного поля в секрете                        |
+| `vault kv get -format=json creds/db`                                | Вывод результата в указанном формате (`json`, `yaml`, `table`)    |
+| `vault kv metadata get creds/db`                                    | Показать историю версий, время создания и метаданные ключа        |
+| `vault kv get -version=2 creds/db`                                  | Прочитать конкретную версию секрета                               |
+| `vault kv delete creds/db`                                          | Удалить конкретную версию секрета (пометить на удаление)          |
+| `vault kv undelete -versions=1 creds/db`                            | Восстановить ранее удаленную версию секрета                       |
+| `vault kv destroy -versions=1 creds/db`                             | Полностью и безвозвратно стереть данные указанной версии          |
+| `vault kv metadata delete creds/db`                                 | Полностью удалить секрет и всю его историю версий                 |
+
+Пример содержимого политики доступа:
+
+```hcl
+# Разрешить чтение секретов в конкретном пути
+path "configs/db/*" {
+  capabilities = ["read", "list"]
+}
+
+# Разрешить создание и обновление секретов
+path "configs/apps/*" {
+  capabilities = ["create", "update", "read"]
+}
+
+# Запретить доступ
+path "creds/db" {
+  capabilities = ["deny"]
+}
+```
+
+Управление политиками доступа:
+
+| Команда                                                             | Описание                                                          |
+| -                                                                   | -                                                                 |
+| `vault policy write policy-devops policy-devops.hcl`                | Создать или обновить политику из файла `.hcl`                     |
+| `vault policy list`                                                 | Показать список всех загруженных политик                          |
+| `vault policy read policy-devops`                                   | Просмотреть содержимое конкретной политики                        |
+| `vault policy delete policy-devops`                                 | Удалить политику                                                  |
+| `vault token create -policy=policy-devops`                          | Генерация нового токена доступа с привязкой политики              |
+| `vault token lookup`                                                | Показать информацию о текущем токене (`TTL`, политики)            |
+| `vault token renew`                                                 | Продлить время жизни текущего токена                              |
+| `vault token revoke -self`                                          | Отозвать текущий токен                                            |
+| `vault token revoke -accessor <accessor>`                           | Отозвать конкретный токен по его идентификатору                   |
+| `export VAULT_TOKEN="hvs.CAES..."`                                  | Установить токен для текущей сессии терминала                     |
+| `vault login hvs.CAES...`                                           | Авторизовать под токеном и сохранить его в файл `~/.vault-token`  |
+| `vault kv get configs/db/pg`                                        | Чтение секрета (есть доступ)                                      |
+| `vault kv put configs/db/pg password=123456`                        | Изменение секрета (нет доступа на `create` и `update`)            |
+
+### Consul
+
+[Consul](https://github.com/hashicorp/consul) - используется для кластеризации и централизованного хранения данных `Vault`, а также как самостоятельное `Key-Value` хранилище.
+
+Создать конфигурацию в файле `consul_config/consul.hcl`:
+
+```hcl
+# Включаем веб-интерфейс
+ui = true
+
+# Режим логирования
+log_level = "INFO"
+
+acl {
+  # Включить управление доступом
+  enabled = true
+  # Запрещено все, что не разрешено
+  default_policy = "deny"
+  # Сохранять токены для повторного использования
+  enable_token_persistence = true
+}
+
+# Настройки для репликации и работы в режиме кластере
+ports {
+  grpc = 8502
+}
+
+# Чтобы сервера доверяли друг другу при выборе лидера
+performance {
+  raft_multiplier = 1
+}
+```
+
+Запускаем в контейнере:
+
+```yaml
+services:
+  consul-master:
+    image: hashicorp/consul:latest
+    container_name: consul-master
+    restart: unless-stopped
+    ports:
+      - 8500:8500
+    volumes:
+      - ./consul_config:/consul/config
+      - ./consul_data_master:/consul/data
+    command: "agent -server -bootstrap-expect=1 -client=0.0.0.0 -data-dir=/consul/data"
+```
+
+Команды для управления:
+
+```bash
+# Загрузить consul cli из контейнера
+sudo docker cp consul:/bin/consul /usr/local/bin/consul
+# Создать root token, который будет использоваться для управления системой ACL, создания политик доступа и других токенов доступа
+docker exec -it consul-master consul acl bootstrap
+
+# Показать список всех узлов и их статус (alive/failed)
+export CONSUL_HTTP_TOKEN="65a0093a-b8cb-3a94-642f-fb9187265f46"
+consul members # -token="65a0093a-b8cb-3a94-642f-fb9187265f46" 
+# Показывает состояние репликации (State: leader or follower)
+consul operator raft list-peers
+# Показать подробную статистику синхронизации по протоколу Raft
+consul info
+
+# Создать новую политику доступа
+consul acl policy create -name "custom" -rules 'node_prefix "" { policy = "write" } service_prefix "" { policy = "write" } key_prefix "" { policy = "write" }'
+# Прочитать правило из файла
+# consul acl policy create -name "custom" -rules @custom-policy.hcl
+# Создать новый токен доступа для политики
+consul acl token create -policy-name "custom" -token "65a0093a-b8cb-3a94-642f-fb9187265f46"
+
+# Записать секрет
+consul kv put ssh/key "ssh-rsa AAAA"
+# Список всех ключей в формате JSON
+consul kv export ssh/ # | jq -r .[].value | base64 --decode
+# Прочитать указанный секрет
+consul kv get ssh/key
+# Удалить секрет
+consul kv delete ssh/key
+
+# Записать секрет в Consul KV Store под новых токеном доступа
+curl -sS http://localhost:8500/v1/kv/ssh/key --request PUT --header "X-Consul-Token: 89fa8962-1b32-2089-5893-37f294444adb" --data "ssh-rsa AAAA"
+# Извлечь содержимое секрета
+curl -sS http://localhost:8500/v1/kv/ssh/key --header "X-Consul-Token: 89fa8962-1b32-2089-5893-37f294444adb" | jq -r .[].Value | base64 --decode
+```
+
+### Vault Agent Injector
+
+Создаем `SA` и выдаем ему кластерные права на встроенную системную роль `auth-delegator` для делегирования аутентификации:
+
+```bash
+kubectl create serviceaccount vault-sa -n telegram
+kubectl create clusterrolebinding vault-auth-delegator \
+    --clusterrole=system:auth-delegator \
+    --serviceaccount=telegram:vault-sa
+```
+
+Создаем токен для инициализации кластера в Vault:
+
+```yaml
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: vault-token
+  namespace: telegram
+  annotations:
+    kubernetes.io/service-account.name: vault-sa
+```
+
+`kubectl apply -f vault-sa.yaml`
+
+Извлекаем сертификат и токен доступа для передачи в концигурацию Vault:
+
+```bash
+kubectl get secret vault-token -n telegram -o jsonpath='{.data.ca\.crt}' | base64 --decode > ca.crt
+kubectl get secret vault-token -n telegram -o jsonpath='{.data.token}' | base64 --decode > token.jwt
+```
+
+Создаем новое `KV` хранилище и секрет:
+
+```bash
+vault secrets enable -version=2 -path=k8s kv
+vault kv put k8s/app/telegram-bot API_KEY=admin CHAT_ID=admin
+```
+
+Создаем политику для доступа к хранилищу:
+
+```bash
+vault policy write k8s-telegram-policy - <<EOT
+path "k8s/data/app/telegram-bot" {
+  capabilities = ["read"]
+}
+
+path "k8s/metadata/app/*" {
+  capabilities = ["list"]
+}
+EOT
+```
+
+Настройка метода аутентификации для подключения к Vault из кластера Kubernetes:
+
+```bash
+# Включаем метод аутентификации Kubernetes
+vault auth enable kubernetes
+
+# Настраиваем связь с API сервером Kubernetes (кто может подключаться)
+vault write auth/kubernetes/config \
+    kubernetes_host="https://192.168.3.101:6443" \
+    kubernetes_ca_cert=@ca.crt \
+    token_reviewer_jwt=$(cat token.jwt)
+
+# Создаем роль для приложения (привязываем SA к политике)
+vault write auth/kubernetes/role/tg-app-role \
+    bound_service_account_names=vault-sa \
+    bound_service_account_namespaces=telegram \
+    policies=k8s-telegram-policy \
+    audience="https://kubernetes.default.svc.cluster.local" \
+    ttl=24h
+
+vault read auth/kubernetes/role/tg-app-role
+```
+
+По умолчанию [Vault Agent Injector](https://developer.hashicorp.com/vault/docs/deploy/kubernetes/injector) сохраняет все секреты в общую память пода (`tmpfs`) по пути `/vault/secrets/`.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-checker
+  namespace: telegram
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: vault-checker
+  template:
+    metadata:
+      labels:
+        app: vault-checker
+      annotations:
+        # Включаем Vault Agent Sidecar
+        vault.hashicorp.com/agent-inject: "true"
+        # Заставляет контейнеры ждать, пока vault-agent-init не завершится успешно (когда файл записан на диск)
+        vault.hashicorp.com/agent-init-first: 'true'
+        # Роль доступа к секретам Vault
+        vault.hashicorp.com/role: "tg-app-role"
+        # Определяем название файла (/vault/secrets/env.txt) и путь к секрету в Vault 
+        vault.hashicorp.com/agent-inject-secret-env.txt: "k8s/app/telegram-bot"
+        # Шаблон для парсинга выходного файла с содержимым секретов в формте ключ=значение
+        vault.hashicorp.com/agent-inject-template-env.txt: |
+          {{- with secret "k8s/data/app/telegram-bot" -}}
+          {{- range $key, $value := .Data.data }}
+          {{ $key }}="{{ $value }}"
+          {{- end }}
+          {{- end -}}
+        vault.hashicorp.com/agent-requests-cpu: 100m
+        vault.hashicorp.com/agent-limits-cpu: 200m
+        vault.hashicorp.com/agent-requests-mem: 64Mi
+        vault.hashicorp.com/agent-limits-mem: 128Mi
+        vault.hashicorp.com/log-level: debug
+    spec:
+      serviceAccountName: vault-sa
+      containers:
+        - name: env-checker
+          image: alpine:3.23
+          command: ["sh", "-c", "source /vault/secrets/env.txt && echo $CHAT_ID && echo $API_KEY && sleep infinity"]
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "test -s /vault/secrets/env.txt"]
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+```
+
+### Jenkins withVault
+
+- Создаем SA и получаем токен доступа к кластеру Kubernetes:
+
+```bash
+kubectl create serviceaccount jenkins -n kube-system
+kubectl create clusterrolebinding jenkins-role --clusterrole=cluster-admin --serviceaccount=kube-system:jenkins
+kubectl create token jenkins -n kube-system --duration=999999h
+```
+
+- Создаем политику доступа `jenkins-policy.hcl`:
+
+```hcl
+path "jenkins/data/k3s" {
+  capabilities = ["read"]
+}
+```
+
+`vault policy write jenkins-policy jenkins-policy.hcl`
+
+- Включаем метод аутентификации AppRole:
+
+`vault auth enable approle`
+
+- Создаем бессрочную роль для Jenkins c привязкой политики `jenkins-policy`:
+
+```bash
+vault write auth/approle/role/jenkins \
+    token_policies="jenkins-policy" \
+    secret_id_ttl=0 \
+    secret_id_num_uses=0
+```
+
+- Получите учетные данные для доступа к роли:
+
+```bash
+vault read auth/approle/role/jenkins/role-id
+vault write -f auth/approle/role/jenkins/secret-id
+```
+
+Добавляем `Role ID` и `Secret ID` в Jenkins Credentials с название `k3s-approle`.
+
+- Команда (скрипт) для загрузки `kubectl` в Jenkins с помощью Custom Tools:
+
+```bash
+mkdir -p ./bin
+
+VERSION=v1.36.0
+
+ARCH=$(uname -m)
+case $ARCH in
+    x86_64|amd64) ARCH="amd64" ;;
+    aarch64) ARCH="arm64" ;;
+esac
+
+curl -sSL https://dl.k8s.io/release/$VERSION/bin/linux/$ARCH/kubectl -o ./bin/kubectl
+chmod +x ./bin/kubectl
+```
+
+Получение секретов (на примере токена доступа или содержимого `kubeconfig`) с помощью метода `withVault` в Jenkins:
+
+```Groovy
+def K8S_TOKEN = ""
+
+pipeline {
+    agent {
+        label 'linux && (amd64 || arm64)'
+    }
+    options {
+        ansiColor("xterm")
+        timestamps()
+        timeout(time: 10, unit: "MINUTES")
+    }
+    environment {
+        // KUBECONFIG = "${WORKSPACE}/kubeconfig.yaml"
+        KUBECTLPATH = tool(
+            name: 'kubectl-1.36.0',
+            type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+        )
+        PATH = "${KUBECTLPATH}:${env.PATH}"
+    }
+    parameters {
+        string(
+            name: "vaultUrl",
+            defaultValue: "http://192.168.3.101:8200"
+        )
+        string(
+            name: "vaultPath",
+            defaultValue: "jenkins/k3s",
+            description: "Путь к секретам в Vault (где хранится ключ token или config с содержимым kubeconfig)"
+        )
+        credentials(
+            name: "vaultAppRole",
+            credentialType: "com.datapipe.jenkins.vault.credentials.VaultAppRoleCredential",
+            defaultValue: "k3s-approle",
+            description: "AppRole для чтения секретов из Vault"
+        )
+    }
+    stages {
+        stage("Get Kubernetes token from Vault") {
+            steps {
+                script {
+                    // Конфигурация для подключения к Vault
+                    def vaultConfiguration = [
+                        vaultUrl:           params.vaultUrl,
+                        vaultCredentialId:  params.vaultAppRole,
+                        engineVersion:      2
+                    ]
+                    // Массив для извлечения секретов
+                    def vaultSecrets  = [
+                        [
+                            path: params.vaultPath,
+                            engineVersion: 2,
+                            secretValues: [
+                                // [
+                                //     envVar: "kubeconfig",
+                                //     vaultKey: "config"
+                                // ],
+                                [
+                                    envVar: "kubetoken",    // название переменной
+                                    vaultKey: "token"       // ключ в Vault
+                                ]
+                            ]
+                        ]
+                    ]
+                    // Метод извлечения секретов из Vault
+                    withVault(
+                        [
+                            configuration:  vaultConfiguration,
+                            vaultSecrets:   vaultSecrets
+                        ]
+                    ) {
+                        // Записываем содержимое конфигурации в файл
+                        // writeFile(
+                        //     file: "${WORKSPACE}/kubeconfig.yaml",
+                        //     text: kubeconfig
+                        // )
+                        // Передаем содержимое токена в глобальную переменную
+                        K8S_TOKEN = kubetoken
+                    }
+                }
+            }
+        }
+        stage("Check kubectl tool and token") {
+            steps {
+                script {
+                    sh "kubectl version --output=json || true"
+                    echo K8S_TOKEN
+                }
+            }
+        }
+    }
+}
+```
+
 ## Prometheus
+
+### Exporter
 
 Создание экспортера на примере получения метрик температуры всех дисков из [CrystalDiskInfo](https://crystalmark.info/en/software/crystaldiskinfo) с помощью PowerShell и отправки в [Prometheus](https://github.com/prometheus/prometheus) через [PushGateway](https://github.com/prometheus/pushgateway).
 
@@ -9294,6 +9777,7 @@ tasks:
 `docker run -d --name pushgateway --restart unless-stopped -p 19091:9091 prom/pushgateway`
 
 2. Запускаем скрипт в консоли:
+
 ```PowerShell
 $instance = [System.Net.Dns]::GetHostName()
 $pushgatewayUrl = "http://192.168.3.100:19091/metrics/job/disk_temperature"
@@ -9316,11 +9800,15 @@ while ($true) {
     Start-Sleep 10
 }
 ```
+
 3. Проверяем наличие метрик на конечной точке шлюза:
+
 ```PowerShell
 $(Invoke-RestMethod http://192.168.3.100:9091/metrics).Split("`n") | Select-String "disk_temperature"
 ```
+
 4. Добавляем конфигурацию в `prometheus.yml`:
+
 ```yaml
 scrape_configs:
   - job_name: cdi-exporter
@@ -9331,19 +9819,23 @@ scrape_configs:
       - targets:
         - '192.168.3.100:19091'
 ```
+
 `docker-compose kill -s SIGHUP prometheus` применяем изменения
 
-5. Собираем контейнер в среде `WSL` с помощью `dockerfile` монтированием системного диска Windows:
+1. Собираем контейнер в среде `WSL` с помощью `dockerfile` монтированием системного диска Windows:
+
 ```dockerfile
 FROM mcr.microsoft.com/powershell:latest
 WORKDIR /cdi-exporter
 COPY cdi-exporter.ps1 ./cdi-exporter.ps1
 CMD ["pwsh", "-File", "cdi-exporter.ps1"]
 ```
+
 `docker build -t cdi-exporter .` \
 `docker run -d -v /mnt/c:/mnt/c --name cdi-exporter cdi-exporter`
 
-6. Собираем стек из шлюза и скрипта в `docker-compose.yml`:
+1. Собираем стек из шлюза и скрипта в `docker-compose.yml`:
+2. 
 ```yaml
 services:
   cdi-exporter:
@@ -9362,6 +9854,7 @@ services:
       - "19091:9091"
     restart: unless-stopped
 ```
+
 `docker-compose up -d`
 
 7. Настраиваем `Dashboard` в `Grafana`:
@@ -9371,7 +9864,7 @@ hostName: `label_values(exported_instance)` \
 diskName: `label_values(disk)` \
 Метрика температуры: `disk_temperature{exported_instance="$hostName", disk=~"$diskName"}`
 
-## PromQL
+### PromQL
 
 Функции `PromQL`:
 
@@ -9402,6 +9895,7 @@ diskName: `label_values(disk)` \
 ### AWS/LocalStack
 
 Установка [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions):
+
 ```bash
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
@@ -9503,11 +9997,11 @@ services:
 Подключаем драйвер `fluentd` для отправки логов из любого контейнера Docker:
 
 ```yaml
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:24224
-        tag: zerobyte
+logging:
+  driver: fluentd
+  options:
+    fluentd-address: localhost:24224
+    tag: zerobyte
 ```
 
 #### CloudWatch
@@ -9659,6 +10153,7 @@ aws logs tail docker-logs --since 1d
 `vercel switch <team>` переключается между командами и аккаунтами Vercel
 
 Развертвывание `JavaScript` приложения через GitHub Actions:
+
 ```yaml
 name: CD (Deploy to Vercel)
 
@@ -9671,7 +10166,7 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Install node.js
       uses: actions/setup-node@v4
@@ -9689,6 +10184,7 @@ jobs:
         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
         vercel-args: '--prod'
 ```
+
 ## Proxy
 
 ### Traefik
@@ -9764,7 +10260,9 @@ services:
       # Переадресация на порт
       - traefik.http.services.tech-dns-srv.loadbalancer.server.port=5380
 ```
+
 Конфигурация настроек в файле `traefik.yml`:
+
 ```yaml
 entryPoints:
   # Настраиваем переадресацию на websecure для принудительного использования HTTPS
@@ -9845,9 +10343,11 @@ providers:
     directory: /rules
     watch: true
 ```
+
 Настройка дополнительных конфигураций из провайдера `file` в директории `rules` на примере интеграции с [Authentik](https://github.com/goauthentik/authentik) для авторизации с использование технологии `SSO`.
 
 Настройка промежуточной переадресации (между Traefik и веб-приложением) в файле `authentik-middlewares.yml`:
+
 ```yaml
 http:
   middlewares:
@@ -9869,7 +10369,9 @@ http:
           - X-authentik-meta-app
           - X-authentik-meta-version
 ```
+
 Настройка маршрутизации в файле `authentik-routers.yml`:
+
 ```yaml
 http:
   routers:
@@ -9899,6 +10401,7 @@ http:
 ### HAProxy
 
 Запускаем [HAProxy](https://github.com/haproxy/haproxy) в контейнере Docker:
+
 ```yaml
 services:
   httpbin-proxy:
@@ -9973,6 +10476,7 @@ backend backend_httpbin
     server external-httpbin httpbin.org:443 ssl verify none check weight 10
 
 ```
+
 - options:
 
 `maxconn` максимальное количество одновременных соединений \

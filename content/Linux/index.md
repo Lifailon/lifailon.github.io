@@ -1456,6 +1456,15 @@ while true; do
 done
 ```
 
+Пример отправки оповещения в [Gotify](https://github.com/gotify/server):
+
+```bash
+curl -k 'http://localhost:5080/message' \
+  -H 'Content-Type: application/json' \
+  -H 'X-Gotify-Key: As3e1oVioVEYvvZ' \
+  -d '{"title":"Curl","message":"Test","priority":0}'
+```
+
 ### netcat
 
 `nc -zv 192.168.3.100 5985` проверить порт без попытки соединения (`-z`) в подробном режиме (`-v`) \
@@ -4402,15 +4411,22 @@ network:
 ```yaml
 network:
   version: 2
+  renderer: networkd
   wifis:
-    wlp33:
-      dhcp4: yes
-      dhcp6: no
+    wlan0:
+      optional: true
+      dhcp4: no
+      addresses:
+        - 192.168.3.105/24
+      gateway4: 192.168.3.1
       nameservers:
-        addresses: [8.8.8.8]
+        addresses:
+          - 8.8.8.8
       access-points:
         "wifi-ssid":
-          password: "12345678"
+          auth:
+            key-management: "psk"
+            password: "12340987"
 ```
 
 - `Bonding` - используется для объединения физических сетевых интерфейсов в один логический:
