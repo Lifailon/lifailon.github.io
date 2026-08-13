@@ -1,6 +1,12 @@
 name: Build public files
 
 on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
+  # schedule:
+  #   - cron: "0 23 * * 0"
   workflow_run:
     workflows: ["Merge with source Git repositories"]
     types:
