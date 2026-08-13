@@ -27,7 +27,7 @@ git clone https://codeberg.org/daudix/duckquill.git themes/duckquill
 
 # Download Zola
 Invoke-RestMethod "https://github.com/getzola/zola/releases/download/v0.19.2/zola-v0.19.2-x86_64-pc-windows-msvc.zip" -OutFile zola.zip
-Expand-Archive -Path zola.zip && Remove-Item zola.zip
+Expand-Archive -Path zola.zip && Remove-Item zola.zip && Move-Item .\zola\zola.exe . && Remove-Item zola
 
 # Start server and build site
 .\zola serve

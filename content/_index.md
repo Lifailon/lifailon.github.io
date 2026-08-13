@@ -42,12 +42,12 @@ go_to_top = true
 ---
 
 <p align="center">
-    Пожалуйста, ознакомьтесь с другими проектами на ⭐ GitHub:
+    Пожалуйста, ознакомьтесь с другими проектами на GitHub ⭐
 </p>
 
 <table width="100%">
   <tr>
-    <td valign="middle" style="min-width: 450px;">
+    <td valign="middle" style="min-width: 400px;">
       <img src="https://github.com/Lifailon/lazyjournal/blob/main/img/logo.png?raw=true">
     </td>
     <td width="100%" valign="middle">
@@ -61,21 +61,19 @@ go_to_top = true
 
 <table width="100%">
   <tr>
-    <td colspan="2" valign="middle">
-      <h3><a href="https://github.com/Lifailon/multranslate">Multranslate</a></h3>
-      <p>Терминальный пользовательский интерфейс (TUI) на базе библиотеки <a href="https://github.com/chjj/blessed">Blessed</a> для одновременного перевода текста с использованием нескольких популярных источников перевода без необходимости настройки доступа к API.</p>
-      <p>Поддерживается использование ИИ (включая локальные LLM и бесплатные модели на OpenRouter), определение исходного и целевого языка на уровне кода, а также сохранение истории переводов в локальной базе данных <a href="https://github.com/WiseLibs/better-sqlite3">SQLite</a>.</p>
-      <p>Статья на Хабр 👉 <a href="https://habr.com/ru/articles/842288">Переводчик текста для терминала</a>.</p>
+    <td valign="middle" style="min-width: 400px;">
+      <img src="https://github.com/Lifailon/logporter/blob/main/img/logo.png?raw=true">
     </td>
-    <td valign="middle" style="min-width: 150px;">
-      <img src="https://github.com/Lifailon/multranslate/blob/rsa/image/logo.png?raw=true" style="background-color: transparent; box-shadow: none">
+    <td width="100%" valign="middle">
+      <h3><a href="https://github.com/Lifailon/logporter">Logporter</a></h3>
+      <p>Легковесная альтернатива 🦉 <a href="https://github.com/google/cadvisor">cAdvisor</a> для экспорта метрик из контейнеров Docker и сборщик логов для отправки в Loki, с поддержкой фильтрации по меткам compose.</p>
     </td>
   </tr>
 </table>
 
 <table width="100%">
   <tr>
-    <td valign="middle" style="min-width: 450px;">
+    <td valign="middle" style="min-width: 400px;">
       <img src="https://github.com/Lifailon/TorAPI/blob/main/image/logo-02.png?raw=true">
     </td>
     <td width="100%" valign="middle">
@@ -88,20 +86,33 @@ go_to_top = true
 
 <table width="100%">
   <tr>
+    <td valign="middle" style="min-width: 210px;">
+      <img src="https://github.com/Lifailon/LibreKinopoisk/blob/rsa/ChromeExtension/icons/icon256.png?raw=true" style="background-color: transparent; box-shadow: none">
+    </td>
     <td colspan="2" valign="middle">
       <h3><a href="https://github.com/Lifailon/LibreKinopoisk">LibreKinopoisk</a></h3>
       <p>Расширение для Google Chrome, <a href="https://addons.mozilla.org/ru/firefox/addon/librekinopoisk">Mozilla Firefox</a> и мобильных устройств, которое добавляет кнопки на сайт Кинопоиск и в контекстное меню браузера, а также реализует интерфейс <b>TorAPI</b> (frontend) в стиле <a href="https://github.com/Jackett/Jackett">Jackett</a> для быстрого поиска фильмов и сериалов в открытых источниках без использования VPN.</p>
-    </td>
-    <td valign="middle" style="min-width: 150px;">
-      <img src="https://github.com/Lifailon/LibreKinopoisk/blob/rsa/ChromeExtension/icons/icon256.png?raw=true" style="background-color: transparent; box-shadow: none">
     </td>
   </tr>
 </table>
 
 <table width="100%">
   <tr>
-    <td valign="middle" style="min-width: 150px;">
-      <img src="https://github.com/Lifailon/Kinozal-Bot/raw/rsa/image/settings/scheme.jpg">
+    <td valign="middle" style="min-width: 240px;">
+      <img src="https://github.com/Lifailon/doorr/blob/main/assets/logo.png?raw=true">
+    </td>
+    <td width="100%" valign="middle">
+      <h3><a href="https://github.com/Lifailon/doorr">Doorr</a></h3>
+      <p>Интерфейс Android на базе <a href="https://github.com/flutter/flutter">Flutter</a> для поиска торрентов через <a href="https://github.com/prowlarr/prowlarr">Prowlarr</a> и <a href="https://github.com/Jackett/Jackett">Jackett</a>.</p>
+      <p>Поддерживает фильтрацию раздач и предварительный просмотр содержимого торрент-файлов до их загрузки.</p>
+    </td>
+  </tr>
+</table>
+
+<table width="100%">
+  <tr>
+    <td valign="middle" style="min-width: 110px;">
+      <img src="https://github.com/Lifailon/Kinozal-Bot/blob/rsa/image/logo/kinozal-bot-512px.png?raw=true">
     </td>
     <td colspan="2" valign="middle">
       <h3><a href="https://github.com/Lifailon/Kinozal-Bot">Kinozal Bot</a></h3>
@@ -113,20 +124,7 @@ go_to_top = true
 
 <table width="100%">
   <tr>
-    <td width="100%" valign="middle">
-      <h3><a href="https://github.com/Lifailon/doorr">Doorr</a></h3>
-      <p>Интерфейс Android на базе <a href="https://github.com/flutter/flutter">Flutter</a> для поиска торрентов через <a href="https://github.com/prowlarr/prowlarr">Prowlarr</a> и <a href="https://github.com/Jackett/Jackett">Jackett</a>.</p>
-      <p>Поддерживает фильтрацию раздач и предварительный просмотр содержимого торрент-файлов до их загрузки.</p>
-    </td>
-    <td valign="middle" style="min-width: 200px;">
-      <img src="https://github.com/Lifailon/doorr/blob/main/assets/logo.png?raw=true">
-    </td>
-  </tr>
-</table>
-
-<table width="100%">
-  <tr>
-    <td valign="middle" style="min-width: 200px;">
+    <td valign="middle" style="min-width: 240px;">
       <img src="https://github.com/Lifailon/ssh-bot/blob/main/img/logo.png?raw=true">
     </td>
     <td width="100%" valign="middle">
@@ -139,38 +137,26 @@ go_to_top = true
 
 <table width="100%">
   <tr>
+    <td valign="middle" style="min-width: 250px;">
+      <img src="https://github.com/Lifailon/openrouter-bot/blob/main/img/logo.png?raw=true" style="background-color: transparent; box-shadow: none" width="200">
+    </td>
     <td colspan="2" valign="middle">
       <h3><a href="https://github.com/Lifailon/openrouter-bot">OpenRouter Bot</a></h3>
       <p>Проект позволяет за несколько минут запустить своего Telegram бота для общения с бесплатными или платными моделями AI через <a href="https://openrouter.ai">OpenRouter</a> или локальными LLM, например, через <a href="https://lmstudio.ai">LM Studio</a>.</p>
     </td>
-    <td valign="middle" style="min-width: 150px;">
-      <img src="https://github.com/Lifailon/openrouter-bot/blob/main/img/logo.png?raw=true" style="background-color: transparent; box-shadow: none" width="200">
-    </td>
   </tr>
 </table>
 
 <table width="100%">
   <tr>
-    <td valign="middle" style="min-width: 400px;">
-      <img src="https://github.com/Lifailon/logporter/blob/main/img/metrics-1.jpg?raw=true">
+    <td valign="middle" style="min-width: 200px;">
+      <img src="https://github.com/Lifailon/multranslate/blob/rsa/image/logo.png?raw=true" style="background-color: transparent; box-shadow: none">
     </td>
-    <td width="100%" valign="middle">
-      <h3><a href="https://github.com/Lifailon/logporter">Logporter</a></h3>
-      <p>Легковесная альтернатива экспортера [cAdvisor](https://github.com/google/cadvisor) для получения базовых метрик из контейнеров Docker.</p>
-      <p>По сравнению с cAdvisor, среднии показатели потребления памяти в 10 раз ниже, а CPU до 20 раз.</p>
-    </td>
-  </tr>
-</table>
-
-<table width="100%">
-  <tr>
     <td colspan="2" valign="middle">
-      <h3><a href="https://github.com/Lifailon/froxy/blob/main/README_RU.md">Froxy</a></h3>
-      <p>Прямой и обратный прокси сервер на базе .NET для запуска в режиме командной строки или контейнере <a href="https://hub.docker.com/r/lifailon/froxy">Docker</a>.</p>
-      <p>Поддерживает проксирование HTTPS трафика (CONNECT запросы) и протокол SOCKS5 для туннелирования TCP трафика, а также TCP, UDP и HTTP/HTTPS протоколы для обратоного проксирования (поддерживается обработка GET и POST запросов с передачей заголовков и тела запроса для работы с API и передачи Cookie).</p>
-    </td>
-    <td valign="middle" style="min-width: 100px;">
-      <img src="https://github.com/Lifailon/froxy/raw/main/image/android-client.jpg">
+      <h3><a href="https://github.com/Lifailon/multranslate">Multranslate</a></h3>
+      <p>Терминальный пользовательский интерфейс (TUI) на базе библиотеки <a href="https://github.com/chjj/blessed">Blessed</a> для одновременного перевода текста с использованием нескольких популярных источников перевода без необходимости настройки доступа к API.</p>
+      <p>Поддерживается использование ИИ (включая локальные LLM и бесплатные модели на OpenRouter), определение исходного и целевого языка на уровне кода, а также сохранение истории переводов в локальной базе данных <a href="https://github.com/WiseLibs/better-sqlite3">SQLite</a>.</p>
+      <p>Статья на Хабр 👉 <a href="https://habr.com/ru/articles/842288">Переводчик текста для терминала</a>.</p>
     </td>
   </tr>
 </table>
@@ -183,7 +169,7 @@ go_to_top = true
     <td width="100%" valign="middle">
       <h3><a href="https://github.com/Lifailon/RSA">RSA (Remote Shadow Administrator)</a></h3>
       <p>Интерфейс для удаленного подключения к текущим RDP сессиям пользователей на базе RDShadow и WinForms.</p>
-      <p>Дополнительно содержит набор модулей для автоматизации удаленного администрирования и управления ОС Windows (пользовательские процессы, службы, обновления, настройки KMS, NTP и другие функции).</p>
+      <p>Включаем в себя набор модулей для автоматизации удаленного администрирования и управления ОС Windows (пользовательскими процессами, службами, обновлениями, настройками KMS, NTP и другие функции).</p>
     </td>
   </tr>
 </table>
@@ -191,13 +177,9 @@ go_to_top = true
 <table width="100%">
   <tr>
     <td colspan="2" valign="middle">
-      <h3><a href="https://github.com/Lifailon/WinAPI">WinAPI</a></h3>
-      <p>Веб-сервер для удаленного управления ОС Windows через браузер или REST-запросы (например, curl в Linux).</p>
-      <p>Поддерживает запуск и остановка служб и процессов, получение информации о системе, просмотр и фильтрация журналов событий (логов) в браузере и другие функции.</p>
-      <p>Статья на Хабр 👉 <a href="https://habr.com/ru/articles/783022">REST API/Web сервер на PowerShell</a>.</p>
-    </td>
-    <td valign="middle" style="min-width: 150px;">
-      <img src="https://github.com/Lifailon/WinAPI/blob/rsa/Screen/ico/x128.png?raw=true" style="background-color: transparent; box-shadow: none" width="200">
+      <h3><a href="https://github.com/Lifailon/froxy/blob/main/README_RU.md">Froxy</a></h3>
+      <p>Прямой и обратный прокси сервер на базе .NET для запуска в контейнере <a href="https://hub.docker.com/r/lifailon/froxy">Docker</a> или использования в качестве инструмента командной строки.</p>
+      <p>Поддерживает проксирование HTTPS трафика (CONNECT запросы) и протокол SOCKS5 для туннелирования TCP трафика, а также TCP, UDP и HTTP/HTTPS протоколы для обратоного проксирования (поддерживается обработка GET и POST запросов с передачей заголовков и тела запроса для работы с API и передачи Cookie).</p>
     </td>
   </tr>
 </table>
