@@ -1044,6 +1044,58 @@ services:
       - NETALERTX_DEBUG=0
 ```
 
+### LAN Orangutan
+
+[LAN Orangutan](https://github.com/291-Group/LAN-Orangutan) - инструмент для обнаружения устройств в локальной сети с поддержкой Tailscale. Автоматически сканирует сети с помощью `nmap`, обнаруживает устройства, позволяет присваивать им метки, группировать и добавлять заметки через современный веб-интерфейс или командную строку.
+
+```yaml
+services:
+  lan-orangutan:
+    image: ghcr.io/291-group/lan-orangutan:latest
+    container_name: lan-orangutan
+    restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+    environment:
+      - ORANGUTAN_PORT=291
+      - TZ=UTC+3
+    volumes:
+      - ./lan_orangutan_data:/var/lib/lan-orangutan
+```
+
+### reconYa
+
+[reconYa](https://github.com/Dyneteq/reconya) - инструмент для разведки сети, который позволяет обнаруживать и отслеживать устройства в локальной сети в режиме реального времени, предоставляя информацию о MAC-адресах, производителях, именах хостов, операционных системах и типах устройств. Поддерживает сканирование IPv4 с использованием ICMP, TCP и ARP, сканирования портов с определением сервисов, а также систему оповещений о новых устройствах, открытых портах и недоступных хостах.
+
+```yaml
+services:
+  reconYa:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: reconYa
+    restart: unless-stopped
+    # ports:
+    #   - 3008:3008
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      - DATABASE_TYPE=sqlite
+      - SQLITE_PATH=/app/data/reconya.db
+      - DATABASE_NAME=reconya
+      - NETWORK_RANGE=192.168.3.0/24
+      - LOGIN_USERNAME=admin
+      - LOGIN_PASSWORD=admin
+      - JWT_SECRET_KEY=default_jwt_secret_change_this_in_production
+    volumes:
+      - ./reconya_data:/app/data
+```
+
 ### IVRE
 
 [IVRE](https://github.com/ivre/ivre) (Instrument de veille sur les réseaux extérieurs) - платформа сетевой разведки, включающая инструменты для пассивной и активной разведки (например, [Nmap](https://github.com/nmap/nmap) и [Masscan](https://github.com/robertdavidgraham/masscan)).
@@ -2154,6 +2206,20 @@ services:
     #   ENGINE_con4: sqlite@dbgate-plugin-sqlite
 ```
 
+### LibreDB Studio
+
+[LibreDB Studio](https://github.com/libredb/libredb-studio) - среда разработки SQL в браузере для PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis, SQLite, Couchbase, ClickHouse, Druid, DuckDB, Turso и многих других баз данных, с поддержкой единого входа (SSO), журналом аудита и запросами с использованием ИИ.
+
+```yaml
+services:
+  libredb-studio:
+    image: libredb/libredb-studio:latest
+    container_name: libredb-studio
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+```
+
 ### Redis Insight
 
 [Redis Insight](https://github.com/redis/RedisInsight) - официальный веб-интерфейс для управления Redis.
@@ -2164,8 +2230,8 @@ services:
     image: redis/redisinsight:latest
     container_name: redisinsight
     restart: unless-stopped
-    volumes:
-      - ./redisinsight_data:/data
+    ports:
+      - 5540:5540
     environment:
       - RI_APP_PORT=5540
       - RI_APP_HOST=0.0.0.0
@@ -2178,8 +2244,8 @@ services:
       - RI_REDIS_USERNAME=default
       - RI_REDIS_PASSWORD=
       - RI_REDIS_TLS=FALSE
-    ports:
-      - 5540:5540
+    volumes:
+      - ./redisinsight_data:/data
 
   redis:
     image: redis:latest
@@ -7708,6 +7774,32 @@ services:
   #     - 27017:27017
 ```
 
+### Go Ploy
+
+[Go Ploy](https://github.com/zhenorzz/goploy) - инструмент DevOps для развертывания приложений (CI/CD). Поддерживает терминал, SFTP, OpenAPI, мониторинг сервера, менеджер Crontab и Nginx.
+
+```yaml
+services:
+  goploy:
+    image: zhenorzz/goploy:latest
+    container_name: goploy
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - 3000:80
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_USER_PASSWORD=YourPasswordHere
+      - DB_NAME=goploy
+    volumes:
+      - $HOME/.ssh:/root/.ssh
+      - /etc/hosts:/etc/hosts
+      - ./repository:/opt/goploy/repository
+
+```
+
 ### n8n
 
 [n8n](https://github.com/n8n-io/n8n) - платформа автоматизации рабочих процессов с встроенными возможностями ИИ. Сочетание визуального создания кода с пользовательским кодом и более 400 интеграций.
@@ -7747,6 +7839,59 @@ services:
     volumes:
       - ./n8n_data:/home/node/.n8n
       - ./n8n_files:/files
+```
+
+### Ofelia
+
+[Ofelia](https://github.com/mcuadros/ofelia) - современная альтернатива классическому `cron`, разработанная специально для Docker-окружения. Умеет выполнять команды внутри уже запущенных контейнеров через Docker API (эмулируя команду `docker exec`) или запускать для задачи отдельный временный контейнер.
+
+```yaml
+services:
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: production_scheduler
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # Запускаем в режиме отслеживания Docker-меток
+    command: daemon --docker
+
+  # База данных Postgres с настройкой резервного копирования каждый день в 3:00
+  pg-01:
+    image: postgres:15-alpine
+    container_name: pg-01
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: admin
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.db-backup.schedule: "0 3 * * *"
+      ofelia.job-exec.db-backup.command: "pg_dump -U admin admin > /backups/backup-(date +%F).sql"
+
+  # Локальные задания на текущем контейнере
+  docker-prune-scheduler:
+    image: mcuadros/ofelia:latest
+    container_name: docker-prune-scheduler
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers
+    command: daemon --docker
+    labels:
+      ofelia.job-local.docker-system-prune.schedule: "0 21 * * 0"
+      ofelia.job-local.docker-system-prune.command: "docker system prune -a --volumes -f"
+      ofelia.job-local.docker-builder-prune.schedule: "0 21 * * 0"
+      ofelia.job-local.docker-builder-prune.command: "docker builder prune -a -f"
+      ofelia.job-local.docker-log-archive-clean.schedule: "0 23 * * 0"
+      ofelia.job-local.docker-log-archive-clean.command: "find /var/lib/docker/containers/ -name '*-json.log.*' -mtime +7 -delete"
+      ofelia.job-local.docker-log-large-clean.schedule: "0 23 * * 0"
+      ofelia.job-local.docker-log-large-clean.command: "find /var/lib/docker/containers/ -name '*-json.log' -size +500M -exec truncate -s 0 {} \\;"
 ```
 
 ### Cronicle
@@ -9711,6 +9856,22 @@ services:
       - 8080:8080
     volumes:
       - ./thinkdashboard_data:/app/data
+```
+
+### Home Lab Hub
+
+[Home Lab Hub](https://github.com/RaidOwl/homelab-hub) - веб-приложение для визуализации и управления стендом домашней лаборатории. Позволяет вести учет оборудования, виртуальных машин, приложений, хранилищ и сетей.
+
+```yaml
+services:
+  homelab-hub:
+    image: raidowl/homelab-hub:latest
+    container_name: homelab-hub
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    volumes:
+      - ./homelab_hub_data:/data
 ```
 
 ### Memos
